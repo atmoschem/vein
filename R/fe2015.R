@@ -1,0 +1,31 @@
+#' Emission factors from Environmental Agency of Sao Paulo CETESB
+#'
+#' A dataset containing emission factors from CETESB and its
+#' equivalency with EURO
+#'
+#' @format A data frame with 288 rows and 12 variables:
+#' \describe{
+#'   \item{Age}{Age of use}
+#'   \item{Year}{Year of emission factor}
+#'   \item{Pollutant}{Pollutants included: "CH4", "CO", "CO2", "HC",
+#'   "N2O", "NMHC", "NOx", and "PM"}
+#'   \item{Proconve_LDV}{Proconve emission standard: "PP", "L1", "L2",
+#'   "L3", "L4", "L5", "L6"}
+#'   \item{t_Euro_LDV}{Euro emission standard equivalence: "PRE_ECE",
+#'   "I", "II", "III","IV", "V"}
+#'   \item{Euro_LDV}{Euro emission standard equivalence: "PRE_ECE",
+#'   "I", "II", "III","IV", "V"}
+#'   \item{Proconve_HDV}{Proconve emission standard: "PP", "P1", "P2",
+#'   "P3", "P4", "P5", "P7"}
+#'   \item{Euro_HDV}{Euro emission standard equivalence: "PRE", "I",
+#'   "II", "III", "V"}
+#'   \item{Promot}{Promot emission standard: "PP", "M1", "M2", "M3"}
+#'   \item{Euro_moto}{Euro emission standard equivalence: "PRE", "I",
+#'   "II", "III"}
+#'   \item{PC_G}{CETESB emission standard for Passenger Cars with Gasoline (g/km)}
+#'   \item{LT}{CETESB emission standard for Light Trucks with Diesel (g/km)}
+#' }
+#' @source \url{http://veicular.cetesb.sp.gov.br/relatorios-e-publicacoes/}
+#' @usage data(fe2015)
+#' @docType data
+"fe2015"

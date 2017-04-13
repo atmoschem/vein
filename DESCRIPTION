@@ -1,0 +1,21 @@
+Package: vein
+Type: Package
+Title: An R package for vehicular emissions modelling
+Version: 0.1.2-3
+Author: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
+Maintainer: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
+Description: Emissions inventories elaboration and visualization,
+    Consists the three stages, pre-processing activity data, processing
+    or estimating the emissions and post-processing of emissions in
+    maps and databases.
+License: MIT + file LICENSE
+URL: https://github.com/ibarraespinosa/vein
+BugReports: https://github.com/ibarraespinosa/vein/issues/
+LazyData: no
+Depends: sp, R (>= 2.10)
+Imports: raster, rgeos, rgdal, stats
+Suggests: maptools, ggplot2, rgrass7, RQGIS, knitr, rmarkdown, DiagrammeR, RColorBrewer
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+Packaged: 2016-10-21 10:31:39 UTC; sergio
+VignetteBuilder: knitr

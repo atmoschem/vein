@@ -1,0 +1,250 @@
+vein v0.1.2-3 (Release date: 2017-04-22)
+==============
+* Adds demo. Takes out vignettes
+
+vein v0.1.2-2 (Release date: 2017-04-13)
+==============
+* Adds function temp_fact to expand hourly traffic data
+* Adds vignette
+
+vein v0.1.2-1 (Release date: 2017-04-04)
+==============
+* speeds are now read as lists of lists of speeds. First, the speed at
+one hour then  list with 24 elements, 24 hours, 7 list of lists to complete
+a week, if that is the case. Canges emis and emis_cold.
+* netspeed incorporates an option to return list of lists.
+* data now compress as "xz"
+
+
+vein v0.1.2-0 (Release date: 2017-04-04)
+==============
+* most of emissions functions renamed from emissions to emis
+* new netspeed function that calculates speed at different hours and links
+based on BPR curves or simple average speeds
+* emissions_24 and emissions functions deprecated (not exported)
+* emis_evap now reads monthly temperature and estimate evaporative emissions
+for each month.
+
+vein v0.1.1-2 (Release date: 2017-04-03)
+==============
+* Changed data. Now it is a traffic simulation for rectangle located at the
+west part of the Metropolitan Area of Sao Paulo, Brazil
+* emissions_cold had a bug. Before efcold[[k]](speed[[i]]). Now
+( efcold[[k]](speed[[i]]) -1)>0
+* netosm and netspeed deprecated
+* new data pc_cold of vehicle start pattern from IVE in Sao Paulo 2004
+
+vein v0.1.1.1 (Release date: 2017-03-25)
+==============
+* Added some categories to bcom
+
+vein v0.1.1 (Release date: 2017-03-18)
+==============
+* To avoid confusion with the REMI model (www.remi.com),
+the name was changed to Vehicular Emissions INventory Model (vein).
+
+REMI v0.1.0-31 (Release date: 2017-03-13)
+==============
+* new function: emissions_wrf. It returns a dataframe with emissions per
+grid cell in a suitable format ro run with AAS4WRF.ncl (Vara-Vela, 2016).
+
+REMI v0.1.0-30 (Release date: 2017-03-11)
+==============
+* speciate had a bug, dbf instead dbf. Now fixed.
+  Documentation of speciate improved.
+
+REMI v0.1.0-29 (Release date: 2017-03-03)
+==============
+* in cold start emissions, beta is replaced with hourly-weekly cold-start
+distribution. This distribution shows the percentage of vehicles
+driven with cold engine at that hour.
+
+REMI v0.1.0-28 (Release date: 2017-02-07)
+==============
+* emissions_evaporative add colmun of temperature into dataframe output.
+* update documentation of ef_nitro
+
+REMI v0.1.0-27 (Release date: 2017-02-01)
+==============
+* function ef_nitro to estimate emissions of N2O and NH3.
+
+REMI v0.1.0-26 (Release date: 2017-02-01)
+==============
+* Bug fix. Now imports rgdal.
+* Add package citacions.
+* Add speciation of nox.
+
+REMI v0.1.0-25 (Release date: 2017-01-28)
+==============
+* Incorporates speciate "iag" which splits VOC.
+* Incorporates vignette.
+
+REMI v0.1.0-24 (Release date: 2017-01-27)
+==============
+* rowSums and colSums of post_emissions now includes na.rm=T to prevent NA due
+some categories.
+
+REMI v0.1.0-23 (Release date: 2017-01-21)
+==============
+* emissions_evaporative updated. It now returns a dataframe with the
+evaporative emissions by type of day in which is applicable.
+* my_age presents average age even when there is NA
+* emissions_paved replaces na with 0 to prevent errors
+* sysdata of ldv emission factors had wrong equation for "FC" "PRE" "G". Fixed.
+
+REMI v0.1.0-22 (Release date: 2017-01-18)
+==============
+* New function: my_age. Distribute vehicle data using own vehicle distribution
+from a numeric vector.
+* Description title changed from "An R package for elaborating emissions
+inventories" to "An R package for traffic emissions modelling".
+* age functions now used colSums for messaging average age.
+* sysdata for table of EMEP/EEA PC emission factors, TYPE now has value "ALL"
+when EURO is "PRE".
+* ef_ldv_speed size motor FC Euro IV, V, VI and VIc changed from "800_1400"
+to "<=1400" to create have a faster and easier estimation with ef_ldv_scaled.
+The category <=800 remains.
+* ef_ldv_speed_cold called a database with some errors in ifelse closure.
+Now fixed.
+
+
+REMI v0.1.0-21 (Amanda) (Release date: 2017-01-08)
+==============
+* Age function nows append element equal to the last element of the
+vector.
+
+REMI v0.1.0-20 (Release date: 2016-12-13)
+==============
+* bus fix in emissions_dow and emissions_cold when array=F.
+* emissions 24 were changed to lapply over the length of ef.
+* includes function vkm to calculate vkm.
+* includes function emissions_paved for estimating resuspension from paved roads.
+
+
+
+REMI v0.1.0-19 (Release date: 2016-12-10)
+==============
+* Includes function ef_ldv_cold_list for list of cold start emission factors.
+  Also, the function emissions_cold.
+* The internal dataframe with EMEP emission factor for ldv vehicles
+  changes type from "PRE_ECE" to "PRE".
+* bus fix in emissions_dow and emissions_cold when array=F.
+* emissions 24 were changed to lapply over the length of ef.
+
+REMI v0.1.0-18 (Release date: 2016-12-9)
+==============
+* Includes function ef_ldv_cold for cold start emission factors
+
+REMI v0.1.0-17 (Release date: 2016-12-4)
+==============
+* Incorporates speciation of wear emissions for break, tyre and road.
+
+REMI v0.1.0-16 (Release date: 2016-11-29)
+==============
+* Incorporates functions: emissions_wear amd ef_wear. Emissions_wear
+  estimates emissions of wear in a similar way than emissions_dow, with the
+  difference that emission factors are multiplied as a numeric vector and not
+  as functions of speed and it only returns an array. The argument ef is
+  required to be a lis with length as the hours considered in estimation. The
+  function ef_wear determines emission factors of wear returning numeric vectors.
+
+REMI v0.1.0-15 (Release date: 2016-11-27)
+==============
+* Incorporates the function estimate tyre and break wear and  roads  abrasion.
+  The pollutant considered are "TSP", "PM10", "PM2.5", "PM1" and "PM0.1.".
+* the argument "type" from post_emissions wast excluded. Now by argument
+  accepts thre values : "veh", "streets_narrow" or "streets_wide".
+
+REMI v0.1.0-14 (Release date: 2016-11-24)
+==============
+* Incorporates the function speciate to produce species of pollutants. Now
+  it speciate the particulate matter in Black Carbon (BC) and Organic Matter
+  (OM) returning a dataframe with the pm2.5, bc and om.
+
+REMI v0.1.0-13 (Release date: 2016-11-23)
+==============
+* Incorporates evaporative emissions according EMEP/EEA methods, tier 2. The
+  new functions are: ef_evap, hot_soak and running losses.
+* ef_evap is a lookup table for getting the evaporative emissions factor.
+* hot_soak and running_losses  estimage average evaporative emissions.
+
+
+REMI v0.1.0-12 (Release date: 2016-11-16)
+==============
+* post_emissions add parameter type. To be used when by == "streets". It gives
+  the option of return dataframe of street emissions in narrow or wide format.
+* emissions_grid now does the job.
+* make_grid: sr parameter was excluded. Spatial Reference taken from spobj.
+
+REMI v0.1.0-11 (Release date: 2016-11-13)
+==============
+* post_emissions now add 3 parameters, veh, size and fuel.
+
+REMI v0.1.0-10 (Release date: 2016-11-09)
+==============
+* ef_ldv_speed and ef_hdv_speed add argument "show.equation = TRUE", in order
+  to give the option of show the equation or not.
+* ef_ldv_scaled and ef_hdv_scaled now has the show.equation = FALSE by
+  default. This function now accept euro standards as a vector of characters
+  e.g.: c("III", "II").
+* sys data not called, because it is loaded at NAMESPACE
+* emissions_dow now uses lapply(1:day,function(j) and
+    lapply(1:hour,function(i).
+* LCV, Gasoline and Diesel, now includes Euro II, III and IV. Gasoline also
+    V, VI and VIc
+
+REMI v0.1.0-9 (Release date: 2016-11-07)
+==============
+* data(fkm). Bug fix. fkm[[3]] had ',' instead of '.' in decimal number.
+
+REMI v0.1.0-8 (Release date: 2016-11-01)
+==============
+* post_emissions: Bug fix.  Change seq nombre, from 40 to dim(arra)[2].
+
+REMI v0.1.0-7 (Release date: 2016-10-30)
+==============
+* ef_ldv_speed: Bug fix. Some parameters from sysdata were wrong. E.g. Value
+  change from 2135 to 2.153.
+* fkm: added data. List of functions to calculate mileage in km based on age.
+* emis_det: new function to calculate emission degradations based on
+  accumulated milage.
+
+
+REMI v0.1.0-6 (Release date: 2016-10-27)
+==============
+* emissions_24: New function when there is 24h traffic data.
+
+REMI v0.1.0-5 (Release date: 2016-10-20)
+==============
+* Licence: Added Licence MIT.
+
+REMI v0.1.0-4 (Release date: 2016-10-20)
+==============
+* Bug fix.
+
+REMI v0.1.0-3 (Release date: 2016-10-20)
+==============
+* Bug fix.
+
+REMI v0.1.0-2 (Release date: 2016-10-20)
+==============
+* Bug fix.
+
+REMI v0.1.0-1 (Release date: 2016-10-19)
+==============
+* Bug fix. Now export all the functions
+
+REMI v0.1.0-0 (Release date: 2016-10-19)
+==============
+* REMI released.
+
+Prior REMI v0.1.0-0 (Release date: 2016-10-19)
+==============
+* The model started as a collection of rscripts named "remIAG".
+see: Ibarra-Espinosa S., Ynoue R. 2016. REMI model: Bottom-up emissions
+inventories for cities with lack of data. Journal of Earth Sciences &
+Geotechnical Engineering. issn 1792--9660.
+URL =
+https://www.researchgate.net/publication/313253283_REMI_model_Bottom-up_emissions_inventories_for_cities_with_lack_of_data
+
+
