@@ -1,0 +1,39 @@
+---
+title: "VEIN model"
+author: "Sergio Ibarra-Espinosa"
+date: "22 de abril de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Vein Package
+
+**V**ehicular **E**missions **IN**ventory **(VEIN)** model.  
+
+Read the DESCRIPTION file. You need several packages to run **vein**.
+
+- sp
+- raster
+- rgdal
+- rgeos
+
+Also, if you want to properly run the demo, needs these:
+
+- ggplot2
+- DiagrammeR
+- RColorBrewer
+
+
+```{r eval=F}
+library(devtools)
+install_github("ibarraespinosa/vein")
+```
+
+I'm currently working in some classes.
+
+Isseus here please https://github.com/ibarraespinosa/vein/issues/
+
+I hope you enjoy it
