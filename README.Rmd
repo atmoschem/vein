@@ -30,6 +30,7 @@ Also, if you want to properly run the demo, needs these:
 ```{r eval=F}
 library(devtools)
 install_github("ibarraespinosa/vein")
+demo("VEIN")
 ```
 
 I'm currently working in some classes.
