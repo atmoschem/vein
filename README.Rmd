@@ -20,7 +20,7 @@ Read the DESCRIPTION file. You need several packages to run **vein**.
 - rgdal
 - rgeos
 
-Also, if you want to properly run the demo, needs these:
+Also, if you want to properly run the demo, install these packages:
 
 - ggplot2
 - DiagrammeR
