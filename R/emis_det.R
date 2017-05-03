@@ -10,6 +10,7 @@
 #' @param cc Size of engine in cc
 #' @param eu Euro standard: "PRE", "I", "II", "III", "III", "IV", "V", "VI"
 #' @param km mileage in km
+#' @return It returns a numeric vector without "units"
 #' @keywords deterioration emission factors
 #' @export
 #' @examples \dontrun{

@@ -75,8 +75,8 @@ l2 <- ef_ldv_scaled(co2, co2$PC_G, v = "PC", t = "PRE_ECE", cc = "ALL", f = "G",
 p = "CO")
 EF <- c(l1,l2,l2[[12]],l2[[12]],l2[[12]],l2[[12]])
 E_CO_PC_E25 <- emis(veh = PC_E25,lkm = net$lkm,
-               ef = EF, speed = speed,agemax = 40, profile = pc_profile,
-               hour = i, day = j, array = T) #92 Mb
+               ef = EF, speed = speed, agemax = 40, profile = pc_profile,
+               hour = i, day = j, array = T)
 emi_table <- emis_post(E_CO_PC_E25, "PC", "1400", "E25", "co", by = "veh")
 emi_table_1 <- emi_table[emi_table$E_CO_PC_E25=="E_CO_PC_E25_1", ]
 library(ggplot2)

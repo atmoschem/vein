@@ -15,6 +15,9 @@ emis_det(po, cc, eu, km)
 
 \item{km}{mileage in km}
 }
+\value{
+It returns a numeric vector without "units"
+}
 \description{
 This function returns deterioration factors. The emission factors comes
 from the guidelines for developing emission factors of the EMEP/EEA air pollutant

@@ -7,11 +7,12 @@
 emis_wear(veh, lkm, ef, agemax, profile, hour = 1, day = 1)
 }
 \arguments{
-\item{veh}{Array of vehicles}
+\item{veh}{Object of class "Vehicles"}
 
 \item{lkm}{Length of the road}
 
-\item{ef}{list of emission factor in grams/km, length equals to hours.}
+\item{ef}{list of emission factor functions class "EmissionFactorsList",
+length equals to hours.}
 
 \item{agemax}{Age of oldest vehicles for that category}
 

@@ -3,9 +3,10 @@
 #' @description Estimation of wear emissions. The sources are tyres, breaks
 #' and road surface.
 #'
-#' @param veh Array of vehicles
+#' @param veh Object of class "Vehicles"
 #' @param lkm Length of the road
-#' @param ef list of emission factor in grams/km, length equals to hours.
+#' @param ef list of emission factor functions class "EmissionFactorsList",
+#' length equals to hours.
 #' @param agemax Age of oldest vehicles for that category
 #' @param profile Numerical or dataframe with nrows equal to 24 and ncol
 #' 7 day of the week
@@ -19,13 +20,9 @@
 #' @examples \dontrun{
 #' # Do not run
 #' }
-emis_wear <- function (veh,
-                           lkm,
-                           ef,
-                           agemax,
-                           profile,
-                           hour = 1,
-                           day = 1) {
+emis_wear <- function (veh, lkm, ef, agemax, profile, hour = 1, day = 1) {
+  veh <- as.data.frame(veh)
+  lkm <- as.numeric(lkm)
     d <-  simplify2array(
     lapply(1:day,function(j){
       simplify2array(
@@ -39,5 +36,5 @@ emis_wear <- function (veh,
       )
     })
   )
-  return(d)
+  return(as.Emissions(d))
 }

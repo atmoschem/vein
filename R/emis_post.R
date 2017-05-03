@@ -61,8 +61,8 @@
 #' p = "CO")
 #' EF <- c(l1,l2,l2[[12]],l2[[12]],l2[[12]],l2[[12]])
 #' E_CO_PC_E25 <- emis(veh = PC_E25,lkm = net$lkm,
-#'                ef = EF, speed = speed,agemax = 40, profile = pc_profile,
-#'                hour = i, day = j, array = T) #92 Mb
+#'                ef = EF, speed = speed, agemax = 40, profile = pc_profile,
+#'                hour = i, day = j, array = T)
 #' emi_table <- emis_post(E_CO_PC_E25, "PC", "1400", "E25", "co", by = "veh")
 #' emi_table_1 <- emi_table[emi_table$E_CO_PC_E25=="E_CO_PC_E25_1", ]
 #' library(ggplot2)
@@ -71,31 +71,26 @@
 #' title="Emissions of CO by day of the week") +theme_bw()
 #' }
 emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
-  if (missing(arra)){
-    stop("No array of emissions")
-  } else if (by == "veh" & class(arra)=="array"){
-    x <- unlist(lapply(1:dim(arra)[4], function(j) {#crea vector con 40 categorias pro hora, y reepite seria por dia
+  if ( class(arra) != "EmissionsArray" && !is.array(arra) ){
+    stop("No EmissionsArray")
+  } else if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
+    x <- unlist(lapply(1:dim(arra)[4], function(j) {
       unlist(lapply (1:dim(arra)[3],function(i) {
         colSums(arra[,,i,j], na.rm = T)
-        })) #40 categorias  por
+        }))
     }))
-
     df <- cbind(deparse(substitute(arra)),
                 as.data.frame(x))
-
     names(df) <- c(as.character(df[1,1]), "g")
-
     nombre <- rep(paste(as.character(df[1,1]),
                         seq(1:dim(arra)[2]),
                         sep = "_"),24*7, by=7 )
-
     df[,1] <- nombre
     df$veh <- rep(veh, nrow(df))
     df$size <- rep(size, nrow(df))
     df$fuel <- rep(fuel, nrow(df))
     df$pollutant <- rep(pollutant, nrow(df))
     df$age <- rep(seq(1:dim(arra)[2]),24*7, by=7 )
-
     hour <- rep(seq(0:(dim(arra)[3]-1)),dim(arra)[4],
                 by = dim(arra)[2],
                 each=dim(arra)[2] )
@@ -104,6 +99,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
                  "Thursday", "Friday", "Saturday",
                  "Sunday"), each=dim(arra)[2]*dim(arra)[3])
     df$day <- day
+    df$g <- as.Emissions(df$g)
     return(df)
     } else if (by == "streets_narrow") {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
@@ -111,15 +107,11 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
           rowSums(arra[,,i,j], na.rm = T)
         }))
       }))
-
       df <- cbind(deparse(substitute(arra)),as.data.frame(x))
-
       names(df) <- c(as.character(df[1,1]), pollutant)
-
       hour <- rep(seq(0: (dim(arra)[3]-1) ),
                   times = dim(arra)[4],
                   each=dim(arra)[1])
-
       df$hour <- hour
       day <- c(rep("Monday", dim(arra)[1]*dim(arra)[3]),
                rep("Tuesday", dim(arra)[1]*dim(arra)[3]),
@@ -130,6 +122,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
                rep("Sunday", dim(arra)[1]*dim(arra)[3]))
       df$day <- day
       df[,1] <- seq(1,dim(arra)[1])
+      df$pollutant <- as.Emissions(df$pollutant)
       return(df)
     } else if (by == "streets_wide") {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
@@ -137,15 +130,10 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
           rowSums(arra[,,i,j], na.rm = T)
         }))
       }))
-
       m <- matrix(x, nrow=dim(arra)[1], ncol=dim(arra)[3]*dim(arra)[4])
-
+      df <- as.Emissions(m)
       nombres <- lapply(1:dim(m)[2], function(i){paste0("h",i)})
-
-      df <- as.data.frame(m)
-
       names(df) <- nombres
-
       return(df)
     }
 }

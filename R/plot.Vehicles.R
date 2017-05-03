@@ -18,15 +18,15 @@
 #' @return Plot vehicles class
 #' @export
 #' @examples \dontrun{
+#' # Do not run
 #' data(net)
 #' lt <- as.Vehicles(net$hdv)
 #' class(lt)
 #' plot(lt)
-#' #with data.frames
 #' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
 #' plot(1:50,LT_B5[30,])
 #' plot(LT_B5)
-#' plot(LT_B5, by = "col", "mean = T)
+#' plot(LT_B5, by = "col", mean = T)
 #' plot(LT_B5, by="streets")
 #' plot(LT_B5, by="streets", mean=T)
 #' }

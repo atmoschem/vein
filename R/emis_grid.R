@@ -19,8 +19,6 @@
 #' #do not run
 #' data(net)
 #' net@data$POL <- rnorm(n = nrow(net@data), mean = 1000, sd = 100)
-#' net$highway <- NULL
-#' net$lkm <-  gLength(spTransform(net,CRS("+init=epsg:29183")),byid = T)/1000
 #' grid <- make_grid(net, width = 0.5/102.47, height = 0.5/102.47) #500 mts
 #' gPOL <- emis_grid(spobj = net, g = grid, pol = "POL", sr = "+init=epsg:29183")
 #' spplot(gPOL, "POL", scales=list(draw=T),

@@ -58,82 +58,80 @@
 #' df <- speciate(pm, veh="PC", fuel="G", eu="I")
 #' }
 speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE) {
-
-  if (spec=="bcom") {
+ if ( inherits(x, "data.frame") ) {
+   x <- as.data.frame(x)
+ } else if ( inherits(x, "numeric") ) {
+   x <- as.numeric(x)
+ } else if (spec=="bcom") {
   bcom <- sysdata[[4]]
   df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-  dfb <- data.frame(BC = x*df$BC/100,
-                    OM = (df$OM/100)*(x*df$BC/100))
+  dfb <- as.Emissions(data.frame(BC = x*df$BC/100,
+                    OM = (df$OM/100)*(x*df$BC/100)))
   if (show == TRUE) {print(df) } else if (list == TRUE){
     dfb <- as.list(dfb) }
 
   } else if (spec=="tyre") {
     df <- data.frame(PM10 = 0.6, PM2.5 = 0.42,PM1 = 0.06,
                       PM0.1 = 0.048)
-    dfb <- data.frame(PM10 = x*0.6, PM2.5 = x*0.42,PM1 = x*0.06,
-                      PM0.1 = x*0.048)
+    dfb <- as.Emissions(data.frame(PM10 = x*0.6, PM2.5 = x*0.42,PM1 = x*0.06,
+                      PM0.1 = x*0.048))
     if (show == TRUE) {print(df) } else if (list == TRUE){
       dfb <- as.list(dfb) }
-
     } else if (spec=="break") {
     df <- data.frame(PM10 = 0.98, PM2.5 = 0.39,PM1 = 0.1,
                      PM0.1 = 0.08)
-
-    dfb <- data.frame(PM10 = x*0.98, PM2.5 = x*0.39,PM1 = x*0.1,
-                      PM0.1 = x*0.08)
+    dfb <- as.Emissions(data.frame(PM10 = x*0.98, PM2.5 = x*0.39,PM1 = x*0.1,
+                      PM0.1 = x*0.08))
     if (show == TRUE) {print(df) } else if (list == TRUE){
       dfb <- as.list(dfb) }
-
     } else if (spec=="road") {
     df <- data.frame(PM10 = 0.5, PM2.5 = 0.27)
-
-    dfb <- data.frame(PM10 = x*0.5, PM2.5 = x*0.27)
+    dfb <- as.Emissions(data.frame(PM10 = x*0.5, PM2.5 = x*0.27))
     if (show == TRUE) {print(df) } else if (list == TRUE){
       dfb <- as.list(dfb) }
-
     } else if (spec=="iag") {
     iag <- sysdata[[6]]
     df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
-    dfb <- data.frame(e_eth = (x/100)*df$e_eth,
-                      e_hc3 = (x/100)*df$e_hc3,
-                      e_hc5 = (x/100)*df$e_hc5,
-                      e_hc8 = (x/100)*df$e_hc8,
-                      e_ol2 = (x/100)*df$e_ol2,
-                      e_olt = (x/100)*df$e_olt,
-                      e_oli = (x/100)*df$e_oli,
-                      e_iso = (x/100)*df$e_iso,
-                      e_tol = (x/100)*df$e_tol,
-                      e_xyl = (x/100)*df$e_xyl,
-                      e_ket = (x/100)*df$e_ket,
-                      e_ch3oh = (x/100)*df$e_ch3oh,
-                      e_c2h5oh = (x/100)*df$e_c2h5oh,
-                      e_hcho = (x/100)*df$e_hcho,
-                      e_ald = (x/100)*df$e_ald)
+    dfb <- data.frame(e_eth = (x/100)*df$e_eth*ud_units$mol/ud_units$h,
+                      e_hc3 = (x/100)*df$e_hc3*ud_units$mol/ud_units$h,
+                      e_hc5 = (x/100)*df$e_hc5*ud_units$mol/ud_units$h,
+                      e_hc8 = (x/100)*df$e_hc8*ud_units$mol/ud_units$h,
+                      e_ol2 = (x/100)*df$e_ol2*ud_units$mol/ud_units$h,
+                      e_olt = (x/100)*df$e_olt*ud_units$mol/ud_units$h,
+                      e_oli = (x/100)*df$e_oli*ud_units$mol/ud_units$h,
+                      e_iso = (x/100)*df$e_iso*ud_units$mol/ud_units$h,
+                      e_tol = (x/100)*df$e_tol*ud_units$mol/ud_units$h,
+                      e_xyl = (x/100)*df$e_xyl*ud_units$mol/ud_units$h,
+                      e_ket = (x/100)*df$e_ket*ud_units$mol/ud_units$h,
+                      e_ch3oh = (x/100)*df$e_ch3oh*ud_units$mol/ud_units$h,
+                      e_c2h5oh = (x/100)*df$e_c2h5oh*ud_units$mol/ud_units$h,
+                      e_hcho = (x/100)*df$e_hcho*ud_units$mol/ud_units$h,
+                      e_ald = (x/100)*df$e_ald*ud_units$mol/ud_units$h)
 
     if (show == TRUE) {
       print(df)
       } else if (list == TRUE){
-      dfb <- list(e_eth = (x/100)*df$e_eth,
-                  e_hc3 = (x/100)*df$e_hc3,
-                  e_hc5 = (x/100)*df$e_hc5,
-                  e_hc8 = (x/100)*df$e_hc8,
-                  e_ol2 = (x/100)*df$e_ol2,
-                  e_olt = (x/100)*df$e_olt,
-                  e_oli = (x/100)*df$e_oli,
-                  e_iso = (x/100)*df$e_iso,
-                  e_tol = (x/100)*df$e_tol,
-                  e_xyl = (x/100)*df$e_xyl,
-                  e_ket = (x/100)*df$e_ket,
-                  e_ch3oh = (x/100)*df$e_ch3oh,
-                  e_c2h5oh = (x/100)*df$e_c2h5oh,
-                  e_hcho = (x/100)*df$e_hcho,
-                  e_ald = (x/100)*df$e_ald)
+      dfb <- list(e_eth = (x/100)*df$e_eth*ud_units$mol/ud_units$h,
+                  e_hc3 = (x/100)*df$e_hc3*ud_units$mol/ud_units$h,
+                  e_hc5 = (x/100)*df$e_hc5*ud_units$mol/ud_units$h,
+                  e_hc8 = (x/100)*df$e_hc8*ud_units$mol/ud_units$h,
+                  e_ol2 = (x/100)*df$e_ol2*ud_units$mol/ud_units$h,
+                  e_olt = (x/100)*df$e_olt*ud_units$mol/ud_units$h,
+                  e_oli = (x/100)*df$e_oli*ud_units$mol/ud_units$h,
+                  e_iso = (x/100)*df$e_iso*ud_units$mol/ud_units$h,
+                  e_tol = (x/100)*df$e_tol*ud_units$mol/ud_units$h,
+                  e_xyl = (x/100)*df$e_xyl*ud_units$mol/ud_units$h,
+                  e_ket = (x/100)*df$e_ket*ud_units$mol/ud_units$h,
+                  e_ch3oh = (x/100)*df$e_ch3oh*ud_units$mol/ud_units$h,
+                  e_c2h5oh = (x/100)*df$e_c2h5oh*ud_units$mol/ud_units$h,
+                  e_hcho = (x/100)*df$e_hcho*ud_units$mol/ud_units$h,
+                  e_ald = (x/100)*df$e_ald*ud_units$mol/ud_units$h)
       }
     } else if (spec=="nox") {
       bcom <- sysdata[[7]]
       df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-      dfb <- data.frame(NO2 = x*df$NO2,
-                        NO =  x*df$NO)
+      dfb <- as.Emissions(data.frame(NO2 = x*df$NO2,
+                        NO =  x*df$NO))
       if (show == TRUE) {print(df) } else if (list == TRUE){
         dfb <- as.list(dfb)
         }

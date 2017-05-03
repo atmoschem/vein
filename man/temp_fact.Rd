@@ -25,6 +25,6 @@ at each link to every hour
 data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
-plot(colSums(pc_week))
+plot(pc_week)
 }
 }

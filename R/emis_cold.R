@@ -30,6 +30,8 @@
 #' }
 emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
                        hour = 1, day = 1, array = F) {
+  veh <- as.numeric(veh)
+  lkm <- as.numeric(lkm)
   if(array == F){
     lista <- lapply(1:day,function(j){
       lapply(1:hour,function(i){
@@ -40,7 +42,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
           })
       })
     })
-    return(lista)
+    return(as.Emissions(lista))
   } else {
   d <-  simplify2array(
     lapply(1:day,function(j){
@@ -57,7 +59,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
         )
       })
     )
-  return(d)
+  return(as.Emissions(d))
   }
 }
 

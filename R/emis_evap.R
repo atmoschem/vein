@@ -57,6 +57,7 @@ emis_evap <- function(veh, name, size, fuel, aged,
   if (missing(veh) | is.null(veh)) {
     stop (print("Missing vehicles"))
   } else {
+    veh <- as.numeric(veh)
   df <- data.frame(name = rep(name, max(aged)*4*3),
                    size = rep(size, max(aged)*4*3),
                    age = rep(aged, 4*3),

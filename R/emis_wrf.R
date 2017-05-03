@@ -30,41 +30,28 @@ emis_wrf <- function(sdf,nr, dmyhm, tz, utc, islist){
     stop("The argument 'nr' must be positive")
   } else if (islist==FALSE) {
     dft <- as.data.frame(coordinates(sdf))
-
     dft$id <- 1:nrow(dft)
-
     dft <- do.call("rbind", replicate(ncol(sdf), dft, simplify = FALSE))
-
     dft$pol <-  unlist(lapply(1:(ncol(sdf)),function(i) {
       as.numeric(sdf@data[, i])
       })
       )
     names(dft) <- c("long", "lat", "id", "pollutant")
-
     dft <- do.call("rbind", replicate(nr, dft, simplify = FALSE))
-
     tzz <- ifelse(utc!=0,(-utc)*3600, 0)
-
     time_lt <- as.POSIXct(x = dmyhm, format="%d-%m-%Y %H:%M", tz=tz)
-
     dft$time_lt = rep(seq.POSIXt(from = time_lt,
                                  by = "1 hour",
                                  length.out = ncol(sdf)*nr),
                       each=nrow(sdf))
-
     dft$time_utc = dft$time_lt + tzz
-
   } else if (class(sdf)!="list" & islist==TRUE) {
-
     stop("The argument 'sdf' must be a list")
-
     } else if (class(sdf)=="list" & islist==TRUE) {
     dft <- as.data.frame(coordinates(sdf[[1]]))
     dft$id <- 1:nrow(sdf[[1]])
-
     dft <- do.call("rbind", replicate(ncol(sdf[[1]]),
                                       dft, simplify = FALSE))
-
     dft <- cbind(dft,
                  as.data.frame(
                    do.call("cbind",
@@ -80,21 +67,14 @@ emis_wrf <- function(sdf,nr, dmyhm, tz, utc, islist){
                  )
 
     names(dft) <- c("long", "lat", "id", names(sdf))
-
     dft <- do.call("rbind", replicate(nr, dft, simplify = FALSE))
-
     tzz <- ifelse(utc!=0,(-utc)*3600, 0)
-
     time_lt <- as.POSIXct(x = dmyhm, format="%d-%m-%Y %H:%M", tz=tz)
-
     dft$time_lt = rep(seq.POSIXt(from = time_lt,
                                  by = "1 hour",
                                  length.out = ncol(sdf[[1]])*nr),
                       each=nrow(sdf[[1]]))
     dft$time_utc = dft$time_lt + tzz
-
   }
-
-
   return(dft)
 }

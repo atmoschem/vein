@@ -31,7 +31,7 @@
 #'                        W = W)
 #' }
 emis_paved <- function(veh, lkm, k, sL1, sL2, sL3, sL4, W) {
-  warning("Estimation of dry hours only, aggregation should include rainy hours")
+  message("Estimation of dry hours only, aggregation should include rainy hours")
   if (class(veh)!="array" | class(W)!="array") {
     stop("class of veh or W should be array")
   }

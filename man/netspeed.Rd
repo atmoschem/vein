@@ -4,7 +4,8 @@
 \alias{netspeed}
 \title{Calculate speeds of traffic network}
 \usage{
-netspeed(q, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, isList = FALSE)
+netspeed(q, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, isList = FALSE,
+  dist = "km", time = "h")
 }
 \arguments{
 \item{q}{Data-frame of traffic flow to each hour (veh/h)}
@@ -21,10 +22,10 @@ netspeed(q, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, isList = FALSE)
 
 \item{beta}{Parameter of BPR curves}
 
-\item{isList}{Boolean to specify type of return, list or data-frame}
+\item{isList}{Logical to specify type of return, list or data-frame}
 }
 \value{
-dataframe of speeds
+dataframe or list of speeds with units
 }
 \description{
 Creates a dataframe of speeds fir diferent hours and each link based on

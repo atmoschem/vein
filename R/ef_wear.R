@@ -51,5 +51,5 @@ ef_wear <- function (wear, type, pol = "TSP", speed, load = 0.5, axle=2) {
           ifelse(pol=="PM0.1", 0.27,"pol")))))
   }
   efw <- ef*f*sv
-  return(efw)
+  return(as.EmissionsFactors(efw))
 }
