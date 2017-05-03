@@ -27,5 +27,6 @@ my_age <- function (x, y, name,  k = 1){
                   round(sum(seq(1,length(y))*base::colSums(df)/sum(df),na.rm = T), 2),
                   sep=" "))
   }
-  return(df*k)
+  df <- as.Vehicles(df*k)
+  return(df)
 }

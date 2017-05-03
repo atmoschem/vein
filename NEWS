@@ -1,3 +1,7 @@
+vein v0.2.0-0 (Release date: 2017-05-03)
+==============
+* Adds several S3 classes and methods
+
 vein v0.1.2-3 (Release date: 2017-04-22)
 ==============
 * Adds demo. Takes out vignettes. Adds README

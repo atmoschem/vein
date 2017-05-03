@@ -1,11 +1,9 @@
 #' Generic function of class "Vehicles"
 #'
-#' @description Returns amount of vehicles at each age
+#' @description Returns object with class "Vehicles"
 #'
-#' @return Define vehicle classes inhetis of data.frame
+#' @return Construtor of objects with class "Vehicles"
 #' @export
-#' @examples \dontrun{
-#' }
 Vehicles <- function(veh, ...) {
   UseMethod("Vehicles", veh)
 }

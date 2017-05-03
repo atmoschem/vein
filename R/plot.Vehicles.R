@@ -4,13 +4,20 @@
 #' with columns as type of vehicles and rows as streets. Therefore the plot
 #' seeks to inform the total number by type of vehicles
 #'
-#' @return Define vehicle classes inhetis of data.frame
+#' @return Plot vehicles class
 #' @export
 #' @examples \dontrun{
 #' data(net)
 #' lt <- as.Vehicles(net$hdv)
 #' class(lt)
 #' plot(lt)
+#' #with data.frames
+#' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
+#' plot(1:50,LT_B5[30,])
+#' plot(LT_B5)
+#' plot(LT_B5, by = "col", "mean = T)
+#' plot(LT_B5, by="streets")
+#' plot(LT_B5, by="streets", mean=T)
 #' }
 plot.Vehicles <- function(veh, by = "col", mean = TRUE, default = FALSE, ...) {
   if (default == TRUE) {
@@ -42,10 +49,3 @@ plot.Vehicles <- function(veh, by = "col", mean = TRUE, default = FALSE, ...) {
     # abline(h = quveh)
   }
 }
-##example
-plot(LightTrucks,mean=F)
-plot(LightTrucks, by="col", mean=T)
-text(x = 21, y = 100,"Average =  17.12")
-plot(LightTrucks, default = T)
-plot(LightTrucks, by="streets", mean=F)
-plot(LightTrucks, by="streets", mean=T)

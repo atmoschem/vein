@@ -68,6 +68,6 @@ age_hdv <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
   }
-  class(df) <- c("Vehicles", class(df))
-  return(df*k)
+  df <- as.Vehicles(df*k)
+  return(df)
 }
