@@ -41,9 +41,12 @@
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile, hour = 24, day = 7, array = F)
 #' class(E_CO)
-#' E_COl <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
-#'               profile = pc_profile, hour = 24, day = 7, array = F)
-#' class(E_COl)
+#' emi <- as.Emissions(E_CO[ , , 1, 1])
+#' class(emi)
+#' summary(emi)
+#' summary(emi, by="streets")
+#' summary(emi, by="all")
+#' summary(emi, by="default")
 #' }
 as.Emissions <- function(e, mass = "g", time = "h", ...) {
   if ( is.matrix(e) ) {
