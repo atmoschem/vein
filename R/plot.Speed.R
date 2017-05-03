@@ -19,6 +19,9 @@
 #' @export
 #' @examples \dontrun{
 #' data(net)
+#' data(pc_profile)
+#' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' class(pcw)
 #' df <- netspeed(pcw, net$ps,net$ffs, net$capacity, net$lkm, alpha = 1,isList=F)
 #' class(df)
 #' plot(df$S1)

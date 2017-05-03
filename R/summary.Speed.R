@@ -16,34 +16,29 @@
 #' @export
 #' @examples \dontrun{
 #' data(net)
-#' lt <- as.Vehicles(net$hdv)
-#' class(lt)
-#' plot(lt)
-#' #with data.frames
-#' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
-#' summary(LT_B5, by="age")
-#' summary(LT_B5, by="streets")
-#' summary(LT_B5, by="all")
-#' summary(LT_B5, by="default")
+#' data(pc_profile)
+#' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' class(pcw)
+#' df <- netspeed(pcw, net$ps,net$ffs, net$capacity, net$lkm, alpha = 1,isList=F)
+#' class(df)
+#' summary(df, by="age")
+#' summary(df, by="streets")
+#' summary(df, by="all")
+#' summary(df, by="default")
 #' }
-summary.Vehicles <- function(veh, by = "col", ...) {
+summary.Speed <- function(spd, by = "col", ...) {
   if(by =="col") {
-    avage <- sum(seq(1,ncol(veh))*colSums(veh)/sum(veh))
-    sdage <- sqrt(Hmisc::wtd.var(x = 1:ncol(veh), weights = colSums(veh)))
-    cat("Vehicles by columns in study area = \n")
-    print(summary(colSums(veh), ...))#
-    cat("\nAverage = ", round(avage,2))#,"  sd = ",round(sdage,2),"\n\n")
+    cat("Mean Speeds by column in study area = \n")
+    print(summary(colMeans(spd), ...))#
   } else if (by=="streets") {
-    summary(rowSums(veh), ...)
-    avveh <- mean(rowSums(veh), na.rm=T)
-    cat("Vehicles by street in study area = \n")
-    print(summary(rowSums(veh)))
-    cat("\nAverage = ", round(avveh,2))#,"  sd = ",round(sdveh,2),"\n\n")
+    summary(rowMeans(spd), ...)
+    cat("Mean speeds by street in study area = \n")
+    print(summary(rowMeans(spd)))
   } else if (by == "all") {
-    cat("Vehicles by age and street in study area = \n")
-    print(summary(unlist(veh), ...))
+    cat("Speeds by columns and street in study area = \n")
+    print(summary(unlist(spd), ...))
   } else if (by == "default") {
     cat("Summary for each type of vehicle by street = \n")
-    print(summary.data.frame(veh), ...)
+    print(summary.data.frame(spd), ...)
   }
 }

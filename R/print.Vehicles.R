@@ -3,10 +3,9 @@
 #' @description A simple method for printing objects with class "Vehicles".
 #'
 #'
-#' @param q traffic data per each link
-#' @param pro expansion factors data-frames
-#' @return Print method
+#' @param veh Objecto with class "Vehicles"
 #' @param all when T call method print.data.frame \code{\link{print.data.frame}}.
+#' @return Print method
 #' When F applies a  default print to each column
 #' @export
 #' @examples \dontrun{

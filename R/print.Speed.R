@@ -3,15 +3,17 @@
 #' @description A simple method for printing objects with class "Speed".
 #'
 #'
-#' @param q traffic data per each link
-#' @param pro expansion factors data-frames
-#' @return Print method
+#' @param spd Object with class "Speed"
 #' @param all when T call method print.data.frame \code{\link{print.data.frame}}.
 #' When F applies a  default print to each column
+#' @return Print method
 #' @export
 #' @examples \dontrun{
 #' # Do not run
 #' data(net)
+#' data(pc_profile)
+#' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' class(pcw)
 #' df <- netspeed(pcw, net$ps,net$ffs, net$capacity, net$lkm, alpha = 1,isList=F)
 #' class(df)
 #' df
