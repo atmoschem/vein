@@ -14,7 +14,7 @@ PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
           84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
 veh <- data.frame(PC_G = PC_G)
-pc1 <- my_age(x = net$ldv, y = veh$PC_G, name = "PC")
+pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 pc2 <- age_ldv(x = net$ldv,name = "PC",agemax = 41)
 pc3 <- age_ldv(x = net$ldv,name = "PC",b=-0.14,agemax = 41)
 
