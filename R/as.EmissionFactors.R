@@ -7,12 +7,15 @@
 #' this function returns a dataframe. When then object is a list with numerics
 #' or a list with functions it returns an "EmissionFactorsList".
 #'
-#' @param lfx Logical value to determine if the returning object should be
+#' @param ef Object with class "EmissionFactors"
+#' @param lfx Logical value to determine if the returning object will be
 #' a list of functions or not. Each function is dependent on the speed.
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param distance Character to determine the distance unit. Default is "km"
-#' @return Objects of class "EmissionFactors" or "EmissionFactorsList"
+#' @return Objects of class "EmissionFactors", "EmissionFactorsList" or "units"
 #' @export
+#' @note If the class ob the object is functions, as.EmissionFactors won't
+#' append another class
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)

@@ -5,6 +5,7 @@
 #' seeks to inform the total number by type of vehicles. This functions
 #' plot the mean speed and the standard deviation.
 #'
+#' @param spd Object of class "Speed"
 #' @param by Character that determines the type of plot. It accept the values:
 #' "col", "streets" and "default".
 #' When by is "col" it is shown a plot of the mean of the columns

@@ -6,6 +6,7 @@
 #' the information of vehicles in a helpful way.
 #'
 #' @return Summary for vehicle classes
+#' @param spd Object of class Speed
 #' @param by This parameter allows 4 values: "col", "streets", "all" and
 #' "default" "col" returns a summary of the sum of the columns
 #' via \code{\link{colSums}}, "streets" summary of the sum of the streets

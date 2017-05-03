@@ -4,6 +4,7 @@
 #' with columns as type of vehicles and rows as streets. Therefore the plot
 #' seeks to inform the total number by type of vehicles
 #'
+#' @param veh An object with class "Vehicles"
 #' @param by Character that determines the type of plot. It accept the values:
 #' "col", "streets" and "default".
 #' When by is "col" it is shown a plot of the sum of the columns

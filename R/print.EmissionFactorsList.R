@@ -1,11 +1,17 @@
-#' Printing class "EmissionFactors"
+#' Printing class "EmissionFactorsList"
 #'
 #' @description A simple method for printing objects with class
-#' "EmissionFactors".
+#' "EmissionFactorsList".
 #'
 #' @param ef Object with class "EmissionFactors"
-#' @param all when T call method print.data.frame \code{\link{print.data.frame}}.
-#' When F applies a  default print to each column
+#' @param default when T call method print.listof \code{\link{print.listof}}.
+#' When F applies returns messages with type of nested lists. In vein it is
+#' assumed that "EmissionFactorsList" are list of functions. The number
+#' of elements in the list is the number of function that apply to a specific
+#' type of vehicle. For example, an "EmissionFactorsList" with 30 functions
+#' applies to a "Vehicles" data.frame with 30 categories. The function
+#' \code{\link{emis}} relates both type of objects.
+#' @seealso \code{\link{emis}}
 #' @return Print method
 #' @export
 #' @examples \dontrun{
@@ -14,10 +20,9 @@
 #' names(fe2015)
 #' class(fe2015)
 #' df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
-#' ef1 <- as.EmissionFactors(df)
-#' print(ef1)
-#' print(ef1, all = F)
-
+#' ef2 <- as.EmissionFactors(df, lfx = T)
+#' ef2
+#' ef2[[1]]
 #' }
 print.EmissionFactorsList <- function(ef, default=F,  ...) {
   if ( default == TRUE ) {

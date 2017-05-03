@@ -6,7 +6,8 @@
 #'  This function returns a dataframe with units for speed. When this function
 #'  is applied to numeric vectors it add class "units".
 #'
-#' @return Constructor for class "Speed". Allows specification of units.
+#' @return Constructor for class "Speed" or "units"
+#' @param spd Object with class "Speed"
 #' @param distance Character specifying the units for distance. Default is "km"
 #' @param time Character specifying the units for time Default is "h"
 #' @seealso \code{\link{units}}

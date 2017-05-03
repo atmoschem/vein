@@ -5,7 +5,8 @@
 #'  and "numeric". If the object is a matrix it is converted to data.frame.
 #'  If the object is "numeric" it is converted to class "units".
 #'
-#' @return Define vehicle classes inhetis of data.frame
+#' @param veh Object with class "Vehicles"
+#' @return Objects of class "Vehicles" or "units"
 #' @export
 #' @examples \dontrun{
 #' data(net)
