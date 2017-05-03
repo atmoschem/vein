@@ -10,10 +10,10 @@
 #' @param lkm Distance of link (km)
 #' @param alpha Parameter of BPR curves
 #' @param beta Parameter of BPR curves
-#' @param isList Boolean to specify type of return, list or data-frame
+#' @param isList Logical to specify type of return, list or data-frame
 #' @import sp
 #' @import raster
-#' @return dataframe of speeds
+#' @return dataframe or list of speeds with units
 #' @export
 #' @examples \dontrun{
 #' # Do not run
@@ -22,25 +22,38 @@
 #' qq <- as.matrix(net$ldv+net$hdv) %*% matrix(unlist(pc_profile), nrow=1)
 #' df <- netspeed(qq, net$ps, net$ffs, net$capacity, net$lkm)
 #' }
-netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE){
+netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
+                      dist = "km", time="h"){
   if(missing(q) | is.null(q)){
     stop(print("No vehicles"))
+  q <- as.data.frame(q)
+  for (i  in 1:ncol(q) ) {
+    q[,i] <- as.numeric(q[,i])
+  }
+  ps <- as.numeric(ps)
+  ffs <- as.numeric(ffs)
+  cap <- as.numeric(cap)
+  lkm <- as.numeric(lkm)
   } else if (isList==FALSE){
     dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
-    lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
+      lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
     }))))
+    dfv <- as.Speed(dfv, distance = dist, time = time)
     # dfv[,8] <- ps
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
+    dfv <- as.Speed(dfv)
     return(dfv)
-   }else if (isList==TRUE){
-     dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
-       lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
-     }))))
-     # dfv[,8] <- ps
-     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
-     ldfv <- lapply(0:(ncol(dfv)/24-1),function(i) {
-       as.list(dfv[,(1:24)+i*24])
-     })
-     return(ldfv)
-   }
+  }else if (isList==TRUE){
+    dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
+      lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
+    }))))
+    # dfv[,8] <- ps
+    dfv <- as.Speed(dfv, distance = dist, time = time)
+    names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
+    dfv <- as.Speed(dfv)
+    ldfv <- lapply(0:(ncol(dfv)/24-1),function(i) {
+      as.list(dfv[,(1:24)+i*24])
+    })
+    return(ldfv)
+  }
 }

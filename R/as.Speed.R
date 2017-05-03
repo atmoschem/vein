@@ -3,16 +3,19 @@
 #' @description Returns a tranformed object with class "Speed" and units
 #'  km/h. This functions includes two arguments, distance and time. Therefore,
 #'  it is posibel to change the units of the speed to "m" to "s" for example.
+#'  This function returns a dataframe with units for speed. When this function
+#'  is applied to numeric vectors it add class "units".
 #'
 #' @return Constructor for class "Speed". Allows specification of units.
-#' @param distance
-#' @param time
+#' @param distance Character specifying the units for distance. Default is "km"
+#' @param time Character specifying the units for time Default is "h"
+#' @seealso \code{\link{units}}
 #' @export
 #' @examples \dontrun{
 #' data(net)
-#' lt <- as.Vehicles(net$hdv)
-#' class(lt)
-#' plot(lt)
+#' speed <- as.Speed(net$ps)
+#' class(speed)
+#' plot(speed)
 #' }
 as.Speed <- function(spd, distance = "km", time = "h", ...) {
   if  (is.matrix(spd)) {

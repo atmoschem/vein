@@ -1,6 +1,6 @@
-#' Printing class "Vehicles"
+#' Printing class "Speed"
 #'
-#' @description A simple method for printing objects with class "Vehicles".
+#' @description A simple method for printing objects with class "Speed".
 #'
 #'
 #' @param q traffic data per each link
@@ -12,14 +12,14 @@
 #' @examples \dontrun{
 #' # Do not run
 #' data(net)
-#' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
-#' LT_B5
+#' df <- netspeed(pcw, net$ps,net$ffs, net$capacity, net$lkm, alpha = 1,isList=F)
+#' class(df)
+#' df
 #' }
-print.Vehicles <- function(veh, all=TRUE,  ...) {
+print.Speed <- function(spd, all=TRUE,  ...) {
   if(all ==TRUE) {
-    print.data.frame(veh)
+    print.data.frame(spd)
   } else {
-    sapply(veh, print, zero.print=".")
+    sapply(spd, print, zero.print=".")
   }
 }
-
