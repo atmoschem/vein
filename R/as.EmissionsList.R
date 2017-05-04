@@ -8,18 +8,24 @@
 #' this function returns a dataframe. When then object is a list with numerics,
 #' or a nested list, it returns an "EmissionsList".
 #'
+#' @param ... ignored
+#' @description Returns a tranformed object with class "Emissions",
+#' "Emissionslist" or "EmissionsArray". This functions has arguments to change
+#' the units. The type of objects supported are of classes "matrix",
+#' "data.frame", "list", "array" and "numeric". If the class of the object is "matrix"
+#' this function returns a dataframe. When then object is a list with numerics,
+#' or a nested list, it returns an "EmissionsList".
 #' @param e object with class "Emissions", "EmissionsList" or "EmissionsArray"
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param time Character to determine the time unit. Default is "h"
-#' @param ... ignored
+#' @rdname as.EmissionsList
 #' @return Objects of class "Emissions", "EmissionsList", "EmissionsArray" or
 #' "units"
-#' @rdname as.Emissions
-#' @name as.Emissions
-#' @title as.Emissions
+#' @name as.EmissionsList
+#' @title as.EmissionsList
 #' @export
-Emission <- function(e, ...) {
-  UseMethod("Emission", e)
+EmissionList <- function(e, ...) {
+  UseMethod("EmissionList", e)
 }
 #' @examples \dontrun{
 #' data(net)

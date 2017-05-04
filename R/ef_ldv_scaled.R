@@ -48,6 +48,6 @@ ef_ldv_scaled <- function(df,dfcol ,SDC  = 34.12, v, t, cc, f, eu, p) {
     k <- dfcol[i]/ funIN(SDC)
     funOUT <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,
                          eu = as.character(eu[i]), p = p, k = k,show.equation = FALSE)
-    return(as.EmissionsFactors(funOUT))
+    return(funOUT)
    })
 }

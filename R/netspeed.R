@@ -23,7 +23,7 @@
 #' df <- netspeed(qq, net$ps, net$ffs, net$capacity, net$lkm)
 #' }
 netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
-                      dist = "km", time="h"){
+                      distance = "km", time="h"){
   if(missing(q) | is.null(q)){
     stop(print("No vehicles"))
   q <- as.data.frame(q)
@@ -38,7 +38,7 @@ netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
     dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
       lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
     }))))
-    dfv <- as.Speed(dfv, distance = dist, time = time)
+    dfv <- as.Speed(dfv, distance = distance, time = time)
     # dfv[,8] <- ps
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
     dfv <- as.Speed(dfv)
@@ -48,7 +48,7 @@ netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
       lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
     }))))
     # dfv[,8] <- ps
-    dfv <- as.Speed(dfv, distance = dist, time = time)
+    dfv <- as.Speed(dfv, distance = distance, time = time)
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
     dfv <- as.Speed(dfv)
     ldfv <- lapply(0:(ncol(dfv)/24-1),function(i) {

@@ -5,7 +5,7 @@
 \title{Calculate speeds of traffic network}
 \usage{
 netspeed(q, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, isList = FALSE,
-  dist = "km", time = "h")
+  distance = "km", time = "h")
 }
 \arguments{
 \item{q}{Data-frame of traffic flow to each hour (veh/h)}
@@ -24,9 +24,9 @@ netspeed(q, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, isList = FALSE,
 
 \item{isList}{Logical to specify type of return, list or data-frame}
 
-\item{time}{Character specifying the units for time Default is "h"}
-
 \item{distance}{Character specifying the units for distance. Default is "km"}
+
+\item{time}{Character specifying the units for time Default is "h"}
 }
 \value{
 dataframe or list of speeds with units

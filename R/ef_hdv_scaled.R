@@ -38,6 +38,6 @@ ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr, l ,p) {
     k <- dfcol[i]/ funIN(SDC)
     funOUT <-  ef_hdv_speed(v = v, t = t, g = g,eu = as.character(eu[i]),
                             gr = gr, l = l, p = p, k = k, show.equation = FALSE)
-    return(as.EmissionsFactors(funOUT))
+    return(funOUT)
   })
 }

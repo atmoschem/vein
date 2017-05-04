@@ -10,6 +10,7 @@
 #' @param ... ignored
 #' @seealso \code{\link{summary}}
 #' @rdname summary.EmissionFactors
+#' @title  Summary for EmisionFactors
 #' @export
 EmissionsFactors <- function(ef, ...) {
   UseMethod("EmissionsFactors", ef)

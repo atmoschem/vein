@@ -42,7 +42,7 @@ plot.Vehicles <- function(veh, by = "col", mean = TRUE, ...) {
     graphics::plot(Veh, type="l")
   } else if (by=="col" && mean == TRUE){
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
-    units(avage) <- with(ud_units, 1/h)
+    units(avage) <- with(units::ud_units, 1/h)
     Veh <- as.Vehicles(colSums(veh))
     graphics::plot(Veh, type="l", main=paste(deparse(substitute(veh))), ...)
     graphics::abline(v = avage, col="red")

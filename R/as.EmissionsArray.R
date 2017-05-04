@@ -18,8 +18,8 @@
 #' @name as.Emissions
 #' @title as.Emissions
 #' @export
-Emission <- function(e, ...) {
-  UseMethod("Emission", e)
+EmissionArray <- function(e, ...) {
+  UseMethod("EmissionArray", e)
 }
 #' @examples \dontrun{
 #' data(net)

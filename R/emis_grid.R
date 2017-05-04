@@ -31,7 +31,7 @@ emis_grid <- function(spobj, g, sr, type="lines"){
     netg <- raster::intersect(spobj,g)
     netg$lkm2 <-  rgeos::gLength(sp::spTransform(netg,CRS(sr)),byid = T)/1000
     netg@data[,1:(ncol(netg@data)-3)] <-  netg@data[,1:(ncol(netg@data)-3)]*netg$lkm2/netg$lkm
-    dfm <- aggregate(cbind(netg@data[,1:(ncol(netg@data)-3)]), by=list(netg$id),
+    dfm <- stats::aggregate(cbind(netg@data[,1:(ncol(netg@data)-3)]), by=list(netg$id),
                      sum, na.rm=TRUE)
 
     colnames(dfm)[1] <- "id"

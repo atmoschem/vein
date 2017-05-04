@@ -17,6 +17,7 @@
 #' @param ... ignored
 #' @return Plot vehicles class
 #' @rdname plot.Emissions
+#' @name plot.Emissions
 #' @export
 Emissions <- function(e, ...) {
   UseMethod("Emissions", e)
@@ -60,7 +61,7 @@ plot.Emissions <- function(e, by = "col", mean = F, ...) {
     graphics::plot(Emissions, type="l")
   } else if ( by=="col" && mean == TRUE ){
     avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
-    units(avage) <- with(ud_units, g/h)
+    units(avage) <- with(units::ud_units, g/h)
     Emissions <- as.Emissions(colSums(e))
     graphics::plot(Emissions, type="l", main=paste(deparse(substitute(e))), ...)
     graphics::abline(v = avage, col="red")

@@ -9,6 +9,7 @@
 #' @param ... ignored
 #' @return Print method
 #' @rdname print.EmissionFactors
+#' @title  Print for EmisionFactors
 #' @export
 EmissionFactors <- function(ef, ...) {
   UseMethod("EmissionFactors", ef)

@@ -8,6 +8,7 @@
 #' @param ... ignored
 #' @return Print method
 #' @rdname print.Emissions
+#' @name print.Emissions
 #' @export
 Emissions <- function(e, ...) {
   UseMethod("Emissions", e)

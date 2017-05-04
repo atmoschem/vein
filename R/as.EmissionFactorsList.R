@@ -1,4 +1,4 @@
-#' Construction function for class "EmissionFactors" and "EmissionFactorsList"
+#' Construction function for class "EmissionFactorsList"
 #'
 #' @description Returns a tranformed object with class "EmissionFactors" and
 #' units g/km or "EmissionsFactorsList". This functions has arguments to change
@@ -6,20 +6,18 @@
 #' "data.frame", "list" and "numeric". If the class of the object is "matrix"
 #' this function returns a dataframe. When then object is a list with numerics
 #' or a list with functions it returns an "EmissionFactorsList".
-#' @title Constructor for EmissionFactors
 #' @param ef Object with class "EmissionFactors"
 #' @param lfx Logical value to determine if the returning object will be
 #' a list of functions or not. Each function is dependent on the speed.
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param distance Character to determine the distance unit. Default is "km"
+#' @rdname as.EmissionFactorsList
+#' @name as.EmissionFactorsList
+#' @title as.EmissionFactorsList
 #' @param ... ignored
-#' @return Objects of class "EmissionFactors", "EmissionFactorsList" or "units"
-#' @rdname as.EmissionFactors
-#' @name as.EmissionFactors
-#' @title as.EmissionFactors
 #' @export
-EmissionFactors <- function(ef, ...) {
-  UseMethod("EmissionFactors", ef)
+EmissionFactorsList <- function(ef, ...) {
+  UseMethod("EmissionFactorsList", ef)
 }
 #' @note If the class ob the object is functions, as.EmissionFactors won't
 #' append another class

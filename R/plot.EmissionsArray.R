@@ -8,7 +8,8 @@
 #' number of hours and number of days. This functions first performs an
 #' \code{\link{apply}} over the array
 #'
-#' @return Plot for class "EmissionsArray".
+#' @return Plot for class "EmissionsArray"
+#' @param e Object of class "EmissionsArray"
 #' @param by Character value. When by is "day" it returns a dataframe with
 #' columns mean, standard deviation (sd), min and max emissions based on hoyly
 #' total emissions and rows as days of the week. When by is "hour" it returns
@@ -19,6 +20,7 @@
 #' @param xlab xlab for the plot
 #' @seealso \code{\link{apply}}
 #' @rdname plot.EmissionsArray
+#' @name plot.EmissionsArray
 #' @export
 EmissionsArray <- function(e, ...) {
   UseMethod("EmissionsArray", e)

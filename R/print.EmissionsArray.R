@@ -8,6 +8,7 @@
 #' @param ... ignored
 #' @return Print method
 #' @rdname print.EmissionsArray
+#' @name print.EmissionsArray
 #' @export
 EmissionsArray <- function(e, ...) {
   UseMethod("EmissionsArray", e)
@@ -22,6 +23,6 @@ print.EmissionsArray <- function(e, default = F) {
     cat("This EmissionsArray has\n", dim(e)[1], "streets\n",
         dim(e)[2], "vehicle categories\n", dim(e)[3], "hours\n",
         dim(e)[4], "days\n")
-    print(head(e))
+    print(utils::head(e))
   }
 }

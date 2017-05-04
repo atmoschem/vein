@@ -11,6 +11,8 @@
 #' @param ... ignored
 #' @return Plot Speed class
 #' @rdname plot.EmissionFactors
+#' @name plot.EmissionFactors
+#' @title  Plot for EmisionFactors
 #' @export
 EmissionFactors <- function(ef, ...) {
   UseMethod("EmissionFactors", ef)
