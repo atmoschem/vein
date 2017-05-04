@@ -5,8 +5,13 @@
 #' @param e Object with class "Emissions"
 #' @param all when T call method print.data.frame \code{\link{print.data.frame}}.
 #' When F applies a  default print to each column
+#' @param ... ignored
 #' @return Print method
+#' @rdname print.Emissions
 #' @export
+Emissions <- function(e, ...) {
+  UseMethod("Emissions", e)
+}
 #' @examples \dontrun{
 #' # Do not run
 #' eco <- 2:15
@@ -15,7 +20,7 @@
 #' print(dfco)
 #' print(dfco, all = F)
 #' }
-print.Emissions <- function(e, all=TRUE,  ...) {
+print.Emissions <- function(e, all = TRUE) {
   if(all ==TRUE) {
     print.data.frame(e)
   } else {

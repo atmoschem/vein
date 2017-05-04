@@ -6,12 +6,17 @@
 #' @param e Object with class "EmissionsList"
 #' @param default when T call method print.listof
 #' \code{\link{print.listof}}. When F returns messages with list structure
+#' @param ... ignored
 #' @return Print method
+#' @rdname print.EmissionsList
 #' @export
+EmissionsList <- function(e, ...) {
+  UseMethod("EmissionsList", e)
+}
 #' @examples \dontrun{
 #' # Do not run
 #' }
-print.EmissionsList <- function(e, default=F,  ...) {
+print.EmissionsList <- function(e, default = F) {
   if ( default == TRUE ) {
     print.listof(e)
   } else if ( is.list(e) && is.numeric(e[[1]]) ){ #dont work

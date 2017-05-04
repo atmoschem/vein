@@ -5,12 +5,17 @@
 #' @param e Object with class "EmissionsArray"
 #' @param default when T call method print.default
 #' \code{\link{print.default}}. When F returns messages with array structure
+#' @param ... ignored
 #' @return Print method
+#' @rdname print.EmissionsArray
 #' @export
+EmissionsArray <- function(e, ...) {
+  UseMethod("EmissionsArray", e)
+}
 #' @examples \dontrun{
 #' # Do not run
 #' }
-print.EmissionsArray <- function(e, default=F,  ...) {
+print.EmissionsArray <- function(e, default = F) {
   if ( default == TRUE ) {
     print.default(e)
   } else if (is.array(e)) {

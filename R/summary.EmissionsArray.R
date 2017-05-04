@@ -16,8 +16,13 @@
 #' hourly mean, sd, min and max considering all day sof the week. When by is
 #' "col" it returns a data.frame with mean, sd, min and max hourly emissions
 #' considering each type of vehicle
+#' @param ... ignored
 #' @seealso \code{\link{apply}}
+#' @rdname summary.EmissionsArray
 #' @export
+EmissionsArray <- function(e, ...) {
+  UseMethod("EmissionsArray", e)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -48,7 +53,7 @@
 #' summary(as.Emissions(E_CO), by="hour")
 #' summary(as.Emissions(E_CO), by="col")
 #'}
-summary.EmissionsArray <- function(e, by = "day", ...) {
+summary.EmissionsArray <- function(e, by = "day") {
   if ( class(e) != "EmissionsArray" && !is.array(e) ) {
     stop("Not an EmissionsArray")
   } else if ( by == "day" ) {
@@ -56,7 +61,7 @@ summary.EmissionsArray <- function(e, by = "day", ...) {
     names(df) <- c("Mon", "Tue","Wed", "Thu", "Fri", "Sat", "Sun")
     # Total <- colSums(df)
     Mean <- colMeans(df)
-    SD <- unlist(lapply(df, sd))
+    SD <- unlist(lapply(df, stats::sd))
     Min <- unlist(lapply(df, min))
     Max <- unlist(lapply(df, max))
     dfx <- data.frame(Mean, SD, Min, Max)
@@ -67,7 +72,7 @@ summary.EmissionsArray <- function(e, by = "day", ...) {
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
     # Total <- rowSums(df)
     Mean <- colMeans(df)
-    SD <- unlist(lapply(df, sd))
+    SD <- unlist(lapply(df, stats::sd))
     Min <- unlist(lapply(df, min))
     Max <- unlist(lapply(df, max))
     dfx <- data.frame(Mean, SD, Min, Max)
@@ -75,9 +80,9 @@ summary.EmissionsArray <- function(e, by = "day", ...) {
     return(dfx)
   } else if ( by == "col") {
     df <- as.Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
-    names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("TOV",i)))
+    names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("col",i)))
     Mean <- colMeans(df)
-    SD <- unlist(lapply(df, sd))
+    SD <- unlist(lapply(df, stats::sd))
     Min <- unlist(lapply(df, min))
     Max <- unlist(lapply(df, max))
     dfx <- data.frame(Mean, SD, Min, Max)

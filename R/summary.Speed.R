@@ -14,7 +14,12 @@
 #' columns x street and "default" the default summary.data.frame via
 #' \code{\link{summary.data.frame}}
 #' @seealso \code{\link{summary}}
+#' @rdname summary.Speed
+#' @param ... ignored
 #' @export
+Speed <- function(spd, ...) {
+UseMethod("Speed", spd)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -27,19 +32,19 @@
 #' summary(df, by="all")
 #' summary(df, by="default")
 #' }
-summary.Speed <- function(spd, by = "col", ...) {
+summary.Speed <- function(spd, by = "col") {
   if(by =="col") {
     cat("Mean Speeds by column in study area = \n")
-    print(summary(colMeans(spd), ...))#
+    print(summary(colMeans(spd)))
   } else if (by=="streets") {
-    summary(rowMeans(spd), ...)
+    summary(rowMeans(spd))
     cat("Mean speeds by street in study area = \n")
     print(summary(rowMeans(spd)))
   } else if (by == "all") {
     cat("Speeds by columns and street in study area = \n")
-    print(summary(unlist(spd), ...))
+    print(summary(unlist(spd)))
   } else if (by == "default") {
     cat("Summary for each type of vehicle by street = \n")
-    print(summary.data.frame(spd), ...)
+    print(summary.data.frame(spd))
   }
 }

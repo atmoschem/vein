@@ -92,40 +92,40 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
     } else if (spec=="iag") {
     iag <- sysdata[[6]]
     df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
-    dfb <- data.frame(e_eth = (x/100)*df$e_eth*ud_units$mol/ud_units$h,
-                      e_hc3 = (x/100)*df$e_hc3*ud_units$mol/ud_units$h,
-                      e_hc5 = (x/100)*df$e_hc5*ud_units$mol/ud_units$h,
-                      e_hc8 = (x/100)*df$e_hc8*ud_units$mol/ud_units$h,
-                      e_ol2 = (x/100)*df$e_ol2*ud_units$mol/ud_units$h,
-                      e_olt = (x/100)*df$e_olt*ud_units$mol/ud_units$h,
-                      e_oli = (x/100)*df$e_oli*ud_units$mol/ud_units$h,
-                      e_iso = (x/100)*df$e_iso*ud_units$mol/ud_units$h,
-                      e_tol = (x/100)*df$e_tol*ud_units$mol/ud_units$h,
-                      e_xyl = (x/100)*df$e_xyl*ud_units$mol/ud_units$h,
-                      e_ket = (x/100)*df$e_ket*ud_units$mol/ud_units$h,
-                      e_ch3oh = (x/100)*df$e_ch3oh*ud_units$mol/ud_units$h,
-                      e_c2h5oh = (x/100)*df$e_c2h5oh*ud_units$mol/ud_units$h,
-                      e_hcho = (x/100)*df$e_hcho*ud_units$mol/ud_units$h,
-                      e_ald = (x/100)*df$e_ald*ud_units$mol/ud_units$h)
+    dfb <- data.frame(e_eth = (x/100)*df$e_eth*units::ud_units$mol/units::ud_units$h,
+                      e_hc3 = (x/100)*df$e_hc3*units::ud_units$mol/units::ud_units$h,
+                      e_hc5 = (x/100)*df$e_hc5*units::ud_units$mol/units::ud_units$h,
+                      e_hc8 = (x/100)*df$e_hc8*units::ud_units$mol/units::ud_units$h,
+                      e_ol2 = (x/100)*df$e_ol2*units::ud_units$mol/units::ud_units$h,
+                      e_olt = (x/100)*df$e_olt*units::ud_units$mol/units::ud_units$h,
+                      e_oli = (x/100)*df$e_oli*units::ud_units$mol/units::ud_units$h,
+                      e_iso = (x/100)*df$e_iso*units::ud_units$mol/units::ud_units$h,
+                      e_tol = (x/100)*df$e_tol*units::ud_units$mol/units::ud_units$h,
+                      e_xyl = (x/100)*df$e_xyl*units::ud_units$mol/units::ud_units$h,
+                      e_ket = (x/100)*df$e_ket*units::ud_units$mol/units::ud_units$h,
+                      e_ch3oh = (x/100)*df$e_ch3oh*units::ud_units$mol/units::ud_units$h,
+                      e_c2h5oh = (x/100)*df$e_c2h5oh*units::ud_units$mol/units::ud_units$h,
+                      e_hcho = (x/100)*df$e_hcho*units::ud_units$mol/units::ud_units$h,
+                      e_ald = (x/100)*df$e_ald*units::ud_units$mol/units::ud_units$h)
 
     if (show == TRUE) {
       print(df)
       } else if (list == TRUE){
-      dfb <- list(e_eth = (x/100)*df$e_eth*ud_units$mol/ud_units$h,
-                  e_hc3 = (x/100)*df$e_hc3*ud_units$mol/ud_units$h,
-                  e_hc5 = (x/100)*df$e_hc5*ud_units$mol/ud_units$h,
-                  e_hc8 = (x/100)*df$e_hc8*ud_units$mol/ud_units$h,
-                  e_ol2 = (x/100)*df$e_ol2*ud_units$mol/ud_units$h,
-                  e_olt = (x/100)*df$e_olt*ud_units$mol/ud_units$h,
-                  e_oli = (x/100)*df$e_oli*ud_units$mol/ud_units$h,
-                  e_iso = (x/100)*df$e_iso*ud_units$mol/ud_units$h,
-                  e_tol = (x/100)*df$e_tol*ud_units$mol/ud_units$h,
-                  e_xyl = (x/100)*df$e_xyl*ud_units$mol/ud_units$h,
-                  e_ket = (x/100)*df$e_ket*ud_units$mol/ud_units$h,
-                  e_ch3oh = (x/100)*df$e_ch3oh*ud_units$mol/ud_units$h,
-                  e_c2h5oh = (x/100)*df$e_c2h5oh*ud_units$mol/ud_units$h,
-                  e_hcho = (x/100)*df$e_hcho*ud_units$mol/ud_units$h,
-                  e_ald = (x/100)*df$e_ald*ud_units$mol/ud_units$h)
+      dfb <- list(e_eth = (x/100)*df$e_eth*units::ud_units$mol/units::ud_units$h,
+                  e_hc3 = (x/100)*df$e_hc3*units::ud_units$mol/units::ud_units$h,
+                  e_hc5 = (x/100)*df$e_hc5*units::ud_units$mol/units::ud_units$h,
+                  e_hc8 = (x/100)*df$e_hc8*units::ud_units$mol/units::ud_units$h,
+                  e_ol2 = (x/100)*df$e_ol2*units::ud_units$mol/units::ud_units$h,
+                  e_olt = (x/100)*df$e_olt*units::ud_units$mol/units::ud_units$h,
+                  e_oli = (x/100)*df$e_oli*units::ud_units$mol/units::ud_units$h,
+                  e_iso = (x/100)*df$e_iso*units::ud_units$mol/units::ud_units$h,
+                  e_tol = (x/100)*df$e_tol*units::ud_units$mol/units::ud_units$h,
+                  e_xyl = (x/100)*df$e_xyl*units::ud_units$mol/units::ud_units$h,
+                  e_ket = (x/100)*df$e_ket*units::ud_units$mol/units::ud_units$h,
+                  e_ch3oh = (x/100)*df$e_ch3oh*units::ud_units$mol/units::ud_units$h,
+                  e_c2h5oh = (x/100)*df$e_c2h5oh*units::ud_units$mol/units::ud_units$h,
+                  e_hcho = (x/100)*df$e_hcho*units::ud_units$mol/units::ud_units$h,
+                  e_ald = (x/100)*df$e_ald*units::ud_units$mol/units::ud_units$h)
       }
     } else if (spec=="nox") {
       bcom <- sysdata[[7]]

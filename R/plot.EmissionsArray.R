@@ -15,9 +15,14 @@
 #' hourly mean, sd, min and max considering all day sof the week. When by is
 #' "col" it returns a data.frame with mean, sd, min and max hourly emissions
 #' considering each type of vehicle
+#' @param ... ignored
 #' @param xlab xlab for the plot
 #' @seealso \code{\link{apply}}
+#' @rdname plot.EmissionsArray
 #' @export
+EmissionsArray <- function(e, ...) {
+  UseMethod("EmissionsArray", e)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -65,15 +70,14 @@ plot.EmissionsArray <- function(e, by = "day", xlab = "Index", ...) {
     title = "Emissions by column"
   }
   Mean <- colMeans(df)
-  SD <- unlist(lapply(df, sd))
+  SD <- unlist(lapply(df, stats::sd))
   Min <- unlist(lapply(df, min))
   Max <- unlist(lapply(df, max))
   dfx <- data.frame(Mean, SD, Min, Max)
-  plot(y = dfx$Mean, x = 1:nrow(dfx), ylim = c(min(dfx$Min), max(dfx$Max)),
-       col = "red", type = "l", xlab = xlab,
-       main = title)
-  lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
-  lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
-  points(dfx$Max, ylim = c(min(dfx$Min), max(dfx$Max)))
-  points(dfx$Min, ylim = c(min(dfx$Min), max(dfx$Max)))
+  graphics::plot(y = dfx$Mean, x = 1:nrow(dfx), ylim = c(min(dfx$Min), max(dfx$Max)),
+       col = "red", type = "l", xlab = xlab, ...)
+  graphics::lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
+  graphics::lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
+  graphics::points(dfx$Max, ylim = c(min(dfx$Min), max(dfx$Max)))
+  graphics::points(dfx$Min, ylim = c(min(dfx$Min), max(dfx$Max)))
 }

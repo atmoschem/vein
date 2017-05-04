@@ -14,9 +14,13 @@
 #' (See \code{\link{plot.default}}).
 #' @param mean a logical value. When mean is TRUE and by is "col" it adds
 #' the weighted mean with and when by is "streets" the mean.
-#'
+#' @param ... ignored
 #' @return Plot vehicles class
+#' @rdname plot.Emissions
 #' @export
+Emissions <- function(e, ...) {
+  UseMethod("Emissions", e)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -50,25 +54,25 @@
 #' }
 plot.Emissions <- function(e, by = "col", mean = F, ...) {
   if ( by == "default" ) {
-    plot.default(e, ...)
+    graphics::plot.default(e, ...)
   } else if ( by=="col" && mean == FALSE ){
     Emissions <- as.Emissions(colSums(e))
-    plot(Emissions, type="l")
+    graphics::plot(Emissions, type="l")
   } else if ( by=="col" && mean == TRUE ){
     avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
     units(avage) <- with(ud_units, g/h)
     Emissions <- as.Emissions(colSums(e))
-    plot(Emissions, type="l", main=paste(deparse(substitute(e))), ...)
-    abline(v = avage, col="red")
+    graphics::plot(Emissions, type="l", main=paste(deparse(substitute(e))), ...)
+    graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
   } else if (by=="streets" && mean == FALSE){
     Emissions <- as.Emissions(rowSums(e))
-    plot(Emissions, type="l", ...)
+    graphics::plot(Emissions, type="l", ...)
   } else if (by=="streets" && mean == TRUE){
     avveh <- mean(rowSums(e), na.rm=T)
     Emissions <- as.Emissions(rowSums(e))
-    plot(Emissions, type="l", main=paste(deparse(substitute(e))), ...)
-    abline(h =  avveh, col="red")
+    graphics::plot(Emissions, type="l", main=paste(deparse(substitute(e))), ...)
+    graphics::abline(h =  avveh, col="red")
     cat("\nAverage = ",round(avveh,2))
   }
 }

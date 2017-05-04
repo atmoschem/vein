@@ -15,9 +15,13 @@
 #' (See \code{\link{plot.default}}).
 #' @param mean a logical value. When mean is TRUE and by is "col" it adds
 #' the weighted mean with and when by is "streets" the mean.
-#'
+#' @param ... ignored
+#' @rdname plot.Speed
 #' @return Plot Speed class
 #' @export
+Speed <- function(spd, ...) {
+  UseMethod("Speed", spd)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -33,28 +37,28 @@
 plot.Speed <- function(spd, by = "col", mean = TRUE, dist = "km", time="h",
                        xlab = NULL, ...) {
   if ( by == "default" ) {
-    plot.default(spd, xlab = xlab, ...)
+    graphics::plot.default(spd, xlab = xlab, ...)
   } else if ( by == "col" && mean == FALSE ){
     Speed <- as.Speed(colMeans(spd, na.rm = T))
     plot(Speed, xlab = xlab, type = "l")
   } else if ( by == "col" && mean == TRUE ){
     Speed <- as.Speed(colMeans(spd), distance = dist, time=time)
-    SpeedSD <- as.Speed(unlist(lapply(spd,sd)))
+    SpeedSD <- as.Speed(unlist(lapply(spd,stats::sd)))
     smin <- Speed - SpeedSD
     smax <- Speed + SpeedSD
     avspd <- mean(Speed, na.rm=T)
-    plot(Speed, type = "l", main=paste(deparse(substitute(spd))),
+    graphics::plot(Speed, type = "l", main=paste(deparse(substitute(spd))),
          xlab = xlab, ylim=c(min(smin),max(smax)), ...)
-    abline(h = avspd, col="red")
-    lines(smin, ylim=c(min(smin),max(smax)), col="grey", ...)
-    lines(smax, ylim=c(min(smin),max(smax)), col="grey", ...)
+    graphics::abline(h = avspd, col="red")
+    graphics::lines(smin, ylim=c(min(smin),max(smax)), col="grey", ...)
+    graphics::lines(smax, ylim=c(min(smin),max(smax)), col="grey", ...)
   } else if ( by == "streets" && mean == FALSE ){
     Speed <- as.Speed(rowMeans(spd), distance = dist, time=time)
     plot(Speed, xlab = xlab, type="l", ...)
   } else if ( by=="streets" && mean == TRUE ){
     avveh <- mean(rowMeans(spd), na.rm=T)
     Speed <- as.Speed(rowMeans(spd), distance = dist, time=time)
-    plot(Speed,type="l", xlab = xlab, main=paste(deparse(substitute(spd))), ...)
-    abline(h =  avveh, col = "red")
+    graphics::plot(Speed,type="l", xlab = xlab, main=paste(deparse(substitute(spd))), ...)
+    graphics::abline(h =  avveh, col = "red")
   }
 }

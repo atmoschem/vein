@@ -8,10 +8,14 @@
 #'  veh must be an array in the total fleet at each street and dimensions
 #'  total fleet, hours and days
 #'
-#'
+#' @param ... ignored
 #' @param veh Object with class "Vehicles"
 #' @return Objects of class "Vehicles" or "units"
+#' @rdname as.Vehicles
 #' @export
+Vehicles <- function(veh, ...) {
+  UseMethod("Vehicles", veh)
+}
 #' @examples \dontrun{
 #' data(net)
 #' lt <- as.Vehicles(net$hdv)
@@ -22,18 +26,18 @@ as.Vehicles <- function(veh, ...) {
   if  ( is.matrix(veh) ) {
     veh <- as.data.frame(veh)
     for(i in 1:ncol(veh)){
-      units(veh[,i]) <- with(ud_units, 1/h)
+      units(veh[,i]) <- with(units::ud_units, 1/h)
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.data.frame(veh) ) {
     for(i in 1:ncol(veh)){
-      units(veh[,i]) <- with(ud_units, 1/h)
+      units(veh[,i]) <- with(units::ud_units, 1/h)
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if (is.array(veh) && length(dim(veh)) == 3 ) {
     class(veh) <- c("Vehicles",class(veh))
     } else if ( is.numeric(veh) ) {
-      units(veh) <- with(ud_units, 1/h)
+      units(veh) <- with(units::ud_units, 1/h)
       }
   return(veh)
 }

@@ -12,8 +12,13 @@
 #' applies to a "Vehicles" data.frame with 30 categories. The function
 #' \code{\link{emis}} relates both type of objects.
 #' @seealso \code{\link{emis}}
+#' @param ... ignored
 #' @return Print method
+#' @rdname print.EmissionFactorsList
 #' @export
+EmissionFactorsList <- function(ef, ...) {
+  UseMethod("EmissionFactorsList", ef)
+}
 #' @examples \dontrun{
 #' # Do not run
 #' data(fe2015)
@@ -24,7 +29,7 @@
 #' ef2
 #' ef2[[1]]
 #' }
-print.EmissionFactorsList <- function(ef, default=F,  ...) {
+print.EmissionFactorsList <- function(ef, default = F) {
   if ( default == TRUE ) {
     print.listof(ef)
   } else if ( is.function( ef[[1]] ) ){ #dont work

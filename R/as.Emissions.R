@@ -11,9 +11,26 @@
 #' @param e object with class "Emissions", "EmissionsList" or "EmissionsArray"
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param time Character to determine the time unit. Default is "h"
+#' @param ... ignored
 #' @return Objects of class "Emissions", "EmissionsList", "EmissionsArray" or
 #' "units"
+#' @rdname as.Emissions
 #' @export
+Emission <- function(e, ...) {
+  UseMethod("Emission", e)
+}
+#' @param ... ignored
+#' @rdname as.EmissionsList
+#' @export
+EmissionList <- function(e, ...) {
+  UseMethod("EmissionList", e)
+}
+#' @param ... ignored
+#' @rdname as.EmissionsArray
+#' @export
+EmissionArray <- function(e, ...) {
+  UseMethod("EmissionArray", e)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -52,24 +69,24 @@ as.Emissions <- function(e, mass = "g", time = "h", ...) {
   if ( is.matrix(e) ) {
     ex <- as.data.frame(e)
     for(i in 1:ncol(ex)){
-      ex[,i] <- ex[,i] * parse_unit(paste0(mass," ", time,"-1"))
+      ex[,i] <- ex[,i] * units::parse_unit(paste0(mass," ", time,"-1"))
     }
     class(ex) <- c("Emissions", class(ex))
   } else if (is.data.frame(e)) {
     for(i in 1:ncol(e)){
-      e[,i] <- e[,i] * parse_unit(paste0(mass," ", time,"-1"))
+      e[,i] <- e[,i] * units::parse_unit(paste0(mass," ", time,"-1"))
     }
     ex <- e
     class(ex) <- c("Emissions",class(e))
   } else if ( is.list(e) && is.numeric(e[[1]]) ){
     ex <-  lapply(1:length(e), function(i)  {
-      e[[i]] <- e[[i]] * parse_unit(paste0(mass," ", time, "-1"))
+      e[[i]] <- e[[i]] * units::parse_unit(paste0(mass," ", time, "-1"))
     })
     class(ex) <- c("EmissionsList",class(e))
   } else if ( is.list(e) && is.list(e[[1]]) && is.numeric(e[[1]][[1]]) ) {
     ex <-  lapply(1:length(e), function(i)  {
       lapply(1:length(e[[1]]), function(j)  {
-        e[[i]][[j]] <- e[[i]][[j]] * parse_unit(paste0(mass," ", time, "-1"))
+        e[[i]][[j]] <- e[[i]][[j]] * units::parse_unit(paste0(mass," ", time, "-1"))
       }) })
     class(ex) <- c("EmissionsList",class(e))
     class(ex[[1]]) <- c("EmissionsList",class(e))
@@ -78,7 +95,7 @@ as.Emissions <- function(e, mass = "g", time = "h", ...) {
     ex <-  lapply(1:length(e), function(i)  {
       lapply(1:length(e[[1]]), function(j) {
         lapply(1:length(e[[1]][[1]]), function(k) {
-          e[[i]][[j]][[k]] <- e[[i]][[j]][[k]] * parse_unit(paste0(mass," ", time, "-1"))
+          e[[i]][[j]][[k]] <- e[[i]][[j]][[k]] * units::parse_unit(paste0(mass," ", time, "-1"))
         }) }) })
     class(ex[[1]][[1]]) <- c("EmissionsList",class(e))
     class(ex[[1]]) <- c("EmissionsList",class(e))
@@ -87,7 +104,7 @@ as.Emissions <- function(e, mass = "g", time = "h", ...) {
     ex <- e
     class(ex) <- c("EmissionsArray",class(e))
   } else if (is.numeric(e)) {
-    ex <- e * parse_unit(paste0(mass," ", time, "-1"))
+    ex <- e * units::parse_unit(paste0(mass," ", time, "-1"))
   }
   return(ex)
 }

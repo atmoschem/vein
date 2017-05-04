@@ -11,8 +11,8 @@
 #' @param alpha Parameter of BPR curves
 #' @param beta Parameter of BPR curves
 #' @param isList Logical to specify type of return, list or data-frame
-#' @import sp
-#' @import raster
+#' @param distance Character specifying the units for distance. Default is "km"
+#' @param time Character specifying the units for time Default is "h"
 #' @return dataframe or list of speeds with units
 #' @export
 #' @examples \dontrun{

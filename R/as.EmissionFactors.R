@@ -6,14 +6,23 @@
 #' "data.frame", "list" and "numeric". If the class of the object is "matrix"
 #' this function returns a dataframe. When then object is a list with numerics
 #' or a list with functions it returns an "EmissionFactorsList".
-#'
+#' @title Constructor for EmissionFactors
 #' @param ef Object with class "EmissionFactors"
 #' @param lfx Logical value to determine if the returning object will be
 #' a list of functions or not. Each function is dependent on the speed.
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param distance Character to determine the distance unit. Default is "km"
+#' @param ... ignored
 #' @return Objects of class "EmissionFactors", "EmissionFactorsList" or "units"
+#' @rdname as.EmissionFactors
 #' @export
+EmissionFactors <- function(ef, ...) {
+  UseMethod("EmissionFactors", ef)
+}
+#' @export
+EmissionFactorsList <- function(ef, ...) {
+  UseMethod("EmissionFactorsList", ef)
+}
 #' @note If the class ob the object is functions, as.EmissionFactors won't
 #' append another class
 #' @examples \dontrun{
@@ -32,18 +41,18 @@ as.EmissionFactors <- function(ef, lfx = F, mass = "g", distance = "km", ...) {
   if (lfx==F && is.matrix(ef)) {
     ef <- as.data.frame(ef)
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i] * parse_unit(paste0(mass," ", distance, "-1"))
+      ef[,i] <- ef[,i] * units::parse_unit(paste0(mass," ", distance, "-1"))
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if (lfx==F && is.data.frame(ef)) {
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i] * parse_unit(paste0(mass," ", distance, "-1"))
+      ef[,i] <- ef[,i] * units::parse_unit(paste0(mass," ", distance, "-1"))
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if (lfx==F && is.numeric(ef)) {
-    units(ef) <- ef * parse_unit(paste0(mass," ", distance, "-1"))
+    units(ef) <- ef * units::parse_unit(paste0(mass," ", distance, "-1"))
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if (lfx == T && (is.matrix(ef) || is.data.frame(ef))) {
@@ -57,7 +66,7 @@ as.EmissionFactors <- function(ef, lfx = F, mass = "g", distance = "km", ...) {
     }
     class(efx) <- c("EmissionFactorsList",class(efx))
   } else  if (lfx == T && is.numeric(ef)) {
-    ef <- ef * parse_unit(paste0(mass," ", distance, "-1"))
+    ef <- ef * units::parse_unit(paste0(mass," ", distance, "-1"))
     efx <- lapply(1:length(ef), function(i) {function(V) ef[i] })
     class(ef) <- c("EmissionFactorsList",class(ef))
     efx <- ef

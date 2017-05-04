@@ -8,10 +8,16 @@
 #' @param default Logical value. Whe  default is TRUE it returns the default
 #' summary. When FALSE it return the structure of the list
 #' @seealso \code{\link{head}}
+#' @param ... ignored
+#' @rdname summary.EmissionsList
 #' @export
+EmissionsList <- function(e, ...) {
+  UseMethod("EmissionsList", e)
+}
 #' @examples \dontrun{
+#' #Do not run
 #'}
-summary.EmissionsList <- function(e, default=F,  ...) {
+summary.EmissionsList <- function(e, default = F) {
   if ( default == TRUE ) {
     summary(e)
   } else if ( is.list(e) && is.numeric(e[[1]]) ){ #dont work

@@ -12,7 +12,12 @@
 #' @return Summary for class "Emissions"
 #' @param by Character to indicate the summary
 #' @seealso \code{\link{summary}}
+#' @param ... ignored
+#' @rdname summary.Emissions
 #' @export
+Emissions <- function(e, ...) {
+  UseMethod("Emissions", e)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -40,20 +45,20 @@
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile, hour = 24, day = 7, array = F)
 #'}
-summary.Emissions <- function(e, by = "col", ...) {
+summary.Emissions <- function(e, by = "col") {
   if(by =="col") {
     avemi <- sum(seq(1,ncol(e))*colSums(e)/sum(e))
     cat("Total emissions by column in study area = \n")
-    print(summary(colSums(e), ...))#
-    cat("\nAverage = ", round(avemi,2))#,"  sd = ",round(sdage,2),"\n\n")
+    print(summary(colSums(e)))
+    cat("\nAverage = ", round(avemi,2))
   } else if (by=="streets") {
     cat("Emissions by street in study area = \n")
     print(summary(rowSums(e)))
   } else if (by == "all") {
     cat("Emissions by column and street in study area = \n")
-    print(summary(unlist(e), ...))
+    print(summary(unlist(e)))
   } else if (by == "default") {
     cat("Summary for column by street = \n")
-    print(summary.data.frame(e), ...)
+    print(summary.data.frame(e))
   }
 }

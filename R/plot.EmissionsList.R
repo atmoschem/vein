@@ -1,10 +1,14 @@
 #' Plot of EmissionsList
 #'
 #' @description Plot of the first numeric element of the "EmissionsList"
-#'
+#' @param ... ignored
 #' @param e An object with class "EmissionsList"
 #' @return Plot vehicles class
+#' @rdname plot.EmissionsList
 #' @export
+EmissionsList <- function(e, ...) {
+  UseMethod("EmissionsList", e)
+}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -34,12 +38,12 @@
 #' plot(E_COl)
 #' }
 plot.EmissionsList <- function(e, ...) {
-  if ( is.list(e) && is.numeric(e[[1]]) ){ #dont work
-    plot(e[[1]], type = "l")
+  if ( is.list(e) && is.numeric(e[[1]]) ){
+    graphics::plot(e[[1]], type = "l", ...)
   } else if ( is.list(e) && is.list(e[[1]]) && is.numeric(e[[1]][[1]]) ) {
-    plot(e[[1]][[1]], type = "l")
+    graphics::plot(e[[1]][[1]], type = "l", ...)
   } else if ( is.list(e) && is.list(e[[1]]) && is.list(e[[1]][[1]]) &&
               is.numeric(e[[1]][[1]][[1]]) ) {
-    plot(e[[1]][[1]][[1]], type = "l")
+    graphics::plot(e[[1]][[1]][[1]], type = "l", ...)
   }
 }
