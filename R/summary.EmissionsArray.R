@@ -23,9 +23,7 @@
 #' @name summary.EmissionsArray
 #' @rdname summary.EmissionsArray
 #' @name summary.EmissionsArray
-#' @title Summary
-#' @aliases NULL
-NULL
+#' @aliases summary.EmissionsArray
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)

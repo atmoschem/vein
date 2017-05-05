@@ -13,10 +13,8 @@
 #' @seealso \code{\link{head}}
 #' @name summary.EmissionsList
 #' @rdname summary.EmissionsList
-#' @name summary.EmissionList
-#' @title Summary
-#' @aliases NULL
-NULL
+#' @name summary.EmissionsList
+#' @aliases summary.EmissionsList
 #' @examples \dontrun{
 #' #Do not run
 #'}

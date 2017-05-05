@@ -1,9 +1,6 @@
 #' @export
-print.Vehicles <- function(veh, all=TRUE, ...) {
-  if(all ==TRUE) {
-    print.data.frame(veh,  ...)
-  } else {
-    sapply(veh, print, zero.print=".", ...)
-  }
+print.Vehicles <- function(veh, ...) {
+  cat("Result for Vehicles ")
+    print(unclass(veh),  ...)
 }
 

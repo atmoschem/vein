@@ -15,7 +15,7 @@ plot.Speed(spd, by = "col", mean = TRUE, distance = "km", time = "h",
 mean of the columns (See \code{\link{colMeans}}) and also the standard
 deviation. When by is "streets" performs  sum of the streets via
 \code{\link{rowSums}}. When by is "default" it plots the default method
-for plot (See \code{\link{plot.default}}).}
+for plot (See \code{\link{plot}}).}
 
 \item{mean}{a logical value. When mean is TRUE and by is "col" it adds
 the weighted mean with and when by is "streets" the mean.}

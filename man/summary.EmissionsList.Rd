@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.EmissionsList.R
 \name{summary.EmissionsList}
 \alias{summary.EmissionsList}
-\title{Summary}
+\title{Summary of EmissionsList}
 \usage{
 summary.EmissionsList(e, default = F)
 }
@@ -19,9 +19,6 @@ Summary for class "EmissionsList"
 The object with class "EmissionsList" is list of emissions.
 The summary method consists in plotting a mesage with the structure of
 the list and indicating the summary of the first numeric element
-}
-\details{
-Summary of EmissionsList
 }
 \examples{
 \dontrun{

@@ -9,7 +9,7 @@
 #' "col", "streets" and "default". When by is "col" it is shown a plot of the
 #' sum of the columns (See \code{\link{colSums}}). When by is "streets"
 #' performs  sum of the streets via \code{\link{rowSums}}.When by is "default"
-#' it plots the default method for plot (See \code{\link{plot.default}}).
+#' it plots the default method for plot (See \code{\link{plot}}).
 #' @param mean a logical value. When mean is TRUE and by is "col" it adds
 #' the weighted mean with and when by is "streets" the mean.
 #' @param xlab xlab
@@ -30,23 +30,23 @@ NULL
 #' @export
 plot.Vehicles <- function(veh, by = "col", mean = TRUE, xlab = "Index", ...) {
   if (by == "default") {
-    graphics::plot.default(veh, xlab = xlab, ...)
+    graphics::plot(veh, xlab = xlab, ...)
   } else if (by=="col" && mean == FALSE){
-    Veh <- Vehicles.default(colSums(veh))
+    Veh <- Vehicles(colSums(veh))
     graphics::plot(Veh, type="l",xlab = xlab, ...)
   } else if (by=="col" && mean == TRUE){
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
     units(avage) <- with(units::ud_units, 1/h)
-    Veh <- Vehicles.default(colSums(veh))
+    Veh <- Vehicles(colSums(veh))
     graphics::plot(Veh, type="l",xlab = xlab, ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
   } else if (by=="streets" && mean == FALSE){
-    Veh <- Vehicles.default(rowSums(veh))
+    Veh <- Vehicles(rowSums(veh))
     graphics::plot(Veh, type="l", xlab = xlab, ...)
   } else if (by=="streets" && mean == TRUE){
     avveh <- mean(rowSums(veh), na.rm=T)
-    Veh <- Vehicles.default(rowSums(veh))
+    Veh <- Vehicles(rowSums(veh))
     graphics::plot(Veh, type="l",xlab = xlab, ...)
     graphics::abline(h =  avveh, col="red")
     cat("\nAverage = ",round(avveh,2))

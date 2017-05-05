@@ -2,15 +2,40 @@
 % Please edit documentation in R/Speed.R
 \name{Speed}
 \alias{Speed}
-\title{Generic function Speed}
+\title{Speed}
 \usage{
-Speed(spd, ...)
+Speed(spd, distance = "km", time = "h", ...)
 }
 \arguments{
-\item{spd}{object}
+\item{spd}{Object with class "Speed"}
+
+\item{distance}{Character specifying the units for distance. Default is "km"}
+
+\item{time}{Character specifying the units for time Default is "h"}
 
 \item{...}{ignored}
 }
+\value{
+Constructor for class "Speed" or "units"
+}
 \description{
-Generic function
+Returns a tranformed object with class "Speed" and units
+ km/h. This functions includes two arguments, distance and time. Therefore,
+ it is posibel to change the units of the speed to "m" to "s" for example.
+ This function returns a dataframe with units for speed. When this function
+ is applied to numeric vectors it add class "units".
+}
+\details{
+Construction function for class "Speed"
+}
+\examples{
+\dontrun{
+data(net)
+speed <- as.Speed(net$ps)
+class(speed)
+plot(speed)
+}
+}
+\seealso{
+\code{\link{units}}
 }

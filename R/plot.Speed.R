@@ -11,7 +11,7 @@
 #' mean of the columns (See \code{\link{colMeans}}) and also the standard
 #' deviation. When by is "streets" performs  sum of the streets via
 #' \code{\link{rowSums}}. When by is "default" it plots the default method
-#' for plot (See \code{\link{plot.default}}).
+#' for plot (See \code{\link{plot}}).
 #' @param mean a logical value. When mean is TRUE and by is "col" it adds
 #' the weighted mean with and when by is "streets" the mean.
 #' @param distance Character specifying the units for distance. Default is "km"
@@ -36,13 +36,13 @@ NULL
 plot.Speed <- function(spd, by = "col", mean = TRUE, distance = "km", time="h",
                        xlab = "Index", ...) {
   if ( by == "default" ) {
-    graphics::plot.default(spd, xlab = xlab, ...)
+    graphics::plot(spd, xlab = xlab, ...)
   } else if ( by == "col" && mean == FALSE ){
-    Velocity <- Speed.default(colMeans(spd, na.rm = T))
+    Velocity <- Speed(colMeans(spd, na.rm = T))
     plot(Velocity, xlab = xlab, type = "l")
   } else if ( by == "col" && mean == TRUE ){
-    Velocity <- Speed.default(colMeans(spd), distance = distance, time = time)
-    VelocitySD <- Speed.default(unlist(lapply(spd,stats::sd)))
+    Velocity <- Speed(colMeans(spd), distance = distance, time = time)
+    VelocitySD <- Speed(unlist(lapply(spd,stats::sd)))
     smin <- Velocity - VelocitySD
     smax <- Velocity + VelocitySD
     avspd <- mean(Velocity, na.rm=T)
@@ -52,11 +52,11 @@ plot.Speed <- function(spd, by = "col", mean = TRUE, distance = "km", time="h",
     graphics::lines(smin, ylim=c(min(smin),max(smax)), col="grey", ...)
     graphics::lines(smax, ylim=c(min(smin),max(smax)), col="grey", ...)
   } else if ( by == "streets" && mean == FALSE ){
-    Velocity <- Speed.default(rowMeans(spd), distance = distance, time = time)
+    Velocity <- Speed(rowMeans(spd), distance = distance, time = time)
     plot(Velocity, xlab = xlab, type="l", ...)
   } else if ( by=="streets" && mean == TRUE ){
     avveh <- mean(rowMeans(spd), na.rm=T)
-    Velocity <- Speed.default(rowMeans(spd), distance = distance, time = time)
+    Velocity <- Speed(rowMeans(spd), distance = distance, time = time)
     graphics::plot(Velocity,type="l", xlab = xlab,
                    main=paste(deparse(substitute(spd))), ...)
     graphics::abline(h =  avveh, col = "red")

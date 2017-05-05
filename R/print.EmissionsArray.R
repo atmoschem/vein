@@ -1,5 +1,5 @@
 #' @export
-print.EmissionsArray <- function(e, default = F) {
+print.EmissionsArray <- function(e, default = F, ...) {
   if ( default == TRUE ) {
     print.default(e)
   } else if (is.array(e)) {

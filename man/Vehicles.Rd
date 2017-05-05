@@ -2,15 +2,35 @@
 % Please edit documentation in R/Vehicles.R
 \name{Vehicles}
 \alias{Vehicles}
-\title{Generic function Speed}
+\title{Vehicles}
 \usage{
 Vehicles(veh, ...)
 }
 \arguments{
-\item{veh}{object}
+\item{veh}{Object with class "Vehicles"}
 
 \item{...}{ignored}
 }
+\value{
+Objects of class "Vehicles" or "units"
+}
 \description{
-Generic function
+Returns a tranformed object with class "Vehicles" and units
+ 1/h. The type of objects supported are of classes "matrix", "data.frame",
+ "numeric" and "array". If the object is a matrix it is converted to data.frame.
+ If the object is "numeric" it is converted to class "units". The function
+ \code{\link{emis_paved}} needs veh to be an array, therefore in this case,
+ veh must be an array in the total fleet at each street and dimensions
+ total fleet, hours and days
+}
+\details{
+Construction function for class "Vehicles"
+}
+\examples{
+\dontrun{
+data(net)
+lt <- as.Vehicles(net$hdv)
+class(lt)
+plot(lt)
+}
 }

@@ -1,7 +1,7 @@
 #' @export
-print.EmissionsList <- function(e, default = F) {
+print.EmissionsList <- function(e, default = F, ...) {
   if ( default == TRUE ) {
-    print.listof(e)
+    print(unclass(e))
   } else if ( is.list(e) && is.numeric(e[[1]]) ){ #dont work
     cat("This EmissionsList has\n", length(e),
         "vehicle categories\n")

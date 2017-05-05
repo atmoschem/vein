@@ -65,11 +65,11 @@ plot.EmissionsArray <- function(e, by = "day", xlab = "Index", ...) {
     names(df) <- c("Mon", "Tue","Wed", "Thu", "Fri", "Sat", "Sun")
     title <- "Daily emissions calculated from hourly totals"
   } else if ( by == "hour" ) {
-    df <- Emissions.default(t(apply(e, c(3, 4), sum, na.rm=T)))
+    df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
     title = "Hourly emissions"
   } else if ( by == "col") {
-    df <- Emissions.default(t(apply(e, c(2, 3), sum, na.rm=T)))
+    df <- Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("col",i)))
     title = "Emissions by column"
   }

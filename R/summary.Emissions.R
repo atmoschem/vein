@@ -18,9 +18,7 @@
 #' @name summary.Emissions
 #' @rdname summary.Emissions
 #' @name summary.Emissions
-#' @title Summary
-#' @aliases NULL
-NULL
+#' @aliases summary.Emissions
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)

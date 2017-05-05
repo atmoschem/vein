@@ -99,7 +99,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
                  "Thursday", "Friday", "Saturday",
                  "Sunday"), each=dim(arra)[2]*dim(arra)[3])
     df$day <- day
-    df$g <- Emissions.default(df$g)
+    df$g <- Emissions(df$g)
     return(df)
     } else if (by == "streets_narrow") {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
@@ -122,7 +122,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
                rep("Sunday", dim(arra)[1]*dim(arra)[3]))
       df$day <- day
       df[,1] <- seq(1,dim(arra)[1])
-      df$pollutant <- Emissions.default(df$pollutant)
+      df$pollutant <- Emissions(df$pollutant)
       return(df)
     } else if (by == "streets_wide") {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
@@ -131,7 +131,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
         }))
       }))
       m <- matrix(x, nrow=dim(arra)[1], ncol=dim(arra)[3]*dim(arra)[4])
-      df <- Emissions.default(m)
+      df <- Emissions(m)
       nombres <- lapply(1:dim(m)[2], function(i){paste0("h",i)})
       names(df) <- nombres
       return(df)

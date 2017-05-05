@@ -19,9 +19,7 @@
 #' @name summary.Speed
 #' @rdname summary.Speed
 #' @name summary.Speed
-#' @title Summary
-#' @aliases NULL
-NULL
+#' @aliases summary.Speed
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)

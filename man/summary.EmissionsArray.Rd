@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.EmissionsArray.R
 \name{summary.EmissionsArray}
 \alias{summary.EmissionsArray}
-\title{Summary}
+\title{Summary of EmissionsArray}
 \usage{
 summary.EmissionsArray(e, by = "day")
 }
@@ -28,9 +28,6 @@ the list and indicating the summary of the first numeric element. The
 dimensions of must be number of streets, number of vehicle categories,
 number of hours and number of days.  This functions first performs an
 \code{\link{apply}} over the array
-}
-\details{
-Summary of EmissionsArray
 }
 \examples{
 \dontrun{

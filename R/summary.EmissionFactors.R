@@ -12,9 +12,7 @@
 #' @seealso \code{\link{summary}}
 #' @rdname summary.EmissionFactors
 #' @name summary.EmissionFactors
-#' @title Summary
-#' @aliases NULL
-NULL
+#' @aliases summary.EmissionFactors
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)

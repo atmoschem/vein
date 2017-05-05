@@ -13,7 +13,7 @@ plot.Vehicles(veh, by = "col", mean = TRUE, xlab = "Index", ...)
 "col", "streets" and "default". When by is "col" it is shown a plot of the
 sum of the columns (See \code{\link{colSums}}). When by is "streets"
 performs  sum of the streets via \code{\link{rowSums}}.When by is "default"
-it plots the default method for plot (See \code{\link{plot.default}}).}
+it plots the default method for plot (See \code{\link{plot}}).}
 
 \item{mean}{a logical value. When mean is TRUE and by is "col" it adds
 the weighted mean with and when by is "streets" the mean.}

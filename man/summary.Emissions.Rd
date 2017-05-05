@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.Emissions.R
 \name{summary.Emissions}
 \alias{summary.Emissions}
-\title{Summary}
+\title{Summary of Emissions}
 \usage{
 summary.Emissions(e, by = "col")
 }
@@ -23,9 +23,6 @@ When the by is "streets" it returns the summary of the sum of the row via
 \code{\link{rowSums}}. When by is "all" it returns a summary of the object
 as it was an vector of length 1L. When by is "default" it performs a
 summary as data.frame vua \code{\link{summary.data.frame}}
-}
-\details{
-Summary of Emissions
 }
 \examples{
 \dontrun{

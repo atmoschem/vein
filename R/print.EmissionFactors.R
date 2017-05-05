@@ -1,8 +1,5 @@
 #' @export
-print.EmissionFactors <- function(ef, all = TRUE) {
-  if(all ==TRUE) {
-    print.data.frame(ef)
-  } else {
-    sapply(ef, print, zero.print=".")
-  }
+print.EmissionFactors <- function(ef, ...) {
+  cat("Result for EmissionFactors")
+  print(unclass(ef),  ...)
 }

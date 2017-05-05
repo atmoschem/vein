@@ -1,8 +1,5 @@
 #' @export
-print.Speed <- function(spd, all=TRUE) {
-  if(all ==TRUE) {
-    print.data.frame(spd)
-  } else {
-    sapply(spd, print, zero.print=".")
-  }
+print.Speed <- function(spd, ...) {
+  cat("Result for Speed ")
+  print(unclass(spd),  ...)
 }

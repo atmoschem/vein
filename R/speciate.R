@@ -65,7 +65,7 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
  } else if (spec=="bcom") {
   bcom <- sysdata[[4]]
   df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-  dfb <- Emissions.default(data.frame(BC = x*df$BC/100,
+  dfb <- Emissions(data.frame(BC = x*df$BC/100,
                     OM = (df$OM/100)*(x*df$BC/100)))
   if (show == TRUE) {print(df) } else if (list == TRUE){
     dfb <- as.list(dfb) }
@@ -73,20 +73,20 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
   } else if (spec=="tyre") {
     df <- data.frame(PM10 = 0.6, PM2.5 = 0.42,PM1 = 0.06,
                       PM0.1 = 0.048)
-    dfb <- Emissions.default(data.frame(PM10 = x*0.6, PM2.5 = x*0.42,PM1 = x*0.06,
+    dfb <- Emissions(data.frame(PM10 = x*0.6, PM2.5 = x*0.42,PM1 = x*0.06,
                       PM0.1 = x*0.048))
     if (show == TRUE) {print(df) } else if (list == TRUE){
       dfb <- as.list(dfb) }
     } else if (spec=="break") {
     df <- data.frame(PM10 = 0.98, PM2.5 = 0.39,PM1 = 0.1,
                      PM0.1 = 0.08)
-    dfb <- Emissions.default(data.frame(PM10 = x*0.98, PM2.5 = x*0.39,PM1 = x*0.1,
+    dfb <- Emissions(data.frame(PM10 = x*0.98, PM2.5 = x*0.39,PM1 = x*0.1,
                       PM0.1 = x*0.08))
     if (show == TRUE) {print(df) } else if (list == TRUE){
       dfb <- as.list(dfb) }
     } else if (spec=="road") {
     df <- data.frame(PM10 = 0.5, PM2.5 = 0.27)
-    dfb <- Emissions.default(data.frame(PM10 = x*0.5, PM2.5 = x*0.27))
+    dfb <- Emissions(data.frame(PM10 = x*0.5, PM2.5 = x*0.27))
     if (show == TRUE) {print(df) } else if (list == TRUE){
       dfb <- as.list(dfb) }
     } else if (spec=="iag") {
@@ -130,7 +130,7 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
     } else if (spec=="nox") {
       bcom <- sysdata[[7]]
       df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-      dfb <- Emissions.default(data.frame(NO2 = x*df$NO2,
+      dfb <- Emissions(data.frame(NO2 = x*df$NO2,
                         NO =  x*df$NO))
       if (show == TRUE) {print(df) } else if (list == TRUE){
         dfb <- as.list(dfb)

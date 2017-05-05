@@ -9,7 +9,7 @@
 #' "col", "streets" and "default". When by is "col" it is shown a plot of the
 #' sum of the columns (See \code{\link{colSums}}). When by is "streets" performs
 #' sum of the streets via \code{\link{rowSums}}. When by is "default" it plots
-#' the default method for plot (See \code{\link{plot.default}}).
+#' the default method for plot (See \code{\link{plot}}).
 #' @param mean a logical value. When mean is TRUE and by is "col" it adds
 #' the weighted mean with and when by is "streets" the mean.
 #' @param xlab xlab
@@ -55,24 +55,24 @@ NULL
 #' @export
 plot.Emissions <- function(e, by = "col", mean = F, xlab = "Index", ...) {
   if ( by == "default" ) {
-    graphics::plot.default(e, xlab = xlab, ...)
+    graphics::plot(e, xlab = xlab, ...)
   } else if ( by=="col" && mean == FALSE ){
-    Emission <- Emissions.default(colSums(e))
+    Emission <- Emissions(colSums(e))
     graphics::plot(Emission, type="l",xlab = xlab, ...)
   } else if ( by=="col" && mean == TRUE ){
     avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
     units(avage) <- with(units::ud_units, g/h)
-    Emission <- Emissions.default(colSums(e))
+    Emission <- Emissions(colSums(e))
     graphics::plot(Emission,xlab = xlab, type="l",
                    main=paste(deparse(substitute(e))), ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
   } else if (by=="streets" && mean == FALSE){
-    Emission <- Emissions.default(rowSums(e))
+    Emission <- Emissions(rowSums(e))
     graphics::plot(Emission, type="l", xlab = xlab, ...)
   } else if (by=="streets" && mean == TRUE){
     avveh <- mean(rowSums(e), na.rm=T)
-    Emission <- Emissions.default(rowSums(e))
+    Emission <- Emissions(rowSums(e))
     graphics::plot(Emission, xlab = xlab, type="l",
                    main=paste(deparse(substitute(e))), ...)
     graphics::abline(h =  avveh, col="red")

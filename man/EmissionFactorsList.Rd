@@ -2,15 +2,43 @@
 % Please edit documentation in R/EmissionFactorsList.R
 \name{EmissionFactorsList}
 \alias{EmissionFactorsList}
-\title{Generic function EmissionFactorsList}
+\title{EmissionFactorsList}
 \usage{
-EmissionFactorsList(ef, ...)
+EmissionFactorsList(ef, lfx = F, mass = "g", distance = "km", ...)
 }
 \arguments{
-\item{ef}{object}
+\item{ef}{Object with class "list"}
+
+\item{lfx}{Logical value to determine if the returning object will be
+a list of functions or not. Each function is dependent on the speed.}
+
+\item{mass}{Character to determine the unit of the mass. Default is "g"}
+
+\item{distance}{Character to determine the distance unit. Default is "km"}
 
 \item{...}{ignored}
 }
+\value{
+Objects of class "EmissionFactorsList"
+}
 \description{
-Generic function
+Returns a tranformed object with class"EmissionsFactorsList".
+This functions has arguments to change of the numeric elements of the list.
+}
+\details{
+Construction function for class "EmissionFactorsList"
+}
+\examples{
+\dontrun{
+data(fe2015)
+names(fe2015)
+class(fe2015)
+df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
+ef1 <- as.EmissionFactors(df)
+class(ef1)
+head(ef1)
+ef2 <- as.EmissionFactors(df, lfx = T)
+class(ef2)
+class(ef2[[1]])
+}
 }
