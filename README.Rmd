@@ -36,6 +36,24 @@ demo("VEIN")
 
 I'm currently working in some classes.
 
+I've created the following classes:
+
+- Vehicles
+- Speed
+- EmissionFactors
+- EmissionFactorsList
+- Emissions
+- EmissionsArray
+- EmissionsList
+
+Each has a constructor function with the same name that return the class. I'm
+trying to create methods for the generic functions 'print', 'summary' and 
+'plot'.
+
+The checking --as-cran `devtools::check(args = c('--as-cran'))` of the package shows 1 warning and two notes about the 
+**"S3 methods shown with full name in documentation object"**. I'm fixing that.
+Anyway, the demo runs fine.
+
 Isseus here please https://github.com/ibarraespinosa/vein/issues/
 
 I hope you enjoy it
