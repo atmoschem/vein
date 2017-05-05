@@ -38,10 +38,9 @@ netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
     dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
       lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
     }))))
-    dfv <- Speed(dfv, distance = distance, time = time)
     # dfv[,8] <- ps
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
-    dfv <- Speed(dfv)
+    dfv <- Speed(dfv, distance = distance, time = time)
     return(dfv)
   }else if (isList==TRUE){
     dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
