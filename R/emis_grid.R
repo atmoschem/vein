@@ -33,7 +33,6 @@ emis_grid <- function(spobj, g, sr, type="lines"){
     netg@data[,1:(ncol(netg@data)-3)] <-  netg@data[,1:(ncol(netg@data)-3)]*netg$lkm2/netg$lkm
     dfm <- stats::aggregate(cbind(netg@data[,1:(ncol(netg@data)-3)]), by=list(netg$id),
                      sum, na.rm=TRUE)
-
     colnames(dfm)[1] <- "id"
     gg <- merge(g, dfm, by="id")
     return(gg)

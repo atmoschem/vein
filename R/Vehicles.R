@@ -1,16 +1,10 @@
-#' Generic function for class "Vehicles"
+#' Generic function Speed
 #'
-#' @description Generic function for class "Vehicles"
+#' @description Generic function
 #'
-#' @return Objects of class "Vehicles"
-#'
-#' @param veh Object which can be "matrix", "data.frame" or "numeric"
+#' @param veh object
 #' @param ... ignored
-#'
-#' @rdname Vehicles
-#' @name Vehicles
-#' @title Vehicles
 #' @export
-Vehicles <- function(veh, ...) {
+Vehicles <- function(veh, ...){
   UseMethod("Vehicles", veh)
 }

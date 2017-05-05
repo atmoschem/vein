@@ -12,12 +12,11 @@
 #' @param spd Object with class "Speed"
 #' @param distance Character specifying the units for distance. Default is "km"
 #' @param time Character specifying the units for time Default is "h"
-#' @export
 #' @seealso \code{\link{units}}
 #'
-#' @rdname as.Speed
-#' @name as.Speed
-#' @title as.Speed
+#' @rdname Speed.default
+#' @name Speed.default
+#' @title Speed
 #' @aliases NULL
 NULL
 #' @examples \dontrun{
@@ -26,7 +25,8 @@ NULL
 #' class(speed)
 #' plot(speed)
 #' }
-as.Speed <- function(spd, distance = "km", time = "h", ...) {
+#' @export
+Speed.default <- function(spd, distance = "km", time = "h", ...) {
   if  (is.matrix(spd)) {
     spd <- as.data.frame(spd)
     for(i in 1:ncol(spd)){

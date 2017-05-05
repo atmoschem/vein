@@ -20,8 +20,12 @@
 #' considering each type of vehicle
 #'
 #' @seealso \code{\link{apply}}
-#' @export
 #' @name summary.EmissionsArray
+#' @rdname summary.EmissionsArray
+#' @name summary.EmissionsArray
+#' @title Summary
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -52,6 +56,7 @@
 #' summary(as.Emissions(E_CO), by="hour")
 #' summary(as.Emissions(E_CO), by="col")
 #'}
+#' @export
 summary.EmissionsArray <- function(e, by = "day") {
   if ( class(e) != "EmissionsArray" && !is.array(e) ) {
     stop("Not an EmissionsArray")
@@ -67,7 +72,7 @@ summary.EmissionsArray <- function(e, by = "day") {
     cat("Daily emissions calculated from hourly totals\n")
     return(dfx)
   } else if ( by == "hour" ) {
-    df <- as.Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
+    df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
     # Total <- rowSums(df)
     Mean <- colMeans(df)
@@ -78,7 +83,7 @@ summary.EmissionsArray <- function(e, by = "day") {
     cat("Hourly emissions\n")
     return(dfx)
   } else if ( by == "col") {
-    df <- as.Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
+    df <- Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("col",i)))
     Mean <- colMeans(df)
     SD <- unlist(lapply(df, stats::sd))

@@ -1,16 +1,10 @@
-#' Generic function for lass "EmissionFactors"
+#' Generic function EmissionFactors
 #'
-#' @description Generic function for class "EmissionFactors"
+#' @description Generic function
 #'
-#' @return Objects of class "EmissionFactors" or "units"
-#'
-#' @param ef Object which can be "matrix", "data.frame" or "numeric"
+#' @param ef object
 #' @param ... ignored
-#'
-#' @rdname EmissionFactors
-#' @name EmissionFactors
-#' @title EmissionFactors
 #' @export
-EmissionFactors <- function(ef, ...) {
+EmissionFactors <- function(ef, ...){
   UseMethod("EmissionFactors", ef)
 }

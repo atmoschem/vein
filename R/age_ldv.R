@@ -63,6 +63,6 @@ age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
   }
-  df <- as.Vehicles(df*k)
+  df <- Vehicles(df*k)
   return(df)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.Speed.R
 \name{plot.Speed}
 \alias{plot.Speed}
-\title{Plot of Speed}
+\title{plot}
 \usage{
 plot.Speed(spd, by = "col", mean = TRUE, distance = "km", time = "h",
   xlab = "Index", ...)
@@ -33,6 +33,9 @@ The object with class "Speed" is esentially a data.frame
 with columns as type of vehicles and rows as streets. Therefore the plot
 seeks to inform the total number by type of vehicles. This functions
 plot the mean speed and the standard deviation.
+}
+\details{
+Plot of Speed
 }
 \examples{
 \dontrun{

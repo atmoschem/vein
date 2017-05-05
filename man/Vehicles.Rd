@@ -2,21 +2,15 @@
 % Please edit documentation in R/Vehicles.R
 \name{Vehicles}
 \alias{Vehicles}
-\title{Vehicles}
+\title{Generic function Speed}
 \usage{
 Vehicles(veh, ...)
 }
 \arguments{
-\item{veh}{Object which can be "matrix", "data.frame" or "numeric"}
+\item{veh}{object}
 
 \item{...}{ignored}
 }
-\value{
-Objects of class "Vehicles"
-}
 \description{
-Generic function for class "Vehicles"
-}
-\details{
-Generic function for class "Vehicles"
+Generic function
 }

@@ -13,10 +13,9 @@
 #' @param veh Object with class "Vehicles"
 #' @param ... ignored
 #'
-#' @export
-#' @rdname as.Vehicles
-#' @name as.Vehicles
-#' @title as.Vehicles
+#' @rdname Vehicles.default
+#' @name Vehicles.default
+#' @title Vehicles
 #' @aliases NULL
 NULL
 #' @examples \dontrun{
@@ -25,7 +24,8 @@ NULL
 #' class(lt)
 #' plot(lt)
 #' }
-as.Vehicles <- function(veh, ...) {
+#' @export
+Vehicles.default <- function(veh, ...) {
   if  ( is.matrix(veh) ) {
     veh <- as.data.frame(veh)
     for(i in 1:ncol(veh)){

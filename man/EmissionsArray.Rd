@@ -2,21 +2,15 @@
 % Please edit documentation in R/EmissionsArray.R
 \name{EmissionsArray}
 \alias{EmissionsArray}
-\title{EmissionsArray}
+\title{Generic function EmissionsArray}
 \usage{
 EmissionsArray(e, ...)
 }
 \arguments{
-\item{e}{Object which can be "array"}
+\item{e}{object}
 
 \item{...}{ignored}
 }
-\value{
-Objects of class "EmissionsArray"
-}
 \description{
-Generic function for class "EmissionsArray"
-}
-\details{
-Generic function for lass "EmissionsArray"
+Generic function
 }

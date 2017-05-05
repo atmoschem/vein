@@ -9,8 +9,11 @@
 #' @param ef Object with class "EmissionFactors"
 #' @param xlab Labs for horizontal axe
 #' @param ... ignored
-#' @export
+#' @rdname plot.EmissionFactors
 #' @name plot.EmissionFactors
+#' @title plot
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)
@@ -18,6 +21,7 @@
 #' ef1 <- as.EmissionFactors(df)
 #' plot(ef1)
 #' }
+#' @export
 plot.EmissionFactors <- function(ef, xlab = "Index", ...) {
   if (mode(ef)=="numeric" || ncol(ef) > 12) {
     graphics::plot(ef, xlab = xlab, ...)

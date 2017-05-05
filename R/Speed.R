@@ -1,16 +1,10 @@
-#' Generic function for class "Speed"
+#' Generic function Speed
 #'
-#' @description Generic function for class "Speed"
+#' @description Generic function
 #'
-#' @return Objects of class "Speed"
-#'
-#' @param spd Object which can be "matrix", "data.frame" or "numeric"
+#' @param spd object
 #' @param ... ignored
-#'
-#' @rdname Speed
-#' @name Speed
-#' @title Speed
 #' @export
-Speed <- function(spd, ...) {
+Speed <- function(spd, ...){
   UseMethod("Speed", spd)
 }

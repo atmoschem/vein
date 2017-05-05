@@ -2,21 +2,15 @@
 % Please edit documentation in R/EmissionFactors.R
 \name{EmissionFactors}
 \alias{EmissionFactors}
-\title{EmissionFactors}
+\title{Generic function EmissionFactors}
 \usage{
 EmissionFactors(ef, ...)
 }
 \arguments{
-\item{ef}{Object which can be "matrix", "data.frame" or "numeric"}
+\item{ef}{object}
 
 \item{...}{ignored}
 }
-\value{
-Objects of class "EmissionFactors" or "units"
-}
 \description{
-Generic function for class "EmissionFactors"
-}
-\details{
-Generic function for lass "EmissionFactors"
+Generic function
 }

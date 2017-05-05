@@ -2,9 +2,9 @@
 % Please edit documentation in R/plot.EmissionsList.R
 \name{plot.EmissionsList}
 \alias{plot.EmissionsList}
-\title{Plot of EmissionsList}
+\title{plot}
 \usage{
-\method{plot}{EmissionsList}(e, xlab = "Index", ...)
+plot.EmissionsList(e, xlab = "Index", ...)
 }
 \arguments{
 \item{e}{An object with class "EmissionsList"}
@@ -15,6 +15,9 @@
 }
 \description{
 Plot of the first numeric element of the "EmissionsList"
+}
+\details{
+Plot of EmissionsList
 }
 \examples{
 \dontrun{

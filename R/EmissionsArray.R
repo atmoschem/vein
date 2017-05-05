@@ -1,16 +1,10 @@
-#' Generic function for lass "EmissionsArray"
+#' Generic function EmissionsArray
 #'
-#' @description Generic function for class "EmissionsArray"
+#' @description Generic function
 #'
-#' @return Objects of class "EmissionsArray"
-#'
-#' @param e Object which can be "array"
+#' @param e object
 #' @param ... ignored
-#'
-#' @rdname EmissionsArray
-#' @name EmissionsArray
-#' @title EmissionsArray
 #' @export
-EmissionsArray <- function(e, ...) {
+EmissionsArray <- function(e, ...){
   UseMethod("EmissionsArray", e)
 }

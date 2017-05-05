@@ -16,8 +16,12 @@
 #' \code{\link{summary.data.frame}}
 #'
 #' @seealso \code{\link{summary}}
-#' @export
 #' @name summary.Speed
+#' @rdname summary.Speed
+#' @name summary.Speed
+#' @title Summary
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -30,6 +34,7 @@
 #' summary(df, by="all")
 #' summary(df, by="default")
 #' }
+#' @export
 summary.Speed <- function(spd, by = "col") {
   if(by =="col") {
     cat("Mean Speeds by column in study area = \n")

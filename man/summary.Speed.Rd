@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.Speed.R
 \name{summary.Speed}
 \alias{summary.Speed}
-\title{Summary of Speed}
+\title{Summary}
 \usage{
 summary.Speed(spd, by = "col")
 }
@@ -24,6 +24,9 @@ The object with class "Speed" is esentially a data.frame
 with columns as type of vehicles and rows as streets. The summary method
 considers this by arguments by, mean and default to produce summaries
 the information of vehicles in a helpful way.
+}
+\details{
+Summary of Speed
 }
 \examples{
 \dontrun{

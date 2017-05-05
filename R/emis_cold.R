@@ -42,7 +42,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
           })
       })
     })
-    return(as.Emissions(lista))
+    return(EmissionsList.default(lista))
   } else {
   d <-  simplify2array(
     lapply(1:day,function(j){
@@ -59,7 +59,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
         )
       })
     )
-  return(as.Emissions(d))
+  return(Emissions.default(d))
   }
 }
 

@@ -10,8 +10,11 @@
 #' @param ef Object of class EmissionFactors
 #'
 #' @seealso \code{\link{summary}}
-#' @export
+#' @rdname summary.EmissionFactors
 #' @name summary.EmissionFactors
+#' @title Summary
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)
@@ -20,6 +23,7 @@
 #' ef1 <- as.EmissionFactors(df)
 #' summary(ef1)
 #' }
+#' @export
 summary.EmissionFactors <- function(ef) {
   cat("Mean EmissionFactors in study area = \n")
   print(summary.data.frame(ef))

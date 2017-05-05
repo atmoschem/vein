@@ -1,16 +1,10 @@
-#' Generic function for lass "EmissionFactorsList"
+#' Generic function EmissionFactorsList
 #'
-#' @description Generic function for class "EmissionFactorsList"
+#' @description Generic function
 #'
-#' @return Objects of class "EmissionFactorsList" or "units"
-#'
-#' @param ef Object which can be "list" with "numeric" elements
+#' @param ef object
 #' @param ... ignored
-#'
-#' @rdname EmissionFactorsList
-#' @name EmissionFactorsList
-#' @title EmissionFactors
 #' @export
-EmissionFactorsList <- function(ef, ...) {
+EmissionFactorsList <- function(ef, ...){
   UseMethod("EmissionFactorsList", ef)
 }

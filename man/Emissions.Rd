@@ -2,21 +2,15 @@
 % Please edit documentation in R/Emissions.R
 \name{Emissions}
 \alias{Emissions}
-\title{Emissions}
+\title{Generic function Emissions}
 \usage{
 Emissions(e, ...)
 }
 \arguments{
-\item{e}{Object which can be "matrix", "data.frame" or "numeric"}
+\item{e}{object}
 
 \item{...}{ignored}
 }
-\value{
-Objects of class "Emissions" or "units"
-}
 \description{
-Generic function for class "Emissions"
-}
-\details{
-Generic function for lass "Emissions"
+Generic function
 }

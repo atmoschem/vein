@@ -2,21 +2,15 @@
 % Please edit documentation in R/EmissionFactorsList.R
 \name{EmissionFactorsList}
 \alias{EmissionFactorsList}
-\title{EmissionFactors}
+\title{Generic function EmissionFactorsList}
 \usage{
 EmissionFactorsList(ef, ...)
 }
 \arguments{
-\item{ef}{Object which can be "list" with "numeric" elements}
+\item{ef}{object}
 
 \item{...}{ignored}
 }
-\value{
-Objects of class "EmissionFactorsList" or "units"
-}
 \description{
-Generic function for class "EmissionFactorsList"
-}
-\details{
-Generic function for lass "EmissionFactorsList"
+Generic function
 }

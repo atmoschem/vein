@@ -21,6 +21,11 @@
 #' @seealso \code{\link{apply}}
 #' @export
 #' @name plot.EmissionsArray
+#' @rdname plot.EmissionsArray
+#' @name plot.EmissionsArray
+#' @title plot
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -51,7 +56,6 @@
 #' plot(E_CO, by="hour")
 #' plot(E_CO, by="col")
 #'}
-#' @method plot Vehicles
 #' @export
 plot.EmissionsArray <- function(e, by = "day", xlab = "Index", ...) {
   if ( class(e) != "EmissionsArray" && !is.array(e) ) {
@@ -61,11 +65,11 @@ plot.EmissionsArray <- function(e, by = "day", xlab = "Index", ...) {
     names(df) <- c("Mon", "Tue","Wed", "Thu", "Fri", "Sat", "Sun")
     title <- "Daily emissions calculated from hourly totals"
   } else if ( by == "hour" ) {
-    df <- as.Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
+    df <- Emissions.default(t(apply(e, c(3, 4), sum, na.rm=T)))
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
     title = "Hourly emissions"
   } else if ( by == "col") {
-    df <- as.Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
+    df <- Emissions.default(t(apply(e, c(2, 3), sum, na.rm=T)))
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("col",i)))
     title = "Emissions by column"
   }
@@ -74,7 +78,8 @@ plot.EmissionsArray <- function(e, by = "day", xlab = "Index", ...) {
   Min <- unlist(lapply(df, min))
   Max <- unlist(lapply(df, max))
   dfx <- data.frame(Mean, SD, Min, Max)
-  graphics::plot(y = dfx$Mean, x = 1:nrow(dfx), ylim = c(min(dfx$Min), max(dfx$Max)),
+  graphics::plot(y = dfx$Mean, x = 1:nrow(dfx),
+                 ylim = c(min(dfx$Min), max(dfx$Max)),
        col = "red", type = "l", xlab = xlab, ...)
   graphics::lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
   graphics::lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))

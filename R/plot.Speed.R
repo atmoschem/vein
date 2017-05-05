@@ -18,8 +18,12 @@
 #' @param time Character specifying the units for time Default is "h"
 #' @param xlab xlab
 #' @param ... ignored
-#' @export
 #' @name plot.Speed
+#' @rdname plot.Speed
+#' @name plot.Speed
+#' @title plot
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -28,31 +32,33 @@
 #' df <- netspeed(pcw, net$ps,net$ffs, net$capacity, net$lkm, alpha = 1,isList=F)
 #' class(df)
 #' }
+#' @export
 plot.Speed <- function(spd, by = "col", mean = TRUE, distance = "km", time="h",
                        xlab = "Index", ...) {
   if ( by == "default" ) {
     graphics::plot.default(spd, xlab = xlab, ...)
   } else if ( by == "col" && mean == FALSE ){
-    Speed <- as.Speed(colMeans(spd, na.rm = T))
-    plot(Speed, xlab = xlab, type = "l")
+    Velocity <- Speed.default(colMeans(spd, na.rm = T))
+    plot(Velocity, xlab = xlab, type = "l")
   } else if ( by == "col" && mean == TRUE ){
-    Speed <- as.Speed(colMeans(spd), distance = distance, time = time)
-    SpeedSD <- as.Speed(unlist(lapply(spd,stats::sd)))
-    smin <- Speed - SpeedSD
-    smax <- Speed + SpeedSD
-    avspd <- mean(Speed, na.rm=T)
-    graphics::plot(Speed, type = "l", main=paste(deparse(substitute(spd))),
+    Velocity <- Speed.default(colMeans(spd), distance = distance, time = time)
+    VelocitySD <- Speed.default(unlist(lapply(spd,stats::sd)))
+    smin <- Velocity - VelocitySD
+    smax <- Velocity + VelocitySD
+    avspd <- mean(Velocity, na.rm=T)
+    graphics::plot(Velocity, type = "l", main=paste(deparse(substitute(spd))),
          xlab = xlab, ylim=c(min(smin),max(smax)), ...)
     graphics::abline(h = avspd, col="red")
     graphics::lines(smin, ylim=c(min(smin),max(smax)), col="grey", ...)
     graphics::lines(smax, ylim=c(min(smin),max(smax)), col="grey", ...)
   } else if ( by == "streets" && mean == FALSE ){
-    Speed <- as.Speed(rowMeans(spd), distance = distance, time = time)
-    plot(Speed, xlab = xlab, type="l", ...)
+    Velocity <- Speed.default(rowMeans(spd), distance = distance, time = time)
+    plot(Velocity, xlab = xlab, type="l", ...)
   } else if ( by=="streets" && mean == TRUE ){
     avveh <- mean(rowMeans(spd), na.rm=T)
-    Speed <- as.Speed(rowMeans(spd), distance = distance, time = time)
-    graphics::plot(Speed,type="l", xlab = xlab, main=paste(deparse(substitute(spd))), ...)
+    Velocity <- Speed.default(rowMeans(spd), distance = distance, time = time)
+    graphics::plot(Velocity,type="l", xlab = xlab,
+                   main=paste(deparse(substitute(spd))), ...)
     graphics::abline(h =  avveh, col = "red")
   }
 }

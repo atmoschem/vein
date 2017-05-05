@@ -2,21 +2,15 @@
 % Please edit documentation in R/Speed.R
 \name{Speed}
 \alias{Speed}
-\title{Speed}
+\title{Generic function Speed}
 \usage{
 Speed(spd, ...)
 }
 \arguments{
-\item{spd}{Object which can be "matrix", "data.frame" or "numeric"}
+\item{spd}{object}
 
 \item{...}{ignored}
 }
-\value{
-Objects of class "Speed"
-}
 \description{
-Generic function for class "Speed"
-}
-\details{
-Generic function for class "Speed"
+Generic function
 }

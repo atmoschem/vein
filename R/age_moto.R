@@ -62,6 +62,6 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1, 
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
   }
-  df <- as.Vehicles(df*k)
+  df <- Vehicles(df*k)
   return(df)
 }

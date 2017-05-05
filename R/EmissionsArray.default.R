@@ -6,10 +6,9 @@
 #'
 #' @param e object with class "array'
 #' @param ... ignored
-#' @export
-#' @rdname as.EmissionsArray
-#' @name as.EmissionsArray
-#' @title as.EmissionsArray
+#' @rdname EmissionsArray.default
+#' @name EmissionsArray.default
+#' @title EmissionsArray
 #' @aliases NULL
 NULL
 #' @examples \dontrun{
@@ -40,7 +39,8 @@ NULL
 #'              profile = pc_profile, hour = 24, day = 7, array = T)
 #' class(E_CO)
 #' }
-as.EmissionsArray <- function(e, ...) {
+#' @export
+EmissionsArray.default <- function(e, ...) {
   if ( !is.array(e) ) {
     stop("Class of e must be 'array'")
   } else if ( is.array(e) ) {

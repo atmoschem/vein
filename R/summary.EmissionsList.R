@@ -11,11 +11,16 @@
 #' summary. When FALSE it return the structure of the list
 #'
 #' @seealso \code{\link{head}}
-#' @export
 #' @name summary.EmissionsList
+#' @rdname summary.EmissionsList
+#' @name summary.EmissionList
+#' @title Summary
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' #Do not run
 #'}
+#' @export
 summary.EmissionsList <- function(e, default = F) {
   if ( default == TRUE ) {
     summary(e)

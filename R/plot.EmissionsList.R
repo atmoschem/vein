@@ -7,6 +7,11 @@
 #' @param ... ignored
 #' @export
 #' @name plot.EmissionsList
+#' @rdname plot.EmissionsList
+#' @name plot.EmissionsList
+#' @title plot
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -35,7 +40,6 @@
 #'              profile = pc_profile, hour = 24, day = 7, array = F)
 #' plot(E_COl)
 #' }
-#' @method plot EmissionsList
 #' @export
 plot.EmissionsList <- function(e, xlab = "Index", ...) {
   if ( is.list(e) && is.numeric(e[[1]]) ){

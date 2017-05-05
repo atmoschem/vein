@@ -15,8 +15,12 @@
 #' @param xlab xlab
 #' @param ... ignored
 #'
-#' @export
+#' @name plot
+#' @rdname plot.Emissions
 #' @name plot.Emissions
+#' @title plot
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -48,26 +52,29 @@
 #' plot(as.Emissions(apply(E_CO, c(1,3), sum)), by="streets", mean = T)
 #' plot(as.Emissions(apply(E_CO, c(1,4), sum)), by="streets", mean = T)
 #' }
+#' @export
 plot.Emissions <- function(e, by = "col", mean = F, xlab = "Index", ...) {
   if ( by == "default" ) {
     graphics::plot.default(e, xlab = xlab, ...)
   } else if ( by=="col" && mean == FALSE ){
-    Emissions <- as.Emissions(colSums(e))
-    graphics::plot(Emissions, type="l",xlab = xlab, ...)
+    Emission <- Emissions.default(colSums(e))
+    graphics::plot(Emission, type="l",xlab = xlab, ...)
   } else if ( by=="col" && mean == TRUE ){
     avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
     units(avage) <- with(units::ud_units, g/h)
-    Emissions <- as.Emissions(colSums(e))
-    graphics::plot(Emissions,xlab = xlab, type="l", main=paste(deparse(substitute(e))), ...)
+    Emission <- Emissions.default(colSums(e))
+    graphics::plot(Emission,xlab = xlab, type="l",
+                   main=paste(deparse(substitute(e))), ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
   } else if (by=="streets" && mean == FALSE){
-    Emissions <- as.Emissions(rowSums(e))
-    graphics::plot(Emissions, type="l", xlab = xlab, ...)
+    Emission <- Emissions.default(rowSums(e))
+    graphics::plot(Emission, type="l", xlab = xlab, ...)
   } else if (by=="streets" && mean == TRUE){
     avveh <- mean(rowSums(e), na.rm=T)
-    Emissions <- as.Emissions(rowSums(e))
-    graphics::plot(Emissions, xlab = xlab, type="l", main=paste(deparse(substitute(e))), ...)
+    Emission <- Emissions.default(rowSums(e))
+    graphics::plot(Emission, xlab = xlab, type="l",
+                   main=paste(deparse(substitute(e))), ...)
     graphics::abline(h =  avveh, col="red")
     cat("\nAverage = ",round(avveh,2))
   }

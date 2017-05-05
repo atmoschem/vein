@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.EmissionFactors.R
 \name{summary.EmissionFactors}
 \alias{summary.EmissionFactors}
-\title{Summary of EmissionFactors}
+\title{Summary}
 \usage{
 summary.EmissionFactors(ef)
 }
@@ -17,6 +17,9 @@ The object with class "EmissionFactors" is esentially a
 data.frame with columns as type of vehicles and rows as age. The summary
 method considers this by arguments by, mean and default to produce summaries
 the information of EmissionFactors in a helpful way.
+}
+\details{
+Summary of EmissionFactors
 }
 \examples{
 \dontrun{

@@ -2,9 +2,9 @@
 % Please edit documentation in R/plot.EmissionsArray.R
 \name{plot.EmissionsArray}
 \alias{plot.EmissionsArray}
-\title{Plot of EmissionsArray}
+\title{plot}
 \usage{
-\method{plot}{Vehicles}(e, by = "day", xlab = "Index", ...)
+plot.EmissionsArray(e, by = "day", xlab = "Index", ...)
 }
 \arguments{
 \item{e}{Object of class "EmissionsArray"}
@@ -28,6 +28,9 @@ with the difference that here the same information is ploted. The
 dimensions of must be number of streets, number of vehicle categories,
 number of hours and number of days. This functions first performs an
 \code{\link{apply}} over the array
+}
+\details{
+Plot of EmissionsArray
 }
 \examples{
 \dontrun{

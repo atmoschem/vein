@@ -15,8 +15,12 @@
 #' @param by Character to indicate the summary
 #'
 #' @seealso \code{\link{summary}}
-#' @export
 #' @name summary.Emissions
+#' @rdname summary.Emissions
+#' @name summary.Emissions
+#' @title Summary
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -44,6 +48,7 @@
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile, hour = 24, day = 7, array = F)
 #'}
+#' @export
 summary.Emissions <- function(e, by = "col") {
   if(by =="col") {
     avemi <- sum(seq(1,ncol(e))*colSums(e)/sum(e))

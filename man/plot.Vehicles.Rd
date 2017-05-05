@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.Vehicles.R
 \name{plot.Vehicles}
 \alias{plot.Vehicles}
-\title{Plot of Vehicles}
+\title{plot}
 \usage{
 plot.Vehicles(veh, by = "col", mean = TRUE, xlab = "Index", ...)
 }
@@ -26,6 +26,9 @@ the weighted mean with and when by is "streets" the mean.}
 The object with class "Vehicles" is esentially a data.frame
 with columns as type of vehicles and rows as streets. Therefore the plot
 seeks to inform the total number by type of vehicles
+}
+\details{
+Plot of Vehicles
 }
 \examples{
 \dontrun{

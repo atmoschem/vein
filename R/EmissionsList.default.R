@@ -11,10 +11,9 @@
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param time Character to determine the time unit. Default is "h"
 #' @param ... ignored
-#' @export
-#' @rdname as.EmissionsList
-#' @name as.EmissionsList
-#' @title as.EmissionsList
+#' @rdname EmissionsList.default
+#' @name EmissionsList.default
+#' @title EmissionsList
 #' @aliases NULL
 NULL
 #' @examples \dontrun{
@@ -47,7 +46,8 @@ NULL
 #' emi <- as.Emissions(E_CO[ , , 1, 1])
 #' class(emi)
 #' }
-as.EmissionsList <- function(e, mass = "g", time = "h", ...) {
+#' @export
+EmissionsList.default <- function(e, mass = "g", time = "h", ...) {
   if ( !is.list(e) ) {
     stop("Class of e must b 'list'")
   } else if ( is.list(e) && is.numeric(e[[1]]) ){

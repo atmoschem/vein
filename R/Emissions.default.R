@@ -11,10 +11,9 @@
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param time Character to determine the time unit. Default is "h"
 #' @param ... ignored
-#' @export
-#' @rdname as.Emissions
-#' @name as.Emissions
-#' @title as.Emissions
+#' @rdname Emissions.default
+#' @name Emissions.default
+#' @title Emissions
 #' @aliases NULL
 NULL
 #' @examples \dontrun{
@@ -47,7 +46,8 @@ NULL
 #' emi <- as.Emissions(E_CO[ , , 1, 1])
 #' class(emi)
 #' }
-as.Emissions <- function(e, mass = "g", time = "h", ...) {
+#' @export
+Emissions.default <- function(e, mass = "g", time = "h", ...) {
   if ( is.matrix(e) ) {
     ex <- as.data.frame(e)
     for(i in 1:ncol(ex)){

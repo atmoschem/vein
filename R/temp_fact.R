@@ -19,7 +19,7 @@ temp_fact <- function(q, pro) {
   if (missing(q) | is.null(q)) {
     stop("No traffic data")
   } else {
-   df <- as.Vehicles(as.matrix(q) %*% matrix(unlist(pro), nrow=1))
+   df <- Vehicles.default(as.matrix(q) %*% matrix(unlist(pro), nrow=1))
   }
   return(df)
 }

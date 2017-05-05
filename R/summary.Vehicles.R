@@ -16,8 +16,8 @@
 #' \code{\link{summary.data.frame}}
 #'
 #' @seealso \code{\link{summary}}
-#' @export
-#' @name summary.Vehicles
+#' @name summary
+#' @rdname summary.Vehicles
 #' @examples \dontrun{
 #' data(net)
 #' lt <- as.Vehicles(net$hdv)
@@ -30,6 +30,7 @@
 #' summary(LT_B5, by="all")
 #' summary(LT_B5, by="default")
 #' }
+#' @export
 summary.Vehicles <- function(veh, by = "col") {
   if(by =="col") {
     avage <- sum(seq(1,ncol(veh))*colSums(veh)/sum(veh))

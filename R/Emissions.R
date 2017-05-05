@@ -1,16 +1,10 @@
-#' Generic function for lass "Emissions"
+#' Generic function Emissions
 #'
-#' @description Generic function for class "Emissions"
+#' @description Generic function
 #'
-#' @return Objects of class "Emissions" or "units"
-#'
-#' @param e Object which can be "matrix", "data.frame" or "numeric"
+#' @param e object
 #' @param ... ignored
-#'
-#' @rdname Emissions
-#' @name Emissions
-#' @title Emissions
 #' @export
-Emissions <- function(e, ...) {
+Emissions <- function(e, ...){
   UseMethod("Emissions", e)
 }

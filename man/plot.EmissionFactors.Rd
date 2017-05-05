@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.EmissionFactors.R
 \name{plot.EmissionFactors}
 \alias{plot.EmissionFactors}
-\title{Plot of EmissionFactors}
+\title{plot}
 \usage{
 plot.EmissionFactors(ef, xlab = "Index", ...)
 }
@@ -19,6 +19,9 @@ data.frame with columns as type of vehicles and rows as age. Therefore plot
 seeks to inform the emission factor producing a panel of plots of emission
 factors, each panel to each type of vehicle. When the emission factors
 are functions, other methods should be used.
+}
+\details{
+Plot of EmissionFactors
 }
 \examples{
 \dontrun{
