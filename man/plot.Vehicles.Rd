@@ -4,7 +4,7 @@
 \alias{plot.Vehicles}
 \title{Plot of Vehicles}
 \usage{
-plot.Vehicles(veh, by = "col", mean = TRUE, xlab = NULL, ...)
+plot.Vehicles(veh, by = "col", mean = TRUE, xlab = "Index", ...)
 }
 \arguments{
 \item{veh}{An object with class "Vehicles"}

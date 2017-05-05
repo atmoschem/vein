@@ -22,7 +22,7 @@
 #' LT_B5 <- age_hdv(x = net$ldv,name = "LT_B5")
 #' graphics::plot(colSums(LT_B5), xlab = "c")
 #' }
-plot.Vehicles <- function(veh, by = "col", mean = TRUE, xlab = NULL, ...) {
+plot.Vehicles <- function(veh, by = "col", mean = TRUE, xlab = "Index", ...) {
   if (by == "default") {
     graphics::plot.default(veh, xlab = xlab, ...)
   } else if (by=="col" && mean == FALSE){
