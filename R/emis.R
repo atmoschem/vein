@@ -27,7 +27,7 @@
 #' }
 emis <- function (veh, lkm, ef, speed, agemax, profile, hour = 1, day = 1,
                   array = F) {
-  veh <- as.numeric(veh)
+  veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)
   if(array == F){
   lista <- lapply(1:day,function(j){
