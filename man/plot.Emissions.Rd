@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.Emissions.R
 \name{plot.Emissions}
 \alias{plot.Emissions}
-\title{plot}
+\title{Plot of Emissions}
 \usage{
 plot.Emissions(e, by = "col", mean = F, xlab = "Index", ...)
 }
@@ -26,9 +26,6 @@ the weighted mean with and when by is "streets" the mean.}
 The object with class "Emissions" is esentially a data.frame
 with columns as type of vehicles and rows as streets. Therefore the plot
 seeks to inform the total number by type of vehicles
-}
-\details{
-Plot of Emissions
 }
 \examples{
 \dontrun{
