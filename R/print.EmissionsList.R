@@ -1,21 +1,5 @@
-#' Printing class "Emissionslist"
-#'
-#' @description A simple method for printing objects with class "EmissionsList".
-#' It prints \code{\link{head}} of the first numeric element of the list.
-#'
-#' @param e Object with class "EmissionsList"
-#' @param default when T call method print.listof
-#' \code{\link{print.listof}}. When F returns messages with list structure
-#' @param ... ignored
-#' @return Print method
-#' @rdname print.EmissionsList
 #' @export
-EmissionsList <- function(e, ...) {
-  UseMethod("EmissionsList", e)
-}
-#' @examples \dontrun{
-#' # Do not run
-#' }
+#' @name print.EmissionsList
 print.EmissionsList <- function(e, default = F) {
   if ( default == TRUE ) {
     print.listof(e)

@@ -7,21 +7,19 @@
 #'
 #' @param spd Object of class "Speed"
 #' @param by Character that determines the type of plot. It accept the values:
-#' "col", "streets" and "default".
-#' When by is "col" it is shown a plot of the mean of the columns
-#' (See \code{\link{colMeans}}) and also the standard deviation.
-#' When by is "streets" performs  sum of the streets via \code{\link{rowSums}}.
-#' When by is "default" it plots the default method for plot
-#' (See \code{\link{plot.default}}).
+#' "col", "streets" and "default". When by is "col" it is shown a plot of the
+#' mean of the columns (See \code{\link{colMeans}}) and also the standard
+#' deviation. When by is "streets" performs  sum of the streets via
+#' \code{\link{rowSums}}. When by is "default" it plots the default method
+#' for plot (See \code{\link{plot.default}}).
 #' @param mean a logical value. When mean is TRUE and by is "col" it adds
 #' the weighted mean with and when by is "streets" the mean.
+#' @param distance Character specifying the units for distance. Default is "km"
+#' @param time Character specifying the units for time Default is "h"
+#' @param xlab xlab
 #' @param ... ignored
-#' @rdname plot.Speed
-#' @return Plot Speed class
 #' @export
-Speed <- function(spd, ...) {
-  UseMethod("Speed", spd)
-}
+#' @name plot.Speed
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -29,20 +27,16 @@ Speed <- function(spd, ...) {
 #' class(pcw)
 #' df <- netspeed(pcw, net$ps,net$ffs, net$capacity, net$lkm, alpha = 1,isList=F)
 #' class(df)
-#' plot(df$S1)
-#' plot(df, by = "col", mean=F, xlab="test")
-#' plot(df, by="streets", mean=F)
-#' plot(df, by="streets", mean=T)
 #' }
-plot.Speed <- function(spd, by = "col", mean = TRUE, dist = "km", time="h",
-                       xlab = NULL, ...) {
+plot.Speed <- function(spd, by = "col", mean = TRUE, distance = "km", time="h",
+                       xlab = "Index", ...) {
   if ( by == "default" ) {
     graphics::plot.default(spd, xlab = xlab, ...)
   } else if ( by == "col" && mean == FALSE ){
     Speed <- as.Speed(colMeans(spd, na.rm = T))
     plot(Speed, xlab = xlab, type = "l")
   } else if ( by == "col" && mean == TRUE ){
-    Speed <- as.Speed(colMeans(spd), distance = dist, time=time)
+    Speed <- as.Speed(colMeans(spd), distance = distance, time = time)
     SpeedSD <- as.Speed(unlist(lapply(spd,stats::sd)))
     smin <- Speed - SpeedSD
     smax <- Speed + SpeedSD
@@ -53,11 +47,11 @@ plot.Speed <- function(spd, by = "col", mean = TRUE, dist = "km", time="h",
     graphics::lines(smin, ylim=c(min(smin),max(smax)), col="grey", ...)
     graphics::lines(smax, ylim=c(min(smin),max(smax)), col="grey", ...)
   } else if ( by == "streets" && mean == FALSE ){
-    Speed <- as.Speed(rowMeans(spd), distance = dist, time=time)
+    Speed <- as.Speed(rowMeans(spd), distance = distance, time = time)
     plot(Speed, xlab = xlab, type="l", ...)
   } else if ( by=="streets" && mean == TRUE ){
     avveh <- mean(rowMeans(spd), na.rm=T)
-    Speed <- as.Speed(rowMeans(spd), distance = dist, time=time)
+    Speed <- as.Speed(rowMeans(spd), distance = distance, time = time)
     graphics::plot(Speed,type="l", xlab = xlab, main=paste(deparse(substitute(spd))), ...)
     graphics::abline(h =  avveh, col = "red")
   }

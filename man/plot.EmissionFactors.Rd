@@ -2,23 +2,16 @@
 % Please edit documentation in R/plot.EmissionFactors.R
 \name{plot.EmissionFactors}
 \alias{plot.EmissionFactors}
-\alias{EmissionFactors}
-\alias{plot.EmissionFactors}
-\title{Plot for EmissionFactors}
+\title{Plot of EmissionFactors}
 \usage{
-EmissionFactors(ef, ...)
-
 plot.EmissionFactors(ef, xlab = "Index", ...)
 }
 \arguments{
 \item{ef}{Object with class "EmissionFactors"}
 
-\item{...}{ignored}
-
 \item{xlab}{Labs for horizontal axe}
-}
-\value{
-Plot Speed class
+
+\item{...}{ignored}
 }
 \description{
 The object with class "EmissionFactors" is esentially a
@@ -26,9 +19,6 @@ data.frame with columns as type of vehicles and rows as age. Therefore plot
 seeks to inform the emission factor producing a panel of plots of emission
 factors, each panel to each type of vehicle. When the emission factors
 are functions, other methods should be used.
-}
-\details{
-Plot of EmissionFactors
 }
 \examples{
 \dontrun{

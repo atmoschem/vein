@@ -8,7 +8,6 @@
 #' number of hours and number of days. This functions first performs an
 #' \code{\link{apply}} over the array
 #'
-#' @return Plot for class "EmissionsArray"
 #' @param e Object of class "EmissionsArray"
 #' @param by Character value. When by is "day" it returns a dataframe with
 #' columns mean, standard deviation (sd), min and max emissions based on hoyly
@@ -18,13 +17,10 @@
 #' considering each type of vehicle
 #' @param ... ignored
 #' @param xlab xlab for the plot
+#'
 #' @seealso \code{\link{apply}}
-#' @rdname plot.EmissionsArray
-#' @name plot.EmissionsArray
 #' @export
-EmissionsArray <- function(e, ...) {
-  UseMethod("EmissionsArray", e)
-}
+#' @name plot.EmissionsArray
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -55,6 +51,8 @@ EmissionsArray <- function(e, ...) {
 #' plot(E_CO, by="hour")
 #' plot(E_CO, by="col")
 #'}
+#' @method plot Vehicles
+#' @export
 plot.EmissionsArray <- function(e, by = "day", xlab = "Index", ...) {
   if ( class(e) != "EmissionsArray" && !is.array(e) ) {
     stop("Not an EmissionsArray")

@@ -5,15 +5,14 @@
 #' the list and indicating the summary of the first numeric element
 #'
 #' @return Summary for class "EmissionsList"
+
+#' @param e Objecto of class "EmissionsArray"
 #' @param default Logical value. Whe  default is TRUE it returns the default
 #' summary. When FALSE it return the structure of the list
+#'
 #' @seealso \code{\link{head}}
-#' @param ... ignored
-#' @rdname summary.EmissionsList
 #' @export
-EmissionsList <- function(e, ...) {
-  UseMethod("EmissionsList", e)
-}
+#' @name summary.EmissionsList
 #' @examples \dontrun{
 #' #Do not run
 #'}

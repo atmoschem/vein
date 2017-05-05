@@ -2,18 +2,12 @@
 % Please edit documentation in R/summary.EmissionsArray.R
 \name{summary.EmissionsArray}
 \alias{summary.EmissionsArray}
-\alias{EmissionsArray}
-\alias{summary.EmissionsArray}
 \title{Summary of EmissionsArray}
 \usage{
-EmissionsArray(e, ...)
-
 summary.EmissionsArray(e, by = "day")
 }
 \arguments{
 \item{e}{Objecto of class "EmissionsArray"}
-
-\item{...}{ignored}
 
 \item{by}{Character value. When by is "day" it returns a dataframe with
 columns mean, standard deviation (sd), min and max emissions based on hoyly

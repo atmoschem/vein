@@ -6,6 +6,7 @@
 #' the information of vehicles in a helpful way.
 #'
 #' @return Summary for vehicle classes
+#'
 #' @param spd Object of class Speed
 #' @param by This parameter allows 4 values: "col", "streets", "all" and
 #' "default" "col" returns a summary of the sum of the columns
@@ -13,13 +14,10 @@
 #' via \code{\link{rowSums}}, "all" returns a simple summary to each combunation
 #' columns x street and "default" the default summary.data.frame via
 #' \code{\link{summary.data.frame}}
+#'
 #' @seealso \code{\link{summary}}
-#' @rdname summary.Speed
-#' @param ... ignored
 #' @export
-Speed <- function(spd, ...) {
-UseMethod("Speed", spd)
-}
+#' @name summary.Speed
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)

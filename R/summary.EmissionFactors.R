@@ -4,17 +4,14 @@
 #' data.frame with columns as type of vehicles and rows as age. The summary
 #' method considers this by arguments by, mean and default to produce summaries
 #' the information of EmissionFactors in a helpful way.
-#' @title Summary for EmissionFactors
+#'
 #' @return Summary for vehicle classes
+#'
 #' @param ef Object of class EmissionFactors
-#' @param ... ignored
+#'
 #' @seealso \code{\link{summary}}
-#' @rdname summary.EmissionFactors
-#' @title  Summary for EmisionFactors
 #' @export
-EmissionsFactors <- function(ef, ...) {
-  UseMethod("EmissionsFactors", ef)
-}
+#' @name summary.EmissionFactors
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)

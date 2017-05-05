@@ -5,18 +5,12 @@
 #' seeks to inform the emission factor producing a panel of plots of emission
 #' factors, each panel to each type of vehicle. When the emission factors
 #' are functions, other methods should be used.
-#' @title Plot for EmissionFactors
+#'
 #' @param ef Object with class "EmissionFactors"
 #' @param xlab Labs for horizontal axe
 #' @param ... ignored
-#' @return Plot Speed class
-#' @rdname plot.EmissionFactors
-#' @name plot.EmissionFactors
-#' @title  Plot for EmisionFactors
 #' @export
-EmissionFactors <- function(ef, ...) {
-  UseMethod("EmissionFactors", ef)
-}
+#' @name plot.EmissionFactors
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)

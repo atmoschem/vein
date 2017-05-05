@@ -2,18 +2,12 @@
 % Please edit documentation in R/summary.Emissions.R
 \name{summary.Emissions}
 \alias{summary.Emissions}
-\alias{Emissions}
-\alias{summary.Emissions}
 \title{Summary of Emissions}
 \usage{
-Emissions(e, ...)
-
 summary.Emissions(e, by = "col")
 }
 \arguments{
 \item{e}{Object of class "Emissions"}
-
-\item{...}{ignored}
 
 \item{by}{Character to indicate the summary}
 }

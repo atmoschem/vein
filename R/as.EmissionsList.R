@@ -1,32 +1,22 @@
-#' Construction function for class "Emissions", "EmissionsList" or
-#' "EmissionsArray"
+#' Construction function for class "EmissionsList"
 #'
-#' @description Returns a tranformed object with class "Emissions",
-#' "Emissionslist" or "EmissionsArray". This functions has arguments to change
-#' the units. The type of objects supported are of classes "matrix",
-#' "data.frame", "list", "array" and "numeric". If the class of the object is "matrix"
-#' this function returns a dataframe. When then object is a list with numerics,
-#' or a nested list, it returns an "EmissionsList".
+#' @description Returns a tranformed object with class "EmissionsList".
+#' This functions has arguments to change the units the numeric elements of the
+#' list.
 #'
-#' @param ... ignored
-#' @description Returns a tranformed object with class "Emissions",
-#' "Emissionslist" or "EmissionsArray". This functions has arguments to change
-#' the units. The type of objects supported are of classes "matrix",
-#' "data.frame", "list", "array" and "numeric". If the class of the object is "matrix"
-#' this function returns a dataframe. When then object is a list with numerics,
-#' or a nested list, it returns an "EmissionsList".
-#' @param e object with class "Emissions", "EmissionsList" or "EmissionsArray"
+#' @return Objects of class "EmissionsList" and numeric elements as "units"
+#'
+#' @param e object with class "list" or a nested list with eventually numeric
+#' elements
 #' @param mass Character to determine the unit of the mass. Default is "g"
 #' @param time Character to determine the time unit. Default is "h"
+#' @param ... ignored
+#' @export
 #' @rdname as.EmissionsList
-#' @return Objects of class "Emissions", "EmissionsList", "EmissionsArray" or
-#' "units"
 #' @name as.EmissionsList
 #' @title as.EmissionsList
-#' @export
-EmissionList <- function(e, ...) {
-  UseMethod("EmissionList", e)
-}
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -56,24 +46,10 @@ EmissionList <- function(e, ...) {
 #' class(E_CO)
 #' emi <- as.Emissions(E_CO[ , , 1, 1])
 #' class(emi)
-#' summary(emi)
-#' summary(emi, by="streets")
-#' summary(emi, by="all")
-#' summary(emi, by="default")
 #' }
-as.Emissions <- function(e, mass = "g", time = "h", ...) {
-  if ( is.matrix(e) ) {
-    ex <- as.data.frame(e)
-    for(i in 1:ncol(ex)){
-      ex[,i] <- ex[,i] * units::parse_unit(paste0(mass," ", time,"-1"))
-    }
-    class(ex) <- c("Emissions", class(ex))
-  } else if (is.data.frame(e)) {
-    for(i in 1:ncol(e)){
-      e[,i] <- e[,i] * units::parse_unit(paste0(mass," ", time,"-1"))
-    }
-    ex <- e
-    class(ex) <- c("Emissions",class(e))
+as.EmissionsList <- function(e, mass = "g", time = "h", ...) {
+  if ( !is.list(e) ) {
+    stop("Class of e must b 'list'")
   } else if ( is.list(e) && is.numeric(e[[1]]) ){
     ex <-  lapply(1:length(e), function(i)  {
       e[[i]] <- e[[i]] * units::parse_unit(paste0(mass," ", time, "-1"))
@@ -96,11 +72,6 @@ as.Emissions <- function(e, mass = "g", time = "h", ...) {
     class(ex[[1]][[1]]) <- c("EmissionsList",class(e))
     class(ex[[1]]) <- c("EmissionsList",class(e))
     class(ex) <- c("EmissionsList",class(e))
-  } else if ( is.array(e) ) {
-    ex <- e
-    class(ex) <- c("EmissionsArray",class(e))
-  } else if (is.numeric(e)) {
-    ex <- e * units::parse_unit(paste0(mass," ", time, "-1"))
   }
   return(ex)
 }

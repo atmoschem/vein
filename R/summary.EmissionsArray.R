@@ -10,6 +10,7 @@
 #' @return Summary for class "EmissionsArray". It returns a dataframe with
 #' the mean values, standard deviation, min and max according the specification
 #' in the argument 'by'
+#'
 #' @param e Objecto of class "EmissionsArray"
 #' @param by Character value. When by is "day" it returns a dataframe with
 #' columns mean, standard deviation (sd), min and max emissions based on hoyly
@@ -17,14 +18,10 @@
 #' hourly mean, sd, min and max considering all day sof the week. When by is
 #' "col" it returns a data.frame with mean, sd, min and max hourly emissions
 #' considering each type of vehicle
-#' @param ... ignored
+#'
 #' @seealso \code{\link{apply}}
-#' @rdname summary.EmissionsArray
-#' @name summary.EmissionsArray
 #' @export
-EmissionsArray <- function(e, ...) {
-  UseMethod("EmissionsArray", e)
-}
+#' @name summary.EmissionsArray
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)

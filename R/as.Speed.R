@@ -7,16 +7,19 @@
 #'  is applied to numeric vectors it add class "units".
 #'
 #' @return Constructor for class "Speed" or "units"
+#'
 #' @param ... ignored
 #' @param spd Object with class "Speed"
 #' @param distance Character specifying the units for distance. Default is "km"
 #' @param time Character specifying the units for time Default is "h"
-#' @seealso \code{\link{units}}
-#' @rdname as.Speed
 #' @export
-Speed <- function(spd, ...) {
-  UseMethod("Speed", spd)
-}
+#' @seealso \code{\link{units}}
+#'
+#' @rdname as.Speed
+#' @name as.Speed
+#' @title as.Speed
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' speed <- as.Speed(net$ps)

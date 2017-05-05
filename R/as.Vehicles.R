@@ -8,14 +8,17 @@
 #'  veh must be an array in the total fleet at each street and dimensions
 #'  total fleet, hours and days
 #'
-#' @param ... ignored
-#' @param veh Object with class "Vehicles"
 #' @return Objects of class "Vehicles" or "units"
-#' @rdname as.Vehicles
+#'
+#' @param veh Object with class "Vehicles"
+#' @param ... ignored
+#'
 #' @export
-Vehicles <- function(veh, ...) {
-  UseMethod("Vehicles", veh)
-}
+#' @rdname as.Vehicles
+#' @name as.Vehicles
+#' @title as.Vehicles
+#' @aliases NULL
+NULL
 #' @examples \dontrun{
 #' data(net)
 #' lt <- as.Vehicles(net$hdv)

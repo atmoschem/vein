@@ -10,16 +10,13 @@
 #' summary as data.frame vua \code{\link{summary.data.frame}}
 #'
 #' @return Summary for class "Emissions"
+#'
 #' @param e Object of class "Emissions"
 #' @param by Character to indicate the summary
+#'
 #' @seealso \code{\link{summary}}
-#' @param ... ignored
-#' @rdname summary.Emissions
-#' @name summary.Emissions
 #' @export
-Emissions <- function(e, ...) {
-  UseMethod("Emissions", e)
-}
+#' @name summary.Emissions
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)

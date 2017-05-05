@@ -2,18 +2,12 @@
 % Please edit documentation in R/plot.EmissionsArray.R
 \name{plot.EmissionsArray}
 \alias{plot.EmissionsArray}
-\alias{EmissionsArray}
-\alias{plot.EmissionsArray}
 \title{Plot of EmissionsArray}
 \usage{
-EmissionsArray(e, ...)
-
-plot.EmissionsArray(e, by = "day", xlab = "Index", ...)
+\method{plot}{Vehicles}(e, by = "day", xlab = "Index", ...)
 }
 \arguments{
 \item{e}{Object of class "EmissionsArray"}
-
-\item{...}{ignored}
 
 \item{by}{Character value. When by is "day" it returns a dataframe with
 columns mean, standard deviation (sd), min and max emissions based on hoyly
@@ -23,9 +17,8 @@ hourly mean, sd, min and max considering all day sof the week. When by is
 considering each type of vehicle}
 
 \item{xlab}{xlab for the plot}
-}
-\value{
-Plot for class "EmissionsArray"
+
+\item{...}{ignored}
 }
 \description{
 Plot of the object with class "EmissionsArray".

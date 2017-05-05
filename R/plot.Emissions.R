@@ -6,22 +6,17 @@
 #'
 #' @param e An object with class "Emissions"
 #' @param by Character that determines the type of plot. It accept the values:
-#' "col", "streets" and "default".
-#' When by is "col" it is shown a plot of the sum of the columns
-#' (See \code{\link{colSums}}).
-#' When by is "streets" performs  sum of the streets via \code{\link{rowSums}}.
-#' When by is "default" it plots the default method for plot
-#' (See \code{\link{plot.default}}).
+#' "col", "streets" and "default". When by is "col" it is shown a plot of the
+#' sum of the columns (See \code{\link{colSums}}). When by is "streets" performs
+#' sum of the streets via \code{\link{rowSums}}. When by is "default" it plots
+#' the default method for plot (See \code{\link{plot.default}}).
 #' @param mean a logical value. When mean is TRUE and by is "col" it adds
 #' the weighted mean with and when by is "streets" the mean.
+#' @param xlab xlab
 #' @param ... ignored
-#' @return Plot vehicles class
-#' @rdname plot.Emissions
-#' @name plot.Emissions
+#'
 #' @export
-Emissions <- function(e, ...) {
-  UseMethod("Emissions", e)
-}
+#' @name plot.Emissions
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -53,26 +48,26 @@ Emissions <- function(e, ...) {
 #' plot(as.Emissions(apply(E_CO, c(1,3), sum)), by="streets", mean = T)
 #' plot(as.Emissions(apply(E_CO, c(1,4), sum)), by="streets", mean = T)
 #' }
-plot.Emissions <- function(e, by = "col", mean = F, ...) {
+plot.Emissions <- function(e, by = "col", mean = F, xlab = "Index", ...) {
   if ( by == "default" ) {
-    graphics::plot.default(e, ...)
+    graphics::plot.default(e, xlab = xlab, ...)
   } else if ( by=="col" && mean == FALSE ){
     Emissions <- as.Emissions(colSums(e))
-    graphics::plot(Emissions, type="l")
+    graphics::plot(Emissions, type="l",xlab = xlab, ...)
   } else if ( by=="col" && mean == TRUE ){
     avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
     units(avage) <- with(units::ud_units, g/h)
     Emissions <- as.Emissions(colSums(e))
-    graphics::plot(Emissions, type="l", main=paste(deparse(substitute(e))), ...)
+    graphics::plot(Emissions,xlab = xlab, type="l", main=paste(deparse(substitute(e))), ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
   } else if (by=="streets" && mean == FALSE){
     Emissions <- as.Emissions(rowSums(e))
-    graphics::plot(Emissions, type="l", ...)
+    graphics::plot(Emissions, type="l", xlab = xlab, ...)
   } else if (by=="streets" && mean == TRUE){
     avveh <- mean(rowSums(e), na.rm=T)
     Emissions <- as.Emissions(rowSums(e))
-    graphics::plot(Emissions, type="l", main=paste(deparse(substitute(e))), ...)
+    graphics::plot(Emissions, xlab = xlab, type="l", main=paste(deparse(substitute(e))), ...)
     graphics::abline(h =  avveh, col="red")
     cat("\nAverage = ",round(avveh,2))
   }

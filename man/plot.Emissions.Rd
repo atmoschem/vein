@@ -2,32 +2,25 @@
 % Please edit documentation in R/plot.Emissions.R
 \name{plot.Emissions}
 \alias{plot.Emissions}
-\alias{Emissions}
-\alias{plot.Emissions}
 \title{Plot of Emissions}
 \usage{
-Emissions(e, ...)
-
-plot.Emissions(e, by = "col", mean = F, ...)
+plot.Emissions(e, by = "col", mean = F, xlab = "Index", ...)
 }
 \arguments{
 \item{e}{An object with class "Emissions"}
 
-\item{...}{ignored}
-
 \item{by}{Character that determines the type of plot. It accept the values:
-"col", "streets" and "default".
-When by is "col" it is shown a plot of the sum of the columns
-(See \code{\link{colSums}}).
-When by is "streets" performs  sum of the streets via \code{\link{rowSums}}.
-When by is "default" it plots the default method for plot
-(See \code{\link{plot.default}}).}
+"col", "streets" and "default". When by is "col" it is shown a plot of the
+sum of the columns (See \code{\link{colSums}}). When by is "streets" performs
+sum of the streets via \code{\link{rowSums}}. When by is "default" it plots
+the default method for plot (See \code{\link{plot.default}}).}
 
 \item{mean}{a logical value. When mean is TRUE and by is "col" it adds
 the weighted mean with and when by is "streets" the mean.}
-}
-\value{
-Plot vehicles class
+
+\item{xlab}{xlab}
+
+\item{...}{ignored}
 }
 \description{
 The object with class "Emissions" is esentially a data.frame
