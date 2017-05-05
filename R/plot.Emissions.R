@@ -15,12 +15,10 @@
 #' @param xlab xlab
 #' @param ... ignored
 #'
-#' @name plot
+#' @name plot.Emissions
 #' @rdname plot.Emissions
 #' @name plot.Emissions
-#' @title plot
-#' @aliases NULL
-NULL
+#' @aliases plot.Emissions
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
