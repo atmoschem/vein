@@ -1,5 +1,4 @@
 #' @export
-#' @name print.EmissionFactorsList
 print.EmissionFactorsList <- function(ef, default = F) {
   if ( default == TRUE ) {
     print.listof(ef)

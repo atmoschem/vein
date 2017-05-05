@@ -1,5 +1,4 @@
 #' @export
-#' @name print.EmissionsList
 print.EmissionsList <- function(e, default = F) {
   if ( default == TRUE ) {
     print.listof(e)

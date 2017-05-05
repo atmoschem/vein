@@ -1,5 +1,4 @@
 #' @export
-#' @name print.EmissionsArray
 print.EmissionsArray <- function(e, default = F) {
   if ( default == TRUE ) {
     print.default(e)

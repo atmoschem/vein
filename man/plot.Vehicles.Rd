@@ -32,6 +32,6 @@ seeks to inform the total number by type of vehicles
 # Do not run
 data(net)
 LT_B5 <- age_hdv(x = net$ldv,name = "LT_B5")
-plot(LT_B5)
+graphics::plot(colSums(LT_B5), xlab = "c")
 }
 }

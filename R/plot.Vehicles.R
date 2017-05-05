@@ -20,19 +20,19 @@
 #' # Do not run
 #' data(net)
 #' LT_B5 <- age_hdv(x = net$ldv,name = "LT_B5")
-#' plot(LT_B5)
+#' graphics::plot(colSums(LT_B5), xlab = "c")
 #' }
 plot.Vehicles <- function(veh, by = "col", mean = TRUE, xlab = NULL, ...) {
   if (by == "default") {
     graphics::plot.default(veh, xlab = xlab, ...)
   } else if (by=="col" && mean == FALSE){
     Veh <- as.Vehicles(colSums(veh))
-    return(NextMethod("plot", veh, xlab = xlab))
-    } else if (by=="col" && mean == TRUE){
+    graphics::plot(Veh, type="l",xlab = xlab, ...)
+  } else if (by=="col" && mean == TRUE){
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
     units(avage) <- with(units::ud_units, 1/h)
     Veh <- as.Vehicles(colSums(veh))
-    return(NextMethod("plot", veh, xlab = xlab))
+    graphics::plot(Veh, type="l",xlab = xlab, ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
   } else if (by=="streets" && mean == FALSE){
@@ -41,7 +41,7 @@ plot.Vehicles <- function(veh, by = "col", mean = TRUE, xlab = NULL, ...) {
   } else if (by=="streets" && mean == TRUE){
     avveh <- mean(rowSums(veh), na.rm=T)
     Veh <- as.Vehicles(rowSums(veh))
-    return(NextMethod("plot", veh, xlab = xlab))
+    graphics::plot(Veh, type="l",xlab = xlab, ...)
     graphics::abline(h =  avveh, col="red")
     cat("\nAverage = ",round(avveh,2))
   }
