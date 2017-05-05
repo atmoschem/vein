@@ -2,18 +2,28 @@
 % Please edit documentation in R/Speed.R
 \name{Speed}
 \alias{Speed}
-\title{Speed}
+\alias{print.Speed}
+\alias{summary.Speed}
+\alias{plot.Speed}
+\alias{print.Speed}
+\alias{summary.Speed}
+\alias{plot.Speed}
+\title{Construction function for class "Speed"}
 \usage{
-Speed(spd, distance = "km", time = "h", ...)
+Speed(x, ...)
+
+\method{print}{Speed}(x, ...)
+
+\method{summary}{Speed}(object, ...)
+
+\method{plot}{Speed}(x, ...)
 }
 \arguments{
-\item{spd}{Object with class "Speed"}
-
-\item{distance}{Character specifying the units for distance. Default is "km"}
-
-\item{time}{Character specifying the units for time Default is "h"}
+\item{x}{Object with class "data.frame", "matrix" or "numeric"}
 
 \item{...}{ignored}
+
+\item{object}{Object with class "Speed"}
 }
 \value{
 Constructor for class "Speed" or "units"
@@ -24,9 +34,6 @@ Returns a tranformed object with class "Speed" and units
  it is posibel to change the units of the speed to "m" to "s" for example.
  This function returns a dataframe with units for speed. When this function
  is applied to numeric vectors it add class "units".
-}
-\details{
-Construction function for class "Speed"
 }
 \examples{
 \dontrun{

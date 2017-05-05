@@ -2,19 +2,28 @@
 % Please edit documentation in R/EmissionsList.R
 \name{EmissionsList}
 \alias{EmissionsList}
-\title{EmissionsList}
+\alias{print.EmissionsList}
+\alias{summary.EmissionsList}
+\alias{plot.EmissionsList}
+\alias{print.EmissionsList}
+\alias{summary.EmissionsList}
+\alias{plot.EmissionsList}
+\title{Construction function for class "EmissionsList"}
 \usage{
-EmissionsList(e, mass = "g", time = "h", ...)
+EmissionsList(x, ...)
+
+\method{print}{EmissionsList}(x, ...)
+
+\method{summary}{EmissionsList}(object, ...)
+
+\method{plot}{EmissionsList}(x, ...)
 }
 \arguments{
-\item{e}{object with class "list" or a nested list with eventually numeric
-elements}
-
-\item{mass}{Character to determine the unit of the mass. Default is "g"}
-
-\item{time}{Character to determine the time unit. Default is "h"}
+\item{x}{object with class "EmissionList"}
 
 \item{...}{ignored}
+
+\item{object}{object with class "EmissionList"}
 }
 \value{
 Objects of class "EmissionsList" and numeric elements as "units"
@@ -23,9 +32,6 @@ Objects of class "EmissionsList" and numeric elements as "units"
 Returns a tranformed object with class "EmissionsList".
 This functions has arguments to change the units the numeric elements of the
 list.
-}
-\details{
-Construction function for class "EmissionsList"
 }
 \examples{
 \dontrun{

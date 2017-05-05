@@ -2,23 +2,34 @@
 % Please edit documentation in R/EmissionsArray.R
 \name{EmissionsArray}
 \alias{EmissionsArray}
-\title{EmissionsArray}
+\alias{print.EmissionsArray}
+\alias{summary.EmissionsArray}
+\alias{plot.EmissionsArray}
+\alias{print.EmissionsArray}
+\alias{summary.EmissionsArray}
+\alias{plot.EmissionsArray}
+\title{Construction function for class "EmissionsArray"}
 \usage{
-EmissionsArray(e, ...)
+EmissionsArray(x, ...)
+
+\method{print}{EmissionsArray}(x, ...)
+
+\method{summary}{EmissionsArray}(object, ...)
+
+\method{plot}{EmissionsArray}(x, ...)
 }
 \arguments{
-\item{e}{object with class "array'}
+\item{x}{Object with class "data.frame", "matrix" or "numeric"}
 
 \item{...}{ignored}
+
+\item{object}{object with class "EmissionsArray'}
 }
 \value{
 Objects of class "EmissionsArray"
 }
 \description{
 Returns a tranformed object with class "EmissionsArray".
-}
-\details{
-Construction function for class "EmissionsArray"
 }
 \examples{
 \dontrun{

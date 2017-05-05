@@ -2,21 +2,28 @@
 % Please edit documentation in R/EmissionFactorsList.R
 \name{EmissionFactorsList}
 \alias{EmissionFactorsList}
-\title{EmissionFactorsList}
+\alias{print.EmissionFactorsList}
+\alias{summary.EmissionFactorsList}
+\alias{plot.EmissionFactorsList}
+\alias{print.EmissionFactorsList}
+\alias{summary.EmissionFactorsList}
+\alias{plot.EmissionFactorsList}
+\title{Construction function for class "EmissionFactorsList"}
 \usage{
-EmissionFactorsList(ef, lfx = F, mass = "g", distance = "km", ...)
+EmissionFactorsList(x, ...)
+
+\method{print}{EmissionFactorsList}(x, ...)
+
+\method{summary}{EmissionFactorsList}(object, ...)
+
+\method{plot}{EmissionFactorsList}(x, ...)
 }
 \arguments{
-\item{ef}{Object with class "list"}
-
-\item{lfx}{Logical value to determine if the returning object will be
-a list of functions or not. Each function is dependent on the speed.}
-
-\item{mass}{Character to determine the unit of the mass. Default is "g"}
-
-\item{distance}{Character to determine the distance unit. Default is "km"}
+\item{x}{Object with class "list"}
 
 \item{...}{ignored}
+
+\item{object}{Object with class "EmissionFactorsList"}
 }
 \value{
 Objects of class "EmissionFactorsList"
@@ -24,9 +31,6 @@ Objects of class "EmissionFactorsList"
 \description{
 Returns a tranformed object with class"EmissionsFactorsList".
 This functions has arguments to change of the numeric elements of the list.
-}
-\details{
-Construction function for class "EmissionFactorsList"
 }
 \examples{
 \dontrun{

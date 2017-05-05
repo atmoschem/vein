@@ -9,13 +9,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+![vein](p2.png)
+
+
 ## Vein Package
 
 **V**ehicular **E**missions **IN**ventory **(VEIN)** model.  
 
+
+
 Read the DESCRIPTION file. You need several packages to run **vein**.
 
 - sp
+- units
 - raster
 - rgdal
 - rgeos
@@ -34,8 +40,6 @@ library(vein)
 demo("VEIN")
 ```
 
-I'm currently working in some classes.
-
 I've created the following classes:
 
 - Vehicles
@@ -46,14 +50,13 @@ I've created the following classes:
 - EmissionsArray
 - EmissionsList
 
-Each has a constructor function with the same name that return the class. I'm
-trying to create methods for the generic functions 'print', 'summary' and 
-'plot'.
+Each class has the methods print, plot and summary.
 
-The checking --as-cran `devtools::check(args = c('--as-cran'))` of the package shows 1 warning and 2 notes about the 
-**"S3 methods shown with full name in documentation object"**. I'm fixing that.
-Anyway, the demo runs fine but Classes are not methods of classes not fully
-implemented.
+The units are still not fully implemented and now i'm hunting bugs and erros
+in documentation. Regarding the documentation of the emission factors, it
+will be added several information.
+
+
 
 Isseus here please https://github.com/ibarraespinosa/vein/issues/
 

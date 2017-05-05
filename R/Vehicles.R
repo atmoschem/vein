@@ -10,14 +10,12 @@
 #'
 #' @return Objects of class "Vehicles" or "units"
 #'
-#' @param veh Object with class "Vehicles"
+#' @param x Object with class "Vehicles"
+#' @param object Object with class "Vehicles"
 #' @param ... ignored
 #'
 #' @rdname Vehicles
-#' @name Vehicles
-#' @title Vehicles
-#' @aliases NULL
-NULL
+#' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
 #' @examples \dontrun{
 #' data(net)
 #' lt <- as.Vehicles(net$hdv)
@@ -25,22 +23,60 @@ NULL
 #' plot(lt)
 #' }
 #' @export
-Vehicles <- function(veh, ...) {
+Vehicles <- function(x, ...) {
+  veh <- x
   if  ( is.matrix(veh) ) {
     veh <- as.data.frame(veh)
     for(i in 1:ncol(veh)){
-      units(veh[,i]) <- with(units::ud_units, 1/h)
+      veh[,i] <- veh[,i] * units::parse_unit(paste0(1," ", "h","-1"))
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.data.frame(veh) ) {
     for(i in 1:ncol(veh)){
-      units(veh[,i]) <- with(units::ud_units, 1/h)
+      veh[,i] <- veh[,i] * units::parse_unit(paste0(1," ", "h","-1"))
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if (is.array(veh) && length(dim(veh)) == 3 ) {
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.numeric(veh) ) {
-    units(veh) <- with(units::ud_units, 1/h)
+    veh <- veh *units::parse_unit(paste0(1," ", "h","-1"))
   }
   return(veh)
+}
+
+#' @rdname Vehicles
+#' @method print Vehicles
+#' @export
+print.Vehicles <- function(x, ...) {
+  cat("Result for Vehicles ")
+  print(unclass(x),  ...)
+}
+
+
+#' @rdname Vehicles
+#' @method summary Vehicles
+#' @export
+summary.Vehicles <- function(object, ...) {
+  veh <- object
+  avage <- sum(seq(1,ncol(veh))*colSums(veh)/sum(veh))
+  cat("Vehicles by columns in study area = \n")
+  print(summary(colSums(veh)) )
+  cat("\nAverage = ", round(avage,2))
+  summary(rowSums(veh))
+  avveh <- mean(rowSums(veh), na.rm=T)
+  cat("Vehicles by street in study area = \n")
+  print(summary(rowSums(veh)))
+  cat("\nAverage = ", round(avveh,2))
+}
+
+#' @rdname Vehicles
+#' @method plot Vehicles
+#' @export
+plot.Vehicles <- function(x,   ...) {
+  veh <- x
+    avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
+    Veh <- Vehicles(colSums(veh))
+    graphics::plot(Veh, type="l", ...)
+    graphics::abline(v = avage, col="red")
+    cat("\nAverage = ",round(avage,2))
 }

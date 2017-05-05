@@ -2,18 +2,28 @@
 % Please edit documentation in R/EmissionFactors.R
 \name{EmissionFactors}
 \alias{EmissionFactors}
-\title{EmissionFactors}
+\alias{print.EmissionFactors}
+\alias{summary.EmissionFactors}
+\alias{plot.EmissionFactors}
+\alias{print.EmissionFactors}
+\alias{summary.EmissionFactors}
+\alias{plot.EmissionFactors}
+\title{Construction function for class "EmissionFactors"}
 \usage{
-EmissionFactors(ef, mass = "g", distance = "km", ...)
+EmissionFactors(x, ...)
+
+\method{print}{EmissionFactors}(x, ...)
+
+\method{summary}{EmissionFactors}(object, ...)
+
+\method{plot}{EmissionFactors}(x, ...)
 }
 \arguments{
-\item{ef}{Object with class "EmissionFactors"}
-
-\item{mass}{Character to determine the unit of the mass. Default is "g"}
-
-\item{distance}{Character to determine the distance unit. Default is "km"}
+\item{x}{Object with class "data.frame", "matrix" or "numeric"}
 
 \item{...}{ignored}
+
+\item{object}{Object with class "EmissionFactors"}
 }
 \value{
 Objects of class "EmissionFactors" or "units"
@@ -22,9 +32,6 @@ Objects of class "EmissionFactors" or "units"
 Returns a tranformed object with class "EmissionFactors" and
 units g/km. This functions has arguments to change
 the units.
-}
-\details{
-Construction function for class "EmissionFactors"
 }
 \note{
 If the class ob the object is functions, as.EmissionFactors won't

@@ -2,14 +2,28 @@
 % Please edit documentation in R/Vehicles.R
 \name{Vehicles}
 \alias{Vehicles}
-\title{Vehicles}
+\alias{print.Vehicles}
+\alias{summary.Vehicles}
+\alias{plot.Vehicles}
+\alias{print.Vehicles}
+\alias{summary.Vehicles}
+\alias{plot.Vehicles}
+\title{Construction function for class "Vehicles"}
 \usage{
-Vehicles(veh, ...)
+Vehicles(x, ...)
+
+\method{print}{Vehicles}(x, ...)
+
+\method{summary}{Vehicles}(object, ...)
+
+\method{plot}{Vehicles}(x, ...)
 }
 \arguments{
-\item{veh}{Object with class "Vehicles"}
+\item{x}{Object with class "Vehicles"}
 
 \item{...}{ignored}
+
+\item{object}{Object with class "Vehicles"}
 }
 \value{
 Objects of class "Vehicles" or "units"
@@ -22,9 +36,6 @@ Returns a tranformed object with class "Vehicles" and units
  \code{\link{emis_paved}} needs veh to be an array, therefore in this case,
  veh must be an array in the total fleet at each street and dimensions
  total fleet, hours and days
-}
-\details{
-Construction function for class "Vehicles"
 }
 \examples{
 \dontrun{

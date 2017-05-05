@@ -4,13 +4,12 @@
 #'
 #' @return Objects of class "EmissionsArray"
 #'
-#' @param e object with class "array'
+#' @param x Object with class "data.frame", "matrix" or "numeric"
+#' @param object object with class "EmissionsArray'
 #' @param ... ignored
 #' @rdname EmissionsArray
-#' @name EmissionsArray
-#' @title EmissionsArray
-#' @aliases NULL
-NULL
+#' @aliases EmissionsArray print.EmissionsArray summary.EmissionsArray
+#' plot.EmissionsArray
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -40,7 +39,8 @@ NULL
 #' class(E_CO)
 #' }
 #' @export
-EmissionsArray <- function(e, ...) {
+EmissionsArray <- function(x, ...) {
+  e <- x
   if ( !is.array(e) ) {
     stop("Class of e must be 'array'")
   } else if ( is.array(e) ) {
@@ -48,4 +48,89 @@ EmissionsArray <- function(e, ...) {
     class(ex) <- c("EmissionsArray",class(e))
   }
   return(ex)
+}
+
+#' @rdname EmissionsArray
+#' @method print EmissionsArray
+#' @export
+print.EmissionsArray <- function(x,  ...) {
+  e <- x
+if (is.array(e)) {
+    cat("This EmissionsArray has\n", dim(e)[1], "streets\n",
+        dim(e)[2], "vehicle categories\n", dim(e)[3], "hours\n",
+        dim(e)[4], "days\n")
+    print(utils::head(e))
+  }
+}
+
+#' @rdname EmissionsArray
+#' @method summary EmissionsArray
+#' @export
+summary.EmissionsArray <- function(object, ...) {
+  e <- object
+  #   } else if ( by == "day" ) {
+  #   df <- as.data.frame(apply(e, c(3, 4), sum, na.rm=T))
+  #   names(df) <- c("Mon", "Tue","Wed", "Thu", "Fri", "Sat", "Sun")
+  #   # Total <- colSums(df)
+  #   Mean <- colMeans(df)
+  #   SD <- unlist(lapply(df, stats::sd))
+  #   Min <- unlist(lapply(df, min))
+  #   Max <- unlist(lapply(df, max))
+  #   dfx <- data.frame(Mean, SD, Min, Max)
+  #   cat("Daily emissions calculated from hourly totals\n")
+  #   return(dfx)
+  # } else if ( by == "hour" ) {
+    df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
+    names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
+    # Total <- rowSums(df)
+    Mean <- colMeans(df)
+    SD <- unlist(lapply(df, stats::sd))
+    Min <- unlist(lapply(df, min))
+    Max <- unlist(lapply(df, max))
+    dfx <- data.frame(Mean, SD, Min, Max)
+    cat("Hourly emissions\n")
+    return(dfx)
+  # } else if ( by == "col") {
+  #   df <- Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
+  #   names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("col",i)))
+  #   Mean <- colMeans(df)
+  #   SD <- unlist(lapply(df, stats::sd))
+  #   Min <- unlist(lapply(df, min))
+  #   Max <- unlist(lapply(df, max))
+  #   dfx <- data.frame(Mean, SD, Min, Max)
+  #   cat("Hourly emissions by column\n")
+  #   return(dfx)
+  # }
+}
+
+#' @rdname EmissionsArray
+#' @method plot EmissionsArray
+#' @export
+plot.EmissionsArray <- function(x, ...) {
+  e <- x
+  # } else if ( by == "day" ) {
+  #   df <- as.data.frame(apply(e, c(3, 4), sum, na.rm=T))
+  #   names(df) <- c("Mon", "Tue","Wed", "Thu", "Fri", "Sat", "Sun")
+  #   title <- "Daily emissions calculated from hourly totals"
+  # } else if ( by == "hour" ) {
+    df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
+    names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
+    title = "Hourly emissions"
+  # } else if ( by == "col") {
+  #   df <- Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
+  #   names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("col",i)))
+  #   title = "Emissions by column"
+  # }
+  Mean <- colMeans(df)
+  SD <- unlist(lapply(df, stats::sd))
+  Min <- unlist(lapply(df, min))
+  Max <- unlist(lapply(df, max))
+  dfx <- data.frame(Mean, SD, Min, Max)
+  graphics::plot(y = dfx$Mean, x = 1:nrow(dfx),
+                 ylim = c(min(dfx$Min), max(dfx$Max)),
+                 col = "red", type = "l",  ...)
+  graphics::lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
+  graphics::lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
+  graphics::points(dfx$Max, ylim = c(min(dfx$Min), max(dfx$Max)))
+  graphics::points(dfx$Min, ylim = c(min(dfx$Min), max(dfx$Max)))
 }

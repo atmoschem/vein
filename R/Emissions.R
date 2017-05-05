@@ -7,15 +7,11 @@
 #'
 #' @return Objects of class "Emissions" or "units"
 #'
-#' @param e object with class "data.frame", "matrix" or "numeric"
-#' @param mass Character to determine the unit of the mass. Default is "g"
-#' @param time Character to determine the time unit. Default is "h"
+#' @param x Object with class "data.frame", "matrix" or "numeric"
+#' @param object object with class "Emissions"
 #' @param ... ignored
 #' @rdname Emissions
-#' @name Emissions
-#' @title Emissions
-#' @aliases NULL
-NULL
+#' @aliases Emissions print.Emissions summary.Emissions plot.Emissions
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -43,23 +39,68 @@ NULL
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile, hour = 24, day = 7, array = T)
 #' class(E_CO)
-#' emi <- as.Emissions(E_CO[ , , 1, 1])
-#' class(emi)
+#' E_CO
+#' summary(E_CO)
+#' plot(E_CO)
 #' }
 #' @export
-Emissions <- function(e, mass = "g", time = "h", ...) {
+Emissions <- function(x, ...) {
+  e <- x
   if ( is.matrix(e) ) {
     ex <- as.data.frame(e)
     for(i in 1:ncol(ex)){
-      ex[,i] <- ex[,i] * units::parse_unit(paste0(mass," ", time,"-1"))
+      ex[,i] <- ex[,i] * units::parse_unit(paste0("g"," ", "h","-1"))
     }
     class(ex) <- c("Emissions", class(ex))
   } else if (is.data.frame(e)) {
     for(i in 1:ncol(e)){
-      e[,i] <- e[,i] * units::parse_unit(paste0(mass," ", time,"-1"))
+      e[,i] <- e[,i] * units::parse_unit(paste0("g"," ", "h","-1"))
     }
     ex <- e
     class(ex) <- c("Emissions",class(e))
   }
   return(ex)
+}
+
+#' @rdname Emissions
+#' @method print Emissions
+#' @export
+print.Emissions <- function(x, ...) {
+  cat("Result for Emissions ")
+  print(unclass(x),  ...)
+}
+
+#' @rdname Emissions
+#' @method summary Emissions
+#' @export
+summary.Emissions <- function(object, ...) {
+  e <- object
+  if(by =="col") {
+    avemi <- sum(seq(1,ncol(e))*colSums(e)/sum(e))
+    cat("Total emissions by column in study area = \n")
+    print(summary(colSums(e)))
+    cat("\nAverage = ", round(avemi,2))
+  } else if (by=="streets") {
+    cat("Emissions by street in study area = \n")
+    print(summary(rowSums(e)))
+  } else if (by == "all") {
+    cat("Emissions by column and street in study area = \n")
+    print(summary(unlist(e)))
+  } else if (by == "default") {
+    cat("Summary for column by street = \n")
+    print(summary.data.frame(e))
+  }
+}
+
+#' @rdname Emissions
+#' @method plot Emissions
+#' @export
+plot.Emissions <- function(x,  ...) {
+  e <- x
+    avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
+    Emission <- Emissions(colSums(e))
+    graphics::plot(Emission, type="l",
+                   main=paste(deparse(substitute(e))), ...)
+    graphics::abline(v = avage, col="red")
+    cat("\nAverage = ",round(avage,2))
 }

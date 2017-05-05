@@ -6,15 +6,12 @@
 #'
 #' @return Objects of class "EmissionFactors" or "units"
 #'
-#' @param ef Object with class "EmissionFactors"
-#' @param mass Character to determine the unit of the mass. Default is "g"
-#' @param distance Character to determine the distance unit. Default is "km"
+#' @param x Object with class "data.frame", "matrix" or "numeric"
+#' @param object Object with class "EmissionFactors"
 #' @param ... ignored
 #' @rdname EmissionFactors
-#' @name EmissionFactors
-#' @title EmissionFactors
-#' @aliases NULL
-NULL
+#' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors
+#' plot.EmissionFactors
 #' @note If the class ob the object is functions, as.EmissionFactors won't
 #' append another class
 #' @examples \dontrun{
@@ -27,24 +24,65 @@ NULL
 #' head(ef1)
 #' }
 #' @export
-EmissionFactors <- function(ef, mass = "g", distance = "km", ...) {
+EmissionFactors <- function(x, ...) {
+  ef <- x
   if ( is.matrix(ef) ) {
     ef <- as.data.frame(ef)
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i] * units::parse_unit(paste0(mass," ", distance, "-1"))
+      ef[,i] <- ef[,i] * units::parse_unit(paste0("g"," ", "km", "-1"))
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.data.frame(ef) ) {
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i] * units::parse_unit(paste0(mass," ", distance, "-1"))
+      ef[,i] <- ef[,i] * units::parse_unit(paste0("g"," ", "km", "-1"))
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.numeric(ef) ) {
-    units(ef) <- ef * units::parse_unit(paste0(mass," ", distance, "-1"))
+    ef <- ef * units::parse_unit(paste0("g"," ", "km", "-1"))
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   }
   return(efx)
+}
+
+#' @rdname EmissionFactors
+#' @method print EmissionFactors
+#' @export
+print.EmissionFactors <- function(x, ...) {
+  cat("Result for EmissionFactors")
+  print(unclass(x),  ...)
+}
+
+#' @rdname EmissionFactors
+#' @method summary EmissionFactors
+#' @export
+summary.EmissionFactors <- function(object, ...) {
+  cat("Mean EmissionFactors in study area = \n")
+  print(summary.data.frame(object))
+}
+
+#' @rdname EmissionFactors
+#' @method plot EmissionFactors
+#' @export
+plot.EmissionFactors <- function(x,  ...) {
+  ef <- x
+  if (mode(ef)=="numeric" || ncol(ef) > 12) {
+    graphics::plot(ef, ...)
+  } else if (ncol(ef) >= 2 & ncol(ef) <= 3) {
+    graphics::par(mfrow=c(1, ncol(ef)), tcl = -0.5)
+  } else if (ncol(ef) == 4) {
+    graphics::par(mfrow=c(2, 2), tcl = -0.5)
+  } else if (ncol(ef) >= 5 && ncol(ef) >= 6 ) {
+    graphics::par(mfrow=c(2, 3), tcl = -0.5)
+  } else if (ncol(ef) >= 7 && ncol(ef) >= 9 ) {
+    graphics::par(mfrow=c(3, 3), tcl = -0.5)
+  } else if (ncol(ef) >= 10 && ncol(ef) >= 12 ) {
+    graphics::par(mfrow=c(3, 4), tcl = -0.5)
+  }
+  for (i in 1:ncol(ef)) {
+    graphics::plot(ef[,i], type = "l", ...)
+  }
+  graphics::par(mfrow=c(1,1))
 }

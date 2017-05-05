@@ -2,18 +2,28 @@
 % Please edit documentation in R/Emissions.R
 \name{Emissions}
 \alias{Emissions}
-\title{Emissions}
+\alias{print.Emissions}
+\alias{summary.Emissions}
+\alias{plot.Emissions}
+\alias{print.Emissions}
+\alias{summary.Emissions}
+\alias{plot.Emissions}
+\title{Construction function for class "Emissions"}
 \usage{
-Emissions(e, mass = "g", time = "h", ...)
+Emissions(x, ...)
+
+\method{print}{Emissions}(x, ...)
+
+\method{summary}{Emissions}(object, ...)
+
+\method{plot}{Emissions}(x, ...)
 }
 \arguments{
-\item{e}{object with class "data.frame", "matrix" or "numeric"}
-
-\item{mass}{Character to determine the unit of the mass. Default is "g"}
-
-\item{time}{Character to determine the time unit. Default is "h"}
+\item{x}{Object with class "data.frame", "matrix" or "numeric"}
 
 \item{...}{ignored}
+
+\item{object}{object with class "Emissions"}
 }
 \value{
 Objects of class "Emissions" or "units"
@@ -23,9 +33,6 @@ Returns a tranformed object with class "Emissions".
 This functions has arguments to change the units. The type of objects
 supported are of classes "matrix", "data.frame" and "numeric". If the class
 of the object is "matrix" this function returns a dataframe.
-}
-\details{
-Construction function for class "Emissions"
 }
 \examples{
 \dontrun{
@@ -55,7 +62,8 @@ lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile, hour = 24, day = 7, array = T)
 class(E_CO)
-emi <- as.Emissions(E_CO[ , , 1, 1])
-class(emi)
+E_CO
+summary(E_CO)
+plot(E_CO)
 }
 }

@@ -8,17 +8,13 @@
 #'
 #' @return Constructor for class "Speed" or "units"
 #'
+#' @param x Object with class "data.frame", "matrix" or "numeric"
+#' @param object Object with class "Speed"
 #' @param ... ignored
-#' @param spd Object with class "Speed"
-#' @param distance Character specifying the units for distance. Default is "km"
-#' @param time Character specifying the units for time Default is "h"
 #' @seealso \code{\link{units}}
 #'
 #' @rdname Speed
-#' @name Speed
-#' @title Speed
-#' @aliases NULL
-NULL
+#' @aliases Speed print.Speed summary.Speed plot.Speed
 #' @examples \dontrun{
 #' data(net)
 #' speed <- as.Speed(net$ps)
@@ -26,27 +22,63 @@ NULL
 #' plot(speed)
 #' }
 #' @export
-Speed <- function(spd, distance = "km", time = "h", ...) {
+Speed <- function(x, ...) {
+  spd <- x
   if  (is.matrix(spd)) {
     spd <- as.data.frame(spd)
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i] * units::parse_unit(paste0(distance," ", time,"-1"))
+      spd[,i] <- spd[,i] * units::parse_unit(paste0("km"," ", "h","-1"))
     }
     class(spd) <- c("Speed",class(spd))
   } else if (is.data.frame(spd)) {
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i] * units::parse_unit(paste0(distance," ", time,"-1"))
+      spd[,i] <- spd[,i] * units::parse_unit(paste0("km"," ", "h","-1"))
     }
     class(spd) <- c("Speed",class(spd))
   } else if (is.list(spd) && is.list(spd[[1]])) {
     for (i in 1:length(spd) ) {
       for (j in 1:length(spd[[1]]) ) {
-        spd[[i]][[j]] <- spd[[i]][[j]] * units::parse_unit(paste0(distance," ", time,"-1"))
+        spd[[i]][[j]] <- spd[[i]][[j]] * units::parse_unit(paste0("km"," ", "h","-1"))
       }
     }
     #SpeedList?
   } else {
-    units(spd) <- spd * units::parse_unit(paste0(distance," ", time,"-1"))
+    units(spd) <- spd * units::parse_unit(paste0("km"," ", "h","-1"))
   }
   return(spd)
+}
+
+#' @rdname Speed
+#' @method print Speed
+#' @export
+print.Speed <- function(x, ...) {
+  cat("Result for Speed ")
+  print(unclass(x),  ...)
+}
+
+#' @rdname Speed
+#' @method summary Speed
+#' @export
+summary.Speed <- function(object,  ...) {
+  spd <- object
+    cat("Speeds by columns and street in study area = \n")
+    print(summary(unlist(spd)))
+}
+
+
+#' @rdname Speed
+#' @method plot Speed
+#' @export
+plot.Speed <- function(x, ...) {
+  spd <- x
+    Velocity <- Speed(colMeans(spd))
+    VelocitySD <- Speed(unlist(lapply(spd,stats::sd)))
+    smin <- Velocity - VelocitySD
+    smax <- Velocity + VelocitySD
+    avspd <- mean(Velocity, na.rm=T)
+    graphics::plot(Velocity, type = "l", main=paste(deparse(substitute(spd))),
+                    ylim=c(min(smin),max(smax)), ...)
+    graphics::abline(h = avspd, col="red")
+    graphics::lines(smin, ylim=c(min(smin),max(smax)), col="grey", ...)
+    graphics::lines(smax, ylim=c(min(smin),max(smax)), col="grey", ...)
 }
