@@ -12,8 +12,8 @@ License: MIT + file LICENSE
 URL: https://github.com/ibarraespinosa/vein
 BugReports: https://github.com/ibarraespinosa/vein/issues/
 LazyData: no
-Depends: sp,  units, R (>= 2.10)
-Imports:   graphics, raster, rgeos, rgdal, stats
+Depends: R (>= 2.10), sp
+Imports: graphics, raster, rgeos, stats, units
 Suggests: maptools, ggplot2, RQGIS, knitr, rmarkdown, DiagrammeR, RColorBrewer
 RoxygenNote: 6.0.1
 NeedsCompilation: no

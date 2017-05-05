@@ -1,5 +1,5 @@
 #' @export
-print.EmissionFactors <- function(ef, ...) {
-  cat("Result for EmissionFactors")
-  print(unclass(ef),  ...)
+print.EmissionFactors <- function(x, ...) {
+  cat("Result for EmissionFactors:\n")
+  NextMethod()
 }
