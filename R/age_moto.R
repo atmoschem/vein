@@ -16,7 +16,7 @@
 #' # Do not run
 #' m <- rnorm(100, 300, 10)
 #' MOTO_E25_500 <- age_moto(x = m,name = "M_E25_500")
-#' plot(1:50,MOTO_E25_500[1,])
+#' plot(MOTO_E25_500)
 #' }
 age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1, bystreet = F){
   if (missing(x) | is.null(x)) {

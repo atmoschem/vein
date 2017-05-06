@@ -17,7 +17,7 @@
 #' @aliases Speed print.Speed summary.Speed plot.Speed
 #' @examples \dontrun{
 #' data(net)
-#' speed <- as.Speed(net$ps)
+#' speed <- Speed(net$ps)
 #' class(speed)
 #' plot(speed)
 #' }
@@ -76,7 +76,7 @@ plot.Speed <- function(x, ...) {
     smin <- Velocity - VelocitySD
     smax <- Velocity + VelocitySD
     avspd <- mean(Velocity, na.rm=T)
-    graphics::plot(Velocity, type = "l", main=paste(deparse(substitute(spd))),
+    graphics::plot(Velocity, type = "l",
                     ylim=c(min(smin),max(smax)), ...)
     graphics::abline(h = avspd, col="red")
     graphics::lines(smin, ylim=c(min(smin),max(smax)), col="grey", ...)

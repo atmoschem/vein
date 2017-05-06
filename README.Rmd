@@ -52,10 +52,7 @@ I've created the following classes:
 
 Each class has the methods print, plot and summary.
 
-The units are still not fully implemented and now i'm hunting bugs and erros
-in documentation. Regarding the documentation of the emission factors, it
-will be added several information.
-
+The units are still not fully implemented and now i'm hunting bugs and erros in documentation. Regarding the documentation of the emission factors, it will be added several information.
 
 
 Isseus here please https://github.com/ibarraespinosa/vein/issues/

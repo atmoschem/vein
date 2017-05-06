@@ -128,7 +128,8 @@ plot.EmissionsArray <- function(x, ...) {
   dfx <- data.frame(Mean, SD, Min, Max)
   graphics::plot(y = dfx$Mean, x = 1:nrow(dfx),
                  ylim = c(min(dfx$Min), max(dfx$Max)),
-                 col = "red", type = "l",  ...)
+                 col = "red", type = "l",
+                 ...)
   graphics::lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
   graphics::lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
   graphics::points(dfx$Max, ylim = c(min(dfx$Min), max(dfx$Max)))

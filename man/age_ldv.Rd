@@ -35,6 +35,6 @@ Returns amount of vehicles at each age
 # Do not run
 pc <- rnorm(100, 300, 10)
 PC_E25_1400 <- age_ldv(x = pc,name = "PC_E25_1400")
-plot(1:50,PC_E25_1400[1,])
+plot(PC_E25_1400)
 }
 }

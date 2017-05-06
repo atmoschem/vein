@@ -38,7 +38,7 @@ Returns a tranformed object with class "Speed" and units
 \examples{
 \dontrun{
 data(net)
-speed <- as.Speed(net$ps)
+speed <- Speed(net$ps)
 class(speed)
 plot(speed)
 }

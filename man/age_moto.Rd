@@ -35,6 +35,6 @@ Returns amount of vehicles at each age
 # Do not run
 m <- rnorm(100, 300, 10)
 MOTO_E25_500 <- age_moto(x = m,name = "M_E25_500")
-plot(1:50,MOTO_E25_500[1,])
+plot(MOTO_E25_500)
 }
 }

@@ -1,3 +1,7 @@
+vein v0.2.0-0 (Release date: 2017-05-06)
+==============
+* fix bugs in plot
+
 vein v0.2.0-0 (Release date: 2017-05-05)
 ==============
 * Adds several S3 classes Vehicles, Speed, EmissionFactors, EmissionFactorsList

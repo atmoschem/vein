@@ -17,10 +17,15 @@
 #' @rdname Vehicles
 #' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
 #' @examples \dontrun{
-#' data(net)
-#' lt <- as.Vehicles(net$hdv)
+#' lt <- rnorm(100, 300, 10)
 #' class(lt)
-#' plot(lt)
+#' vlt <- Vehicles(lt)
+#' class(vlt)
+#' plot(vlt)
+#' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
+#' print(LT_B5)
+#' summary(LT_B5)
+#' plot(1:50,LT_B5)
 #' }
 #' @export
 Vehicles <- function(x, ...) {
@@ -75,7 +80,7 @@ summary.Vehicles <- function(object, ...) {
 plot.Vehicles <- function(x,   ...) {
   veh <- x
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
-    Veh <- Vehicles(colSums(veh))
+    Veh <- colSums(veh)
     graphics::plot(Veh, type="l", ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))

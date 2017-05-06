@@ -15,13 +15,8 @@
 #' @examples \dontrun{
 #' # Do not run
 #' lt <- rnorm(100, 300, 10)
-#' length(lt)
 #' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
-#' plot(1:50,LT_B5[1,])
-#' A <-  rnorm(100, 0.2, 0.001)
-#' B <-  rnorm(100, 10, 1)
-#' LT_B5 <- age_hdv(x = lt,name = "LT_B5", a = A, b = B, bystreet = T)
-#' plot(1:50,LT_B5[30,])
+#' plot(1:50,LT_B5)
 #' }
 age_hdv <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                      bystreet = F){
