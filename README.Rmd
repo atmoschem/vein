@@ -61,8 +61,3 @@ New information will also be added to the documentation of emission factors.
 If you encounter any issues while using VEIN, please submit your issues to: https://github.com/ibarraespinosa/vein/issues/
 
 Thanks and enjoy VEIN!
-
-pack <- "vein"
-path <- find.package(vein)
-system(paste(shQuote(file.path(R.home("bin"), "R")),
-    "CMD", "Rd2pdf", shQuote(path)))
