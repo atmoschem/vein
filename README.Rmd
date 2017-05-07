@@ -42,14 +42,13 @@ demo("VEIN")
 
 I've created the following classes:
 
-  |   Classes      |     units      |
-- Vehicles $(\dfrac{1}{h})$
-- Speed $(\dfrac{km}{h})$
-- EmissionFactors $(\dfrac{g}{km})$
-- EmissionFactorsList $(\dfrac{g}{km})$
-- Emissions $(\dfrac{g}{h})$
-- EmissionsArray $(\dfrac{g}{h})$
-- EmissionsList $(\dfrac{g}{h})$
+- Vehicles (1/h) 
+- Speed  (km/h)
+- EmissionFactors (g/km)
+- EmissionFactorsList (g/km)
+- Emissions  (g/h)
+- EmissionsArray  (g/h)
+- EmissionsList  (g/h)
 
 Each class has the methods print, plot and summary.
 
