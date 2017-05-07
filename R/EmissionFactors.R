@@ -19,9 +19,10 @@
 #' names(fe2015)
 #' class(fe2015)
 #' df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
-#' ef1 <- as.EmissionFactors(df)
+#' ef1 <- EmissionFactors(df)
 #' class(ef1)
-#' head(ef1)
+#' summary(ef1)
+#' plot(ef1)
 #' }
 #' @export
 EmissionFactors <- function(x, ...) {
@@ -29,18 +30,18 @@ EmissionFactors <- function(x, ...) {
   if ( is.matrix(ef) ) {
     ef <- as.data.frame(ef)
     for(i in 1:ncol(ef)){
-      ef[,i] <- set_units(ef[,i],  g/km)
+      ef[,i] <- ef[,i]*units::parse_unit("g km-1")
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.data.frame(ef) ) {
     for(i in 1:ncol(ef)){
-      ef[,i] <- set_units(ef[,i],  g/km)
+      ef[,i] <- ef[,i]*units::parse_unit("g km-1")
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.numeric(ef) ) {
-    ef <- set_units(ef,  g/km)
+    ef <- ef*units::parse_unit("g km-1")
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   }

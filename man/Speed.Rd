@@ -41,9 +41,10 @@ data(net)
 data(pc_profile)
 speed <- Speed(net$ps)
 class(speed)
-plot(speed)
-qq <- as.matrix(net$ldv+net$hdv) \%*\% matrix(unlist(pc_profile), nrow=1)
-df <- netspeed(qq, net$ps, net$ffs, net$capacity, net$lkm)
+plot(speed, type = "l")
+pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+summary(df)
 }
 }
 \seealso{

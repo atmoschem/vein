@@ -42,5 +42,7 @@ data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+class(df)
+plot(df) #plot of the average speed at each hour, +- sd
 }
 }

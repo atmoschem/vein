@@ -61,7 +61,5 @@ lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile, hour = 24, day = 7, array = F)
 class(E_CO)
-emi <- as.Emissions(E_CO[ , , 1, 1])
-class(emi)
 }
 }

@@ -35,14 +35,14 @@ This functions has arguments to change of the numeric elements of the list.
 \examples{
 \dontrun{
 data(fe2015)
-names(fe2015
+names(fe2015)
 class(fe2015)
 df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
-ef1 <- as.EmissionFactors(df)
+ef1 <- EmissionFactorsList(df)
 class(ef1)
-head(ef1)
-ef2 <- as.EmissionFactors(df, lfx = T)
-class(ef2)
-class(ef2[[1]])
+length(ef1)
+length(ef1[[1]])
+summary(ef1)
+ef1
 }
 }

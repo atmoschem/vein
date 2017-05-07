@@ -13,15 +13,15 @@
 #' summary.EmissionFactorsList plot.EmissionFactorsList
 #' @examples \dontrun{
 #' data(fe2015)
-#' names(fe2015
+#' names(fe2015)
 #' class(fe2015)
 #' df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
-#' ef1 <- as.EmissionFactors(df)
+#' ef1 <- EmissionFactorsList(df)
 #' class(ef1)
-#' head(ef1)
-#' ef2 <- as.EmissionFactors(df, lfx = T)
-#' class(ef2)
-#' class(ef2[[1]])
+#' length(ef1)
+#' length(ef1[[1]])
+#' summary(ef1)
+#' ef1
 #' }
 #' @export
 EmissionFactorsList <- function(x, ...) {
@@ -50,11 +50,15 @@ print.EmissionFactorsList <- function(x, ...) {
   ef <- x
   if ( is.function( ef[[1]] ) ){
     cat("This EmissionFactorsList has", length(ef),
-        "functions")
+        "functions\n")
+    print(ef[[1]])
+    cat("... ")
   } else if ( is.list(ef) && is.list(ef[[1]]) ) {
     cat("This EmissionFactorsList has ", length(ef), "lists\n")
     cat("First has",length(ef[[1]]), "functions\n")
-    cat("Last has", length(ef[[length(ef)]]), "functions")
+    cat("Last has", length(ef[[length(ef)]]), "functions\n")
+    print(ef[[1]][[1]])
+    cat("\n ... ")
   }
 }
 
@@ -71,7 +75,6 @@ summary.EmissionFactorsList <- function(object, ...) {
     cat("This EmissionFactorsList has ", length(ef), "lists\n")
     cat("First has",length(ef[[1]]), "functions\n")
     cat("Last has", length(ef[[length(ef)]]), "functions")
-    summary(ef[[1]][[1]])
   }
 }
 

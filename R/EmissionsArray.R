@@ -37,6 +37,9 @@
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile, hour = 24, day = 7, array = T)
 #' class(E_CO)
+#' E_CO
+#' summary(E_CO)
+#' plot(E_CO)
 #' }
 #' @export
 EmissionsArray <- function(x, ...) {
@@ -44,10 +47,9 @@ EmissionsArray <- function(x, ...) {
   if ( !is.array(e) ) {
     stop("Class of e must be 'array'")
   } else if ( is.array(e) ) {
-    ex <- e
-    class(ex) <- c("EmissionsArray",class(e))
+    class(e) <- c("EmissionsArray",class(e))
   }
-  return(ex)
+  return(e)
 }
 
 #' @rdname EmissionsArray

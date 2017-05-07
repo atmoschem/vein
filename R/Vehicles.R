@@ -33,16 +33,16 @@ Vehicles <- function(x, ...) {
   if  ( is.matrix(veh) ) {
     veh <- as.data.frame(veh)
     for(i in 1:ncol(veh)){
-      veh[,i] <- set_units(veh[,i],  1/h)
+      veh[,i] <- veh[,i]*units::parse_unit("h-1")
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.data.frame(veh) ) {
     for(i in 1:ncol(veh)){
-      veh[,i] <- set_units(veh[,i],  1/h)
+      veh[,i] <- veh[,i]*units::parse_unit("h-1")
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.numeric(veh) ) {
-    veh <- set_units(veh,  1/h)
+    veh <- veh*units::parse_unit("h-1")
   }
   return(veh)
 }
@@ -75,12 +75,12 @@ summary.Vehicles <- function(object, ...) {
 #' @rdname Vehicles
 #' @method plot Vehicles
 #' @export
-plot.Vehicles <- function(x,   ...) {
+plot.Vehicles <- function(x,  ...) {
   veh <- x
   if ( inherits(veh, "data.frame") ) {
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
     Veh <- colSums(veh)
-    Veh <- set_units(Veh,  1/h)
+    Veh <- Veh*units::parse_unit("h-1")
     graphics::plot(Veh, type="l", ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
