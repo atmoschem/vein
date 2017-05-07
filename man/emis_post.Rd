@@ -33,55 +33,40 @@ by street. It reads array of emissions
 data(net)
 data(pc_profile)
 data(fe2015)
-df <- netosm(net = net, x = -46.633949, y = -23.550391, sr = '+init=epsg:32723')
-net@data <- cbind(net@data,df)
-rm(df)
-df <- netspeed(net = net)
-df$S0 <- df$FFS
-df$S1 <- df$FFS
-df$S2 <- df$FFS
-df$S3 <- df$FFS
-df$S4 <- df$FFS
-df$S5 <- df$FFS
-df$S6 <- df$AS
-df$S7 <- df$PS
-df$S8 <- df$PS
-df$S9 <- df$PS
-df$S10 <- df$AS
-df$S11 <- df$AS
-df$S12 <- df$AS
-df$S13 <- df$AS
-df$S14 <- df$AS
-df$S15 <- df$AS
-df$S16 <- df$AS
-df$S17 <- df$PS
-df$S18 <- df$PS
-df$S19 <- df$PS
-df$S20 <- df$AS
-df$S21 <- df$AS
-df$S22 <- df$FFS
-df$S23 <- df$FFS
-net@data <- cbind(net@data,df)
-names(net)
-speed <- lapply(16:39, function(i) {net@data[,i]})
-pc <- interpolate_pc(net)
-PC_E25 <- age_ldv(x = pc,name = "PC_E25", b = -0.15,
-agemax = 40)
-co1 <- fe2015[fe2015$Pollutant=="CO" & fe2015$Age<25, ] #24 obs!!!
-l1 <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "ALL", cc = "ALL", f = "G",
-p = "CO")
-co2 <- fe2015[fe2015$Pollutant=="CO" & fe2015$Age>24,] #22 obs!!!
-l2 <- ef_ldv_scaled(co2, co2$PC_G, v = "PC", t = "PRE_ECE", cc = "ALL", f = "G",
-p = "CO")
-EF <- c(l1,l2,l2[[12]],l2[[12]],l2[[12]],l2[[12]])
-E_CO_PC_E25 <- emis(veh = PC_E25,lkm = net$lkm,
-               ef = EF, speed = speed, agemax = 40, profile = pc_profile,
-               hour = i, day = j, array = T)
-emi_table <- emis_post(E_CO_PC_E25, "PC", "1400", "E25", "co", by = "veh")
-emi_table_1 <- emi_table[emi_table$E_CO_PC_E25=="E_CO_PC_E25_1", ]
-library(ggplot2)
-ggplot(emi_table_1, aes(x=emi_table_1$hour, y = emi_table_1$co, colour =day)) +
-geom_line() + geom_point() + labs(x="hours",y="co g/h",
-title="Emissions of CO by day of the week") +theme_bw()
+data(fkm)
+PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
+          133833,138441,142682,171029,151048,115228,98664,126444,101027,
+          84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
+          1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
+veh <- data.frame(PC_G = PC_G)
+pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
+pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1,
+isList = T)
+pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
+cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
+cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
+#vehicles newer than pre-euro
+co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
+cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
+lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
+                     f = "G",p = "CO", eu=co1$Euro_LDV)
+lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
+         lef[length(lef)],lef[length(lef)])
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
+             profile = pc_profile, hour = 24, day = 7, array = T)
+# arguments required: arra, pollutant ad by
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
+names(E_CO_STREETS)
+class(E_CO_STREETS)
+summary(E_CO_STREETS)
+head(E_CO_STREETS)
+E_CO_STREETS_n <- emis_post(arra = E_CO, pollutant = "CO",
+by = "streets_narrow")
+head(E_CO_STREETS_n)
+# arguments required arra, veh, size, fuel, pollutant, by
+E_CO_DF <- emis_post(arra = E_CO, veh = "PC", size = "<1400cc", fuel = "G",
+                    pollutant = "CO", by = "veh")
+head(E_CO_DF)
 }
 }

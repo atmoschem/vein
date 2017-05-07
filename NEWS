@@ -1,3 +1,8 @@
+vein v0.2.0-2 (Release date: 2017-05-07)
+==============
+* fix bugs: Documentation and emis_post now returns units. Emission class
+fized to data.frames. Print Emissions.
+
 vein v0.2.0-1 (Release date: 2017-05-06)
 ==============
 * fix bugs in: plot.*, Speed, netspeed convert to numeric before apply formula

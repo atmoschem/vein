@@ -62,3 +62,7 @@ If you encounter any issues while using VEIN, please submit your issues to: http
 
 Thanks and enjoy VEIN!
 
+pack <- "vein"
+path <- find.package(vein)
+system(paste(shQuote(file.path(R.home("bin"), "R")),
+    "CMD", "Rd2pdf", shQuote(path)))

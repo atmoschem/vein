@@ -66,6 +66,7 @@ class(E_CO[ , , 1, 1])
 df <- Emissions(E_CO[ , , 1, 1]) # Firt hour x First day
 class(df)
 summary(df)
+head(df)
 plot(df)
 }
 }

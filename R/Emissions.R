@@ -43,24 +43,24 @@
 #' df <- Emissions(E_CO[ , , 1, 1]) # Firt hour x First day
 #' class(df)
 #' summary(df)
+#' head(df)
 #' plot(df)
 #' }
 #' @export
 Emissions <- function(x, ...) {
   e <- x
-  if ( is.matrix(e) ) {
-    e <- as.data.frame(e)
+  if ( is.matrix(x) ) {
+    e <- as.data.frame(x)
     for(i in 1:ncol(e)){
       e[,i] <- e[,i]*units::parse_unit("g h-1")
     }
     class(e) <- c("Emissions", class(e))
-  } else if ( is.data.frame(e) ) {
-    for(i in 1:ncol(e)){
+  } else if ( is.data.frame(x) ) {
+    for(i in 1:ncol(x)){
       e[,i] <- e[,i]*units::parse_unit("g h-1")
     }
-    ex <- e
-    class(ex) <- c("Emissions",class(e))
-  } else if ( is.numeric(e) ) {
+    class(e) <- c("Emissions",class(x))
+  } else if ( is.numeric(x) ) {
     e <- e*units::parse_unit("g h-1")
   }
   return(e)
@@ -71,7 +71,7 @@ Emissions <- function(x, ...) {
 #' @export
 print.Emissions <- function(x, ...) {
   cat("Result for Emissions ")
-  print(x,  ...)
+  print(unclass(x,  ...))
 }
 
 #' @rdname Emissions

@@ -1,7 +1,7 @@
 Package: vein
 Type: Package
 Title: An R package for vehicular emissions inventories
-Version: 0.2.0-1
+Version: 0.2.0-2
 Author: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
 Maintainer: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
 Description: Emissions inventories elaboration and visualization,
