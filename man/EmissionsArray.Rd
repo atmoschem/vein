@@ -59,8 +59,8 @@ lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile, hour = 24, day = 7, array = T)
 class(E_CO)
-E_CO
 summary(E_CO)
+E_CO
 plot(E_CO)
 }
 }

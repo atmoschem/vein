@@ -57,16 +57,10 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile, hour = 24, day = 7, array = T)
 # arguments required: arra, pollutant ad by
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
-names(E_CO_STREETS)
-class(E_CO_STREETS)
 summary(E_CO_STREETS)
-head(E_CO_STREETS)
-E_CO_STREETS_n <- emis_post(arra = E_CO, pollutant = "CO",
-by = "streets_narrow")
-head(E_CO_STREETS_n)
-# arguments required arra, veh, size, fuel, pollutant, by
-E_CO_DF <- emis_post(arra = E_CO, veh = "PC", size = "<1400cc", fuel = "G",
-                    pollutant = "CO", by = "veh")
+# arguments required: arra, veh, size, fuel, pollutant ad by
+E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
+pollutant = "CO", by = "veh")
 head(E_CO_DF)
 }
 }
