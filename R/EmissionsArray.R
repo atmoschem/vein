@@ -117,7 +117,6 @@ plot.EmissionsArray <- function(x, ...) {
   # } else if ( by == "hour" ) {
     df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
-    title = "Hourly emissions"
   # } else if ( by == "col") {
   #   df <- Emissions(t(apply(e, c(2, 3), sum, na.rm=T)))
   #   names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("col",i)))
