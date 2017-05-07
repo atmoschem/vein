@@ -1,4 +1,5 @@
 library(vein)
+library(units)
 library(ggplot2)
 library(RColorBrewer)
 library(DiagrammeR)
@@ -157,23 +158,29 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile, hour = 24, day = 7, array = T)
 E_CO_DF <- emis_post(arra = E_CO, veh = "PC", size = "1400", fuel = "Gasoline",
                      pollutant = "CO", by = "veh")
+head(E_CO_DF) # take care of units
 df <- aggregate(E_CO_DF$g, by=list(E_CO_DF$hour, E_CO_DF$day), sum)
 names(df) <- c("Hour", "Day", "g_CO")
-df$hour <- ifelse(df$Day=="Monday", 1:24,ifelse(df$Day=="Tuesday", 1:24+24,
-                                                ifelse(df$Day=="Wednesday", 1:24+24*2,ifelse(df$Day=="Thursday", 1:24+24*3,
-                                                                                             ifelse(df$Day=="Friday", 1:24+24*4,ifelse(df$Day=="Saturday", 1:24+24*5,1:24+24*6))))))
+df$hour <- ifelse(df$Day=="Monday", 1:24,
+           ifelse(df$Day=="Tuesday", 1:24+24,
+           ifelse(df$Day=="Wednesday", 1:24+24*2,
+           ifelse(df$Day=="Thursday", 1:24+24*3,
+           ifelse(df$Day=="Friday", 1:24+24*4,
+           ifelse(df$Day=="Saturday", 1:24+24*5,1:24+24*6))))))
+
 df$day <- factor(df$Day,
                  levels =  c("Monday", "Tuesday", "Wednesday", "Thursday",
                              "Friday", "Saturday", "Sunday"))
-ggplot(df, aes(x=Hour, y=g_CO, colour=day)) + geom_line() +
+
+ggplot(df, aes(x=Hour, y=unclass(g_CO), colour=day)) + geom_line() +
   geom_point(size=2) + theme_bw()+ theme(legend.key.size=unit(0.6,"cm")) +
   labs(x="Hour", y=expression(g%.%h^-1))
 
-df3 <- aggregate(E_CO_DF$g, by=list(E_CO_DF$age), sum)
+df3 <- aggregate(unclass(E_CO_DF$g), by=list(E_CO_DF$age), sum)
 names(df3) <- c("Age", "t_CO")
 df3$CO <- df3$t_CO*52/1000000
 
-ggplot(df3, aes(x=Age, y=CO, fill=CO)) + geom_bar(stat='identity') +
+ggplot(df3, aes(x=Age, y=CO, fill=unclass(CO))) + geom_bar(stat='identity') +
   scale_fill_continuous(low="pink", high="black") + theme_bw() + geom_line(size=0.3) +
   theme(legend.key.size=unit(0.8,"cm")) + labs(x="Age", y=expression(t%.%y^-1))
 
@@ -182,7 +189,7 @@ sldv <- colSums(pc1)
 sum(sldv[20:36])
 sum(sldv[20:36]) / sum(sldv)
 sum(sldv)
-df3 <- aggregate(E_CO_DF$g, by=list(E_CO_DF$age), sum)
+df3 <- aggregate(unclass(E_CO_DF$g), by=list(E_CO_DF$age), sum)
 names(df3) <- c("age", "t_CO")
 head(df3)
 df3$t_CO <- df3$t_CO*52/1000000
@@ -206,15 +213,20 @@ E_CO_STREETS_n <- emis_post(arra = E_CO, pollutant = "CO",
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO",
                           by = "streets_wide")
 data(net)
+# spplot does not plot 'units' therefore, columns needs to be converted to
+numeric
+for (i in 1:ncol(E_CO_STREETS)) {
+  E_CO_STREETS[,i] <- as.numeric(E_CO_STREETS[,i])
+}
 net@data <- cbind(net@data, E_CO_STREETS)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2, polygon = T)
-spplot(net, "h138", scales=list(draw=T),
+spplot(net, "V138", scales=list(draw=T),
        colorkey = list(space = "bottom", height = 1),
        sp.layout = list("sp.polygons", g, pch = 16, cex = 2))
 
 net@data <- net@data[,- c(1:9)]
 E_CO_g <- emis_grid(spobj = net, g = g, sr= "+init=epsg:31983", type = "lines")
-spplot(E_CO_g, "h138", scales=list(draw=T),cuts=8,
+spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
        colorkey = list(space = "bottom", height = 1),
        col.regions=brewer.pal(9, "Blues"),
        sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
