@@ -25,7 +25,7 @@
 #' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
 #' print(LT_B5)
 #' summary(LT_B5)
-#' plot(1:50,LT_B5)
+#' plot(LT_B5)
 #' }
 #' @export
 Vehicles <- function(x, ...) {
@@ -33,18 +33,16 @@ Vehicles <- function(x, ...) {
   if  ( is.matrix(veh) ) {
     veh <- as.data.frame(veh)
     for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i] * units::parse_unit(paste0(1," ", "h","-1"))
+      veh[,i] <- set_units(veh[,i],  1/h)
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.data.frame(veh) ) {
     for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i] * units::parse_unit(paste0(1," ", "h","-1"))
+      veh[,i] <- set_units(veh[,i],  1/h)
     }
     class(veh) <- c("Vehicles",class(veh))
-  } else if (is.array(veh) && length(dim(veh)) == 3 ) {
-    class(veh) <- c("Vehicles",class(veh))
   } else if ( is.numeric(veh) ) {
-    veh <- veh *units::parse_unit(paste0(1," ", "h","-1"))
+    veh <- set_units(veh,  1/h)
   }
   return(veh)
 }
@@ -64,9 +62,9 @@ print.Vehicles <- function(x, ...) {
 summary.Vehicles <- function(object, ...) {
   veh <- object
   avage <- sum(seq(1,ncol(veh))*colSums(veh)/sum(veh))
-  cat("Vehicles by columns in study area = \n")
+  cat("\nVehicles by columns in study area = \n")
   print(summary(colSums(veh)) )
-  cat("\nAverage = ", round(avage,2))
+  cat("Average = ", round(avage,2),"\n")
   summary(rowSums(veh))
   avveh <- mean(rowSums(veh), na.rm=T)
   cat("Vehicles by street in study area = \n")
@@ -79,9 +77,13 @@ summary.Vehicles <- function(object, ...) {
 #' @export
 plot.Vehicles <- function(x,   ...) {
   veh <- x
+  if ( inherits(veh, "data.frame") ) {
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
     Veh <- colSums(veh)
+    Veh <- set_units(Veh,  1/h)
     graphics::plot(Veh, type="l", ...)
     graphics::abline(v = avage, col="red")
     cat("\nAverage = ",round(avage,2))
+  }
 }
+

@@ -47,14 +47,14 @@
 Emissions <- function(x, ...) {
   e <- x
   if ( is.matrix(e) ) {
-    ex <- as.data.frame(e)
-    for(i in 1:ncol(ex)){
-      ex[,i] <- ex[,i] * units::parse_unit(paste0("g"," ", "h","-1"))
+    e <- as.data.frame(e)
+    for(i in 1:ncol(e)){
+      e[,i] <- e[,i] <- set_units(e[,i],  g/h)
     }
     class(ex) <- c("Emissions", class(ex))
   } else if (is.data.frame(e)) {
     for(i in 1:ncol(e)){
-      e[,i] <- e[,i] * units::parse_unit(paste0("g"," ", "h","-1"))
+      e[,i] <- e[,i] <- set_units(e[,i],  g/h)
     }
     ex <- e
     class(ex) <- c("Emissions",class(e))
@@ -99,6 +99,7 @@ plot.Emissions <- function(x,  ...) {
   e <- x
     avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
     Emission <- Emissions(colSums(e))
+    Emission <- set_units(Emission,  g/h)
     graphics::plot(Emission, type="l",
                    main=paste(deparse(substitute(e))), ...)
     graphics::abline(v = avage, col="red")

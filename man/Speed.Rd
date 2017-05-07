@@ -38,9 +38,12 @@ Returns a tranformed object with class "Speed" and units
 \examples{
 \dontrun{
 data(net)
+data(pc_profile)
 speed <- Speed(net$ps)
 class(speed)
 plot(speed)
+qq <- as.matrix(net$ldv+net$hdv) \%*\% matrix(unlist(pc_profile), nrow=1)
+df <- netspeed(qq, net$ps, net$ffs, net$capacity, net$lkm)
 }
 }
 \seealso{

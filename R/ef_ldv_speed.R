@@ -29,7 +29,7 @@
 ef_ldv_speed <- function(v, t, cc, f, eu, p, k = 1, show.equation = TRUE){
   ef_ldv <- sysdata[[1]]
   df <- ef_ldv[ef_ldv$VEH == v &
-                 ef_ldv$TYPE == t &
+              ef_ldv$TYPE == t &
              ef_ldv$CC == cc &
              ef_ldv$FUEL == f &
              ef_ldv$EURO == eu &

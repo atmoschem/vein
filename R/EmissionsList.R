@@ -41,6 +41,7 @@
 #' class(E_CO)
 #' emi <- as.Emissions(E_CO[ , , 1, 1])
 #' class(emi)
+#'
 #' }
 #' @export
 EmissionsList <- function(x,  ...) {
@@ -49,13 +50,13 @@ EmissionsList <- function(x,  ...) {
     stop("Class of e must b 'list'")
   } else if ( is.list(e) && is.numeric(e[[1]]) ){
     ex <-  lapply(1:length(e), function(i)  {
-      e[[i]] <- e[[i]] * units::parse_unit(paste0( "g"," ", "h", "-1"))
+      e[[i]] <- set_units(e[[i]],  g/h)
     })
     class(ex) <- c("EmissionsList",class(e))
   } else if ( is.list(e) && is.list(e[[1]]) && is.numeric(e[[1]][[1]]) ) {
     ex <-  lapply(1:length(e), function(i)  {
       lapply(1:length(e[[1]]), function(j)  {
-        e[[i]][[j]] <- e[[i]][[j]] * units::parse_unit(paste0( "g"," ", "h", "-1"))
+        e[[i]][[j]] <- set_units(e[[i]][[j]],  g/h)
       }) })
     class(ex) <- c("EmissionsList",class(e))
     class(ex[[1]]) <- c("EmissionsList",class(e))
@@ -64,7 +65,7 @@ EmissionsList <- function(x,  ...) {
     ex <-  lapply(1:length(e), function(i)  {
       lapply(1:length(e[[1]]), function(j) {
         lapply(1:length(e[[1]][[1]]), function(k) {
-          e[[i]][[j]][[k]] <- e[[i]][[j]][[k]] * units::parse_unit(paste0( "g"," ", "h", "-1"))
+          e[[i]][[j]][[k]] <- set_units(e[[i]][[j]][[k]],  g/h)
         }) }) })
     class(ex[[1]][[1]]) <- c("EmissionsList",class(e))
     class(ex[[1]]) <- c("EmissionsList",class(e))
@@ -81,6 +82,9 @@ print.EmissionsList <- function(x,  ...) {
   if ( is.list(e) && is.numeric(e[[1]]) ){
     cat("This EmissionsList has\n", length(e),
         "vehicle categories\n")
+    for ( i in 1:length(e)  ) {
+      e[[i]] <- set_units(e[[i]],  g/h)
+    }
     cat(length(e[[1]]), "streets\n")
     print(utils::head(e[[1]]))
     cat(" ...\n")
@@ -88,6 +92,9 @@ print.EmissionsList <- function(x,  ...) {
     cat("This EmissionsList has\n", length(e), "hours\n")
     cat(length(e[[1]]), "vehicle categories\n")
     cat(length(e[[1]][[1]]), "streets\n")
+    for ( i in 1:length(e)  ) {
+      e[[i]] <- set_units(e[[i]],  g/h)
+    }
     print(utils::head(e[[1]][[1]]))
     cat(" ...")
   } else if ( is.list(e) && is.list(e[[1]]) && is.list(e[[1]][[1]]) &&

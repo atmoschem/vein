@@ -19,32 +19,42 @@
 #' # Do not run
 #' data(net)
 #' data(pc_profile)
-#' qq <- as.matrix(net$ldv+net$hdv) %*% matrix(unlist(pc_profile), nrow=1)
-#' df <- netspeed(qq, net$ps, net$ffs, net$capacity, net$lkm)
+#' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+#' class(df)
+#' plot(df) #plot of the average speed at each hour, +- sd
 #' }
 netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
                       distance = "km", time="h"){
   if(missing(q) | is.null(q)){
     stop(print("No vehicles"))
-  q <- as.data.frame(q)
-  for (i  in 1:ncol(q) ) {
-    q[,i] <- as.numeric(q[,i])
-  }
-  ps <- as.numeric(ps)
-  ffs <- as.numeric(ffs)
-  cap <- as.numeric(cap)
-  lkm <- as.numeric(lkm)
   } else if (isList==FALSE){
-    dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
-      lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
+    qq <- as.data.frame(q)
+    for (i  in 1:ncol(qq) ) {
+      qq[,i] <- as.numeric(qq[,i])
+    }
+    ps <- as.numeric(ps)
+    ffs <- as.numeric(ffs)
+    cap <- as.numeric(cap)
+    lkm <- as.numeric(lkm)
+    dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(qq), function(i) {
+      lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
     }))))
     # dfv[,8] <- ps
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
     dfv <- Speed(dfv, distance = distance, time = time)
     return(dfv)
-  }else if (isList==TRUE){
-    dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(q), function(i) {
-      lkm/(lkm/ffs*(1 + alpha*(q[,i]/cap)^beta))
+  } else if (isList==TRUE){
+    qq <- as.data.frame(q)
+    for (i  in 1:ncol(qq) ) {
+      qq[,i] <- as.numeric(qq[,i])
+    }
+    ps <- as.numeric(ps)
+    ffs <- as.numeric(ffs)
+    cap <- as.numeric(cap)
+    lkm <- as.numeric(lkm)
+    dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(qq), function(i) {
+      lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
     }))))
     # dfv[,8] <- ps
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))

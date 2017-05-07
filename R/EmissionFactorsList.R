@@ -13,7 +13,7 @@
 #' summary.EmissionFactorsList plot.EmissionFactorsList
 #' @examples \dontrun{
 #' data(fe2015)
-#' names(fe2015)
+#' names(fe2015
 #' class(fe2015)
 #' df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
 #' ef1 <- as.EmissionFactors(df)
@@ -26,22 +26,17 @@
 #' @export
 EmissionFactorsList <- function(x, ...) {
   ef <- x
-  if ((is.matrix(ef) || is.data.frame(ef))) {
+  if ( is.matrix(ef) || is.data.frame(ef) ) {
     efx <- lapply(1:ncol(ef), function(i) {
       lapply(1:nrow(ef), function(j) {
         function(V) ef[j,i]
       })
     })
-    for (i in 1:length(efx)) {
-      class(efx[[i]]) <- c("EmissionFactorsList",class(efx))
-    }
     class(efx) <- c("EmissionFactorsList",class(efx))
-  } else  if (is.numeric(ef)) {
-    ef <- ef * units::parse_unit(paste0("g"," ", "km", "-1"))
+  } else  if ( is.numeric(ef) ) {
     efx <- lapply(1:length(ef), function(i) {function(V) ef[i] })
-    class(ef) <- c("EmissionFactorsList",class(ef))
-    efx <- ef
-  } else if (is.list(ef) && is.function(ef[[1]])) {
+    class(efx) <- c("EmissionFactorsList",class(efx))
+  } else if ( is.list(ef) && is.function(ef[[1]]) ) {
     class(ef) <- c("EmissionFactorsList",class(ef))
     efx <- ef
   }

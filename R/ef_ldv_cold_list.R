@@ -31,6 +31,6 @@ ef_ldv_cold_list <- function(df,v = "LDV", ta, cc, f, eu, p) {
     funIN <- ef_ldv_cold(v = "LDV", ta, cc, f,
                          eu = as.character(eu[i]), p = p, k = 1,
                          show.equation = FALSE)
-    return(funIN)
+    return(EmissionFactorsList(funIN))
    })
 }

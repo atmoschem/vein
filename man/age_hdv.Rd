@@ -35,6 +35,6 @@ Returns amount of vehicles at each age
 # Do not run
 lt <- rnorm(100, 300, 10)
 LT_B5 <- age_hdv(x = lt,name = "LT_B5")
-plot(1:50,LT_B5)
+plot(LT_B5)
 }
 }

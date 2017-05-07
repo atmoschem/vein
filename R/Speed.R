@@ -17,33 +17,37 @@
 #' @aliases Speed print.Speed summary.Speed plot.Speed
 #' @examples \dontrun{
 #' data(net)
+#' data(pc_profile)
 #' speed <- Speed(net$ps)
 #' class(speed)
 #' plot(speed)
+#' qq <- as.matrix(net$ldv+net$hdv) %*% matrix(unlist(pc_profile), nrow=1)
+#' df <- netspeed(qq, net$ps, net$ffs, net$capacity, net$lkm)
+#' summary(df)
 #' }
 #' @export
 Speed <- function(x, ...) {
   spd <- x
-  if  (is.matrix(spd)) {
+  if  ( is.matrix(spd) ) {
     spd <- as.data.frame(spd)
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i] * units::parse_unit(paste0("km"," ", "h","-1"))
+      spd[,i] <- set_units(spd[,i],  km/h)
     }
     class(spd) <- c("Speed",class(spd))
-  } else if (is.data.frame(spd)) {
+  } else if ( is.data.frame(spd) ) {
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i] * units::parse_unit(paste0("km"," ", "h","-1"))
+      spd[,i] <- set_units(spd[,i],  km/h)
     }
     class(spd) <- c("Speed",class(spd))
-  } else if (is.list(spd) && is.list(spd[[1]])) {
+  } else if ( is.list(spd) && is.list(spd[[1]]) ) {
     for (i in 1:length(spd) ) {
       for (j in 1:length(spd[[1]]) ) {
-        spd[[i]][[j]] <- spd[[i]][[j]] * units::parse_unit(paste0("km"," ", "h","-1"))
+        spd[[i]][[j]] <- set_units(spd[[i]][[j]],  km/h)
       }
     }
     #SpeedList?
-  } else {
-    units(spd) <- spd * units::parse_unit(paste0("km"," ", "h","-1"))
+  } else if ( is.numeric(spd) ) {
+    spd <- set_units(spd,  km/h)
   }
   return(spd)
 }
@@ -72,6 +76,7 @@ summary.Speed <- function(object,  ...) {
 plot.Speed <- function(x, ...) {
   spd <- x
     Velocity <- Speed(colMeans(spd))
+    Velocity <- set_units(Velocity,  km/h)
     VelocitySD <- Speed(unlist(lapply(spd,stats::sd)))
     smin <- Velocity - VelocitySD
     smax <- Velocity + VelocitySD

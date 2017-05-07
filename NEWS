@@ -1,6 +1,7 @@
-vein v0.2.0-0 (Release date: 2017-05-06)
+vein v0.2.0-1 (Release date: 2017-05-06)
 ==============
-* fix bugs in plot
+* fix bugs in: plot.*, Speed, netspeed convert to numeric before apply formula
+and return Speed data.frame
 
 vein v0.2.0-0 (Release date: 2017-05-05)
 ==============

@@ -29,18 +29,18 @@ EmissionFactors <- function(x, ...) {
   if ( is.matrix(ef) ) {
     ef <- as.data.frame(ef)
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i] * units::parse_unit(paste0("g"," ", "km", "-1"))
+      ef[,i] <- set_units(ef[,i],  g/km)
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.data.frame(ef) ) {
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i] * units::parse_unit(paste0("g"," ", "km", "-1"))
+      ef[,i] <- set_units(ef[,i],  g/km)
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.numeric(ef) ) {
-    ef <- ef * units::parse_unit(paste0("g"," ", "km", "-1"))
+    ef <- set_units(ef,  g/km)
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   }
