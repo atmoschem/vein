@@ -27,10 +27,10 @@
 #' length(l_cold)
 #' }
 ef_ldv_cold_list <- function(df,v = "LDV", ta, cc, f, eu, p) {
-   lapply(1:length(df[,1]), function(i)  {
+   lista <- lapply(1:length(df[,1]), function(i)  {
     funIN <- ef_ldv_cold(v = "LDV", ta, cc, f,
                          eu = as.character(eu[i]), p = p, k = 1,
                          show.equation = FALSE)
-    return(EmissionFactorsList(funIN))
    })
+  return(EmissionFactorsList(lista))
 }
