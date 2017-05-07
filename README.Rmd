@@ -42,19 +42,24 @@ demo("VEIN")
 
 I've created the following classes:
 
-- Vehicles
-- Speed
-- EmissionFactors
-- EmissionFactorsList
-- Emissions
-- EmissionsArray
-- EmissionsList
+  |   Classes      |     units      |
+- Vehicles $(\dfrac{1}{h})$
+- Speed $(\dfrac{km}{h})$
+- EmissionFactors $(\dfrac{g}{km})$
+- EmissionFactorsList $(\dfrac{g}{km})$
+- Emissions $(\dfrac{g}{h})$
+- EmissionsArray $(\dfrac{g}{h})$
+- EmissionsList $(\dfrac{g}{h})$
 
 Each class has the methods print, plot and summary.
 
-The units are still not fully implemented and now i'm hunting bugs and erros in documentation. Regarding the documentation of the emission factors, it will be added several information.
+Soon, all units will be fully implemented in VEIN.
 
+VEIN is currently in its testing phase - to identify software bugs and errors. 
 
-Isseus here please https://github.com/ibarraespinosa/vein/issues/
+New information will also be added to the documentation of emission factors.
 
-I hope you enjoy it
+If you encounter any issues while using VEIN, please submit your issues to: https://github.com/ibarraespinosa/vein/issues/
+
+Thanks and enjoy VEIN!
+
