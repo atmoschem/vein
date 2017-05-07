@@ -214,7 +214,7 @@ E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO",
                           by = "streets_wide")
 data(net)
 # spplot does not plot 'units' therefore, columns needs to be converted to
-numeric
+#numeric
 for (i in 1:ncol(E_CO_STREETS)) {
   E_CO_STREETS[,i] <- as.numeric(E_CO_STREETS[,i])
 }
