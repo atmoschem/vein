@@ -9,6 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+[![Build Status](https://travis-ci.org/ibarraespinosa/vein.svg?branch=master)](https://travis-ci.org/ibarraespinosa/vein)
+
+
 ![vein](p2.png)
 
 
