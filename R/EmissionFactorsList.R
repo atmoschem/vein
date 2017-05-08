@@ -1,7 +1,6 @@
 #' Construction function for class "EmissionFactorsList"
 #'
 #' @description Returns a tranformed object with class"EmissionsFactorsList".
-#' This functions has arguments to change of the numeric elements of the list.
 #'
 #' @return Objects of class "EmissionFactorsList"
 #'

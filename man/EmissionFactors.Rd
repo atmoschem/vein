@@ -30,12 +30,7 @@ Objects of class "EmissionFactors" or "units"
 }
 \description{
 Returns a tranformed object with class "EmissionFactors" and
-units g/km. This functions has arguments to change
-the units.
-}
-\note{
-If the class ob the object is functions, as.EmissionFactors won't
-append another class
+units g/km.
 }
 \examples{
 \dontrun{

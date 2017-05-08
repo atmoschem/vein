@@ -32,7 +32,8 @@ guidelines
 \examples{
 \dontrun{
 # Do not run
-ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
+ev <- hot_soak(x = 1:10, carb = 0, p = 1, eshot = 1, eswarmc =1,
+eshotfi = 1)
 }
 }
 \references{

@@ -19,8 +19,11 @@
 #' @export
 #' @examples \dontrun{
 #' # Do not run
-#' running_losses(x = 1,v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
+#' ev <- running_losses(x = 1:10, carb = 0, p = 1, erhot = 1, erwarmc =1,
+#' erhotfi = 1)
 #' }
 running_losses <- function(x,carb,p,erhotc,erwarmc,erhotfi) {
-  x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi)
+  evap <- x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi)
+  Evaporative(evap)
 }
+

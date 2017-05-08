@@ -29,7 +29,8 @@ and "20_35"}
 \item{show}{when TRUE shows row of table with respective emission factor.}
 }
 \value{
-numeric vector of evaporative emission factor in grams per day or trip
+emission factors in g/trip or g/proced. The object has class (g)
+but it order to know it is g/trip or g/proceed the argument show must by T
 }
 \description{
 A lookup table with tier 2 evaporative emission factors
@@ -38,7 +39,8 @@ from EMEP/EEA emisison guidelines
 \examples{
 \dontrun{
 # Do not run
-ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
+ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+show = T)
 }
 }
 \references{

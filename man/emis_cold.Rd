@@ -35,7 +35,7 @@ expects a profile as a dataframe producing an array with dimensions
 (streets x columns x hours x days)}
 }
 \value{
-emission estimation  g/h
+EmissionsArray  g/h
 }
 \description{
 The vehicular emissions are estimated as the product of the vehicles on a

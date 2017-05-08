@@ -49,6 +49,7 @@ I've created the following classes:
 - Emissions  (g/h)
 - EmissionsArray  (g/h)
 - EmissionsList  (g/h)
+- Evaporative  (g/d)
 
 Each class has the methods print, plot and summary.
 

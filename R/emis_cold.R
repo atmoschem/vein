@@ -20,7 +20,7 @@
 #' @param array When FALSE produces a dataframe of the estimation. When TRUE
 #' expects a profile as a dataframe producing an array with dimensions
 #' (streets x columns x hours x days)
-#' @return emission estimation  g/h
+#' @return EmissionsArray  g/h
 #' @export
 #' @note Actually dcold is not necessary, it would be enough to multiply
 #' an existing cold-start distribution with the daily profile, but it was added

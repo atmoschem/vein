@@ -1,9 +1,9 @@
 #' Construction function for class "Emissions"
 #'
 #' @description Returns a tranformed object with class "Emissions".
-#' This functions has arguments to change the units. The type of objects
-#' supported are of classes "matrix", "data.frame" and "numeric". If the class
-#' of the object is "matrix" this function returns a dataframe.
+#' The type of objects supported are of classes "matrix", "data.frame" and
+#' "numeric". If the class of the object is "matrix" this function returns a
+#' dataframe.
 #'
 #' @return Objects of class "Emissions" or "units"
 #'

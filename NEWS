@@ -1,6 +1,12 @@
+vein v0.2.1-0 (Release date: 2017-05-08)
+==============
+* Evaporative class with units d/day according emission guidelines EEA Tier 2.
+Fix some documentation errors. ef_evap return unit (g). Fix speciate and some
+documentation. field of data 'net' now has units
+
 vein v0.2.0-4 (Release date: 2017-05-07)
 ==============
-* emis_cold with classes
+* Fix emis_cold, now with classes
 
 vein v0.2.0-3 (Release date: 2017-05-07)
 ==============

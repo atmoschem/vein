@@ -1,8 +1,7 @@
 #' Construction function for class "EmissionFactors"
 #'
 #' @description Returns a tranformed object with class "EmissionFactors" and
-#' units g/km. This functions has arguments to change
-#' the units.
+#' units g/km.
 #'
 #' @return Objects of class "EmissionFactors" or "units"
 #'
@@ -12,8 +11,6 @@
 #' @rdname EmissionFactors
 #' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors
 #' plot.EmissionFactors
-#' @note If the class ob the object is functions, as.EmissionFactors won't
-#' append another class
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)

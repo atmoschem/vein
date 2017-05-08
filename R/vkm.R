@@ -25,6 +25,8 @@ vkm <- function (veh,
                  hour = 1,
                  day = 1,
                  array = F) {
+  veh <- as.numeric(veh)
+  lkm <- as.numeric(lkm)
   if(array == F){
     lista <- lapply(1:day,function(j){
       lapply(1:hour,function(i){

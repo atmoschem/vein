@@ -17,21 +17,23 @@
 #' "large"
 #' @param k multiplication factor
 #' @param show when TRUE shows row of table with respective emission factor.
-#' @return numeric vector of evaporative emission factor in grams per day or trip
+#' @return emission factors in g/trip or g/proced. The object has class (g)
+#' but it order to know it is g/trip or g/proceed the argument show must by T
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
 #' @export
 #' @examples \dontrun{
 #' # Do not run
-#' ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
+#' ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+#' show = T)
 #' }
 ef_evap <- function (ef, v, cc, dt, ca, k = 1, show = FALSE)
 {
   ef_ev <- sysdata[[3]]
   df <- ef_ev[ef_ev$ef == ef & ef_ev$veh == v & ef_ev$cc == cc &
                 ef_ev$dt == dt & ef_ev$canister == ca, ]
-  g <- df$g*k
+  g <- df$g*k * units::parse_unit("g")
   if (show == TRUE) {
     print(df)
   }

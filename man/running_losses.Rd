@@ -32,7 +32,8 @@ guidelines
 \examples{
 \dontrun{
 # Do not run
-running_losses(x = 1,v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
+ev <- running_losses(x = 1:10, carb = 0, p = 1, erhot = 1, erwarmc =1,
+erhotfi = 1)
 }
 }
 \references{

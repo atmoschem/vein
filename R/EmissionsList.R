@@ -1,8 +1,6 @@
 #' Construction function for class "EmissionsList"
 #'
 #' @description Returns a tranformed object with class "EmissionsList".
-#' This functions has arguments to change the units the numeric elements of the
-#' list.
 #'
 #' @return Objects of class "EmissionsList" and numeric elements as "units"
 #'
