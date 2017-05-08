@@ -11,5 +11,5 @@ addons:
        - libudunits2-dev
        - libproj-dev
        - libgdal1h
-       - libhdf5-dev
+       - libhdf5-7
        - libnetcdf-dev
