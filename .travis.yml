@@ -9,3 +9,4 @@ addons:
        - libgeos-dev
        - gdal-bin
        - libudunits2-dev
+       - libgdal-dev
