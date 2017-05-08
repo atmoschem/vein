@@ -8,4 +8,4 @@ addons:
      packages:
        - libgeos-dev
        - gdal-bin
-       - udunits-bin
+       - libudunits2-dev
