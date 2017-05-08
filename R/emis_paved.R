@@ -45,5 +45,5 @@ emis_paved <- function(veh, lkm, k, sL1, sL2, sL3, sL4, W) {
     veh[,,i]*lkm*k*sL[,i]^0.91*W[,,i]^1.02
   ))
   emi[is.na(emi)] <- 0
-  return(emi)
+  return(EmissionsArray(emi))
 }

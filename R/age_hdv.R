@@ -14,7 +14,7 @@
 #' @export
 #' @examples \dontrun{
 #' # Do not run
-#' lt <- rnorm(100, 300, 10)
+#' lt <- Vehicles(rnorm(100, 300, 10))
 #' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
 #' plot(LT_B5)
 #' }

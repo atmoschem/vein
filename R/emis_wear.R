@@ -36,5 +36,5 @@ emis_wear <- function (veh, lkm, ef, agemax, profile, hour = 1, day = 1) {
       )
     })
   )
-  return(d)
+  return(EmissionsArray(d))
 }
