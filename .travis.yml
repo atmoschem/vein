@@ -10,5 +10,4 @@ addons:
        - gdal-bin
        - libudunits2-dev
        - libproj-dev
-       - libgdal-dev
        - libgdal1h
