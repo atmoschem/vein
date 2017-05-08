@@ -10,6 +10,6 @@ addons:
        - gdal-bin
        - libudunits2-dev
        - libproj-dev
-       - libhdf5-7
+       - libgdal1h
        - libhdf5-dev
-       - libgdal-dev
+       - libnetcdf-dev
