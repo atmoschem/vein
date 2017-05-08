@@ -1,6 +1,7 @@
 vein v0.2.1-1 (Release date: 2017-05-08)
 ==============
-* Fix some documentation errors.
+* Fix some documentation errors. Not sugesting ggplot2 and
+DiagrammeR
 
 vein v0.2.1-0 (Release date: 2017-05-08)
 ==============
