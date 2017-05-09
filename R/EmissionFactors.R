@@ -20,6 +20,7 @@
 #' class(ef1)
 #' summary(ef1)
 #' plot(ef1)
+#' print(ef1)
 #' }
 #' @export
 EmissionFactors <- function(x, ...) {
@@ -49,9 +50,10 @@ EmissionFactors <- function(x, ...) {
 #' @method print EmissionFactors
 #' @export
 print.EmissionFactors <- function(x, ...) {
-  cat("Result for EmissionFactors")
-  print(unclass(x),  ...)
+  cat("EmissionFactors:\n")
+  NextMethod("print", x)
 }
+
 
 #' @rdname EmissionFactors
 #' @method summary EmissionFactors
