@@ -5,3 +5,4 @@
 ^p2.png$
 ^vein.pdf$
 ^\.travis\.yml$
+^appveyor.yml$
