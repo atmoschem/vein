@@ -50,33 +50,34 @@ ggplot(df2, aes(x=Hour,y=TF, colour=as.factor(Day))) + geom_point(size=2)  +
   scale_color_discrete(name = "Days")
 
 # 4 ####
-grViz("
-      digraph boxes_and_circles {
-      graph [overlap = false, fontsize = 10, rankdir=LR]
-      node [shape = circle, style = filled, fillcolor = SpringGreen, fixedsize = false,
-      color=SpringGreen, fontcolor=black, fontize=12]
-      traffic; profile; local_ef; df_emis; street_emis; grid_emis;
-      node [shape = box, style = filled, fixedsize = false, fillcolor = Aqua,
-      color=Aqua, fontcolor=black, fontize=12]
-      age; speed_ef; scaled_ef; emis; emis_det; emis_post; speciate;
-      make_grid; emis_grid; emis_wrf;
-      edge [color = black, arrowhead = vee, penwidth=1.5]
-      traffic->age age->emis profile->emis
-      local_ef->{emis scaled_ef}
-      scaled_ef->emis
-      speed_ef-> {emis scaled_ef}
-      emis->emis_post
-      emis_post->{df_emis street_emis}
-      street_emis->speciate df_emis->speciate
-      make_grid->grid_emis speciate->grid_emis
-      street_emis->emis_grid
-      emis_grid->grid_emis
-      grid_emis->emis_wrf
-      emis_det->{local_ef speed_ef}
-      traffic->netspeed
-      netspeed->emis
-      }
-      ")
+# library(DiagrammeR)
+# grViz("
+#       digraph boxes_and_circles {
+#       graph [overlap = false, fontsize = 10, rankdir=LR]
+#       node [shape = circle, style = filled, fillcolor = SpringGreen, fixedsize = false,
+#       color=SpringGreen, fontcolor=black, fontize=12]
+#       traffic; profile; local_ef; df_emis; street_emis; grid_emis;
+#       node [shape = box, style = filled, fixedsize = false, fillcolor = Aqua,
+#       color=Aqua, fontcolor=black, fontize=12]
+#       age; speed_ef; scaled_ef; emis; emis_det; emis_post; speciate;
+#       make_grid; emis_grid; emis_wrf;
+#       edge [color = black, arrowhead = vee, penwidth=1.5]
+#       traffic->age age->emis profile->emis
+#       local_ef->{emis scaled_ef}
+#       scaled_ef->emis
+#       speed_ef-> {emis scaled_ef}
+#       emis->emis_post
+#       emis_post->{df_emis street_emis}
+#       street_emis->speciate df_emis->speciate
+#       make_grid->grid_emis speciate->grid_emis
+#       street_emis->emis_grid
+#       emis_grid->grid_emis
+#       grid_emis->emis_wrf
+#       emis_det->{local_ef speed_ef}
+#       traffic->netspeed
+#       netspeed->emis
+#       }
+#       ")
 
 # 5 ####
 data(net)
