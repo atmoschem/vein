@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^README.Rmd$
+^README.html$
+^p2.png$
+^vein.pdf$
+^\.travis\.yml$
