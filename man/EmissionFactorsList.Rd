@@ -12,7 +12,7 @@
 \usage{
 EmissionFactorsList(x, ...)
 
-\method{print}{EmissionFactorsList}(x, ...)
+\method{print}{EmissionFactorsList}(x, ..., default = FALSE)
 
 \method{summary}{EmissionFactorsList}(object, ...)
 
@@ -22,6 +22,9 @@ EmissionFactorsList(x, ...)
 \item{x}{Object with class "list"}
 
 \item{...}{ignored}
+
+\item{default}{Logical value. When TRUE prints default list, when FALSE
+prints messages with description of list}
 
 \item{object}{Object with class "EmissionFactorsList"}
 }

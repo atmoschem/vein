@@ -42,5 +42,6 @@ ef1 <- EmissionFactors(df)
 class(ef1)
 summary(ef1)
 plot(ef1)
+print(ef1)
 }
 }

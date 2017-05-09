@@ -6,6 +6,8 @@
 #'
 #' @param x Object with class "list"
 #' @param object Object with class "EmissionFactorsList"
+#' @param default Logical value. When TRUE prints default list, when FALSE
+#' prints messages with description of list
 #' @param ... ignored
 #' @rdname EmissionFactorsList
 #' @aliases EmissionFactorsList print.EmissionFactorsList
