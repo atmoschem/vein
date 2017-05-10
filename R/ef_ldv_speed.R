@@ -9,13 +9,8 @@
 #' any option is wrong it will return an empty value. Therefore, it is
 #' important ti know the combinations.
 #'
-#' v = PC
-#' \tabular{rrrrrr}{
-#' v \tab t \tab cc \tab f \tab eu \tab p\cr
-#' PC  \tab 6 \tab 160 \tab 110 \tab 3.90 \tab 3.90\cr
-#' \tab 4 \tab 108 \tab  93 \tab 3.85 \tab 3.90\cr
-#' \tab 6 \tab 258 \tab 110 \tab 3.08 \tab 3.90\cr
-#' \tab 8 \tab 360 \tab 175 \tab 3.15 \tab 3.90
+#' When v = "PC"
+#'
 #' }
 #'
 #' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped
