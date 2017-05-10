@@ -4,6 +4,20 @@
 #'  comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 #'
+#' The argument of this functions have several options which results in
+#' different combinations that returns emission factors. If a combination of
+#' any option is wrong it will return an empty value. Therefore, it is
+#' important ti know the combinations.
+#'
+#' v = PC
+#' \tabular{rrrrrr}{
+#' v \tab t \tab cc \tab f \tab eu \tab p\cr
+#' PC  \tab 6 \tab 160 \tab 110 \tab 3.90 \tab 3.90\cr
+#' \tab 4 \tab 108 \tab  93 \tab 3.85 \tab 3.90\cr
+#' \tab 6 \tab 258 \tab 110 \tab 3.08 \tab 3.90\cr
+#' \tab 8 \tab 360 \tab 175 \tab 3.15 \tab 3.90
+#' }
+#'
 #' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped
 #' @param t Sub-category of of vehicle: "PRE_ECE", "ECE_1501", "ECE_1502",
 #' "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
