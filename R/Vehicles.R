@@ -31,13 +31,9 @@
 Vehicles <- function(x, ...) {
   veh <- x
   if  ( is.matrix(veh) ) {
-    veh <- as.data.frame(veh)
+    spd <- as.data.frame(veh)
     for(i in 1:ncol(veh)){
-      if  ( class(veh[,i]) == "sfc" ) {
-        class(veh[,i]) <- class(veh[,i])
-      } else {
-        veh[,i] <- veh[,i]*units::parse_unit("h-1")
-      }
+      veh[,i] <- veh[,i]*units::parse_unit("km h-1")
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.data.frame(veh) ) {
