@@ -30,7 +30,7 @@ ef_ldv_cold <- function(v = "LDV", ta, cc, f, eu, p, k = 1, show.equation = FALS
              ef_ldv$CC == cc &
              ef_ldv$FUEL == f &
              ef_ldv$EURO == eu &
-             ef_ldv$POLLUTANT == p, ]  # Seleçõa a equação (string) por filtro
+             ef_ldv$POLLUTANT == p, ]
 
   lista <- list(a = df$a,
                 b = df$b,
@@ -55,8 +55,8 @@ ef_ldv_cold <- function(v = "LDV", ta, cc, f, eu, p, k = 1, show.equation = FALS
     g <- df$g
     h <- df$h
     i <- df$i
-    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V)) #Limita valores de V
+    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
-  }    # converte a equação a função
+  }
   return(f1)
 }
