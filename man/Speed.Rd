@@ -39,7 +39,7 @@ Returns a tranformed object with class "Speed" and units
 \dontrun{
 data(net)
 data(pc_profile)
-speed <- net$ps
+speed <- Speed(net$ps)
 class(speed)
 plot(speed, type = "l")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)

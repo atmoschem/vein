@@ -48,7 +48,6 @@
 #' }
 #' @export
 Emissions <- function(x, ...) {
-  e <- x
   if ( is.matrix(x) ) {
     e <- as.data.frame(x)
     for(i in 1:ncol(e)){
@@ -56,16 +55,16 @@ Emissions <- function(x, ...) {
     }
     class(e) <- c("Emissions", class(e))
   } else if ( is.data.frame(x) ) {
+    e <- x
     for(i in 1:ncol(x)){
       e[,i] <- e[,i]*units::parse_unit("g h-1")
     }
     class(e) <- c("Emissions",class(x))
-  } else if ( class(e) == "units" ) {
+  } else if ( class(x) == "units" ) {
+    e <- x
     warning("Check units are g/h")
-    class(e) <- c("Emissions",class(x))
-  } else if( class(e) == "numeric" | class(e) == "integer" ) {
-    e <- e*units::parse_unit("g h-1")
-    class(e) <- c("Emissions",class(x))
+  } else if( class(x) == "numeric" | class(x) == "integer") {
+    e <- x*units::parse_unit("g h-1")
   }
   return(e)
 }

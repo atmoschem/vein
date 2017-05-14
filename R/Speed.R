@@ -18,7 +18,7 @@
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
-#' speed <- net$ps
+#' speed <- Speed(net$ps)
 #' class(speed)
 #' plot(speed, type = "l")
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -27,31 +27,30 @@
 #' }
 #' @export
 Speed <- function(x, ...) {
-  spd <- x
-  if  ( is.matrix(spd) ) {
-    spd <- as.data.frame(spd)
+  if  ( is.matrix(x) ) {
+    spd <- as.data.frame(x)
     for(i in 1:ncol(spd)){
       spd[,i] <- spd[,i]*units::parse_unit("km h-1")
     }
-    class(spd) <- c("Speed",class(spd))
-  } else if ( is.data.frame(spd) ) {
+    class(spd) <- c("Speed",class(x))
+  } else if ( is.data.frame(x) ) {
+    spd <- x
     for(i in 1:ncol(spd)){
       spd[,i] <- spd[,i]*units::parse_unit("km h-1")
     }
-    class(spd) <- c("Speed",class(spd))
-  } else if ( is.list(spd) && is.list(spd[[1]]) ) {
-    for (i in 1:length(spd) ) {
-      for (j in 1:length(spd[[1]]) ) {
-        spd[[i]][[j]] <- spd[[i]][[j]]*units::parse_unit("km h-1")
+    class(spd) <- c("Speed",class(x))
+  } else if ( is.list(x) && is.list(x[[1]]) ) {
+    for (i in 1:length(x) ) {
+      for (j in 1:length(x[[1]]) ) {
+        x[[i]][[j]] <- x[[i]][[j]]*units::parse_unit("km h-1")
       }
     }
     #SpeedList?
-  } else if ( class(spd) == "units" ) {
+  } else if ( class(x) == "units" ) {
+    spd <- x
     message("Check units are km/h")
-    class(spd) <- c("Speed",class(x))
-  } else if( class(spd) == "numeric" | class(spd) == "integer" ) {
-    spd <- spd*units::parse_unit("km h-1")
-    class(spd) <- c("Speed",class(x))
+  } else if( class(x) == "numeric" | class(x) == "integer" ) {
+    spd <- x*units::parse_unit("km h-1")
   }
   return(spd)
 }
@@ -61,7 +60,7 @@ Speed <- function(x, ...) {
 #' @export
 print.Speed <- function(x, ...) {
   cat("Result for Speed ")
-  print(unclass(x),  ...)
+  NextMethod("print",x,  ...)
 }
 
 #' @rdname Speed
@@ -80,7 +79,6 @@ summary.Speed <- function(object,  ...) {
 plot.Speed <- function(x, ...) {
   spd <- x
     Velocity <- Speed(colMeans(spd))
-    Velocity <- Velocity*units::parse_unit("km h-1")
     VelocitySD <- Speed(unlist(lapply(spd,stats::sd)))
     smin <- Velocity - VelocitySD
     smax <- Velocity + VelocitySD

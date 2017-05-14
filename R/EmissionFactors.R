@@ -24,29 +24,25 @@
 #' }
 #' @export
 EmissionFactors <- function(x, ...) {
-  ef <- x
-  if ( is.matrix(ef) ) {
-    ef <- as.data.frame(ef)
+  if ( is.matrix(x) ) {
+    ef <- as.data.frame(x)
     for(i in 1:ncol(ef)){
       ef[,i] <- ef[,i]*units::parse_unit("g km-1")
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
-  } else if ( is.data.frame(ef) ) {
+  } else if ( is.data.frame(x) ) {
+    ef <- x
     for(i in 1:ncol(ef)){
       ef[,i] <- ef[,i]*units::parse_unit("g km-1")
     }
     class(ef) <- c("EmissionFactors",class(ef))
-    efx <- ef
-  } else if ( class(ef) == "units" ) {
+  } else if ( class(x) == "units" ) {
     warning("Check units are g/km")
-    class(e) <- c("EmissionFactors",class(x))
-  } else if( class(ef) == "numeric" | class(e) == "integer" ) {
-    ef <- ef*units::parse_unit("g km-1")
-    class(ef) <- c("EmissionFactors",class(x))
-    efx <- ef
+  } else if( class(ef) == "numeric" | class(ef) == "integer" ) {
+    ef <- x*units::parse_unit("g km-1")
   }
-  return(efx)
+  return(ef)
 }
 
 #' @rdname EmissionFactors

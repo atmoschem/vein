@@ -29,24 +29,23 @@
 #' }
 #' @export
 Vehicles <- function(x, ...) {
-  veh <- x
-  if  ( is.matrix(veh) ) {
-    spd <- as.data.frame(veh)
+  if  ( is.matrix(x) ) {
+    veh <- as.data.frame(x)
     for(i in 1:ncol(veh)){
       veh[,i] <- veh[,i]*units::parse_unit("km h-1")
     }
-    class(veh) <- c("Vehicles",class(veh))
-  } else if ( is.data.frame(veh) ) {
-    for(i in 1:ncol(veh[])){
+    class(veh) <- c("Vehicles",class(x))
+  } else if ( is.data.frame(x) ) {
+    veh <- x
+    for(i in 1:ncol(veh)){
       veh[,i] <- veh[,i]*units::parse_unit("h-1")
     }
-    class(veh) <- c("Vehicles",class(veh))
-  } else if ( class(veh) == "units" ) {
+    class(veh) <- c("Vehicles",class(x))
+  } else if ( class(x) == "units" ) {
+    veh <- x
     message("Check units are 1/h")
-    class(veh) <- c("Vehicles",class(x))
-  } else if( class(veh) == "numeric" | class(veh) == "integer" ) {
-    veh <- veh*units::parse_unit("h-1")
-    class(veh) <- c("Vehicles",class(x))
+  } else if( class(x) == "numeric" | class(x) == "integer" ) {
+    veh <- x*units::parse_unit("h-1")
   }
   return(veh)
 }
