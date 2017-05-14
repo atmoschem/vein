@@ -18,7 +18,7 @@
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
-#' speed <- Speed(net$ps)
+#' speed <- net$ps
 #' class(speed)
 #' plot(speed, type = "l")
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
