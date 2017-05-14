@@ -32,7 +32,6 @@ Read the DESCRIPTION file. You need several packages to run **vein**.
 Also, if you want to properly run the demo, install these packages:
 
 - ggplot2
-- DiagrammeR
 - RColorBrewer
 
 
