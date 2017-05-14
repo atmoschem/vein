@@ -1,11 +1,11 @@
 Package: vein
 Type: Package
-Title: An R package for vehicular emissions inventories
+Title: Vehicular Emissions Inventories
 Version: 0.2.1-3
 Author: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
 Maintainer: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
 Description: Emissions inventories elaboration and visualization,
-    Consists the three stages, pre-processing activity data, processing
+    consists the three stages, pre-processing activity data, processing
     or estimating the emissions and post-processing of emissions in
     maps and databases.
 License: MIT + file LICENSE
@@ -18,4 +18,3 @@ Suggests: knitr, rmarkdown,  RColorBrewer
 RoxygenNote: 6.0.1
 NeedsCompilation: no
 Packaged: 2016-10-21 10:31:39 UTC; sergio
-VignetteBuilder: knitr

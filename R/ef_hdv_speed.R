@@ -36,7 +36,7 @@ ef_hdv_speed <- function(v, t, g, eu, gr, l ,p, k=1, show.equation=TRUE){
                  ef_hdv$EURO == eu &
                  ef_hdv$GRA == gr &
                  ef_hdv$LOAD == l &
-                 ef_hdv$POLLUTANT == p, ]  # Seleçõa a equação (string) por filtro
+                 ef_hdv$POLLUTANT == p, ]
   lista <- list(a = df$a,
                 b = df$b,
                 c = df$c,
@@ -52,8 +52,8 @@ ef_hdv_speed <- function(v, t, g, eu, gr, l ,p, k=1, show.equation=TRUE){
     c <- df$c ;
     d <- df$d;
     e <- df$e
-    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V)) #Limita valores de V
+    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
-  }    # converte a equação a função
+  }
   return(f1)
 }

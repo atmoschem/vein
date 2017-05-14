@@ -39,7 +39,7 @@ ef_ldv_speed <- function(v, t, cc, f, eu, p, k = 1, show.equation = TRUE){
              ef_ldv$CC == cc &
              ef_ldv$FUEL == f &
              ef_ldv$EURO == eu &
-             ef_ldv$POLLUTANT == p, ]  # Seleçõa a equação (string) por filtro
+             ef_ldv$POLLUTANT == p, ]
 
   lista <- list(a = df$a,
                 b = df$b,
@@ -58,8 +58,8 @@ ef_ldv_speed <- function(v, t, cc, f, eu, p, k = 1, show.equation = TRUE){
     d <- df$d
     e <- df$e
     f <- df$f
-    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V)) #Limita valores de V
+    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
-  }    # converte a equação a função
+  }
   return(f1)
 }
