@@ -33,16 +33,24 @@ Vehicles <- function(x, ...) {
   if  ( is.matrix(veh) ) {
     veh <- as.data.frame(veh)
     for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i]*units::parse_unit("h-1")
+      if  ( class(veh[,i]) == "sfc" ) {
+        class(veh[,i]) <- class(veh[,i])
+      } else {
+        veh[,i] <- veh[,i]*units::parse_unit("h-1")
+      }
     }
     class(veh) <- c("Vehicles",class(veh))
   } else if ( is.data.frame(veh) ) {
-    for(i in 1:ncol(veh)){
+    for(i in 1:ncol(veh[])){
       veh[,i] <- veh[,i]*units::parse_unit("h-1")
     }
     class(veh) <- c("Vehicles",class(veh))
-  } else if ( is.numeric(veh) ) {
+  } else if ( class(veh) == "units" ) {
+    message("Check units are 1/h")
+    class(veh) <- c("Vehicles",class(x))
+  } else if( class(veh) == "numeric" | class(veh) == "integer" ) {
     veh <- veh*units::parse_unit("h-1")
+    class(veh) <- c("Vehicles",class(x))
   }
   return(veh)
 }

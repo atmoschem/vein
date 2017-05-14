@@ -38,10 +38,13 @@ EmissionFactors <- function(x, ...) {
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
-  } else if ( is.numeric(ef) ) {
+  } else if ( class(ef) == "units" ) {
+    warning("Check units are g/km")
+    class(e) <- c("EmissionFactors",class(x))
+  } else if( class(ef) == "numeric" | class(e) == "integer" ) {
     ef <- ef*units::parse_unit("g km-1")
-    class(ef) <- c("EmissionFactors",class(ef))
-    efx <- ef
+    class(ef) <- c("EmissionFactors",class(x))
+    efx <- f
   }
   return(efx)
 }

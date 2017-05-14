@@ -60,8 +60,12 @@ Emissions <- function(x, ...) {
       e[,i] <- e[,i]*units::parse_unit("g h-1")
     }
     class(e) <- c("Emissions",class(x))
-  } else if ( is.numeric(x) ) {
+  } else if ( class(e) == "units" ) {
+    warning("Check units are g/h")
+    class(e) <- c("Emissions",class(x))
+  } else if( class(e) == "numeric" | class(e) == "integer" ) {
     e <- e*units::parse_unit("g h-1")
+    class(e) <- c("Emissions",class(x))
   }
   return(e)
 }

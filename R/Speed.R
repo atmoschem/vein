@@ -46,8 +46,12 @@ Speed <- function(x, ...) {
       }
     }
     #SpeedList?
-  } else if ( is.numeric(spd) ) {
+  } else if ( class(spd) == "units" ) {
+    message("Check units are km/h")
+    class(spd) <- c("Speed",class(x))
+  } else if( class(spd) == "numeric" | class(spd) == "integer" ) {
     spd <- spd*units::parse_unit("km h-1")
+    class(spd) <- c("Speed",class(x))
   }
   return(spd)
 }
