@@ -36,10 +36,14 @@ Also, if you want to properly run the demo, install these packages:
 
 
 ```{r eval=F}
+install.packages("vein")
+```
+
+or
+
+```{r eval=F}
 library(devtools)
 install_github("ibarraespinosa/vein")
-library(vein)
-demo("VEIN")
 ```
 
 I've created the following classes:
@@ -64,5 +68,3 @@ New information will also be added to the documentation of emission factors.
 If you encounter any issues while using VEIN, please submit your issues to: https://github.com/ibarraespinosa/vein/issues/
 
 Thanks and enjoy VEIN!
-
-13/05/2017: The process of migrating to 'sf' has started

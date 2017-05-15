@@ -7,8 +7,8 @@
 #'
 #' @param veh Numeric vector with length of elements equals to number of streets
 #' @param lkm Length of each link
-#' @param ef List of functions of emission factors
-#' @param efcold List of functions of cold start emission factors
+#' @param ef List of functions of emission factors of vehicular categories
+#' @param efcold List of functions of cold start emission factors of vehicular categories
 #' @param beta Datraframe with the hourly cold-start distribution to each day
 #' of the period. Number of rows are hours and columns are days
 #' @param speed List of speeds
@@ -77,8 +77,8 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
       lapply(1:hour,function(i){
         lapply(1:agemax, function(k){
           beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[[j]][[i]])*
-            ifelse((efcold[[i]](speed[[j]][[i]])-1)<0,0,
-                   (efcold[[i]](speed[[j]][[i]])-1))
+            ifelse((efcold[[k]](speed[[j]][[i]])-1)<0,0,
+                   (efcold[[k]](speed[[j]][[i]])-1))
           })
       })
     })
@@ -96,8 +96,8 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
           simplify2array(
             lapply(1:agemax, function(k){
               beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[[j]][[i]])*
-                ifelse((efcold[[i]](speed[[j]][[i]])-1)<0,0,
-                       (efcold[[i]](speed[[j]][[i]])-1))
+                ifelse((efcold[[k]](speed[[j]][[i]])-1)<0,0,
+                       (efcold[[k]](speed[[j]][[i]])-1))
               })
             )
           })

@@ -25,12 +25,15 @@
 #' @param show.equation Option to see or not the equation parameters
 #' @return an emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
+#' @note t = "ALL" and cc == "ALL" works for several pollutants because emission
+#' fators are the same. Some exceptions are with NOx and FC because size of engine.
 #' @export
 #' @examples \dontrun{
 #' # Do not run
 #' V <- 0:150
-#' ef1 <- ef_ldv_speed(v = "PC",t = "PRE_ECE", cc = "ALL", f = "G", eu = "PRE", p = "CO")
-#' plot(1:150, ef1(1:150))
+#' ef1 <- ef_ldv_speed(v = "PC",t = "ALL", cc = "ALL", f = "G", eu = "PRE", p = "CO")
+#' efs <- EmissionFactors(ef1(1:150))
+#' plot(Speed(1:150), efs)
 #' }
 ef_ldv_speed <- function(v, t, cc, f, eu, p, k = 1, show.equation = TRUE){
   ef_ldv <- sysdata[[1]]

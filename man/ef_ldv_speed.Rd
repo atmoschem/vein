@@ -42,12 +42,17 @@ different combinations that returns emission factors. If a combination of
 any option is wrong it will return an empty value. Therefore, it is
 important ti know the combinations.
 }
+\note{
+t = "ALL" and cc == "ALL" works for several pollutants because emission
+fators are the same. Some exceptions are with NOx and FC because size of engine.
+}
 \examples{
 \dontrun{
 # Do not run
 V <- 0:150
-ef1 <- ef_ldv_speed(v = "PC",t = "PRE_ECE", cc = "ALL", f = "G", eu = "PRE", p = "CO")
-plot(1:150, ef1(1:150))
+ef1 <- ef_ldv_speed(v = "PC",t = "ALL", cc = "ALL", f = "G", eu = "PRE", p = "CO")
+efs <- EmissionFactors(ef1(1:150))
+plot(Speed(1:150), efs)
 }
 }
 \keyword{emission}

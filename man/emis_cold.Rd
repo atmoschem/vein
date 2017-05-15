@@ -12,9 +12,9 @@ emis_cold(veh, lkm, ef, efcold, beta, speed, agemax, profile, hour = 1,
 
 \item{lkm}{Length of each link}
 
-\item{ef}{List of functions of emission factors}
+\item{ef}{List of functions of emission factors of vehicular categories}
 
-\item{efcold}{List of functions of cold start emission factors}
+\item{efcold}{List of functions of cold start emission factors of vehicular categories}
 
 \item{beta}{Datraframe with the hourly cold-start distribution to each day
 of the period. Number of rows are hours and columns are days}

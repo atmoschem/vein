@@ -1,3 +1,8 @@
+vein v0.2.1-5 (Release date: 2017-05-15)
+==============
+* Fix emis_cold. efcold[[i]] now is efcold[[k]]. Add doc in ef_ldv_speed.
+Fix class EmissionFactors. Not it works for numerics
+
 vein v0.2.1-4 (Release date: 2017-05-14)
 ==============
 * Fix Classes and temp_fact. Remove non-ASCII
