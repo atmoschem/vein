@@ -60,12 +60,10 @@ I've created the following classes:
 
 Each class has the methods print, plot and summary.
 
-Soon, all units will be fully implemented in VEIN.
-
-VEIN is currently in its testing phase - to identify software bugs and errors. 
-
 New information will also be added to the documentation of emission factors.
 
 If you encounter any issues while using VEIN, please submit your issues to: https://github.com/ibarraespinosa/vein/issues/
+
+If you have any suggestions just let me know to zergioibarra@gmail.com
 
 Thanks and enjoy VEIN!
