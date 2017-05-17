@@ -35,17 +35,20 @@ Also, if you want to properly run the demo, install these packages:
 - ggplot2
 - RColorBrewer
 
-
 ```{r eval=F}
-install.packages("vein")
+# 0.2.1-6
+library(devtools)
+install_github("ibarraespinosa/vein")
 ```
 
 or
 
 ```{r eval=F}
-library(devtools)
-install_github("ibarraespinosa/vein")
+# 0.2.1-4
+install.packages("vein")
 ```
+
+
 
 I've created the following classes:
 
