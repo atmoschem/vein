@@ -12,6 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 [![Travis-CI Build Status](https://travis-ci.org/ibarraespinosa/vein.svg?branch=master)](https://travis-ci.org/ibarraespinosa/vein)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
 [![Rdoc](http://www.rdocumentation.org/badges/version/vein)](http://www.rdocumentation.org/packages/vein)
+[![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
+
+
 
 ![vein](p2.png)
 
