@@ -26,20 +26,19 @@
 #' }
 #' @export
 EmissionFactorsList <- function(x, ...) {
-  ef <- x
-  if ( is.matrix(ef) || is.data.frame(ef) ) {
-    efx <- lapply(1:ncol(ef), function(i) {
-      lapply(1:nrow(ef), function(j) {
-        function(V) ef[j,i]
+  if ( is.matrix(x) || is.data.frame(x) ) {
+    efx <- lapply(1:ncol(x), function(i) {
+      lapply(1:nrow(x), function(j) {
+        function(V) x[j,i]
       })
     })
+    class(efx) <- c("EmissionFactorsList",class(x))
+  } else  if ( is.numeric(x) ) {
+    efx <- lapply(1:length(x), function(i) {function(V) x[i] })
     class(efx) <- c("EmissionFactorsList",class(efx))
-  } else  if ( is.numeric(ef) ) {
-    efx <- lapply(1:length(ef), function(i) {function(V) ef[i] })
-    class(efx) <- c("EmissionFactorsList",class(efx))
-  } else if ( is.list(ef) && is.function(ef[[1]]) ) {
-    class(ef) <- c("EmissionFactorsList",class(ef))
-    efx <- ef
+  } else if ( is.list(x) && is.function(x[[1]]) ) {
+    efx <- x
+    class(efx) <- c("EmissionFactorsList",class(x))
   }
   return(efx)
 }

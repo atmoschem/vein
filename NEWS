@@ -1,3 +1,8 @@
+vein v0.2.1-7 (Chiba) (Release date: 2017-05-18)
+==============
+* More documentation on emission factors. Fix EmissionFactorsList. Delete
+call to library(DiagrammeR) in demo
+
 vein v0.2.1-6 (Release date: 2017-05-17)
 ==============
 * FC  PC <=1400cc fixed

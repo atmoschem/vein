@@ -51,15 +51,12 @@ a specific type of vehicle. Thanks to Glauber Camponogara by the help.
 \dontrun{
 # Do not run
 data(fe2015)
-co1 <- fe2015[fe2015$Pollutant=="CO" & fe2015$Age<25, ] #24 obs!!!
-l1 <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "ALL", cc = "ALL", f = "G",
+co1 <- fe2015[fe2015$Pollutant=="CO", ]
+lef <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "ALL", cc = "ALL", f = "G",
 eu = co1$Euro_LDV, p = "CO")
-co2 <- fe2015[fe2015$Pollutant=="CO" & fe2015$Age>24,] #22 obs!!!
-l2 <- ef_ldv_scaled(co2$PC_G, v = "PC", t = "PRE_ECE", cc = "ALL", f = "G",
-eu = co2$Euro_LDV, p = "CO")
-FE_PC_E25_1400_CO <- c(l1,l2,l2[[12]],l2[[12]],l2[[12]],l2[[12]])
-FE_PC_E25_1400_CO[[1]](34.12) #first element
-length(FE_PC_E25_1400_CO)
+length(lef)
+lef[[1]](40)
+lef[[36]](50)
 }
 }
 \seealso{

@@ -2,13 +2,16 @@ library(vein)
 library(units)
 library(ggplot2)
 library(RColorBrewer)
-library(DiagrammeR)
+# library(DiagrammeR)
 
 
 ## ---- fig.width=8, fig.height=6------------------------------------------
 # 1 ####
 data(net)
-spplot(net, "ldv", scales=list(draw=T))
+class(net$ldv) <- "numeric"
+spplot(net, "ldv", scales=list(draw=T),cuts=8,
+       col.regions=brewer.pal(9, "Blues"))
+
 # 2 ####
 PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
           133833,138441,142682,171029,151048,115228,98664,126444,101027,
@@ -23,7 +26,7 @@ df <- data.frame(pc = c(colSums(pc1),colSums(pc2),colSums(pc3)),
                  Age = c(rep(15.17,41),rep(11.09,41),rep(15.53,41)),
                  x = rep(1:41,3))
 
-ggplot(df, aes(x=x,y=pc, colour=as.factor(Age))) + geom_point(size=2)  +
+ggplot(df, aes(x=x,y=pc, colour=as.factor(Age))) + geom_point(size=3)  +
   geom_line()+theme_bw() + labs(x="Age", y="Distribution") +
   theme(legend.position = c(0.8,0.8)) +
   guides(colour = guide_legend(keywidth = 2, keyheight = 2))+

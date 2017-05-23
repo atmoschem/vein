@@ -21,12 +21,18 @@
 #' @examples \dontrun{
 #' # Do not run
 #' V <- 0:130
-#' ef1 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "I", gr = 0,l = 0.5, p = "CO")
-#' plot(1:130, ef1(1:130))
-#' ef2 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,l = 0.5, p = "THC")
+#' ef1 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+#' l = 0.5, p = "HC")
 #' plot(1:130, ef2(1:130))
-#' ef3 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,l = 0.5, p = "PM")
-#' plot(1:130, ef3(1:130))
+#' euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
+#'           rep("I", 5), rep("PRE", 15))
+#' lef <- lapply(1:30, function(i) {
+#' ef_hdv_speed(v = "Trucks", t = "RT", g = ">32", gr = 0,
+#' eu = euro[i], l = 0.5, p = "NOx",
+#' show.equation = F)(25) })
+#' efs <- EmissionFactors(unlist(lef)) #returns 'units'
+#' plot(efs, xlab = "age")
+#' lines(efs, type = "l")
 #' }
 ef_hdv_speed <- function(v, t, g, eu, gr, l ,p, k=1, show.equation=TRUE){
   ef_hdv <- sysdata[[2]]
