@@ -60,12 +60,13 @@
 #'             lefc[[length(lefc)]],lefc[[length(lefc)]],lef[[length(lef)]])
 #' class(lefec)
 #' PC_CO_COLD <- emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
-#' beta = pcf, speed = speed, agemax = 41, profile = pc_profile, hour = 24,
+#' beta = pcf, speed = speed, profile = pc_profile, hour = 24,
 #' day = 7, array = T)
 #' class(PC_CO_COLD)
 #' plot(PC_CO_COLD)
 #' }
-emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax, profile,
+emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax = ncol(veh),
+                       profile,
                        hour = 1, day = 1, array = F) {
   veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)

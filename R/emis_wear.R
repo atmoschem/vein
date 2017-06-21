@@ -20,7 +20,7 @@
 #' @examples \dontrun{
 #' # Do not run
 #' }
-emis_wear <- function (veh, lkm, ef, agemax, profile, hour = 1, day = 1) {
+emis_wear <- function (veh, lkm, ef, agemax = ncol(veh), profile, hour = 1, day = 1) {
   veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)
     d <-  simplify2array(

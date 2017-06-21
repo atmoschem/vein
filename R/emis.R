@@ -41,11 +41,12 @@
 #'                      f = "G",p = "CO", eu=co1$Euro_LDV)
 #' lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 #'          lef[length(lef)],lef[length(lef)])
-#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
+#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
 #'              profile = pc_profile, hour = 24, day = 7, array = T)
 #' class(E_CO)
 #' }
-emis <- function (veh, lkm, ef, speed, agemax, profile, hour = 1, day = 1,
+emis <- function (veh, lkm, ef, speed, agemax = ncol(veh),
+                  profile, hour = 1, day = 1,
                   array = F) {
   veh <- as.data.frame(veh)
   for (i  in 1:ncol(veh) ) {

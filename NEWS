@@ -1,3 +1,7 @@
+vein v0.2.1-8 (Release date: 2017-06-21)
+==============
+* In emis, emis_cold and emis_paved: agemax  =  ncol(veh) by default
+
 vein v0.2.1-7 (Chiba) (Release date: 2017-05-18)
 ==============
 * More documentation on emission factors. Fix EmissionFactorsList. Delete

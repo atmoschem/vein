@@ -4,7 +4,8 @@
 \alias{emis}
 \title{Emissions estimation hourly for the of the week}
 \usage{
-emis(veh, lkm, ef, speed, agemax, profile, hour = 1, day = 1, array = F)
+emis(veh, lkm, ef, speed, agemax = ncol(veh), profile, hour = 1, day = 1,
+  array = F)
 }
 \arguments{
 \item{veh}{Numeric vector with length of elements equals to number of streets}
@@ -60,7 +61,7 @@ lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
 lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
          lef[length(lef)],lef[length(lef)])
-E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
              profile = pc_profile, hour = 24, day = 7, array = T)
 class(E_CO)
 }
