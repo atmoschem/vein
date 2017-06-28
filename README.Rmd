@@ -27,11 +27,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Read the DESCRIPTION file. You need several packages to run **vein**.
 
-- sp
-- units
-- raster
-- rgdal
-- rgeos
+- [sp](https://github.com/edzer/sp/) 
+- [units](https://github.com/edzer/units/) 
+- [raster](http://cran.r-project.org/package=raster)
+- [rgdal](https://github.com/cran/rgdal)
+- [rgeos](https://github.com/cran/rgeos)
 
 Also, if you want to properly run the demo, install these packages:
 
@@ -39,7 +39,7 @@ Also, if you want to properly run the demo, install these packages:
 - RColorBrewer
 
 ```{r eval=F}
-# 0.2.1-8
+# 0.2.1-9
 library(devtools)
 install_github("ibarraespinosa/vein")
 library(vein)
@@ -77,3 +77,7 @@ If you encounter any issues while using VEIN, please submit your issues to: http
 If you have any suggestions just let me know to zergioibarra@gmail.com
 
 Thanks and enjoy VEIN!
+
+**More notes**
+
+- Next plan, migrate to [sf](https://github.com/edzer/sfr/) 
