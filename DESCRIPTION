@@ -1,7 +1,9 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 0.2.1-9
+Version: 0.2.2
+Authors@R: c(person(given = "Sergio", family = "Ibarra", role = c("aut", "cre"),
+     email = "zergioibarra@gmail.com")) 
 Author: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
 Maintainer: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
 Description: Emissions inventories elaboration and visualization,

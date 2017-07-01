@@ -1,0 +1,6 @@
+url: http://ibarraespinosa.github.io/vein/
+
+template:
+  params:
+    bootswatch: flatly
+
