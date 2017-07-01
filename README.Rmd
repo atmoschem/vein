@@ -80,4 +80,4 @@ Thanks and enjoy VEIN!
 
 **More notes**
 
-- Next plan, migrate to [sf](https://github.com/edzer/sfr/) 
+- Next plan, migrate to [sf](https://github.com/edzer/sfr/)
