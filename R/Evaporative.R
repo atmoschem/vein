@@ -16,6 +16,7 @@
 #' plot.Evaporative
 #' @examples \dontrun{
 #' ef1 <- ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
+#' class(ef1)
 #' dfe <- emis_evap(rep(50,3),"PC","<=1400","G", 1:3,
 #'                      10,4,2,1,
 #'                      ef1*1:3, ef1*1:3, ef1*1:3, ef1*1:3,
