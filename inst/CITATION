@@ -1,17 +1,9 @@
-citHeader("To cite REMI in publications use:")
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
 
-citEntry(entry = "Article",
-  title        = "REMI model: Bottom-up emissions inventories for cities with lack of data",
-  author       = "Sergio Ibarra-Espinosa, Rita Ynoue",
-  journal      = "Journal of Earth Sciences & Geotechnical Engineering",
-  year         = "2017",
-  vol          = "7",
-  pages        = "277--288",
-  ISSN         = "1792--9660",
-
-
-  textVersion  =
-  paste("Ibarra S., Ynoue R., (2017)",
-        "REMI model: Bottom-up emissions inventories for cities with lack of data",
-        "Journal of Earth Sciences & Geotechnical Engineering", 7:277-288)
-)
+bibentry(bibtype = "Manual",
+         title = "{vein}: Vehicular Emissions Inventories",
+         author = c(person("Sergio", "Ibarra Espinosa")),
+         year = year,
+         note = note,
+         url = "https://CRAN.R-project.org/package=vein")
