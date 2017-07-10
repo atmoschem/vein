@@ -85,4 +85,4 @@ Thanks and enjoy VEIN!
 - Graphical interface (probably similar [MODIStsp](https://github.com/lbusett/MODIStsp)
 - More speciations
 - Topdown estimation
-- Next plan, migrate to [sf](https://github.com/edzer/sfr/)
+- Migrate to [sf](https://github.com/edzer/sfr/)
