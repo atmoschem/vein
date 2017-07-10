@@ -78,6 +78,11 @@ If you have any suggestions just let me know to zergioibarra@gmail.com
 
 Thanks and enjoy VEIN!
 
-**More notes**
+### **Roadmap** (not in order)
 
+- Improve vehicle classification (all vehicle includes engine size)
+- Estimation of evaporative emissions with Copert Tier 3
+- Graphical interface (probably similar [MODIStsp](https://github.com/lbusett/MODIStsp)
+- More speciations
+- Topdown estimation
 - Next plan, migrate to [sf](https://github.com/edzer/sfr/)
