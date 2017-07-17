@@ -1,9 +1,9 @@
-year <- sub("-.*", "", meta$Date)
+year <- 2017
 note <- sprintf("R package version %s", meta$Version)
 
 bibentry(bibtype = "Manual",
          title = "{vein}: Vehicular Emissions Inventories",
-         author = c(person("Sergio", "Ibarra Espinosa")),
+         author = c(person("Sergio", "Ibarra-Espinosa")),
          year = year,
          note = note,
          url = "https://CRAN.R-project.org/package=vein")
