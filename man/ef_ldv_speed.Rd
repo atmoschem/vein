@@ -4,23 +4,22 @@
 \alias{ef_ldv_speed}
 \title{Emissions factors for Light Duty Vehicles and Motorcycles}
 \usage{
-ef_ldv_speed(v, t, cc, f, eu, p, k = 1, show.equation = TRUE)
+ef_ldv_speed(v, t = "4S", cc, f, eu, p, k = 1, show.equation = TRUE)
 }
 \arguments{
 \item{v}{Category vehicle: "PC", "LCV", "Motorcycle" or "Moped}
 
-\item{t}{Sub-category of of vehicle: "PRE_ECE", "ECE_1501", "ECE_1502",
+\item{t}{Sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
 "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
-"2S"  or "4S"}
+"2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"}
 
-\item{cc}{Size of engine in cc: "ALL", "<=1400", ">1400", "1400_2000", ">2000",
-"<=800", "800_1400", "<=2000", "2S", "<=50", ">=50", "<=250", "250_750", ">=750",
-or ">50"}
+\item{cc}{Size of engine in cc:  PC: "<=1400", ">1400", "1400_2000", ">2000",
+"<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
+Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{f}{Type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)}
 
-\item{eu}{Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"
-or "ALL"}
+\item{eu}{Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"}
 
 \item{p}{Pollutant: "CO", "FC", "NOx", "HC" or "PM"}
 
@@ -52,7 +51,7 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 # Passenger Cars PC
 # Emission factor function
 V <- 0:150
-ef1 <- ef_ldv_speed(v = "PC",t = "ALL", cc = "ALL", f = "G", eu = "PRE",
+ef1 <- ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 p = "CO")
 efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]")
@@ -64,7 +63,7 @@ euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
           rep("I", 5), rep("PRE", 15))
 speed <- 25
 lef <- lapply(1:40, function(i) {
-ef_ldv_speed(v = "PC", t = "ALL", cc = "ALL", f = "G",
+ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euro[i], p = "CO", show.equation = F)(25) })
 # to check the emission factor with a plot
 efs <- EmissionFactors(unlist(lef)) #returns 'units'
@@ -73,12 +72,12 @@ lines(efs, type = "l")
 
 # Light Commercial Vehicles
 V <- 0:150
-ef1 <- ef_ldv_speed(v = "LCV",t = "ALL", cc = "ALL", f = "G", eu = "PRE",
+ef1 <- ef_ldv_speed(v = "LCV",t = "4S", cc = "<3.5", f = "G", eu = "PRE",
 p = "CO")
 efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]")
 lef <- lapply(1:40, function(i) {
-ef_ldv_speed(v = "LCV", t = "ALL", cc = "ALL", f = "G",
+ef_ldv_speed(v = "LCV", t = "4S", cc = "<3.5", f = "G",
           eu = euro[i], p = "CO", show.equation = F)(25) })
 # to check the emission factor with a plot
 efs <- EmissionFactors(unlist(lef)) #returns 'units'

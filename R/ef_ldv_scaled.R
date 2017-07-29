@@ -12,15 +12,14 @@
 #' @param dfcol Column of the dataframe with the local emission factors eg df$dfcol
 #' @param SDC Speed of the driving cycle
 #' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped
-#' @param t Sub-category of of vehicle: "PRE_ECE", "ECE_1501", "ECE_1502",
+#' @param t Sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
 #' "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
-#' "2S"  or "4S"
-#' @param cc Size of engine in cc: "ALL", "<=1400", ">1400", "1400_2000", ">2000",
-#' "<=800", "800_1400", "<=2000", "2S", "<=50", ">=50", "<=250", "250_750", ">=750",
-#' or ">50"
+#' "2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"
+#' @param cc Size of engine in cc:  PC: "<=1400", ">1400", "1400_2000", ">2000",
+#' "<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
+#' Moped: "<=50". LCV :  "<3.5" for gross weight.
 #' @param f Type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
 #' @param eu Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"
-#' or "ALL"
 #' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM"
 #' @return A list of scaled emission factors  g/km
 #' @keywords speed emission factors
@@ -32,13 +31,13 @@
 #' # Do not run
 #' data(fe2015)
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ]
-#' lef <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "ALL", cc = "ALL", f = "G",
+#' lef <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",
 #' eu = co1$Euro_LDV, p = "CO")
 #' length(lef)
-#' lef[[1]](40)
-#' lef[[36]](50)
+#' lef[[1]](40) # First element of the lit of speed functions at 40 km/h
+#' lef[[36]](50) # 36th element of the lit of speed functions at 50 km/h
 #' }
-ef_ldv_scaled <- function(df,dfcol ,SDC  = 34.12, v, t, cc, f, eu, p) {
+ef_ldv_scaled <- function(df,dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
    lapply(1:length(df[,1]), function(i)  {
     funIN <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,
                          eu = as.character(eu[i]), p = p, k = 1, show.equation = FALSE)

@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ![vein](p2.png)
-
+a) Emisions with VEIN for MASP (kgCO/m2/s) and b) emissions for MASP from EDGAR (kgCO/m2/s)
 
 ## Vein Package
 
@@ -39,7 +39,7 @@ Also, if you want to properly run the demo, install these packages:
 - RColorBrewer
 
 ```{r eval=F}
-# 0.2.2
+# 0.2.2-1
 library(devtools)
 install_github("ibarraespinosa/vein")
 library(vein)
@@ -82,7 +82,7 @@ Thanks and enjoy VEIN!
 
 - Improve vehicle classification (all vehicle includes engine size)
 - Estimation of evaporative emissions with Copert Tier 3
-- Graphical interface (probably similar [MODIStsp](https://github.com/lbusett/MODIStsp)
+- Graphical interface (probably similar [MODIStsp](https://github.com/lbusett/MODIStsp))
 - More speciations
 - Topdown estimation
 - Migrate to [sf](https://github.com/edzer/sfr/)

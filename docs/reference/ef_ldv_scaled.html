@@ -88,7 +88,7 @@
 emission factor which at a speed of the driving cycle (SDC) gives a desired value.</p>
     
 
-    <pre class="usage"><span class='fu'>ef_ldv_scaled</span>(<span class='no'>df</span>, <span class='no'>dfcol</span>, <span class='kw'>SDC</span> <span class='kw'>=</span> <span class='fl'>34.12</span>, <span class='no'>v</span>, <span class='no'>t</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_ldv_scaled</span>(<span class='no'>df</span>, <span class='no'>dfcol</span>, <span class='kw'>SDC</span> <span class='kw'>=</span> <span class='fl'>34.12</span>, <span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -111,15 +111,15 @@ emission factor which at a speed of the driving cycle (SDC) gives a desired valu
     </tr>
     <tr>
       <th>t</th>
-      <td><p>Sub-category of of vehicle: "PRE_ECE", "ECE_1501", "ECE_1502",
+      <td><p>Sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
 "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
-"2S"  or "4S"</p></td>
+"2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"</p></td>
     </tr>
     <tr>
       <th>cc</th>
-      <td><p>Size of engine in cc: "ALL", "&lt;=1400", "&gt;1400", "1400_2000", "&gt;2000",
-"&lt;=800", "800_1400", "&lt;=2000", "2S", "&lt;=50", "&gt;=50", "&lt;=250", "250_750", "&gt;=750",
-or "&gt;50"</p></td>
+      <td><p>Size of engine in cc:  PC: "&lt;=1400", "&gt;1400", "1400_2000", "&gt;2000",
+"&lt;=800", "&lt;=2000". Motorcycle:  "&gt;=50" (for "2S"), "&lt;=250", "250_750", "&gt;=750".
+Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></td>
     </tr>
     <tr>
       <th>f</th>
@@ -127,8 +127,7 @@ or "&gt;50"</p></td>
     </tr>
     <tr>
       <th>eu</th>
-      <td><p>Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"
-or "ALL"</p></td>
+      <td><p>Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"</p></td>
     </tr>
     <tr>
       <th>p</th>
@@ -162,11 +161,11 @@ a specific type of vehicle. Thanks to Glauber Camponogara by the help.</p>
 <span class='co'># Do not run</span>
 <span class='fu'>data</span>(<span class='no'>fe2015</span>)
 <span class='no'>co1</span> <span class='kw'>&lt;-</span> <span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, ]
-<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_scaled</span>(<span class='no'>co1</span>, <span class='no'>co1</span>$<span class='no'>PC_G</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
+<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_scaled</span>(<span class='no'>co1</span>, <span class='no'>co1</span>$<span class='no'>PC_G</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
 <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>co1</span>$<span class='no'>Euro_LDV</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
 <span class='fu'>length</span>(<span class='no'>lef</span>)
-<span class='no'>lef</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>40</span>)
-<span class='no'>lef</span><span class='kw'>[[</span><span class='fl'>36</span>]](<span class='fl'>50</span>)
+<span class='no'>lef</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>40</span>) <span class='co'># First element of the lit of speed functions at 40 km/h</span>
+<span class='no'>lef</span><span class='kw'>[[</span><span class='fl'>36</span>]](<span class='fl'>50</span>) <span class='co'># 36th element of the lit of speed functions at 50 km/h</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

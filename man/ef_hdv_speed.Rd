@@ -4,7 +4,8 @@
 \alias{ef_hdv_speed}
 \title{Emissions factors for Heavy Duty Vehicles based on average speed}
 \usage{
-ef_hdv_speed(v, t, g, eu, gr, l, p, k = 1, show.equation = TRUE)
+ef_hdv_speed(v, t, g, eu, gr = 0, l = 0.5, p, k = 1,
+  show.equation = TRUE)
 }
 \arguments{
 \item{v}{Category vehicle: "Coach", "Trucks" or "Ubus"}

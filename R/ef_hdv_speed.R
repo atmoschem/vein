@@ -34,7 +34,7 @@
 #' plot(efs, xlab = "age")
 #' lines(efs, type = "l")
 #' }
-ef_hdv_speed <- function(v, t, g, eu, gr, l ,p, k=1, show.equation=TRUE){
+ef_hdv_speed <- function(v, t, g, eu, gr = 0, l = 0.5 ,p, k=1, show.equation=TRUE){
   ef_hdv <- sysdata[[2]]
   df <- ef_hdv[ef_hdv$VEH == v &
                  ef_hdv$TYPE == t &

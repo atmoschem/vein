@@ -31,7 +31,7 @@
 #' g = "<=7.5", eu = co1$Euro_HDV, gr = 0, l = 0.5, p = "CO")
 #' length(FE_LT_7_5_D_CO)
 #' }
-ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr, l ,p) {
+ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
    lapply(1:length(df[,1]), function(i)  {
     funIN <- ef_hdv_speed(v = v, t = t, g = g,eu = as.character(eu[i]),
                           gr = gr, l = l, p = p, k=1, show.equation = FALSE)

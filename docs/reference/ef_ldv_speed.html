@@ -89,7 +89,7 @@
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook</p>
     
 
-    <pre class="usage"><span class='fu'>ef_ldv_speed</span>(<span class='no'>v</span>, <span class='no'>t</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_ldv_speed</span>(<span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -100,15 +100,15 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     </tr>
     <tr>
       <th>t</th>
-      <td><p>Sub-category of of vehicle: "PRE_ECE", "ECE_1501", "ECE_1502",
+      <td><p>Sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
 "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
-"2S"  or "4S"</p></td>
+"2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"</p></td>
     </tr>
     <tr>
       <th>cc</th>
-      <td><p>Size of engine in cc: "ALL", "&lt;=1400", "&gt;1400", "1400_2000", "&gt;2000",
-"&lt;=800", "800_1400", "&lt;=2000", "2S", "&lt;=50", "&gt;=50", "&lt;=250", "250_750", "&gt;=750",
-or "&gt;50"</p></td>
+      <td><p>Size of engine in cc:  PC: "&lt;=1400", "&gt;1400", "1400_2000", "&gt;2000",
+"&lt;=800", "&lt;=2000". Motorcycle:  "&gt;=50" (for "2S"), "&lt;=250", "250_750", "&gt;=750".
+Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></td>
     </tr>
     <tr>
       <th>f</th>
@@ -116,8 +116,7 @@ or "&gt;50"</p></td>
     </tr>
     <tr>
       <th>eu</th>
-      <td><p>Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"
-or "ALL"</p></td>
+      <td><p>Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"</p></td>
     </tr>
     <tr>
       <th>p</th>
@@ -156,7 +155,7 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 <span class='co'># Passenger Cars PC</span>
 <span class='co'># Emission factor function</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>:<span class='fl'>150</span>
-<span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
+<span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
 <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>ef1</span>(<span class='fl'>1</span>:<span class='fl'>150</span>))
 <span class='fu'>plot</span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>)
@@ -168,7 +167,7 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
           <span class='fu'>rep</span>(<span class='st'>"I"</span>, <span class='fl'>5</span>), <span class='fu'>rep</span>(<span class='st'>"PRE"</span>, <span class='fl'>15</span>))
 <span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fl'>25</span>
 <span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fl'>1</span>:<span class='fl'>40</span>, <span class='kw'>function</span>(<span class='no'>i</span>) {
-<span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
+<span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
           <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euro</span>[<span class='no'>i</span>], <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='no'>F</span>)(<span class='fl'>25</span>) })
 <span class='co'># to check the emission factor with a plot</span>
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>unlist</span>(<span class='no'>lef</span>)) <span class='co'>#returns 'units'</span>
@@ -177,12 +176,12 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 
 <span class='co'># Light Commercial Vehicles</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>:<span class='fl'>150</span>
-<span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"LCV"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
+<span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"LCV"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;3.5"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
 <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>ef1</span>(<span class='fl'>1</span>:<span class='fl'>150</span>))
 <span class='fu'>plot</span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>)
 <span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fl'>1</span>:<span class='fl'>40</span>, <span class='kw'>function</span>(<span class='no'>i</span>) {
-<span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"LCV"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
+<span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"LCV"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;3.5"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
           <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euro</span>[<span class='no'>i</span>], <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='no'>F</span>)(<span class='fl'>25</span>) })
 <span class='co'># to check the emission factor with a plot</span>
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>unlist</span>(<span class='no'>lef</span>)) <span class='co'>#returns 'units'</span>

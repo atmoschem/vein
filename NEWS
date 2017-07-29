@@ -1,3 +1,8 @@
+vein v0.2.2-1 (Release date: 2017-07-29)
+==============
+* None of the options of ldv emission factors includes the option "ALL".
+* github updates includes '-' in description
+
 vein v0.2.2 (Release date: 2017-06-28)
 ==============
 * Versions with three numbers. Fix speciate for "iag"
