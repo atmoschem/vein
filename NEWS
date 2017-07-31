@@ -1,3 +1,8 @@
+vein v0.2.2-2 (Release date: 2017-07-31)
+==============
+* emis now allowa veh as list of "Vehicles" data.frame. The length of the list
+is equal to the hours considered in the estimation.
+
 vein v0.2.2-1 (Release date: 2017-07-29)
 ==============
 * None of the options of ldv emission factors includes the option "ALL".

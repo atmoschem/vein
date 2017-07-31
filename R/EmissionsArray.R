@@ -86,7 +86,7 @@ summary.EmissionsArray <- function(object, ...) {
     names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
     # Total <- rowSums(df)
     Mean <- colMeans(df)
-    SD <- unlist(lapply(df, stats::sd))
+    SD <- unlist(lapply(df, stats::sd, na.rm = T))
     Min <- unlist(lapply(df, min))
     Max <- unlist(lapply(df, max))
     dfx <- data.frame(Mean, SD, Min, Max)

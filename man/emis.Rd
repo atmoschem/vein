@@ -8,7 +8,9 @@ emis(veh, lkm, ef, speed, agemax = ncol(veh), profile, hour = 1, day = 1,
   array = F)
 }
 \arguments{
-\item{veh}{Numeric vector with length of elements equals to number of streets}
+\item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
+as number of columns matching the age distribution of that ype of vehicle.
+The number of rows is equal to the number of streets link}
 
 \item{lkm}{Length of each link}
 
@@ -57,12 +59,16 @@ cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #vehicles newer than pre-euro
 co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
-lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
+lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
 lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
          lef[length(lef)],lef[length(lef)])
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
              profile = pc_profile, hour = 24, day = 7, array = T)
 class(E_CO)
+lpc <- list(pc1, pc1)
+E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
+             agemax = 41, hour = 2, day = 1, array = T)
+class(E_COv2)
 }
 }
