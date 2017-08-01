@@ -3,7 +3,7 @@ vein v0.2.2-2 (Release date: 2017-07-31)
 * emis now allowa veh as list of "Vehicles" data.frame. The length of the list
 is equal to the hours considered in the estimation.
 * agemax in emis and emis_cold varies
-* In emis and emis_cold defaults hour = 24, day = 7
+* In emis and emis_cold defaults hour = 24, day = 7, array = T
 
 vein v0.2.2-1 (Release date: 2017-07-29)
 ==============

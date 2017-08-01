@@ -6,7 +6,7 @@
 \usage{
 emis(veh, lkm, ef, speed, agemax = if (!inherits(x = veh, what = "list")) {   
    ncol(veh) } else {     ncol(veh[[1]]) }, profile, hour = 24, day = 7,
-  array = F)
+  array = T)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame

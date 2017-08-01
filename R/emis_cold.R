@@ -80,7 +80,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
                          ncol(veh[[1]])
                        },
                        profile,
-                       hour = 24, day = 7, array = F) {
+                       hour = 24, day = 7, array = T) {
   if (!inherits(x = veh, what = "list")) {
     veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)

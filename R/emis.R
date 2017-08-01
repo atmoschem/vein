@@ -58,7 +58,7 @@ emis <- function (veh, lkm, ef, speed,
                       ncol(veh[[1]])
                     },
                   profile, hour = 24, day = 7,
-                  array = F) {
+                  array = T) {
   if (!inherits(x = veh, what = "list")) {
   veh <- as.data.frame(veh)
   for (i  in 1:ncol(veh) ) {
