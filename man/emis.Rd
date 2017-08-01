@@ -5,7 +5,7 @@
 \title{Emissions estimation hourly for the of the week}
 \usage{
 emis(veh, lkm, ef, speed, agemax = if (!inherits(x = veh, what = "list")) {   
-   ncol(veh) } else {     ncol(veh[[1]]) }, profile, hour = 1, day = 1,
+   ncol(veh) } else {     ncol(veh[[1]]) }, profile, hour = 24, day = 7,
   array = F)
 }
 \arguments{

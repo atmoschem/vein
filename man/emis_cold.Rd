@@ -6,7 +6,7 @@
 \usage{
 emis_cold(veh, lkm, ef, efcold, beta, speed, agemax = if (!inherits(x = veh,
   what = "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile,
-  hour = 1, day = 1, array = F)
+  hour = 24, day = 7, array = F)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
