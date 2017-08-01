@@ -4,7 +4,8 @@
 \alias{emis}
 \title{Emissions estimation hourly for the of the week}
 \usage{
-emis(veh, lkm, ef, speed, agemax = ncol(veh), profile, hour = 1, day = 1,
+emis(veh, lkm, ef, speed, agemax = if (!inherits(x = veh, what = "list")) {   
+   ncol(veh) } else {     ncol(veh[[1]]) }, profile, hour = 1, day = 1,
   array = F)
 }
 \arguments{
@@ -68,7 +69,7 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
 class(E_CO)
 lpc <- list(pc1, pc1)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
-             agemax = 41, hour = 2, day = 1, array = T)
+               hour = 2, day = 1, array = T)
 class(E_COv2)
 }
 }

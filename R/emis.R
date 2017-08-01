@@ -48,10 +48,15 @@
 #' class(E_CO)
 #' lpc <- list(pc1, pc1)
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
-#'              agemax = 41, hour = 2, day = 1, array = T)
+#'                hour = 2, day = 1, array = T)
 #' class(E_COv2)
 #' }
-emis <- function (veh, lkm, ef, speed, agemax = ncol(veh),
+emis <- function (veh, lkm, ef, speed,
+                  agemax = if (!inherits(x = veh, what = "list")) {
+                    ncol(veh)
+                    } else {
+                      ncol(veh[[1]])
+                    },
                   profile, hour = 1, day = 1,
                   array = F) {
   if (!inherits(x = veh, what = "list")) {

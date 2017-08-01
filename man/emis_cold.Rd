@@ -4,7 +4,8 @@
 \alias{emis_cold}
 \title{Estimation of cold start emissions hourly for the of the week}
 \usage{
-emis_cold(veh, lkm, ef, efcold, beta, speed, agemax = ncol(veh), profile,
+emis_cold(veh, lkm, ef, efcold, beta, speed, agemax = if (!inherits(x = veh,
+  what = "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile,
   hour = 1, day = 1, array = F)
 }
 \arguments{

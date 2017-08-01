@@ -73,7 +73,12 @@
 #' class(PC_CO_COLDv2)
 #' plot(PC_CO_COLDv2)
 #' }
-emis_cold <- function (veh, lkm, ef, efcold, beta, speed, agemax = ncol(veh),
+emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
+                       agemax = if (!inherits(x = veh, what = "list")) {
+                         ncol(veh)
+                       } else {
+                         ncol(veh[[1]])
+                       },
                        profile,
                        hour = 1, day = 1, array = F) {
   if (!inherits(x = veh, what = "list")) {
