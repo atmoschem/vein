@@ -66,8 +66,8 @@ lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
              profile = pc_profile, hour = 24, day = 7, array = T)
 class(E_CO)
-lpc <- list(pc1, pc1)
+lpc <- list(pc1,pc1)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
-               hour = 2, day = 1, array = T)
+               hour = 168, day = 7, array = T)
 }
 }

@@ -48,13 +48,17 @@
 #' E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
 #' pollutant = "CO", by = "veh")
 #' head(E_CO_DF)
-#' E_CO <- emis(veh = list(pc1,pc1),  lkm = net$lkm, ef = lef, speed = speed,
+#' E_COv2 <- emis(veh = list(pc1,pc1),  lkm = net$lkm, ef = lef, speed = speed,
 #'             agemax = 41, profile = pc_profil2, hour = 2, day = 1)
+#' E_CO_DFv2 <- emis_post(arra = E_COv2,  veh = "PC", size = "<1400", fuel = "G",
+#' pollutant = "CO", by = "veh")
+#' arra = E_COv2;  veh = "PC"; size = "<1400"; fuel = "G";
+#' pollutant = "CO"; by = "veh"
 #' }
 emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
   if ( class(arra) != "EmissionsArray" && !is.array(arra) ){
     stop("No EmissionsArray")
-  } else if (length(dim(arra) == 4)){
+  } else if (length(dim(arra)) == 4){
     if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
       x <- unlist(lapply(1:dim(arra)[4], function(j) {
         unlist(lapply (1:dim(arra)[3],function(i) {
@@ -133,11 +137,11 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       df$fuel <- rep(fuel, nrow(df))
       df$pollutant <- rep(pollutant, nrow(df))
       df$age <- rep(1:dim(arra)[2], dim(arra)[3])
-      hour <- rep(1:(dim(arra)[3]), dim(arra)[2])
+      hour <- rep(1:24, dim(arra)[2], by = 24, each = 7)
       df$hour <- hour
       day <- rep(c("Monday", "Tuesday", "Wednesday",
                    "Thursday", "Friday", "Saturday",
-                   "Sunday"), each=dim(arra)[2]*dim(arra)[3])
+                   "Sunday"), each=dim(arra)[2]*24)
       df$day <- day
       df$g <- Emissions(df$g)
       return(df)

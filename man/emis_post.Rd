@@ -62,7 +62,11 @@ summary(E_CO_STREETS)
 E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
 pollutant = "CO", by = "veh")
 head(E_CO_DF)
-E_CO <- emis(veh = list(pc1,pc1),  lkm = net$lkm, ef = lef, speed = speed,
+E_COv2 <- emis(veh = list(pc1,pc1),  lkm = net$lkm, ef = lef, speed = speed,
             agemax = 41, profile = pc_profil2, hour = 2, day = 1)
+E_CO_DFv2 <- emis_post(arra = E_COv2,  veh = "PC", size = "<1400", fuel = "G",
+pollutant = "CO", by = "veh")
+arra = E_COv2;  veh = "PC"; size = "<1400"; fuel = "G";
+pollutant = "CO"; by = "veh"
 }
 }
