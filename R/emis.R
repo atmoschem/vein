@@ -31,8 +31,7 @@
 #' veh <- data.frame(PC_G = PC_G)
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
-#' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1,
-#' isList = F) # delete islist format
+#' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 #' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 #' cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
@@ -49,7 +48,6 @@
 #' lpc <- list(pc1, pc1)
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
 #'                hour = 2, day = 1, array = T)
-#' class(E_COv2)
 #' }
 emis <- function (veh, lkm, ef, speed,
                   agemax = if (!inherits(x = veh, what = "list")) {
@@ -88,7 +86,6 @@ emis <- function (veh, lkm, ef, speed,
   return(EmissionsArray(d))
   }
   } else {
-    veh <- as.data.frame(veh)
     for (j in 1:length(veh)) {
     for (i  in 1:ncol(veh[[j]]) ) {
       veh[[j]][,i] <- as.numeric(veh[[j]][,i])

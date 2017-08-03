@@ -80,6 +80,12 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
                        },
                        profile,
                        hour = 24, day = 7, array = T) {
+
+  lkm <- as.numeric(lkm)
+  speed <- as.data.frame(speed)
+  for (i  in 1:ncol(speed) ) {
+    speed[, i] <- as.numeric(speed[, i])
+  }
   if (!inherits(x = veh, what = "list")) {
     veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)
@@ -99,7 +105,6 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
     return(EmissionsList(lista))
   } else {
     veh <- as.data.frame(veh)
-    lkm <- as.numeric(lkm)
     for(i in 1:ncol(veh)){
       veh[,i] <- as.numeric(veh[,i])
     }
@@ -112,35 +117,23 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
               beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])*
                 ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
                        (efcold[[k]](speed[, i]) - 1))
-              })
-            )
-          })
-        )
-      })
-    )
+              }) ) }) ) }) )
   return(EmissionsArray(d))
   }
   } else {
-    veh <- as.data.frame(veh)
-    lkm <- as.numeric(lkm)
-    for(i in 1:ncol(veh)){
-      veh[,i] <- as.numeric(veh[,i])
-    }
+    for (j in 1:length(veh)) {
+      for (i  in 1:ncol(veh[[j]]) ) {
+        veh[[j]][,i] <- as.numeric(veh[[j]][,i])
+      } }
     if(array == F){
       lista <- lapply(1:hour,function(i){
           lapply(1:agemax, function(k){
             unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
               ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
                      (efcold[[k]](speed[, i]) - 1))
-        })
-      })
+        }) })
       return(EmissionsList(lista))
     } else {
-      veh <- as.data.frame(veh)
-      lkm <- as.numeric(lkm)
-      for(i in 1:ncol(veh)){
-        veh[,i] <- as.numeric(veh[,i])
-      }
       d <-  simplify2array(
             lapply(1:hour,function(i){
               simplify2array(
@@ -148,10 +141,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
                   unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
                     ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
                            (efcold[[k]](speed[, i]) - 1))
-                })
-              )
-            })
-          )
+                }) ) }) )
       return(EmissionsArray(d))
     }
   }
