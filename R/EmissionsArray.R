@@ -40,6 +40,9 @@
 #' summary(E_CO)
 #' E_CO
 #' plot(E_CO)
+#' lpc <- list(pc1, pc1)
+#' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
+#'              profile = pc_profile, hour = 2, day = 1)
 #' }
 #' @export
 EmissionsArray <- function(x, ...) {

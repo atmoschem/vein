@@ -3,7 +3,8 @@
 #' Simplify emissions estimated as total per type category of vehicle or
 #' by street. It reads array of emissions
 #'
-#' @param arra Array of emissions (streets x category of vehicles x hours x days)
+#' @param arra Array of emissions 4d: streets x category of vehicles x hours x days or
+#' 3d: streets x category of vehicles x hours
 #' @param veh Type of vehicle
 #' @param size Size or weight
 #' @param fuel Fuel
@@ -27,20 +28,19 @@
 #' veh <- data.frame(PC_G = PC_G)
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
-#' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1,
-#' isList = T)
+#' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 #' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 #' cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #' #vehicles newer than pre-euro
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 #' cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
-#' lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
+#' lef <- ef_ldv_scaled(co1, cod, v = "PC",  cc = "<=1400",
 #'                      f = "G",p = "CO", eu=co1$Euro_LDV)
 #' lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 #'          lef[length(lef)],lef[length(lef)])
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
-#'              profile = pc_profile, hour = 24, day = 7, array = T)
+#'              profile = pc_profile)
 #' # arguments required: arra, pollutant ad by
 #' E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 #' summary(E_CO_STREETS)
@@ -48,38 +48,41 @@
 #' E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
 #' pollutant = "CO", by = "veh")
 #' head(E_CO_DF)
+#' E_CO <- emis(veh = list(pc1,pc1),  lkm = net$lkm, ef = lef, speed = speed,
+#'             agemax = 41, profile = pc_profil2, hour = 2, day = 1)
 #' }
 emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
   if ( class(arra) != "EmissionsArray" && !is.array(arra) ){
     stop("No EmissionsArray")
-  } else if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
-    x <- unlist(lapply(1:dim(arra)[4], function(j) {
-      unlist(lapply (1:dim(arra)[3],function(i) {
-        colSums(arra[,,i,j], na.rm = T)
+  } else if (length(dim(arra) == 4)){
+    if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
+      x <- unlist(lapply(1:dim(arra)[4], function(j) {
+        unlist(lapply (1:dim(arra)[3],function(i) {
+          colSums(arra[,,i,j], na.rm = T)
         }))
-    }))
-    df <- cbind(deparse(substitute(arra)),
-                as.data.frame(x))
-    names(df) <- c(as.character(df[1,1]), "g")
-    nombre <- rep(paste(as.character(df[1,1]),
-                        seq(1:dim(arra)[2]),
-                        sep = "_"),24*7, by=7 )
-    df[,1] <- nombre
-    df$veh <- rep(veh, nrow(df))
-    df$size <- rep(size, nrow(df))
-    df$fuel <- rep(fuel, nrow(df))
-    df$pollutant <- rep(pollutant, nrow(df))
-    df$age <- rep(seq(1:dim(arra)[2]),24*7, by=7 )
-    hour <- rep(seq(0:(dim(arra)[3]-1)),dim(arra)[4],
-                by = dim(arra)[2],
-                each=dim(arra)[2] )
-    df$hour <- hour
-    day <- rep(c("Monday", "Tuesday", "Wednesday",
-                 "Thursday", "Friday", "Saturday",
-                 "Sunday"), each=dim(arra)[2]*dim(arra)[3])
-    df$day <- day
-    df$g <- Emissions(df$g)
-    return(df)
+      }))
+      df <- cbind(deparse(substitute(arra)),
+                  as.data.frame(x))
+      names(df) <- c(as.character(df[1,1]), "g")
+      nombre <- rep(paste(as.character(df[1,1]),
+                          seq(1:dim(arra)[2]),
+                          sep = "_"),24*7, by=7 )
+      df[,1] <- nombre
+      df$veh <- rep(veh, nrow(df))
+      df$size <- rep(size, nrow(df))
+      df$fuel <- rep(fuel, nrow(df))
+      df$pollutant <- rep(pollutant, nrow(df))
+      df$age <- rep(seq(1:dim(arra)[2]),24*7, by=7 )
+      hour <- rep(seq(0:(dim(arra)[3]-1)),dim(arra)[4],
+                  by = dim(arra)[2],
+                  each=dim(arra)[2] )
+      df$hour <- hour
+      day <- rep(c("Monday", "Tuesday", "Wednesday",
+                   "Thursday", "Friday", "Saturday",
+                   "Sunday"), each=dim(arra)[2]*dim(arra)[3])
+      df$day <- day
+      df$g <- Emissions(df$g)
+      return(df)
     } else if (by == "streets_narrow") {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
         unlist(lapply (1:dim(arra)[3],function(i) { # hora
@@ -113,5 +116,40 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       df <- as.data.frame(m)
       nombres <- lapply(1:dim(m)[2], function(i){paste0("h",i)})
       return(Emissions(df))
+    }
+
+  } else {
+    if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
+      x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum))
+      df <- cbind(deparse(substitute(arra)),
+                  as.data.frame(x))
+      names(df) <- c(as.character(df[1,1]), "g")
+      nombre <- rep(paste(as.character(df[1,1]),
+                          seq(1:dim(arra)[2]),
+                          sep = "_"),24*7, by=7 )
+      df[,1] <- nombre
+      df$veh <- rep(veh, nrow(df))
+      df$size <- rep(size, nrow(df))
+      df$fuel <- rep(fuel, nrow(df))
+      df$pollutant <- rep(pollutant, nrow(df))
+      df$age <- rep(1:dim(arra)[2], dim(arra)[3])
+      hour <- rep(1:(dim(arra)[3]), dim(arra)[2])
+      df$hour <- hour
+      day <- rep(c("Monday", "Tuesday", "Wednesday",
+                   "Thursday", "Friday", "Saturday",
+                   "Sunday"), each=dim(arra)[2]*dim(arra)[3])
+      df$day <- day
+      df$g <- Emissions(df$g)
+      return(df)
+    } else if (by == "streets_narrow") {
+      df <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum))
+      warning("TODO: Improve")
+      return(df)
+    } else if (by == "streets_wide") {
+      df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum))
+      names(df) <- lapply(1:dim(arra)[3], function(i){paste0("h",i)})
+      return(df)
+    }
+
     }
 }
