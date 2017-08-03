@@ -13,6 +13,7 @@
 #' @param x Object with class "Vehicles"
 #' @param object Object with class "Vehicles"
 #' @param ... ignored
+#' @importFrom units parse_unit
 #'
 #' @rdname Vehicles
 #' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
@@ -54,8 +55,8 @@ Vehicles <- function(x, ...) {
 #' @method print Vehicles
 #' @export
 print.Vehicles <- function(x, ...) {
-  cat("Result for Vehicles ")
-  print(unclass(x),  ...)
+  cat("Result for Vehicles \n")
+  NextMethod("print", x)
 }
 
 

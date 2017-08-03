@@ -4,8 +4,8 @@
 \alias{netspeed}
 \title{Calculate speeds of traffic network}
 \usage{
-netspeed(q, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, isList = FALSE,
-  distance = "km", time = "h")
+netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
+  scheme = FALSE, distance = "km", time = "h")
 }
 \arguments{
 \item{q}{Data-frame of traffic flow to each hour (veh/h)}
@@ -22,7 +22,10 @@ netspeed(q, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, isList = FALSE,
 
 \item{beta}{Parameter of BPR curves}
 
-\item{isList}{Logical to specify type of return, list or data-frame}
+\item{scheme}{Logical to create a Speed data-frame with 24 hours and a
+default  profile: ffs at 00:00-06:00, average speed at 06:00-07:00, ps
+at 07:00-10:00, average speed between 10:0-17:00, ps at 17:00-20:00,
+average speed at 20:00-22:00 and ffs at 22:00-00:00}
 
 \item{distance}{Character specifying the units for distance. Default is "km"}
 
@@ -42,6 +45,9 @@ data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+class(df)
+plot(df) #plot of the average speed at each hour, +- sd
+df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = T)
 class(df)
 plot(df) #plot of the average speed at each hour, +- sd
 }

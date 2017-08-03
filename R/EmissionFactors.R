@@ -7,6 +7,7 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object Object with class "EmissionFactors"
+#' @importFrom units parse_unit
 #' @param ... ignored
 #' @rdname EmissionFactors
 #' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors

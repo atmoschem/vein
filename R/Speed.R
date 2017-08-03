@@ -11,6 +11,7 @@
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object Object with class "Speed"
 #' @param ... ignored
+#' @importFrom units parse_unit
 #' @seealso \code{\link{units}}
 #'
 #' @rdname Speed
@@ -59,8 +60,8 @@ Speed <- function(x, ...) {
 #' @method print Speed
 #' @export
 print.Speed <- function(x, ...) {
-  cat("Result for Speed ")
-  NextMethod("print",x,  ...)
+  cat("Result for Speed \n")
+  NextMethod("print", x)
 }
 
 #' @rdname Speed

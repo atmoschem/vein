@@ -60,6 +60,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -88,8 +91,8 @@
 morning rush traffic data</p>
     
 
-    <pre class="usage"><span class='fu'>netspeed</span>(<span class='no'>q</span>, <span class='no'>ps</span>, <span class='no'>ffs</span>, <span class='no'>cap</span>, <span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>isList</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>distance</span> <span class='kw'>=</span> <span class='st'>"km"</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"h"</span>)</pre>
+    <pre class="usage"><span class='fu'>netspeed</span>(<span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ps</span>, <span class='no'>ffs</span>, <span class='no'>cap</span>, <span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>distance</span> <span class='kw'>=</span> <span class='st'>"km"</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"h"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -123,8 +126,11 @@ morning rush traffic data</p>
       <td><p>Parameter of BPR curves</p></td>
     </tr>
     <tr>
-      <th>isList</th>
-      <td><p>Logical to specify type of return, list or data-frame</p></td>
+      <th>scheme</th>
+      <td><p>Logical to create a Speed data-frame with 24 hours and a
+default  profile: ffs at 00:00-06:00, average speed at 06:00-07:00, ps
+at 07:00-10:00, average speed between 10:0-17:00, ps at 17:00-20:00,
+average speed at 20:00-22:00 and ffs at 22:00-00:00</p></td>
     </tr>
     <tr>
       <th>distance</th>
@@ -148,6 +154,9 @@ morning rush traffic data</p>
 <span class='fu'>data</span>(<span class='no'>pc_profile</span>)
 <span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>)
+<span class='fu'>class</span>(<span class='no'>df</span>)
+<span class='fu'>plot</span>(<span class='no'>df</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='kw'>ps</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ps</span>, <span class='kw'>ffs</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='no'>T</span>)
 <span class='fu'>class</span>(<span class='no'>df</span>)
 <span class='fu'>plot</span>(<span class='no'>df</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
 <span class='co'># }</span></pre>

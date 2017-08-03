@@ -60,6 +60,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -122,7 +125,7 @@ of the period. Number of rows are hours and columns are days</p></td>
     </tr>
     <tr>
       <th>speed</th>
-      <td><p>List of speeds</p></td>
+      <td><p>Speed data-frame with number of columns as hours</p></td>
     </tr>
     <tr>
       <th>agemax</th>
@@ -177,8 +180,7 @@ because it is important to clarify both, the data and the concepts</p>
 <span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>PC_G</span> <span class='kw'>=</span> <span class='no'>PC_G</span>)
 <span class='no'>pc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='my_age.html'>my_age</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>PC_G</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)
 <span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-<span class='kw'>isList</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'>cumsum</span>(<span class='no'>pckm</span>)
 <span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>])
 <span class='no'>cod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"I"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>12</span>:<span class='fl'>24</span>])

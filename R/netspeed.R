@@ -10,7 +10,10 @@
 #' @param lkm Distance of link (km)
 #' @param alpha Parameter of BPR curves
 #' @param beta Parameter of BPR curves
-#' @param isList Logical to specify type of return, list or data-frame
+#' @param scheme Logical to create a Speed data-frame with 24 hours and a
+#' default  profile: ffs at 00:00-06:00, average speed at 06:00-07:00, ps
+#' at 07:00-10:00, average speed between 10:0-17:00, ps at 17:00-20:00,
+#' average speed at 20:00-22:00 and ffs at 22:00-00:00
 #' @param distance Character specifying the units for distance. Default is "km"
 #' @param time Character specifying the units for time Default is "h"
 #' @return dataframe or list of speeds with units
@@ -23,12 +26,16 @@
 #' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
 #' class(df)
 #' plot(df) #plot of the average speed at each hour, +- sd
+#' df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = T)
+#' class(df)
+#' plot(df) #plot of the average speed at each hour, +- sd
 #' }
-netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
+netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
+                      scheme = FALSE,
                       distance = "km", time="h"){
   if(missing(q) | is.null(q)){
     stop(print("No vehicles"))
-  } else if (isList==FALSE){
+  } else if (scheme == FALSE){
     qq <- as.data.frame(q)
     for (i  in 1:ncol(qq) ) {
       qq[,i] <- as.numeric(qq[,i])
@@ -40,27 +47,19 @@ netspeed <- function (q, ps, ffs, cap, lkm, alpha=0.15, beta=4, isList=FALSE,
     dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(qq), function(i) {
       lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
     }))))
-    # dfv[,8] <- ps
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
     dfv <- Speed(dfv, distance = distance, time = time)
     return(dfv)
-  } else if (isList==TRUE){
-    qq <- as.data.frame(q)
-    for (i  in 1:ncol(qq) ) {
-      qq[,i] <- as.numeric(qq[,i])
-    }
+  } else {
     ps <- as.numeric(ps)
     ffs <- as.numeric(ffs)
-    cap <- as.numeric(cap)
-    lkm <- as.numeric(lkm)
-    dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(qq), function(i) {
-      lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
-    }))))
-    # dfv[,8] <- ps
-    names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
-    ldfv <- lapply(0:(ncol(dfv)/24-1),function(i) {
-      as.list(dfv[,(1:24)+i*24])
-    })
-    return(ldfv)
+    dfv <- cbind(replicate(5, ffs), replicate(1, 0.5*(ps + ffs) ),
+                 replicate(3, ps), replicate(7, 0.5*(ps + ffs)),
+                 replicate(3, ps), replicate(2, 0.5*(ps + ffs)),
+                 replicate(3, ffs))
+    names(dfv) <- c(rep("FSS",5), "AS", rep("PS", 3), rep("AS", 7),
+                    rep("PS", 3), rep("AS", 2),rep("FSS",3))
+    dfv <- Speed(as.data.frame(dfv), distance = distance, time = time)
+    return(dfv)
   }
 }

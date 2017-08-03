@@ -10,6 +10,8 @@
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object object with class "Emissions"
 #' @param ... ignored
+#' @importFrom units parse_unit
+#'
 #' @rdname Emissions
 #' @aliases Emissions print.Emissions summary.Emissions plot.Emissions
 #' @examples \dontrun{
@@ -73,8 +75,8 @@ Emissions <- function(x, ...) {
 #' @method print Emissions
 #' @export
 print.Emissions <- function(x, ...) {
-  cat("Result for Emissions ")
-  print(unclass(x,  ...))
+  cat("Result for Emissions \n")
+  NextMethod("print", x)
 }
 
 #' @rdname Emissions

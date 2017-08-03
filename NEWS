@@ -1,6 +1,11 @@
-vein v0.2.2-2 (Release date: 2017-07-31)
+vein v0.2.2-3 (Release date: 2017-08-03)
 ==============
-* emis now allowa veh as list of "Vehicles" data.frame. The length of the list
+* speed in emis and emis cold is now a dataframe with columns as number of hours.
+* netspeed argument isList changed to scheme
+
+vein v0.2.2-2 (Release date: 2017-07-29)
+==============
+* emis now allows veh as list of "Vehicles" dataframe. The length of the list
 is equal to the hours considered in the estimation.
 * agemax in emis and emis_cold varies
 * In emis and emis_cold defaults hour = 24, day = 7, array = T

@@ -17,7 +17,7 @@ The number of rows is equal to the number of streets link}
 
 \item{ef}{List of functions of emission factors}
 
-\item{speed}{List of speeds}
+\item{speed}{Speed data-frame with number of columns as hours}
 
 \item{agemax}{Age of oldest vehicles for that category}
 
@@ -53,7 +53,7 @@ veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1,
-isList = T)
+isList = F) # delete islist format
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])

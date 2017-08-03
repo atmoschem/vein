@@ -22,7 +22,7 @@ The number of rows is equal to the number of streets link}
 \item{beta}{Datraframe with the hourly cold-start distribution to each day
 of the period. Number of rows are hours and columns are days}
 
-\item{speed}{List of speeds}
+\item{speed}{Speed data-frame with number of columns as hours}
 
 \item{agemax}{Age of oldest vehicles for that category}
 
@@ -68,8 +68,7 @@ PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
 veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
-speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1,
-isList = T)
+speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
