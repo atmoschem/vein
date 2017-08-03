@@ -91,14 +91,14 @@ emis <- function (veh, lkm, ef, speed,
       veh[[j]][,i] <- as.numeric(veh[[j]][,i])
     } }
     if(array == F){
-      lista <- lapply(1:hour,function(i){
+      lista <- lapply(1:length(veh),function(i){
           lapply(1:agemax, function(k){
             veh[[i]][, k]*lkm*ef[[k]](speed[, i])
           } ) } )
       return(EmissionsList(lista))
     } else {
       d <-  simplify2array(
-            lapply(1:hour,function(i){
+            lapply(1:length(veh),function(i){
               simplify2array(
                 lapply(1:agemax, function(k){
                   veh[[i]][, k]*lkm*ef[[k]](speed[, i])

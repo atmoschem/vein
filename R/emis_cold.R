@@ -126,7 +126,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
         veh[[j]][,i] <- as.numeric(veh[[j]][,i])
       } }
     if(array == F){
-      lista <- lapply(1:hour,function(i){
+      lista <- lapply(1:length(veh),function(i){
           lapply(1:agemax, function(k){
             unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
               ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
@@ -135,7 +135,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
       return(EmissionsList(lista))
     } else {
       d <-  simplify2array(
-            lapply(1:hour,function(i){
+            lapply(1:length(veh),function(i){
               simplify2array(
                 lapply(1:agemax, function(k){
                   unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
