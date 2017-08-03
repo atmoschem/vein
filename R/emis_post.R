@@ -124,7 +124,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
 
   } else {
     if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
-      x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum))
+      x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = T))
       df <- cbind(deparse(substitute(arra)),
                   as.data.frame(x))
       names(df) <- c(as.character(df[1,1]), "g")
@@ -146,11 +146,11 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       df$g <- Emissions(df$g)
       return(df)
     } else if (by == "streets_narrow") {
-      df <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum))
+      df <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = T))
       warning("TODO: Improve")
       return(df)
     } else if (by == "streets_wide") {
-      df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum))
+      df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = T))
       names(df) <- lapply(1:dim(arra)[3], function(i){paste0("h",i)})
       return(df)
     }
