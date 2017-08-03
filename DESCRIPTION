@@ -2,11 +2,10 @@ Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
 Version: 0.2.2-3
-Authors@R: c(person(given = "Sergio", family = "Ibarra", role = c("aut", "cre"),
+Authors@R: c(person(given = "Sergio", family = "Ibarra-Espinosa", 
+        role = c("aut", "cre"),
      email = "zergioibarra@gmail.com")) 
-Author: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
-Maintainer: Sergio Ibarra Espinosa <zergioibarra@gmail.com>
-Description: Emissions inventories elaboration and visualization,
+Description: Elaboration of vehicular emissions inventories,
     consists the three stages, pre-processing activity data, processing
     or estimating the emissions and post-processing of emissions in
     maps and databases.
