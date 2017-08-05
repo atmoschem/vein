@@ -1,3 +1,12 @@
+## vein v0.2.2-4 (Release date: 2017-08-03)
+
+- emis and emis_cold include stop when ncol(veh) != length(ef) and when
+veh is a list, length(veh) != ncol(speed). In emis agemax determined by ncol of
+vehicles
+- Fix demo
+
+____________________________________________________________________________________
+
 ## vein v0.2.2-3 (Release date: 2017-08-03)
 
 - speed in emis and emis cold is now a dataframe with columns as number of hours.
@@ -26,6 +35,7 @@ the name was changed to Vehicular Emissions INventory Model (vein).
 ____________________________________________________________________________________
 
 ###  REMI v0.1.0-31 (Release date: 2017-03-13)
+
 - New function: my_age. Distribute vehicle data using own vehicle distribution
 from a numeric vector.
 - Description title changed from "An R package for elaborating emissions
@@ -40,6 +50,23 @@ The category <=800 remains.
 Now fixed.
 - Age function nows append element equal to the last element of the
 vector.
+
+____________________________________________________________________________________
+
+###  REMI v0.1.0-21 (Amanda) (Release date: 2017-01-08)
+
+- Age function nows append element equal to the last element of the
+vector.
+- bus fix in emissions_dow and emissions_cold when array=F.
+- emissions 24 were changed to lapply over the length of ef.
+- includes function vkm to calculate vkm.
+- includes function emissions_paved for estimating resuspension from paved roads.
+- Includes function ef_ldv_cold_list for list of cold start emission factors.
+  Also, the function emissions_cold.
+- The internal dataframe with EMEP emission factor for ldv vehicles
+  changes type from "PRE_ECE" to "PRE".
+- bus fix in emissions_dow and emissions_cold when array=F.
+- emissions 24 were changed to lapply over the length of ef.
 
 ____________________________________________________________________________________
 

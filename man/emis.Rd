@@ -68,6 +68,14 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
 class(E_CO)
 lpc <- list(pc1,pc1)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
-               hour = 168, day = 7, array = T)
+               hour = 2, day = 1, array = T)
+# Entering wrong results
+pc1[ , ncol(pc1) + 1] <- pc1$PC_1
+dim(pc1)
+length(lef)
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+             profile = pc_profile, hour = 24, day = 7, array = T)
+E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
+               hour = 2, day = 1, array = T)
 }
 }

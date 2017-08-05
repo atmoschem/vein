@@ -47,7 +47,15 @@
 #' class(E_CO)
 #' lpc <- list(pc1,pc1)
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
-#'                hour = 168, day = 7, array = T)
+#'                hour = 2, day = 1, array = T)
+#' # Entering wrong results
+#' pc1[ , ncol(pc1) + 1] <- pc1$PC_1
+#' dim(pc1)
+#' length(lef)
+#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+#'              profile = pc_profile, hour = 24, day = 7, array = T)
+#' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
+#'                hour = 2, day = 1, array = T)
 #' }
 emis <- function (veh, lkm, ef, speed,
                   agemax = if (!inherits(x = veh, what = "list")) {
@@ -63,48 +71,57 @@ emis <- function (veh, lkm, ef, speed,
     speed[, i] <- as.numeric(speed[, i])
   }
   if (!inherits(x = veh, what = "list")) {
-  veh <- as.data.frame(veh)
-  for (i  in 1:ncol(veh) ) {
-    veh[,i] <- as.numeric(veh[,i])
-  }
-  if(array == F){
-  lista <- lapply(1:day,function(j){
-    lapply(1:hour,function(i){
-      lapply(1:agemax, function(k){
-        veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
-        }) }) })
-    return(EmissionsList(lista))
-  } else {
-  d <-  simplify2array(
-    lapply(1:day,function(j){
-      simplify2array(
+      veh <- as.data.frame(veh)
+      for (i  in 1:ncol(veh) ) {
+        veh[,i] <- as.numeric(veh[,i])
+      }
+      if (ncol(veh) != length(ef)){
+        stop("Number of columns in 'veh' must be the same as length of ef")
+      }
+
+      if(array == F){
+      lista <- lapply(1:day,function(j){
         lapply(1:hour,function(i){
-          simplify2array(
-            lapply(1:agemax, function(k){
-              veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
-              }) ) }) ) }) )
-  return(EmissionsArray(d))
-  }
-  } else {
-    for (j in 1:length(veh)) {
-    for (i  in 1:ncol(veh[[j]]) ) {
-      veh[[j]][,i] <- as.numeric(veh[[j]][,i])
-    } }
-    if(array == F){
-      lista <- lapply(1:length(veh),function(i){
           lapply(1:agemax, function(k){
-            veh[[i]][, k]*lkm*ef[[k]](speed[, i])
-          } ) } )
-      return(EmissionsList(lista))
-    } else {
+            veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
+            }) }) })
+        return(EmissionsList(lista))
+      } else {
       d <-  simplify2array(
-            lapply(1:length(veh),function(i){
+        lapply(1:day,function(j){
+          simplify2array(
+            lapply(1:hour,function(i){
               simplify2array(
                 lapply(1:agemax, function(k){
-                  veh[[i]][, k]*lkm*ef[[k]](speed[, i])
-               }) ) }) )
+                  veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
+                  }) ) }) ) }) )
       return(EmissionsArray(d))
+      }
+  } else {
+    if (ncol(veh[[1]]) != length(ef)){
+      stop("Number of columns in 'veh' must be the same as length of ef")
+    } else if(length(veh) != ncol(speed)) {
+      stop("Length of 'veh' must be the same as number of columns of speed")
     }
-  }
+    for (j in 1:length(veh)) {
+        for (i  in 1:ncol(veh[[j]]) ) {
+          veh[[j]][,i] <- as.numeric(veh[[j]][,i])
+        } }
+        if(array == F){
+          lista <- lapply(1:length(veh),function(i){
+              lapply(1:agemax, function(k){
+                veh[[i]][, k]*lkm*ef[[k]](speed[, i])
+              } ) } )
+          return(EmissionsList(lista))
+        } else {
+          d <-  simplify2array(
+                lapply(1:length(veh),function(i){
+                  simplify2array(
+                    lapply(1:agemax, function(k){
+                      veh[[i]][, k]*lkm*ef[[k]](speed[, i])
+                   }) ) }) )
+          return(EmissionsArray(d))
+        }
+      }
 }
 

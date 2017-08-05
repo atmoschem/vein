@@ -1,3 +1,8 @@
+vein v0.2.2-4 (Release date: 2017-08-04)
+==============
+* emis and emis_cold include stop when ncol(veh) != length(ef) and when
+veh is a list, length(veh) != ncol(speed). Fix demo
+
 vein v0.2.2-3 (Release date: 2017-08-03)
 ==============
 * speed in emis and emis cold is now a dataframe with columns as number of hours.

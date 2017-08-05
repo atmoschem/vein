@@ -87,63 +87,71 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
     speed[, i] <- as.numeric(speed[, i])
   }
   if (!inherits(x = veh, what = "list")) {
-    veh <- as.data.frame(veh)
-  lkm <- as.numeric(lkm)
-  for(i in 1:ncol(veh)){
-    veh[,i] <- as.numeric(veh[,i])
-  }
-  if(array == F){
-    lista <- lapply(1:day,function(j){
-      lapply(1:hour,function(i){
-        lapply(1:agemax, function(k){
-          beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])*
-            ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
-                   (efcold[[k]](speed[, i]) - 1))
+          veh <- as.data.frame(veh)
+        lkm <- as.numeric(lkm)
+        for(i in 1:ncol(veh)){
+          veh[,i] <- as.numeric(veh[,i])
+        }
+        if (ncol(veh) != length(ef)){
+          stop("Number of columns in 'veh' must be the same as length of ef")
+        }
+        if(array == F){
+          lista <- lapply(1:day,function(j){
+            lapply(1:hour,function(i){
+              lapply(1:agemax, function(k){
+                beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])*
+                  ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
+                         (efcold[[k]](speed[, i]) - 1))
+                })
+            })
           })
-      })
-    })
-    return(EmissionsList(lista))
-  } else {
-    veh <- as.data.frame(veh)
-    for(i in 1:ncol(veh)){
-      veh[,i] <- as.numeric(veh[,i])
-    }
-    d <-  simplify2array(
-    lapply(1:day,function(j){
-      simplify2array(
-        lapply(1:hour,function(i){
+          return(EmissionsList(lista))
+      } else {
+        veh <- as.data.frame(veh)
+        for(i in 1:ncol(veh)){
+          veh[,i] <- as.numeric(veh[,i])
+        }
+        d <-  simplify2array(
+        lapply(1:day,function(j){
           simplify2array(
-            lapply(1:agemax, function(k){
-              beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])*
-                ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
-                       (efcold[[k]](speed[, i]) - 1))
-              }) ) }) ) }) )
-  return(EmissionsArray(d))
-  }
-  } else {
-    for (j in 1:length(veh)) {
-      for (i  in 1:ncol(veh[[j]]) ) {
-        veh[[j]][,i] <- as.numeric(veh[[j]][,i])
-      } }
-    if(array == F){
-      lista <- lapply(1:length(veh),function(i){
-          lapply(1:agemax, function(k){
-            unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
-              ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
-                     (efcold[[k]](speed[, i]) - 1))
-        }) })
-      return(EmissionsList(lista))
-    } else {
-      d <-  simplify2array(
-            lapply(1:length(veh),function(i){
+            lapply(1:hour,function(i){
               simplify2array(
                 lapply(1:agemax, function(k){
-                  unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
+                  beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])*
                     ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
                            (efcold[[k]](speed[, i]) - 1))
-                }) ) }) )
+                  }) ) }) ) }) )
       return(EmissionsArray(d))
+      }
+  } else {
+    if (ncol(veh[[1]]) != length(ef)){
+      stop("Number of columns in 'veh' must be the same as length of ef")
+    } else if(length(veh) != ncol(speed)) {
+      stop("Length of 'veh' must be the same as number of columns of speed")
     }
-  }
+    for (j in 1:length(veh)) {
+          for (i  in 1:ncol(veh[[j]]) ) {
+            veh[[j]][,i] <- as.numeric(veh[[j]][,i])
+          } }
+        if(array == F){
+          lista <- lapply(1:length(veh),function(i){
+              lapply(1:agemax, function(k){
+                unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
+                  ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
+                         (efcold[[k]](speed[, i]) - 1))
+            }) })
+          return(EmissionsList(lista))
+        } else {
+          d <-  simplify2array(
+                lapply(1:length(veh),function(i){
+                  simplify2array(
+                    lapply(1:agemax, function(k){
+                      unlist(beta)[i]*veh[[i]][, k]*lkm*ef[[k]](speed[, i])*
+                        ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
+                               (efcold[[k]](speed[, i]) - 1))
+                    }) ) }) )
+          return(EmissionsArray(d))
+        }
+      }
 }
 

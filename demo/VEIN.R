@@ -9,8 +9,10 @@ library(RColorBrewer)
 # 1 ####
 data(net)
 class(net$ldv) <- "numeric"
-spplot(net, "ldv", scales=list(draw=T),cuts=8,
-       col.regions=brewer.pal(9, "Blues"))
+
+spplot(net, "ldv", scales=list(draw=T),cuts=12,
+       colorkey = list(space = "bottom", height = 1),
+       col.regions = rev(bpy.colors(13)))
 
 # 2 ####
 PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
@@ -26,8 +28,8 @@ df <- data.frame(pc = c(colSums(pc1),colSums(pc2),colSums(pc3)),
                  Age = c(rep(15.17,41),rep(11.09,41),rep(15.53,41)),
                  x = rep(1:41,3))
 
-ggplot(df, aes(x=x,y=pc, colour=as.factor(Age))) + geom_point(size=3)  +
-  geom_line()+theme_bw() + labs(x="Age", y="Distribution") +
+ggplot(df, aes(x = x, y = pc, colour = as.factor(Age))) + geom_point(size=3)  +
+  geom_line() + theme_bw() + labs(x="Age", y="Distribution") +
   theme(legend.position = c(0.8,0.8)) +
   guides(colour = guide_legend(keywidth = 2, keyheight = 2))+
   scale_color_discrete(name = "Average age")
@@ -46,7 +48,8 @@ df2 <- data.frame(TF = as.numeric(unlist(pc_profile)),
 df2$Day <- factor(df2$Day,
                   levels =  c("Monday", "Tuesday", "Wednesday", "Thursday",
                               "Friday", "Saturday", "Sunday"))
-ggplot(df2, aes(x=Hour,y=TF, colour=as.factor(Day))) + geom_point(size=2)  +
+ggplot(df2, aes(x = Hour, y = TF, colour = as.factor(Day),
+                shape = as.factor(Day))) + geom_point(size=2)  +
   geom_line() + theme_bw() + labs(x="Hours", y="TF") +
   theme(legend.position = c(0.1,0.7))+
   guides(colour = guide_legend(keywidth = 2, keyheight = 2))+
@@ -87,28 +90,37 @@ data(net)
 data(pc_profile)
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pcw, net$ps,
-               net$ffs, net$capacity, net$lkm, alpha = 1,
-               isList=F)
+               net$ffs, net$capacity, net$lkm, alpha = 1)
 
 net@data$nts <- as.factor(
-  ifelse(net@data$tstreet==1, "Other",
-         ifelse(net@data$tstreet==2, "Arterial",
-                ifelse(net@data$tstreet==3, "Arterial",
-                       ifelse(net@data$tstreet==4, "Arterial",
-                              ifelse(net@data$tstreet==5, "Collect",
-                                     ifelse(net@data$tstreet==6, "Collect",
-                                            ifelse(net@data$tstreet==7, "Local",
-                                                   ifelse(net@data$tstreet==37, "Local",
-                                                          ifelse(net@data$tstreet==41, "Motorway",
-                                                                 ifelse(net@data$tstreet==42, "Motorway","Other")
-                                                          ))))))))))
+  ifelse(
+    net@data$tstreet==1, "Other",
+    ifelse(
+      net@data$tstreet==2, "Arterial",
+      ifelse(
+        net@data$tstreet==3, "Arterial",
+        ifelse(
+          net@data$tstreet==4, "Arterial",
+          ifelse(
+            net@data$tstreet==5, "Collect",
+            ifelse(
+              net@data$tstreet==6, "Collect",
+              ifelse(
+                net@data$tstreet==7, "Local",
+                ifelse(
+                  net@data$tstreet==37, "Local",
+                  ifelse(
+                    net@data$tstreet==41, "Motorway",
+                    ifelse(
+                      net@data$tstreet==42, "Motorway",
+                      "Other")))))))))))
 
 net@data <- cbind(net@data,df)
 
-spplot(net, c("S8","S23"), scales=list(draw=T))
+spplot(net, c("S8","S23"), scales=list(draw=T),
+       col.regions = rev(bpy.colors(16)))
 
-speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1,
-                  isList = T)
+speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 
 # 6 ####
 df2 <- aggregate(net@data[,11:178], by=list(net$nts), mean )
@@ -148,9 +160,9 @@ pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #vehicles newer than pre-euro
-co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
-cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
-lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
+co1 <- fe2015[fe2015$Pollutant == "CO", ] #24 obs!!!
+cod <- c(co1$PC_G[1:24] * c(cod1, cod2), co1$PC_G[25:nrow(co1)])
+lef <- ef_ldv_scaled(co1, cod, v = "PC", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
 lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
          lef[length(lef)],lef[length(lef)])
@@ -158,8 +170,7 @@ lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 # 9 ####
 data(pc_profile)
 data(net)
-E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
-             profile = pc_profile, hour = 24, day = 7, array = T)
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, profile = pc_profile)
 E_CO_DF <- emis_post(arra = E_CO, veh = "PC", size = "1400", fuel = "Gasoline",
                      pollutant = "CO", by = "veh")
 head(E_CO_DF) # take care of units
@@ -176,7 +187,7 @@ df$day <- factor(df$Day,
                  levels =  c("Monday", "Tuesday", "Wednesday", "Thursday",
                              "Friday", "Saturday", "Sunday"))
 
-ggplot(df, aes(x=Hour, y=unclass(g_CO), colour=day)) + geom_line() +
+ggplot(df, aes(x=Hour, y=unclass(g_CO), colour = day, shape = day)) + geom_line() +
   geom_point(size=2) + theme_bw()+ theme(legend.key.size=unit(0.6,"cm")) +
   labs(x="Hour", y=expression(g%.%h^-1))
 
@@ -205,7 +216,8 @@ dfco <- data.frame(co = c(co1$PC_G,rep(co1$PC_G[length(co1$PC_G)],5),
                    EF = c(rep("0 km", 41),rep("Deteriorated", 41)),
                    Age = rep(1:41,2))
 
-ggplot(dfco, aes(x=Age,y=co, colour=EF)) + geom_point(size=2)  +
+ggplot(dfco, aes(x = Age, y = co, colour = EF, shape = EF)) +
+  geom_point(size = 2)  +
   geom_line()+theme_bw() + labs(x="Age", y="CO (g/km)") +
   theme(legend.position = c(0.2,0.8)) +
   guides(colour = guide_legend(keywidth = 2, keyheight = 2))+
@@ -224,20 +236,21 @@ for (i in 1:ncol(E_CO_STREETS)) {
 }
 net@data <- cbind(net@data, E_CO_STREETS)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2, polygon = T)
-spplot(net, "V138", scales=list(draw=T),
+spplot(net, "V138", scales=list(draw=T), cuts = 15,
        colorkey = list(space = "bottom", height = 1),
-       sp.layout = list("sp.polygons", g, pch = 16, cex = 2))
+       col.regions = rev(bpy.colors(16)),
+       sp.layout = list("sp.polygons", g, pch = 13, cex = 2))
+
 
 net@data <- net@data[,- c(1:9)]
 E_CO_g <- emis_grid(spobj = net, g = g, sr= "+init=epsg:31983", type = "lines")
 spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
        colorkey = list(space = "bottom", height = 1),
-       col.regions=brewer.pal(9, "Blues"),
+       col.regions = rev(bpy.colors(9)),
        sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
-
 # 12 ####
-E_CO_g@data <- E_CO_g@data[,-1]
-ldf <- list("co"=E_CO_g)
+E_CO_g@data <- E_CO_g@data[, -1]
+ldf <- list("co" = E_CO_g)
 df_wrf <- emis_wrf(ldf,nr=1,dmyhm = "04-08-2014 00:00",
                    tz = "America/Sao_Paulo",utc = -3,islist=T)
 
