@@ -1,4 +1,11 @@
-## vein v0.2.2-4 (Release date: 2017-08-03)
+## vein v0.2.2-5 (Release date: 2017-08-07)
+
+- Update evaporative emissions emis_evap  to include lists of 'Vehicles' data-
+frame
+
+____________________________________________________________________________________
+
+## vein v0.2.2-4 (Release date: 2017-08-05)
 
 - emis and emis_cold include stop when ncol(veh) != length(ef) and when
 veh is a list, length(veh) != ncol(speed). In emis agemax determined by ncol of

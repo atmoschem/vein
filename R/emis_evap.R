@@ -2,7 +2,10 @@
 #'
 #' @description Estimation of evaporative emissions from EMEP/EEA emisison guidelines
 #'
-#' @param veh Total number of vehicles by age of use
+#' @param veh Total number of vehicles by age of use. If is a lsit of 'Vehicles'
+#' data-frames, it will sum the columns of the eight element of the list
+#' representing the 8th hour. It was chosen this hour because it is morning rush
+#' hour but the user can adapt the data to this function
 #' @param name Character of type of vehicle
 #' @param size Character of size of vehicle
 #' @param fuel Character of fuel of vehicle
@@ -42,14 +45,61 @@
 #' @export
 #' @examples \dontrun{
 #' # Do not run
+#' data(net)
+#' PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
+#'           133833,138441,142682,171029,151048,115228,98664,126444,101027,
+#'           84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
+#'           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
+#' veh <- data.frame(PC_G = PC_G)
+#' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 #' ef1 <- ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
-#' dfe <- emis_evap(rep(50,3),"PC","<=1400","G", 1:3,
-#'                      10,4,2,1,
-#'                      ef1*1:3, ef1*1:3, ef1*1:3, ef1*1:3,
-#'                      ef1*1:3, ef1*1:3, ef1*1:3, ef1*1:3,
-#'                      ef1*1:3, ef1*1:3, ef1*1:3, ef1*1:3)
+#' dfe <- emis_evap(veh = pc1,
+#'                  name = "PC",
+#'                  size = "<=1400",
+#'                  fuel = "G",
+#'                  aged = 1:ncol(pc1),
+#'                  nd4 = 10,
+#'                  nd3 = 4,
+#'                  nd2 = 2,
+#'                  nd1 = 1,
+#'                  hs_nd4 = ef1*1:ncol(pc1),
+#'                  hs_nd3 = ef1*1:ncol(pc1),
+#'                  hs_nd2 = ef1*1:ncol(pc1),
+#'                  hs_nd1 = ef1*1:ncol(pc1),
+#'                  d_nd4 = ef1*1:ncol(pc1),
+#'                  d_nd3 = ef1*1:ncol(pc1),
+#'                  d_nd2 = ef1*1:ncol(pc1),
+#'                  d_nd1 = ef1*1:ncol(pc1),
+#'                  rl_nd4 = ef1*1:ncol(pc1),
+#'                  rl_nd3 = ef1*1:ncol(pc1),
+#'                  rl_nd2 = ef1*1:ncol(pc1),
+#'                  rl_nd1 = ef1*1:ncol(pc1))
+#' lpc <- list(pc1, pc1, pc1, pc1,
+#'             pc1, pc1, pc1, pc1)
+#' dfe <- emis_evap(veh = lpc,
+#'                  name = "PC",
+#'                  size = "<=1400",
+#'                  fuel = "G",
+#'                  aged = 1:ncol(pc1),
+#'                  nd4 = 10,
+#'                  nd3 = 4,
+#'                  nd2 = 2,
+#'                  nd1 = 1,
+#'                  hs_nd4 = ef1*1:ncol(pc1),
+#'                  hs_nd3 = ef1*1:ncol(pc1),
+#'                  hs_nd2 = ef1*1:ncol(pc1),
+#'                  hs_nd1 = ef1*1:ncol(pc1),
+#'                  d_nd4 = ef1*1:ncol(pc1),
+#'                  d_nd3 = ef1*1:ncol(pc1),
+#'                  d_nd2 = ef1*1:ncol(pc1),
+#'                  d_nd1 = ef1*1:ncol(pc1),
+#'                  rl_nd4 = ef1*1:ncol(pc1),
+#'                  rl_nd3 = ef1*1:ncol(pc1),
+#'                  rl_nd2 = ef1*1:ncol(pc1),
+#'                  rl_nd1 = ef1*1:ncol(pc1))
 #' }
-emis_evap <- function(veh, name, size, fuel, aged,
+emis_evap <- function(veh,
+                      name, size, fuel, aged,
                       nd4, nd3, nd2, nd1,
                       hs_nd4, hs_nd3, hs_nd2, hs_nd1,
                       rl_nd4, rl_nd3, rl_nd2, rl_nd1,
@@ -57,7 +107,8 @@ emis_evap <- function(veh, name, size, fuel, aged,
   if (missing(veh) | is.null(veh)) {
     stop (print("Missing vehicles"))
   } else {
-    veh <- as.numeric(veh)
+    veh <- if (inherits(veh, "list")){colSums(veh[[8]])
+    } else { colSums(veh) }
   df <- data.frame(name = rep(name, max(aged)*4*3),
                    size = rep(size, max(aged)*4*3),
                    age = rep(aged, 4*3),
@@ -75,7 +126,7 @@ emis_evap <- function(veh, name, size, fuel, aged,
                                 rep("10_25",max(aged)),
                                 rep("0_10",max(aged)),
                                 rep("-5_10",max(aged))),3))
-  message(paste0("Annual evaporative NMHC emissions of ",
+  message(paste0("Evaporative NMHC emissions of ",
                  name, "_", size, " are ",
                  round(sum(df$g*df$days, na.rm = T)/1000000,2),
                  " t/(time-lapse)"))
