@@ -11,8 +11,8 @@
 #' @examples \dontrun{
 #' # Do not run
 #' pc <- rnorm(100, 300, 10)
-#' dpc <- rnorm(10, 100, 1)
-#' PC_E25_1400 <- my_age(x = pc,y = dpc, name = "PC_E25_1400")
+#' dpc <- c(rnorm(10, 99, 1), NA, NA, NA)
+#' PC_E25_1400 <- my_age(x = pc, y = dpc, name = "PC_E25_1400")
 #' }
 my_age <- function (x, y, name,  k = 1){
   if (missing(x) | is.null(x)) {
@@ -20,6 +20,7 @@ my_age <- function (x, y, name,  k = 1){
     } else if (missing(y) | is.null(y)) {
       stop (print("Missing distributed vehicles"))
     } else {
+      y <- y[!is.na(y)]
     d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
     df <- as.data.frame(as.matrix(x) %*%d)
     names(df) <- paste(name,seq(1,length(y)),sep="_")

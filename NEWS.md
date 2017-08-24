@@ -1,3 +1,7 @@
+## vein v0.2.2-6 (Release date: 2017-08-23)
+
+- Minor update #8, to exclude na in veh of function my_age
+
 ## vein v0.2.2-5 (Release date: 2017-08-07)
 
 - Update evaporative emissions emis_evap  to include lists of 'Vehicles' data-
