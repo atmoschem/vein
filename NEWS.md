@@ -1,3 +1,6 @@
+## vein v0.2.2-7 (Release date: 2017-08-23)
+- Fix #12, speciate now returns mol/h when spec = iag
+
 ## vein v0.2.2-6 (Release date: 2017-08-23)
 
 - Minor update #8, to exclude na in veh of function my_age
