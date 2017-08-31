@@ -93,8 +93,11 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
     } else if (spec=="iag") {
     iag <- sysdata[[6]]
     df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
-    for (i in 1:ncol(df)) {
-      df[ , i] <- df[ , i] * units::parse_unit("mol g-1")
+    if (is.data.frame(x)) {
+      for (i in 1:ncol(x)) {
+        x[ , i] <- as.numeric(x[ , i])
+      }
+
     }
     if (list == T) {
     dfb <- list(e_eth = (x/100)*df$e_eth,
@@ -112,7 +115,11 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
                       e_c2h5oh = (x/100)*df$e_c2h5oh,
                       e_hcho = (x/100)*df$e_hcho,
                       e_ald = (x/100)*df$e_ald)
-
+    for (j in 1:length(dfb)) {
+    for (i in 1:ncol(dfb[[j]])) {
+      dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol g-1")
+    }
+    }
 
     if (show == TRUE) { print(df) }
     } else {
