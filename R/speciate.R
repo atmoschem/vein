@@ -117,7 +117,7 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
                       e_ald = (x/100)*df$e_ald)
     for (j in 1:length(dfb)) {
     for (i in 1:ncol(dfb[[j]])) {
-      dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol g-1")
+      dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
     }
     }
 
