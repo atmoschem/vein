@@ -4,7 +4,7 @@
 \alias{emis_wrf}
 \title{Generates emissions dataframe to generate WRF-Chem inputs}
 \usage{
-emis_wrf(sdf, nr, dmyhm, tz, utc, islist)
+emis_wrf(sdf, nr, dmyhm, tz, islist)
 }
 \arguments{
 \item{sdf}{Grid emissions, which can be a SpatialPolygonsDataFrame, or a list
@@ -17,8 +17,6 @@ of  SpatialPolygonsDataFrame}
 hour of emissions in Local Time}
 
 \item{tz}{Time zone as required in for function \code{\link{as.POSIXct}}}
-
-\item{utc}{interger indicating the difference between local and GMT time}
 
 \item{islist}{logical value to indicate if sdf is a list or not}
 }
@@ -43,4 +41,7 @@ A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
 \dontrun{
 # Do not run
 }
+}
+\seealso{
+\code{\link{emis_post}} \code{\link{emis}}
 }

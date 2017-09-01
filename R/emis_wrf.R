@@ -12,7 +12,6 @@
 #' "d-m-Y H:M" e.g.: "01-05-2014 00:00" It represents the time of the first
 #' hour of emissions in Local Time
 #' @param tz Time zone as required in for function \code{\link{as.POSIXct}}
-#' @param utc interger indicating the difference between local and GMT time
 #' @param islist logical value to indicate if sdf is a list or not
 #' @return data-frame of gridded emissions  g/h
 #' @export
@@ -22,10 +21,11 @@
 #' Metropolitan Area: a numerical study with the WRF-Chem model, Atmos. Chem.
 #' Phys., 16, 777-797, doi:10.5194/acp-16-777-2016, 2016.
 #' A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
+#' @seealso \code{\link{emis_post}} \code{\link{emis}}
 #' @examples \dontrun{
 #' # Do not run
 #' }
-emis_wrf <- function(sdf,nr, dmyhm, tz, utc, islist){
+emis_wrf <- function(sdf,nr, dmyhm, tz, islist){
   if(nr <= 0){
     stop("The argument 'nr' must be positive")
   } else if (islist==FALSE) {
@@ -38,13 +38,14 @@ emis_wrf <- function(sdf,nr, dmyhm, tz, utc, islist){
       )
     names(dft) <- c("long", "lat", "id", "pollutant")
     dft <- do.call("rbind", replicate(nr, dft, simplify = FALSE))
-    tzz <- ifelse(utc!=0,(-utc)*3600, 0)
+   # tzz <- ifelse(utc!=0,(-utc)*3600, 0)
     time_lt <- as.POSIXct(x = dmyhm, format="%d-%m-%Y %H:%M", tz=tz)
     dft$time_lt = rep(seq.POSIXt(from = time_lt,
                                  by = "1 hour",
                                  length.out = ncol(sdf)*nr),
                       each=nrow(sdf))
-    dft$time_utc = dft$time_lt + tzz
+    dft$time_utc <- dft$time_lt
+    attr(dft$time_utc, "tzone") <- "Etc/UTC"
   } else if (class(sdf)!="list" & islist==TRUE) {
     stop("The argument 'sdf' must be a list")
     } else if (class(sdf)=="list" & islist==TRUE) {
@@ -68,13 +69,14 @@ emis_wrf <- function(sdf,nr, dmyhm, tz, utc, islist){
 
     names(dft) <- c("long", "lat", "id", names(sdf))
     dft <- do.call("rbind", replicate(nr, dft, simplify = FALSE))
-    tzz <- ifelse(utc!=0,(-utc)*3600, 0)
+  #  tzz <- ifelse(utc!=0,(-utc)*3600, 0)
     time_lt <- as.POSIXct(x = dmyhm, format="%d-%m-%Y %H:%M", tz=tz)
-    dft$time_lt = rep(seq.POSIXt(from = time_lt,
+    dft$time_lt <- rep(seq.POSIXt(from = time_lt,
                                  by = "1 hour",
                                  length.out = ncol(sdf[[1]])*nr),
                       each=nrow(sdf[[1]]))
-    dft$time_utc = dft$time_lt + tzz
+    dft$time_utc <- dft$time_lt
+    attr(dft$time_utc, "tzone") <- "Etc/UTC"
   }
   return(dft)
 }

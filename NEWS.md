@@ -1,4 +1,7 @@
-## vein v0.2.2-7 (Release date: 2017-08-23)
+## vein v0.2.2-8 (Release date: 2017-09-01)
+- Fix #14, emis_wrf
+
+## vein v0.2.2-7 (Release date: 2017-08-30)
 - Fix #12, speciate now returns mol/h when spec = iag
 
 ## vein v0.2.2-6 (Release date: 2017-08-23)
