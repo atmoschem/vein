@@ -1,3 +1,7 @@
+## vein v0.2.2-9 (Release date: 2017-09-02)
+- Fix #3 and #15
+
+
 ## vein v0.2.2-8 (Release date: 2017-09-01)
 - Fix #14, emis_wrf
 

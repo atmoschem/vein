@@ -47,6 +47,12 @@ age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
+    cat("\n")
+    message(paste("Number of",name, "is",
+                  round(sum(df, na.rm = T)/1000000, 2),
+                  sep=" ")
+    )
+
   } else {
     suca <- function (t) {1 - exp(-exp(a + b*t))}
     anos <- seq(agemin,agemax)
@@ -62,6 +68,12 @@ age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
+    cat("\n")
+    message(paste("Number of",name, "is",
+                  round(sum(df, na.rm = T)/1000000, 2),
+                  sep=" ")
+    )
+
   }
   df <- Vehicles(df*k)
   return(df)

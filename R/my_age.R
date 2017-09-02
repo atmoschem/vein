@@ -27,6 +27,11 @@ my_age <- function (x, y, name,  k = 1){
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,length(y))*base::colSums(df)/sum(df),na.rm = T), 2),
                   sep=" "))
+    cat("\n")
+    message(paste("Number of",name, "is",
+                  round(sum(df, na.rm = T)/1000000, 2),
+                  sep=" ")
+            )
   }
   df <- Vehicles(df*k)
   return(df)
