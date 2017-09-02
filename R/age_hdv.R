@@ -49,7 +49,8 @@ age_hdv <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   sep=" "))
     cat("\n")
     message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000000, 2),
+                  round(sum(df*k, na.rm = T)/1000000, 2),
+                  "* 10^6",
                   sep=" ")
     )
 
@@ -70,7 +71,8 @@ age_hdv <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   sep=" "))
     cat("\n")
     message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000000, 2),
+                  round(sum(df*k, na.rm = T)/1000000, 2),
+                  "* 10^6",
                   sep=" ")
     )
 

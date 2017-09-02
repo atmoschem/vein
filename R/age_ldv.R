@@ -49,7 +49,8 @@ age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 
                   sep=" "))
     cat("\n")
     message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000000, 2),
+                  round(sum(df*k, na.rm = T)/1000000, 2),
+                  "* 10^6",
                   sep=" ")
     )
 
@@ -70,7 +71,8 @@ age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 
                   sep=" "))
     cat("\n")
     message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000000, 2),
+                  round(sum(df*k, na.rm = T)/1000000, 2),
+                  "* 10^6",
                   sep=" ")
     )
 

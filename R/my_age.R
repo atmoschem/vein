@@ -29,10 +29,11 @@ my_age <- function (x, y, name,  k = 1){
                   sep=" "))
     cat("\n")
     message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000000, 2),
+                  round(sum(df*k, na.rm = T)/1000000, 2),
+                  "* 10^6",
                   sep=" ")
             )
-  }
+    }
   df <- Vehicles(df*k)
   return(df)
 }
