@@ -17,7 +17,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ![vein](p2.png)
-a) Emisions with VEIN for MASP (kgCO/m2/s) and b) emissions for MASP from EDGAR (kgCO/m2/s)
 
 ## Vein Package
 

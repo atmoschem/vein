@@ -1,5 +1,5 @@
-## vein v0.2.2-10 (Release date: 2017-09-04)
-- Fix #10, #17 and #18
+## vein v0.2.2-10 (Release date: 2017-09-04) (Pimenta)
+- Fix #10, #17 and #18 and demo
 
 ## vein v0.2.2-9 (Release date: 2017-09-02)
 - Fix #3 and #15
