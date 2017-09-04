@@ -26,7 +26,9 @@ row number of streets by hour and day of the week}
 }
 \description{
 Simplify emissions estimated as total per type category of vehicle or
-by street. It reads array of emissions
+by street. It reads EmissionsArray. It can return an dataframe with hourly
+emissions at each street, or a data base with emissions by vehicular
+category, hour, including size, fuel and other characteristics.
 }
 \examples{
 \dontrun{
@@ -62,11 +64,17 @@ summary(E_CO_STREETS)
 E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
 pollutant = "CO", by = "veh")
 head(E_CO_DF)
-E_COv2 <- emis(veh = list(pc1,pc1),  lkm = net$lkm, ef = lef, speed = speed,
-            agemax = 41, profile = pc_profil2, hour = 2, day = 1)
+# recreating 24 profile
+lpc <-list(pc1*0.2, pc1*0.1, pc1*0.1, pc1*0.2, pc1*0.5, pc1*0.8,
+           pc1, pc1*1.1, pc1,
+           pc1*0.8, pc1*0.5, pc1*0.5,
+           pc1*0.5, pc1*0.5, pc1*0.5, pc1*0.8,
+           pc1, pc1*1.1, pc1,
+           pc1*0.8, pc1*0.5, pc1*0.3, pc1*0.2, pc1*0.1)
+E_COv2 <- emis(veh = lpc,  lkm = net$lkm, ef = lef, speed = speed[, 1:24],
+            agemax = 41, hour = 24, day = 1)
+plot(E_COv2)
 E_CO_DFv2 <- emis_post(arra = E_COv2,  veh = "PC", size = "<1400", fuel = "G",
 pollutant = "CO", by = "veh")
-arra = E_COv2;  veh = "PC"; size = "<1400"; fuel = "G";
-pollutant = "CO"; by = "veh"
 }
 }

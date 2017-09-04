@@ -1,7 +1,9 @@
 #' Post emissions
 #'
 #' Simplify emissions estimated as total per type category of vehicle or
-#' by street. It reads array of emissions
+#' by street. It reads EmissionsArray. It can return an dataframe with hourly
+#' emissions at each street, or a data base with emissions by vehicular
+#' category, hour, including size, fuel and other characteristics.
 #'
 #' @param arra Array of emissions 4d: streets x category of vehicles x hours x days or
 #' 3d: streets x category of vehicles x hours
@@ -48,12 +50,18 @@
 #' E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
 #' pollutant = "CO", by = "veh")
 #' head(E_CO_DF)
-#' E_COv2 <- emis(veh = list(pc1,pc1),  lkm = net$lkm, ef = lef, speed = speed,
-#'             agemax = 41, profile = pc_profil2, hour = 2, day = 1)
+#' # recreating 24 profile
+#' lpc <-list(pc1*0.2, pc1*0.1, pc1*0.1, pc1*0.2, pc1*0.5, pc1*0.8,
+#'            pc1, pc1*1.1, pc1,
+#'            pc1*0.8, pc1*0.5, pc1*0.5,
+#'            pc1*0.5, pc1*0.5, pc1*0.5, pc1*0.8,
+#'            pc1, pc1*1.1, pc1,
+#'            pc1*0.8, pc1*0.5, pc1*0.3, pc1*0.2, pc1*0.1)
+#' E_COv2 <- emis(veh = lpc,  lkm = net$lkm, ef = lef, speed = speed[, 1:24],
+#'             agemax = 41, hour = 24, day = 1)
+#' plot(E_COv2)
 #' E_CO_DFv2 <- emis_post(arra = E_COv2,  veh = "PC", size = "<1400", fuel = "G",
 #' pollutant = "CO", by = "veh")
-#' arra = E_COv2;  veh = "PC"; size = "<1400"; fuel = "G";
-#' pollutant = "CO"; by = "veh"
 #' }
 emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
   if ( class(arra) != "EmissionsArray" && !is.array(arra) ){
@@ -77,17 +85,13 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       df$fuel <- rep(fuel, nrow(df))
       df$pollutant <- rep(pollutant, nrow(df))
       df$age <- rep(seq(1:dim(arra)[2]),24*7, by=7 )
-      hour <- rep(seq(0:(dim(arra)[3]-1)),dim(arra)[4],
-                  by = dim(arra)[2],
-                  each=dim(arra)[2] )
+      hour <- rep(1:dim(arra)[3]*dim(arra)[4], #hours x days
+                  each = dim(arra)[2]) #veh cat
       df$hour <- hour
-      day <- rep(c("Monday", "Tuesday", "Wednesday",
-                   "Thursday", "Friday", "Saturday",
-                   "Sunday"), each=dim(arra)[2]*dim(arra)[3])
-      df$day <- day
       df$g <- Emissions(df$g)
       return(df)
     } else if (by == "streets_narrow") {
+      # soon deprecated this function?
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
         unlist(lapply (1:dim(arra)[3],function(i) { # hora
           rowSums(arra[,,i,j], na.rm = T)
@@ -99,14 +103,6 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
                   times = dim(arra)[4],
                   each=dim(arra)[1])
       df$hour <- hour
-      day <- c(rep("Monday", dim(arra)[1]*dim(arra)[3]),
-               rep("Tuesday", dim(arra)[1]*dim(arra)[3]),
-               rep("Wednesday", dim(arra)[1]*dim(arra)[3]),
-               rep("Thursday", dim(arra)[1]*dim(arra)[3]),
-               rep("Friday", dim(arra)[1]*dim(arra)[3]),
-               rep("Saturday", dim(arra)[1]*dim(arra)[3]),
-               rep("Sunday", dim(arra)[1]*dim(arra)[3]))
-      df$day <- day
       df[,1] <- seq(1,dim(arra)[1])
       df[,2] <- df[,2] * units::parse_unit("g h-1")
       return(df)
@@ -130,19 +126,17 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       names(df) <- c(as.character(df[1,1]), "g")
       nombre <- rep(paste(as.character(df[1,1]),
                           seq(1:dim(arra)[2]),
-                          sep = "_"),24*7, by=7 )
+                          sep = "_"),dim(arra)[3], by=7 )
       df[,1] <- nombre
       df$veh <- rep(veh, nrow(df))
       df$size <- rep(size, nrow(df))
       df$fuel <- rep(fuel, nrow(df))
       df$pollutant <- rep(pollutant, nrow(df))
       df$age <- rep(1:dim(arra)[2], dim(arra)[3])
-      hour <- rep(1:24, dim(arra)[2], by = 24, each = 7)
+
+      hour <- rep(1:dim(arra)[3], #hours x days
+                  each = dim(arra)[2]) #veh cat
       df$hour <- hour
-      day <- rep(c("Monday", "Tuesday", "Wednesday",
-                   "Thursday", "Friday", "Saturday",
-                   "Sunday"), each=dim(arra)[2]*24)
-      df$day <- day
       df$g <- Emissions(df$g)
       return(df)
     } else if (by == "streets_narrow") {
