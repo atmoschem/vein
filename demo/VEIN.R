@@ -174,15 +174,17 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, profile = pc_prof
 E_CO_DF <- emis_post(arra = E_CO, veh = "PC", size = "1400", fuel = "Gasoline",
                      pollutant = "CO", by = "veh")
 head(E_CO_DF) # take care of units
-df <- aggregate(E_CO_DF$g, by=list(E_CO_DF$hour, E_CO_DF$day), sum)
-names(df) <- c("Hour", "Day", "g_CO")
-df$hour <- ifelse(df$Day=="Monday", 1:24,
-           ifelse(df$Day=="Tuesday", 1:24+24,
-           ifelse(df$Day=="Wednesday", 1:24+24*2,
-           ifelse(df$Day=="Thursday", 1:24+24*3,
-           ifelse(df$Day=="Friday", 1:24+24*4,
-           ifelse(df$Day=="Saturday", 1:24+24*5,1:24+24*6))))))
+df <- aggregate(E_CO_DF$g, by=list(E_CO_DF$hour), sum)
 
+df$Day <- c(
+  rep("Monday", 24),
+      rep("Tuesday", 24),
+           rep("Wednesday", 24),
+           rep("Thursday", 24),
+           rep("Friday", 24),
+           rep("Saturday", 24),
+               rep("Sunday", 24))
+names(df) <- c("Hour", "g_CO", "Day" )
 df$day <- factor(df$Day,
                  levels =  c("Monday", "Tuesday", "Wednesday", "Thursday",
                              "Friday", "Saturday", "Sunday"))
@@ -252,6 +254,6 @@ spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
 E_CO_g@data <- E_CO_g@data[, -1]
 ldf <- list("co" = E_CO_g)
 df_wrf <- emis_wrf(ldf,nr=1,dmyhm = "04-08-2014 00:00",
-                   tz = "America/Sao_Paulo",utc = -3,islist=T)
+                   tz = "America/Sao_Paulo", islist=T)
 
 

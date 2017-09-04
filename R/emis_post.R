@@ -85,7 +85,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       df$fuel <- rep(fuel, nrow(df))
       df$pollutant <- rep(pollutant, nrow(df))
       df$age <- rep(seq(1:dim(arra)[2]),24*7, by=7 )
-      hour <- rep(1:dim(arra)[3]*dim(arra)[4], #hours x days
+      hour <- rep(1:(dim(arra)[3]*dim(arra)[4]), #hours x days
                   each = dim(arra)[2]) #veh cat
       df$hour <- hour
       df$g <- Emissions(df$g)
