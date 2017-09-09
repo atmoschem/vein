@@ -122,6 +122,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
                            (efcold[[k]](speed[, i]) - 1))
                   }) ) }) ) }) )
       return(EmissionsArray(d))
+        message(sum(d), " emissions in", hour, "hours and", day, "days")
       }
   } else {
     if (ncol(veh[[1]]) != length(ef)){
@@ -151,6 +152,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed,
                                (efcold[[k]](speed[, i]) - 1))
                     }) ) }) )
           return(EmissionsArray(d))
+          message(sum(d), " emissions in", hour, "hours")
         }
       }
 }
