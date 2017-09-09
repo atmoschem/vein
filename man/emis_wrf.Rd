@@ -4,7 +4,7 @@
 \alias{emis_wrf}
 \title{Generates emissions dataframe to generate WRF-Chem inputs}
 \usage{
-emis_wrf(sdf, nr, dmyhm, tz, crs = "+init=epsg:4326", islist)
+emis_wrf(sdf, nr = 0, dmyhm, tz, crs = "+init=epsg:4326", islist)
 }
 \arguments{
 \item{sdf}{Grid emissions, which can be a SpatialPolygonsDataFrame, or a list

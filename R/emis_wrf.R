@@ -28,11 +28,12 @@
 #' @examples \dontrun{
 #' # Do not run
 #' }
-emis_wrf <- function(sdf,nr, dmyhm, tz, crs = "+init=epsg:4326", islist){
+emis_wrf <- function(sdf,nr = 0, dmyhm, tz, crs = "+init=epsg:4326", islist){
   if(nr <= 0){
     stop("The argument 'nr' must be positive")
   } else if (islist==FALSE) {
-    dft <- as.data.frame(coordinates(spTransform(sdf)), sp::CRS(crs))
+    dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf)),
+                         CRSobj = sp::CRS(crs))
     dft$id <- 1:nrow(dft)
     dft <- do.call("rbind", replicate(ncol(sdf), dft, simplify = FALSE))
     dft$pol <-  unlist(lapply(1:(ncol(sdf)),function(i) {
@@ -52,7 +53,8 @@ emis_wrf <- function(sdf,nr, dmyhm, tz, crs = "+init=epsg:4326", islist){
   } else if (class(sdf)!="list" & islist==TRUE) {
     stop("The argument 'sdf' must be a list")
     } else if (class(sdf)=="list" & islist==TRUE) {
-      dft <- as.data.frame(coordinates(spTransform(sdf[[1]])), sp::CRS(crs))
+      dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf[[1]])),
+                           CRSobj = sp::CRS(crs))
     dft$id <- 1:nrow(sdf[[1]])
     dft <- do.call("rbind", replicate(ncol(sdf[[1]]),
                                       dft, simplify = FALSE))
