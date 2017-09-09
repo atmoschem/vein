@@ -5,9 +5,7 @@ date: "22 de abril de 2017"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+
 
 [![Travis-CI Build Status](https://travis-ci.org/ibarraespinosa/vein.svg?branch=master)](https://travis-ci.org/ibarraespinosa/vein)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
@@ -37,7 +35,8 @@ Also, if you want to properly run the demo, install these packages:
 - ggplot2
 - RColorBrewer
 
-```{r eval=F}
+
+```r
 # 0.2.2-12
 library(devtools)
 install_github("ibarraespinosa/vein")
@@ -47,7 +46,8 @@ demo(VEIN)
 
 or
 
-```{r eval=F}
+
+```r
 # 0.2.2-3
 install.packages("vein")
 library(vein)

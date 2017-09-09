@@ -15,7 +15,7 @@ and "nox".}
 
 \item{veh}{Type of vehicle. When spec is "bcom" or "nox" veh can be "PC",
 "LCV", HDV" or "Motorcycle". When spec is "iag" veh is only "veh".
-Not required for "tyre", "break" or "road"}
+Not required for "tyre", "break" or "road".}
 
 \item{fuel}{Fuel. When spec is "bcom" fuel can be "G" or "D".
 When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can

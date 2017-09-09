@@ -10,7 +10,7 @@
 #' and "nox".
 #' @param veh Type of vehicle. When spec is "bcom" or "nox" veh can be "PC",
 #' "LCV", HDV" or "Motorcycle". When spec is "iag" veh is only "veh".
-#' Not required for "tyre", "break" or "road"
+#' Not required for "tyre", "break" or "road".
 #' @param fuel Fuel. When spec is "bcom" fuel can be "G" or "D".
 #' When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
 #' be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "break" or "road"
@@ -110,11 +110,9 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
                       e_iso = (x/100)*df$e_iso,
                       e_tol = (x/100)*df$e_tol,
                       e_xyl = (x/100)*df$e_xyl,
-                      e_ket = (x/100)*df$e_ket,
-                      e_ch3oh = (x/100)*df$e_ch3oh,
                       e_c2h5oh = (x/100)*df$e_c2h5oh,
-                      e_hcho = (x/100)*df$e_hcho,
-                      e_ald = (x/100)*df$e_ald)
+                      e_ald = (x/100)*df$e_ald,
+                      e_hcho = (x/100)*df$e_hcho)
     for (j in 1:length(dfb)) {
     for (i in 1:ncol(dfb[[j]])) {
       dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
@@ -133,11 +131,9 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
                   e_iso = (x/100)*df$e_iso,
                   e_tol = (x/100)*df$e_tol,
                   e_xyl = (x/100)*df$e_xyl,
-                  e_ket = (x/100)*df$e_ket,
-                  e_ch3oh = (x/100)*df$e_ch3oh,
                   e_c2h5oh = (x/100)*df$e_c2h5oh,
-                  e_hcho = (x/100)*df$e_hcho,
-                  e_ald = (x/100)*df$e_ald)
+                  e_ald = (x/100)*df$e_ald,
+                  e_hcho = (x/100)*df$e_hcho)
 
     }
     if (show == TRUE) {
