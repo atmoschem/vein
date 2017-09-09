@@ -93,7 +93,7 @@ assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
 by Vera-Vala et al (2016)</p>
     
 
-    <pre class="usage"><span class='fu'>emis_wrf</span>(<span class='no'>sdf</span>, <span class='no'>nr</span>, <span class='no'>dmyhm</span>, <span class='no'>tz</span>, <span class='no'>islist</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_wrf</span>(<span class='no'>sdf</span>, <span class='no'>nr</span>, <span class='no'>dmyhm</span>, <span class='no'>tz</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='st'>"+init=epsg:4326"</span>, <span class='no'>islist</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -118,6 +118,11 @@ hour of emissions in Local Time</p></td>
       <td><p>Time zone as required in for function <code>as.POSIXct</code></p></td>
     </tr>
     <tr>
+      <th>crs</th>
+      <td><p>Coordinate reference system, e.g: "+init=epsg:4326". Used to
+transform the coordinates of the output</p></td>
+    </tr>
+    <tr>
       <th>islist</th>
       <td><p>logical value to indicate if sdf is a list or not</p></td>
     </tr>
@@ -134,7 +139,8 @@ Andrade, M. F., Kumar, P., Ynoue, R. Y., and Munoz, A. G.: Impact of
 vehicular emissions on the formation of fine particles in the Sao Paulo
 Metropolitan Area: a numerical study with the WRF-Chem model, Atmos. Chem.
 Phys., 16, 777-797, doi:10.5194/acp-16-777-2016, 2016.
-A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc</p>
+A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
+The crs is the same as used by <code>sp</code> package</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

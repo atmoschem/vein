@@ -4,7 +4,7 @@
 \alias{emis_wrf}
 \title{Generates emissions dataframe to generate WRF-Chem inputs}
 \usage{
-emis_wrf(sdf, nr, dmyhm, tz, islist)
+emis_wrf(sdf, nr, dmyhm, tz, crs = "+init=epsg:4326", islist)
 }
 \arguments{
 \item{sdf}{Grid emissions, which can be a SpatialPolygonsDataFrame, or a list
@@ -17,6 +17,9 @@ of  SpatialPolygonsDataFrame}
 hour of emissions in Local Time}
 
 \item{tz}{Time zone as required in for function \code{\link{as.POSIXct}}}
+
+\item{crs}{Coordinate reference system, e.g: "+init=epsg:4326". Used to
+transform the coordinates of the output}
 
 \item{islist}{logical value to indicate if sdf is a list or not}
 }
@@ -36,6 +39,7 @@ vehicular emissions on the formation of fine particles in the Sao Paulo
 Metropolitan Area: a numerical study with the WRF-Chem model, Atmos. Chem.
 Phys., 16, 777-797, doi:10.5194/acp-16-777-2016, 2016.
 A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
+The crs is the same as used by \code{\link{sp}} package
 }
 \examples{
 \dontrun{
