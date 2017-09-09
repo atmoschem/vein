@@ -28,7 +28,7 @@
 #' @examples \dontrun{
 #' # Do not run
 #' }
-emis_wrf <- function(sdf,nr = 0, dmyhm, tz, crs = "+init=epsg:4326", islist){
+emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
   if(nr <= 0){
     stop("The argument 'nr' must be positive")
   } else if (islist==FALSE) {
