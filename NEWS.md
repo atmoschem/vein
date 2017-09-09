@@ -1,3 +1,6 @@
+## vein v0.2.2-14 (Release date: 2017-09-09)
+- Fix #11
+
 ## vein v0.2.2-13 (Release date: 2017-09-09)
 - Fix #7 
 
