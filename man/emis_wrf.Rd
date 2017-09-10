@@ -40,6 +40,8 @@ Metropolitan Area: a numerical study with the WRF-Chem model, Atmos. Chem.
 Phys., 16, 777-797, doi:10.5194/acp-16-777-2016, 2016.
 A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
 The crs is the same as used by \code{\link{sp}} package
+It returns a dataframe with long, lat, id, pollutants, time_lt, time_utc
+and day-UTC-hour (dutch)
 }
 \examples{
 \dontrun{

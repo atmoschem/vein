@@ -24,6 +24,8 @@
 #' Phys., 16, 777-797, doi:10.5194/acp-16-777-2016, 2016.
 #' A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
 #' The crs is the same as used by \code{\link{sp}} package
+#' It returns a dataframe with long, lat, id, pollutants, time_lt, time_utc
+#' and day-UTC-hour (dutch)
 #' @seealso \code{\link{emis_post}} \code{\link{emis}}
 #' @examples \dontrun{
 #' # Do not run
@@ -50,6 +52,11 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
                       each=nrow(sdf))
     dft$time_utc <- dft$time_lt
     attr(dft$time_utc, "tzone") <- "Etc/UTC"
+    dft$dutch <- as.numeric(
+      paste0(
+        strftime(dft$time_utc, timezone = tz, format = "%d"),
+        strftime(dft$time_utc, timezone = tz, format = "%H")
+      ))
   } else if (class(sdf)!="list" & islist==TRUE) {
     stop("The argument 'sdf' must be a list")
     } else if (class(sdf)=="list" & islist==TRUE) {
@@ -82,6 +89,11 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
                       each=nrow(sdf[[1]]))
     dft$time_utc <- dft$time_lt
     attr(dft$time_utc, "tzone") <- "Etc/UTC"
+    dft$dutch <- as.numeric(
+      paste0(
+        strftime(dft$time_utc, timezone = tz, format = "%d"),
+        strftime(dft$time_utc, timezone = tz, format = "%H")
+      ))
   }
   return(dft)
 }
