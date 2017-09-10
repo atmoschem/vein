@@ -25,7 +25,7 @@ make_grid <- function(spobj, width, height,  polygon = T){
   cc <- bb[, 1] + (cs/2)  # cell offset
   cd <- ceiling(diff(t(bb))/cs)  # numero de celda por direcao
   grd <- sp::GridTopology(cellcentre.offset=cc, cellsize=cs, cells.dim=cd)
-  grd
+  message(print(grd))
   grade <- sp::SpatialGridDataFrame(grd,
                                 data=data.frame(id=1:prod(cd)),
                                 proj4string=sr)
@@ -37,7 +37,7 @@ make_grid <- function(spobj, width, height,  polygon = T){
     cc <- bb[, 1] + (cs/2)  # cell offset
     cd <- ceiling(diff(t(bb))/cs)  # numero de celda por direcao
     grd <- sp::GridTopology(cellcentre.offset=cc, cellsize=cs, cells.dim=cd)
-    grd
+    message(print(grd))
     grade <- sp::SpatialGridDataFrame(grd,
                                   data=data.frame(id=1:prod(cd)),
                                   proj4string=sr)
