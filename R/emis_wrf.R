@@ -45,7 +45,7 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
       as.numeric(sdf@data[, i])
       })
       )
-    names(dft) <- c("long", "lat", "id", "pollutant")
+    names(dft) <- c("id", "long", "lat", "pollutant")
     dft <- do.call("rbind", replicate(nr, dft, simplify = FALSE))
    # tzz <- ifelse(utc!=0,(-utc)*3600, 0)
     time_lt <- as.POSIXct(x = dmyhm, format="%d-%m-%Y %H:%M", tz=tz)
@@ -63,7 +63,7 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
   } else if (class(sdf)!="list" & islist==TRUE) {
     stop("The argument 'sdf' must be a list")
     } else if (class(sdf)=="list" & islist==TRUE) {
-      dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf[[1]],
+    dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf[[1]],
                                                            CRSobj = sp::CRS(crs))))
 
     dftid <- data.frame(id = 1:nrow(sdf[[1]]))
@@ -86,7 +86,7 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
                                   )))
                  )
 
-    names(dft) <- c("long", "lat", "id", names(sdf))
+    names(dft) <- c("id", "long", "lat",  names(sdf))
     dft <- do.call("rbind", replicate(nr, dft, simplify = FALSE))
   #  tzz <- ifelse(utc!=0,(-utc)*3600, 0)
     time_lt <- as.POSIXct(x = dmyhm, format="%d-%m-%Y %H:%M", tz=tz)
