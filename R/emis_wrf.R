@@ -24,7 +24,7 @@
 #' Phys., 16, 777-797, doi:10.5194/acp-16-777-2016, 2016.
 #' A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
 #' The crs is the same as used by \code{\link{sp}} package
-#' It returns a dataframe with long, lat, id, pollutants, time_lt, time_utc
+#' It returns a dataframe with id,, long, lat, pollutants, time_lt, time_utc
 #' and day-UTC-hour (dutch)
 #' @seealso \code{\link{emis_post}} \code{\link{emis}}
 #' @examples \dontrun{
@@ -36,7 +36,10 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
   } else if (islist==FALSE) {
     dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf,
                                                          CRSobj = sp::CRS(crs))))
-    dft$id <- 1:nrow(dft)
+    dftid <- data.frame(id = 1:nrow(dft))
+
+    dft <- as.data.frame(cbind(dftid, dft))
+
     dft <- do.call("rbind", replicate(ncol(sdf), dft, simplify = FALSE))
     dft$pol <-  unlist(lapply(1:(ncol(sdf)),function(i) {
       as.numeric(sdf@data[, i])
@@ -62,7 +65,11 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
     } else if (class(sdf)=="list" & islist==TRUE) {
       dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf[[1]],
                                                            CRSobj = sp::CRS(crs))))
-    dft$id <- 1:nrow(sdf[[1]])
+
+    dftid <- data.frame(id = 1:nrow(sdf[[1]]))
+
+    dft <- as.data.frame(cbind(dftid, dft))
+
     dft <- do.call("rbind", replicate(ncol(sdf[[1]]),
                                       dft, simplify = FALSE))
     dft <- cbind(dft,

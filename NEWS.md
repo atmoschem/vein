@@ -1,44 +1,33 @@
 ## vein v0.2.2-14 (Release date: 2017-09-10)
-- Fix #24
+- Fix #25
 
+## vein v0.2.2-14 (Release date: 2017-09-10)
+- Fix #24
 ## vein v0.2.2-16 (Release date: 2017-09-09)
 - Fix #23
 ## vein v0.2.2-15 (Release date: 2017-09-09)
 - Fix #22
-
 ## vein v0.2.2-14 (Release date: 2017-09-09)
 - Fix #11
-
 ## vein v0.2.2-13 (Release date: 2017-09-09)
 - Fix #7 
-
 ## vein v0.2.2-12 (Release date: 2017-09-09)
 - Fix #21 
-
 ## vein v0.2.2-11 (Release date: 2017-09-09)
 - Fix #20
-
 ## vein v0.2.2-10 (Release date: 2017-09-04)
 - Fix #10, #17 and #18 and demo
-
 ## vein v0.2.2-9 (Release date: 2017-09-02)
 - Fix #3 and #15
-
 ## vein v0.2.2-8 (Release date: 2017-09-01)
 - Fix #14, emis_wrf
-
 ## vein v0.2.2-7 (Release date: 2017-08-30)
 - Fix #12, speciate now returns mol/h when spec = iag
-
 ## vein v0.2.2-6 (Release date: 2017-08-23)
-
 - Minor update #8, to exclude na in veh of function my_age
-
 ## vein v0.2.2-5 (Release date: 2017-08-07)
-
 - Update evaporative emissions emis_evap  to include lists of 'Vehicles' data-
 frame
-
 ____________________________________________________________________________________
 
 ## vein v0.2.2-4 (Release date: 2017-08-05)
