@@ -11,11 +11,16 @@ speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE)
 
 \item{spec}{type of speciation, e.g.: "bcom" stands for black carbon and
 organic matter. The speciations are: "bcom", tyre", "break", "road","iag"
-and "nox".}
+and "nox". 'iag' now includes a speciation for use of industrial and
+building paintings}
 
 \item{veh}{Type of vehicle. When spec is "bcom" or "nox" veh can be "PC",
-"LCV", HDV" or "Motorcycle". When spec is "iag" veh is only "veh".
-Not required for "tyre", "break" or "road".}
+"LCV", HDV" or "Motorcycle".
+When spec is "iag" veh can take two values depending:
+when the speciation is for vehicles veh accepts "veh", eu "Evaporative",
+"Liquid" or "Exhaust" and fuel "G", "E" or "D",
+when the speciation is for painting, veh is "paint" fuel or eu can be
+"industrial" or "buildind".}
 
 \item{fuel}{Fuel. When spec is "bcom" fuel can be "G" or "D".
 When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
@@ -34,7 +39,7 @@ Not required for "tyre", "break" or "road"}
 the number species of pollutants}
 }
 \value{
-dataframe of speciation in grams
+dataframe of speciation in grams or mols
 }
 \description{
 The separation of emissions in different compunds. It includes
@@ -81,4 +86,18 @@ Metropolitana de Sao Paulo. 2013. Dissertacao de Mestrado. Instituto de
 Astronomia, Geofisica e Ciencias Atmosfericas, Universidade de Sao Paulo,
 Sao Paulo.
 http://www.iag.usp.br/pos/sites/default/files/d_angel_l_v_vela_corrigida_0.pdf
+Speciate EPA: https://cfpub.epa.gov/speciate/. :
+K. Sexton, H. Westberg, "Ambient hydrocarbon and ozone measurements downwind
+of a large automotive painting plant" Environ. Sci. Tchnol. 14:329 (1980).P.A.
+Scheff, R.A. Schauer, James J., Kleeman, Mike J., Cass, Glen R., Characterization and
+Control of Organic Compounds Emitted from Air Pollution Sources, Final Report,
+Contract 93-329, prepared for California Air Resources Board Research Division,
+Sacramento, CA, April 1998.
+2004 NPRI National Databases as of April 25, 2006,
+http://www.ec.gc.ca/pdb/npri/npri_dat_rep_e.cfm. Memorandum
+Proposed procedures for preparing composite speciation profiles using
+Environment Canada s National Pollutant Release Inventory (NPRI) for
+stationary sources, prepared by Ying Hsu and Randy Strait of E.H. Pechan
+Associates, Inc. for David Niemi, Marc Deslauriers, and Lisa Graham of
+Environment Canada, September 26, 2006.
 }

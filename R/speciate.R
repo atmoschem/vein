@@ -7,10 +7,15 @@
 #' @param x Emissions estimation
 #' @param spec type of speciation, e.g.: "bcom" stands for black carbon and
 #' organic matter. The speciations are: "bcom", tyre", "break", "road","iag"
-#' and "nox".
+#' and "nox". 'iag' now includes a speciation for use of industrial and
+#' building paintings
 #' @param veh Type of vehicle. When spec is "bcom" or "nox" veh can be "PC",
-#' "LCV", HDV" or "Motorcycle". When spec is "iag" veh is only "veh".
-#' Not required for "tyre", "break" or "road".
+#' "LCV", HDV" or "Motorcycle".
+#' When spec is "iag" veh can take two values depending:
+#' when the speciation is for vehicles veh accepts "veh", eu "Evaporative",
+#' "Liquid" or "Exhaust" and fuel "G", "E" or "D",
+#' when the speciation is for painting, veh is "paint" fuel or eu can be
+#' "industrial" or "buildind".
 #' @param fuel Fuel. When spec is "bcom" fuel can be "G" or "D".
 #' When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
 #' be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "break" or "road"
@@ -23,7 +28,7 @@
 #' @param show when TRUE shows row of table with respective speciation
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
-#' @return dataframe of speciation in grams
+#' @return dataframe of speciation in grams or mols
 #' @references "bcom": Ntziachristos and Zamaras. 2016. Passneger cars, light
 #' commercial trucks, heavy-duty vehicles including buses and motor cycles. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
@@ -44,6 +49,21 @@
 #' Astronomia, Geofisica e Ciencias Atmosfericas, Universidade de Sao Paulo,
 #' Sao Paulo.
 #' http://www.iag.usp.br/pos/sites/default/files/d_angel_l_v_vela_corrigida_0.pdf
+#' Speciate EPA: https://cfpub.epa.gov/speciate/. :
+#' K. Sexton, H. Westberg, "Ambient hydrocarbon and ozone measurements downwind
+#' of a large automotive painting plant" Environ. Sci. Tchnol. 14:329 (1980).P.A.
+#' Scheff, R.A. Schauer, James J., Kleeman, Mike J., Cass, Glen R., Characterization and
+#' Control of Organic Compounds Emitted from Air Pollution Sources, Final Report,
+#' Contract 93-329, prepared for California Air Resources Board Research Division,
+#' Sacramento, CA, April 1998.
+#' 2004 NPRI National Databases as of April 25, 2006,
+#' http://www.ec.gc.ca/pdb/npri/npri_dat_rep_e.cfm. Memorandum
+#' Proposed procedures for preparing composite speciation profiles using
+#' Environment Canada s National Pollutant Release Inventory (NPRI) for
+#' stationary sources, prepared by Ying Hsu and Randy Strait of E.H. Pechan
+#' Associates, Inc. for David Niemi, Marc Deslauriers, and Lisa Graham of
+#' Environment Canada, September 26, 2006.
+#'
 #' @note when spec = "iag", veh is only "VEH", STANDARD is "Evaporative",
 #' "Liquid" or "Exhaust", FUEL is "G" for gasoline (blended with 25\% ethanol),
 #'  "E" for Ethanol and "D" for diesel (blended with 5\% of biodiesel).
@@ -112,7 +132,9 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
                       e_xyl = (x/100)*df$e_xyl,
                       e_c2h5oh = (x/100)*df$e_c2h5oh,
                       e_ald = (x/100)*df$e_ald,
-                      e_hcho = (x/100)*df$e_hcho)
+                      e_hcho = (x/100)*df$e_hcho,
+                      e_ch3oh = (x/100)*df$e_ch3oh,
+                      e_ket = (x/100)*df$e_ket)
     for (j in 1:length(dfb)) {
     for (i in 1:ncol(dfb[[j]])) {
       dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
@@ -121,7 +143,7 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
 
     if (show == TRUE) { print(df) }
     } else {
-      dfb <- list(e_eth = (x/100)*df$e_eth,
+      dfb <- list(e_eth = (x/100)*df$e_eth, # /100 porque es basado en 100g combustible
                   e_hc3 = (x/100)*df$e_hc3,
                   e_hc5 = (x/100)*df$e_hc5,
                   e_hc8 = (x/100)*df$e_hc8,
@@ -133,7 +155,9 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
                   e_xyl = (x/100)*df$e_xyl,
                   e_c2h5oh = (x/100)*df$e_c2h5oh,
                   e_ald = (x/100)*df$e_ald,
-                  e_hcho = (x/100)*df$e_hcho)
+                  e_hcho = (x/100)*df$e_hcho,
+                  e_ch3oh = (x/100)*df$e_ch3oh,  # /100 porque el porcentaje esta en 100%
+                  e_ket = (x/100)*df$e_ket)  # /100 porque el porcentaje esta en 100%
 
     }
     if (show == TRUE) {

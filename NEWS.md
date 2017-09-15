@@ -1,7 +1,10 @@
-## vein v0.2.2-14 (Release date: 2017-09-11)
+## vein v0.2.2-19 (Release date: 2017-09-15)
+- Experimental: adding NMHC speciation for industrial and buildings painting
+
+## vein v0.2.2-18 (Release date: 2017-09-11)
 - Fix #25
 
-## vein v0.2.2-14 (Release date: 2017-09-10)
+## vein v0.2.2-17 (Release date: 2017-09-10)
 - Fix #24
 ## vein v0.2.2-16 (Release date: 2017-09-09)
 - Fix #23
