@@ -6,3 +6,5 @@
 ^vein.pdf$
 ^\.travis\.yml$
 ^appveyor.yml$
+^docs$
+^_pkgdown\.yml$
