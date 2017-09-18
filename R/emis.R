@@ -65,6 +65,9 @@ emis <- function (veh, lkm, ef, speed,
                     },
                   profile, hour = 24, day = 7,
                   array = T) {
+  if(units(lkm)$numerator == "m" ){
+    warning("Units of lkm is 'm' ")
+  }
   lkm <- as.numeric(lkm)
   speed <- as.data.frame(speed)
   for (i  in 1:ncol(speed) ) {
