@@ -28,8 +28,8 @@ my_age <- function (x, y, name,  k = 1){
                   round(sum(seq(1,length(y))*base::colSums(df)/sum(df),na.rm = T), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
-                  round(sum(df*k, na.rm = T)/1000000, 2),
-                  "* 10^6 veh",
+                  round(sum(df*k, na.rm = T)/1000, 3),
+                  "* 10^3 veh",
                   sep=" ")
             )
     cat("\n")

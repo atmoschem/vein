@@ -48,8 +48,8 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
-                  round(sum(df*k, na.rm = T)/1000000, 2),
-                  "* 10^6 veh",
+                  round(sum(df*k, na.rm = T)/1000, 2),
+                  "* 10^3 veh",
                   sep=" ")
     )
     cat("\n")
@@ -70,8 +70,8 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
-                  round(sum(df*k, na.rm = T)/1000000, 2),
-                  "* 10^6 veh",
+                  round(sum(df*k, na.rm = T)/1000, 2),
+                  "* 10^3 veh",
                   sep=" ")
     )
     cat("\n")

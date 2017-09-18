@@ -1,3 +1,6 @@
+## vein v0.2.2-22 (Release date: 2017-09-18)(Viva Chile)
+- Fix #27. 
+
 ## vein v0.2.2-21 (Release date: 2017-09-18)
 - Fix #11 (reopen). Now prints in kg
 ## vein v0.2.2-20 (Release date: 2017-09-16)
