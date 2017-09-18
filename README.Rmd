@@ -38,7 +38,7 @@ Also, if you want to properly run the demo, install these packages:
 - RColorBrewer
 
 ```{r eval=F}
-# 0.2.2-20
+# 0.2.2-21
 library(devtools)
 install_github("ibarraespinosa/vein")
 library(vein)

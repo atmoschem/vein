@@ -96,7 +96,7 @@ emis <- function (veh, lkm, ef, speed,
                   veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
                   }) ) }) ) }) )
       return(EmissionsArray(d))
-      message(sum(d), " emissions in", hour, "hours and", day, "days")
+      message(sum(d, na.rm = T)/1000, " kg emissions in", hour, "hours and", day, "days")
       }
   } else {
     if (ncol(veh[[1]]) != length(ef)){
@@ -122,7 +122,7 @@ emis <- function (veh, lkm, ef, speed,
                       veh[[i]][, k]*lkm*ef[[k]](speed[, i])
                    }) ) }) )
           return(EmissionsArray(d))
-          message(sum(d), " emissions in", hour, "hours")
+          message(sum(d, na.rm = T)/1000, " kg emissions in", hour, "hours")
         }
       }
 }

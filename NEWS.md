@@ -1,6 +1,7 @@
+## vein v0.2.2-21 (Release date: 2017-09-18)
+- Fix #11 (reopen). Now prints in kg
 ## vein v0.2.2-20 (Release date: 2017-09-16)
 - Fix #26
-
 ## vein v0.2.2-19 (Release date: 2017-09-15)
 - Experimental: adding NMHC speciation for industrial and buildings painting
 ## vein v0.2.2-18 (Release date: 2017-09-11)
