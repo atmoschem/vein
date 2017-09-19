@@ -8,7 +8,10 @@ emis_wrf(sdf, nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist)
 }
 \arguments{
 \item{sdf}{Grid emissions, which can be a SpatialPolygonsDataFrame, or a list
-of  SpatialPolygonsDataFrame}
+of SpatialPolygonsDataFrame. The user must enter a list with 36
+SpatialPolygonsDataFrame with emissions for the mechanism CBMZ. When there
+are no emissions available, the SpatialPolygonsDataFrame must contain
+0.}
 
 \item{nr}{Number of repetitions of the emissions period}
 
@@ -42,6 +45,42 @@ A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
 The crs is the same as used by \code{\link{sp}} package
 It returns a dataframe with id,, long, lat, pollutants, time_lt, time_utc
 and day-UTC-hour (dutch)
+The pollutants for the CBMZ are:
+
+\itemize{e_so2}
+\itemize{e_no}
+\itemize{e_ald}
+\itemize{e_hcho}
+\itemize{e_ora2}
+\itemize{e_nh3}
+\itemize{e_hc3}
+\itemize{e_hc5}
+\itemize{e_hc8}
+\itemize{e_co}
+\itemize{e_ol2}
+\itemize{e_olt}
+\itemize{e_oli}
+\itemize{e_tol}
+\itemize{e_xyl}
+\itemize{e_ket}
+\itemize{e_csl}
+\itemize{e_iso}
+\itemize{e_no2}
+\itemize{e_ch3oh}
+\itemize{e_c2h5oh}
+\itemize{e_pm25i}
+\itemize{e_pm25j}
+\itemize{e_so4i}
+\itemize{e_so4j}
+\itemize{e_no3i}
+\itemize{e_orgi}
+\itemize{e_orgj}
+\itemize{e_eci}
+\itemize{e_ecj}
+\itemize{e_so4c}
+\itemize{e_no3c}
+\itemize{e_orgc}
+\itemize{e_ecc}
 }
 \examples{
 \dontrun{
