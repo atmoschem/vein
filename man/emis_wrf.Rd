@@ -47,40 +47,42 @@ It returns a dataframe with id,, long, lat, pollutants, time_lt, time_utc
 and day-UTC-hour (dutch)
 The pollutants for the CBMZ are:
 
-\itemize{e_so2}
-\itemize{e_no}
-\itemize{e_ald}
-\itemize{e_hcho}
-\itemize{e_ora2}
-\itemize{e_nh3}
-\itemize{e_hc3}
-\itemize{e_hc5}
-\itemize{e_hc8}
-\itemize{e_co}
-\itemize{e_ol2}
-\itemize{e_olt}
-\itemize{e_oli}
-\itemize{e_tol}
-\itemize{e_xyl}
-\itemize{e_ket}
-\itemize{e_csl}
-\itemize{e_iso}
-\itemize{e_no2}
-\itemize{e_ch3oh}
-\itemize{e_c2h5oh}
-\itemize{e_pm25i}
-\itemize{e_pm25j}
-\itemize{e_so4i}
-\itemize{e_so4j}
-\itemize{e_no3i}
-\itemize{e_orgi}
-\itemize{e_orgj}
-\itemize{e_eci}
-\itemize{e_ecj}
-\itemize{e_so4c}
-\itemize{e_no3c}
-\itemize{e_orgc}
-\itemize{e_ecc}
+\itemize{1 e_so2}
+\itemize{2 e_no}
+\itemize{3 e_ald}
+\itemize{4 e_hcho}
+\itemize{5 e_ora2}
+\itemize{6 e_nh3}
+\itemize{7 e_hc3}
+\itemize{8 e_hc5}
+\itemize{9 e_hc8}
+\itemize{10 e_eth}
+\itemize{11 e_co}
+\itemize{12 e_ol2}
+\itemize{13 e_olt}
+\itemize{14 e_oli}
+\itemize{15 e_tol}
+\itemize{16 e_xyl}
+\itemize{17 e_ket}
+\itemize{18 e_csl}
+\itemize{19 e_iso}
+\itemize{20 e_no2}
+\itemize{21 e_ch3oh}
+\itemize{22 e_c2h5oh}
+\itemize{23 e_pm25i}
+\itemize{24 e_pm25j}
+\itemize{25 e_so4i}
+\itemize{26 e_so4j}
+\itemize{27 e_no3i}
+\itemize{28 e_no3j}
+\itemize{29 e_orgi}
+\itemize{30 e_orgj}
+\itemize{31 e_eci}
+\itemize{32 e_ecj}
+\itemize{33 e_so4c}
+\itemize{34 e_no3c}
+\itemize{35 e_orgc}
+\itemize{36 e_ecc}
 }
 \examples{
 \dontrun{
