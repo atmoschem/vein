@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Vein Package
 
-**V**ehicular **E**missions **IN**ventory **(VEIN)** model.  
+**V**ehicular **E**missions **IN**ventory **(VEIN)** model.
 
 
 
