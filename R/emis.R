@@ -98,7 +98,8 @@ emis <- function (veh, lkm, ef, speed,
                 lapply(1:agemax, function(k){
                   veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
                   }) ) }) ) }) )
-      message(sum(d, na.rm = T)/1000, " kg emissions in", hour, "hours and", day, "days")
+      message(round(sum(d, na.rm = T)/1000,2),
+              " kg emissions in ", hour, " hours and ", day, " days")
       return(EmissionsArray(d))
       }
   } else {
@@ -124,7 +125,8 @@ emis <- function (veh, lkm, ef, speed,
                     lapply(1:agemax, function(k){
                       veh[[i]][, k]*lkm*ef[[k]](speed[, i])
                    }) ) }) )
-          message(sum(d, na.rm = T)/1000, " kg emissions in", hour, "hours")
+          message(round(sum(d, na.rm = T)/1000,2),
+                  " kg emissions in ", hour, " hours")
           return(EmissionsArray(d))
         }
       }

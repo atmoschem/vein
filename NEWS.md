@@ -1,8 +1,10 @@
+## vein v0.2.2-25 (Release date: 2017-09-28)
+- Fix #32
+
 ## vein v0.2.2-24 (Release date: 2017-09-19)
 - Fix #31
 - Updated speciation of paintings for CBMZ
 - Update message in emis
-
 ## vein v0.2.2-23 (Release date: 2017-09-18)
 - Fix #29
 ## vein v0.2.2-22 (Release date: 2017-09-18)(Viva Chile)

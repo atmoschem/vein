@@ -37,7 +37,7 @@ Also, if you want to properly run the demo, install these packages:
 
 
 ```r
-# 0.2.2-12
+# 0.2.2-25
 library(devtools)
 install_github("ibarraespinosa/vein")
 library(vein)
@@ -78,9 +78,10 @@ Thanks and enjoy VEIN!
 
 ### **Roadmap** (not in order)
 
+- 0.3: Migrate to [sf](https://github.com/edzer/sfr/)
+- 0.4: **Estimator** structured folders and scripts???
+- 0.5: Graphical interface (probably similar [MODIStsp](https://github.com/lbusett/MODIStsp))
 - Improve vehicle classification (all vehicle includes engine size)
 - Estimation of evaporative emissions with Copert Tier 3
-- Graphical interface (probably similar [MODIStsp](https://github.com/lbusett/MODIStsp))
 - More speciations
 - Topdown estimation
-- Migrate to [sf](https://github.com/edzer/sfr/)
