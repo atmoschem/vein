@@ -29,44 +29,10 @@
 #' The crs is the same as used by \code{\link{sp}} package
 #' It returns a dataframe with id,, long, lat, pollutants, time_lt, time_utc
 #' and day-UTC-hour (dutch)
-#' The pollutants for the CBMZ are:
-#'
-#' \itemize{1 e_so2}
-#' \itemize{2 e_no}
-#' \itemize{3 e_ald}
-#' \itemize{4 e_hcho}
-#' \itemize{5 e_ora2}
-#' \itemize{6 e_nh3}
-#' \itemize{7 e_hc3}
-#' \itemize{8 e_hc5}
-#' \itemize{9 e_hc8}
-#' \itemize{10 e_eth}
-#' \itemize{11 e_co}
-#' \itemize{12 e_ol2}
-#' \itemize{13 e_olt}
-#' \itemize{14 e_oli}
-#' \itemize{15 e_tol}
-#' \itemize{16 e_xyl}
-#' \itemize{17 e_ket}
-#' \itemize{18 e_csl}
-#' \itemize{19 e_iso}
-#' \itemize{20 e_no2}
-#' \itemize{21 e_ch3oh}
-#' \itemize{22 e_c2h5oh}
-#' \itemize{23 e_pm25i}
-#' \itemize{24 e_pm25j}
-#' \itemize{25 e_so4i}
-#' \itemize{26 e_so4j}
-#' \itemize{27 e_no3i}
-#' \itemize{28 e_no3j}
-#' \itemize{29 e_orgi}
-#' \itemize{30 e_orgj}
-#' \itemize{31 e_eci}
-#' \itemize{32 e_ecj}
-#' \itemize{33 e_so4c}
-#' \itemize{34 e_no3c}
-#' \itemize{35 e_orgc}
-#' \itemize{36 e_ecc}
+#' The pollutants for the CBMZ are: e_so2, e_no, e_ald, e_hcho, e_ora2, e_nh3
+#' e_hc3, e_hc5, e_hc8, e_eth, e_co, e_ol2, e_olt, e_oli, e_tol, e_xyl, e_ket
+#' e_csl, e_iso, e_no2, e_ch3oh, e_c2h5oh, e_pm25i, e_pm25j, e_so4i, e_so4j
+#' e_no3i, e_no3j, e_orgi, e_orgj, e_eci, e_ecj, e_so4c, e_no3c, e_orgc, e_ecc
 #' @seealso \code{\link{emis_post}} \code{\link{emis}}
 #' @examples \dontrun{
 #' # Do not run

@@ -49,7 +49,7 @@ demo(VEIN)
 or
 
 ```{r eval=F}
-# 0.2.2-3
+# 0.2.2-25
 install.packages("vein")
 library(vein)
 ```

@@ -17,6 +17,10 @@
 #' @param g A grid with class SpatialPolygonsDataFrame
 #' @param sr Spatial reference, default is "+init=epsg:4326"
 #' @param type type of geometry: "lines" or "points"
+#' @importFrom raster intersect
+#' @importFrom rgeos gLength
+#' @importFrom stats aggregate
+#' @import rgdal
 #' @export
 #' @examples \dontrun{
 #' data(net)

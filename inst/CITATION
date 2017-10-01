@@ -1,9 +1,35 @@
+citHeader("To cite vein in publications use at least the first, if not both, thanks:")
+
+citEntry(entry = "article",
+   title          = "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
+   journal		    = "Geoscientific Model Development Discussions",
+   author         = personList(person("Sergio", "Ibarra-Espinosa"),
+                    person("Rita", "Ynoue"),
+                    person("Shane", "O' Sullivan"),
+                    person("Edzer", "Pebesma"),
+                    person("Maria de Fatima", "Andrade"),
+                    person("Mauricio", "Osses")),
+   year           = "2017",
+   url            = "https://www.geosci-model-dev-discuss.net/gmd-2017-193",
+
+   textVersion  =
+   paste("Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017).",
+        "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
+        " Geosci. Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, in review, 2017.")
+)
 year <- 2017
 note <- sprintf("R package version %s", meta$Version)
 
-bibentry(bibtype = "Manual",
-         title = "{vein}: Vehicular Emissions Inventories",
-         author = c(person("Sergio", "Ibarra-Espinosa")),
-         year = year,
-         note = note,
-         url = "https://CRAN.R-project.org/package=vein")
+citEntry(entry = "Manual",
+  title   = "vein: Vehicular Emissions Inventories",
+  author  = "Sergio Ibarra-Espinosa",
+  year    = "2017",
+  note    = note,
+  url     = "https://CRAN.R-project.org/package=vein",
+  textVersion =
+  paste("Sergio Ibarra-Espinosa (2017) vein: Vehicular Emissions Inventories. R package version 0.2.2-25. https://CRAN.R-project.org/package=vein")
+  )
+
+
+
+
