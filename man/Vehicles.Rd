@@ -16,7 +16,7 @@ Vehicles(x, ...)
 
 \method{summary}{Vehicles}(object, ...)
 
-\method{plot}{Vehicles}(x, ...)
+\method{plot}{Vehicles}(x, ..., message = TRUE)
 }
 \arguments{
 \item{x}{Object with class "Vehicles"}
@@ -24,6 +24,8 @@ Vehicles(x, ...)
 \item{...}{ignored}
 
 \item{object}{Object with class "Vehicles"}
+
+\item{message}{message with average age}
 }
 \value{
 Objects of class "Vehicles" or "units"

@@ -5,7 +5,7 @@
 \title{Returns amount of vehicles at each age}
 \usage{
 age_moto(x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
-  bystreet = F)
+  bystreet = F, message = TRUE)
 }
 \arguments{
 \item{x}{numerical vector of vehicles}
@@ -23,6 +23,8 @@ age_moto(x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
 \item{k}{multiplication factor}
 
 \item{bystreet}{when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x}
+
+\item{message}{message with average age and total numer of vehicles}
 }
 \value{
 dataframe of age distrubution of vehicles

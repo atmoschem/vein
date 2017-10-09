@@ -4,7 +4,7 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, name, k = 1)
+my_age(x, y, name, k = 1, message = TRUE)
 }
 \arguments{
 \item{x}{numerical vector of vehicles}
@@ -14,6 +14,8 @@ my_age(x, y, name, k = 1)
 \item{name}{of vehicle assigned to columns of dataframe}
 
 \item{k}{multiplication factor}
+
+\item{message}{message with average age and total numer of vehicles}
 }
 \value{
 dataframe of age distrubution of vehicles

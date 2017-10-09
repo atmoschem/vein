@@ -1,6 +1,9 @@
+## vein v0.2.2-26 (Release date: 2017-10-08)
+- Fix #35
+____________________________________________________________________________________
+
 ## vein v0.2.2-25 (Release date: 2017-09-28)
 - Fix #32
-
 ## vein v0.2.2-24 (Release date: 2017-09-19)
 - Fix #31
 - Updated speciation of paintings for CBMZ

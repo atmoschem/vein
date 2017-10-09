@@ -10,6 +10,7 @@
 #' @param agemax age of oldest vehicles for that category
 #' @param k multiplication factor
 #' @param bystreet when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
+#' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
 #' @export
 #' @examples \dontrun{
@@ -19,7 +20,7 @@
 #' plot(MOTO_E25_500)
 #' }
 age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
-                      bystreet = F){
+                      bystreet = F, message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){
@@ -43,6 +44,7 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
       df <- cbind(as.data.frame(matrix(0,ncol=agemin-1, nrow=length(x))),
                   df)
     } else {df <- df}
+    if(message){
     names(df) <- paste(name,seq(1,agemax),sep="_")
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
@@ -53,7 +55,7 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   sep=" ")
     )
     cat("\n")
-
+}
   } else {
     suca <- function (t) {1/(1 + exp(a*(t+b)))+1/(1 + exp(a*(t-b)))}
     anos <- seq(agemin,agemax)
@@ -65,6 +67,7 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
       df <- cbind(as.data.frame(matrix(0,ncol=agemin-1, nrow=length(x))),
                   df)
     } else {df <- df}
+    if(message){
     names(df) <- paste(name,seq(1,agemax),sep="_")
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
@@ -75,7 +78,7 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   sep=" ")
     )
     cat("\n")
-  }
+  } }
   df <- Vehicles(df*k)
   return(df)
 }

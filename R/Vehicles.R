@@ -13,6 +13,7 @@
 #' @param x Object with class "Vehicles"
 #' @param object Object with class "Vehicles"
 #' @param ... ignored
+#' @param message message with average age
 #' @importFrom units parse_unit
 #'
 #' @rdname Vehicles
@@ -79,7 +80,7 @@ summary.Vehicles <- function(object, ...) {
 #' @rdname Vehicles
 #' @method plot Vehicles
 #' @export
-plot.Vehicles <- function(x,  ...) {
+plot.Vehicles <- function(x,  ..., message = TRUE) {
   veh <- x
   if ( inherits(veh, "data.frame") ) {
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
@@ -87,7 +88,8 @@ plot.Vehicles <- function(x,  ...) {
     Veh <- Veh*units::parse_unit("h-1")
     graphics::plot(Veh, type="l", ...)
     graphics::abline(v = avage, col="red")
+    if(message){
     cat("\nAverage = ",round(avage,2))
-  }
+  }}
 }
 
