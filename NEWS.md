@@ -1,6 +1,5 @@
 ## vein v0.2.2-27 (Release date: 2017-12-18)
 - Fix #2: Documentation of ef_nitro.
-- Suggests sf
 
 ## vein v0.2.2-26 (Release date: 2017-10-08)
 - Fix #35
