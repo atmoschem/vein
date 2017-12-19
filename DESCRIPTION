@@ -17,7 +17,7 @@ BugReports: https://github.com/ibarraespinosa/vein/issues/
 LazyData: no
 Depends: R (>= 2.10), sp
 Imports: graphics, raster, rgeos, rgdal, stats, units
-Suggests: sf, knitr, rmarkdown,  RColorBrewer
+Suggests: knitr, rmarkdown,  RColorBrewer
 RoxygenNote: 6.0.1
 NeedsCompilation: no
 Packaged: 2016-10-21 10:31:39 UTC; sergio
