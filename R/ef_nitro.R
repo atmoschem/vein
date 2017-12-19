@@ -5,26 +5,29 @@
 #' emission inventory guidebook
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 #'
-#' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped
-#' @param t Type: "PC", "LCV", "LDV", "Motorcycles", "Trucks", "HDV", "HDV-A",
-#' "BUS" and "Coach"
-#' @param cc "Cold", "Hot", "<50", ">=50", ">3.5", "7.5_12", "12_28", "28_34",
-#' ">34", "ALL".
+#' @param v Category vehicle: "PC", "LCV", "LDV", "Motorcycle", "Trucks",
+#' "HDV", "HDV-A", "BUS" or "Coach".
+#' @param t Type: "Cold", "Hot", "<50", ">=50", ">3.5", "7.5_12", "12_18", "28_34",
+#' ">34" and "ALL".
+#' @param cc "Urban", "Rural", "Highway" and "ALL".
 #' @param f Type of fuel: "G", "D" or "LPG"
-#' @param eu Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI",
+#' @param eu Euro standard: "PRE", "I", "II", "III", "IV", "V", "VI",
 #' "VIc", "2S",  4S" and "ALL"
 #' @param p Pollutant: "N2O", "NH3"
-#' @param S Sulphur (ppm)
+#' @param S Sulphur (ppm). Number.
 #' @param k Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
-#' @return an emission factor function which depends of the average speed V  g/km
+#' @return an emission factor function which depends on the accumulated mileage
 #' @keywords speed emission factors
 #' @export
 #' @examples \dontrun{
 #' # Do not run
-#' V <- 0:150
-#' ef1 <- ef_ldv_speed(v = "PC",t = "PRE_ECE", cc = "ALL", f = "G", eu = "PRE", p = "CO")
-#' plot(1:150, ef1(1:150))
+#' efe10 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
+#' eu = "III", p = "NH3", S = 10,
+#' show.equation = F)
+#' efe50 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
+#' eu = "III", p = "NH3", S = 50,
+#' show.equation = F)
 #' }
 ef_nitro <- function(v, t, cc, f, eu, p, S, k = 1, show.equation = TRUE){
   ef <- sysdata[[8]]

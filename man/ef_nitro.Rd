@@ -7,29 +7,29 @@
 ef_nitro(v, t, cc, f, eu, p, S, k = 1, show.equation = TRUE)
 }
 \arguments{
-\item{v}{Category vehicle: "PC", "LCV", "Motorcycle" or "Moped}
+\item{v}{Category vehicle: "PC", "LCV", "LDV", "Motorcycle", "Trucks",
+"HDV", "HDV-A", "BUS" or "Coach".}
 
-\item{t}{Type: "PC", "LCV", "LDV", "Motorcycles", "Trucks", "HDV", "HDV-A",
-"BUS" and "Coach"}
+\item{t}{Type: "Cold", "Hot", "<50", ">=50", ">3.5", "7.5_12", "12_18", "28_34",
+">34" and "ALL".}
 
-\item{cc}{"Cold", "Hot", "<50", ">=50", ">3.5", "7.5_12", "12_28", "28_34",
-">34", "ALL".}
+\item{cc}{"Urban", "Rural", "Highway" and "ALL".}
 
 \item{f}{Type of fuel: "G", "D" or "LPG"}
 
-\item{eu}{Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI",
+\item{eu}{Euro standard: "PRE", "I", "II", "III", "IV", "V", "VI",
 "VIc", "2S",  4S" and "ALL"}
 
 \item{p}{Pollutant: "N2O", "NH3"}
 
-\item{S}{Sulphur (ppm)}
+\item{S}{Sulphur (ppm). Number.}
 
 \item{k}{Multiplication factor}
 
 \item{show.equation}{Option to see or not the equation parameters}
 }
 \value{
-an emission factor function which depends of the average speed V  g/km
+an emission factor function which depends on the accumulated mileage
 }
 \description{
 This function returns emission factors as a functions of accumulated mileage.
@@ -40,9 +40,12 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 \examples{
 \dontrun{
 # Do not run
-V <- 0:150
-ef1 <- ef_ldv_speed(v = "PC",t = "PRE_ECE", cc = "ALL", f = "G", eu = "PRE", p = "CO")
-plot(1:150, ef1(1:150))
+efe10 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
+eu = "III", p = "NH3", S = 10,
+show.equation = F)
+efe50 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
+eu = "III", p = "NH3", S = 50,
+show.equation = F)
 }
 }
 \keyword{emission}

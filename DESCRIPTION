@@ -1,10 +1,12 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 0.2.2-26
-Authors@R: c(person(given = "Sergio", family = "Ibarra-Espinosa", 
+Version: 0.2.2-27
+Authors@R: c(
+  person(given = "Sergio", family = "Ibarra-Espinosa",
         role = c("aut", "cre"),
-     email = "zergioibarra@gmail.com")) 
+        email = "sergio.ibarra@usp.br",
+        comment = c(ORCID = "0000-0002-3162-1905"))) 
 Description: Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
@@ -15,7 +17,7 @@ BugReports: https://github.com/ibarraespinosa/vein/issues/
 LazyData: no
 Depends: R (>= 2.10), sp
 Imports: graphics, raster, rgeos, rgdal, stats, units
-Suggests: knitr, rmarkdown,  RColorBrewer
+Suggests: sf, knitr, rmarkdown,  RColorBrewer
 RoxygenNote: 6.0.1
 NeedsCompilation: no
 Packaged: 2016-10-21 10:31:39 UTC; sergio
