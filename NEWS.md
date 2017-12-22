@@ -1,6 +1,7 @@
+## vein v0.2.2-28 (Release date: 2017-12-22)
+- Fix #4: list of data-frames not needed so far! vkm needs a numeric as veh
 ## vein v0.2.2-27 (Release date: 2017-12-18)
 - Fix #2: Documentation of ef_nitro.
-
 ## vein v0.2.2-26 (Release date: 2017-10-08)
 - Fix #35
 ____________________________________________________________________________________
@@ -138,4 +139,6 @@ Geotechnical Engineering. issn 1792--9660.
 URL =
 https://www.researchgate.net/publication/313253283_REMI_model_Bottom-up_emissions_inventories_for_cities_with_lack_of_data
 
-
+Versioning:
+CRAN includes <big>.<major>.<minor> eg: 0.2.2
+Github includes <big>.<major>.<minor>-<sub-minor> 0.2.2-28
