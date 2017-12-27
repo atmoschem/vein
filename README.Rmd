@@ -36,10 +36,9 @@ Read the DESCRIPTION file. You need several packages to run **vein**.
 Also, if you want to properly run the demo, install these packages:
 
 - ggplot2
-- RColorBrewer
 
 ```{r eval=F}
-# 0.2.2-26
+# 0.2.2-29
 library(devtools)
 install_github("ibarraespinosa/vein")
 library(vein)
@@ -77,12 +76,9 @@ If you have any suggestions just let me know to zergioibarra@gmail.com
 
 Thanks and enjoy VEIN!
 
-### **Roadmap** (not in order)
+### **future steps**
 
-- 0.3: Migrate to [sf](https://github.com/edzer/sfr/)
-- 0.4: **Estimator** structured folders and scripts???
-- 0.5: Graphical interface (probably similar [MODIStsp](https://github.com/lbusett/MODIStsp))
-- Improve vehicle classification (all vehicle includes engine size)
+- Migrate to [sf](https://github.com/edzer/sfr/)
 - Estimation of evaporative emissions with Copert Tier 3
 - More speciations
-- Topdown estimation
+- Look issues

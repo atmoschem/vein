@@ -1,3 +1,5 @@
+## vein v0.2.2-29 (Release date: 2017-12-27)
+- Fix #43: ADT
 ## vein v0.2.2-28 (Release date: 2017-12-22)
 - Fix #4: list of data-frames not needed so far! vkm needs a numeric as veh
 ## vein v0.2.2-27 (Release date: 2017-12-18)
