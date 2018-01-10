@@ -1,3 +1,5 @@
+## vein v0.2.2-30 (Release date: 2018-01-10)
+- Speciation of NMHC
 ## vein v0.2.2-29 (Release date: 2017-12-27)
 - Fix #43: ADT
 ## vein v0.2.2-28 (Release date: 2017-12-22)

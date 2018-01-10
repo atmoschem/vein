@@ -38,7 +38,7 @@ Also, if you want to properly run the demo, install these packages:
 - ggplot2
 
 ```{r eval=F}
-# 0.2.2-29
+# 0.2.2-30
 library(devtools)
 install_github("ibarraespinosa/vein")
 library(vein)
@@ -78,7 +78,37 @@ Thanks and enjoy VEIN!
 
 ### **future steps**
 
-- Migrate to [sf](https://github.com/edzer/sfr/)
+- Migrate to [sf](https://github.com/r-spatial/sf/)
 - Estimation of evaporative emissions with Copert Tier 3
 - More speciations
-- Look issues
+- Solve issues
+- Vignettes, blogs and a book (hopefully released in 2018)
+
+#### Note:
+The current versioning in VEIN is X.X.X-X. This is because version 0.2.2 is
+in a paper on GMDD under open review: 
+
+Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E.,
+  Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R
+  package for bottom-up Vehicular Emissions Inventories Geosci.
+  Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, in
+  review, 2017.
+
+However, once the paper is ready, the new versioning of VEIN will be:
+
+CRAN: X.X.X
+GITHUB: X.X.X-X
+
+For example: Github: 0.2.2-9, 0.2.2-10 ==> CRAN: 0.2.3.
+If you use VEIN, please, cite it:
+
+```{bash eval = FALSE, echo = TRUE}
+ @article{,
+    title = {VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories},
+    journal = {Geoscientific Model Development Discussions},
+    author = {Sergio Ibarra-Espinosa and Rita Ynoue and Shane {O' Sullivan} and Edzer Pebesma and Maria de Fatima Andrade and Mauricio Osses},
+    year = {2017},
+    url = {https://www.geosci-model-dev-discuss.net/gmd-2017-193},
+  }
+```
+
