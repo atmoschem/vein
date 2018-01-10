@@ -9,22 +9,27 @@ speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE)
 \arguments{
 \item{x}{Emissions estimation}
 
-\item{spec}{type of speciation, e.g.: "bcom" stands for black carbon and
-organic matter. The speciations are: "bcom", tyre", "break", "road","iag"
-and "nox". 'iag' now includes a speciation for use of industrial and
-building paintings}
+\item{spec}{speciation: The speciations are: "bcom", tyre", "break", "road",
+"iag", "nox" and "nmhc". 'iag' now includes a speciation for use of industrial and
+building paintings. "bcom" stands for black carbon and organic matter.}
 
-\item{veh}{Type of vehicle. When spec is "bcom" or "nox" veh can be "PC",
-"LCV", HDV" or "Motorcycle".
+\item{veh}{Type of vehicle:
+When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
 When spec is "iag" veh can take two values depending:
 when the speciation is for vehicles veh accepts "veh", eu "Evaporative",
 "Liquid" or "Exhaust" and fuel "G", "E" or "D",
 when the speciation is for painting, veh is "paint" fuel or eu can be
-"industrial" or "buildind".}
+"industrial" or "building"
+when spec is "nmhc", veh can be "LDV" with fuel "G" or "D" and eu "PRE", "I",
+"II", "III", "IV", "V", or "VI".
+when spec is "nmhc", veh can be "HDV" with fuel "D" and eu  "PRE", "I",
+"II", "III", "IV", "V", or "VI".
+when spec is "nmhc" and fuel is "LPG", veh and eu must be "ALL"}
 
 \item{fuel}{Fuel. When spec is "bcom" fuel can be "G" or "D".
 When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
-be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "break" or "road"}
+be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "break" or "road".
+When spec is "nmhc" fuel can be G, D or LPG.}
 
 \item{eu}{Euro emission standard: "PRE", "ECE_1501", "ECE_1502", "ECE_1503",
 "I", "II", "III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
@@ -73,24 +78,15 @@ Automobile tyre and break wear and road abrasion. In: EEA, EMEP. EEA air
 pollutant emission inventory
 guidebook-2009. European Environment Agency, Copenhagen, 2016
 
-"iag": RAFEE, S.A.A. Estudo numerico do impacto das emissoes
-veiculares e fixas da cidade de Manaus nas concentracoes de poluentes
-atmosfericos da regiao amazonica. 2015. 109 f. Dissertacao (Mestrado).
-Programa de Pos-Graduacao em Engenharia Ambiental (PPGEA) - Universidade
-Tecnologica Federal do Parana. Londrina, 2015.
-http://repositorio.utfpr.edu.br/jspui/bitstream/1/1675/1/LD_PPGEA_M_Rafee%2c%20Sameh%20Adib%20Abou_2015.pdf
-
-"iag": Vela, A. L. V. Avaliacao do impacto da mudanca dos
-fatores de emissao veicular na formacao de ozonio troposferico na Regiao
-Metropolitana de Sao Paulo. 2013. Dissertacao de Mestrado. Instituto de
+"iag": Ibarra-Espinosa S. Air pollution modeling in Sao Paulo
+using bottom-up vehicular emissions inventories. 2017. PhD thesis. Instituto de
 Astronomia, Geofisica e Ciencias Atmosfericas, Universidade de Sao Paulo,
-Sao Paulo.
-http://www.iag.usp.br/pos/sites/default/files/d_angel_l_v_vela_corrigida_0.pdf
+Sao Paulo, page 88.
 Speciate EPA: https://cfpub.epa.gov/speciate/. :
 K. Sexton, H. Westberg, "Ambient hydrocarbon and ozone measurements downwind
 of a large automotive painting plant" Environ. Sci. Tchnol. 14:329 (1980).P.A.
-Scheff, R.A. Schauer, James J., Kleeman, Mike J., Cass, Glen R., Characterization and
-Control of Organic Compounds Emitted from Air Pollution Sources, Final Report,
+Scheff, R.A. Schauer, James J., Kleeman, Mike J., Cass, Glen R., Characterization
+and Control of Organic Compounds Emitted from Air Pollution Sources, Final Report,
 Contract 93-329, prepared for California Air Resources Board Research Division,
 Sacramento, CA, April 1998.
 2004 NPRI National Databases as of April 25, 2006,

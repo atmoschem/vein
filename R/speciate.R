@@ -5,20 +5,25 @@
 #' added more speciations
 #'
 #' @param x Emissions estimation
-#' @param spec type of speciation, e.g.: "bcom" stands for black carbon and
-#' organic matter. The speciations are: "bcom", tyre", "break", "road","iag"
-#' and "nox". 'iag' now includes a speciation for use of industrial and
-#' building paintings
-#' @param veh Type of vehicle. When spec is "bcom" or "nox" veh can be "PC",
-#' "LCV", HDV" or "Motorcycle".
+#' @param spec speciation: The speciations are: "bcom", tyre", "break", "road",
+#' "iag", "nox" and "nmhc". 'iag' now includes a speciation for use of industrial and
+#' building paintings. "bcom" stands for black carbon and organic matter.
+#' @param veh Type of vehicle:
+#' When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
 #' When spec is "iag" veh can take two values depending:
 #' when the speciation is for vehicles veh accepts "veh", eu "Evaporative",
 #' "Liquid" or "Exhaust" and fuel "G", "E" or "D",
 #' when the speciation is for painting, veh is "paint" fuel or eu can be
-#' "industrial" or "buildind".
+#' "industrial" or "building"
+#' when spec is "nmhc", veh can be "LDV" with fuel "G" or "D" and eu "PRE", "I",
+#' "II", "III", "IV", "V", or "VI".
+#' when spec is "nmhc", veh can be "HDV" with fuel "D" and eu  "PRE", "I",
+#' "II", "III", "IV", "V", or "VI".
+#' when spec is "nmhc" and fuel is "LPG", veh and eu must be "ALL"
 #' @param fuel Fuel. When spec is "bcom" fuel can be "G" or "D".
 #' When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
-#' be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "break" or "road"
+#' be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "break" or "road".
+#' When spec is "nmhc" fuel can be G, D or LPG.
 #' @param eu Euro emission standard: "PRE", "ECE_1501", "ECE_1502", "ECE_1503",
 #'  "I", "II", "III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
 #'  "IV-ADFP","V-ADFP" and "OPEN_LOOP". When spec is "iag" accept the values
@@ -28,6 +33,7 @@
 #' @param show when TRUE shows row of table with respective speciation
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
+#' @importFrom units parse_unit
 #' @return dataframe of speciation in grams or mols
 #' @references "bcom": Ntziachristos and Zamaras. 2016. Passneger cars, light
 #' commercial trucks, heavy-duty vehicles including buses and motor cycles. In:
@@ -37,23 +43,15 @@
 #' Automobile tyre and break wear and road abrasion. In: EEA, EMEP. EEA air
 #' pollutant emission inventory
 #' guidebook-2009. European Environment Agency, Copenhagen, 2016
-#' @references "iag": RAFEE, S.A.A. Estudo numerico do impacto das emissoes
-#' veiculares e fixas da cidade de Manaus nas concentracoes de poluentes
-#' atmosfericos da regiao amazonica. 2015. 109 f. Dissertacao (Mestrado).
-#' Programa de Pos-Graduacao em Engenharia Ambiental (PPGEA) - Universidade
-#' Tecnologica Federal do Parana. Londrina, 2015.
-#' http://repositorio.utfpr.edu.br/jspui/bitstream/1/1675/1/LD_PPGEA_M_Rafee%2c%20Sameh%20Adib%20Abou_2015.pdf
-#' @references "iag": Vela, A. L. V. Avaliacao do impacto da mudanca dos
-#' fatores de emissao veicular na formacao de ozonio troposferico na Regiao
-#' Metropolitana de Sao Paulo. 2013. Dissertacao de Mestrado. Instituto de
+#' @references "iag": Ibarra-Espinosa S. Air pollution modeling in Sao Paulo
+#' using bottom-up vehicular emissions inventories. 2017. PhD thesis. Instituto de
 #' Astronomia, Geofisica e Ciencias Atmosfericas, Universidade de Sao Paulo,
-#' Sao Paulo.
-#' http://www.iag.usp.br/pos/sites/default/files/d_angel_l_v_vela_corrigida_0.pdf
+#' Sao Paulo, page 88.
 #' Speciate EPA: https://cfpub.epa.gov/speciate/. :
 #' K. Sexton, H. Westberg, "Ambient hydrocarbon and ozone measurements downwind
 #' of a large automotive painting plant" Environ. Sci. Tchnol. 14:329 (1980).P.A.
-#' Scheff, R.A. Schauer, James J., Kleeman, Mike J., Cass, Glen R., Characterization and
-#' Control of Organic Compounds Emitted from Air Pollution Sources, Final Report,
+#' Scheff, R.A. Schauer, James J., Kleeman, Mike J., Cass, Glen R., Characterization
+#' and Control of Organic Compounds Emitted from Air Pollution Sources, Final Report,
 #' Contract 93-329, prepared for California Air Resources Board Research Division,
 #' Sacramento, CA, April 1998.
 #' 2004 NPRI National Databases as of April 25, 2006,
@@ -120,49 +118,66 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
 
     }
     if (list == T) {
-    dfb <- list(e_eth = (x/100)*df$e_eth,
-                      e_hc3 = (x/100)*df$e_hc3,
-                      e_hc5 = (x/100)*df$e_hc5,
-                      e_hc8 = (x/100)*df$e_hc8,
-                      e_ol2 = (x/100)*df$e_ol2,
-                      e_olt = (x/100)*df$e_olt,
-                      e_oli = (x/100)*df$e_oli,
-                      e_iso = (x/100)*df$e_iso,
-                      e_tol = (x/100)*df$e_tol,
-                      e_xyl = (x/100)*df$e_xyl,
-                      e_c2h5oh = (x/100)*df$e_c2h5oh,
-                      e_ald = (x/100)*df$e_ald,
-                      e_hcho = (x/100)*df$e_hcho,
-                      e_ch3oh = (x/100)*df$e_ch3oh,
-                      e_ket = (x/100)*df$e_ket)
-    for (j in 1:length(dfb)) {
-    for (i in 1:ncol(dfb[[j]])) {
-      dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
-    }
-    }
-
-    if (show == TRUE) { print(df) }
-    } else {
-      dfb <- list(e_eth = (x/100)*df$e_eth, # /100 porque es basado en 100g combustible
-                  e_hc3 = (x/100)*df$e_hc3,
-                  e_hc5 = (x/100)*df$e_hc5,
-                  e_hc8 = (x/100)*df$e_hc8,
-                  e_ol2 = (x/100)*df$e_ol2,
-                  e_olt = (x/100)*df$e_olt,
-                  e_oli = (x/100)*df$e_oli,
-                  e_iso = (x/100)*df$e_iso,
-                  e_tol = (x/100)*df$e_tol,
-                  e_xyl = (x/100)*df$e_xyl,
-                  e_c2h5oh = (x/100)*df$e_c2h5oh,
-                  e_ald = (x/100)*df$e_ald,
-                  e_hcho = (x/100)*df$e_hcho,
-                  e_ch3oh = (x/100)*df$e_ch3oh,  # /100 porque el porcentaje esta en 100%
-                  e_ket = (x/100)*df$e_ket)  # /100 porque el porcentaje esta en 100%
-
+      dfx <- df[, 4:ncol(df)]
+      dfb <- lapply(1:ncol(dfx), function(i){
+        dfx[, i]/100
+      })
+      names(dfb) <- names(dfx)
+      for (j in 1:length(dfb)) {
+        for (i in 1:ncol(dfb[[j]])) {
+          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
+        }
+      }
+      if (show == TRUE) { print(df) }
+      } else {
+        dfx <- df[, 4:ncol(df)]
+        dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
+          dfx[, i]/100
+        }))
+        names(dfb) <- names(dfx)
+        # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
+        # e_xyl, e_c2h5oh, e_hcho /100 because it is based on 100g of fuel
+        # e_ch3oh and e_ket /100 because it is percentage
     }
     if (show == TRUE) {
       print(df)
       }
+
+    } else if (spec=="nmhc") {
+      iag <- sysdata[[9]]
+      df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
+      if (is.data.frame(x)) {
+        for (i in 1:ncol(x)) {
+          x[ , i] <- as.numeric(x[ , i])
+        }
+
+      }
+      if (list == T) {
+        dfx <- df[, 4:ncol(df)]
+        dfb <- lapply(1:ncol(dfx), function(i){
+          dfx[, i]/100 #percentage
+        })
+        names(dfb) <- names(dfx)
+
+        for (j in 1:length(dfb)) {
+          for (i in 1:ncol(dfb[[j]])) {
+            dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("g h-1")
+          }
+        }
+
+        if (show == TRUE) { print(df) }
+      } else {
+        dfx <- df[, 4:ncol(df)]
+        dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
+          dfx[, i]/100
+        }))
+        names(dfb) <- names(dfx)
+
+      }
+      if (show == TRUE) {
+        print(df)
+      }
+
     } else if (spec=="nox") {
       bcom <- sysdata[[7]]
       df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
