@@ -38,7 +38,7 @@ Also, if you want to properly run the demo, install these packages:
 - ggplot2
 
 ```{r eval=F}
-# 0.2.2-30
+# 0.2.3.9000
 library(devtools)
 install_github("ibarraespinosa/vein")
 library(vein)
@@ -96,14 +96,15 @@ Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E.,
 
 However, once the paper is ready, the new versioning of VEIN will be:
 
-CRAN: X.X.X
-GITHUB: X.X.X-X
+- CRAN: X.X.X
+- GITHUB: X.X.X-X (which will be more frequent from now)
+- .9000 developemnt or experimental.
 
-For example: Github: 0.2.2-9, 0.2.2-10 ==> CRAN: 0.2.3.
+For example: Github: 0.2.2-30, next relase would be CRAN: 0.2.3.
 If you use VEIN, please, cite it:
 
 ```{bash eval = FALSE, echo = TRUE}
- @article{,
+ @article{vein,
     title = {VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories},
     journal = {Geoscientific Model Development Discussions},
     author = {Sergio Ibarra-Espinosa and Rita Ynoue and Shane {O' Sullivan} and Edzer Pebesma and Maria de Fatima Andrade and Mauricio Osses},
