@@ -21,23 +21,30 @@
 #' sources of emissions. The structure of the directories is: daily, ef, emi,
 #' est, images, network and veh. This structure is a suggestion and the user can
 #' use another.
+#'
 #' daily: it is for storing the profiles saved as .csv files
+#'
 #' ef: it is for storing the emission factors data-frame, similar to data(fe2015)
 #' but including one column for each of the categories of the vehicular
 #' composition. For intance, if PC = 5, there should be 5 columns with emission
 #' factors in this file. If LCV = 5, another 5 columns should be present, and
 #' so on.
+#'
 #' emi: Directory for saving the estimates. It is suggested to use .rds
 #' extension instead of .rda.
+#'
 #' images: Directory for saving images.
+#'
 #' network: Directory for saving the road network with the required attributes.
 #' This file will includes the vehicular flow per street to be used by age*
 #' functions.
+#'
 #' veh: Directory for storing the distribution by age of use of each category of
 #' the vehicular composition. Those are data-frames with number of columns with
 #' the age distribution and number of rows as the number of streets. The class
 #' of these objects is "Vehicles". Future versions of vein will generate
 #' Vehicles objects with the explicit spatial component.
+#'
 #' The name of the scripts and directories are based on the vehicular
 #' composition, however, there is included a file named vein.R which is just
 #' an R script to estimate all the emissions. It is important to note that the
@@ -191,8 +198,8 @@ vein <- function(name,
     cat("sessionInfo()\n\n")
     cat("# Estimation\n")
     cat("dirs <- list.dirs(path = ", deparse(paste0(name, "/est")), ")\n")
-    cat("for (i in 1:length(dirs)){\n")
-    cat( "  source(paste0(lista2[i], '/input.R'))\n" )
+    cat("for (i in 2:length(dirs)){\n")
+    cat( "  source(paste0(dirs[i], '/input.R'))\n" )
     cat("}\n")
     sink()
   }
