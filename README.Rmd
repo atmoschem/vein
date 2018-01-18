@@ -42,7 +42,7 @@ Also, if you want to properly run the demo, install these packages:
 ```{r eval=F}
 # 0.2.3.9000
 library(devtools)
-install_github("ibarraespinosa/vein")
+install_github("atmoschem/vein")
 library(vein)
 demo(VEIN)
 ```
