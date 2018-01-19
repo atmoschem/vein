@@ -7,7 +7,7 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object Object with class "EmissionFactors"
-#' @importFrom units parse_unit
+#' @importFrom units as_units
 #' @param ... ignored
 #' @rdname EmissionFactors
 #' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors
@@ -28,20 +28,20 @@ EmissionFactors <- function(x, ...) {
   if ( is.matrix(x) ) {
     ef <- as.data.frame(x)
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i]*units::parse_unit("g km-1")
+      ef[,i] <- ef[,i]*units::as_units("g km-1")
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.data.frame(x) ) {
     ef <- x
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i]*units::parse_unit("g km-1")
+      ef[,i] <- ef[,i]*units::as_units("g km-1")
     }
     class(ef) <- c("EmissionFactors",class(ef))
   } else if ( class(x) == "units" ) {
     warning("Check units are g/km")
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
-    ef <- x*units::parse_unit("g km-1")
+    ef <- x*units::as_units("g km-1")
   }
   return(ef)
 }

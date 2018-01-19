@@ -27,7 +27,7 @@
 Evaporative <- function(x, ...) {
   ev <- x
 if ( is.numeric(ev) ) {
-    ev <- ev*units::parse_unit("g d-1")
+    ev <- ev*units::as_units("g d-1")
     class(ev) <- c("Evaporative",class(ev))
   }
   return(ev)

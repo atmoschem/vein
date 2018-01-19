@@ -33,7 +33,7 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, show = FALSE)
   ef_ev <- sysdata[[3]]
   df <- ef_ev[ef_ev$ef == ef & ef_ev$veh == v & ef_ev$cc == cc &
                 ef_ev$dt == dt & ef_ev$canister == ca, ]
-  g <- df$g*k * units::parse_unit("g")
+  g <- df$g*k * units::as_units("g")
   if (show == TRUE) {
     print(df)
   }

@@ -10,7 +10,7 @@ age_ldv(x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 1,
 \arguments{
 \item{x}{numerical vector of vehicles}
 
-\item{name}{of vehicle assigned to columns of dataframe}
+\item{name}{word of vehicle assigned to columns of dataframe}
 
 \item{a}{parameter of survival equation}
 
@@ -22,7 +22,8 @@ age_ldv(x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 1,
 
 \item{k}{multiplication factor}
 
-\item{bystreet}{when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x}
+\item{bystreet}{when TRUE it is expecting that 'a' and 'b' are numeric
+vectors with length equal to x}
 
 \item{message}{message with average age and total numer of vehicles}
 }
@@ -36,7 +37,7 @@ Returns amount of vehicles at each age
 \dontrun{
 # Do not run
 pc <- rnorm(100, 300, 10)
-PC_E25_1400 <- age_ldv(x = pc,name = "PC_E25_1400")
+PC_E25_1400 <- age_ldv(x = pc, name = "PC_E25_1400")
 plot(PC_E25_1400)
 }
 }

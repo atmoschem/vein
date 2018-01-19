@@ -11,7 +11,7 @@
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object Object with class "Speed"
 #' @param ... ignored
-#' @importFrom units parse_unit
+#' @importFrom units as_units
 #' @seealso \code{\link{units}}
 #'
 #' @rdname Speed
@@ -31,19 +31,19 @@ Speed <- function(x, ...) {
   if  ( is.matrix(x) ) {
     spd <- as.data.frame(x)
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i]*units::parse_unit("km h-1")
+      spd[,i] <- spd[,i]*units::as_units("km h-1")
     }
     class(spd) <- c("Speed",class(x))
   } else if ( is.data.frame(x) ) {
     spd <- x
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i]*units::parse_unit("km h-1")
+      spd[,i] <- spd[,i]*units::as_units("km h-1")
     }
     class(spd) <- c("Speed",class(x))
   } else if ( is.list(x) && is.list(x[[1]]) ) {
     for (i in 1:length(x) ) {
       for (j in 1:length(x[[1]]) ) {
-        x[[i]][[j]] <- x[[i]][[j]]*units::parse_unit("km h-1")
+        x[[i]][[j]] <- x[[i]][[j]]*units::as_units("km h-1")
       }
     }
     #SpeedList?
@@ -51,7 +51,7 @@ Speed <- function(x, ...) {
     spd <- x
     message("Check units are km/h")
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
-    spd <- x*units::parse_unit("km h-1")
+    spd <- x*units::as_units("km h-1")
   }
   return(spd)
 }
