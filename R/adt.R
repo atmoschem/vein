@@ -16,7 +16,7 @@
 #' @param expanded boolean argument for returning numeric vector or "Vehicles"
 #' @return numeric vector of total volume of traffic per link, or data-frames
 #' of expanded traffic
-#' @importFrom units parse_unit
+#' @importFrom units as_units
 #' @export
 #' @examples \dontrun{
 #' # Do not run
@@ -60,7 +60,7 @@ adt <- function(pc, lcv, hgv, bus, mc,
    if (expanded == FALSE) {
      df <- rowSums(df_pc) + rowSums(df_lcv) + rowSums(df_hgv) +
        rowSums(df_bus) + rowSums(df_mc)
-     return(df*units::parse_unit("d-1"))
+     return(df*units::as_units("d-1"))
    } else{
      df <- df_pc + df_lcv + df_hgv + df_bus + df_mc
      return(Vehicles(df))

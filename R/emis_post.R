@@ -104,7 +104,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
                   each=dim(arra)[1])
       df$hour <- hour
       df[,1] <- seq(1,dim(arra)[1])
-      df[,2] <- df[,2] * units::parse_unit("g h-1")
+      df[,2] <- df[,2] * units::as_units("g h-1")
       return(df)
     } else if (by == "streets_wide") {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia

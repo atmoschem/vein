@@ -4,7 +4,7 @@
 \alias{vein}
 \title{Vehicular Emissions Inventory (VEIN) function.}
 \usage{
-vein(name, vehcomp = c(PC = 3, LCV = 4, HGV = 5, BUS = 3, MC = 3),
+vein(name, vehcomp = c(PC = 4, LCV = 5, HGV = 5, BUS = 3, MC = 9),
   scripts = TRUE, show.dir = FALSE, show.scripts = FALSE, clear = TRUE)
 }
 \arguments{

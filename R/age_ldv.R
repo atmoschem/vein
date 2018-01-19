@@ -3,20 +3,21 @@
 #' @description Returns amount of vehicles at each age
 #'
 #' @param x numerical vector of vehicles
-#' @param name of vehicle assigned to columns of dataframe
+#' @param name word of vehicle assigned to columns of dataframe
 #' @param a parameter of survival equation
 #' @param b parameter of survival equation
 #' @param agemin age of newest vehicles for that category
 #' @param agemax age of oldest vehicles for that category
 #' @param k multiplication factor
-#' @param bystreet when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
+#' @param bystreet when TRUE it is expecting that 'a' and 'b' are numeric
+#' vectors with length equal to x
 #' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
 #' @export
 #' @examples \dontrun{
 #' # Do not run
 #' pc <- rnorm(100, 300, 10)
-#' PC_E25_1400 <- age_ldv(x = pc,name = "PC_E25_1400")
+#' PC_E25_1400 <- age_ldv(x = pc, name = "PC_E25_1400")
 #' plot(PC_E25_1400)
 #' }
 age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 1,

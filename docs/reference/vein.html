@@ -92,7 +92,7 @@ in order to run vein. It is required to know the vehicular composition of the
 fleet.</p>
     
 
-    <pre class="usage"><span class='fu'>vein</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>3</span>),
+    <pre class="usage"><span class='fu'>vein</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>9</span>),
   <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -136,25 +136,25 @@ another one.</p></td>
 vehicular emissions inventory. The structure can be used with other type of
 sources of emissions. The structure of the directories is: daily, ef, emi,
 est, images, network and veh. This structure is a suggestion and the user can
-use another.
-daily: it is for storing the profiles saved as .csv files
-ef: it is for storing the emission factors data-frame, similar to data(fe2015)
+use another.</p>
+<p>daily: it is for storing the profiles saved as .csv files</p>
+<p>ef: it is for storing the emission factors data-frame, similar to data(fe2015)
 but including one column for each of the categories of the vehicular
 composition. For intance, if PC = 5, there should be 5 columns with emission
 factors in this file. If LCV = 5, another 5 columns should be present, and
-so on.
-emi: Directory for saving the estimates. It is suggested to use .rds
-extension instead of .rda.
-images: Directory for saving images.
-network: Directory for saving the road network with the required attributes.
+so on.</p>
+<p>emi: Directory for saving the estimates. It is suggested to use .rds
+extension instead of .rda.</p>
+<p>images: Directory for saving images.</p>
+<p>network: Directory for saving the road network with the required attributes.
 This file will includes the vehicular flow per street to be used by age*
-functions.
-veh: Directory for storing the distribution by age of use of each category of
+functions.</p>
+<p>veh: Directory for storing the distribution by age of use of each category of
 the vehicular composition. Those are data-frames with number of columns with
 the age distribution and number of rows as the number of streets. The class
 of these objects is "Vehicles". Future versions of vein will generate
-Vehicles objects with the explicit spatial component.
-The name of the scripts and directories are based on the vehicular
+Vehicles objects with the explicit spatial component.</p>
+<p>The name of the scripts and directories are based on the vehicular
 composition, however, there is included a file named vein.R which is just
 an R script to estimate all the emissions. It is important to note that the
 user must add the emission factors for other pollutants. Also, this function

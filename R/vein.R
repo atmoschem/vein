@@ -58,7 +58,7 @@
 #' vein(name = "cityVEIN", show.dir = T)
 #' }
 vein <- function(name,
-                 vehcomp = c(PC = 3, LCV = 4, HGV = 5, BUS = 3, MC = 3),
+                 vehcomp = c(PC = 4, LCV = 5, HGV = 5, BUS = 3, MC = 9),
                  scripts = TRUE,
                  show.dir = FALSE,
                  show.scripts = FALSE,
@@ -180,15 +180,15 @@ vein <- function(name,
       cat("x <- efe[1:efero & efe$Pollutant == pol, efeco]\n")
       cat("lefe <- EmissionFactorsList(x)\n")
       cat("array_x <- emis(veh = veh, lkm = lkm,ef = lefe,  speed = speed,\n")
-      cat("                profile = profile\n")
+      cat("                profile = profile)\n")
       cat("x_DF <- emis_post(arra = array_x, veh = vname, size = vsize,\n")
       cat("                  fuel = vfuel, pollutant = pol, by = 'veh'\n")
       cat("x_STREETS <- emis_post(arra = array_x, pollutant = pol,\n")
-      cat("                       by = streets_wide) \n")
+      cat("                       by = 'streets_wide') \n")
       cat("saveRDS(x_DF, file = paste0('emi/', directory, '/', pol, '_',\n")
       cat("        vname, '_', vsize, '_', vfuel,'_DF.rds')) \n")
       cat("saveRDS(x_STREETS, file = paste0('emi/', directory, '/', pol, '_',\n")
-      cat("        vname, '_', vsize, '_', vfuel,'_DF.rds')) \n")
+      cat("        vname, '_', vsize, '_', vfuel,'_STREETS.rds')) \n")
       cat("rm(array_x); rm(x_DF); rm(x_STREETS); rm(pol); rm(lefe)\n\n")
       cat("# Other Pollutants...")
       sink()

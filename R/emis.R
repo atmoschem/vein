@@ -57,7 +57,7 @@
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
 #'                hour = 2, day = 1, array = T)
 #' }
-emis <- function (veh, lkm, ef, speed,
+emis <- function (veh, lkm, ef, speed = 1,
                   agemax = if (!inherits(x = veh, what = "list")) {
                     ncol(veh)
                     } else {

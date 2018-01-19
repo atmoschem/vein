@@ -14,7 +14,7 @@
 #' @param object Object with class "Vehicles"
 #' @param ... ignored
 #' @param message message with average age
-#' @importFrom units parse_unit
+#' @importFrom units as_units
 #'
 #' @rdname Vehicles
 #' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
@@ -34,20 +34,20 @@ Vehicles <- function(x, ...) {
   if  ( is.matrix(x) ) {
     veh <- as.data.frame(x)
     for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i]*units::parse_unit("km h-1")
+      veh[,i] <- veh[,i]*units::as_units("km h-1")
     }
     class(veh) <- c("Vehicles",class(x))
   } else if ( is.data.frame(x) ) {
     veh <- x
     for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i]*units::parse_unit("h-1")
+      veh[,i] <- veh[,i]*units::as_units("h-1")
     }
     class(veh) <- c("Vehicles",class(x))
   } else if ( class(x) == "units" ) {
     veh <- x
     message("Check units are 1/h")
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
-    veh <- x*units::parse_unit("h-1")
+    veh <- x*units::as_units("h-1")
   }
   return(veh)
 }
@@ -85,7 +85,7 @@ plot.Vehicles <- function(x,  ..., message = TRUE) {
   if ( inherits(veh, "data.frame") ) {
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
     Veh <- colSums(veh)
-    Veh <- Veh*units::parse_unit("h-1")
+    Veh <- Veh*units::as_units("h-1")
     graphics::plot(Veh, type="l", ...)
     graphics::abline(v = avage, col="red")
     if(message){

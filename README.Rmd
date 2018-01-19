@@ -40,7 +40,7 @@ Also, if you want to properly run the demo, install these packages:
 - ggplot2
 
 ```{r eval=F}
-# 0.2.3.9000
+# 0.2.3.9003
 library(devtools)
 install_github("atmoschem/vein")
 library(vein)
@@ -72,7 +72,7 @@ Each class has the methods print, plot and summary.
 
 New information will also be added to the documentation of emission factors.
 
-If you encounter any issues while using VEIN, please submit your issues to: https://github.com/ibarraespinosa/vein/issues/
+If you encounter any issues while using VEIN, please submit your issues to: https://github.com/atmoschem/vein/issues/
 
 If you have any suggestions just let me know to zergioibarra@gmail.com
 
@@ -105,13 +105,4 @@ However, once the paper is ready, the new versioning of VEIN will be:
 For example: Github: 0.2.2-30, next relase would be CRAN: 0.2.3.
 If you use VEIN, please, cite it:
 
-```{bash eval = FALSE, echo = TRUE}
- @article{vein,
-    title = {VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories},
-    journal = {Geoscientific Model Development Discussions},
-    author = {Sergio Ibarra-Espinosa and Rita Ynoue and Shane {O' Sullivan} and Edzer Pebesma and Maria de Fatima Andrade and Mauricio Osses},
-    year = {2017},
-    url = {https://www.geosci-model-dev-discuss.net/gmd-2017-193},
-  }
-```
-
+https://doi.org/10.5194/gmd-2017-193

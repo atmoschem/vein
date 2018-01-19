@@ -33,7 +33,7 @@
 #' @param show when TRUE shows row of table with respective speciation
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
-#' @importFrom units parse_unit
+#' @importFrom units as_units
 #' @return dataframe of speciation in grams or mols
 #' @references "bcom": Ntziachristos and Zamaras. 2016. Passneger cars, light
 #' commercial trucks, heavy-duty vehicles including buses and motor cycles. In:
@@ -130,7 +130,7 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
       names(dfb) <- names(dfx)
       for (j in 1:length(dfb)) {
         for (i in 1:ncol(x)) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
+          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("mol h-1")
         }
       }
       if (show == TRUE) { print(df) }
@@ -166,7 +166,7 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
 
       for (j in 1:length(dfb)) {
         for (i in 1:ncol(x)) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("g h-1")
+          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("g h-1")
         }
       }
 
