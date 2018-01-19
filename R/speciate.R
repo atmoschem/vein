@@ -76,40 +76,83 @@
 #' df <- speciate(pm, veh="PC", fuel="G", eu="I")
 #' }
 speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE) {
- if (spec=="bcom") {
-  bcom <- sysdata[[4]]
-  df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-  dfb <- Emissions(data.frame(BC = x*df$BC/100,
-                    OM = (df$OM/100)*(x*df$BC/100)))
-  if (show == TRUE) {print(df) } else if (list == TRUE){
-    dfb <- as.list(dfb) }
-
+  if(x$id){
+    stop("Remove 'id'")
+  }
+  # black carbon and organic matter
+  if (spec=="bcom") {
+    bcom <- sysdata[[4]]
+    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
+    dfb <- Emissions(data.frame(BC = x*df$BC/100,
+                                OM = (df$OM/100)*(x*df$BC/100)))
+    if (show == TRUE) {print(df) } else if (list == TRUE){
+      dfb <- as.list(dfb) }
+    # tyre ####
   } else if (spec=="tyre") {
     df <- data.frame(PM10 = 0.6, PM2.5 = 0.42,PM1 = 0.06,
-                      PM0.1 = 0.048)
+                     PM0.1 = 0.048)
     dfb <- Emissions(data.frame(PM10 = x*0.6, PM2.5 = x*0.42,PM1 = x*0.06,
-                      PM0.1 = x*0.048))
+                                PM0.1 = x*0.048))
     if (show == TRUE) {
       print(df)
-      } else if (list == TRUE){
+    } else if (list == TRUE){
       dfb <- as.list(dfb)
-      }
-    } else if (spec=="break") {
+    }
+    # break ####
+  } else if (spec=="break") {
     df <- data.frame(PM10 = 0.98, PM2.5 = 0.39,PM1 = 0.1,
                      PM0.1 = 0.08)
     dfb <- Emissions(data.frame(PM10 = x*0.98, PM2.5 = x*0.39,PM1 = x*0.1,
-                      PM0.1 = x*0.08))
+                                PM0.1 = x*0.08))
     if (show == TRUE) {
       print(df)
-      } else if (list == TRUE){
-      dfb <- as.list(dfb) }
-    } else if (spec=="road") {
+    } else if (list == TRUE){
+      dfb <- as.list(dfb)
+    }
+    # road ####
+  } else if (spec=="road") {
     df <- data.frame(PM10 = 0.5, PM2.5 = 0.27)
     dfb <- Emissions(data.frame(PM10 = x*0.5, PM2.5 = x*0.27))
     if (show == TRUE) {print(df) } else if (list == TRUE){
-      dfb <- as.list(dfb) }
-    } else if (spec=="iag") {
+      dfb <- as.list(dfb)
+    }
+    # iag ####
+  } else if (spec=="iag") {
     iag <- sysdata[[6]]
+    df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
+    if (is.data.frame(x)) {
+      for (i in 1:ncol(x)) {
+        x[ , i] <- as.numeric(x[ , i])
+      }
+    }
+    if (list == T) {
+      dfx <- df[, 4:ncol(df)]
+      dfb <- lapply(1:ncol(dfx), function(i){
+        dfx[, i]*x/100
+      })
+      names(dfb) <- names(dfx)
+      for (j in 1:length(dfb)) {
+        for (i in 1:ncol(x)) {
+          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
+        }
+      }
+      if (show == TRUE) { print(df) }
+    } else {
+      dfx <- df[, 4:ncol(df)]
+      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
+        dfx[, i]*x/100
+      }))
+      names(dfb) <- names(dfx)
+      # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
+      # e_xyl, e_c2h5oh, e_hcho /100 because it is based on 100g of fuel
+      # e_ch3oh and e_ket /100 because it is percentage
+    }
+    if (show == TRUE) {
+      print(df)
+    }
+    # nmhc ####
+  } else if (spec=="nmhc") {
+    iag <- sysdata[[9]]
     df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
@@ -120,72 +163,37 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
     if (list == T) {
       dfx <- df[, 4:ncol(df)]
       dfb <- lapply(1:ncol(dfx), function(i){
-        dfx[, i]/100
+        dfx[, i]*x/100 #percentage
       })
       names(dfb) <- names(dfx)
+
       for (j in 1:length(dfb)) {
-        for (i in 1:ncol(dfb[[j]])) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("mol h-1")
+        for (i in 1:ncol(x)) {
+          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("g h-1")
         }
       }
+
       if (show == TRUE) { print(df) }
-      } else {
-        dfx <- df[, 4:ncol(df)]
-        dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-          dfx[, i]/100
-        }))
-        names(dfb) <- names(dfx)
-        # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
-        # e_xyl, e_c2h5oh, e_hcho /100 because it is based on 100g of fuel
-        # e_ch3oh and e_ket /100 because it is percentage
+    } else {
+      dfx <- df[, 4:ncol(df)]
+      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
+        dfx[, i]*x/100
+      }))
+      names(dfb) <- names(dfx)
+
     }
     if (show == TRUE) {
       print(df)
-      }
-
-    } else if (spec=="nmhc") {
-      iag <- sysdata[[9]]
-      df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
-      if (is.data.frame(x)) {
-        for (i in 1:ncol(x)) {
-          x[ , i] <- as.numeric(x[ , i])
-        }
-
-      }
-      if (list == T) {
-        dfx <- df[, 4:ncol(df)]
-        dfb <- lapply(1:ncol(dfx), function(i){
-          dfx[, i]/100 #percentage
-        })
-        names(dfb) <- names(dfx)
-
-        for (j in 1:length(dfb)) {
-          for (i in 1:ncol(dfb[[j]])) {
-            dfb[[j]][ , i] <- dfb[[j]][ , i] * units::parse_unit("g h-1")
-          }
-        }
-
-        if (show == TRUE) { print(df) }
-      } else {
-        dfx <- df[, 4:ncol(df)]
-        dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-          dfx[, i]/100
-        }))
-        names(dfb) <- names(dfx)
-
-      }
-      if (show == TRUE) {
-        print(df)
-      }
-
-    } else if (spec=="nox") {
-      bcom <- sysdata[[7]]
-      df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-      dfb <- Emissions(data.frame(NO2 = x*df$NO2,
-                        NO =  x*df$NO))
-      if (show == TRUE) {print(df) } else if (list == TRUE){
-        dfb <- as.list(dfb)
-        }
-      }
+    }
+    # nox ####
+  } else if (spec=="nox") {
+    bcom <- sysdata[[7]]
+    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
+    dfb <- Emissions(data.frame(NO2 = x*df$NO2,
+                                NO =  x*df$NO))
+    if (show == TRUE) {print(df) } else if (list == TRUE){
+      dfb <- as.list(dfb)
+    }
+  }
   return(dfb)
 }
