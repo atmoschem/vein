@@ -76,9 +76,6 @@
 #' df <- speciate(pm, veh="PC", fuel="G", eu="I")
 #' }
 speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE) {
-  if(x$id){
-    stop("Remove 'id'")
-  }
   # black carbon and organic matter
   if (spec=="bcom") {
     bcom <- sysdata[[4]]
