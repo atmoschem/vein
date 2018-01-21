@@ -72,19 +72,33 @@
 <h2 class="hasAnchor">
 <a href="#vein-package" class="anchor"></a>Vein Package</h2>
 <p><strong>V</strong>ehicular <strong>E</strong>missions <strong>IN</strong>ventory <strong>(VEIN)</strong> model.</p>
-<p>Read the DESCRIPTION file. You need several packages to run <strong>vein</strong>.</p>
+<div id="system-requirements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#system-requirements" class="anchor"></a>System requirements</h3>
+<p>vein imports functions from spatial packages listed below. In order to install these packages, firstly the user must install the requirements mentioned [here][<a href="https://www.github.com/r-spatial/sf" class="uri">https://www.github.com/r-spatial/sf</a>].</p>
+</div>
+<div id="packages-needed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#packages-needed" class="anchor"></a>Packages needed</h3>
+<p>After installing system dependencies, you need these packages:</p>
 <ul>
 <li><a href="https://github.com/edzer/sp/">sp</a></li>
 <li><a href="https://github.com/edzer/units/">units</a></li>
 <li><a href="http://cran.r-project.org/package=raster">raster</a></li>
 <li><a href="https://github.com/cran/rgdal">rgdal</a></li>
 <li><a href="https://github.com/cran/rgeos">rgeos</a></li>
+<li><a href="https://github.com/r-spatial/sf">sf</a></li>
 </ul>
-<p>Also, if you want to properly run the demo, install these packages:</p>
+<p>At the current version of vein, sf is not imported but suggested. Future version of vein will import or depend on sf, so it is recommended to install it now. Also, if you want to properly run the demo, install:</p>
 <ul>
-<li>ggplot2</li>
+<li><a href="https://github.com/tidyverse/ggplot2">ggplot2</a></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.3.9003</span>
+</div>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<p>VEIN can be installed via CRAN or github</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.3.9004</span>
 <span class="kw">library</span>(devtools)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
@@ -93,7 +107,12 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.2-25</span>
 <span class="kw">install.packages</span>(<span class="st">"vein"</span>)
 <span class="kw">library</span>(vein)</code></pre></div>
-<p>I’ve created the following classes:</p>
+</div>
+</div>
+<div id="classes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#classes" class="anchor"></a>Classes</h2>
+<p>VEIN has the following classes:</p>
 <ul>
 <li>Vehicles (1/h)</li>
 <li>Speed (km/h)</li>
@@ -106,9 +125,20 @@
 </ul>
 <p>Each class has the methods print, plot and summary.</p>
 <p>New information will also be added to the documentation of emission factors.</p>
+<div id="how-to-use-vein" class="section level3">
+<h3 class="hasAnchor">
+<a href="#how-to-use-vein" class="anchor"></a>How to use vein</h3>
+<p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, pre-processing activity data, preparing emissions factors, estimating the emissions and post-processing of emissions in maps and databases.”</p>
+<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>vein</strong> which creates a structured set of directoreis and scripts to run VEIN. Please, read the examples in the documentation of each function and run the demo.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vein::<span class="kw"><a href="reference/vein.html">vein</a></span>(<span class="dt">name =</span> <span class="st">"YourCity"</span>)</code></pre></div>
+</div>
+<div id="issues" class="section level3">
+<h3 class="hasAnchor">
+<a href="#issues" class="anchor"></a>Issues</h3>
 <p>If you encounter any issues while using VEIN, please submit your issues to: <a href="https://github.com/atmoschem/vein/issues/" class="uri">https://github.com/atmoschem/vein/issues/</a></p>
-<p>If you have any suggestions just let me know to <a href="mailto:zergioibarra@gmail.com">zergioibarra@gmail.com</a></p>
+<p>If you have any suggestions just let me know to <a href="mailto:sergio.ibarra@usp.br">sergio.ibarra@usp.br</a>.</p>
 <p>Thanks and enjoy VEIN!</p>
+</div>
 <div id="future-steps" class="section level3">
 <h3 class="hasAnchor">
 <a href="#future-steps" class="anchor"></a><strong>future steps</strong>
