@@ -1,15 +1,14 @@
 #' Allocate emissions into a grid
 #'
-#' The allocation is proportionally to each grid cell. The process is
-#' performed by intersection between geometries and the grid. Geometries
-#' suported, so, far are lines with raster::intersect and points with
+#' @description \code{emis_grid} allocates emissions proportionally to each grid
+#'  cell. The process is performed by intersection between geometries and the grid.
+#'  Geometries uported, so, far are lines with raster::intersect and points with
 #' sp::over. The allocation of lines is by interaction, then update the
 #' pollutant values according the new length of road inside each grid cell.
 #' It means that requires "sr" according with your location for the projection.
 #' It is assumed that soobj is a spatial*DataFrame with the pollutant in data.
 #' Also, it is required that, when is a SpatialLinesDataFrame, there is a field
 #' called lkm, with the length of the road, in this case, in km.
-#'
 #' This function accepts data with "units" but they are converted internally
 #' to numeric and then return SpatialPolygonsDataFrame with numeric data.frame
 #'
@@ -20,8 +19,13 @@
 #' @importFrom raster intersect
 #' @importFrom rgeos gLength
 #' @importFrom stats aggregate
+#' @import sp
 #' @import rgdal
 #' @export
+#' @note A future version of VEIN will imports or depend on the new package
+#' 'spatial features'. The migration for VEIN will be converting the 'Spatial'
+#' objects (class of sp) into 'sf'. Also, a new version of this function will
+#' import some functions from 'data.table'.
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -62,7 +66,7 @@
 #' sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
 #' }
 emis_grid <- function(spobj, g, sr, type="lines"){
-  if ( type == "lines" ) {
+  if (type == "lines" ) {
     net <- spobj
     for( i in 1:ncol(net@data) ){
       net@data[,i] <- as.numeric(net@data[,i])

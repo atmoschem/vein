@@ -26,8 +26,8 @@ with fuel injection and returnless fuel systems}
 numeric vector of emission estimation in grams
 }
 \description{
-Estimation of evaporative emissions from EMEP/EEA emisison
-guidelines
+\code{hot_soak} estimates of evaporative emissions from EMEP/EEA
+emisison guidelines
 }
 \examples{
 \dontrun{

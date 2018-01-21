@@ -27,8 +27,8 @@ length equals to hours.}
 emission estimation  g/h
 }
 \description{
-Estimation of wear emissions. The sources are tyres, breaks
-and road surface.
+\code{emis_wear} estimates wear emissions. The sources are tyres,
+breaks and road surface.
 }
 \examples{
 \dontrun{

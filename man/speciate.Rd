@@ -47,9 +47,9 @@ the number species of pollutants}
 dataframe of speciation in grams or mols
 }
 \description{
-The separation of emissions in different compunds. It includes
-black carbon and organic matter from particulate matter. Soon it will be
-added more speciations
+\code{speciate} separates emissions in different compounds.
+It covers black carbon and organic matter from particulate matter. Soon it
+will be added more speciations
 }
 \note{
 when spec = "iag", veh is only "VEH", STANDARD is "Evaporative",

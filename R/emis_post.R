@@ -1,8 +1,8 @@
 #' Post emissions
 #'
-#' Simplify emissions estimated as total per type category of vehicle or
-#' by street. It reads EmissionsArray. It can return an dataframe with hourly
-#' emissions at each street, or a data base with emissions by vehicular
+#' @description \code{emis_post} simplify emissions estimated as total per type category of
+#' vehicle or by street. It reads EmissionsArray. It can return an dataframe
+#' with hourly emissions at each street, or a data base with emissions by vehicular
 #' category, hour, including size, fuel and other characteristics.
 #'
 #' @param arra Array of emissions 4d: streets x category of vehicles x hours x days or
@@ -17,6 +17,12 @@
 #' 168 columns as the hours of a whole week and "streets_wide repeats the
 #' row number of streets by hour and day of the week
 #' @export
+#' @note This function depends on EmissionsArray objests which currently has
+#' 4 dimensions. However, a future version of VEIN will produce EmissionsArray
+#' with 3 dimensiones and his function also will change. This change will be
+#' made in order to not produce inconsistencies with previous versions, therefore,
+#' if the user count with an EmissionsArry with 4 dimension, it will be able
+#' to use this function.
 #' @examples \dontrun{
 #' # Do not run
 #' data(net)

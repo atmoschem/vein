@@ -34,9 +34,9 @@ profile as a dataframe producing an array with dimensions (streets x columns x h
 emission estimation  g/h
 }
 \description{
-The vehicular emissions are estimated as the product of the vehicles on a
-road, length of the road, emission factor avaliated at the respective speed.
- \eqn{E = VEH*LENGTH*EF(speed)}
+\code{emis} estimates vehicular emissions as the product of the
+vehicles on a road, length of the road, emission factor avaliated at the
+respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
 }
 \examples{
 \dontrun{

@@ -16,19 +16,23 @@ emis_grid(spobj, g, sr, type = "lines")
 \item{type}{type of geometry: "lines" or "points"}
 }
 \description{
-The allocation is proportionally to each grid cell. The process is
-performed by intersection between geometries and the grid. Geometries
-suported, so, far are lines with raster::intersect and points with
+\code{emis_grid} allocates emissions proportionally to each grid
+ cell. The process is performed by intersection between geometries and the grid.
+ Geometries uported, so, far are lines with raster::intersect and points with
 sp::over. The allocation of lines is by interaction, then update the
 pollutant values according the new length of road inside each grid cell.
 It means that requires "sr" according with your location for the projection.
 It is assumed that soobj is a spatial*DataFrame with the pollutant in data.
 Also, it is required that, when is a SpatialLinesDataFrame, there is a field
 called lkm, with the length of the road, in this case, in km.
-}
-\details{
 This function accepts data with "units" but they are converted internally
 to numeric and then return SpatialPolygonsDataFrame with numeric data.frame
+}
+\note{
+A future version of VEIN will imports or depend on the new package
+'spatial features'. The migration for VEIN will be converting the 'Spatial'
+objects (class of sp) into 'sf'. Also, a new version of this function will
+import some functions from 'data.table'.
 }
 \examples{
 \dontrun{
@@ -43,15 +47,14 @@ PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
 veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
-speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1,
-isList = T)
+speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #vehicles newer than pre-euro
 co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
-lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
+lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
 lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
          lef[length(lef)],lef[length(lef)])
@@ -66,10 +69,9 @@ net@data <- net@data[,- c(1:9)]
 names(net)
 E_CO_g <- emis_grid(spobj = net, g = g, sr= "+init=epsg:31983")
 head(E_CO_g@data)
-library(RColorBrewer)
 spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
 colorkey = list(space = "bottom", height = 1),
-col.regions=brewer.pal(9, "Blues"),
+col.regions = rev(bpy.colors(9)),
 sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
 }
 }

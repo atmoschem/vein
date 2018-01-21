@@ -29,8 +29,8 @@ EmissionFactors(x, ...)
 Objects of class "EmissionFactors" or "units"
 }
 \description{
-Returns a tranformed object with class "EmissionFactors" and
-units g/km.
+\code{EmissionFactors} returns a tranformed object with class
+"EmissionFactors" and units g/km.
 }
 \examples{
 \dontrun{

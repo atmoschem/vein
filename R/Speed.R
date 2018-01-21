@@ -1,6 +1,6 @@
 #' Construction function for class "Speed"
 #'
-#' @description Returns a tranformed object with class "Speed" and units
+#' @description \code{Speed} returns a tranformed object with class "Speed" and units
 #'  km/h. This functions includes two arguments, distance and time. Therefore,
 #'  it is posibel to change the units of the speed to "m" to "s" for example.
 #'  This function returns a dataframe with units for speed. When this function

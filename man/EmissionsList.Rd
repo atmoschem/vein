@@ -29,7 +29,7 @@ EmissionsList(x, ...)
 Objects of class "EmissionsList" and numeric elements as "units"
 }
 \description{
-Returns a tranformed object with class "EmissionsList".
+\code{EmissionsList} returns a tranformed object with class "EmissionsList".
 }
 \examples{
 \dontrun{

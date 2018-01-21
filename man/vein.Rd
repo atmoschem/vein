@@ -64,7 +64,7 @@ creates the scripts input.R where the user must specify the inputs for the
 estimation of emissions of each category. The user can rename these scripts.
 }
 \description{
-This function produces an structure of directories and scripts
+\code{vein} produces an structure of directories and scripts
 in order to run vein. It is required to know the vehicular composition of the
 fleet.
 }

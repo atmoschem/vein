@@ -1,6 +1,6 @@
 #' Generates emissions dataframe to generate WRF-Chem inputs
 #'
-#' It returns a dataframes with columns lat, long, id, pollutants, local time
+#' \code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time
 #' and GMT time. This dataframe has the proper format to be used with WRF
 #' assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
 #' by Vera-Vala et al (2016)
@@ -18,6 +18,7 @@
 #' @param crs Coordinate reference system, e.g: "+init=epsg:4326". Used to
 #' transform the coordinates of the output
 #' @param islist logical value to indicate if sdf is a list or not
+#' @importFrom sp coordinates spTransform CRS
 #' @return data-frame of gridded emissions  g/h
 #' @export
 #' @note The reference of the emissions assimilation system is Vara-Vela, A.,
@@ -41,8 +42,8 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
   if(nr <= 0){
     stop("The argument 'nr' must be positive")
   } else if (islist==FALSE) {
-    dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf,
-                                                         CRSobj = sp::CRS(crs))))
+    dft <- as.data.frame(sp::coordinates(
+      sp::spTransform(sdf, CRSobj = sp::CRS(crs))))
     dftid <- data.frame(id = 1:nrow(dft))
 
     dft <- as.data.frame(cbind(dftid, dft))
@@ -70,8 +71,8 @@ emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
   } else if (class(sdf)!="list" & islist==TRUE) {
     stop("The argument 'sdf' must be a list")
     } else if (class(sdf)=="list" & islist==TRUE) {
-    dft <- as.data.frame(sp::coordinates(sp::spTransform(sdf[[1]],
-                                                           CRSobj = sp::CRS(crs))))
+    dft <- as.data.frame(sp::coordinates(
+      sp::spTransform(sdf[[1]], CRSobj = sp::CRS(crs))))
 
     dftid <- data.frame(id = 1:nrow(sdf[[1]]))
 

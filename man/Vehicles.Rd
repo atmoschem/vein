@@ -31,7 +31,7 @@ Vehicles(x, ...)
 Objects of class "Vehicles" or "units"
 }
 \description{
-Returns a tranformed object with class "Vehicles" and units
+\code{Vehicles} returns a tranformed object with class "Vehicles" and units
  1/h. The type of objects supported are of classes "matrix", "data.frame",
  "numeric" and "array". If the object is a matrix it is converted to data.frame.
  If the object is "numeric" it is converted to class "units". The function

@@ -29,6 +29,7 @@ weight of traffic fleet in each road}
 emission estimation  g/h
 }
 \description{
+\code{emis_paved} estimates vehicular emissions from paved roads.
 The vehicular emissions are estimated as the product of the vehicles on a
 road, length of the road, emission factor from AP42 13.2.1 Paved roads.
 It is assumed dry hours and anual aggregation should consider moisture factor.

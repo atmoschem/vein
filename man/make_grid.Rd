@@ -16,11 +16,11 @@ make_grid(spobj, width, height, polygon = T)
 \item{polygon}{whe TRUE return a polygon grid, when FALSE a SpatialGridDataFrame}
 }
 \value{
-grid
+A 'SpatialPolygonsDataFrame' or a 'SpatialGridDataFrame'
 }
 \description{
-It is created a SpatialGridDataFrame.The spatial reference is taken from
-the spatial object.
+\code{make_grid} creates a SpatialGridDataFrame. The spatial
+reference is taken from the spatial object.
 }
 \examples{
 \dontrun{

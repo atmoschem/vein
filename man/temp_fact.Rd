@@ -15,7 +15,7 @@ temp_fact(q, pro)
 data-frames of expanded traffic
 }
 \description{
-Matrix multiplication between traffic and
+\code{temp_fact} is a matrix multiplication between traffic and
 hourly expansion data-frames to obtain a data-frame of traffic
 at each link to every hour
 }

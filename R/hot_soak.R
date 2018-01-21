@@ -1,7 +1,7 @@
 #' Estimation of average running hot-soak evaporative emissions
 #'
-#' @description Estimation of evaporative emissions from EMEP/EEA emisison
-#' guidelines
+#' @description \code{hot_soak} estimates of evaporative emissions from EMEP/EEA
+#' emisison guidelines
 #'
 #' @param x Mean number of trips per vehicle per day
 #' @param carb fraction of gasoline vehicles with carburator or fuel return system
