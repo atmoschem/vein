@@ -19,9 +19,9 @@ emis_det(po, cc, eu, km)
 It returns a numeric vector without "units"
 }
 \description{
-This function returns deterioration factors. The emission factors comes
-from the guidelines for developing emission factors of the EMEP/EEA air pollutant
-emission inventory guidebook
+\code{emis_det} returns deterioration factors. The emission
+factors comes from the guidelines for developing emission factors of the
+EMEP/EEA air pollutant emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 This function subset an internal database of emission factors with each argument
 }

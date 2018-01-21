@@ -1,7 +1,7 @@
 #' Construction function for class "EmissionFactors"
 #'
-#' @description Returns a tranformed object with class "EmissionFactors" and
-#' units g/km.
+#' @description \code{EmissionFactors} returns a tranformed object with class
+#' "EmissionFactors" and units g/km.
 #'
 #' @return Objects of class "EmissionFactors" or "units"
 #'

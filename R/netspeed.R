@@ -1,7 +1,7 @@
 #' Calculate speeds of traffic network
 #'
-#' Creates a dataframe of speeds fir diferent hours and each link based on
-#' morning rush traffic data
+#' @description \code{netspeed} Creates a dataframe of speeds fir diferent hours
+#' and each link based on morning rush traffic data
 #'
 #' @param q Data-frame of traffic flow to each hour (veh/h)
 #' @param ps Peak speed (km/h)
@@ -11,12 +11,19 @@
 #' @param alpha Parameter of BPR curves
 #' @param beta Parameter of BPR curves
 #' @param scheme Logical to create a Speed data-frame with 24 hours and a
-#' default  profile: ffs at 00:00-06:00, average speed at 06:00-07:00, ps
-#' at 07:00-10:00, average speed between 10:0-17:00, ps at 17:00-20:00,
-#' average speed at 20:00-22:00 and ffs at 22:00-00:00
+#' default  profile. It needs ffs and ps:
+#' \tabular{rl}{
+#'   00:00-06:00 \tab ffs\cr
+#'   06:00-07:00 \tab average between ffs and ps\cr
+#'   07:00-10:00 \tab ps\cr
+#'   10:00-17:00 \tab average between ffs and ps\cr
+#'   17:00-20:00 \tab ps\cr
+#'   20:00-22:00 \tab average between ffs and ps\cr
+#'   22:00-00:00 \tab ffs\cr
+#' }
 #' @param distance Character specifying the units for distance. Default is "km"
-#' @param time Character specifying the units for time Default is "h"
-#' @return dataframe or list of speeds with units
+#' @param time Character specifying the units for time Default is "h".
+#' @return dataframe speeds with units.
 #' @export
 #' @examples \dontrun{
 #' # Do not run

@@ -1,7 +1,7 @@
 #' Emission estimation from tyre, break and road surface wear
 #'
-#' @description Estimation of wear emissions. The sources are tyres, breaks
-#' and road surface.
+#' @description \code{emis_wear} estimates wear emissions. The sources are tyres,
+#' breaks and road surface.
 #'
 #' @param veh Object of class "Vehicles"
 #' @param lkm Length of the road

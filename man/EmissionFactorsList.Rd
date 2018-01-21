@@ -32,7 +32,8 @@ prints messages with description of list}
 Objects of class "EmissionFactorsList"
 }
 \description{
-Returns a tranformed object with class"EmissionsFactorsList".
+\code{EmissionFactorsList} returns a tranformed object with
+class"EmissionsFactorsList".
 }
 \examples{
 \dontrun{

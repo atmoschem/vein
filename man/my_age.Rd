@@ -7,21 +7,22 @@
 my_age(x, y, name, k = 1, message = TRUE)
 }
 \arguments{
-\item{x}{numerical vector of vehicles}
+\item{x}{numerical vector of vehicles.}
 
-\item{y}{Age dustribution of vehicles}
+\item{y}{Age dustribution of vehicles.}
 
-\item{name}{of vehicle assigned to columns of dataframe}
+\item{name}{of vehicle assigned to columns of dataframe.}
 
-\item{k}{multiplication factor}
+\item{k}{multiplication factor.}
 
-\item{message}{message with average age and total numer of vehicles}
+\item{message}{message with average age and total numer of vehicles.}
 }
 \value{
-dataframe of age distrubution of vehicles
+dataframe of age distrubution of vehicles.
 }
 \description{
-Returns amount of vehicles at each age using a numeric vector
+\code{my_age} returns amount of vehicles at each age using a
+numeric vector.
 }
 \examples{
 \dontrun{

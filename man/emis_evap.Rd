@@ -69,7 +69,8 @@ temperature between -5 and 10 celcius degrees}
 dataframe of emission estimation in grams/days
 }
 \description{
-Estimation of evaporative emissions from EMEP/EEA emisison guidelines
+\code{emis_evap} performs the estimation of evaporative emissions
+from EMEP/EEA emisison guidelines with Tier 2.
 }
 \examples{
 \dontrun{

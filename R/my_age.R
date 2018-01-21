@@ -1,13 +1,14 @@
 #' Returns amount of vehicles at each age
 #'
-#' @description Returns amount of vehicles at each age using a numeric vector
+#' @description \code{my_age} returns amount of vehicles at each age using a
+#' numeric vector.
 #'
-#' @param x numerical vector of vehicles
-#' @param y Age dustribution of vehicles
-#' @param name of vehicle assigned to columns of dataframe
-#' @param k multiplication factor
-#' @param message message with average age and total numer of vehicles
-#' @return dataframe of age distrubution of vehicles
+#' @param x numerical vector of vehicles.
+#' @param y Age dustribution of vehicles.
+#' @param name of vehicle assigned to columns of dataframe.
+#' @param k multiplication factor.
+#' @param message message with average age and total numer of vehicles.
+#' @return dataframe of age distrubution of vehicles.
 #' @export
 #' @examples \dontrun{
 #' # Do not run

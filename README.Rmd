@@ -26,21 +26,36 @@ knitr::opts_chunk$set(echo = TRUE)
 **V**ehicular **E**missions **IN**ventory **(VEIN)** model.
 
 
+### System requirements
 
-Read the DESCRIPTION file. You need several packages to run **vein**.
+vein imports functions from spatial packages listed below. In order to
+install these packages, firstly the user must install the requirements
+mentioned [here][https://www.github.com/r-spatial/sf].
+
+### Packages needed
+
+After installing system dependencies, you need these packages:
 
 - [sp](https://github.com/edzer/sp/) 
 - [units](https://github.com/edzer/units/) 
 - [raster](http://cran.r-project.org/package=raster)
 - [rgdal](https://github.com/cran/rgdal)
 - [rgeos](https://github.com/cran/rgeos)
+- [sf](https://github.com/r-spatial/sf)
 
-Also, if you want to properly run the demo, install these packages:
+At the current version of vein, sf is not imported but suggested. Future version
+of vein will import or depend on sf, so it is recommended to install it now. Also,
+if you want to properly run the demo, install:
 
-- ggplot2
+- [ggplot2](https://github.com/tidyverse/ggplot2)
+
+
+### Installation
+
+VEIN can be installed via CRAN or github
 
 ```{r eval=F}
-# 0.2.3.9003
+# 0.2.3.9004
 library(devtools)
 install_github("atmoschem/vein")
 library(vein)
@@ -57,7 +72,9 @@ library(vein)
 
 
 
-I've created the following classes:
+## Classes
+
+VEIN has the following classes:
 
 - Vehicles (1/h) 
 - Speed  (km/h)
@@ -72,9 +89,28 @@ Each class has the methods print, plot and summary.
 
 New information will also be added to the documentation of emission factors.
 
+### How to use vein
+
+VEIN consist of: "Elaboration of vehicular emissions inventories,
+    consisting in four stages, pre-processing activity data, preparing 
+    emissions factors, estimating the emissions and post-processing of emissions 
+    in maps and databases."
+
+This implies the use of several functions in a coordinates ans structured way,
+therefore it is added the new function **vein** which creates a structured
+set of directoreis and scripts to run VEIN. Please, read the examples in the
+documentation of each function and run the demo.
+
+```{r eval = FALSE}
+vein::vein(name = "YourCity")
+```
+
+
+###  Issues
+
 If you encounter any issues while using VEIN, please submit your issues to: https://github.com/atmoschem/vein/issues/
 
-If you have any suggestions just let me know to zergioibarra@gmail.com
+If you have any suggestions just let me know to sergio.ibarra@usp.br.
 
 Thanks and enjoy VEIN!
 

@@ -1,6 +1,7 @@
 #' Construction function for class "EmissionFactorsList"
 #'
-#' @description Returns a tranformed object with class"EmissionsFactorsList".
+#' @description \code{EmissionFactorsList} returns a tranformed object with
+#' class"EmissionsFactorsList".
 #'
 #' @return Objects of class "EmissionFactorsList"
 #'

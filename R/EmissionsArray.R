@@ -1,6 +1,7 @@
 #' Construction function for class "EmissionsArray"
 #'
-#' @description Returns a tranformed object with class "EmissionsArray".
+#' @description \code{EmissionsArray} returns a tranformed object with class
+#' "EmissionsArray" with 4 dimensios.
 #'
 #' @return Objects of class "EmissionsArray"
 #'
@@ -10,6 +11,7 @@
 #' @rdname EmissionsArray
 #' @aliases EmissionsArray print.EmissionsArray summary.EmissionsArray
 #' plot.EmissionsArray
+#' @note Future version of this function will return an Array of 3 dimensions.
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)

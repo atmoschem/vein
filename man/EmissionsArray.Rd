@@ -29,7 +29,11 @@ EmissionsArray(x, ...)
 Objects of class "EmissionsArray"
 }
 \description{
-Returns a tranformed object with class "EmissionsArray".
+\code{EmissionsArray} returns a tranformed object with class
+"EmissionsArray" with 4 dimensios.
+}
+\note{
+Future version of this function will return an Array of 3 dimensions.
 }
 \examples{
 \dontrun{

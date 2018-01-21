@@ -30,7 +30,7 @@ transform the coordinates of the output}
 data-frame of gridded emissions  g/h
 }
 \description{
-It returns a dataframes with columns lat, long, id, pollutants, local time
+\code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time
 and GMT time. This dataframe has the proper format to be used with WRF
 assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
 by Vera-Vala et al (2016)

@@ -1,6 +1,6 @@
 #' Vehicular Emissions Inventory (VEIN) function.
 #'
-#' @description This function produces an structure of directories and scripts
+#' @description \code{vein} produces an structure of directories and scripts
 #' in order to run vein. It is required to know the vehicular composition of the
 #' fleet.
 #'

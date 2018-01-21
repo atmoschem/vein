@@ -1,14 +1,16 @@
 #' Creates rectangular grid for emission allocation
 #'
-#' It is created a SpatialGridDataFrame.The spatial reference is taken from
-#' the spatial object.
+#' @description \code{make_grid} creates a SpatialGridDataFrame. The spatial
+#' reference is taken from the spatial object.
 #'
 #' @param spobj A spatial object of class sp
 #' @param width Width of grid cell, units according sr
 #' @param height Height of grid cell, units according sr
 #' @param polygon whe TRUE return a polygon grid, when FALSE a SpatialGridDataFrame
+#' @return A 'SpatialPolygonsDataFrame' or a 'SpatialGridDataFrame'
+#' @importFrom sp bbox GridTopology SpatialGridDataFrame proj4string
+#' @importFrom raster rasterToPolygons raster
 #' @export
-#' @return grid
 #' @examples \dontrun{
 #' #do not run
 #' data(net)

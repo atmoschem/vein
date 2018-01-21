@@ -41,10 +41,10 @@ expects a profile as a dataframe producing an array with dimensions
 EmissionsArray  g/h
 }
 \description{
-The vehicular emissions are estimated as the product of the vehicles on a
-road, length of the road, emission factor avaliated at the respective speed.
-The estimation considers beta
-parameter, the fraction of mileage driven
+\code{emis_cold} emissions are estimated as the product of the
+vehicles on a road, length of the road, emission factor avaliated at the
+respective speed.The estimation considers beta parameter, the fraction of
+mileage driven
 }
 \note{
 Actually dcold is not necessary, it would be enough to multiply

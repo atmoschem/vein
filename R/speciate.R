@@ -1,8 +1,8 @@
 #' Speciation of emissions
 #'
-#' @description The separation of emissions in different compunds. It includes
-#' black carbon and organic matter from particulate matter. Soon it will be
-#' added more speciations
+#' @description \code{speciate} separates emissions in different compounds.
+#' It covers black carbon and organic matter from particulate matter. Soon it
+#' will be added more speciations
 #'
 #' @param x Emissions estimation
 #' @param spec speciation: The speciations are: "bcom", tyre", "break", "road",

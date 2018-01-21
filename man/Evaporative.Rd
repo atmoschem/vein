@@ -29,7 +29,7 @@ Evaporative(x, ...)
 Objects of class "Evaporative" or "units"
 }
 \description{
-Returns a tranformed object with class "Evaporative" and
+\code{Evaporative} returns a tranformed object with class "Evaporative" and
 units g/day. This class represents the daily emissions presented by
 Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 it will be incorporated the techniques of Tier 3.

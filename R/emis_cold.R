@@ -1,9 +1,9 @@
 #' Estimation of cold start emissions hourly for the of the week
 #'
-#' The vehicular emissions are estimated as the product of the vehicles on a
-#' road, length of the road, emission factor avaliated at the respective speed.
-#' The estimation considers beta
-#' parameter, the fraction of mileage driven
+#' @description \code{emis_cold} emissions are estimated as the product of the
+#' vehicles on a road, length of the road, emission factor avaliated at the
+#' respective speed.The estimation considers beta parameter, the fraction of
+#' mileage driven
 #'
 #' @param veh "Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 #' as number of columns matching the age distribution of that ype of vehicle.

@@ -24,9 +24,9 @@ profile as a dataframe producing an array with dimensions (streets x hours x day
 emission estimation  of vkm
 }
 \description{
-VKM consists in the product of the number of vehicles and the distance driven
-by these vehicles in km. This function reads hourly vehciles and then
-extrapolates the vehicles
+\code{vkm} consists in the product of the number of vehicles and
+the distance driven by these vehicles in km. This function reads hourly
+vehiles and then extrapolates the vehicles
 }
 \examples{
 \dontrun{

@@ -1,6 +1,7 @@
 #' Estimation of evaporative emissions
 #'
-#' @description Estimation of evaporative emissions from EMEP/EEA emisison guidelines
+#' @description \code{emis_evap} performs the estimation of evaporative emissions
+#' from EMEP/EEA emisison guidelines with Tier 2.
 #'
 #' @param veh Total number of vehicles by age of use. If is a lsit of 'Vehicles'
 #' data-frames, it will sum the columns of the eight element of the list
