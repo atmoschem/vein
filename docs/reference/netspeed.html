@@ -87,8 +87,8 @@
     </div>
 
     
-    <p>Creates a dataframe of speeds fir diferent hours and each link based on
-morning rush traffic data</p>
+    <p><code>netspeed</code> Creates a dataframe of speeds fir diferent hours
+and each link based on morning rush traffic data</p>
     
 
     <pre class="usage"><span class='fu'>netspeed</span>(<span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ps</span>, <span class='no'>ffs</span>, <span class='no'>cap</span>, <span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>4</span>,
@@ -128,9 +128,28 @@ morning rush traffic data</p>
     <tr>
       <th>scheme</th>
       <td><p>Logical to create a Speed data-frame with 24 hours and a
-default  profile: ffs at 00:00-06:00, average speed at 06:00-07:00, ps
-at 07:00-10:00, average speed between 10:0-17:00, ps at 17:00-20:00,
-average speed at 20:00-22:00 and ffs at 22:00-00:00</p></td>
+default  profile. It needs ffs and ps:</p><table><tr><td>
+  00:00-06:00 </td>
+<td> ffs</td>
+</tr><tr><td>
+  06:00-07:00 </td>
+<td> average between ffs and ps</td>
+</tr><tr><td>
+  07:00-10:00 </td>
+<td> ps</td>
+</tr><tr><td>
+  10:00-17:00 </td>
+<td> average between ffs and ps</td>
+</tr><tr><td>
+  17:00-20:00 </td>
+<td> ps</td>
+</tr><tr><td>
+  20:00-22:00 </td>
+<td> average between ffs and ps</td>
+</tr><tr><td>
+  22:00-00:00 </td>
+<td> ffs</td>
+</tr></table></td>
     </tr>
     <tr>
       <th>distance</th>
@@ -138,13 +157,13 @@ average speed at 20:00-22:00 and ffs at 22:00-00:00</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>Character specifying the units for time Default is "h"</p></td>
+      <td><p>Character specifying the units for time Default is "h".</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe or list of speeds with units</p>
+    <p>dataframe speeds with units.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
