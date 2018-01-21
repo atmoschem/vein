@@ -87,8 +87,6 @@ VEIN has the following classes:
 
 Each class has the methods print, plot and summary.
 
-New information will also be added to the documentation of emission factors.
-
 ### How to use vein
 
 VEIN consist of: "Elaboration of vehicular emissions inventories,
@@ -98,7 +96,7 @@ VEIN consist of: "Elaboration of vehicular emissions inventories,
 
 This implies the use of several functions in a coordinates ans structured way,
 therefore it is added the new function **vein** which creates a structured
-set of directoreis and scripts to run VEIN. Please, read the examples in the
+set of directories and scripts to run VEIN. Please, read the examples in the
 documentation of each function and run the demo.
 
 ```{r eval = FALSE}
