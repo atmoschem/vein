@@ -30,7 +30,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 vein imports functions from spatial packages listed below. In order to
 install these packages, firstly the user must install the requirements
-mentioned [here][https://www.github.com/r-spatial/sf].
+mentioned [here](https://www.github.com/r-spatial/sf).
 
 ### Packages needed
 
