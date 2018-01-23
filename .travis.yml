@@ -15,7 +15,7 @@ addons:
   postgresql: "9.6"
 
 before_install:
-  - sudo add-apt-repository -m ppa:ubuntugis/ubuntugis-unstable --yes
+  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
   - sudo apt-get --yes --force-yes update -qq
   # install tmap dependencies
   - sudo apt-get install --yes libprotobuf-dev protobuf-compiler libv8-3.14-dev
