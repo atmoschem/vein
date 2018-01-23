@@ -57,8 +57,8 @@
 #' # Mohtly average temperature 18 Celcius degrees
 #' lefc <- ef_ldv_cold_list(df = co1, ta = 18, cc = "<=1400", f = "G",
 #'                           eu = co1$Euro_LDV, p = "CO" )
-#' lefec <- c(lefc,lefc[[length(lefc)]],lefc[[length(lefc)]],
-#'             lefc[[length(lefc)]],lefc[[length(lefc)]],lef[[length(lef)]])
+#' length(lefc) != ncol(pc1)
+#' #emis change length of 'ef' to match ncol of 'veh'
 #' class(lefec)
 #' PC_CO_COLD <- emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
 #' beta = pcf, speed = speed, profile = pc_profile, hour = 24,
@@ -95,8 +95,21 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
         for(i in 1:ncol(veh)){
           veh[,i] <- as.numeric(veh[,i])
         }
-        if (ncol(veh) != length(ef)){
-          stop("Number of columns in 'veh' must be the same as length of ef")
+        if(ncol(veh) != length(ef)){
+          message("Number of columns of 'veh' is different than length of 'ef'")
+          cat("\nadjusting length of ef to the number of colums of 'veh'\n")
+          if(ncol(veh) > length(ef)){
+            for(i in (ncol(veh) - length(ef)):ncol(veh) ){
+              ef[[i]] <- ef[[length(ef)]]
+            }
+            if (ncol(veh) < length(ef)){
+              ff <- list()
+              for(i in 1:ncol(veh)){
+                ff[[i]] <- ef[[i]]
+              }
+              ef <- ff
+            }
+          }
         }
         if(array == F){
           lista <- lapply(1:day,function(j){

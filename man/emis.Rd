@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis.R
 \name{emis}
 \alias{emis}
-\title{Emissions estimation hourly for the of the week}
+\title{Estimation of hourly emissions}
 \usage{
 emis(veh, lkm, ef, speed = 34, agemax = if (!inherits(x = veh, what =
   "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile, hour = 24,
@@ -61,12 +61,12 @@ co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
 lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
-lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-         lef[length(lef)],lef[length(lef)])
+length(lef) != ncol(pc1)
+#emis change length of 'ef' to match ncol of 'veh'
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
              profile = pc_profile, hour = 24, day = 7, array = T)
 class(E_CO)
-lpc <- list(pc1,pc1)
+lpc <- list(pc1, pc1)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
                hour = 2, day = 1, array = T)
 # Entering wrong results

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vehicular Emissions Inventory (VEIN) function. — vein • vein</title>
+<title>vein: a package for elaborating vehicular emissions inventories — vein • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,101 +83,47 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Vehicular Emissions Inventory (VEIN) function.</h1>
+    <h1>vein: a package for elaborating vehicular emissions inventories</h1>
     </div>
 
     
-    <p><code>vein</code> produces an structure of directories and scripts
-in order to run vein. It is required to know the vehicular composition of the
-fleet.</p>
+    <p>This package provides functions to arrange traffic data, prepare
+emission factors, estimate emissions and process emissions</p>
     
 
-    <pre class="usage"><span class='fu'>vein</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>9</span>),
-  <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>name</th>
-      <td><p>one word indicating the name of the main directory for running
-vein</p></td>
-    </tr>
-    <tr>
-      <th>vehcomp</th>
-      <td><p>Vehicular composition of the fleet. It is required a named
-numerical vector with the names "PC", "LCV", "HGV", "BUS" and "MC". In the
-case that tthere are no vehiles for one category of the composition, the name
-should be included with the number zero, for example PC = 0. The maximum
-number allowed is 99 per category.</p></td>
-    </tr>
-    <tr>
-      <th>scripts</th>
-      <td><p>Boolean value for aggregate or no scripts.</p></td>
-    </tr>
-    <tr>
-      <th>show.dir</th>
-      <td><p>Boolean alue for printing the created directories.</p></td>
-    </tr>
-    <tr>
-      <th>show.scripts</th>
-      <td><p>Boolean value for printing the created scripts.</p></td>
-    </tr>
-    <tr>
-      <th>clear</th>
-      <td><p>Boolean value for removing recursively the directory and create
-another one.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Structure of directories and scripts for automating compilation of
-vehicular emissions inventory. The structure can be used with other type of
-sources of emissions. The structure of the directories is: daily, ef, emi,
-est, images, network and veh. This structure is a suggestion and the user can
-use another.</p>
-<p>daily: it is for storing the profiles saved as .csv files</p>
-<p>ef: it is for storing the emission factors data-frame, similar to data(fe2015)
-but including one column for each of the categories of the vehicular
-composition. For intance, if PC = 5, there should be 5 columns with emission
-factors in this file. If LCV = 5, another 5 columns should be present, and
-so on.</p>
-<p>emi: Directory for saving the estimates. It is suggested to use .rds
-extension instead of .rda.</p>
-<p>images: Directory for saving images.</p>
-<p>network: Directory for saving the road network with the required attributes.
-This file will includes the vehicular flow per street to be used by age*
-functions.</p>
-<p>veh: Directory for storing the distribution by age of use of each category of
-the vehicular composition. Those are data-frames with number of columns with
-the age distribution and number of rows as the number of streets. The class
-of these objects is "Vehicles". Future versions of vein will generate
-Vehicles objects with the explicit spatial component.</p>
-<p>The name of the scripts and directories are based on the vehicular
-composition, however, there is included a file named vein.R which is just
-an R script to estimate all the emissions. It is important to note that the
-user must add the emission factors for other pollutants. Also, this function
-creates the scripts input.R where the user must specify the inputs for the
-estimation of emissions of each category. The user can rename these scripts.</p>
+    <p><strong>1) Inventory</strong></p>
+<p>It is recommended to start with the function <code><a href='inventory.html'>inventory</a></code> which
+produces a set of directories and scripts to run vein.
+    <strong>2) Traffic data</strong></p>
+<p>The user must count with traffic data at each street at least for one hour.
+The format of the data must be spatial, either "SpatialLinesDataFrame" or
+an object class of "sf". Then the user must use any ob tje age functions:
+<code><a href='age_ldv.html'>age_ldv</a></code>, <code><a href='age_hdv.html'>age_hdv</a></code>, <code><a href='age_moto.html'>age_moto</a></code> or
+<code><a href='my_age.html'>my_age</a></code>. The outputs of these functions can be saved in
+directory 'veh' with the extension .rds.
+    <strong>3) Emission factors</strong></p>
+<p>The user must chosse a type of emission factor: from Copert with the
+<code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> or <code><a href='ef_hdv_speed.html'>ef_hdv_speed</a></code>, from local sources
+as one constant emission factors by age of use of vehicles with
+<code><a href='EmissionFactorsList.html'>EmissionFactorsList</a></code> or as a merge between both with
+<code><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></code> or <code><a href='ef_hdv_scaled.html'>ef_hdv_scaled</a></code>.
+    <strong>4) Estimating emissions</strong></p>
+<p>Once all information is obtained, the user can estimate the emissions with
+<code><a href='emis.html'>emis</a></code>, <code><a href='emis_cold.html'>emis_cold</a></code> or other.
+    <strong>5) Processing the emissions</strong></p>
+<p>The function for processing the emissions ins <code><a href='emis_post.html'>emis_post</a></code>.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Do not run</span>
-<span class='co'># setwd("path")</span>
-<span class='fu'>vein</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"cityVEIN"</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
