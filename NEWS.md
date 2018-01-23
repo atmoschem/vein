@@ -1,8 +1,7 @@
-## vein v0.2.3.9001-v0.2.3.9004 (Release date: 2018-01-18)
+## vein v0.2.3.9000-v0.2.3.9005 (Release date: 2018-01-20)
 - sp now imported instead of Depend.
 - Improved Documentation
-## vein v0.2.3.9000 (Release date: 2018-01-18)
-- vein and emis_save functions. This is a pre-release.
+- Minor fix
 ## vein v0.2.2-30 (Release date: 2018-01-10)
 - Speciation of NMHC
 ## vein v0.2.2-29 (Release date: 2017-12-27)

@@ -46,22 +46,25 @@
 #' Vehicles objects with the explicit spatial component.
 #'
 #' The name of the scripts and directories are based on the vehicular
-#' composition, however, there is included a file named vein.R which is just
+#' composition, however, there is included a file named main.R which is just
 #' an R script to estimate all the emissions. It is important to note that the
 #' user must add the emission factors for other pollutants. Also, this function
 #' creates the scripts input.R where the user must specify the inputs for the
-#' estimation of emissions of each category. The user can rename these scripts.
+#' estimation of emissions of each category. Also, there is a file called
+#' traffic.R to generates objects of class "Vehicles".
+#' The user can rename these scripts.
 #' @export
 #' @examples \dontrun{
 #' # Do not run
-#' # setwd("path")
+#' getwd()
 #' vein(name = "cityVEIN", show.dir = T)
+#' setwd("cityVEIN")
 #' }
 vein <- function(name,
                  vehcomp = c(PC = 4, LCV = 5, HGV = 5, BUS = 3, MC = 9),
                  scripts = TRUE,
-                 show.dir = FALSE,
-                 show.scripts = FALSE,
+                 show.dir = TRUE,
+                 show.scripts = TRUE,
                  clear = TRUE){
   # directorys
   dovein <- function(){
@@ -147,70 +150,78 @@ vein <- function(name,
     for (i in 1:length(lista)){
       sink(paste0(lista[[i]], "/input.R"))
       cat("# Network \n")
-      cat("net <- readRDS('PATH')\n")
+      cat("net <- readRDS('network/net.rds')\n")
       cat("lkm <- net$lkm\n")
-      cat("speed <- readRDS('PATH')\n\n")
+      cat("speed <- readRDS('network/speed.rds')\n\n")
       cat("# Vehicles\n")
-      cat("veh <- readRDS('PATH')\n")
+      cat("veh <- readRDS('veh/OBJECT.rds') # Put object\n")
       cat("# Profiles\n")
       cat("pc <- read.csv('daily/pc.csv') #Change accordingly\n")
       cat("pcf <- read.csv('daily/pcf.csv') #For Cold Starts\n\n")
       cat("# Emission Factors data-set\n")
-      cat("efe <- read.csv('ef/ef2014.csv')\n")
+      cat("efe <- read.csv('ef/fe2015.csv')\n")
       cat("efeco <- 10 #Number of column of the respective EF\n")
       cat("efero <- ifelse(is.data.frame(veh), ncol(veh), ncol(veh[[1]]))\n")
       cat("# efero reads the number of the vehicle distribution\n")
-      cat("# Evaporative Emission Factors\n")
-      cat("evap <- read.csv('PATH')\n")
       cat("trips_per_day <- 5\n\n")
       cat("# Mileage, Check name of categories with names(fkm)\n")
       cat("data(fkm)\n")
       cat("pckm <- fkm[['KM_PC_E25']](1:efero)\n")
       cat("pckm <- cumsum(pckm)\n\n")
       cat("# Sulphur\n")
-      cat("sulphur <- 50 # ppm\n")
+      cat("sulphur <- 50 # ppm\n\n\n")
       cat("# Input and Output\n\n")
       cat(paste0("directory <- ", deparse(lista3[[i]]), "\n"))
       cat("vfuel <- 'E_25' \n")
-      cat("vsize <- '<=1400' \n")
-      cat("vname <- 'PC'\n")
+      cat("vsize <- '' # It can be small/big/<=1400, one word\n")
+      cat("vname <- ", deparse(lista3[[i]]), "\n")
       cat("\n\n")
       cat("# CO \n")
       cat("pol <- 'CO' \n")
       cat("x <- efe[1:efero & efe$Pollutant == pol, efeco]\n")
       cat("lefe <- EmissionFactorsList(x)\n")
-      cat("array_x <- emis(veh = veh, lkm = lkm,ef = lefe,  speed = speed,\n")
+      cat("array_x <- emis(veh = veh, lkm = lkm, ef = lefe,  speed = speed,\n")
       cat("                profile = profile)\n")
       cat("x_DF <- emis_post(arra = array_x, veh = vname, size = vsize,\n")
-      cat("                  fuel = vfuel, pollutant = pol, by = 'veh'\n")
+      cat("                  fuel = vfuel, pollutant = pol, by = 'veh')\n")
       cat("x_STREETS <- emis_post(arra = array_x, pollutant = pol,\n")
       cat("                       by = 'streets_wide') \n")
-      cat("saveRDS(x_DF, file = paste0('emi/', directory, '/', pol, '_',\n")
-      cat("        vname, '_', vsize, '_', vfuel,'_DF.rds')) \n")
-      cat("saveRDS(x_STREETS, file = paste0('emi/', directory, '/', pol, '_',\n")
-      cat("        vname, '_', vsize, '_', vfuel,'_STREETS.rds')) \n")
+      cat("saveRDS(x_DF, file = paste0('emi/pol_', ", lista3[i],", '_DF'))\n")
+      cat("saveRDS(x_DF, file = paste0('emi/pol_', ", lista3[i],", '_STREETS'))\n")
       cat("rm(array_x); rm(x_DF); rm(x_STREETS); rm(pol); rm(lefe)\n\n")
       cat("# Other Pollutants...")
       sink()
     }
-    sink(paste0(name, "/vein.R"))
+    sink(paste0(name, "/main.R"))
+    cat("setwd(", deparse(name), ")\n")
     cat("library(vein)\n")
     cat("sessionInfo()\n\n")
-    cat("# Estimation\n")
+    cat("# Network\n")
+    cat("# ...\n\n")
+    cat("# Traffic\n")
+    cat("source('traffic.R') # Edit traffic.R\n\n")
+    cat("# Estimation # Edit each input.R\n")
     cat("dirs <- list.dirs(path = ", deparse(paste0(name, "/est")), ")\n")
     cat("for (i in 2:length(dirs)){\n")
     cat( "  source(paste0(dirs[i], '/input.R'))\n" )
     cat("}\n")
     sink()
+    sink(paste0(name, "/traffic.R"))
+    cat("PC_01 <- age_ldv(x = net$ldv, name = 'PC_01', k = 1/4*3/4)\n")
+    cat("saveRDS(PC_01, file = 'veh/PC_01.rds')\n")
+    cat(" # Other...\n")
+    sink()
+
   }
+
   if(show.dir){
     dirs <- list.dirs(path = name, full.names = T, recursive = T)
     cat("Directories:\n")
     print(dirs)
-  }
+  } else {NULL}
   if(show.scripts){
     sc <- list.files(path = name, pattern = ".R", recursive = T)
     cat("Scripts:\n")
     print(sc)
-  }
+  } else {NULL}
 }
