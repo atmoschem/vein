@@ -1,7 +1,10 @@
-## vein v0.2.3.9000-v0.2.3.9005 (Release date: 2018-01-20)
-- sp now imported instead of Depend.
+## vein v0.2.3 (Release date: 2018-01-23) (Fernanda)
+- sp now imported instead of Depend #47.
 - Improved Documentation
 - Minor fix
+- emis and emis_cold adjust the length of ef to match ncol of veh.
+- Fix #42
+____________________________________________________________________________________
 ## vein v0.2.2-30 (Release date: 2018-01-10)
 - Speciation of NMHC
 ## vein v0.2.2-29 (Release date: 2017-12-27)
@@ -12,8 +15,6 @@
 - Fix #2: Documentation of ef_nitro.
 ## vein v0.2.2-26 (Release date: 2017-10-08)
 - Fix #35
-____________________________________________________________________________________
-
 ## vein v0.2.2-25 (Release date: 2017-09-28)
 - Fix #32
 ## vein v0.2.2-24 (Release date: 2017-09-19)
@@ -59,38 +60,24 @@ ________________________________________________________________________________
 ## vein v0.2.2-5 (Release date: 2017-08-07)
 - Update evaporative emissions emis_evap  to include lists of 'Vehicles' data-
 frame
-____________________________________________________________________________________
-
 ## vein v0.2.2-4 (Release date: 2017-08-05)
-
 - emis and emis_cold include stop when ncol(veh) != length(ef) and when
 veh is a list, length(veh) != ncol(speed). In emis agemax determined by ncol of
 vehicles
 - Fix demo
-
-____________________________________________________________________________________
-
 ## vein v0.2.2-3 (Release date: 2017-08-03)
-
 - speed in emis and emis cold is now a dataframe with columns as number of hours.
 - netspeed argument isList changed to scheme
 - Versions with three numbers. Fix speciate for "iag"
 - Corrected sysdata for PC with gasoline euro PRE pollutant HC
 - In emis, emis_cold and emis_paved: agemax  =  ncol(veh) by default
-
-____________________________________________________________________________________
-
 ### vein v0.2.1-7 (Chiba) (Release date: 2017-05-18)
-
 - Evaporative class with units d/day according emission guidelines EEA Tier 2.
 Fix some documentation errors. ef_evap return unit (g). Fix speciate and some
 documentation. field of data 'net' now has units
 - Adds several S3 classes Vehicles, Speed, EmissionFactors, EmissionFactorsList
 Emission, EmissionsArray, EmissionsList and methods print, plot and summary
-____________________________________________________________________________________
-
 ### vein v0.1.1.1 (Release date: 2017-03-25)
-
 - Added some categories to bcom
 - To avoid confusion with the REMI model (www.remi.com),
 the name was changed to Vehicular Emissions INventory Model (vein).

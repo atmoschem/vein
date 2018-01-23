@@ -1,4 +1,4 @@
-#' Emissions estimation hourly for the of the week
+#' Estimation of hourly emissions
 #'
 #' @description \code{emis} estimates vehicular emissions as the product of the
 #' vehicles on a road, length of the road, emission factor avaliated at the
@@ -40,12 +40,12 @@
 #' cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
 #' lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
 #'                      f = "G",p = "CO", eu=co1$Euro_LDV)
-#' lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-#'          lef[length(lef)],lef[length(lef)])
+#' length(lef) != ncol(pc1)
+#' #emis change length of 'ef' to match ncol of 'veh'
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
 #'              profile = pc_profile, hour = 24, day = 7, array = T)
 #' class(E_CO)
-#' lpc <- list(pc1,pc1)
+#' lpc <- list(pc1, pc1)
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
 #'                hour = 2, day = 1, array = T)
 #' # Entering wrong results
@@ -66,20 +66,34 @@ emis <- function (veh, lkm, ef, speed = 34,
                   profile, hour = 24, day = 7,
                   array = T) {
   if(units(lkm)$numerator == "m" ){
-    warning("Units of lkm is 'm' ")
+    stop("Units of lkm is 'm'")
   }
   lkm <- as.numeric(lkm)
   speed <- as.data.frame(speed)
   for (i  in 1:ncol(speed) ) {
     speed[, i] <- as.numeric(speed[, i])
   }
+  # veh is "Vehicles" data-frame
   if (!inherits(x = veh, what = "list")) {
       veh <- as.data.frame(veh)
       for (i  in 1:ncol(veh) ) {
         veh[,i] <- as.numeric(veh[,i])
       }
-      if (ncol(veh) != length(ef)){
-        stop("Number of columns in 'veh' must be the same as length of ef")
+      if(ncol(veh) != length(ef)){
+        message("Number of columns of 'veh' is different than length of 'ef'")
+        cat("\nadjusting length of ef to the number of colums of 'veh'\n")
+        if(ncol(veh) > length(ef)){
+          for(i in (ncol(veh) - length(ef)):ncol(veh) ){
+            ef[[i]] <- ef[[length(ef)]]
+          }
+          if (ncol(veh) < length(ef)){
+            ff <- list()
+            for(i in 1:ncol(veh)){
+              ff[[i]] <- ef[[i]]
+            }
+            ef <- ff
+          }
+        }
       }
 
       if(array == F){
@@ -102,6 +116,7 @@ emis <- function (veh, lkm, ef, speed = 34,
               " kg emissions in ", hour, " hours and ", day, " days")
       return(EmissionsArray(d))
       }
+  # veh is a list of "Vehicles" data-frames
   } else {
     if (ncol(veh[[1]]) != length(ef)){
       stop("Number of columns in 'veh' must be the same as length of ef")

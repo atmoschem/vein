@@ -82,8 +82,8 @@ lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
 # Mohtly average temperature 18 Celcius degrees
 lefc <- ef_ldv_cold_list(df = co1, ta = 18, cc = "<=1400", f = "G",
                           eu = co1$Euro_LDV, p = "CO" )
-lefec <- c(lefc,lefc[[length(lefc)]],lefc[[length(lefc)]],
-            lefc[[length(lefc)]],lefc[[length(lefc)]],lef[[length(lef)]])
+length(lefc) != ncol(pc1)
+#emis change length of 'ef' to match ncol of 'veh'
 class(lefec)
 PC_CO_COLD <- emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
 beta = pcf, speed = speed, profile = pc_profile, hour = 24,

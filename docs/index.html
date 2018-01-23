@@ -98,13 +98,13 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.3.9004</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.3</span>
 <span class="kw">library</span>(devtools)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 <p>or</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.2-25</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.3</span>
 <span class="kw">install.packages</span>(<span class="st">"vein"</span>)
 <span class="kw">library</span>(vein)</code></pre></div>
 </div>
@@ -129,7 +129,7 @@
 <a href="#how-to-use-vein" class="anchor"></a>How to use vein</h3>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, pre-processing activity data, preparing emissions factors, estimating the emissions and post-processing of emissions in maps and databases.”</p>
 <p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>vein</strong> which creates a structured set of directories and scripts to run VEIN. Please, read the examples in the documentation of each function and run the demo.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vein::<span class="kw"><a href="reference/vein.html">vein</a></span>(<span class="dt">name =</span> <span class="st">"YourCity"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vein<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/vein/topics/inventory">inventory</a></span>(<span class="dt">name =</span> <span class="st">"YourCity"</span>)</code></pre></div>
 </div>
 <div id="issues" class="section level3">
 <h3 class="hasAnchor">

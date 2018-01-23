@@ -55,7 +55,7 @@ if you want to properly run the demo, install:
 VEIN can be installed via CRAN or github
 
 ```{r eval=F}
-# 0.2.3.9004
+# 0.2.3
 library(devtools)
 install_github("atmoschem/vein")
 library(vein)
@@ -65,11 +65,10 @@ demo(VEIN)
 or
 
 ```{r eval=F}
-# 0.2.2-25
+# 0.2.3
 install.packages("vein")
 library(vein)
 ```
-
 
 
 ## Classes
@@ -100,7 +99,7 @@ set of directories and scripts to run VEIN. Please, read the examples in the
 documentation of each function and run the demo.
 
 ```{r eval = FALSE}
-vein::vein(name = "YourCity")
+vein::inventory(name = "YourCity")
 ```
 
 
