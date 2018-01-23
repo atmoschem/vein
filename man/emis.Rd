@@ -4,7 +4,7 @@
 \alias{emis}
 \title{Emissions estimation hourly for the of the week}
 \usage{
-emis(veh, lkm, ef, speed = 1, agemax = if (!inherits(x = veh, what =
+emis(veh, lkm, ef, speed = 34, agemax = if (!inherits(x = veh, what =
   "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile, hour = 24,
   day = 7, array = T)
 }

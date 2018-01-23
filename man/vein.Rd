@@ -5,7 +5,7 @@
 \title{Vehicular Emissions Inventory (VEIN) function.}
 \usage{
 vein(name, vehcomp = c(PC = 4, LCV = 5, HGV = 5, BUS = 3, MC = 9),
-  scripts = TRUE, show.dir = FALSE, show.scripts = FALSE, clear = TRUE)
+  scripts = TRUE, show.dir = TRUE, show.scripts = TRUE, clear = TRUE)
 }
 \arguments{
 \item{name}{one word indicating the name of the main directory for running
@@ -57,11 +57,13 @@ of these objects is "Vehicles". Future versions of vein will generate
 Vehicles objects with the explicit spatial component.
 
 The name of the scripts and directories are based on the vehicular
-composition, however, there is included a file named vein.R which is just
+composition, however, there is included a file named main.R which is just
 an R script to estimate all the emissions. It is important to note that the
 user must add the emission factors for other pollutants. Also, this function
 creates the scripts input.R where the user must specify the inputs for the
-estimation of emissions of each category. The user can rename these scripts.
+estimation of emissions of each category. Also, there is a file called
+traffic.R to generates objects of class "Vehicles".
+The user can rename these scripts.
 }
 \description{
 \code{vein} produces an structure of directories and scripts
@@ -71,7 +73,8 @@ fleet.
 \examples{
 \dontrun{
 # Do not run
-# setwd("path")
+getwd()
 vein(name = "cityVEIN", show.dir = T)
+setwd("cityVEIN")
 }
 }
