@@ -55,7 +55,7 @@ if you want to properly run the demo, install:
 VEIN can be installed via CRAN or github
 
 ```{r eval=F}
-# 0.2.3
+# 0.2.4
 library(devtools)
 install_github("atmoschem/vein")
 library(vein)
