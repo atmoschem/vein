@@ -1,3 +1,6 @@
+## vein v0.2.4 (Release date: 2018-01-31)
+- new data set names profiles data(profiles)
+
 ## vein v0.2.3 (Release date: 2018-01-23) (Fernanda)
 - sp now imported instead of Depend #47.
 - Improved Documentation
