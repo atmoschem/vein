@@ -36,16 +36,11 @@ mentioned [here](https://www.github.com/r-spatial/sf).
 
 After installing system dependencies, you need these packages:
 
+- [sf](https://github.com/r-spatial/sf)
 - [sp](https://github.com/edzer/sp/) 
 - [units](https://github.com/edzer/units/) 
-- [raster](http://cran.r-project.org/package=raster)
-- [rgdal](https://github.com/cran/rgdal)
-- [rgeos](https://github.com/cran/rgeos)
-- [sf](https://github.com/r-spatial/sf)
 
-At the current version of vein, sf is not imported but suggested. Future version
-of vein will import or depend on sf, so it is recommended to install it now. Also,
-if you want to properly run the demo, install:
+In order to run the demo, this package is also needed:
 
 - [ggplot2](https://github.com/tidyverse/ggplot2)
 
@@ -54,8 +49,8 @@ if you want to properly run the demo, install:
 
 VEIN can be installed via CRAN or github
 
-```{r eval=F}
-# 0.2.4
+```{r eval = F}
+# 0.3.0
 library(devtools)
 install_github("atmoschem/vein")
 library(vein)
@@ -70,21 +65,28 @@ install.packages("vein")
 library(vein)
 ```
 
+## What is new on 0.3.0 ?
 
-## Classes
+I decided to jump into a new 'minor' version because it brings lots of cool
+improvements.
 
-VEIN has the following classes:
+- vein imports **sf** functions.
+- R packages -raster-, -rgdal- and -rgeos- not needed anymore.
+- vein now imports **data-table**.
+- Add class GriddedEmissionsArray.
+- Fix #28, data.table imported in emis_grid. Now it is very fast!
+- Fix #49: Documentation in inventory est.
+- Fix #50: Fix repetition of x_DF.
+- Fix #51: deparse text.
+- Fix #52: separate objects in rm with ','
+- Fix #55.
+- Minor fix on demo(VEIN).
+- emis and emis_cold adjust length of ef by length of columns of first
+element of the list of data-frames.
+- Revised all examples.
 
-- Vehicles (1/h) 
-- Speed  (km/h)
-- EmissionFactors (g/km)
-- EmissionFactorsList (g/km)
-- Emissions  (g/h)
-- EmissionsArray  (g/h)
-- EmissionsList  (g/h)
-- Evaporative  (g/d)
+Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
-Each class has the methods print, plot and summary.
 
 ### How to use vein
 
@@ -94,14 +96,13 @@ VEIN consist of: "Elaboration of vehicular emissions inventories,
     in maps and databases."
 
 This implies the use of several functions in a coordinates ans structured way,
-therefore it is added the new function **vein** which creates a structured
+therefore it is added the new function **inventory** which creates a structured
 set of directories and scripts to run VEIN. Please, read the examples in the
-documentation of each function and run the demo.
+documentation of each function and run the demo. 
 
 ```{r eval = FALSE}
 vein::inventory(name = "YourCity")
 ```
-
 
 ###  Issues
 
@@ -113,29 +114,17 @@ Thanks and enjoy VEIN!
 
 ### **future steps**
 
-- Migrate to [sf](https://github.com/r-spatial/sf/)
 - Estimation of evaporative emissions with Copert Tier 3
 - More speciations
-- Solve issues
 - Vignettes, blogs and a book (hopefully released in 2018)
 
 #### Note:
-The current versioning in VEIN is X.X.X-X. This is because version 0.2.2 is
-in a paper on GMDD under open review: 
+The paper of vein on GMDD under open review. If you use VEIN, please, cite it:
 
 Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E.,
   Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R
   package for bottom-up Vehicular Emissions Inventories Geosci.
   Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, in
   review, 2017.
-
-However, once the paper is ready, the new versioning of VEIN will be:
-
-- CRAN: X.X.X
-- GITHUB: X.X.X-X (which will be more frequent from now)
-- .9000 developemnt or experimental.
-
-For example: Github: 0.2.2-30, next relase would be CRAN: 0.2.3.
-If you use VEIN, please, cite it:
 
 https://doi.org/10.5194/gmd-2017-193

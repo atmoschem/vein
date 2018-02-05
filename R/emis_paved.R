@@ -30,6 +30,8 @@
 #' emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65,
 #'                        sL1 = sL1, sL2 = sL1/4, sL3 = sL1/16, sL4 = sL1/32,
 #'                        W = W)
+#' class(emi)
+#' head(emi)
 #' }
 emis_paved <- function(veh, lkm, k, sL1, sL2, sL3, sL4, W) {
   message("Estimation of dry hours only, aggregation should include rainy hours")

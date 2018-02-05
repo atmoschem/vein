@@ -15,7 +15,9 @@
 #' @rdname GriddedEmissionsArray
 #' @aliases GriddedEmissionsArray print.GriddedEmissionsArray
 #' summary.GriddedEmissionsArray plot.GriddedEmissionsArray
-#' @import sf
+#' @importFrom sf st_set_geometry
+#' @importFrom grDevices terrain.colors
+#' @importFrom utils head
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -36,10 +38,8 @@
 #' #vehicles newer than pre-euro
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 #' cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
-#' lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
+#' lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
 #'                      f = "G",p = "CO", eu=co1$Euro_LDV)
-#' lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-#'          lef[length(lef)],lef[length(lef)])
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile, hour = 24, day = 7, array = T)
 #' class(E_CO)
@@ -51,29 +51,32 @@
 #' names(net)
 #' E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
 #' head(E_CO_g) #class sf
-#' gr <- GriddedEmissionsArray(E_CO_g, rows = 23, cols = 19, times = 168)
-#' E_CO_g$V138 <- as.numeric(E_CO_g$V138)
+#' library(mapview)
+#' mapview(E_CO_g, zcol= "V1", legend = T)
+#' gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168)
+#' plot(gr)
 #' }
 #' @export
-GriddedEmissionsArray <- function(x, ..., rows, cols, times = ncol(x)) {
-  if (class(x) == "SpatialPolygonsDataFrame") {
-    df <- x@data
-  } else if (class(x) == "sf") {
+GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x)) {
+  x$id <- NULL
+  if(inherits(x, "Spatial")){
+  df <- sf::st_as_sf(x)
+  df <- sf::st_set_geometry(x, NULL)
+  } else if(inherits(x, "sf")){
     df <- sf::st_set_geometry(x, NULL)
-  } else if(is.data.frame(x) | is.matrix(x)){
-      df <- x
   }
   for (i in 1:ncol(df)) {
     df[, i] <- as.numeric(df[, i])
   }
-  df$id <- NULL
-  e <- array(unlist(df), c(rows, cols, zlev, times))
+  e <- simplify2array(lapply(1:ncol(df), function(i){
+    m <- matrix(df[, i], nrow = rows, ncol = cols, byrow = T)
+    m <- m[nrow(m):1, ]
+    }))
   class(e) <- c("GriddedEmissionsArray",class(e))
   cat("This GriddedEmissionsArray has:\n",
-      dim(e)[1], "lat points\n",
-      dim(e)[2], "lon points\n",
-      dim(e)[3], "Vertical levels\n",
-      dim(e)[4], "hours\n")
+      rows, "lat points\n",
+      cols, "lon points\n",
+      times,  "hours\n")
   return(e)
 }
 
@@ -86,9 +89,8 @@ if (is.array(e)) {
     cat("This GriddedEmissionsArray has:\n",
         dim(e)[1], "lat points\n",
         dim(e)[2], "lon points\n",
-        dim(e)[3], "Vertical levels\n",
-        dim(e)[4], "hours\n\n")
-  print(head(e))
+        dim(e)[3], "hours\n\n")
+  print(utils::head(e))
   }
 }
 
@@ -97,17 +99,14 @@ if (is.array(e)) {
 #' @export
 summary.GriddedEmissionsArray <- function(object, ...) {
   e <- object
-  summary(e[ , , 0 , ])
+  summary(e[ , ,  ])
   }
 
 #' @rdname GriddedEmissionsArray
 #' @method plot GriddedEmissionsArray
 #' @export
-plot.GriddedEmissionsArray <- function(x, ...) {
+plot.GriddedEmissionsArray <- function(x, ..., times = 1) {
   e <- x
-  graphics::par(mfrow=c(3, 3), tcl = -0.5)
-  for (i in 1:9){
-    graphics::image(e[ , , 0 , i], col = terrain.colors(12))
-  }
+  graphics::image(e[ , , times], col = grDevices::terrain.colors(12))
   graphics::par(mfrow = c(1, 1))
 }

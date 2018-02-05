@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
+  <a href="/index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -82,14 +82,11 @@
 <a href="#packages-needed" class="anchor"></a>Packages needed</h3>
 <p>After installing system dependencies, you need these packages:</p>
 <ul>
+<li><a href="https://github.com/r-spatial/sf">sf</a></li>
 <li><a href="https://github.com/edzer/sp/">sp</a></li>
 <li><a href="https://github.com/edzer/units/">units</a></li>
-<li><a href="http://cran.r-project.org/package=raster">raster</a></li>
-<li><a href="https://github.com/cran/rgdal">rgdal</a></li>
-<li><a href="https://github.com/cran/rgeos">rgeos</a></li>
-<li><a href="https://github.com/r-spatial/sf">sf</a></li>
 </ul>
-<p>At the current version of vein, sf is not imported but suggested. Future version of vein will import or depend on sf, so it is recommended to install it now. Also, if you want to properly run the demo, install:</p>
+<p>In order to run the demo, this package is also needed:</p>
 <ul>
 <li><a href="https://github.com/tidyverse/ggplot2">ggplot2</a></li>
 </ul>
@@ -98,7 +95,7 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.2.4</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.0</span>
 <span class="kw">library</span>(devtools)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
@@ -109,26 +106,31 @@
 <span class="kw">library</span>(vein)</code></pre></div>
 </div>
 </div>
-<div id="classes" class="section level2">
+<div id="what-is-new-on-0-3-0" class="section level2">
 <h2 class="hasAnchor">
-<a href="#classes" class="anchor"></a>Classes</h2>
-<p>VEIN has the following classes:</p>
+<a href="#what-is-new-on-0-3-0" class="anchor"></a>What is new on 0.3.0 ?</h2>
+<p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
 <ul>
-<li>Vehicles (1/h)</li>
-<li>Speed (km/h)</li>
-<li>EmissionFactors (g/km)</li>
-<li>EmissionFactorsList (g/km)</li>
-<li>Emissions (g/h)</li>
-<li>EmissionsArray (g/h)</li>
-<li>EmissionsList (g/h)</li>
-<li>Evaporative (g/d)</li>
+<li>vein imports <strong>sf</strong> functions.</li>
+<li>R packages -raster-, -rgdal- and -rgeos- not needed anymore.</li>
+<li>vein now imports <strong>data-table</strong>.</li>
+<li>Add class GriddedEmissionsArray.</li>
+<li>Fix #28, data.table imported in emis_grid. Now it is very fast!</li>
+<li>Fix #49: Documentation in inventory est.</li>
+<li>Fix #50: Fix repetition of x_DF.</li>
+<li>Fix #51: deparse text.</li>
+<li>Fix #52: separate objects in rm with ‘,’</li>
+<li>Fix #55.</li>
+<li>Minor fix on demo(VEIN).</li>
+<li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
+<li>Revised all examples.</li>
 </ul>
-<p>Each class has the methods print, plot and summary.</p>
+<p>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.md">NEWS</a></p>
 <div id="how-to-use-vein" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-to-use-vein" class="anchor"></a>How to use vein</h3>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, pre-processing activity data, preparing emissions factors, estimating the emissions and post-processing of emissions in maps and databases.”</p>
-<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>vein</strong> which creates a structured set of directories and scripts to run VEIN. Please, read the examples in the documentation of each function and run the demo.</p>
+<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, read the examples in the documentation of each function and run the demo.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vein<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/vein/topics/inventory">inventory</a></span>(<span class="dt">name =</span> <span class="st">"YourCity"</span>)</code></pre></div>
 </div>
 <div id="issues" class="section level3">
@@ -143,25 +145,15 @@
 <a href="#future-steps" class="anchor"></a><strong>future steps</strong>
 </h3>
 <ul>
-<li>Migrate to <a href="https://github.com/r-spatial/sf/">sf</a>
-</li>
 <li>Estimation of evaporative emissions with Copert Tier 3</li>
 <li>More speciations</li>
-<li>Solve issues</li>
 <li>Vignettes, blogs and a book (hopefully released in 2018)</li>
 </ul>
 <div id="note" class="section level4">
 <h4 class="hasAnchor">
 <a href="#note" class="anchor"></a>Note:</h4>
-<p>The current versioning in VEIN is X.X.X-X. This is because version 0.2.2 is in a paper on GMDD under open review:</p>
+<p>The paper of vein on GMDD under open review. If you use VEIN, please, cite it:</p>
 <p>Ibarra-Espinosa, S., Ynoue, R., O’Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories Geosci. Model Dev. Discus, <a href="https://doi.org/10.5194/gmd-2017-193" class="uri">https://doi.org/10.5194/gmd-2017-193</a>, in review, 2017.</p>
-<p>However, once the paper is ready, the new versioning of VEIN will be:</p>
-<ul>
-<li>CRAN: X.X.X</li>
-<li>GITHUB: X.X.X-X (which will be more frequent from now)</li>
-<li>.9000 developemnt or experimental.</li>
-</ul>
-<p>For example: Github: 0.2.2-30, next relase would be CRAN: 0.2.3. If you use VEIN, please, cite it:</p>
 <p><a href="https://doi.org/10.5194/gmd-2017-193" class="uri">https://doi.org/10.5194/gmd-2017-193</a></p>
 </div>
 </div>
@@ -209,7 +201,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
 </div>
 
       </footer>

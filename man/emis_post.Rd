@@ -61,8 +61,6 @@ co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
 lef <- ef_ldv_scaled(co1, cod, v = "PC",  cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
-lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-         lef[length(lef)],lef[length(lef)])
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile)
 # arguments required: arra, pollutant ad by
@@ -84,5 +82,6 @@ E_COv2 <- emis(veh = lpc,  lkm = net$lkm, ef = lef, speed = speed[, 1:24],
 plot(E_COv2)
 E_CO_DFv2 <- emis_post(arra = E_COv2,  veh = "PC", size = "<1400", fuel = "G",
 pollutant = "CO", by = "veh")
+head(E_CO_DFv2)
 }
 }

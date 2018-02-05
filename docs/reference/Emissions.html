@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -147,8 +147,8 @@ dataframe.</p>
 <span class='co'>#vehicles newer than pre-euro</span>
 <span class='no'>co1</span> <span class='kw'>&lt;-</span> <span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, ] <span class='co'>#24 obs!!!</span>
 <span class='no'>cod</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>1</span>:<span class='fl'>24</span>]*<span class='fu'>c</span>(<span class='no'>cod1</span>,<span class='no'>cod2</span>),<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>25</span>:<span class='fu'>nrow</span>(<span class='no'>co1</span>)])
-<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></span>(<span class='no'>co1</span>, <span class='no'>cod</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>,
-                     <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>eu</span><span class='kw'>=</span><span class='no'>co1</span>$<span class='no'>Euro_LDV</span>)
+<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></span>(<span class='no'>co1</span>, <span class='no'>cod</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,  <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
+                     <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>eu</span><span class='kw'>=</span><span class='no'>co1</span>$<span class='no'>Euro_LDV</span>)
 <span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>lef</span>,<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],
          <span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)])
 <span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis.html'>emis</a></span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>41</span>,
@@ -181,7 +181,7 @@ dataframe.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
 </div>
 
       </footer>

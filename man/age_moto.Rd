@@ -35,8 +35,8 @@ Returns amount of vehicles at each age
 \examples{
 \dontrun{
 # Do not run
-m <- rnorm(100, 300, 10)
-MOTO_E25_500 <- age_moto(x = m,name = "M_E25_500")
+mc <- rnorm(100, 300, 10)
+MOTO_E25_500 <- age_moto(x = mc, name = "M_E25_500")
 plot(MOTO_E25_500)
 }
 }

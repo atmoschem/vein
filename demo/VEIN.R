@@ -1,7 +1,9 @@
 library(vein)
+library(sf)
+library(sp)
 library(units)
 library(ggplot2)
-library(RColorBrewer)
+#library(RColorBrewer)
 # library(DiagrammeR)
 
 
@@ -48,42 +50,14 @@ df2 <- data.frame(TF = as.numeric(unlist(pc_profile)),
 df2$Day <- factor(df2$Day,
                   levels =  c("Monday", "Tuesday", "Wednesday", "Thursday",
                               "Friday", "Saturday", "Sunday"))
-ggplot(df2, aes(x = Hour, y = TF, colour = as.factor(Day),
-                shape = as.factor(Day))) + geom_point(size=2)  +
-  geom_line() + theme_bw() + labs(x="Hours", y="TF") +
+ggplot(df2, aes(x = Hour, y = TF, colour = Day,
+                shape = Day)) + geom_point(size = 4)  +
+  geom_line() + theme_bw() + labs(x = "Hours", y = "TF") +
   theme(legend.position = c(0.1,0.7))+
-  guides(colour = guide_legend(keywidth = 2, keyheight = 2))+
-  scale_color_discrete(name = "Days")
+  guides(colour = guide_legend(keywidth = 2, keyheight = 2))
 
 # 4 ####
-# library(DiagrammeR)
-# grViz("
-#       digraph boxes_and_circles {
-#       graph [overlap = false, fontsize = 10, rankdir=LR]
-#       node [shape = circle, style = filled, fillcolor = SpringGreen, fixedsize = false,
-#       color=SpringGreen, fontcolor=black, fontize=12]
-#       traffic; profile; local_ef; df_emis; street_emis; grid_emis;
-#       node [shape = box, style = filled, fixedsize = false, fillcolor = Aqua,
-#       color=Aqua, fontcolor=black, fontize=12]
-#       age; speed_ef; scaled_ef; emis; emis_det; emis_post; speciate;
-#       make_grid; emis_grid; emis_wrf;
-#       edge [color = black, arrowhead = vee, penwidth=1.5]
-#       traffic->age age->emis profile->emis
-#       local_ef->{emis scaled_ef}
-#       scaled_ef->emis
-#       speed_ef-> {emis scaled_ef}
-#       emis->emis_post
-#       emis_post->{df_emis street_emis}
-#       street_emis->speciate df_emis->speciate
-#       make_grid->grid_emis speciate->grid_emis
-#       street_emis->emis_grid
-#       emis_grid->grid_emis
-#       grid_emis->emis_wrf
-#       emis_det->{local_ef speed_ef}
-#       traffic->netspeed
-#       netspeed->emis
-#       }
-#       ")
+
 
 # 5 ####
 data(net)
@@ -134,7 +108,7 @@ df4 <- data.frame(speed =c(df3$Arterial,df3$Collect,df3$Local,df3$Motorway),
                   Hour = rep(1:168,4))
 
 ggplot(df4, aes(x=Hour, y=speed, colour=Street)) +
-  geom_point(size=1) + geom_line() +theme_bw()+
+  geom_point(size=3) + geom_line() +theme_bw()+
   labs(x=NULL, y="Spped (km/h)") +
   guides(colour = guide_legend(keywidth = 3))+
   theme(legend.position = "bottom", legend.key.width  = unit(2,units="cm"))
@@ -164,8 +138,8 @@ co1 <- fe2015[fe2015$Pollutant == "CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24] * c(cod1, cod2), co1$PC_G[25:nrow(co1)])
 lef <- ef_ldv_scaled(co1, cod, v = "PC", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
-lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-         lef[length(lef)],lef[length(lef)])
+# lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
+#          lef[length(lef)],lef[length(lef)])
 
 # 9 ####
 data(pc_profile)
@@ -189,8 +163,9 @@ df$day <- factor(df$Day,
                  levels =  c("Monday", "Tuesday", "Wednesday", "Thursday",
                              "Friday", "Saturday", "Sunday"))
 
-ggplot(df, aes(x=Hour, y=unclass(g_CO), colour = day, shape = day)) + geom_line() +
-  geom_point(size=2) + theme_bw()+ theme(legend.key.size=unit(0.6,"cm")) +
+ggplot(df, aes(x=Hour, y=unclass(g_CO), colour = day, shape = day)) +
+  geom_line() + geom_point(size = 4) + theme_bw() +
+  theme(legend.key.size = unit(0.6,"cm")) +
   labs(x="Hour", y=expression(g%.%h^-1))
 
 df3 <- aggregate(unclass(E_CO_DF$g), by=list(E_CO_DF$age), sum)
@@ -219,7 +194,7 @@ dfco <- data.frame(co = c(co1$PC_G,rep(co1$PC_G[length(co1$PC_G)],5),
                    Age = rep(1:41,2))
 
 ggplot(dfco, aes(x = Age, y = co, colour = EF, shape = EF)) +
-  geom_point(size = 2)  +
+  geom_point(size = 4)  +
   geom_line()+theme_bw() + labs(x="Age", y="CO (g/km)") +
   theme(legend.position = c(0.2,0.8)) +
   guides(colour = guide_legend(keywidth = 2, keyheight = 2))+
@@ -238,20 +213,22 @@ for (i in 1:ncol(E_CO_STREETS)) {
 }
 net@data <- cbind(net@data, E_CO_STREETS)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2, polygon = T)
+gg <- as(g, "Spatial")
 spplot(net, "V138", scales=list(draw=T), cuts = 15,
        colorkey = list(space = "bottom", height = 1),
        col.regions = rev(bpy.colors(16)),
-       sp.layout = list("sp.polygons", g, pch = 13, cex = 2))
+       sp.layout = list("sp.polygons", gg, pch = 13, cex = 2))
 
 
 net@data <- net@data[,- c(1:9)]
-E_CO_g <- emis_grid(spobj = net, g = g, sr= "+init=epsg:31983", type = "lines")
+E_CO_g <- emis_grid(spobj = net, g = g, sr = 31983, type = "lines")
+E_CO_g <- as(E_CO_g, "Spatial")
 spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
        colorkey = list(space = "bottom", height = 1),
        col.regions = rev(bpy.colors(9)),
        sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
 # 12 ####
-E_CO_g@data <- E_CO_g@data[, -1]
+E_CO_g$id <- NULL
 ldf <- list("co" = E_CO_g)
 df_wrf <- emis_wrf(ldf,nr=1,dmyhm = "04-08-2014 00:00",
                    tz = "America/Sao_Paulo", islist=T)

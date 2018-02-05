@@ -60,7 +60,7 @@
 #' @examples \dontrun{
 #' # Do not run
 #' getwd()
-#' inventory(name = "cityVEIN", show.dir = T)
+#' inventory(name = "cityVEIN")
 #' setwd("cityVEIN")
 #' }
 inventory <- function(name,
@@ -189,8 +189,10 @@ inventory <- function(name,
       cat("                  fuel = vfuel, pollutant = pol, by = 'veh')\n")
       cat("x_STREETS <- emis_post(arra = array_x, pollutant = pol,\n")
       cat("                       by = 'streets_wide') \n")
-      cat("saveRDS(x_DF, file = paste0('emi/pol_', ", deparse(lista3[i]),", '_DF'))\n")
-      cat("saveRDS(x_STREETS, file = paste0('emi/pol_', ", deparse(lista3[i]),", '_STREETS'))\n")
+      cat("saveRDS(x_DF, file = paste0('emi/', pol, '_', ",
+          deparse(lista3[i]),", '_DF'))\n")
+      cat("saveRDS(x_STREETS, file = paste0('emi/', pol, '_', ",
+          deparse(lista3[i]),", '_STREETS'))\n")
       cat("rm(array_x, x_DF, x_STREETS, pol, lefe)\n\n")
       cat("# Other Pollutants...")
       sink()

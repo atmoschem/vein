@@ -77,7 +77,7 @@ fleet.
 \dontrun{
 # Do not run
 getwd()
-inventory(name = "cityVEIN", show.dir = T)
+inventory(name = "cityVEIN")
 setwd("cityVEIN")
 }
 }

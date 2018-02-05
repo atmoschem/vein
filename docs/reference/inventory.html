@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -145,6 +145,8 @@ factors in this file. If LCV = 5, another 5 columns should be present, and
 so on.</p>
 <p>emi: Directory for saving the estimates. It is suggested to use .rds
 extension instead of .rda.</p>
+<p>est: Directory with subdirectories matching the vehicular composition for
+storing the scripts named input.R.</p>
 <p>images: Directory for saving images.</p>
 <p>network: Directory for saving the road network with the required attributes.
 This file will includes the vehicular flow per street to be used by age*
@@ -168,7 +170,7 @@ The user can rename these scripts.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># Do not run</span>
 <span class='fu'>getwd</span>()
-<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"cityVEIN"</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"cityVEIN"</span>)
 <span class='fu'>setwd</span>(<span class='st'>"cityVEIN"</span>)
 <span class='co'># }</span></pre>
   </div>
@@ -191,7 +193,7 @@ The user can rename these scripts.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
 </div>
 
       </footer>

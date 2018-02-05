@@ -75,15 +75,15 @@ emis <- function (veh, lkm, ef, speed = 34,
   }
   # veh is "Vehicles" data-frame
   if (!inherits(x = veh, what = "list")) {
-      veh <- as.data.frame(veh)
-      for (i  in 1:ncol(veh) ) {
-        veh[,i] <- as.numeric(veh[,i])
-      }
-      if(ncol(veh) != length(ef)){
-        message("Number of columns of 'veh' is different than length of 'ef'")
-        cat("\nadjusting length of ef to the number of colums of 'veh'\n")
-        if(ncol(veh) > length(ef)){
-          for(i in (ncol(veh) - length(ef)):ncol(veh) ){
+    veh <- as.data.frame(veh)
+    for (i  in 1:ncol(veh) ) {
+      veh[,i] <- as.numeric(veh[,i])
+    }
+    if(ncol(veh) != length(ef)){
+      message("Number of columns of 'veh' is different than length of 'ef'")
+      message("adjusting length of ef to the number of colums of 'veh'\n")
+      if(ncol(veh) > length(ef)){
+        for(i in (length(ef) + 1):ncol(veh) ){
             ef[[i]] <- ef[[length(ef)]]
           }
           if (ncol(veh) < length(ef)){
@@ -97,13 +97,14 @@ emis <- function (veh, lkm, ef, speed = 34,
       }
 
       if(array == F){
-      lista <- lapply(1:day,function(j){
-        lapply(1:hour,function(i){
-          lapply(1:agemax, function(k){
+        lista <- lapply(1:day,function(j){
+          lapply(1:hour,function(i){
+            lapply(1:agemax, function(k){
             veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
             }) }) })
         return(EmissionsList(lista))
       } else {
+
       d <-  simplify2array(
         lapply(1:day,function(j){
           simplify2array(
@@ -118,10 +119,21 @@ emis <- function (veh, lkm, ef, speed = 34,
       }
   # veh is a list of "Vehicles" data-frames
   } else {
-    if (ncol(veh[[1]]) != length(ef)){
-      stop("Number of columns in 'veh' must be the same as length of ef")
-    } else if(length(veh) != ncol(speed)) {
-      stop("Length of 'veh' must be the same as number of columns of speed")
+    if(ncol(veh[[1]]) != length(ef)){
+      message("Number of columns of 'veh' is different than length of 'ef'")
+      message("adjusting length of ef to the number of colums of 'veh'\n")
+      if(ncol(veh[[1]]) > length(ef)){
+        for(i in (length(ef) + 1):ncol(veh[[1]]) ){
+          ef[[i]] <- ef[[length(ef)]]
+        }
+        if (ncol(veh[[1]]) < length(ef)){
+          ff <- list()
+          for(i in 1:ncol(veh[[1]])){
+            ff[[i]] <- ef[[i]]
+          }
+          ef <- ff
+        }
+      }
     }
     for (j in 1:length(veh)) {
         for (i  in 1:ncol(veh[[j]]) ) {

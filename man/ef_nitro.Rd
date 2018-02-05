@@ -45,7 +45,9 @@ eu = "III", p = "NH3", S = 10,
 show.equation = F)
 efe50 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
 eu = "III", p = "NH3", S = 50,
-show.equation = F)
+show.equation = T)
+efe10(10)
+efe50(10)
 }
 }
 \keyword{emission}

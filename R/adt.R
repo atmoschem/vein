@@ -63,6 +63,9 @@ adt <- function(pc, lcv, hgv, bus, mc,
      return(df*units::as_units("d-1"))
    } else{
      df <- df_pc + df_lcv + df_hgv + df_bus + df_mc
+     for (i  in 1:ncol(df) ) {
+       df[, i] <- as.numeric(df[, i])
+     }
      return(Vehicles(df))
      }
    }

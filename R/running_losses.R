@@ -21,6 +21,7 @@
 #' # Do not run
 #' ev <- running_losses(x = 1:10, carb = 0, p = 1, erhot = 1, erwarmc =1,
 #' erhotfi = 1)
+#' plot(vkms)
 #' }
 running_losses <- function(x,carb,p,erhotc,erwarmc,erhotfi) {
   evap <- x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi)
