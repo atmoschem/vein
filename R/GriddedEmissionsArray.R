@@ -68,10 +68,8 @@ GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x)) {
   for (i in 1:ncol(df)) {
     df[, i] <- as.numeric(df[, i])
   }
-  e <- simplify2array(lapply(1:ncol(df), function(i){
-    m <- matrix(df[, i], nrow = rows, ncol = cols, byrow = T)
-    m <- m[nrow(m):1, ]
-    }))
+  e <- array(unlist(df), c(cols, rows, times))
+
   class(e) <- c("GriddedEmissionsArray",class(e))
   cat("This GriddedEmissionsArray has:\n",
       rows, "lat points\n",
