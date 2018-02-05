@@ -44,6 +44,9 @@ so on.
 emi: Directory for saving the estimates. It is suggested to use .rds
 extension instead of .rda.
 
+est: Directory with subdirectories matching the vehicular composition for
+storing the scripts named input.R.
+
 images: Directory for saving images.
 
 network: Directory for saving the road network with the required attributes.

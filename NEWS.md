@@ -1,6 +1,14 @@
+## vein v0.3.0 (Release date: 2018-04-05)
+- Fix #49: Documentation in inventory est
+- Fix #50: Fix repetition of x_DF
+- Fix #51: deparse text
+- Fix #52: separate objects in rm with ','
+- Add class GriddedEmissionsArray
+- emis_grid adds argument array which can returns spatial object or 
+GriddedEmissionsArray
+
 ## vein v0.2.4 (Release date: 2018-01-31)
 - new data set names profiles data(profiles)
-
 ## vein v0.2.3 (Release date: 2018-01-23) (Fernanda)
 - sp now imported instead of Depend #47.
 - Improved Documentation
