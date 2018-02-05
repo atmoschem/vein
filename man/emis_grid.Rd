@@ -4,16 +4,19 @@
 \alias{emis_grid}
 \title{Allocate emissions into a grid}
 \usage{
-emis_grid(spobj, g, sr, type = "lines")
+emis_grid(spobj, g, sr, type = "lines", array = FALSE)
 }
 \arguments{
-\item{spobj}{A spatial dataframe of class sp}
+\item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
+it is transformed to "sf".}
 
-\item{g}{A grid with class SpatialPolygonsDataFrame}
+\item{g}{A grid with class "SpatialPolygonsDataFrame" or "sf".}
 
-\item{sr}{Spatial reference, default is "+init=epsg:4326"}
+\item{sr}{Spatial reference. It must be for projected data, e.g: 31983.}
 
-\item{type}{type of geometry: "lines" or "points"}
+\item{type}{type of geometry: "lines" or "points".}
+
+\item{array}{Logical to return GriddedEmissionsArray or Polygons for sf.}
 }
 \description{
 \code{emis_grid} allocates emissions proportionally to each grid
@@ -26,7 +29,7 @@ It is assumed that soobj is a spatial*DataFrame with the pollutant in data.
 Also, it is required that, when is a SpatialLinesDataFrame, there is a field
 called lkm, with the length of the road, in this case, in km.
 This function accepts data with "units" but they are converted internally
-to numeric and then return SpatialPolygonsDataFrame with numeric data.frame
+to numeric and then return "sf" with numeric data.frame.
 }
 \note{
 A future version of VEIN will imports or depend on the new package

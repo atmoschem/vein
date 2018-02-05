@@ -33,6 +33,9 @@
 #' emi: Directory for saving the estimates. It is suggested to use .rds
 #' extension instead of .rda.
 #'
+#' est: Directory with subdirectories matching the vehicular composition for
+#' storing the scripts named input.R.
+#'
 #' images: Directory for saving images.
 #'
 #' network: Directory for saving the road network with the required attributes.
@@ -186,9 +189,9 @@ inventory <- function(name,
       cat("                  fuel = vfuel, pollutant = pol, by = 'veh')\n")
       cat("x_STREETS <- emis_post(arra = array_x, pollutant = pol,\n")
       cat("                       by = 'streets_wide') \n")
-      cat("saveRDS(x_DF, file = paste0('emi/pol_', ", lista3[i],", '_DF'))\n")
-      cat("saveRDS(x_DF, file = paste0('emi/pol_', ", lista3[i],", '_STREETS'))\n")
-      cat("rm(array_x); rm(x_DF); rm(x_STREETS); rm(pol); rm(lefe)\n\n")
+      cat("saveRDS(x_DF, file = paste0('emi/pol_', ", deparse(lista3[i]),", '_DF'))\n")
+      cat("saveRDS(x_STREETS, file = paste0('emi/pol_', ", deparse(lista3[i]),", '_STREETS'))\n")
+      cat("rm(array_x, x_DF, x_STREETS, pol, lefe)\n\n")
       cat("# Other Pollutants...")
       sink()
     }
