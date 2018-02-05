@@ -34,5 +34,7 @@ vehiles and then extrapolates the vehicles
 pc <- lkm <- abs(rnorm(10,1,1))*100
 pro <- matrix(abs(rnorm(24*7,0.5,1)), ncol=7, nrow=24)
 vkms  <- vkm(veh = pc, lkm = lkm, profile = pro)
+class(vkms)
+dim(vkms)
 }
 }

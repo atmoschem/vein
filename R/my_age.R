@@ -15,6 +15,7 @@
 #' pc <- rnorm(100, 300, 10)
 #' dpc <- c(rnorm(10, 99, 1), NA, NA, NA)
 #' PC_E25_1400 <- my_age(x = pc, y = dpc, name = "PC_E25_1400")
+#' plot(PC_E25_1400)
 #' }
 my_age <- function (x, y, name,  k = 1, message = TRUE){
   if (missing(x) | is.null(x)) {

@@ -2,30 +2,21 @@
 #'
 #' @description \code{emis_grid} allocates emissions proportionally to each grid
 #'  cell. The process is performed by intersection between geometries and the grid.
-#'  Geometries uported, so, far are lines with raster::intersect and points with
-#' sp::over. The allocation of lines is by interaction, then update the
-#' pollutant values according the new length of road inside each grid cell.
 #' It means that requires "sr" according with your location for the projection.
-#' It is assumed that soobj is a spatial*DataFrame with the pollutant in data.
-#' Also, it is required that, when is a SpatialLinesDataFrame, there is a field
-#' called lkm, with the length of the road, in this case, in km.
-#' This function accepts data with "units" but they are converted internally
-#' to numeric and then return "sf" with numeric data.frame.
+#' It is assumed that spobj is a spatial*DataFrame or an "sf" with the pollutants
+#' in data. This function return an object class "sf".
 #'
 #' @param spobj A spatial dataframe of class "sp" or "sf". When class is "sp"
 #' it is transformed to "sf".
 #' @param g A grid with class "SpatialPolygonsDataFrame" or "sf".
-#' @param sr Spatial reference. It must be for projected data, e.g: 31983.
+#' @param sr Spatial reference e.g: 31983. It is required if spobj and g are
+#' not projected. Please, see http://spatialreference.org/.
 #' @param type type of geometry: "lines" or "points".
-#' @param array Logical to return GriddedEmissionsArray or Polygons for sf.
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection
-#' @importFrom sp over
-#' @importFrom data.table data.table
+#' @importFrom data.table data.table .SD
 #' @export
-#' @note A future version of VEIN will imports or depend on the new package
-#' 'spatial features'. The migration for VEIN will be converting the 'Spatial'
-#' objects (class of sp) into 'sf'. Also, a new version of this function will
-#' import some functions from 'data.table'.
+#' @note When spobj is a 'Spatial' object (class of sp), they are converted
+#'  into 'sf'. Also, The aggregation of data ise done with data.table functions.
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -47,8 +38,6 @@
 #' cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
 #' lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
 #'                      f = "G",p = "CO", eu=co1$Euro_LDV)
-#' lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-#'          lef[length(lef)],lef[length(lef)])
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile, hour = 24, day = 7, array = T)
 #' # arguments required: arra, pollutant ad by
@@ -56,6 +45,7 @@
 #' net@data <- cbind(net@data, E_CO_STREETS)
 #' head(net@data)
 #' g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
+#'
 #' net@data <- net@data[,- c(1:9)]
 #' names(net)
 #' E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
@@ -68,16 +58,13 @@
 #' sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
 #' }
 emis_grid <- function(spobj, g, sr, type = "lines"){
-  net <- spobj
-  if(class(net) == "SpatialLinesDataFrame"){
-    net <- sf::st_as_sf(net)
-    net$id <- NULL
-  } else if(class(g) == "SpatialPolygonsDataFrame"){
-    g <- sf::st_as_sf(g)
-  }
-  if(!is.na(sr)){
-    net <- sf::st_transform(net, sr)
-    g <- sf::st_transform(g, sr)
+  net <- sf::st_as_sf(spobj)
+  net$id <- NULL
+  g <- sf::st_as_sf(g)
+
+  if(exists("sr")){
+  net <- sf::st_transform(net, sr)
+  g <- sf::st_transform(g, sr)
   }
 
   if (type == "lines" ) {
@@ -89,11 +76,12 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
     xgg <- data.table::data.table(netg)
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$LKM2/xgg$LKM)
     dfm <- xgg[, lapply(.SD, sum, na.rm=TRUE),
-               by = id,
+               by = "id",
                .SDcols = namesnet]
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by="id", all.x = T)
+    gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
   # if(array){
   #     return(GriddedEmissionsArray(gx, rows = , cols, times = ))
@@ -101,13 +89,16 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
       return(gx)
     # }
   } else if ( type == "points" ){
-    xgg <- data.table::data.table(sf::st_set_geometry(sf::st_intersection(df, g), NULL))
+    xgg <- data.table::data.table(
+      sf::st_set_geometry(sf::st_intersection(net, g), NULL)
+      )
     dfm <- xgg[, lapply(.SD, sum, na.rm=TRUE),
-               by = id,
+               by = "id",
                .SDcols = namesnet ]
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
-    gx <- merge(gx, dfm, by="id", all.x = T)
+    gx <- merge(gx, dfm, by = "id", all.x = T)
+    gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
   }

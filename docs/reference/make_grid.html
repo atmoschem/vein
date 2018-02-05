@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -98,25 +98,25 @@ reference is taken from the spatial object.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>spobj</th>
-      <td><p>A spatial object of class sp</p></td>
+      <td><p>A spatial object of class sp or sf.</p></td>
     </tr>
     <tr>
       <th>width</th>
-      <td><p>Width of grid cell, units according sr</p></td>
+      <td><p>Width of grid cell. It is recommended to use projected values.</p></td>
     </tr>
     <tr>
       <th>height</th>
-      <td><p>Height of grid cell, units according sr</p></td>
+      <td><p>Height of grid cell. It is recommended to use projected values.</p></td>
     </tr>
     <tr>
       <th>polygon</th>
-      <td><p>whe TRUE return a polygon grid, when FALSE a SpatialGridDataFrame</p></td>
+      <td><p>whe TRUE return a polygon grid, when FALSE stops.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 'SpatialPolygonsDataFrame' or a 'SpatialGridDataFrame'</p>
+    <p>A grid of polygons class 'sf'</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -124,8 +124,7 @@ reference is taken from the spatial object.</p>
 <span class='co'>#do not run</span>
 <span class='fu'>data</span>(<span class='no'>net</span>)
 <span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='fu'>make_grid</span>(<span class='no'>net</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>) <span class='co'>#500 mts</span>
-<span class='fu'>spplot</span>(<span class='no'>net</span>, <span class='kw'>scales</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='kw'>draw</span><span class='kw'>=</span><span class='no'>T</span>),
-<span class='kw'>sp.layout</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"sp.polygons"</span>, <span class='no'>grid</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>))
+<span class='fu'>plot</span>(<span class='no'>grid</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='no'>T</span>) <span class='co'>#class f</span>
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -147,7 +146,7 @@ reference is taken from the spatial object.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
 </div>
 
       </footer>

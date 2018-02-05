@@ -27,7 +27,9 @@
 #' show.equation = F)
 #' efe50 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
 #' eu = "III", p = "NH3", S = 50,
-#' show.equation = F)
+#' show.equation = T)
+#' efe10(10)
+#' efe50(10)
 #' }
 ef_nitro <- function(v, t, cc, f, eu, p, S, k = 1, show.equation = TRUE){
   ef <- sysdata[[8]]

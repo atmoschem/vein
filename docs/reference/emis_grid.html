@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -89,15 +89,9 @@
     
     <p><code>emis_grid</code> allocates emissions proportionally to each grid
  cell. The process is performed by intersection between geometries and the grid.
- Geometries uported, so, far are lines with raster::intersect and points with
-sp::over. The allocation of lines is by interaction, then update the
-pollutant values according the new length of road inside each grid cell.
 It means that requires "sr" according with your location for the projection.
-It is assumed that soobj is a spatial*DataFrame with the pollutant in data.
-Also, it is required that, when is a SpatialLinesDataFrame, there is a field
-called lkm, with the length of the road, in this case, in km.
-This function accepts data with "units" but they are converted internally
-to numeric and then return SpatialPolygonsDataFrame with numeric data.frame</p>
+It is assumed that spobj is a spatial*DataFrame or an "sf" with the pollutants
+in data. This function return an object class "sf".</p>
     
 
     <pre class="usage"><span class='fu'>emis_grid</span>(<span class='no'>spobj</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>)</pre>
@@ -107,28 +101,28 @@ to numeric and then return SpatialPolygonsDataFrame with numeric data.frame</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>spobj</th>
-      <td><p>A spatial dataframe of class sp</p></td>
+      <td><p>A spatial dataframe of class "sp" or "sf". When class is "sp"
+it is transformed to "sf".</p></td>
     </tr>
     <tr>
       <th>g</th>
-      <td><p>A grid with class SpatialPolygonsDataFrame</p></td>
+      <td><p>A grid with class "SpatialPolygonsDataFrame" or "sf".</p></td>
     </tr>
     <tr>
       <th>sr</th>
-      <td><p>Spatial reference, default is "+init=epsg:4326"</p></td>
+      <td><p>Spatial reference e.g: 31983. It is required if spobj and g are
+not projected. Please, see http://spatialreference.org/.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>type of geometry: "lines" or "points"</p></td>
+      <td><p>type of geometry: "lines" or "points".</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>A future version of VEIN will imports or depend on the new package
-'spatial features'. The migration for VEIN will be converting the 'Spatial'
-objects (class of sp) into 'sf'. Also, a new version of this function will
-import some functions from 'data.table'.</p>
+    <p>When spobj is a 'Spatial' object (class of sp), they are converted
+ into 'sf'. Also, The aggregation of data ise done with data.table functions.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -153,19 +147,20 @@ import some functions from 'data.table'.</p>
 <span class='no'>cod</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>1</span>:<span class='fl'>24</span>]*<span class='fu'>c</span>(<span class='no'>cod1</span>,<span class='no'>cod2</span>),<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>25</span>:<span class='fu'>nrow</span>(<span class='no'>co1</span>)])
 <span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></span>(<span class='no'>co1</span>, <span class='no'>cod</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
                      <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>eu</span><span class='kw'>=</span><span class='no'>co1</span>$<span class='no'>Euro_LDV</span>)
-<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>lef</span>,<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],
-         <span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)],<span class='no'>lef</span>[<span class='fu'>length</span>(<span class='no'>lef</span>)])
 <span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis.html'>emis</a></span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>41</span>,
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>array</span> <span class='kw'>=</span> <span class='no'>T</span>)
 <span class='co'># arguments required: arra, pollutant ad by</span>
 <span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_post.html'>emis_post</a></span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets_wide"</span>)
 <span class='no'>net</span>@<span class='kw'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>cbind</span>(<span class='no'>net</span>@<span class='kw'>data</span>, <span class='no'>E_CO_STREETS</span>)
 <span class='fu'>head</span>(<span class='no'>net</span>@<span class='kw'>data</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>, <span class='kw'>polygon</span> <span class='kw'>=</span> <span class='no'>T</span>) <span class='co'>#500m in degrees</span>
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
+
 <span class='no'>net</span>@<span class='kw'>data</span> <span class='kw'>&lt;-</span> <span class='no'>net</span>@<span class='kw'>data</span>[,- <span class='fu'>c</span>(<span class='fl'>1</span>:<span class='fl'>9</span>)]
 <span class='fu'>names</span>(<span class='no'>net</span>)
-<span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='st'>"+init=epsg:31983"</span>)
-<span class='fu'>head</span>(<span class='no'>E_CO_g</span>@<span class='kw'>data</span>)
+<span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
+<span class='fu'>head</span>(<span class='no'>E_CO_g</span>) <span class='co'>#class sf</span>
+<span class='no'>E_CO_g</span>$<span class='no'>V138</span> <span class='kw'>&lt;-</span> <span class='fu'>as.numeric</span>(<span class='no'>E_CO_g</span>$<span class='no'>V138</span>)
+<span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>E_CO_g</span>, <span class='st'>"Spatial"</span>)
 <span class='fu'>spplot</span>(<span class='no'>E_CO_g</span>, <span class='st'>"V138"</span>, <span class='kw'>scales</span><span class='kw'>=</span><span class='fu'>list</span>(<span class='kw'>draw</span><span class='kw'>=</span><span class='no'>T</span>),<span class='kw'>cuts</span><span class='kw'>=</span><span class='fl'>8</span>,
 <span class='kw'>colorkey</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>1</span>),
 <span class='kw'>col.regions</span> <span class='kw'>=</span> <span class='fu'>rev</span>(<span class='fu'>bpy.colors</span>(<span class='fl'>9</span>)),
@@ -191,7 +186,7 @@ import some functions from 'data.table'.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
 </div>
 
       </footer>

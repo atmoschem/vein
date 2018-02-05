@@ -4,8 +4,13 @@
 - Fix #51: deparse text
 - Fix #52: separate objects in rm with ','
 - Add class GriddedEmissionsArray
-- emis_grid adds argument array which can returns spatial object or 
-GriddedEmissionsArray
+- Fix #28, data.table imported in emis_grd. Now very fast!
+- Fix #55.
+- Minor fix on demo(VEIN).
+- emis and emis_cold adjust length of ef by length of columns of first
+element of the list of data-frames.
+- Revised all examples.
+
 
 ## vein v0.2.4 (Release date: 2018-01-31)
 - new data set names profiles data(profiles)

@@ -46,6 +46,8 @@ sL1 <- 0.6
 emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65,
                        sL1 = sL1, sL2 = sL1/4, sL3 = sL1/16, sL4 = sL1/32,
                        W = W)
+class(emi)
+head(emi)
 }
 }
 \references{

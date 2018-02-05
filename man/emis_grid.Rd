@@ -4,7 +4,7 @@
 \alias{emis_grid}
 \title{Allocate emissions into a grid}
 \usage{
-emis_grid(spobj, g, sr, type = "lines", array = FALSE)
+emis_grid(spobj, g, sr, type = "lines")
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
@@ -12,30 +12,21 @@ it is transformed to "sf".}
 
 \item{g}{A grid with class "SpatialPolygonsDataFrame" or "sf".}
 
-\item{sr}{Spatial reference. It must be for projected data, e.g: 31983.}
+\item{sr}{Spatial reference e.g: 31983. It is required if spobj and g are
+not projected. Please, see http://spatialreference.org/.}
 
 \item{type}{type of geometry: "lines" or "points".}
-
-\item{array}{Logical to return GriddedEmissionsArray or Polygons for sf.}
 }
 \description{
 \code{emis_grid} allocates emissions proportionally to each grid
  cell. The process is performed by intersection between geometries and the grid.
- Geometries uported, so, far are lines with raster::intersect and points with
-sp::over. The allocation of lines is by interaction, then update the
-pollutant values according the new length of road inside each grid cell.
 It means that requires "sr" according with your location for the projection.
-It is assumed that soobj is a spatial*DataFrame with the pollutant in data.
-Also, it is required that, when is a SpatialLinesDataFrame, there is a field
-called lkm, with the length of the road, in this case, in km.
-This function accepts data with "units" but they are converted internally
-to numeric and then return "sf" with numeric data.frame.
+It is assumed that spobj is a spatial*DataFrame or an "sf" with the pollutants
+in data. This function return an object class "sf".
 }
 \note{
-A future version of VEIN will imports or depend on the new package
-'spatial features'. The migration for VEIN will be converting the 'Spatial'
-objects (class of sp) into 'sf'. Also, a new version of this function will
-import some functions from 'data.table'.
+When spobj is a 'Spatial' object (class of sp), they are converted
+ into 'sf'. Also, The aggregation of data ise done with data.table functions.
 }
 \examples{
 \dontrun{
@@ -59,19 +50,20 @@ co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
 lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
-lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-         lef[length(lef)],lef[length(lef)])
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile, hour = 24, day = 7, array = T)
 # arguments required: arra, pollutant ad by
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 net@data <- cbind(net@data, E_CO_STREETS)
 head(net@data)
-g <- make_grid(net, 1/102.47/2, 1/102.47/2, polygon = T) #500m in degrees
+g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
+
 net@data <- net@data[,- c(1:9)]
 names(net)
-E_CO_g <- emis_grid(spobj = net, g = g, sr= "+init=epsg:31983")
-head(E_CO_g@data)
+E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
+head(E_CO_g) #class sf
+E_CO_g$V138 <- as.numeric(E_CO_g$V138)
+E_CO_g <- as(E_CO_g, "Spatial")
 spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
 colorkey = list(space = "bottom", height = 1),
 col.regions = rev(bpy.colors(9)),

@@ -10,13 +10,13 @@
 \alias{plot.GriddedEmissionsArray}
 \title{Construction function for class "GriddedEmissionsArray"}
 \usage{
-GriddedEmissionsArray(x, ..., rows, cols, zlev = 1, times = ncol(x))
+GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x))
 
 \method{print}{GriddedEmissionsArray}(x, ...)
 
 \method{summary}{GriddedEmissionsArray}(object, ...)
 
-\method{plot}{GriddedEmissionsArray}(x, ...)
+\method{plot}{GriddedEmissionsArray}(x, ..., times = 1)
 }
 \arguments{
 \item{x}{Object with class "SpatialPolygonDataFrame", "sf" "data.frame" or
@@ -24,15 +24,13 @@ GriddedEmissionsArray(x, ..., rows, cols, zlev = 1, times = ncol(x))
 
 \item{...}{ignored}
 
-\item{rows}{Number of rows}
-
 \item{cols}{Number of columns}
+
+\item{rows}{Number of rows}
 
 \item{times}{Number of times}
 
 \item{object}{object with class "EmissionsArray'}
-
-\item{zlevel}{Number of vertical levels}
 }
 \value{
 Objects of class "GriddedEmissionsArray"
@@ -62,27 +60,22 @@ cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #vehicles newer than pre-euro
 co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
-lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "ALL", cc = "ALL",
+lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
-lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-         lef[length(lef)],lef[length(lef)])
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
              profile = pc_profile, hour = 24, day = 7, array = T)
 class(E_CO)
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 net@data <- cbind(net@data, E_CO_STREETS)
 head(net@data)
-g <- make_grid(net, 1/102.47/2, 1/102.47/2, polygon = T) #500m in degrees
+g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 net@data <- net@data[,- c(1:9)]
 names(net)
-E_CO_g <- emis_grid(spobj = net, g = g, sr= "+init=epsg:31983")
-head(E_CO_g@data)
-spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
-colorkey = list(space = "bottom", height = 1),
-col.regions = rev(bpy.colors(9)),
-sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
-E_CO_a <- emis_grid(spobj = net, g = g, sr= "+init=epsg:31983", array = T)
-class(E_CO_a)
-plot(E_CO_a)
+E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
+head(E_CO_g) #class sf
+library(mapview)
+mapview(E_CO_g, zcol= "V1", legend = T)
+gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168)
+plot(gr)
 }
 }
