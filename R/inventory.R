@@ -122,7 +122,7 @@ inventory <- function(name,
           dir.create(path = paste0(name, "/emi/BUS_", i))
           dir.create(path = paste0(name, "/est/BUS_", i))
         }}
-    } else { NULL }
+    }
 
     if(vehcomp["MC"] > 0){
       for(i in 1:vehcomp[5]){
@@ -133,7 +133,7 @@ inventory <- function(name,
           dir.create(path = paste0(name, "/emi/MC_", i))
           dir.create(path = paste0(name, "/est/MC_", i))
         }}
-    } else { NULL }
+    }
   }
   if(clear == FALSE){
     dovein()
@@ -223,10 +223,10 @@ inventory <- function(name,
     dirs <- list.dirs(path = name, full.names = T, recursive = T)
     cat("Directories:\n")
     print(dirs)
-  } else {NULL}
+  }
   if(show.scripts){
     sc <- list.files(path = name, pattern = ".R", recursive = T)
     cat("Scripts:\n")
     print(sc)
-  } else {NULL}
+  }
 }
