@@ -1,8 +1,17 @@
-## vein v0.3.1 (Release date: 2018-04-07)
+NEWS
+===========
+
+# vein 0.3.1 (Release date: 2018-04-07)
+
 - Fix #57, #58 and #59.
 - GriddedEmissionsInventory corrected orientation.
 
-## vein v0.3.0 (Release date: 2018-04-05)
+***********************
+
+# vein 0.3.0 (Release date: 2018-04-05)
+
+### vein 0.3.0 (Release date: 2018-04-05)
+
 - Fix #49: Documentation in inventory est
 - Fix #50: Fix repetition of x_DF
 - Fix #51: deparse text
@@ -14,95 +23,160 @@
 - emis and emis_cold adjust length of ef by length of columns of first
 element of the list of data-frames.
 - Revised all examples.
-## vein v0.2.4 (Release date: 2018-01-31)
+
+***********************
+
+### vein 0.2.4 (Release date: 2018-01-31)
+
 - new data set names profiles data(profiles)
-## vein v0.2.3 (Release date: 2018-01-23) (Fernanda)
+
+### vein 0.2.3 (Release date: 2018-01-23) (Fernanda)
+
 - sp now imported instead of Depend #47.
 - Improved Documentation
 - Minor fix
 - emis and emis_cold adjust the length of ef to match ncol of veh.
 - Fix #42
-____________________________________________________________________________________
-## vein v0.2.2-30 (Release date: 2018-01-10)
+
+### vein 0.2.2-30 (Release date: 2018-01-10)
+
 - Speciation of NMHC
-## vein v0.2.2-29 (Release date: 2017-12-27)
+
+### vein 0.2.2-29 (Release date: 2017-12-27)
+
 - Fix #43: ADT
-## vein v0.2.2-28 (Release date: 2017-12-22)
+
+### vein 0.2.2-28 (Release date: 2017-12-22)
+
 - Fix #4: list of data-frames not needed so far! vkm needs a numeric as veh
-## vein v0.2.2-27 (Release date: 2017-12-18)
+
+### vein 0.2.2-27 (Release date: 2017-12-18)
+
 - Fix #2: Documentation of ef_nitro.
-## vein v0.2.2-26 (Release date: 2017-10-08)
+
+### vein 0.2.2-26 (Release date: 2017-10-08)
+
 - Fix #35
-## vein v0.2.2-25 (Release date: 2017-09-28)
+
+### vein 0.2.2-25 (Release date: 2017-09-28)
+
 - Fix #32
-## vein v0.2.2-24 (Release date: 2017-09-19)
+
+### vein 0.2.2-24 (Release date: 2017-09-19)
+
 - Fix #31
 - Updated speciation of paintings for CBMZ
 - Update message in emis
-## vein v0.2.2-23 (Release date: 2017-09-18)
+
+### vein 0.2.2-23 (Release date: 2017-09-18)
+
 - Fix #29
-## vein v0.2.2-22 (Release date: 2017-09-18)(Viva Chile)
+
+### vein 0.2.2-22 (Release date: 2017-09-18)(Viva Chile)
+
 - Fix #27. 
-## vein v0.2.2-21 (Release date: 2017-09-18)
+
+### vein 0.2.2-21 (Release date: 2017-09-18)
+
 - Fix #11 (reopen). Now prints in kg
-## vein v0.2.2-20 (Release date: 2017-09-16)
+
+### vein 0.2.2-20 (Release date: 2017-09-16)
+
 - Fix #26
-## vein v0.2.2-19 (Release date: 2017-09-15)
+
+### vein 0.2.2-19 (Release date: 2017-09-15)
+
 - Experimental: adding NMHC speciation for industrial and buildings painting
-## vein v0.2.2-18 (Release date: 2017-09-11)
+
+### vein 0.2.2-18 (Release date: 2017-09-11)
+
 - Fix #25
-## vein v0.2.2-17 (Release date: 2017-09-10)
+
+### vein 0.2.2-17 (Release date: 2017-09-10)
+
 - Fix #24
-## vein v0.2.2-16 (Release date: 2017-09-09)
+
+### vein 0.2.2-16 (Release date: 2017-09-09)
+
 - Fix #23
-## vein v0.2.2-15 (Release date: 2017-09-09)
+
+### vein 0.2.2-15 (Release date: 2017-09-09)
+
 - Fix #22
-## vein v0.2.2-14 (Release date: 2017-09-09)
+
+### vein 0.2.2-14 (Release date: 2017-09-09)
+
 - Fix #11
-## vein v0.2.2-13 (Release date: 2017-09-09)
+
+### vein 0.2.2-13 (Release date: 2017-09-09)
+
 - Fix #7 
-## vein v0.2.2-12 (Release date: 2017-09-09)
+
+### vein 0.2.2-12 (Release date: 2017-09-09)
+
 - Fix #21 
-## vein v0.2.2-11 (Release date: 2017-09-09)
+
+### vein 0.2.2-11 (Release date: 2017-09-09)
+
 - Fix #20
-## vein v0.2.2-10 (Release date: 2017-09-04)
+
+### vein 0.2.2-10 (Release date: 2017-09-04)
+
 - Fix #10, #17 and #18 and demo
-## vein v0.2.2-9 (Release date: 2017-09-02)
+
+### vein 0.2.2-9 (Release date: 2017-09-02)
+
 - Fix #3 and #15
-## vein v0.2.2-8 (Release date: 2017-09-01)
+
+### vein 0.2.2-8 (Release date: 2017-09-01)
+
 - Fix #14, emis_wrf
-## vein v0.2.2-7 (Release date: 2017-08-30)
+
+### vein 0.2.2-7 (Release date: 2017-08-30)
+
 - Fix #12, speciate now returns mol/h when spec = iag
-## vein v0.2.2-6 (Release date: 2017-08-23)
+
+### vein 0.2.2-6 (Release date: 2017-08-23)
+
+
 - Minor update #8, to exclude na in veh of function my_age
-## vein v0.2.2-5 (Release date: 2017-08-07)
+
+### vein 0.2.2-5 (Release date: 2017-08-07)
+
 - Update evaporative emissions emis_evap  to include lists of 'Vehicles' data-
 frame
-## vein v0.2.2-4 (Release date: 2017-08-05)
+
+### vein 0.2.2-4 (Release date: 2017-08-05)
+
 - emis and emis_cold include stop when ncol(veh) != length(ef) and when
 veh is a list, length(veh) != ncol(speed). In emis agemax determined by ncol of
 vehicles
 - Fix demo
-## vein v0.2.2-3 (Release date: 2017-08-03)
+
+### vein 0.2.2-3 (Release date: 2017-08-03)
+
 - speed in emis and emis cold is now a dataframe with columns as number of hours.
 - netspeed argument isList changed to scheme
 - Versions with three numbers. Fix speciate for "iag"
 - Corrected sysdata for PC with gasoline euro PRE pollutant HC
 - In emis, emis_cold and emis_paved: agemax  =  ncol(veh) by default
-### vein v0.2.1-7 (Chiba) (Release date: 2017-05-18)
+
+### vein 0.2.1-7 (Chiba) (Release date: 2017-05-18)
+
 - Evaporative class with units d/day according emission guidelines EEA Tier 2.
 Fix some documentation errors. ef_evap return unit (g). Fix speciate and some
 documentation. field of data 'net' now has units
 - Adds several S3 classes Vehicles, Speed, EmissionFactors, EmissionFactorsList
+
 Emission, EmissionsArray, EmissionsList and methods print, plot and summary
-### vein v0.1.1.1 (Release date: 2017-03-25)
+
+# vein 0.1.1.1 (Release date: 2017-03-25)
+
 - Added some categories to bcom
 - To avoid confusion with the REMI model (www.remi.com),
 the name was changed to Vehicular Emissions INventory Model (vein).
 
-____________________________________________________________________________________
-
-###  REMI v0.1.0-31 (Release date: 2017-03-13)
+###  REMI 0.1.0-31 (Release date: 2017-03-13)
 
 - New function: my_age. Distribute vehicle data using own vehicle distribution
 from a numeric vector.
@@ -119,9 +193,7 @@ Now fixed.
 - Age function nows append element equal to the last element of the
 vector.
 
-____________________________________________________________________________________
-
-###  REMI v0.1.0-21 (Amanda) (Release date: 2017-01-08)
+##  REMI 0.1.0-21 (Amanda) (Release date: 2017-01-08)
 
 - Age function nows append element equal to the last element of the
 vector.
@@ -136,14 +208,11 @@ vector.
 - bus fix in emissions_dow and emissions_cold when array=F.
 - emissions 24 were changed to lapply over the length of ef.
 
-____________________________________________________________________________________
-
-
-### REMI v0.1.0-0 (Release date: 2016-10-19)
+# REMI 0.1.0-0 (Release date: 2016-10-19)
 
 - REMI released.
 
-Prior REMI v0.1.0-0 (Release date: 2016-10-19)
+Prior REMI 0.1.0-0 (Release date: 2016-10-19)
 
 - The model started as a collection of rscripts named "remIAG".
 see: Ibarra-Espinosa S., Ynoue R. 2016. REMI model: Bottom-up emissions
@@ -151,7 +220,3 @@ inventories for cities with lack of data. Journal of Earth Sciences &
 Geotechnical Engineering. issn 1792--9660.
 URL =
 https://www.researchgate.net/publication/313253283_REMI_model_Bottom-up_emissions_inventories_for_cities_with_lack_of_data
-
-Versioning:
-CRAN includes <big>.<major>.<minor> eg: 0.2.2
-Github includes <big>.<major>.<minor>-<sub-minor> 0.2.2-28
