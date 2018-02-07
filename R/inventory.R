@@ -190,9 +190,9 @@ inventory <- function(name,
       cat("x_STREETS <- emis_post(arra = array_x, pollutant = pol,\n")
       cat("                       by = 'streets_wide') \n")
       cat("saveRDS(x_DF, file = paste0('emi/', pol, '_', ",
-          deparse(lista3[i]),", '_DF'))\n")
+          deparse(lista3[i]),", '_DF.rds'))\n")
       cat("saveRDS(x_STREETS, file = paste0('emi/', pol, '_', ",
-          deparse(lista3[i]),", '_STREETS'))\n")
+          deparse(lista3[i]),", '_STREETS.rds'))\n")
       cat("rm(array_x, x_DF, x_STREETS, pol, lefe)\n\n")
       cat("# Other Pollutants...")
       sink()

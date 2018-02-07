@@ -1,3 +1,7 @@
+## vein v0.3.1 (Release date: 2018-04-07)
+- Fix #57, #58 and #59.
+- GriddedEmissionsInventory corrected orientation.
+
 ## vein v0.3.0 (Release date: 2018-04-05)
 - Fix #49: Documentation in inventory est
 - Fix #50: Fix repetition of x_DF
@@ -10,8 +14,6 @@
 - emis and emis_cold adjust length of ef by length of columns of first
 element of the list of data-frames.
 - Revised all examples.
-
-
 ## vein v0.2.4 (Release date: 2018-01-31)
 - new data set names profiles data(profiles)
 ## vein v0.2.3 (Release date: 2018-01-23) (Fernanda)
