@@ -23,6 +23,7 @@
 #' }
 #' @param distance Character specifying the units for distance. Default is "km"
 #' @param time Character specifying the units for time Default is "h".
+#' @param isList Deprecated
 #' @return dataframe speeds with units.
 #' @export
 #' @examples \dontrun{
@@ -39,10 +40,12 @@
 #' }
 netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
                       scheme = FALSE,
-                      distance = "km", time="h"){
-  if(missing(q) | is.null(q)){
-    stop(print("No vehicles"))
-  } else if (scheme == FALSE){
+                      distance = "km", time="h", isList){
+  if(!missing(isList)){
+    .Deprecated(msg = "'isList' argument is deprecated")
+  } else if (scheme == FALSE & missing(q)){
+    stop("No vehicles on 'q'")
+  } else if (scheme == FALSE & !missing(q)){
     qq <- as.data.frame(q)
     for (i  in 1:ncol(qq) ) {
       qq[,i] <- as.numeric(qq[,i])
