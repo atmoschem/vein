@@ -35,7 +35,7 @@ if (window.hljs) {
   hljs.configure({languages: []});
   hljs.initHighlightingOnLoad();
   if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlightingOnLoad(); }, 0);
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
   }
 }
 </script>
@@ -154,7 +154,7 @@ $(document).ready(function () {
 <div id="installation" class="section level3">
 <h3>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<pre class="r"><code># 0.3.1
+<pre class="r"><code># 0.3.2
 library(devtools)
 install_github(&quot;atmoschem/vein&quot;)
 library(vein)

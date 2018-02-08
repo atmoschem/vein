@@ -91,7 +91,7 @@
 "EmissionsArray" with 4 dimensios.</p>
     
 
-    <pre class="usage"><span class='fu'>GriddedEmissionsArray</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>cols</span>, <span class='no'>rows</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'>ncol</span>(<span class='no'>x</span>))
+    <pre class="usage"><span class='fu'>GriddedEmissionsArray</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>cols</span>, <span class='no'>rows</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'>ncol</span>(<span class='no'>x</span>), <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S3 method for GriddedEmissionsArray</span>
 <span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -125,6 +125,10 @@
     <tr>
       <th>times</th>
       <td><p>Number of times</p></td>
+    </tr>
+    <tr>
+      <th>rotate</th>
+      <td><p>Logical to rotate TRUE or not FALSE Array</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -172,7 +176,7 @@
 <span class='fu'>head</span>(<span class='no'>E_CO_g</span>) <span class='co'>#class sf</span>
 <span class='fu'>library</span>(<span class='no'>mapview</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>E_CO_g</span>, <span class='kw'>zcol</span><span class='kw'>=</span> <span class='st'>"V1"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>col.regions</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/cptcity/topics/cptcity'>cptcity</a></span>(<span class='fl'>1</span>))
-<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>)
+<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>T</span>)
 <span class='fu'>plot</span>(<span class='no'>gr</span>)
 
 <span class='co'># For some cptcity color gradients:</span>

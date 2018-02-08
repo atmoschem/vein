@@ -1,7 +1,13 @@
 NEWS
 ===========
 
-# vein 0.3.1 (Release date: 2018-04-07)
+# vein 0.3.2 (Release date: 2018-04-08)
+
+## vein 0.3.2 (Release date: 2018-04-08)
+
+- Fix #60 and #61.
+
+### vein 0.3.1 (Release date: 2018-04-07)
 
 - Fix #57, #58 and #59.
 - GriddedEmissionsInventory corrected orientation.
@@ -23,8 +29,6 @@ NEWS
 - emis and emis_cold adjust length of ef by length of columns of first
 element of the list of data-frames.
 - Revised all examples.
-
-***********************
 
 ### vein 0.2.4 (Release date: 2018-01-31)
 
