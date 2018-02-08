@@ -1,9 +1,13 @@
 NEWS
 ===========
 
-# vein 0.3.2 (Release date: 2018-04-08)
+# vein 0.3.3 (Release date: 2018-04-08)
 
-## vein 0.3.2 (Release date: 2018-04-08)
+### vein 0.3.3 (Release date: 2018-04-08)
+
+- Fix #62
+
+### vein 0.3.2 (Release date: 2018-04-08)
 
 - Fix #60 and #61.
 
@@ -11,8 +15,6 @@ NEWS
 
 - Fix #57, #58 and #59.
 - GriddedEmissionsInventory corrected orientation.
-
-***********************
 
 # vein 0.3.0 (Release date: 2018-04-05)
 
@@ -174,7 +176,7 @@ documentation. field of data 'net' now has units
 
 Emission, EmissionsArray, EmissionsList and methods print, plot and summary
 
-# vein 0.1.1.1 (Release date: 2017-03-25)
+## vein 0.1.1.1 (Release date: 2017-03-25)
 
 - Added some categories to bcom
 - To avoid confusion with the REMI model (www.remi.com),

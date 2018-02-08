@@ -68,6 +68,8 @@ GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x),
   df <- sf::st_set_geometry(x, NULL)
   } else if(inherits(x, "sf")){
     df <- sf::st_set_geometry(x, NULL)
+  } else {
+    df <- x
   }
   for (i in 1:ncol(df)) {
     df[, i] <- as.numeric(df[, i])
