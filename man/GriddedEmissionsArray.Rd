@@ -10,7 +10,7 @@
 \alias{plot.GriddedEmissionsArray}
 \title{Construction function for class "GriddedEmissionsArray"}
 \usage{
-GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x))
+GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate = FALSE)
 
 \method{print}{GriddedEmissionsArray}(x, ...)
 
@@ -29,6 +29,8 @@ GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x))
 \item{rows}{Number of rows}
 
 \item{times}{Number of times}
+
+\item{rotate}{Logical to rotate TRUE or not FALSE Array}
 
 \item{object}{object with class "EmissionsArray'}
 }
@@ -74,7 +76,7 @@ E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
 head(E_CO_g) #class sf
 library(mapview)
 mapview(E_CO_g, zcol= "V1", legend = T, col.regions = cptcity::cptcity(1))
-gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168)
+gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
 plot(gr)
 
 # For some cptcity color gradients:

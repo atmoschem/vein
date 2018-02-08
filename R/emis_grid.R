@@ -62,7 +62,8 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
   net$id <- NULL
   g <- sf::st_as_sf(g)
 
-  if(exists("sr")){
+  if(!missing(sr)){
+    message("Transforming spatial objects to 'sr' ")
   net <- sf::st_transform(net, sr)
   g <- sf::st_transform(g, sr)
   }

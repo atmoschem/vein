@@ -12,6 +12,7 @@
 #' @param rows Number of rows
 #' @param cols Number of columns
 #' @param times Number of times
+#' @param rotate Logical to rotate TRUE or not FALSE Array
 #' @rdname GriddedEmissionsArray
 #' @aliases GriddedEmissionsArray print.GriddedEmissionsArray
 #' summary.GriddedEmissionsArray plot.GriddedEmissionsArray
@@ -51,7 +52,7 @@
 #' head(E_CO_g) #class sf
 #' library(mapview)
 #' mapview(E_CO_g, zcol= "V1", legend = T, col.regions = cptcity::cptcity(1))
-#' gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168)
+#' gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
 #' plot(gr)
 #'
 #' # For some cptcity color gradients:
@@ -59,7 +60,8 @@
 #' plot(gr, col = cptcity::cptcity(1))
 #' }
 #' @export
-GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x)) {
+GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x),
+                                  rotate = FALSE) {
   x$id <- NULL
   if(inherits(x, "Spatial")){
   df <- sf::st_as_sf(x)
@@ -70,14 +72,18 @@ GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x)) {
   for (i in 1:ncol(df)) {
     df[, i] <- as.numeric(df[, i])
   }
-  e <- simplify2array(lapply(1:ncol(df), function(i){
-    t(apply(matrix(data = df[, i],
-                   nrow = rows,
-                   ncol = cols,
-                   byrow = T),
-            2,
-            rev))
+  if (rotate) {
+    e <- simplify2array(lapply(1:ncol(df), function(i){
+      t(apply(matrix(data = df[, i],
+                     nrow = rows,
+                     ncol = cols,
+                     byrow = T),
+              2,
+              rev))
     }))
+  } else {
+    e <- array(unlist(df), c(cols, rows, times))
+  }
 
   class(e) <- c("GriddedEmissionsArray",class(e))
   cat("This GriddedEmissionsArray has:\n",
