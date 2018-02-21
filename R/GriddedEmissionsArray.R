@@ -12,7 +12,7 @@
 #' @param rows Number of rows
 #' @param cols Number of columns
 #' @param times Number of times
-#' @param rotate Logical to rotate TRUE or not FALSE Array
+#' @param rotate Logical to rotate TRUE or not FALSE the array
 #' @rdname GriddedEmissionsArray
 #' @aliases GriddedEmissionsArray print.GriddedEmissionsArray
 #' summary.GriddedEmissionsArray plot.GriddedEmissionsArray
