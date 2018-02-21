@@ -1,24 +1,28 @@
 NEWS
 ===========
 
-# vein 0.3.3 (Release date: 2018-04-08)
+# vein 0.3.4 (Release date: 2018-02-21)
 
-### vein 0.3.3 (Release date: 2018-04-08)
+### vein 0.3.4 (Release date: 2018-02-21)
+
+- improve inventory.R
+
+### vein 0.3.3 (Release date: 2018-02-08)
 
 - Fix #62
 
-### vein 0.3.2 (Release date: 2018-04-08)
+### vein 0.3.2 (Release date: 2018-02-08)
 
 - Fix #60 and #61.
 
-### vein 0.3.1 (Release date: 2018-04-07)
+### vein 0.3.1 (Release date: 2018-02-07)
 
 - Fix #57, #58 and #59.
 - GriddedEmissionsInventory corrected orientation.
 
-# vein 0.3.0 (Release date: 2018-04-05)
+# vein 0.3.0 (Release date: 2018-02-05)
 
-### vein 0.3.0 (Release date: 2018-04-05)
+### vein 0.3.0 (Release date: 2018-02-05)
 
 - Fix #49: Documentation in inventory est
 - Fix #50: Fix repetition of x_DF
@@ -159,7 +163,7 @@ veh is a list, length(veh) != ncol(speed). In emis agemax determined by ncol of
 vehicles
 - Fix demo
 
-### vein 0.2.2-3 (Release date: 2017-08-03)
+# vein 0.2.2-3 (Release date: 2017-08-03)
 
 - speed in emis and emis cold is now a dataframe with columns as number of hours.
 - netspeed argument isList changed to scheme
@@ -217,9 +221,7 @@ vector.
 # REMI 0.1.0-0 (Release date: 2016-10-19)
 
 - REMI released.
-
-Prior REMI 0.1.0-0 (Release date: 2016-10-19)
-
+- Prior REMI 0.1.0-0 (Release date: 2016-10-19)
 - The model started as a collection of rscripts named "remIAG".
 see: Ibarra-Espinosa S., Ynoue R. 2016. REMI model: Bottom-up emissions
 inventories for cities with lack of data. Journal of Earth Sciences &

@@ -30,7 +30,7 @@ GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate = FALSE)
 
 \item{times}{Number of times}
 
-\item{rotate}{Logical to rotate TRUE or not FALSE Array}
+\item{rotate}{Logical to rotate TRUE or not FALSE the array}
 
 \item{object}{object with class "EmissionsArray'}
 }

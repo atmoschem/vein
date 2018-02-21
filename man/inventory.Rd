@@ -4,7 +4,7 @@
 \alias{inventory}
 \title{Vehicular Emissions Inventory (VEIN) inventory function.}
 \usage{
-inventory(name, vehcomp = c(PC = 4, LCV = 5, HGV = 5, BUS = 3, MC = 9),
+inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
   scripts = TRUE, show.dir = TRUE, show.scripts = TRUE, clear = TRUE)
 }
 \arguments{
