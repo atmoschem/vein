@@ -1,11 +1,16 @@
 NEWS
 ===========
 
-# vein 0.3.4 (Release date: 2018-02-21)
+# vein 0.3.5 (Release date: 2018-02-22)
+
+### vein 0.3.5 (Release date: 2018-02-22)
+
+- Add emis_merge.
+- improve inventory.
 
 ### vein 0.3.4 (Release date: 2018-02-21)
 
-- improve inventory.R
+- improve inventory.
 
 ### vein 0.3.3 (Release date: 2018-02-08)
 
