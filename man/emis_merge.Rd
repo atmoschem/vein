@@ -4,14 +4,13 @@
 \alias{emis_merge}
 \title{Merge several emissions files returning data-frames or 'sf' of lines}
 \usage{
-emis_merge(path = "emi", pol = "CO_", what = "STREETS.rds", net,
+emis_merge(path = "emi", pol = "CO", what = "STREETS.rds", net,
   streets = T)
 }
 \arguments{
 \item{path}{Character. Path where emissions are located}
 
-\item{pol}{Character. Pollutant. It is a good practice to save the rds emissions with
-pollutants and underline '_'.}
+\item{pol}{Character. Pollutant.}
 
 \item{what}{Character. Word to search the emissions names, "STREETS", "DF" or
 whatever name. It is important to include the extension .'rds'}
