@@ -4,16 +4,19 @@
 \alias{make_grid}
 \title{Creates rectangular grid for emission allocation}
 \usage{
-make_grid(spobj, width, height, polygon = T)
+make_grid(spobj, width, height, polygon, ...)
 }
 \arguments{
 \item{spobj}{A spatial object of class sp or sf.}
 
 \item{width}{Width of grid cell. It is recommended to use projected values.}
 
-\item{height}{Height of grid cell. It is recommended to use projected values.}
+\item{height}{Height of grid cell. Deprecated!}
 
-\item{polygon}{whe TRUE return a polygon grid, when FALSE stops.}
+\item{polygon}{Deprecated! \code{\link{make_grid}} returns only sf grid of
+polygons.}
+
+\item{...}{ignored}
 }
 \value{
 A grid of polygons class 'sf'
@@ -26,7 +29,7 @@ reference is taken from the spatial object.
 \dontrun{
 #do not run
 data(net)
-grid <- make_grid(net, width = 0.5/102.47, height = 0.5/102.47) #500 mts
+grid <- make_grid(net, width = 0.5/102.47) #500 mts
 plot(grid, axes = T) #class f
 }
 }

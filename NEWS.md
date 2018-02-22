@@ -5,7 +5,8 @@ NEWS
 
 ### vein 0.3.6 (Release date: 2018-02-22)
 
-- fix #67
+- fix #67.
+- make_grid now uses sf::st_make_grid
 
 ### vein 0.3.5 (Release date: 2018-02-22)
 
@@ -18,7 +19,7 @@ NEWS
 
 ### vein 0.3.3 (Release date: 2018-02-08)
 
-- Fix #62
+- Fix #62.
 
 ### vein 0.3.2 (Release date: 2018-02-08)
 
