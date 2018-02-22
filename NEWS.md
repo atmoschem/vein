@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.3.5 (Release date: 2018-02-22)
+# vein 0.3.6 (Release date: 2018-02-22)
+
+### vein 0.3.6 (Release date: 2018-02-22)
+
+- fix #67
 
 ### vein 0.3.5 (Release date: 2018-02-22)
 

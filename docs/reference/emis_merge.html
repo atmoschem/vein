@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -91,7 +91,7 @@
  or an object of 'spatial feature' of streets, merging several files.</p>
     
 
-    <pre class="usage"><span class='fu'>emis_merge</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"emi"</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO_"</span>, <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"STREETS"</span>, <span class='no'>netsf</span>,
+    <pre class="usage"><span class='fu'>emis_merge</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"emi"</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO_"</span>, <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"STREETS.rds"</span>, <span class='no'>net</span>,
   <span class='kw'>streets</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -109,13 +109,13 @@ pollutants and underline '_'.</p></td>
     <tr>
       <th>what</th>
       <td><p>Character. Word to search the emissions names, "STREETS", "DF" or
-whatever name.</p></td>
+whatever name. It is important to include the extension .'rds'</p></td>
     </tr>
     <tr>
-      <th>netsf</th>
-      <td><p>sf. 'Spatial feature' onject with the streets. It is expected
-that the number of rows is equal to the number of rows of street emissions. If
-not, the function will stop.</p></td>
+      <th>net</th>
+      <td><p>'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
+It is expected #' that the number of rows is equal to the number of rows of
+street emissions. If #' not, the function will stop.</p></td>
     </tr>
     <tr>
       <th>streets</th>
@@ -157,7 +157,7 @@ rbind them.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
