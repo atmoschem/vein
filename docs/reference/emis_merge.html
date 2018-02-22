@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generates emissions dataframe to generate WRF-Chem inputs — emis_wrf • vein</title>
+<title>Merge several emissions files returning data-frames or 'sf' of lines — emis_merge • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,82 +83,58 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generates emissions dataframe to generate WRF-Chem inputs</h1>
+    <h1>Merge several emissions files returning data-frames or 'sf' of lines</h1>
     </div>
 
     
-    <p><code>emis_wrf</code> returns a dataframes with columns lat, long, id, pollutants, local time
-and GMT time. This dataframe has the proper format to be used with WRF
-assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
-by Vera-Vala et al (2016)</p>
+    <p><code>emis_merge</code> reads rds files and returns a data-frame
+ or an object of 'spatial feature' of streets, merging several files.</p>
     
 
-    <pre class="usage"><span class='fu'>emis_wrf</span>(<span class='no'>sdf</span>, <span class='kw'>nr</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>dmyhm</span>, <span class='no'>tz</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='st'>"+init=epsg:4326"</span>, <span class='no'>islist</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_merge</span>(<span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"emi"</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO_"</span>, <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"STREETS"</span>, <span class='no'>netsf</span>,
+  <span class='kw'>streets</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>sdf</th>
-      <td><p>Grid emissions, which can be a SpatialPolygonsDataFrame, or a list
-of SpatialPolygonsDataFrame. The user must enter a list with 36
-SpatialPolygonsDataFrame with emissions for the mechanism CBMZ. When there
-are no emissions available, the SpatialPolygonsDataFrame must contain
-0.</p></td>
+      <th>path</th>
+      <td><p>Character. Path where emissions are located</p></td>
     </tr>
     <tr>
-      <th>nr</th>
-      <td><p>Number of repetitions of the emissions period</p></td>
+      <th>pol</th>
+      <td><p>Character. Pollutant. It is a good practice to save the rds emissions with
+pollutants and underline '_'.</p></td>
     </tr>
     <tr>
-      <th>dmyhm</th>
-      <td><p>String indicating Day Month Year Hour and Minute in the format
-"d-m-Y H:M" e.g.: "01-05-2014 00:00" It represents the time of the first
-hour of emissions in Local Time</p></td>
+      <th>what</th>
+      <td><p>Character. Word to search the emissions names, "STREETS", "DF" or
+whatever name.</p></td>
     </tr>
     <tr>
-      <th>tz</th>
-      <td><p>Time zone as required in for function <code>as.POSIXct</code></p></td>
+      <th>netsf</th>
+      <td><p>sf. 'Spatial feature' onject with the streets. It is expected
+that the number of rows is equal to the number of rows of street emissions. If
+not, the function will stop.</p></td>
     </tr>
     <tr>
-      <th>crs</th>
-      <td><p>Coordinate reference system, e.g: "+init=epsg:4326". Used to
-transform the coordinates of the output</p></td>
-    </tr>
-    <tr>
-      <th>islist</th>
-      <td><p>logical value to indicate if sdf is a list or not</p></td>
+      <th>streets</th>
+      <td><p>Logical. If true, <code>emis_merge</code> will read the street
+emissions created with <code><a href='emis_post.html'>emis_post</a></code> by "streets_wide", returning an
+object with class 'sf'. If false, it will read the emissions data-frame and
+rbind them.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data-frame of gridded emissions  g/h</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>The reference of the emissions assimilation system is Vara-Vela, A.,
-Andrade, M. F., Kumar, P., Ynoue, R. Y., and Munoz, A. G.: Impact of
-vehicular emissions on the formation of fine particles in the Sao Paulo
-Metropolitan Area: a numerical study with the WRF-Chem model, Atmos. Chem.
-Phys., 16, 777-797, doi:10.5194/acp-16-777-2016, 2016.
-A good website with timezones is http://www.timezoneconverter.com/cgi-bin/tzc
-The crs is the same as used by <code>sp</code> package
-It returns a dataframe with id,, long, lat, pollutants, time_lt, time_utc
-and day-UTC-hour (dutch)
-The pollutants for the CBMZ are: e_so2, e_no, e_ald, e_hcho, e_ora2, e_nh3
-e_hc3, e_hc5, e_hc8, e_eth, e_co, e_ol2, e_olt, e_oli, e_tol, e_xyl, e_ket
-e_csl, e_iso, e_no2, e_ch3oh, e_c2h5oh, e_pm25i, e_pm25j, e_so4i, e_so4j
-e_no3i, e_no3j, e_orgi, e_orgj, e_eci, e_ecj, e_so4c, e_no3c, e_orgc, e_ecc</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p><code><a href='emis_post.html'>emis_post</a></code> <code><a href='emis.html'>emis</a></code></p>
+    <p>'Spatial feature' of lines or a dataframe of emissions</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"># NOT RUN {
 # Do not run
+
 # }
 </pre>
   </div>
@@ -168,10 +144,6 @@ e_no3i, e_no3j, e_orgi, e_orgj, e_eci, e_ecj, e_so4c, e_no3c, e_orgc, e_ecc</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
