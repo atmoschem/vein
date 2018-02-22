@@ -4,7 +4,7 @@
 \alias{emis_merge}
 \title{Merge several emissions files returning data-frames or 'sf' of lines}
 \usage{
-emis_merge(path = "emi", pol = "CO_", what = "STREETS", netsf,
+emis_merge(path = "emi", pol = "CO_", what = "STREETS.rds", net,
   streets = T)
 }
 \arguments{
@@ -14,11 +14,11 @@ emis_merge(path = "emi", pol = "CO_", what = "STREETS", netsf,
 pollutants and underline '_'.}
 
 \item{what}{Character. Word to search the emissions names, "STREETS", "DF" or
-whatever name.}
+whatever name. It is important to include the extension .'rds'}
 
-\item{netsf}{sf. 'Spatial feature' onject with the streets. It is expected
-that the number of rows is equal to the number of rows of street emissions. If
-not, the function will stop.}
+\item{net}{'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
+It is expected #' that the number of rows is equal to the number of rows of
+street emissions. If #' not, the function will stop.}
 
 \item{streets}{Logical. If true, \code{\link{emis_merge}} will read the street
 emissions created with \code{\link{emis_post}} by "streets_wide", returning an
