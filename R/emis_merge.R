@@ -23,11 +23,11 @@
 #' # Do not run
 #'
 #' }
-emis_merge <- function (path = "emi",
-                        pol = "CO",
+emis_merge <- function (pol = "CO",
                         what = "STREETS.rds",
+                        streets = T,
                         net,
-                        streets = T){
+                        path = "emi"){
   x <- list.files(path = path,
                   pattern = glob2rx(paste0(pol, "_*", what)),
                   all.files = T,
