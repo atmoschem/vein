@@ -1,6 +1,13 @@
 NEWS
 ===========
 
+# vein 0.3.7 (Release date: 2018-02-26)
+
+### vein 0.3.7 (Release date: 2018-02-26)
+
+- Improve inventory function.
+- Change order of arguments on emis_merge.
+
 # vein 0.3.6 (Release date: 2018-02-22)
 
 ### vein 0.3.6 (Release date: 2018-02-22)

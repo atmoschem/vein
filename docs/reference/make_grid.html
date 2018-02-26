@@ -91,7 +91,7 @@
 reference is taken from the spatial object.</p>
     
 
-    <pre class="usage"><span class='fu'>make_grid</span>(<span class='no'>spobj</span>, <span class='no'>width</span>, <span class='no'>height</span>, <span class='kw'>polygon</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+    <pre class="usage"><span class='fu'>make_grid</span>(<span class='no'>spobj</span>, <span class='no'>width</span>, <span class='no'>height</span>, <span class='no'>polygon</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -106,11 +106,16 @@ reference is taken from the spatial object.</p>
     </tr>
     <tr>
       <th>height</th>
-      <td><p>Height of grid cell. It is recommended to use projected values.</p></td>
+      <td><p>Height of grid cell. Deprecated!</p></td>
     </tr>
     <tr>
       <th>polygon</th>
-      <td><p>whe TRUE return a polygon grid, when FALSE stops.</p></td>
+      <td><p>Deprecated! <code>make_grid</code> returns only sf grid of
+polygons.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>ignored</p></td>
     </tr>
     </table>
     
@@ -123,7 +128,7 @@ reference is taken from the spatial object.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>#do not run</span>
 <span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='fu'>make_grid</span>(<span class='no'>net</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>) <span class='co'>#500 mts</span>
+<span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='fu'>make_grid</span>(<span class='no'>net</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>) <span class='co'>#500 mts</span>
 <span class='fu'>plot</span>(<span class='no'>grid</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='no'>T</span>) <span class='co'>#class f</span>
 <span class='co'># }</span></pre>
   </div>
