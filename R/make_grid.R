@@ -16,7 +16,6 @@
 #' @importFrom sf st_as_sf st_make_grid st_sf
 #' @export
 #' @examples {
-#' #do not run
 #' data(net)
 #' grid <- make_grid(net, width = 0.5/102.47) #500 mts
 #' plot(grid, axes = TRUE) #class sf

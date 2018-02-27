@@ -30,7 +30,6 @@ reference is taken from the spatial object.
 }
 \examples{
 {
-#do not run
 data(net)
 grid <- make_grid(net, width = 0.5/102.47) #500 mts
 plot(grid, axes = TRUE) #class sf
