@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 [![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
 [![Rdoc](http://www.rdocumentation.org/badges/version/vein)](http://www.rdocumentation.org/packages/vein)
 [![DOI](https://zenodo.org/badge/88201850.svg)](https://zenodo.org/badge/latestdoi/88201850)
+[![Coverage Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
 
 
 
@@ -51,7 +52,7 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.7 Reaching the puberty   
+# 0.3.8 Reaching the puberty   
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)

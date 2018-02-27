@@ -1,6 +1,13 @@
 NEWS
 ===========
 
+# vein 0.3.8 (Release date: 2018-02-27)
+
+### vein 0.3.8 (Release date: 2018-02-27)
+
+- Improve inventory.
+- Starts adding codecov.
+
 # vein 0.3.7 (Release date: 2018-02-26)
 
 ### vein 0.3.7 (Release date: 2018-02-26)
