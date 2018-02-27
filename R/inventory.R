@@ -155,7 +155,7 @@ inventory <- function(name,
       cat("lkm <- net$lkm\n")
       cat("# speed <- readRDS('network/speed.rds')\n\n")
       cat("# Vehicles\n")
-      cat("veh <- readRDS('veh/", cat(lista3[[i]]), ".rds') # Put object\n")
+      cat("veh <- readRDS('veh/", lista3[[i]], ".rds') # Put object\n")
       # PASTE0
       cat("# Profiles\n")
       cat("data(profiles)\n")
