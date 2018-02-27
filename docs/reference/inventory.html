@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vehicular Emissions Inventory (VEIN) inventory function. — inventory • vein</title>
+<title>Inventory function. — inventory • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,7 +83,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Vehicular Emissions Inventory (VEIN) inventory function.</h1>
+    <h1>Inventory function.</h1>
     </div>
 
     
@@ -168,22 +168,31 @@ The user can rename these scripts.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='co'># Do not run</span>
 <span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>))
+<span class='co'># open the following file and run line by line</span>
+<span class='co'># paste0(file.path(tempdir(), "YourCity"), "/main.R</span>
+<span class='co'># or source it</span>
+<span class='fu'>source</span>(<span class='fu'>paste0</span>(<span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>), <span class='st'>"/main.R"</span>))
 }</div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/Rtmprxkfm7/YourCity"            "/tmp/Rtmprxkfm7/YourCity/daily"     
-#&gt;  [3] "/tmp/Rtmprxkfm7/YourCity/ef"         "/tmp/Rtmprxkfm7/YourCity/emi"       
-#&gt;  [5] "/tmp/Rtmprxkfm7/YourCity/emi/BUS_01" "/tmp/Rtmprxkfm7/YourCity/emi/HGV_01"
-#&gt;  [7] "/tmp/Rtmprxkfm7/YourCity/emi/LCV_01" "/tmp/Rtmprxkfm7/YourCity/emi/MC_01" 
-#&gt;  [9] "/tmp/Rtmprxkfm7/YourCity/emi/PC_01"  "/tmp/Rtmprxkfm7/YourCity/est"       
-#&gt; [11] "/tmp/Rtmprxkfm7/YourCity/est/BUS_01" "/tmp/Rtmprxkfm7/YourCity/est/HGV_01"
-#&gt; [13] "/tmp/Rtmprxkfm7/YourCity/est/LCV_01" "/tmp/Rtmprxkfm7/YourCity/est/MC_01" 
-#&gt; [15] "/tmp/Rtmprxkfm7/YourCity/est/PC_01"  "/tmp/Rtmprxkfm7/YourCity/images"    
-#&gt; [17] "/tmp/Rtmprxkfm7/YourCity/network"    "/tmp/Rtmprxkfm7/YourCity/veh"       
+#&gt;  [1] "/tmp/RtmpBEoDWC/YourCity"            "/tmp/RtmpBEoDWC/YourCity/daily"     
+#&gt;  [3] "/tmp/RtmpBEoDWC/YourCity/ef"         "/tmp/RtmpBEoDWC/YourCity/emi"       
+#&gt;  [5] "/tmp/RtmpBEoDWC/YourCity/emi/BUS_01" "/tmp/RtmpBEoDWC/YourCity/emi/HGV_01"
+#&gt;  [7] "/tmp/RtmpBEoDWC/YourCity/emi/LCV_01" "/tmp/RtmpBEoDWC/YourCity/emi/MC_01" 
+#&gt;  [9] "/tmp/RtmpBEoDWC/YourCity/emi/PC_01"  "/tmp/RtmpBEoDWC/YourCity/est"       
+#&gt; [11] "/tmp/RtmpBEoDWC/YourCity/est/BUS_01" "/tmp/RtmpBEoDWC/YourCity/est/HGV_01"
+#&gt; [13] "/tmp/RtmpBEoDWC/YourCity/est/LCV_01" "/tmp/RtmpBEoDWC/YourCity/est/MC_01" 
+#&gt; [15] "/tmp/RtmpBEoDWC/YourCity/est/PC_01"  "/tmp/RtmpBEoDWC/YourCity/images"    
+#&gt; [17] "/tmp/RtmpBEoDWC/YourCity/network"    "/tmp/RtmpBEoDWC/YourCity/veh"       
 #&gt; Scripts:
 #&gt; [1] "est/BUS_01/input.R" "est/HGV_01/input.R" "est/LCV_01/input.R"
 #&gt; [4] "est/MC_01/input.R"  "est/PC_01/input.R"  "main.R"            
-#&gt; [7] "traffic.R"         </div></pre>
+#&gt; [7] "traffic.R"         </div><div class='output co'>#&gt; <span class='message'>Average age of PC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC is 1460.22 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of LCV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of LCV is 243.37 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of HGV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of HGV is 111.09 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of BUS is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of BUS is 37.03 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of MC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of MC is 243.37 * 10^3 veh</span></div><div class='output co'>#&gt; 
+#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>105806.64 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>105806.64 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>17634.44 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>105806.64 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; 
+#&gt; Reading emissions from:
+#&gt; [1] "CO_HGV_01_STREETS.rds" "CO_LCV_01_STREETS.rds" "CO_MC_01_STREETS.rds" 
+#&gt; [4] "CO_PC_01_STREETS.rds" </div><div class='img'><img src='inventory-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+#&gt; Reading emissions from:
+#&gt; [1] "CO_HGV_01_DF.rds" "CO_LCV_01_DF.rds" "CO_MC_01_DF.rds"  "CO_PC_01_DF.rds" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
