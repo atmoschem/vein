@@ -155,7 +155,7 @@ inventory <- function(name,
       cat("lkm <- net$lkm\n")
       cat("# speed <- readRDS('network/speed.rds')\n\n")
       cat("# Vehicles\n")
-      cat("veh <- readRDS('veh/", deparse(lista3[[i]]), ".rds') # Put object\n")
+      cat("veh <- readRDS('veh/", cat(lista3[[i]]), ".rds') # Put object\n")
       # PASTE0
       cat("# Profiles\n")
       cat("data(profiles)\n")
@@ -164,7 +164,7 @@ inventory <- function(name,
       cat("# Emission Factors data-set\n")
       cat("data(fe2015)\n")
       cat("efe <- fe2015\n")
-      cat("efe <- read.csv('ef/fe2015.csv')\n")
+      cat("# efe <- read.csv('ef/fe2015.csv')\n")
       cat("efeco <- 11 #Number of column of the respective EF\n")
       cat("efero <- ifelse(is.data.frame(veh), ncol(veh), ncol(veh[[1]]))\n")
       cat("# efero reads the number of the vehicle distribution\n")
@@ -201,8 +201,9 @@ inventory <- function(name,
       cat("# Other Pollutants...")
       sink()
     }
+    dirs <- list.dirs(path = name, full.names = T, recursive = T)
     sink(paste0(name, "/main.R"))
-    cat(paste0("setwd('", getwd(), '/', name, "')\n"))
+    cat(paste0("setwd('",dirs[1], "')\n"))
     cat("library(vein)\n")
     cat("sessionInfo()\n\n")
     cat("# 1) Network ####\n")
