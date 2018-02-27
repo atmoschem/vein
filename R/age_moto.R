@@ -13,8 +13,7 @@
 #' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
 #' @export
-#' @examples \dontrun{
-#' # Do not run
+#' @examples {
 #' mc <- rnorm(100, 300, 10)
 #' MOTO_E25_500 <- age_moto(x = mc, name = "M_E25_500")
 #' plot(MOTO_E25_500)

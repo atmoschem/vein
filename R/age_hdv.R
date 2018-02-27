@@ -13,8 +13,7 @@
 #' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
 #' @export
-#' @examples \dontrun{
-#' # Do not run
+#' @examples {
 #' lt <- Vehicles(rnorm(100, 300, 10))
 #' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
 #' plot(LT_B5)

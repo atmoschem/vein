@@ -14,8 +14,7 @@
 #' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
 #' @export
-#' @examples \dontrun{
-#' # Do not run
+#' @examples {
 #' pc <- rnorm(100, 300, 10)
 #' PC_E25_1400 <- age_ldv(x = pc, name = "PC_E25_1400")
 #' plot(PC_E25_1400)

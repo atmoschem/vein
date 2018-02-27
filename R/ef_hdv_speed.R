@@ -18,18 +18,17 @@
 #' @return an emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
 #' @export
-#' @examples \dontrun{
-#' # Do not run
+#' @examples {
 #' V <- 0:130
 #' ef1 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
 #' l = 0.5, p = "HC")
-#' plot(1:130, ef2(1:130))
+#' plot(1:130, ef1(1:130), pch = 16, type = "b")
 #' euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
 #'           rep("I", 5), rep("PRE", 15))
 #' lef <- lapply(1:30, function(i) {
 #' ef_hdv_speed(v = "Trucks", t = "RT", g = ">32", gr = 0,
 #' eu = euro[i], l = 0.5, p = "NOx",
-#' show.equation = F)(25) })
+#' show.equation = FALSE)(25) })
 #' efs <- EmissionFactors(unlist(lef)) #returns 'units'
 #' plot(efs, xlab = "age")
 #' lines(efs, type = "l")

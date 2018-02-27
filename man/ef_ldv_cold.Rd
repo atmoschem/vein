@@ -34,11 +34,9 @@ emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 }
 \examples{
-\dontrun{
-# Do not run
+{
 V <- 0:150
-ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "I",
-p = "CO")
+ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "I", p = "CO")
 ef1(10)
 }
 }
