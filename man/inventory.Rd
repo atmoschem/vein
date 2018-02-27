@@ -2,7 +2,7 @@
 % Please edit documentation in R/inventory.R
 \name{inventory}
 \alias{inventory}
-\title{Vehicular Emissions Inventory (VEIN) inventory function.}
+\title{Inventory function.}
 \usage{
 inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
   scripts = TRUE, show.dir = TRUE, show.scripts = TRUE, clear = TRUE)
@@ -75,7 +75,10 @@ fleet.
 }
 \examples{
 {
-# Do not run
 inventory(name = file.path(tempdir(), "YourCity"))
+# open the following file and run line by line
+# paste0(file.path(tempdir(), "YourCity"), "/main.R
+# or source it
+source(paste0(file.path(tempdir(), "YourCity"), "/main.R"))
 }
 }

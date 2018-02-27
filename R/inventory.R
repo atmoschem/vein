@@ -1,4 +1,4 @@
-#' Vehicular Emissions Inventory (VEIN) inventory function.
+#' Inventory function.
 #'
 #' @description \code{inventory} produces an structure of directories and scripts
 #' in order to run vein. It is required to know the vehicular composition of the
@@ -58,8 +58,9 @@
 #' The user can rename these scripts.
 #' @export
 #' @examples {
-#' # Do not run
 #' inventory(name = file.path(tempdir(), "YourCity"))
+#' # open the following file and run line by line
+#' # paste0(file.path(tempdir(), "YourCity"), "/main.R
 #' }
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
@@ -201,7 +202,7 @@ inventory <- function(name,
       cat("# Other Pollutants...")
       sink()
     }
-    dirs <- list.dirs(path = name, full.names = T, recursive = T)
+    dirs <- list.dirs(path = name, full.names = TRUE, recursive = TRUE)
     sink(paste0(name, "/main.R"))
     cat(paste0("setwd('",dirs[1], "')\n"))
     cat("library(vein)\n")
@@ -223,7 +224,7 @@ inventory <- function(name,
     cat("# Edit each input.R\n")
     cat("# You must have all the information required in each input.R\n")
     cat("inputs <- list.files(path = 'est', pattern = 'input.R',\n")
-    cat("                     recursive = T, full.names = T)\n")
+    cat("                     recursive = TRUE, full.names = TRUE)\n")
     cat("for (i in 2:length(inputs)){\n")
     cat( "  source(inputs[i])\n" )
     cat("}\n")
@@ -231,8 +232,8 @@ inventory <- function(name,
     cat("CO <- emis_merge('CO', net = net, crs = 31983)\n")
     cat("g <- make_grid(net, 1/102.47, crs = 31983)\n")
     cat("gCO <- emis_grid(CO, g)\n")
-    cat("plot(gCO['V1'], axes = T)\n")
-    cat("dfco <- emis_merge('CO', what = 'DF.rds', F)\n")
+    cat("plot(gCO['V1'], axes = TRUE)\n")
+    cat("dfco <- emis_merge('CO', what = 'DF.rds', FALSE)\n")
     cat("head(dfco)\n")
     cat("aggregate(dfco$g, by = list(dfco$veh), sum)\n")
     sink()
@@ -256,12 +257,12 @@ inventory <- function(name,
   }
 
   if(show.dir){
-    dirs <- list.dirs(path = name, full.names = T, recursive = T)
+    dirs <- list.dirs(path = name, full.names = TRUE, recursive = TRUE)
     cat("Directories:\n")
     print(dirs)
   }
   if(show.scripts){
-    sc <- list.files(path = name, pattern = ".R", recursive = T)
+    sc <- list.files(path = name, pattern = ".R", recursive = TRUE)
     cat("Scripts:\n")
     print(sc)
   }
