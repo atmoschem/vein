@@ -154,14 +154,14 @@ a specific type of vehicle</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>{
 <span class='co'># Do not run</span>
 <span class='fu'>data</span>(<span class='no'>fe2015</span>)
 <span class='no'>co1</span> <span class='kw'>&lt;-</span> <span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>,]
 <span class='no'>FE_LT_7_5_D_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_hdv_scaled</span>(<span class='no'>co1</span>, <span class='no'>co1</span>$<span class='no'>LT</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"Trucks"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"RT"</span>,
 <span class='kw'>g</span> <span class='kw'>=</span> <span class='st'>"&lt;=7.5"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>co1</span>$<span class='no'>Euro_HDV</span>, <span class='kw'>gr</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>l</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
 <span class='fu'>length</span>(<span class='no'>FE_LT_7_5_D_CO</span>)
-<span class='co'># }</span></pre>
+}</div><div class='output co'>#&gt; [1] 36</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
