@@ -38,8 +38,7 @@ This function calculates ADT based on hourly traffic data. The
 input traffic data is usually for morning rush hours.
 }
 \examples{
-\dontrun{
-# Do not run
+{
 data(net)
 data(pc_profile)
 p1 <- pc_profile[, 1]
@@ -65,7 +64,7 @@ adt2 <- adt(pc = net$ldv*0.75,
             p_hgv = p1,
             p_bus = p1*0, # when zero, must be the same size
             p_mc = p1,
-            T)
+            TRUE)
 head(adt2)
 plot(adt2) # Class Vehicles
 }

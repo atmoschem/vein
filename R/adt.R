@@ -18,8 +18,7 @@
 #' of expanded traffic
 #' @importFrom units as_units
 #' @export
-#' @examples \dontrun{
-#' # Do not run
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' p1 <- pc_profile[, 1]
@@ -45,7 +44,7 @@
 #'             p_hgv = p1,
 #'             p_bus = p1*0, # when zero, must be the same size
 #'             p_mc = p1,
-#'             T)
+#'             TRUE)
 #' head(adt2)
 #' plot(adt2) # Class Vehicles
 #' }

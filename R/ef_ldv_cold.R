@@ -17,11 +17,9 @@
 #' and ambient temperature. g/km
 #' @keywords cold emission factors
 #' @export
-#' @examples \dontrun{
-#' # Do not run
+#' @examples {
 #' V <- 0:150
-#' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "I",
-#' p = "CO")
+#' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "I", p = "CO")
 #' ef1(10)
 #' }
 ef_ldv_cold <- function(v = "LDV", ta, cc, f, eu, p, k = 1, show.equation = FALSE){
