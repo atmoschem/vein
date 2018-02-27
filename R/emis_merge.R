@@ -14,9 +14,11 @@
 #' emissions created with \code{\link{emis_post}} by "streets_wide", returning an
 #' object with class 'sf'. If false, it will read the emissions data-frame and
 #' rbind them.
+#' @param crs coordinate reference system in numeric format from
+#' http://spatialreference.org/ to transform/project spatial data using sf::st_transform
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
-#' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf
+#' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
 #' @importFrom utils glob2rx
 #' @export
 #' @examples \dontrun{
@@ -27,7 +29,8 @@ emis_merge <- function (pol = "CO",
                         what = "STREETS.rds",
                         streets = T,
                         net,
-                        path = "emi"){
+                        path = "emi",
+                        crs){
   x <- list.files(path = path,
                   pattern = glob2rx(paste0(pol, "_*", what)),
                   all.files = T,
@@ -54,6 +57,9 @@ emis_merge <- function (pol = "CO",
       stop("Number of rows of net must be equal to number of rows of estimates")
     }
     net <- sf::st_as_sf(net)
+    if(!missing(crs)) {
+      net <- sf::st_transform(net, crs)
+      }
     netx <- st_sf(x_st, geometry = sf::st_geometry(net))
     return(netx)
   } else{

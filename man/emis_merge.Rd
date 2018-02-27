@@ -5,7 +5,7 @@
 \title{Merge several emissions files returning data-frames or 'sf' of lines}
 \usage{
 emis_merge(pol = "CO", what = "STREETS.rds", streets = T, net,
-  path = "emi")
+  path = "emi", crs)
 }
 \arguments{
 \item{pol}{Character. Pollutant.}
@@ -23,6 +23,9 @@ It is expected #' that the number of rows is equal to the number of rows of
 street emissions. If #' not, the function will stop.}
 
 \item{path}{Character. Path where emissions are located}
+
+\item{crs}{coordinate reference system in numeric format from
+http://spatialreference.org/ to transform/project spatial data using sf::st_transform}
 }
 \value{
 'Spatial feature' of lines or a dataframe of emissions
