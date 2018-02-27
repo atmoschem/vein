@@ -167,12 +167,23 @@ The user can rename these scripts.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>{
 <span class='co'># Do not run</span>
-<span class='fu'>getwd</span>()
-<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"cityVEIN"</span>)
-<span class='fu'>setwd</span>(<span class='st'>"cityVEIN"</span>)
-<span class='co'># }</span></pre>
+<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>))
+}</div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/RtmpFYZ1Ol/YourCity"            "/tmp/RtmpFYZ1Ol/YourCity/daily"     
+#&gt;  [3] "/tmp/RtmpFYZ1Ol/YourCity/ef"         "/tmp/RtmpFYZ1Ol/YourCity/emi"       
+#&gt;  [5] "/tmp/RtmpFYZ1Ol/YourCity/emi/BUS_01" "/tmp/RtmpFYZ1Ol/YourCity/emi/HGV_01"
+#&gt;  [7] "/tmp/RtmpFYZ1Ol/YourCity/emi/LCV_01" "/tmp/RtmpFYZ1Ol/YourCity/emi/MC_01" 
+#&gt;  [9] "/tmp/RtmpFYZ1Ol/YourCity/emi/PC_01"  "/tmp/RtmpFYZ1Ol/YourCity/est"       
+#&gt; [11] "/tmp/RtmpFYZ1Ol/YourCity/est/BUS_01" "/tmp/RtmpFYZ1Ol/YourCity/est/HGV_01"
+#&gt; [13] "/tmp/RtmpFYZ1Ol/YourCity/est/LCV_01" "/tmp/RtmpFYZ1Ol/YourCity/est/MC_01" 
+#&gt; [15] "/tmp/RtmpFYZ1Ol/YourCity/est/PC_01"  "/tmp/RtmpFYZ1Ol/YourCity/images"    
+#&gt; [17] "/tmp/RtmpFYZ1Ol/YourCity/network"    "/tmp/RtmpFYZ1Ol/YourCity/veh"       
+#&gt; Scripts:
+#&gt; [1] "est/BUS_01/input.R" "est/HGV_01/input.R" "est/LCV_01/input.R"
+#&gt; [4] "est/MC_01/input.R"  "est/PC_01/input.R"  "main.R"            
+#&gt; [7] "traffic.R"         </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

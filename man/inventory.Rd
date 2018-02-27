@@ -74,10 +74,8 @@ in order to run vein. It is required to know the vehicular composition of the
 fleet.
 }
 \examples{
-\dontrun{
+{
 # Do not run
-getwd()
-inventory(name = "cityVEIN")
-setwd("cityVEIN")
+inventory(name = file.path(tempdir(), "YourCity"))
 }
 }

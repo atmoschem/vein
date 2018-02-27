@@ -57,11 +57,9 @@
 #' traffic.R to generates objects of class "Vehicles".
 #' The user can rename these scripts.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
-#' getwd()
-#' inventory(name = "cityVEIN")
-#' setwd("cityVEIN")
+#' inventory(name = file.path(tempdir(), "YourCity"))
 #' }
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
@@ -155,16 +153,19 @@ inventory <- function(name,
       cat("# Network \n")
       cat("net <- readRDS('network/net.rds')\n")
       cat("lkm <- net$lkm\n")
-      cat("speed <- readRDS('network/speed.rds')\n\n")
+      cat("# speed <- readRDS('network/speed.rds')\n\n")
       cat("# Vehicles\n")
       cat("veh <- readRDS('veh/", deparse(lista3[[i]]), ".rds') # Put object\n")
+      # PASTE0
       cat("# Profiles\n")
-      cat("# data(profiles)\n")
+      cat("data(profiles)\n")
+      cat("pc <- profiles[[1]]\n")
       cat("# pc <- read.csv('daily/pc.csv') #Change accordingly with your data\n")
-      cat("# pc <- profiles[[1]]\n")
       cat("# Emission Factors data-set\n")
+      cat("data(fe2015)\n")
+      cat("efe <- fe2015\n")
       cat("efe <- read.csv('ef/fe2015.csv')\n")
-      cat("efeco <- 10 #Number of column of the respective EF\n")
+      cat("efeco <- 11 #Number of column of the respective EF\n")
       cat("efero <- ifelse(is.data.frame(veh), ncol(veh), ncol(veh[[1]]))\n")
       cat("# efero reads the number of the vehicle distribution\n")
       cat("trips_per_day <- 5\n\n")
@@ -184,10 +185,10 @@ inventory <- function(name,
       cat("pol <- 'CO' \n")
       cat("print(pol)\n")
       cat("x <- efe[efe$Pollutant == pol, efeco]\n")
-      cat("x <- x[1:efero]\n")
+      # cat("x <- x[1:efero]\n")
+      # !!!!!!!
       cat("lefe <- EmissionFactorsList(x)\n")
-      cat("array_x <- emis(veh = veh, lkm = lkm, ef = lefe,  speed = speed,\n")
-      cat("                profile = profile)\n")
+      cat("array_x <- emis(veh = veh, lkm = lkm, ef = lefe, profile = pc)\n")
       cat("x_DF <- emis_post(arra = array_x, veh = vname, size = vsize,\n")
       cat("                  fuel = vfuel, pollutant = pol, by = 'veh')\n")
       cat("x_STREETS <- emis_post(arra = array_x, pollutant = pol,\n")
@@ -201,7 +202,7 @@ inventory <- function(name,
       sink()
     }
     sink(paste0(name, "/main.R"))
-    cat("setwd(", paste0(getwd(), "/", deparse(name)), ")\n")
+    cat(paste0("setwd('", getwd(), '/', name, "')\n"))
     cat("library(vein)\n")
     cat("sessionInfo()\n\n")
     cat("# 1) Network ####\n")
@@ -213,7 +214,7 @@ inventory <- function(name,
     cat("# Are you going to need Speed?\n")
     cat("# if yes, follow the example in netspeed\n")
     cat("# ?netspeed\n")
-    cat("# saveRDS(net, 'network/net.rds')\n\n")
+    cat("saveRDS(net, 'network/net.rds')\n\n")
     cat("# 2) Traffic ####\n")
     cat("# Edit your file traffic.R\n\n")
     cat("source('traffic.R') # Edit traffic.R\n\n")
