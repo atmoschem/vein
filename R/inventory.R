@@ -58,13 +58,14 @@
 #' The user can rename these scripts.
 #' @export
 #' @examples {
-#' inventory(name = file.path(tempdir(), "YourCity"))
+#' inventory(name = file.path(tempdir(), "YourCity"), show.dir = TRUE,
+#'           show.scripts = TRUE)
 #' }
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
                       scripts = TRUE,
-                      show.dir = TRUE,
-                      show.scripts = TRUE,
+                      show.dir = FALSE,
+                      show.scripts = FALSE,
                       clear = TRUE){
   # directorys
   dovein <- function(){
@@ -198,6 +199,7 @@ inventory <- function(name,
       sink()
     }
     dirs <- list.dirs(path = name, full.names = TRUE, recursive = TRUE)
+    message(paste0("files at ", dirs[1]))
     sink(paste0(name, "/main.R"))
     cat(paste0("setwd('", dirs[1], "')\n"))
     cat("library(vein)\n")

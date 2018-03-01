@@ -5,7 +5,7 @@
 \title{Inventory function.}
 \usage{
 inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-  scripts = TRUE, show.dir = TRUE, show.scripts = TRUE, clear = TRUE)
+  scripts = TRUE, show.dir = FALSE, show.scripts = FALSE, clear = TRUE)
 }
 \arguments{
 \item{name}{one word indicating the name of the main directory for running
@@ -75,6 +75,7 @@ fleet.
 }
 \examples{
 {
-inventory(name = file.path(tempdir(), "YourCity"))
+inventory(name = file.path(tempdir(), "YourCity"), show.dir = TRUE,
+          show.scripts = TRUE)
 }
 }

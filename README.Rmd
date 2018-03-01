@@ -52,7 +52,7 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.8 Reaching the puberty   
+# 0.3.9 Reaching the puberty   
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
@@ -97,14 +97,21 @@ VEIN consist of: "Elaboration of vehicular emissions inventories,
     emissions factors, estimating the emissions and post-processing of emissions 
     in maps and databases."
 
+
 This implies the use of several functions in a coordinates ans structured way,
 therefore it is added the new function **inventory** which creates a structured
-set of directories and scripts to run VEIN. Please, read the examples in the
-documentation of each function and run the demo. 
+set of directories and scripts to run VEIN. Please, open the file 'main.R' and
+run each line to understand VEIN. **Remember, if you have doubts with any function,
+just type '?' with the name of the function. For intance: `?inventory`.**
 
-```{r eval = FALSE}
-vein::inventory(name = "YourCity")
+```{r eval = T}
+library(vein)
+inventory(name = file.path(tempdir(), "YourCity"), show.dir = T,
+          show.scripts = T)
 ```
+
+Please, read the examples in the documentation of each function and run the demo. 
+
 
 ###  Issues
 
@@ -116,9 +123,10 @@ Thanks and enjoy VEIN!
 
 ### **future steps**
 
-- Estimation of evaporative emissions with Copert Tier 3
-- More speciations
-- Vignettes, blogs and a book (hopefully released in 2018)
+- Add more support to sf.
+- Estimation of evaporative emissions with Copert Tier 3.
+- More speciations.
+- A book (hopefully released in 2018).
 
 #### Note:
 The paper of vein on GMDD under open review. If you use VEIN, please, cite it:

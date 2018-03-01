@@ -27,7 +27,6 @@
 #' @return dataframe speeds with units.
 #' @export
 #' @examples {
-#' # Do not run
 #' data(net)
 #' data(pc_profile)
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)

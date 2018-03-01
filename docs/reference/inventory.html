@@ -93,7 +93,7 @@ fleet.</p>
     
 
     <pre class="usage"><span class='fu'>inventory</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -168,17 +168,18 @@ The user can rename these scripts.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>))
-}</div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/Rtmpt3vJTD/YourCity"            "/tmp/Rtmpt3vJTD/YourCity/daily"     
-#&gt;  [3] "/tmp/Rtmpt3vJTD/YourCity/ef"         "/tmp/Rtmpt3vJTD/YourCity/emi"       
-#&gt;  [5] "/tmp/Rtmpt3vJTD/YourCity/emi/BUS_01" "/tmp/Rtmpt3vJTD/YourCity/emi/HGV_01"
-#&gt;  [7] "/tmp/Rtmpt3vJTD/YourCity/emi/LCV_01" "/tmp/Rtmpt3vJTD/YourCity/emi/MC_01" 
-#&gt;  [9] "/tmp/Rtmpt3vJTD/YourCity/emi/PC_01"  "/tmp/Rtmpt3vJTD/YourCity/est"       
-#&gt; [11] "/tmp/Rtmpt3vJTD/YourCity/est/BUS_01" "/tmp/Rtmpt3vJTD/YourCity/est/HGV_01"
-#&gt; [13] "/tmp/Rtmpt3vJTD/YourCity/est/LCV_01" "/tmp/Rtmpt3vJTD/YourCity/est/MC_01" 
-#&gt; [15] "/tmp/Rtmpt3vJTD/YourCity/est/PC_01"  "/tmp/Rtmpt3vJTD/YourCity/images"    
-#&gt; [17] "/tmp/Rtmpt3vJTD/YourCity/network"    "/tmp/Rtmpt3vJTD/YourCity/veh"       
+<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>), <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+          <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpY9hwsy/YourCity</span></div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/RtmpY9hwsy/YourCity"            "/tmp/RtmpY9hwsy/YourCity/daily"     
+#&gt;  [3] "/tmp/RtmpY9hwsy/YourCity/ef"         "/tmp/RtmpY9hwsy/YourCity/emi"       
+#&gt;  [5] "/tmp/RtmpY9hwsy/YourCity/emi/BUS_01" "/tmp/RtmpY9hwsy/YourCity/emi/HGV_01"
+#&gt;  [7] "/tmp/RtmpY9hwsy/YourCity/emi/LCV_01" "/tmp/RtmpY9hwsy/YourCity/emi/MC_01" 
+#&gt;  [9] "/tmp/RtmpY9hwsy/YourCity/emi/PC_01"  "/tmp/RtmpY9hwsy/YourCity/est"       
+#&gt; [11] "/tmp/RtmpY9hwsy/YourCity/est/BUS_01" "/tmp/RtmpY9hwsy/YourCity/est/HGV_01"
+#&gt; [13] "/tmp/RtmpY9hwsy/YourCity/est/LCV_01" "/tmp/RtmpY9hwsy/YourCity/est/MC_01" 
+#&gt; [15] "/tmp/RtmpY9hwsy/YourCity/est/PC_01"  "/tmp/RtmpY9hwsy/YourCity/images"    
+#&gt; [17] "/tmp/RtmpY9hwsy/YourCity/network"    "/tmp/RtmpY9hwsy/YourCity/veh"       
 #&gt; Scripts:
 #&gt; [1] "est/BUS_01/input.R" "est/HGV_01/input.R" "est/LCV_01/input.R"
 #&gt; [4] "est/MC_01/input.R"  "est/PC_01/input.R"  "main.R"            

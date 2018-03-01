@@ -96,7 +96,7 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.8 Reaching the puberty   </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.9 Reaching the puberty   </span>
 <span class="kw">library</span>(devtools) 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
@@ -131,8 +131,35 @@
 <h3 class="hasAnchor">
 <a href="#how-to-use-vein" class="anchor"></a>How to use vein</h3>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, pre-processing activity data, preparing emissions factors, estimating the emissions and post-processing of emissions in maps and databases.”</p>
-<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, read the examples in the documentation of each function and run the demo.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vein<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/vein/topics/inventory">inventory</a></span>(<span class="dt">name =</span> <span class="st">"YourCity"</span>)</code></pre></div>
+<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
+<span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
+          <span class="dt">show.scripts =</span> T)</code></pre></div>
+<pre><code>## files at /tmp/RtmplujB7Q/YourCity</code></pre>
+<pre><code>## Directories:
+##  [1] "/tmp/RtmplujB7Q/YourCity"           
+##  [2] "/tmp/RtmplujB7Q/YourCity/daily"     
+##  [3] "/tmp/RtmplujB7Q/YourCity/ef"        
+##  [4] "/tmp/RtmplujB7Q/YourCity/emi"       
+##  [5] "/tmp/RtmplujB7Q/YourCity/emi/BUS_01"
+##  [6] "/tmp/RtmplujB7Q/YourCity/emi/HGV_01"
+##  [7] "/tmp/RtmplujB7Q/YourCity/emi/LCV_01"
+##  [8] "/tmp/RtmplujB7Q/YourCity/emi/MC_01" 
+##  [9] "/tmp/RtmplujB7Q/YourCity/emi/PC_01" 
+## [10] "/tmp/RtmplujB7Q/YourCity/est"       
+## [11] "/tmp/RtmplujB7Q/YourCity/est/BUS_01"
+## [12] "/tmp/RtmplujB7Q/YourCity/est/HGV_01"
+## [13] "/tmp/RtmplujB7Q/YourCity/est/LCV_01"
+## [14] "/tmp/RtmplujB7Q/YourCity/est/MC_01" 
+## [15] "/tmp/RtmplujB7Q/YourCity/est/PC_01" 
+## [16] "/tmp/RtmplujB7Q/YourCity/images"    
+## [17] "/tmp/RtmplujB7Q/YourCity/network"   
+## [18] "/tmp/RtmplujB7Q/YourCity/veh"       
+## Scripts:
+## [1] "est/BUS_01/input.R" "est/HGV_01/input.R" "est/LCV_01/input.R"
+## [4] "est/MC_01/input.R"  "est/PC_01/input.R"  "main.R"            
+## [7] "traffic.R"</code></pre>
+<p>Please, read the examples in the documentation of each function and run the demo.</p>
 </div>
 <div id="issues" class="section level3">
 <h3 class="hasAnchor">
@@ -146,9 +173,10 @@
 <a href="#future-steps" class="anchor"></a><strong>future steps</strong>
 </h3>
 <ul>
-<li>Estimation of evaporative emissions with Copert Tier 3</li>
-<li>More speciations</li>
-<li>Vignettes, blogs and a book (hopefully released in 2018)</li>
+<li>Add more support to sf.</li>
+<li>Estimation of evaporative emissions with Copert Tier 3.</li>
+<li>More speciations.</li>
+<li>A book (hopefully released in 2018).</li>
 </ul>
 <div id="note" class="section level4">
 <h4 class="hasAnchor">
