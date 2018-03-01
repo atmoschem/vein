@@ -39,7 +39,7 @@ vehicles on a road, length of the road, emission factor avaliated at the
 respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
 }
 \examples{
-\dontrun{
+{
 # Do not run
 data(net)
 data(pc_profile)
