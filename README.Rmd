@@ -62,7 +62,7 @@ demo(VEIN)
 or
 
 ```{r eval=F}
-# 0.2.3
+# 0.3.9
 install.packages("vein")
 library(vein)
 ```
@@ -93,9 +93,11 @@ Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 ### How to use vein
 
 VEIN consist of: "Elaboration of vehicular emissions inventories,
-    consisting in four stages, pre-processing activity data, preparing 
-    emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases."
+    consisting in four stages,
+1) pre-processing activity data,
+2) preparing emissions factors,
+3) estimating the emissions and
+4) post-processing of emissions in maps and databases."
 
 
 This implies the use of several functions in a coordinates ans structured way,
@@ -111,6 +113,67 @@ inventory(name = file.path(tempdir(), "YourCity"), show.dir = T,
 ```
 
 Please, read the examples in the documentation of each function and run the demo. 
+
+#### 1) Examples with traffic data:
+
+age functions 
+
+```{r}
+data("net")
+PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
+plot(PC_E25_1400, xlab = "age of use")
+```
+
+temporal factors and netspeed
+```{r}
+data("net")
+data("pc_profile")
+pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+class(dfspeed)
+plot(dfspeed, xlab = "hours") 
+```
+
+#### 2) Emission Factors
+
+```{r}
+V <- 0:150
+ef1 <- ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+p = "CO")
+efs <- EmissionFactors(ef1(1:150))
+plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
+```
+
+#### 3) Estimation of emissions
+
+```{r}
+euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
+          rep("I", 5), rep("PRE", 15))
+lef <- lapply(1:40, function(i) {
+ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+          eu = euro[i], p = "CO", show.equation = FALSE) })
+E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
+             profile = pc_profile)
+plot(E_CO, xlab = "Hours", ylab = "[g/h]")
+```
+
+#### 4) Post Emissions
+
+```{r}
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
+summary(E_CO_STREETS)
+```
+
+make grid. If you plan to run WRF, uses [eixport::wrf_grid](https://github.com/atmoschem/eixport)
+
+```{r}
+data(net)
+net@data <- cbind(net@data, E_CO_STREETS)
+net@data <- net@data[,- c(1:9)]
+g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
+E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
+plot(E_CO_g["V9"], axes = T)
+```
 
 
 ###  Issues
