@@ -17,7 +17,7 @@
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'. Also, The aggregation of data ise done with data.table functions.
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)

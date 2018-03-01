@@ -18,7 +18,7 @@
 #' profile as a dataframe producing an array with dimensions (streets x columns x hours x days)
 #' @return emission estimation  g/h
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' data(net)
 #' data(pc_profile)

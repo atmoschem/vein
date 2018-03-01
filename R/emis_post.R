@@ -23,7 +23,7 @@
 #' made in order to not produce inconsistencies with previous versions, therefore,
 #' if the user count with an EmissionsArry with 4 dimension, it will be able
 #' to use this function.
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' data(net)
 #' data(pc_profile)
