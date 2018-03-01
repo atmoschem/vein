@@ -204,7 +204,7 @@ inventory <- function(name,
     }
     dirs <- list.dirs(path = name, full.names = TRUE, recursive = TRUE)
     sink(paste0(name, "/main.R"))
-    cat(paste0("setwd('",dirs[1], "')\n"))
+    cat(paste0("setwd('",getwd(),"/",dirs[1], "')\n"))
     cat("library(vein)\n")
     cat("sessionInfo()\n\n")
     cat("# 1) Network ####\n")
