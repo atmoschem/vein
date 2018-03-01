@@ -140,7 +140,7 @@ to use this function.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>{
 <span class='co'># Do not run</span>
 <span class='fu'>data</span>(<span class='no'>net</span>)
 <span class='fu'>data</span>(<span class='no'>pc_profile</span>)
@@ -184,7 +184,27 @@ to use this function.</p>
 <span class='no'>E_CO_DFv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_COv2</span>,  <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='st'>"&lt;1400"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
 <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>)
 <span class='fu'>head</span>(<span class='no'>E_CO_DFv2</span>)
-<span class='co'># }</span></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Average age of PC is 15.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC is 1946.955 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>352804.96 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; Total emissions by column in study area = 
+#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;   91739  654015 2212151 2100030 3076163 5948241 
+#&gt; 
+#&gt; Average =  82.65 
+#&gt; 
+#&gt; Emissions by street in study area = 
+#&gt;     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+#&gt;        0    15096    72446   234422   237400 10488909 
+#&gt;  
+#&gt; 
+#&gt; Emissions by column and street in study area = 
+#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+#&gt;      0.00     41.95    258.09   1395.37   1182.74 190174.87 </div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>50064.05 kg emissions in 24 hours</span></div><div class='img'><img src='emis_post-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+#&gt; Average =  13.11</div><div class='output co'>#&gt;     E_COv2             g veh  size fuel pollutant age hour
+#&gt; 1 E_COv2_1  773.3398 g/h  PC &lt;1400    G        CO   1    1
+#&gt; 2 E_COv2_2  835.8875 g/h  PC &lt;1400    G        CO   2    1
+#&gt; 3 E_COv2_3 1058.1350 g/h  PC &lt;1400    G        CO   3    1
+#&gt; 4 E_COv2_4 1708.3690 g/h  PC &lt;1400    G        CO   4    1
+#&gt; 5 E_COv2_5 2361.8048 g/h  PC &lt;1400    G        CO   5    1
+#&gt; 6 E_COv2_6 1166.5232 g/h  PC &lt;1400    G        CO   6    1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

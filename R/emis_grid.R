@@ -17,7 +17,7 @@
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'. Also, The aggregation of data ise done with data.table functions.
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)
@@ -26,10 +26,13 @@
 #'           133833,138441,142682,171029,151048,115228,98664,126444,101027,
 #'           84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
 #'           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
+#' plot(PC_G, type = "b", pch = 16, xlab = "Age")
 #' veh <- data.frame(PC_G = PC_G)
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
+#' plot(pc1, type = "b", pch = 16, xlab = "Age")
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+#' plot(speed)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 #' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 #' cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
@@ -44,7 +47,7 @@
 #' E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 #' net@data <- cbind(net@data, E_CO_STREETS)
 #' head(net@data)
-#' g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
+#' g <- make_grid(net, 1/102.47/2) #500m in degrees
 #'
 #' net@data <- net@data[,- c(1:9)]
 #' names(net)
@@ -52,9 +55,9 @@
 #' head(E_CO_g) #class sf
 #' E_CO_g$V138 <- as.numeric(E_CO_g$V138)
 #' E_CO_g <- as(E_CO_g, "Spatial")
-#' spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
+#' sp::spplot(E_CO_g, "V138", scales=list(draw = TRUE),cuts=8,
 #' colorkey = list(space = "bottom", height = 1),
-#' col.regions = rev(bpy.colors(9)),
+#' col.regions = rev(sp::bpy.colors(9)),
 #' sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
 #' }
 emis_grid <- function(spobj, g, sr, type = "lines"){
