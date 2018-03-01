@@ -7,6 +7,7 @@ NEWS
 
 - included all examples with less than 5 secs.
 - Preparing submission to CRAN.
+- inventoyr prints directory with files.
 
 # vein 0.3.8 (Release date: 2018-02-27)
 

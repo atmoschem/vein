@@ -154,7 +154,7 @@ $(document).ready(function () {
 <div id="installation" class="section level3">
 <h3>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<pre class="r"><code># 0.3.8 Reaching the puberty   
+<pre class="r"><code># 0.3.9 Reaching the puberty   
 library(devtools) 
 install_github(&quot;atmoschem/vein&quot;)
 library(vein)
@@ -187,8 +187,35 @@ library(vein)</code></pre>
 <div id="how-to-use-vein" class="section level3">
 <h3>How to use vein</h3>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, pre-processing activity data, preparing emissions factors, estimating the emissions and post-processing of emissions in maps and databases.”</p>
-<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, read the examples in the documentation of each function and run the demo.</p>
-<pre class="r"><code>vein::inventory(name = &quot;YourCity&quot;)</code></pre>
+<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code>?inventory</code>.</strong></p>
+<pre class="r"><code>library(vein)
+inventory(name = file.path(tempdir(), &quot;YourCity&quot;), show.dir = T,
+          show.scripts = T)</code></pre>
+<pre><code>## files at /tmp/RtmpEY0ddt/YourCity</code></pre>
+<pre><code>## Directories:
+##  [1] &quot;/tmp/RtmpEY0ddt/YourCity&quot;           
+##  [2] &quot;/tmp/RtmpEY0ddt/YourCity/daily&quot;     
+##  [3] &quot;/tmp/RtmpEY0ddt/YourCity/ef&quot;        
+##  [4] &quot;/tmp/RtmpEY0ddt/YourCity/emi&quot;       
+##  [5] &quot;/tmp/RtmpEY0ddt/YourCity/emi/BUS_01&quot;
+##  [6] &quot;/tmp/RtmpEY0ddt/YourCity/emi/HGV_01&quot;
+##  [7] &quot;/tmp/RtmpEY0ddt/YourCity/emi/LCV_01&quot;
+##  [8] &quot;/tmp/RtmpEY0ddt/YourCity/emi/MC_01&quot; 
+##  [9] &quot;/tmp/RtmpEY0ddt/YourCity/emi/PC_01&quot; 
+## [10] &quot;/tmp/RtmpEY0ddt/YourCity/est&quot;       
+## [11] &quot;/tmp/RtmpEY0ddt/YourCity/est/BUS_01&quot;
+## [12] &quot;/tmp/RtmpEY0ddt/YourCity/est/HGV_01&quot;
+## [13] &quot;/tmp/RtmpEY0ddt/YourCity/est/LCV_01&quot;
+## [14] &quot;/tmp/RtmpEY0ddt/YourCity/est/MC_01&quot; 
+## [15] &quot;/tmp/RtmpEY0ddt/YourCity/est/PC_01&quot; 
+## [16] &quot;/tmp/RtmpEY0ddt/YourCity/images&quot;    
+## [17] &quot;/tmp/RtmpEY0ddt/YourCity/network&quot;   
+## [18] &quot;/tmp/RtmpEY0ddt/YourCity/veh&quot;       
+## Scripts:
+## [1] &quot;est/BUS_01/input.R&quot; &quot;est/HGV_01/input.R&quot; &quot;est/LCV_01/input.R&quot;
+## [4] &quot;est/MC_01/input.R&quot;  &quot;est/PC_01/input.R&quot;  &quot;main.R&quot;            
+## [7] &quot;traffic.R&quot;</code></pre>
+<p>Please, read the examples in the documentation of each function and run the demo.</p>
 </div>
 <div id="issues" class="section level3">
 <h3>Issues</h3>
@@ -199,9 +226,10 @@ library(vein)</code></pre>
 <div id="future-steps" class="section level3">
 <h3><strong>future steps</strong></h3>
 <ul>
-<li>Estimation of evaporative emissions with Copert Tier 3</li>
-<li>More speciations</li>
-<li>Vignettes, blogs and a book (hopefully released in 2018)</li>
+<li>Add more support to sf.</li>
+<li>Estimation of evaporative emissions with Copert Tier 3.</li>
+<li>More speciations.</li>
+<li>A book (hopefully released in 2018).</li>
 </ul>
 <div id="note" class="section level4">
 <h4>Note:</h4>

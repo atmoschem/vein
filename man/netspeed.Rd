@@ -49,7 +49,6 @@ and each link based on morning rush traffic data
 }
 \examples{
 {
-# Do not run
 data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
