@@ -26,7 +26,7 @@
 #' @param isList Deprecated
 #' @return dataframe speeds with units.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' data(net)
 #' data(pc_profile)
@@ -34,7 +34,7 @@
 #' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
 #' class(df)
 #' plot(df) #plot of the average speed at each hour, +- sd
-#' df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = T)
+#' df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)
 #' class(df)
 #' plot(df) #plot of the average speed at each hour, +- sd
 #' }

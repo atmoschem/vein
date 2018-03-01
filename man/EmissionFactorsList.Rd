@@ -36,7 +36,7 @@ Objects of class "EmissionFactorsList"
 class"EmissionsFactorsList".
 }
 \examples{
-\dontrun{
+{
 data(fe2015)
 names(fe2015)
 class(fe2015)

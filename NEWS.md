@@ -1,6 +1,13 @@
 NEWS
 ===========
 
+# vein 0.3.9 (Release date: 2018-03-01)
+
+### vein 0.3.9 (Release date: 2018-03-01)
+
+- included all examples with less than 5 secs.
+- Preparing submission to CRAN.
+
 # vein 0.3.8 (Release date: 2018-02-27)
 
 ### vein 0.3.8 (Release date: 2018-02-27)

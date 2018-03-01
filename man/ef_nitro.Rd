@@ -32,20 +32,20 @@ ef_nitro(v, t, cc, f, eu, p, S, k = 1, show.equation = TRUE)
 an emission factor function which depends on the accumulated mileage
 }
 \description{
-This function returns emission factors as a functions of accumulated mileage.
+\code{\link{ef_nitro}} returns emission factors as a functions of accumulated mileage.
 The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 }
 \examples{
-\dontrun{
+{
 # Do not run
 efe10 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
 eu = "III", p = "NH3", S = 10,
-show.equation = F)
+show.equation = FALSE)
 efe50 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
 eu = "III", p = "NH3", S = 50,
-show.equation = T)
+show.equation = TRUE)
 efe10(10)
 efe50(10)
 }

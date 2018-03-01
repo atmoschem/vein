@@ -30,7 +30,7 @@ numeric vector of emission estimation in grams
 emisison guidelines
 }
 \examples{
-\dontrun{
+{
 # Do not run
 ev <- hot_soak(x = 1:10, carb = 0, p = 1, eshot = 1, eswarmc =1,
 eshotfi = 1)

@@ -43,6 +43,7 @@ respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
 # Do not run
 data(net)
 data(pc_profile)
+data(profiles)
 data(fe2015)
 data(fkm)
 PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
@@ -64,18 +65,18 @@ lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
 length(lef) != ncol(pc1)
 #emis change length of 'ef' to match ncol of 'veh'
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-             profile = pc_profile, hour = 24, day = 7, array = T)
+             profile = profiles$PC_JUNE_2014)
 class(E_CO)
 lpc <- list(pc1, pc1)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
-               hour = 2, day = 1, array = T)
+               hour = 2, day = 1)
 # Entering wrong results
 pc1[ , ncol(pc1) + 1] <- pc1$PC_1
 dim(pc1)
 length(lef)
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-             profile = pc_profile, hour = 24, day = 7, array = T)
+             profile = profiles$PC_JUNE_2014)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
-               hour = 2, day = 1, array = T)
+               hour = 2, day = 1)
 }
 }

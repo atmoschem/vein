@@ -1,11 +1,11 @@
 #' Emissions factors from tyre, break and road surface wear
 #'
-#' @description Estimation of wear emissions. The sources are tyres, breaks
-#' and road surface.
+#' @description \code{\link{ef_wear}} estimates wear emissions.
+#' The sources are tyres, breaks and road surface.
 #'
-#' @param wear  Type of wear: "tyre", "break" and "road"
-#' @param type TYpe of vehicle: "2W", "PC", "LCV", 'HDV"
-#' @param pol Pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"
+#' @param wear Character; type of wear: "tyre", "break" and "road"
+#' @param type Character; type of vehicle: "2W", "PC", "LCV", 'HDV"
+#' @param pol Character; pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"
 #' @param speed List of speeds
 #' @param load Load of the HDV
 #' @param axle Number of axle of the HDV

@@ -52,8 +52,6 @@
 #' cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
 #' lef <- ef_ldv_scaled(co1, cod, v = "PC", cc = "<=1400",
 #'                      f = "G",p = "CO", eu=co1$Euro_LDV)
-#' lef <- c(lef,lef[length(lef)],lef[length(lef)],lef[length(lef)],
-#'          lef[length(lef)],lef[length(lef)])
 #' # Mohtly average temperature 18 Celcius degrees
 #' lefec <- ef_ldv_cold_list(df = co1, ta = 18, cc = "<=1400", f = "G",
 #'                           eu = co1$Euro_LDV, p = "CO" )
@@ -64,14 +62,13 @@
 #' #emis change length of 'ef' to match ncol of 'veh'
 #' class(lefec)
 #' PC_CO_COLD <- emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
-#' beta = pcf, speed = speed, profile = pc_profile, hour = 24,
-#' day = 7, array = T)
+#' beta = pcf, speed = speed, profile = pc_profile)
 #' class(PC_CO_COLD)
 #' plot(PC_CO_COLD)
 #' lpc <- list(pc1, pc1)
 #' PC_CO_COLDv2 <- emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
 #' beta = pcf, speed = speed, profile = pc_profile, hour = 2,
-#' day = 1, array = T)
+#' day = 1)
 #' class(PC_CO_COLDv2)
 #' plot(PC_CO_COLDv2)
 #' }
@@ -82,7 +79,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
                          ncol(veh[[1]])
                        },
                        profile,
-                       hour = 24, day = 7, array = T) {
+                       hour = 24, day = 7, array = TRUE) {
 
   if(units(lkm)$numerator == "m" ){
     warning("Units of lkm is 'm' ")
@@ -142,7 +139,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
                     ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
                            (efcold[[k]](speed[, i]) - 1))
                   }) ) }) ) }) )
-        message(round(sum(d, na.rm = T)/1000,2),
+        message(round(sum(d, na.rm = TRUE)/1000,2),
                 " kg emissions in ", hour, " hours and ", day, " days")
         return(EmissionsArray(d))
       }
@@ -184,7 +181,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
                         ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
                                (efcold[[k]](speed[, i]) - 1))
                     }) ) }) )
-          message(round(sum(d, na.rm = T)/1000,2),
+          message(round(sum(d, na.rm = TRUE)/1000,2),
                   " kg emissions in ", hour, " hours and ", day, " days")
           return(EmissionsArray(d))
         }

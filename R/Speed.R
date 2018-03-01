@@ -16,7 +16,7 @@
 #'
 #' @rdname Speed
 #' @aliases Speed print.Speed summary.Speed plot.Speed
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' speed <- Speed(net$ps)

@@ -61,10 +61,10 @@ when spec = "iag", veh is only "VEH", STANDARD is "Evaporative",
  "E" for Ethanol and "D" for diesel (blended with 5\% of biodiesel).
 }
 \examples{
-\dontrun{
+{
 # Do not run
 pm <- rnorm(n = 100, mean = 400, sd = 2)
-df <- speciate(pm, veh="PC", fuel="G", eu="I")
+df <- speciate(pm, veh = "PC", fuel = "G", eu = "I")
 }
 }
 \references{

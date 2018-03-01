@@ -8,7 +8,7 @@
 #' @param pro expansion factors data-frames
 #' @return data-frames of expanded traffic
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' data(net)
 #' data(pc_profile)

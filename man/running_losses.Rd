@@ -30,11 +30,11 @@ numeric vector of emission estimation in grams
 EMEP/EEA emisison guidelines
 }
 \examples{
-\dontrun{
+{
 # Do not run
 ev <- running_losses(x = 1:10, carb = 0, p = 1, erhot = 1, erwarmc =1,
 erhotfi = 1)
-plot(vkms)
+summary(ev)
 }
 }
 \references{

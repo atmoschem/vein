@@ -26,7 +26,7 @@
 #' @examples \dontrun{
 #' # Do not run
 #' ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
-#' show = T)
+#' show = TRUE)
 #' }
 ef_evap <- function (ef, v, cc, dt, ca, k = 1, show = FALSE)
 {

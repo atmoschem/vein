@@ -17,11 +17,11 @@
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' ev <- running_losses(x = 1:10, carb = 0, p = 1, erhot = 1, erwarmc =1,
 #' erhotfi = 1)
-#' plot(vkms)
+#' summary(ev)
 #' }
 running_losses <- function(x,carb,p,erhotc,erwarmc,erhotfi) {
   evap <- x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi)

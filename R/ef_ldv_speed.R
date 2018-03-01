@@ -1,6 +1,6 @@
 #' Emissions factors for Light Duty Vehicles and Motorcycles
 #'
-#' This function returns speed dependent emission factors. The emission factors
+#' \code{\link{ef_ldv_speed}} returns speed dependent emission factors. The emission factors
 #'  comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 #'
@@ -10,24 +10,24 @@
 #' important ti know the combinations.
 #'
 #'
-#' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped
-#' @param t Sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
+#' @param v Character; category vehicle: "PC", "LCV", "Motorcycle" or "Moped
+#' @param t Character; sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
 #' "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
 #' "2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"
-#' @param cc Size of engine in cc:  PC: "<=1400", ">1400", "1400_2000", ">2000",
+#' @param cc Character; size of engine in cc:  PC: "<=1400", ">1400", "1400_2000", ">2000",
 #' "<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
-#' @param f Type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
-#' @param eu Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"
-#' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM"
-#' @param k Multiplication factor
-#' @param show.equation Option to see or not the equation parameters
-#' @return an emission factor function which depends of the average speed V  g/km
+#' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
+#' @param eu Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"
+#' @param p Character; pollutant: "CO", "FC", "NOx", "HC" or "PM"
+#' @param k Numeric; multiplication factor
+#' @param show.equation Logical; option to see or not the equation parameters
+#' @return An emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
 #' @note t = "ALL" and cc == "ALL" works for several pollutants because emission
 #' fators are the same. Some exceptions are with NOx and FC because size of engine.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' # Passenger Cars PC
 #' # Emission factor function
@@ -45,7 +45,7 @@
 #' speed <- 25
 #' lef <- lapply(1:40, function(i) {
 #' ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
-#'           eu = euro[i], p = "CO", show.equation = F)(25) })
+#'           eu = euro[i], p = "CO", show.equation = FALSE)(25) })
 #' # to check the emission factor with a plot
 #' efs <- EmissionFactors(unlist(lef)) #returns 'units'
 #' plot(efs, xlab = "age")
@@ -59,7 +59,7 @@
 #' plot(Speed(1:150), efs, xlab = "speed[km/h]")
 #' lef <- lapply(1:40, function(i) {
 #' ef_ldv_speed(v = "LCV", t = "4S", cc = "<3.5", f = "G",
-#'           eu = euro[i], p = "CO", show.equation = F)(25) })
+#'           eu = euro[i], p = "CO", show.equation = FALSE)(25) })
 #' # to check the emission factor with a plot
 #' efs <- EmissionFactors(unlist(lef)) #returns 'units'
 #' plot(efs, xlab = "age")
@@ -76,7 +76,7 @@
 #' lef <- lapply(1:30, function(i) {
 #' ef_ldv_speed(v = "Motorcycle", t = "4S", cc = "<=250", f = "G",
 #' eu = eurom[i], p = "CO",
-#' show.equation = F)(25) })
+#' show.equation = FALSE)(25) })
 #' efs <- EmissionFactors(unlist(lef)) #returns 'units'
 #' plot(efs, xlab = "age")
 #' lines(efs, type = "l")
