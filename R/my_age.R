@@ -10,7 +10,7 @@
 #' @param message message with average age and total numer of vehicles.
 #' @return dataframe of age distrubution of vehicles.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' pc <- rnorm(100, 300, 10)
 #' dpc <- c(rnorm(10, 99, 1), NA, NA, NA)

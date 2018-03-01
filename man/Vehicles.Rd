@@ -40,7 +40,7 @@ Objects of class "Vehicles" or "units"
  total fleet, hours and days
 }
 \examples{
-\dontrun{
+{
 lt <- rnorm(100, 300, 10)
 class(lt)
 vlt <- Vehicles(lt)

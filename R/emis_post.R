@@ -75,7 +75,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
     if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
       x <- unlist(lapply(1:dim(arra)[4], function(j) {
         unlist(lapply (1:dim(arra)[3],function(i) {
-          colSums(arra[,,i,j], na.rm = T)
+          colSums(arra[,,i,j], na.rm = TRUE)
         }))
       }))
       df <- cbind(deparse(substitute(arra)),
@@ -99,7 +99,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       # soon deprecated this function?
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
         unlist(lapply (1:dim(arra)[3],function(i) { # hora
-          rowSums(arra[,,i,j], na.rm = T)
+          rowSums(arra[,,i,j], na.rm = TRUE)
         }))
       }))
       df <- cbind(deparse(substitute(arra)),as.data.frame(x))
@@ -125,7 +125,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
 
   } else {
     if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
-      x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = T))
+      x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
       df <- cbind(deparse(substitute(arra)),
                   as.data.frame(x))
       names(df) <- c(as.character(df[1,1]), "g")
@@ -145,11 +145,11 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       df$g <- Emissions(df$g)
       return(df)
     } else if (by == "streets_narrow") {
-      df <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = T))
+      df <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
       warning("TODO: Improve")
       return(df)
     } else if (by == "streets_wide") {
-      df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = T))
+      df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
       names(df) <- lapply(1:dim(arra)[3], function(i){paste0("h",i)})
       return(df)
     }

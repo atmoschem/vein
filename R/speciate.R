@@ -70,10 +70,10 @@
 #' "Liquid" or "Exhaust", FUEL is "G" for gasoline (blended with 25\% ethanol),
 #'  "E" for Ethanol and "D" for diesel (blended with 5\% of biodiesel).
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' pm <- rnorm(n = 100, mean = 400, sd = 2)
-#' df <- speciate(pm, veh="PC", fuel="G", eu="I")
+#' df <- speciate(pm, veh = "PC", fuel = "G", eu = "I")
 #' }
 speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE) {
   # black carbon and organic matter

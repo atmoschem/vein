@@ -39,7 +39,7 @@
 #' lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
 #'                      f = "G",p = "CO", eu=co1$Euro_LDV)
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
-#'              profile = pc_profile, hour = 24, day = 7, array = T)
+#'              profile = pc_profile, hour = 24, day = 7, array = TRUE)
 #' # arguments required: arra, pollutant ad by
 #' E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 #' net@data <- cbind(net@data, E_CO_STREETS)
@@ -81,7 +81,7 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
                .SDcols = namesnet]
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
-    gx <- merge(gx, dfm, by="id", all.x = T)
+    gx <- merge(gx, dfm, by="id", all.x = TRUE)
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
   # if(array){
@@ -98,7 +98,7 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
                .SDcols = namesnet ]
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
-    gx <- merge(gx, dfm, by = "id", all.x = T)
+    gx <- merge(gx, dfm, by = "id", all.x = TRUE)
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)

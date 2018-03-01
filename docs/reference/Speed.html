@@ -52,7 +52,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -132,7 +132,7 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>{
 <span class='fu'>data</span>(<span class='no'>net</span>)
 <span class='fu'>data</span>(<span class='no'>pc_profile</span>)
 <span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'>Speed</span>(<span class='no'>net</span>$<span class='no'>ps</span>)
@@ -141,7 +141,9 @@
 <span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>)
 <span class='fu'>summary</span>(<span class='no'>df</span>)
-<span class='co'># }</span></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Check units are km/h</span></div><div class='img'><img src='Speed-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; Speeds by columns and street in study area = 
+#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;   3.929  39.667  40.000  49.142  59.985 100.000 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -164,7 +166,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
 </div>
 
       </footer>

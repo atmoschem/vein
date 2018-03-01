@@ -40,7 +40,7 @@ from EMEP/EEA emisison guidelines
 \dontrun{
 # Do not run
 ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
-show = T)
+show = TRUE)
 }
 }
 \references{

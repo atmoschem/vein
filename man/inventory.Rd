@@ -76,7 +76,5 @@ fleet.
 \examples{
 {
 inventory(name = file.path(tempdir(), "YourCity"))
-# open the following file and run line by line
-# paste0(file.path(tempdir(), "YourCity"), "/main.R
 }
 }

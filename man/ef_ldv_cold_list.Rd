@@ -34,7 +34,7 @@ The length of the list should be equal to the name of the age categories of
 a specific type of vehicle
 }
 \examples{
-\dontrun{
+{
 # Do not run
 df <- data.frame(age1 = c(1,1), age2 = c(2,2))
 eu = c("I", "PRE")

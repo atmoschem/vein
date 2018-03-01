@@ -7,11 +7,11 @@
 ef_wear(wear, type, pol = "TSP", speed, load = 0.5, axle = 2)
 }
 \arguments{
-\item{wear}{Type of wear: "tyre", "break" and "road"}
+\item{wear}{Character; type of wear: "tyre", "break" and "road"}
 
-\item{type}{TYpe of vehicle: "2W", "PC", "LCV", 'HDV"}
+\item{type}{Character; type of vehicle: "2W", "PC", "LCV", 'HDV"}
 
-\item{pol}{Pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"}
+\item{pol}{Character; pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"}
 
 \item{speed}{List of speeds}
 
@@ -23,8 +23,8 @@ ef_wear(wear, type, pol = "TSP", speed, load = 0.5, axle = 2)
 emission factors grams/km
 }
 \description{
-Estimation of wear emissions. The sources are tyres, breaks
-and road surface.
+\code{\link{ef_wear}} estimates wear emissions.
+The sources are tyres, breaks and road surface.
 }
 \examples{
 \dontrun{

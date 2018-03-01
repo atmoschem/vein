@@ -47,7 +47,7 @@ The length of the list should be equal to the name of the age categories of
 a specific type of vehicle. Thanks to Glauber Camponogara by the help.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 data(fe2015)
 co1 <- fe2015[fe2015$Pollutant=="CO", ]

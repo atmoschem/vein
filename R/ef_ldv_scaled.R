@@ -27,7 +27,7 @@
 #' a specific type of vehicle. Thanks to Glauber Camponogara by the help.
 #' @seealso ef_ldv_seed
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' data(fe2015)
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ]

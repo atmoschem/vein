@@ -59,8 +59,6 @@
 #' @export
 #' @examples {
 #' inventory(name = file.path(tempdir(), "YourCity"))
-#' # open the following file and run line by line
-#' # paste0(file.path(tempdir(), "YourCity"), "/main.R
 #' }
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
@@ -157,7 +155,6 @@ inventory <- function(name,
       cat("# speed <- readRDS('network/speed.rds')\n\n")
       cat("# Vehicles\n")
       cat(paste0("veh <- readRDS('veh/", lista3[[i]], ".rds')"), "\n")
-      # PASTE0
       cat("# Profiles\n")
       cat("data(profiles)\n")
       cat("pc <- profiles[[1]]\n")
@@ -186,8 +183,6 @@ inventory <- function(name,
       cat("pol <- 'CO' \n")
       cat("print(pol)\n")
       cat("x <- efe[efe$Pollutant == pol, efeco]\n")
-      # cat("x <- x[1:efero]\n")
-      # !!!!!!!
       cat("lefe <- EmissionFactorsList(x)\n")
       cat("array_x <- emis(veh = veh, lkm = lkm, ef = lefe, profile = pc)\n")
       cat("x_DF <- emis_post(arra = array_x, veh = vname, size = vsize,\n")
@@ -204,7 +199,7 @@ inventory <- function(name,
     }
     dirs <- list.dirs(path = name, full.names = TRUE, recursive = TRUE)
     sink(paste0(name, "/main.R"))
-    cat(paste0("setwd('",getwd(),"/",dirs[1], "')\n"))
+    cat(paste0("setwd('", dirs[1], "')\n"))
     cat("library(vein)\n")
     cat("sessionInfo()\n\n")
     cat("# 1) Network ####\n")

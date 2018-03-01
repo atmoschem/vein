@@ -25,7 +25,7 @@ dataframe of age distrubution of vehicles.
 numeric vector.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 pc <- rnorm(100, 300, 10)
 dpc <- c(rnorm(10, 99, 1), NA, NA, NA)
