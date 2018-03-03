@@ -8,7 +8,7 @@
 #' of the local emission factor, e.g. If the local emission factors were tested with the
 #' FTP-75 test procedure, SDC = 34.12 km/h.
 #'
-#' @param df Dataframe with local emission factor
+#' @param df Deprecated
 #' @param dfcol Column of the dataframe with the local emission factors eg df$dfcol
 #' @param SDC Speed of the driving cycle
 #' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped

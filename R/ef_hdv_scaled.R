@@ -6,7 +6,7 @@
 #' the name "Euro_HDV" indicating the Euro equivalence standard, assuming that there are
 #' available local emission factors for several consecutive years.
 #'
-#' @param df Dataframe with local emission factor
+#' @param df Deprecated
 #' @param dfcol Column of the dataframe with the local emission factors eg df$dfcol
 #' @param SDC Speed of the driving cycle
 #' @param v Category vehicle: "Coach", "Trucks" or "Ubus"
