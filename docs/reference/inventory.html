@@ -168,20 +168,235 @@ The user can rename these scripts.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>), <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-          <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; setwd('/tmp/RtmpqSDJOG/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpqSDJOG/YourCity</span></div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/RtmpqSDJOG/YourCity"            "/tmp/RtmpqSDJOG/YourCity/ef"        
-#&gt;  [3] "/tmp/RtmpqSDJOG/YourCity/emi"        "/tmp/RtmpqSDJOG/YourCity/emi/BUS_01"
-#&gt;  [5] "/tmp/RtmpqSDJOG/YourCity/emi/HGV_01" "/tmp/RtmpqSDJOG/YourCity/emi/LCV_01"
-#&gt;  [7] "/tmp/RtmpqSDJOG/YourCity/emi/MC_01"  "/tmp/RtmpqSDJOG/YourCity/emi/PC_01" 
-#&gt;  [9] "/tmp/RtmpqSDJOG/YourCity/est"        "/tmp/RtmpqSDJOG/YourCity/images"    
-#&gt; [11] "/tmp/RtmpqSDJOG/YourCity/network"    "/tmp/RtmpqSDJOG/YourCity/profiles"  
-#&gt; [13] "/tmp/RtmpqSDJOG/YourCity/veh"       
+<span class='no'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>)
+<span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>name</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+ <span class='fu'>source</span>(<span class='fu'>paste0</span>(<span class='no'>name</span>, <span class='st'>"/main.R"</span>))
+}</div><div class='output co'>#&gt; setwd('/tmp/Rtmp4eujlK/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/Rtmp4eujlK/YourCity</span></div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/Rtmp4eujlK/YourCity"             
+#&gt;  [2] "/tmp/Rtmp4eujlK/YourCity/ef"          
+#&gt;  [3] "/tmp/Rtmp4eujlK/YourCity/emi"         
+#&gt;  [4] "/tmp/Rtmp4eujlK/YourCity/emi/BUS_01"  
+#&gt;  [5] "/tmp/Rtmp4eujlK/YourCity/emi/HGV_01"  
+#&gt;  [6] "/tmp/Rtmp4eujlK/YourCity/emi/LCV_01"  
+#&gt;  [7] "/tmp/Rtmp4eujlK/YourCity/emi/MC_01"   
+#&gt;  [8] "/tmp/Rtmp4eujlK/YourCity/emi/PC_01"   
+#&gt;  [9] "/tmp/Rtmp4eujlK/YourCity/est"         
+#&gt; [10] "/tmp/Rtmp4eujlK/YourCity/images"      
+#&gt; [11] "/tmp/Rtmp4eujlK/YourCity/network"     
+#&gt; [12] "/tmp/Rtmp4eujlK/YourCity/post"        
+#&gt; [13] "/tmp/Rtmp4eujlK/YourCity/post/df"     
+#&gt; [14] "/tmp/Rtmp4eujlK/YourCity/post/grids"  
+#&gt; [15] "/tmp/Rtmp4eujlK/YourCity/post/streets"
+#&gt; [16] "/tmp/Rtmp4eujlK/YourCity/profiles"    
+#&gt; [17] "/tmp/Rtmp4eujlK/YourCity/veh"         
 #&gt; Scripts:
 #&gt; [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 #&gt; [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
-#&gt; [7] "traffic.R"         </div></pre>
+#&gt; [7] "post.R"             "traffic.R"         </div><div class='output co'>#&gt; <span class='message'>Average age of PC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC is 1460.22 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of LCV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of LCV is 243.37 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of HGV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of HGV is 111.09 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of BUS is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of BUS is 37.03 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of MC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of MC is 243.37 * 10^3 veh</span></div><div class='output co'>#&gt; 
+#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>105806.64 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>105806.64 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>17634.44 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>105806.64 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; 
+#&gt; Reading emissions from:
+#&gt; [1] "CO_HGV_01_STREETS.rds" "CO_LCV_01_STREETS.rds" "CO_MC_01_STREETS.rds" 
+#&gt; [4] "CO_PC_01_STREETS.rds" </div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.5.1, GDAL 2.2.1, proj.4 4.9.3</span></div><div class='output co'>#&gt; <span class='message'>although coordinates are longitude/latitude, st_intersection assumes that they are planar</span></div><div class='output co'>#&gt; $xlog
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $ylog
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $adj
+#&gt; [1] 0.5
+#&gt; 
+#&gt; $ann
+#&gt; [1] TRUE
+#&gt; 
+#&gt; $ask
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $bg
+#&gt; [1] "transparent"
+#&gt; 
+#&gt; $bty
+#&gt; [1] "o"
+#&gt; 
+#&gt; $cex
+#&gt; [1] 1
+#&gt; 
+#&gt; $cex.axis
+#&gt; [1] 1
+#&gt; 
+#&gt; $cex.lab
+#&gt; [1] 1
+#&gt; 
+#&gt; $cex.main
+#&gt; [1] 1.2
+#&gt; 
+#&gt; $cex.sub
+#&gt; [1] 1
+#&gt; 
+#&gt; $col
+#&gt; [1] "black"
+#&gt; 
+#&gt; $col.axis
+#&gt; [1] "black"
+#&gt; 
+#&gt; $col.lab
+#&gt; [1] "black"
+#&gt; 
+#&gt; $col.main
+#&gt; [1] "black"
+#&gt; 
+#&gt; $col.sub
+#&gt; [1] "black"
+#&gt; 
+#&gt; $crt
+#&gt; [1] 0
+#&gt; 
+#&gt; $err
+#&gt; [1] 0
+#&gt; 
+#&gt; $family
+#&gt; [1] ""
+#&gt; 
+#&gt; $fg
+#&gt; [1] "black"
+#&gt; 
+#&gt; $fig
+#&gt; [1] 0 1 0 1
+#&gt; 
+#&gt; $fin
+#&gt; [1] 7 7
+#&gt; 
+#&gt; $font
+#&gt; [1] 1
+#&gt; 
+#&gt; $font.axis
+#&gt; [1] 1
+#&gt; 
+#&gt; $font.lab
+#&gt; [1] 1
+#&gt; 
+#&gt; $font.main
+#&gt; [1] 2
+#&gt; 
+#&gt; $font.sub
+#&gt; [1] 1
+#&gt; 
+#&gt; $lab
+#&gt; [1] 5 5 7
+#&gt; 
+#&gt; $las
+#&gt; [1] 0
+#&gt; 
+#&gt; $lend
+#&gt; [1] "round"
+#&gt; 
+#&gt; $lheight
+#&gt; [1] 1
+#&gt; 
+#&gt; $ljoin
+#&gt; [1] "round"
+#&gt; 
+#&gt; $lmitre
+#&gt; [1] 10
+#&gt; 
+#&gt; $lty
+#&gt; [1] "solid"
+#&gt; 
+#&gt; $lwd
+#&gt; [1] 1
+#&gt; 
+#&gt; $mai
+#&gt; [1] 0.42 0.42 0.24 0.20
+#&gt; 
+#&gt; $mar
+#&gt; [1] 5.1 4.1 4.1 2.1
+#&gt; 
+#&gt; $mex
+#&gt; [1] 1
+#&gt; 
+#&gt; $mfcol
+#&gt; [1] 1 1
+#&gt; 
+#&gt; $mfg
+#&gt; [1] 1 1 1 1
+#&gt; 
+#&gt; $mfrow
+#&gt; [1] 1 1
+#&gt; 
+#&gt; $mgp
+#&gt; [1] 3 1 0
+#&gt; 
+#&gt; $mkh
+#&gt; [1] 0.001
+#&gt; 
+#&gt; $new
+#&gt; [1] TRUE
+#&gt; 
+#&gt; $oma
+#&gt; [1] 0 0 0 0
+#&gt; 
+#&gt; $omd
+#&gt; [1] 0 1 0 1
+#&gt; 
+#&gt; $omi
+#&gt; [1] 0 0 0 0
+#&gt; 
+#&gt; $pch
+#&gt; [1] 1
+#&gt; 
+#&gt; $pin
+#&gt; [1] 5.76 5.16
+#&gt; 
+#&gt; $plt
+#&gt; [1] 0.08857143 0.91142857 0.13142857 0.86857143
+#&gt; 
+#&gt; $ps
+#&gt; [1] 12
+#&gt; 
+#&gt; $pty
+#&gt; [1] "m"
+#&gt; 
+#&gt; $smo
+#&gt; [1] 1
+#&gt; 
+#&gt; $srt
+#&gt; [1] 0
+#&gt; 
+#&gt; $tck
+#&gt; [1] NA
+#&gt; 
+#&gt; $tcl
+#&gt; [1] -0.5
+#&gt; 
+#&gt; $usr
+#&gt; [1] -46.81128 -46.68481 -23.63600 -23.50641
+#&gt; 
+#&gt; $xaxp
+#&gt; [1] 0 1 5
+#&gt; 
+#&gt; $xaxs
+#&gt; [1] "r"
+#&gt; 
+#&gt; $xaxt
+#&gt; [1] "s"
+#&gt; 
+#&gt; $xpd
+#&gt; [1] FALSE
+#&gt; 
+#&gt; $yaxp
+#&gt; [1] 0 1 5
+#&gt; 
+#&gt; $yaxs
+#&gt; [1] "r"
+#&gt; 
+#&gt; $yaxt
+#&gt; [1] "s"
+#&gt; 
+#&gt; $ylbias
+#&gt; [1] 0.2
+#&gt; 
+#&gt; 
+#&gt; Reading emissions from:
+#&gt; [1] "CO_HGV_01_DF.rds" "CO_LCV_01_DF.rds" "CO_MC_01_DF.rds"  "CO_PC_01_DF.rds" </div><div class='output co'>#&gt; <span class='message'>Average age of PC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC is 1460.22 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of LCV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of LCV is 243.37 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of HGV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of HGV is 111.09 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of BUS is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of BUS is 37.03 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of MC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of MC is 243.37 * 10^3 veh</span></div><div class='img'><img src='inventory-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
