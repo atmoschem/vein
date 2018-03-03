@@ -1,6 +1,13 @@
 NEWS
 ===========
 
+# vein 0.3.10 (Release date: 2018-03-03)
+
+### vein 0.3.9 (Release date: 2018-03-03)
+
+- Improve inventory.
+- fix #72.
+
 # vein 0.3.9 (Release date: 2018-03-01)
 
 ### vein 0.3.9 (Release date: 2018-03-01)

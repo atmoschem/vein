@@ -70,7 +70,7 @@ inventory <- function(name,
   # directorys
   dovein <- function(){
     dir.create(path = name)
-    dir.create(path = paste0(name, "/daily"))
+    dir.create(path = paste0(name, "/profiles"))
     dir.create(path = paste0(name, "/ef"))
     dir.create(path = paste0(name, "/emi"))
     dir.create(path = paste0(name, "/est"))
@@ -148,8 +148,12 @@ inventory <- function(name,
     lista2 <- gsub(pattern = name, x = lista, replacement = "")
     lista3 <- gsub(pattern = "/est/", x = lista2, replacement = "")
 
+    dirs <- list.dirs(path = name, full.names = TRUE)
+    cat(paste0("setwd('", dirs[1], "')\n"))
+
+
     for (i in 1:length(lista)){
-      sink(paste0(lista[[i]], "/input.R"))
+      sink(paste0(dirs[1], "/est/", lista3[i],"_input.R"))
       cat("# Network \n")
       cat("net <- readRDS('network/net.rds')\n")
       cat("lkm <- net$lkm\n")
@@ -159,12 +163,12 @@ inventory <- function(name,
       cat("# Profiles\n")
       cat("data(profiles)\n")
       cat("pc <- profiles[[1]]\n")
-      cat("# pc <- read.csv('daily/pc.csv') #Change accordingly with your data\n")
+      cat("# pc <- read.csv('profiles/pc.csv') #Change with your data\n")
       cat("# Emission Factors data-set\n")
       cat("data(fe2015)\n")
       cat("efe <- fe2015\n")
       cat("# efe <- read.csv('ef/fe2015.csv')\n")
-      cat("efeco <- 11 #Number of column of the respective EF\n")
+      cat("efeco <- 11 # Number of column of the respective EF\n")
       cat("efero <- ifelse(is.data.frame(veh), ncol(veh), ncol(veh[[1]]))\n")
       cat("# efero reads the number of the vehicle distribution\n")
       cat("trips_per_day <- 5\n\n")
@@ -175,10 +179,10 @@ inventory <- function(name,
       cat("# Sulphur\n")
       cat("# sulphur <- 50 # ppm\n\n\n")
       cat("# Input and Output\n\n")
-      cat(paste0("directory <- ", deparse(lista3[[i]]), "\n"))
+      cat(paste0("directory <- ", lista3[i], "\n"))
       cat("vfuel <- 'E_25' \n")
       cat("vsize <- '' # It can be small/big/<=1400, one word\n")
-      cat("vname <- ", deparse(lista3[[i]]), "\n")
+      cat("vname <- ", lista3[i], "\n")
       cat("\n\n")
       cat("# CO \n")
       cat("pol <- 'CO' \n")

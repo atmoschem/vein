@@ -28,7 +28,6 @@
 #' @seealso ef_ldv_seed
 #' @export
 #' @examples {
-#' # Do not run
 #' data(fe2015)
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ]
 #' lef <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",
@@ -36,9 +35,18 @@
 #' length(lef)
 #' lef[[1]](40) # First element of the lit of speed functions at 40 km/h
 #' lef[[36]](50) # 36th element of the lit of speed functions at 50 km/h
+#' plot(x = 0:150, y = lef[[36]](0:150), col = "red", type = "b", ylab = "[g/km]",
+#' pch = 16, xlab = "[km/h]",
+#' main = "Variation of emissions with speed of oldest vehicle")
+#' plot(x = 0:150, y = lef[[1]](0:150), col = "blue", type = "b", ylab = "[g/km]",
+#' pch = 16, xlab = "[km/h]",
+#' main = "Variation of emissions with speed of newest vehicle")
 #' }
 ef_ldv_scaled <- function(df,dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
-   lapply(1:length(df[,1]), function(i)  {
+  if(!missing(df)){
+    .Deprecated(msg = "df is not needed")
+  }
+  lapply(1:length(dfcol), function(i)  {
     funIN <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,
                          eu = as.character(eu[i]), p = p, k = 1, show.equation = FALSE)
     k <- dfcol[i]/ funIN(SDC)
