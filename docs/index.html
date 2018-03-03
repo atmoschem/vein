@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="/index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -96,7 +96,7 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.9 Reaching the puberty   </span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.10 Reaching the puberty   </span>
 <span class="kw">library</span>(devtools) 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
@@ -135,29 +135,30 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/Rtmp3qiNWn/YourCity</code></pre>
+<pre><code>## setwd('/tmp/RtmpDsXDSl/YourCity')</code></pre>
+<pre><code>## files at /tmp/RtmpDsXDSl/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/Rtmp3qiNWn/YourCity"           
-##  [2] "/tmp/Rtmp3qiNWn/YourCity/daily"     
-##  [3] "/tmp/Rtmp3qiNWn/YourCity/ef"        
-##  [4] "/tmp/Rtmp3qiNWn/YourCity/emi"       
-##  [5] "/tmp/Rtmp3qiNWn/YourCity/emi/BUS_01"
-##  [6] "/tmp/Rtmp3qiNWn/YourCity/emi/HGV_01"
-##  [7] "/tmp/Rtmp3qiNWn/YourCity/emi/LCV_01"
-##  [8] "/tmp/Rtmp3qiNWn/YourCity/emi/MC_01" 
-##  [9] "/tmp/Rtmp3qiNWn/YourCity/emi/PC_01" 
-## [10] "/tmp/Rtmp3qiNWn/YourCity/est"       
-## [11] "/tmp/Rtmp3qiNWn/YourCity/est/BUS_01"
-## [12] "/tmp/Rtmp3qiNWn/YourCity/est/HGV_01"
-## [13] "/tmp/Rtmp3qiNWn/YourCity/est/LCV_01"
-## [14] "/tmp/Rtmp3qiNWn/YourCity/est/MC_01" 
-## [15] "/tmp/Rtmp3qiNWn/YourCity/est/PC_01" 
-## [16] "/tmp/Rtmp3qiNWn/YourCity/images"    
-## [17] "/tmp/Rtmp3qiNWn/YourCity/network"   
-## [18] "/tmp/Rtmp3qiNWn/YourCity/veh"       
+##  [1] "/tmp/RtmpDsXDSl/YourCity"           
+##  [2] "/tmp/RtmpDsXDSl/YourCity/ef"        
+##  [3] "/tmp/RtmpDsXDSl/YourCity/emi"       
+##  [4] "/tmp/RtmpDsXDSl/YourCity/emi/BUS_01"
+##  [5] "/tmp/RtmpDsXDSl/YourCity/emi/HGV_01"
+##  [6] "/tmp/RtmpDsXDSl/YourCity/emi/LCV_01"
+##  [7] "/tmp/RtmpDsXDSl/YourCity/emi/MC_01" 
+##  [8] "/tmp/RtmpDsXDSl/YourCity/emi/PC_01" 
+##  [9] "/tmp/RtmpDsXDSl/YourCity/est"       
+## [10] "/tmp/RtmpDsXDSl/YourCity/est/BUS_01"
+## [11] "/tmp/RtmpDsXDSl/YourCity/est/HGV_01"
+## [12] "/tmp/RtmpDsXDSl/YourCity/est/LCV_01"
+## [13] "/tmp/RtmpDsXDSl/YourCity/est/MC_01" 
+## [14] "/tmp/RtmpDsXDSl/YourCity/est/PC_01" 
+## [15] "/tmp/RtmpDsXDSl/YourCity/images"    
+## [16] "/tmp/RtmpDsXDSl/YourCity/network"   
+## [17] "/tmp/RtmpDsXDSl/YourCity/profiles"  
+## [18] "/tmp/RtmpDsXDSl/YourCity/veh"       
 ## Scripts:
-## [1] "est/BUS_01/input.R" "est/HGV_01/input.R" "est/LCV_01/input.R"
-## [4] "est/MC_01/input.R"  "est/PC_01/input.R"  "main.R"            
+## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
+## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
 ## [7] "traffic.R"</code></pre>
 <p>Please, read the examples in the documentation of each function and run the demo.</p>
 <div id="examples-with-traffic-data" class="section level4">
@@ -329,7 +330,7 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.ht
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

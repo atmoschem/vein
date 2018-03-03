@@ -27,13 +27,22 @@
 #' # Do not run
 #' data(fe2015)
 #' co1 <- fe2015[fe2015$Pollutant=="CO",]
-#' FE_LT_7_5_D_CO <- ef_hdv_scaled(co1, co1$LT, v = "Trucks", t = "RT",
+#' lef <- ef_hdv_scaled(co1, co1$LT, v = "Trucks", t = "RT",
 #' g = "<=7.5", eu = co1$Euro_HDV, gr = 0, l = 0.5, p = "CO")
-#' length(FE_LT_7_5_D_CO)
+#' length(lef)
+#' plot(x = 0:150, y = lef[[36]](0:150), col = "red", type = "b", ylab = "[g/km]",
+#' pch = 16, xlab = "[km/h]",
+#' main = "Variation of emissions with speed of oldest vehicle")
+#' plot(x = 0:150, y = lef[[1]](0:150), col = "blue", type = "b", ylab = "[g/km]",
+#' pch = 16, xlab = "[km/h]",
+#' main = "Variation of emissions with speed of newest vehicle")
 #' }
 ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
-   lapply(1:length(df[,1]), function(i)  {
-    funIN <- ef_hdv_speed(v = v, t = t, g = g,eu = as.character(eu[i]),
+  if(!missing(df)){
+    .Deprecated(msg = "df is not needed")
+  }
+   lapply(1:length(dfcol), function(i)  {
+    funIN <- ef_hdv_speed(v = v, t = t, g = g, eu = as.character(eu[i]),
                           gr = gr, l = l, p = p, k=1, show.equation = FALSE)
     k <- dfcol[i]/ funIN(SDC)
     funOUT <-  ef_hdv_speed(v = v, t = t, g = g,eu = as.character(eu[i]),
