@@ -5,7 +5,7 @@
 #' fleet.
 #'
 #' @param name one word indicating the name of the main directory for running
-#' vein
+#' vein. It is better to write the pull path to the new directory.
 #' @param vehcomp Vehicular composition of the fleet. It is required a named
 #' numerical vector with the names "PC", "LCV", "HGV", "BUS" and "MC". In the
 #' case that tthere are no vehiles for one category of the composition, the name

@@ -101,7 +101,7 @@ fleet.</p>
     <tr>
       <th>name</th>
       <td><p>one word indicating the name of the main directory for running
-vein</p></td>
+vein. It is better to write the pull path to the new directory.</p></td>
     </tr>
     <tr>
       <th>vehcomp</th>
@@ -170,16 +170,16 @@ The user can rename these scripts.</p>
     <pre class="examples"><div class='input'>{
 <span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>), <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
           <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; setwd('/tmp/RtmpnEt36l/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpnEt36l/YourCity</span></div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/RtmpnEt36l/YourCity"            "/tmp/RtmpnEt36l/YourCity/ef"        
-#&gt;  [3] "/tmp/RtmpnEt36l/YourCity/emi"        "/tmp/RtmpnEt36l/YourCity/emi/BUS_01"
-#&gt;  [5] "/tmp/RtmpnEt36l/YourCity/emi/HGV_01" "/tmp/RtmpnEt36l/YourCity/emi/LCV_01"
-#&gt;  [7] "/tmp/RtmpnEt36l/YourCity/emi/MC_01"  "/tmp/RtmpnEt36l/YourCity/emi/PC_01" 
-#&gt;  [9] "/tmp/RtmpnEt36l/YourCity/est"        "/tmp/RtmpnEt36l/YourCity/est/BUS_01"
-#&gt; [11] "/tmp/RtmpnEt36l/YourCity/est/HGV_01" "/tmp/RtmpnEt36l/YourCity/est/LCV_01"
-#&gt; [13] "/tmp/RtmpnEt36l/YourCity/est/MC_01"  "/tmp/RtmpnEt36l/YourCity/est/PC_01" 
-#&gt; [15] "/tmp/RtmpnEt36l/YourCity/images"     "/tmp/RtmpnEt36l/YourCity/network"   
-#&gt; [17] "/tmp/RtmpnEt36l/YourCity/profiles"   "/tmp/RtmpnEt36l/YourCity/veh"       
+}</div><div class='output co'>#&gt; setwd('/tmp/RtmpPc4zxi/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpPc4zxi/YourCity</span></div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/RtmpPc4zxi/YourCity"            "/tmp/RtmpPc4zxi/YourCity/ef"        
+#&gt;  [3] "/tmp/RtmpPc4zxi/YourCity/emi"        "/tmp/RtmpPc4zxi/YourCity/emi/BUS_01"
+#&gt;  [5] "/tmp/RtmpPc4zxi/YourCity/emi/HGV_01" "/tmp/RtmpPc4zxi/YourCity/emi/LCV_01"
+#&gt;  [7] "/tmp/RtmpPc4zxi/YourCity/emi/MC_01"  "/tmp/RtmpPc4zxi/YourCity/emi/PC_01" 
+#&gt;  [9] "/tmp/RtmpPc4zxi/YourCity/est"        "/tmp/RtmpPc4zxi/YourCity/est/BUS_01"
+#&gt; [11] "/tmp/RtmpPc4zxi/YourCity/est/HGV_01" "/tmp/RtmpPc4zxi/YourCity/est/LCV_01"
+#&gt; [13] "/tmp/RtmpPc4zxi/YourCity/est/MC_01"  "/tmp/RtmpPc4zxi/YourCity/est/PC_01" 
+#&gt; [15] "/tmp/RtmpPc4zxi/YourCity/images"     "/tmp/RtmpPc4zxi/YourCity/network"   
+#&gt; [17] "/tmp/RtmpPc4zxi/YourCity/profiles"   "/tmp/RtmpPc4zxi/YourCity/veh"       
 #&gt; Scripts:
 #&gt; [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 #&gt; [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
