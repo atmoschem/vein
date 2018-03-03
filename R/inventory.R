@@ -82,10 +82,8 @@ inventory <- function(name,
       for(i in 1:vehcomp[1]){
         if(i < 10) {
           dir.create(path = paste0(name, "/emi/PC_0", i))
-          dir.create(path = paste0(name, "/est/PC_0", i))
         } else {
           dir.create(path = paste0(name, "/emi/PC_", i))
-          dir.create(path = paste0(name, "/est/PC_", i))
         }}
     } else {message("no PC")}
 
@@ -93,10 +91,8 @@ inventory <- function(name,
       for(i in 1:vehcomp[2]){
         if(i < 10) {
           dir.create(path = paste0(name, "/emi/LCV_0", i))
-          dir.create(path = paste0(name, "/est/LCV_0", i))
         } else {
           dir.create(path = paste0(name, "/emi/LCV_", i))
-          dir.create(path = paste0(name, "/est/LCV_", i))
         }}
     } else {message("no LCV")}
 
@@ -104,10 +100,8 @@ inventory <- function(name,
       for(i in 1:vehcomp[3]){
         if(i < 10) {
           dir.create(path = paste0(name, "/emi/HGV_0", i))
-          dir.create(path = paste0(name, "/est/HGV_0", i))
         } else {
           dir.create(path = paste0(name, "/emi/HGV_", i))
-          dir.create(path = paste0(name, "/est/HGV_", i))
         }}
     } else {message("no HGV")}
 
@@ -115,10 +109,8 @@ inventory <- function(name,
       for(i in 1:vehcomp[4]){
         if(i < 10) {
           dir.create(path = paste0(name, "/emi/BUS_0", i))
-          dir.create(path = paste0(name, "/est/BUS_0", i))
         } else {
           dir.create(path = paste0(name, "/emi/BUS_", i))
-          dir.create(path = paste0(name, "/est/BUS_", i))
         }}
     } else {message("no BUS")}
 
@@ -126,10 +118,8 @@ inventory <- function(name,
       for(i in 1:vehcomp[5]){
         if(i < 10) {
           dir.create(path = paste0(name, "/emi/MC_0", i))
-          dir.create(path = paste0(name, "/est/MC_0", i))
         } else {
           dir.create(path = paste0(name, "/emi/MC_", i))
-          dir.create(path = paste0(name, "/est/MC_", i))
         }}
     } else {message("no MC")}
   }
