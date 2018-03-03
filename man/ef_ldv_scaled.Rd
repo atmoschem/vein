@@ -7,7 +7,7 @@
 ef_ldv_scaled(df, dfcol, SDC = 34.12, v, t = "4S", cc, f, eu, p)
 }
 \arguments{
-\item{df}{Dataframe with local emission factor}
+\item{df}{Deprecated}
 
 \item{dfcol}{Column of the dataframe with the local emission factors eg df$dfcol}
 
