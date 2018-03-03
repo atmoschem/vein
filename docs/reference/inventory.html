@@ -170,16 +170,18 @@ The user can rename these scripts.</p>
     <pre class="examples"><div class='input'>{
 <span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>), <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
           <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; setwd('/tmp/RtmpZLQtPD/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpZLQtPD/YourCity</span></div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/RtmpZLQtPD/YourCity"            "/tmp/RtmpZLQtPD/YourCity/ef"        
-#&gt;  [3] "/tmp/RtmpZLQtPD/YourCity/emi"        "/tmp/RtmpZLQtPD/YourCity/emi/BUS_01"
-#&gt;  [5] "/tmp/RtmpZLQtPD/YourCity/emi/HGV_01" "/tmp/RtmpZLQtPD/YourCity/emi/LCV_01"
-#&gt;  [7] "/tmp/RtmpZLQtPD/YourCity/emi/MC_01"  "/tmp/RtmpZLQtPD/YourCity/emi/PC_01" 
-#&gt;  [9] "/tmp/RtmpZLQtPD/YourCity/est"        "/tmp/RtmpZLQtPD/YourCity/images"    
-#&gt; [11] "/tmp/RtmpZLQtPD/YourCity/network"    "/tmp/RtmpZLQtPD/YourCity/profiles"  
-#&gt; [13] "/tmp/RtmpZLQtPD/YourCity/veh"       
+}</div><div class='output co'>#&gt; setwd('/tmp/RtmpqSDJOG/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpqSDJOG/YourCity</span></div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/RtmpqSDJOG/YourCity"            "/tmp/RtmpqSDJOG/YourCity/ef"        
+#&gt;  [3] "/tmp/RtmpqSDJOG/YourCity/emi"        "/tmp/RtmpqSDJOG/YourCity/emi/BUS_01"
+#&gt;  [5] "/tmp/RtmpqSDJOG/YourCity/emi/HGV_01" "/tmp/RtmpqSDJOG/YourCity/emi/LCV_01"
+#&gt;  [7] "/tmp/RtmpqSDJOG/YourCity/emi/MC_01"  "/tmp/RtmpqSDJOG/YourCity/emi/PC_01" 
+#&gt;  [9] "/tmp/RtmpqSDJOG/YourCity/est"        "/tmp/RtmpqSDJOG/YourCity/images"    
+#&gt; [11] "/tmp/RtmpqSDJOG/YourCity/network"    "/tmp/RtmpqSDJOG/YourCity/profiles"  
+#&gt; [13] "/tmp/RtmpqSDJOG/YourCity/veh"       
 #&gt; Scripts:
-#&gt; [1] "est/est_input.R" "est/NA_input.R"  "main.R"          "traffic.R"      </div></pre>
+#&gt; [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
+#&gt; [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
+#&gt; [7] "traffic.R"         </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -133,10 +133,10 @@ inventory <- function(name,
   if(scripts == FALSE){
     message("no scripts")
   } else{
-    lista <- list.dirs(path = paste0(name,"/est"))
+    lista <- list.dirs(path = paste0(name,"/emi"))
     lista <- lista[2:length(lista)]
     lista2 <- gsub(pattern = name, x = lista, replacement = "")
-    lista3 <- gsub(pattern = "/est/", x = lista2, replacement = "")
+    lista3 <- gsub(pattern = "/emi/", x = lista2, replacement = "")
 
     dirs <- list.dirs(path = name, full.names = TRUE)
     cat(paste0("setwd('", dirs[1], "')\n"))
