@@ -64,7 +64,7 @@
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
                       scripts = TRUE,
-                      show.dir = FALSE,
+                      show.dir = TRUE,
                       show.scripts = FALSE,
                       clear = TRUE){
   # directorys

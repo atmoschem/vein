@@ -93,7 +93,7 @@ fleet.</p>
     
 
     <pre class="usage"><span class='fu'>inventory</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -170,14 +170,14 @@ The user can rename these scripts.</p>
     <pre class="examples"><div class='input'>{
 <span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>), <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
           <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; setwd('/tmp/RtmpZmIGdP/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpZmIGdP/YourCity</span></div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/RtmpZmIGdP/YourCity"            "/tmp/RtmpZmIGdP/YourCity/ef"        
-#&gt;  [3] "/tmp/RtmpZmIGdP/YourCity/emi"        "/tmp/RtmpZmIGdP/YourCity/emi/BUS_01"
-#&gt;  [5] "/tmp/RtmpZmIGdP/YourCity/emi/HGV_01" "/tmp/RtmpZmIGdP/YourCity/emi/LCV_01"
-#&gt;  [7] "/tmp/RtmpZmIGdP/YourCity/emi/MC_01"  "/tmp/RtmpZmIGdP/YourCity/emi/PC_01" 
-#&gt;  [9] "/tmp/RtmpZmIGdP/YourCity/est"        "/tmp/RtmpZmIGdP/YourCity/images"    
-#&gt; [11] "/tmp/RtmpZmIGdP/YourCity/network"    "/tmp/RtmpZmIGdP/YourCity/profiles"  
-#&gt; [13] "/tmp/RtmpZmIGdP/YourCity/veh"       
+}</div><div class='output co'>#&gt; setwd('/tmp/RtmpZLQtPD/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpZLQtPD/YourCity</span></div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/RtmpZLQtPD/YourCity"            "/tmp/RtmpZLQtPD/YourCity/ef"        
+#&gt;  [3] "/tmp/RtmpZLQtPD/YourCity/emi"        "/tmp/RtmpZLQtPD/YourCity/emi/BUS_01"
+#&gt;  [5] "/tmp/RtmpZLQtPD/YourCity/emi/HGV_01" "/tmp/RtmpZLQtPD/YourCity/emi/LCV_01"
+#&gt;  [7] "/tmp/RtmpZLQtPD/YourCity/emi/MC_01"  "/tmp/RtmpZLQtPD/YourCity/emi/PC_01" 
+#&gt;  [9] "/tmp/RtmpZLQtPD/YourCity/est"        "/tmp/RtmpZLQtPD/YourCity/images"    
+#&gt; [11] "/tmp/RtmpZLQtPD/YourCity/network"    "/tmp/RtmpZLQtPD/YourCity/profiles"  
+#&gt; [13] "/tmp/RtmpZLQtPD/YourCity/veh"       
 #&gt; Scripts:
 #&gt; [1] "est/est_input.R" "est/NA_input.R"  "main.R"          "traffic.R"      </div></pre>
   </div>
