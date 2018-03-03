@@ -85,6 +85,7 @@
 <ul>
 <li><a href="https://github.com/r-spatial/sf">sf</a></li>
 <li><a href="https://github.com/edzer/sp/">sp</a></li>
+<li><a href="https://github.com/r-spatial/lwgeom/">lwgeom</a></li>
 <li><a href="https://github.com/edzer/units/">units</a></li>
 </ul>
 <p>In order to run the demo, this package is also needed:</p>
@@ -135,26 +136,30 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## setwd('/tmp/RtmpArThGa/YourCity')</code></pre>
-<pre><code>## files at /tmp/RtmpArThGa/YourCity</code></pre>
+<pre><code>## setwd('/tmp/RtmpoIOdTm/YourCity')</code></pre>
+<pre><code>## files at /tmp/RtmpoIOdTm/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpArThGa/YourCity"           
-##  [2] "/tmp/RtmpArThGa/YourCity/ef"        
-##  [3] "/tmp/RtmpArThGa/YourCity/emi"       
-##  [4] "/tmp/RtmpArThGa/YourCity/emi/BUS_01"
-##  [5] "/tmp/RtmpArThGa/YourCity/emi/HGV_01"
-##  [6] "/tmp/RtmpArThGa/YourCity/emi/LCV_01"
-##  [7] "/tmp/RtmpArThGa/YourCity/emi/MC_01" 
-##  [8] "/tmp/RtmpArThGa/YourCity/emi/PC_01" 
-##  [9] "/tmp/RtmpArThGa/YourCity/est"       
-## [10] "/tmp/RtmpArThGa/YourCity/images"    
-## [11] "/tmp/RtmpArThGa/YourCity/network"   
-## [12] "/tmp/RtmpArThGa/YourCity/profiles"  
-## [13] "/tmp/RtmpArThGa/YourCity/veh"       
+##  [1] "/tmp/RtmpoIOdTm/YourCity"             
+##  [2] "/tmp/RtmpoIOdTm/YourCity/ef"          
+##  [3] "/tmp/RtmpoIOdTm/YourCity/emi"         
+##  [4] "/tmp/RtmpoIOdTm/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpoIOdTm/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpoIOdTm/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpoIOdTm/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpoIOdTm/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpoIOdTm/YourCity/est"         
+## [10] "/tmp/RtmpoIOdTm/YourCity/images"      
+## [11] "/tmp/RtmpoIOdTm/YourCity/network"     
+## [12] "/tmp/RtmpoIOdTm/YourCity/post"        
+## [13] "/tmp/RtmpoIOdTm/YourCity/post/df"     
+## [14] "/tmp/RtmpoIOdTm/YourCity/post/grids"  
+## [15] "/tmp/RtmpoIOdTm/YourCity/post/streets"
+## [16] "/tmp/RtmpoIOdTm/YourCity/profiles"    
+## [17] "/tmp/RtmpoIOdTm/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
-## [7] "traffic.R"</code></pre>
+## [7] "post.R"             "traffic.R"</code></pre>
 <p>Please, read the examples in the documentation of each function and run the demo.</p>
 <div id="examples-with-traffic-data" class="section level4">
 <h4 class="hasAnchor">

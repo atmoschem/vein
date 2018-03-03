@@ -58,8 +58,9 @@
 #' The user can rename these scripts.
 #' @export
 #' @examples {
-#' inventory(name = file.path(tempdir(), "YourCity"), show.dir = TRUE,
-#'           show.scripts = TRUE)
+#' name = file.path(tempdir(), "YourCity")
+#' inventory(name = name, show.dir = TRUE, show.scripts = TRUE)
+#'  source(paste0(name, "/main.R"))
 #' }
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
@@ -73,6 +74,10 @@ inventory <- function(name,
     dir.create(path = paste0(name, "/profiles"))
     dir.create(path = paste0(name, "/ef"))
     dir.create(path = paste0(name, "/emi"))
+    dir.create(path = paste0(name, "/post"))
+    dir.create(path = paste0(name, "/post/grids"))
+    dir.create(path = paste0(name, "/post/streets"))
+    dir.create(path = paste0(name, "/post/df"))
     dir.create(path = paste0(name, "/est"))
     dir.create(path = paste0(name, "/images"))
     dir.create(path = paste0(name, "/network"))
@@ -169,10 +174,10 @@ inventory <- function(name,
       cat("# Sulphur\n")
       cat("# sulphur <- 50 # ppm\n\n\n")
       cat("# Input and Output\n\n")
-      cat(paste0("directory <- ", lista3[i], "\n"))
+      cat(paste0("directory <- ", deparse(lista3[i]), "\n"))
       cat("vfuel <- 'E_25' \n")
       cat("vsize <- '' # It can be small/big/<=1400, one word\n")
-      cat("vname <- ", lista3[i], "\n")
+      cat("vname <- ", deparse(lista3[i]), "\n")
       cat("\n\n")
       cat("# CO \n")
       cat("pol <- 'CO' \n")
@@ -220,14 +225,10 @@ inventory <- function(name,
     cat( "  source(inputs[i])\n" )
     cat("}\n")
     cat("# 4) Post-estimation #### \n")
-    cat("CO <- emis_merge('CO', net = net, crs = 31983)\n")
-    cat("g <- make_grid(net, 1/102.47, crs = 31983)\n")
-    cat("gCO <- emis_grid(CO, g)\n")
-    cat("plot(gCO['V1'], axes = TRUE)\n")
-    cat("dfco <- emis_merge('CO', what = 'DF.rds', FALSE)\n")
-    cat("head(dfco)\n")
-    cat("aggregate(dfco$g, by = list(dfco$veh), sum)\n")
+    cat("g <- make_grid(net, 1/102.47,)\n")
+    cat("source('post.R')\n")
     sink()
+
     sink(paste0(name, "/traffic.R"))
     cat("net <- readRDS('network/net.rds')\n")
     cat("PC_01 <- age_ldv(x = net$ldv, name = 'PC', k = 3/4)\n")
@@ -244,6 +245,35 @@ inventory <- function(name,
     cat("saveRDS(MC_01, file = 'veh/MC_01.rds')\n")
     cat(" # Add more\n")
     sink()
+    sink(paste0(name, "/post.R"))
+    cat("# streets ####\n")
+    cat("CO <- emis_merge('CO', net = net)\n")
+    cat("saveRDS(CO, 'post/streets/CO.rds')\n\n")
+    cat("# grids ####\n")
+    cat("gCO <- emis_grid(CO, g)\n")
+    cat("print(plot(gCO['V1'], axes = TRUE)) # only an example\n\n")
+    cat("saveRDS(gCO, 'post/grids/gCO.rds')\n\n")
+    cat("# df ####\n")
+    cat("dfCO <- emis_merge('CO', what = 'DF.rds', FALSE)\n")
+    cat("saveRDS(dfCO, 'post/df/dfCO.rds')\n")
+    cat("aggregate(dfCO$g, by = list(dfCO$veh), sum, na.rm = TRUE) # Only an example\n\n")
+
+    cat("net <- readRDS('network/net.rds')\n")
+    cat("PC_01 <- age_ldv(x = net$ldv, name = 'PC', k = 3/4)\n")
+    cat("saveRDS(PC_01, file = 'veh/PC_01.rds')\n")
+    cat("LCV_01 <- age_ldv(x = net$ldv, name = 'LCV', k = 1/4/2)\n")
+    cat("saveRDS(PC_01, file = 'veh/LCV_01.rds')\n")
+    cat("HGV_01 <- age_ldv(x = net$hdv, name = 'HGV', k = 3/4)\n")
+    cat("saveRDS(PC_01, file = 'veh/HGV_01.rds')\n")
+    cat("BUS_01 <- age_ldv(x = net$hdv, name = 'BUS', k = 1/4)\n")
+    cat("# BUS only for example  purposes\n")
+    cat("# BUS a traffic simulation only for BUS, or other source of information\n")
+    cat("saveRDS(BUS_01, file = 'veh/BUS_01.rds')\n")
+    cat("MC_01 <- age_ldv(x = net$ldv, name = 'MC', k = 1/4/2)\n")
+    cat("saveRDS(MC_01, file = 'veh/MC_01.rds')\n")
+    cat(" # Add more\n")
+    sink()
+
 
   }
 

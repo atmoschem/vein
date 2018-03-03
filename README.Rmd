@@ -40,6 +40,7 @@ After installing system dependencies, you need these packages:
 
 - [sf](https://github.com/r-spatial/sf)
 - [sp](https://github.com/edzer/sp/) 
+- [lwgeom](https://github.com/r-spatial/lwgeom/) 
 - [units](https://github.com/edzer/units/) 
 
 In order to run the demo, this package is also needed:
