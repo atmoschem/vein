@@ -1,6 +1,13 @@
 NEWS
 ===========
 
+# vein 0.3.11 (Release date: 2018-03-09)
+
+### vein 0.3.10 (Release date: 2018-03-09)
+
+- fix #74.
+- Add tests.
+
 # vein 0.3.10 (Release date: 2018-03-03)
 
 ### vein 0.3.10 (Release date: 2018-03-03)
