@@ -15,6 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 [![Rdoc](http://www.rdocumentation.org/badges/version/vein)](http://www.rdocumentation.org/packages/vein)
 [![DOI](https://zenodo.org/badge/88201850.svg)](https://zenodo.org/badge/latestdoi/88201850)
 [![Coverage Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein) 
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
 
 
 
