@@ -18,13 +18,21 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Emissions factors for Light Duty Vehicles and Motorcycles — ef_ldv_speed" />
+
+<meta property="og:description" content="ef_ldv_speed returns speed dependent emission factors. The emission factors
+ comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
+http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +55,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">vein</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">vein</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +73,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -84,6 +96,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Emissions factors for Light Duty Vehicles and Motorcycles</h1>
+    <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/ef_ldv_speed.R'><code>R/ef_ldv_speed.R</code></a></small>
     </div>
 
     
@@ -94,7 +107,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 
     <pre class="usage"><span class='fu'>ef_ldv_speed</span>(<span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -226,7 +239,7 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 #&gt; 
 #&gt; $Equation
 #&gt; [1] "(ifelse(V&lt;100, a*V^b, c*V +d))*1"
-#&gt; </div><div class='img'><img src='ef_ldv_speed-1.png' alt='' width='700' height='432.632880098887' /></div><div class='img'><img src='ef_ldv_speed-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; $a
+#&gt; </div><div class='img'><img src='ef_ldv_speed-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; $a
 #&gt; [1] 57.789
 #&gt; 
 #&gt; $b
@@ -246,7 +259,7 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 #&gt; 
 #&gt; $Equation
 #&gt; [1] "(a  + b*V + c*V^2)*1"
-#&gt; </div><div class='img'><img src='ef_ldv_speed-3.png' alt='' width='700' height='432.632880098887' /></div><div class='img'><img src='ef_ldv_speed-4.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; $a
+#&gt; </div><div class='img'><img src='ef_ldv_speed-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; $a
 #&gt; [1] 42.06
 #&gt; 
 #&gt; $b
@@ -266,7 +279,7 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 #&gt; 
 #&gt; $Equation
 #&gt; [1] "(a +b*V + c*V^2 + d*V^3 + e*V^4 + f*V^5)*1"
-#&gt; </div><div class='img'><img src='ef_ldv_speed-5.png' alt='' width='700' height='432.632880098887' /></div><div class='img'><img src='ef_ldv_speed-6.png' alt='' width='700' height='432.632880098887' /></div></pre>
+#&gt; </div><div class='img'><img src='ef_ldv_speed-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -299,3 +312,4 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 
   </body>
 </html>
+

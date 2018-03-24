@@ -18,13 +18,16 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script>
 <script src="pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Citation and Authors" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +50,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">vein</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">vein</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +68,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="news/index.html">News</a>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -101,12 +108,13 @@
 }</pre>
     <p>Ibarra-Espinosa S (2017).
 <em>vein: Vehicular Emissions Inventories</em>.
-<a href="https://CRAN.R-project.org/package=vein">https://CRAN.R-project.org/package=vein</a>. 
+R package version 0.3.11, <a href="https://CRAN.R-project.org/package=vein">https://CRAN.R-project.org/package=vein</a>. 
 </p>
     <pre>@Manual{,
   title = {vein: Vehicular Emissions Inventories},
   author = {Sergio Ibarra-Espinosa},
   year = {2017},
+  note = {R package version 0.3.11},
   url = {https://CRAN.R-project.org/package=vein},
 }</pre>
     <div class="page-header">
@@ -115,8 +123,8 @@
 
     <ul class="list-unstyled">
       <li>
-        <p><strong>Sergio Ibarra-Espinosa</strong>. Author, maintainer.
-        <br /><small>0000-0002-3162-1905</small></p>
+        <p><strong>Sergio Ibarra-Espinosa</strong>. Author, maintainer. <a href='https://orcid.org/0000-0002-3162-1905' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' height='16'></a>
+        </p>
       </li>
     </ul>
 
@@ -139,3 +147,4 @@
 
   </body>
 </html>
+
