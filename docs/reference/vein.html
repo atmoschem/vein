@@ -18,13 +18,20 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="vein: a package for elaborating vehicular emissions inventories — vein" />
+
+<meta property="og:description" content="This package provides functions to arrange traffic data, prepare
+emission factors, estimate emissions and process emissions" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +54,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">vein</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">vein</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +72,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -84,6 +95,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>vein: a package for elaborating vehicular emissions inventories</h1>
+    <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/vein.R'><code>R/vein.R</code></a></small>
     </div>
 
     
@@ -96,24 +108,24 @@ emission factors, estimate emissions and process emissions</p>
 
     <p><strong>1) Inventory</strong></p>
 <p>It is recommended to start with the function <code><a href='inventory.html'>inventory</a></code> which
-produces a set of directories and scripts to run vein.
-    <strong>2) Traffic data</strong></p>
+produces a set of directories and scripts to run vein.</p>
+<p><strong>2) Traffic data</strong></p>
 <p>The user must count with traffic data at each street at least for one hour.
 The format of the data must be spatial, either "SpatialLinesDataFrame" or
 an object class of "sf". Then the user must use any ob tje age functions:
 <code><a href='age_ldv.html'>age_ldv</a></code>, <code><a href='age_hdv.html'>age_hdv</a></code>, <code><a href='age_moto.html'>age_moto</a></code> or
 <code><a href='my_age.html'>my_age</a></code>. The outputs of these functions can be saved in
-directory 'veh' with the extension .rds.
-    <strong>3) Emission factors</strong></p>
+directory 'veh' with the extension .rds.</p>
+<p><strong>3) Emission factors</strong></p>
 <p>The user must chosse a type of emission factor: from Copert with the
 <code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> or <code><a href='ef_hdv_speed.html'>ef_hdv_speed</a></code>, from local sources
 as one constant emission factors by age of use of vehicles with
 <code><a href='EmissionFactorsList.html'>EmissionFactorsList</a></code> or as a merge between both with
-<code><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></code> or <code><a href='ef_hdv_scaled.html'>ef_hdv_scaled</a></code>.
-    <strong>4) Estimating emissions</strong></p>
+<code><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></code> or <code><a href='ef_hdv_scaled.html'>ef_hdv_scaled</a></code>.</p>
+<p><strong>4) Estimating emissions</strong></p>
 <p>Once all information is obtained, the user can estimate the emissions with
-<code><a href='emis.html'>emis</a></code>, <code><a href='emis_cold.html'>emis_cold</a></code> or other.
-    <strong>5) Processing the emissions</strong></p>
+<code><a href='emis.html'>emis</a></code>, <code><a href='emis_cold.html'>emis_cold</a></code> or other.</p>
+<p><strong>5) Processing the emissions</strong></p>
 <p>The function for processing the emissions ins <code><a href='emis_post.html'>emis_post</a></code>.</p>
     
 
@@ -142,3 +154,4 @@ as one constant emission factors by age of use of vehicles with
 
   </body>
 </html>
+

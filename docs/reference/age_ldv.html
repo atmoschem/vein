@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Returns amount of vehicles at each age — age_ldv" />
+
+<meta property="og:description" content="Returns amount of vehicles at each age" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">vein</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">vein</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.11</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,7 +71,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -84,6 +94,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Returns amount of vehicles at each age</h1>
+    <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/age_ldv.R'><code>R/age_ldv.R</code></a></small>
     </div>
 
     
@@ -93,7 +104,7 @@
     <pre class="usage"><span class='fu'>age_ldv</span>(<span class='no'>x</span>, <span class='no'>name</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1.698</span>, <span class='kw'>b</span> <span class='kw'>=</span> -<span class='fl'>0.2</span>, <span class='kw'>agemin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>bystreet</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>message</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -145,7 +156,7 @@ vectors with length equal to x</p></td>
 <span class='no'>pc</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>10</span>)
 <span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>age_ldv</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>pc</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>)
 <span class='fu'>plot</span>(<span class='no'>PC_E25_1400</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 30.11 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='img'><img src='age_ldv-1.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+}</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 29.97 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='img'><img src='age_ldv-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; Average =  11.17</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -175,3 +186,4 @@ vectors with length equal to x</p></td>
 
   </body>
 </html>
+
