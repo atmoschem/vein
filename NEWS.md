@@ -6,6 +6,8 @@ NEWS
 - Change default values of hour and day in emis* functions (fix #76).
 - Add tests.
 - emis_post now derives hours and days from EmissionsArray.
+- Inventory includes argument rush.hour for creating a template for estimations
+of only rush hour.
 
 ## vein 0.3.11 (Release date: 2018-03-09)
 
