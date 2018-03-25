@@ -1,7 +1,13 @@
 NEWS
 ===========
 
-# vein 0.3.11 (Release date: 2018-03-09)
+# vein 0.3.12 (Release date: 2018-03-25)
+
+- Change default values of hour and day in emis* functions (fix #76).
+- Add tests.
+- emis_post now derives hours and days from EmissionsArray.
+
+## vein 0.3.11 (Release date: 2018-03-09)
 
 ### vein 0.3.10 (Release date: 2018-03-09)
 

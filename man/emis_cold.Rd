@@ -6,7 +6,7 @@
 \usage{
 emis_cold(veh, lkm, ef, efcold, beta, speed = 34, agemax = if (!inherits(x =
   veh, what = "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile,
-  hour = 24, day = 7, array = TRUE)
+  hour = nrow(profile), day = ncol(profile), array = TRUE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
@@ -49,7 +49,9 @@ mileage driven
 \note{
 Actually dcold is not necessary, it would be enough to multiply
 an existing cold-start distribution with the daily profile, but it was added
-because it is important to clarify both, the data and the concepts
+because it is important to clarify both, the data and the concepts.
+Hour and day will be deprecate because they can be infered from the profile
+matrix.
 }
 \examples{
 \dontrun{

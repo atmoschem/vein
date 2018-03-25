@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimation of hourly emissions — emis • vein</title>
+<title>Estimation of emissions — emis • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,7 +25,7 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Estimation of hourly emissions — emis" />
+<meta property="og:title" content="Estimation of emissions — emis" />
 
 <meta property="og:description" content="emis estimates vehicular emissions as the product of the
 vehicles on a road, length of the road, emission factor avaliated at the
@@ -57,7 +57,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.12</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimation of hourly emissions</h1>
+    <h1>Estimation of emissions</h1>
     <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/emis.R'><code>R/emis.R</code></a></small>
     </div>
 
@@ -106,8 +106,8 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
     
 
     <pre class="usage"><span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fl'>34</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='kw'>if</span> (!<span class='fu'>inherits</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>what</span> <span class='kw'>=</span>
-  <span class='st'>"list"</span>)) {     <span class='fu'>ncol</span>(<span class='no'>veh</span>) } <span class='kw'>else</span> {     <span class='fu'>ncol</span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]]) }, <span class='no'>profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>24</span>,
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>array</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+  <span class='st'>"list"</span>)) {     <span class='fu'>ncol</span>(<span class='no'>veh</span>) } <span class='kw'>else</span> {     <span class='fu'>ncol</span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]]) }, <span class='no'>profile</span>,
+  <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>profile</span>), <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'>ncol</span>(<span class='no'>profile</span>), <span class='kw'>array</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,11 +136,13 @@ The number of rows is equal to the number of streets link</p></td>
     </tr>
     <tr>
       <th>profile</th>
-      <td><p>Numerical or dataframe with nrows equal to 24 and ncol 7 day of the week</p></td>
+      <td><p>Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
+the week</p></td>
     </tr>
     <tr>
       <th>hour</th>
-      <td><p>Number of considered hours in estimation</p></td>
+      <td><p>Number of considered hours in estimation. Default value us number
+of rows of profile</p></td>
     </tr>
     <tr>
       <th>day</th>
@@ -157,6 +159,14 @@ profile as a dataframe producing an array with dimensions (streets x columns x h
 
     <p>emission estimation  g/h</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>If the user apply a top-down approach, the resulting units will be
+according its own data. For instance, if the vehicles are veh/day, the units
+of the emissions implicitly will be g/day.
+Hour and day will be deprecate because they can be infered from the profile
+matrix.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
@@ -172,6 +182,30 @@ profile as a dataframe producing an array with dimensions (streets x columns x h
           <span class='fl'>1181</span>, <span class='fl'>4991</span>, <span class='fl'>3711</span>, <span class='fl'>5653</span>, <span class='fl'>7039</span>, <span class='fl'>5839</span>, <span class='fl'>4257</span>,<span class='fl'>3824</span>, <span class='fl'>3068</span>)
 <span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>PC_G</span> <span class='kw'>=</span> <span class='no'>PC_G</span>)
 <span class='no'>pc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='my_age.html'>my_age</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>PC_G</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)
+<span class='co'># Estimation for morning rush hour and local emission factors</span>
+<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>S8</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ps</span>)
+<span class='no'>p1h</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fl'>1</span>)
+<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactorsList.html'>EmissionFactorsList</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>])
+<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
+             <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>p1h</span>)
+<span class='co'># Estimation for 168 hour and local factors</span>
+<span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
+<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>]
+<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
+             <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>)
+<span class='fu'>summary</span>(<span class='no'>E_CO</span>)
+<span class='co'># Estimation for 168 hour and COPERT factors</span>
+<span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
+<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>euro</span> <span class='kw'>&lt;-</span> <span class='fu'>as.character</span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, <span class='st'>"Euro_LDV"</span>])
+<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>euro</span>), <span class='kw'>function</span>(<span class='no'>i</span>) {
+<span class='fu'><a href='ef_ldv_speed.html'>ef_ldv_speed</a></span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
+             <span class='kw'>eu</span><span class='kw'>=</span> <span class='no'>euro</span>[<span class='no'>i</span>], <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+})
+<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
+             <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>)
+<span class='co'># Estimation for 168 hour and scaled factors</span>
 <span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
 <span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'>cumsum</span>(<span class='no'>pckm</span>)
@@ -206,6 +240,8 @@ profile as a dataframe producing an array with dimensions (streets x columns x h
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

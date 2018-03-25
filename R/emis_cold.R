@@ -26,7 +26,9 @@
 #' @export
 #' @note Actually dcold is not necessary, it would be enough to multiply
 #' an existing cold-start distribution with the daily profile, but it was added
-#' because it is important to clarify both, the data and the concepts
+#' because it is important to clarify both, the data and the concepts.
+#' Hour and day will be deprecate because they can be infered from the profile
+#' matrix.
 #' @examples \dontrun{
 #' # Do not run
 #' data(net)
@@ -79,7 +81,9 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
                          ncol(veh[[1]])
                        },
                        profile,
-                       hour = 24, day = 7, array = TRUE) {
+                       hour = nrow(profile),
+                       day = ncol(profile),
+                       array = TRUE) {
 
   if(units(lkm)$numerator == "m" ){
     warning("Units of lkm is 'm' ")

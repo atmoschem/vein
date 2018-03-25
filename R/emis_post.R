@@ -34,6 +34,18 @@
 #'           84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
 #'           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
 #' veh <- data.frame(PC_G = PC_G)
+#' # Estimation for morning rush hour and local emission factors
+#' speed <- data.frame(S8 = net$ps)
+#' p1h <- matrix(1)
+#' lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
+#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+#'              profile = p1h)
+#' E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
+#' summary(E_CO_STREETS)
+#' # arguments required: arra, veh, size, fuel, pollutant ad by
+#' E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
+#' pollutant = "CO", by = "veh")
+#' # Estimation 168 hours
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
@@ -83,13 +95,17 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh") {
       names(df) <- c(as.character(df[1,1]), "g")
       nombre <- rep(paste(as.character(df[1,1]),
                           seq(1:dim(arra)[2]),
-                          sep = "_"),24*7, by=7 )
+                          sep = "_"),
+                    dim(arra)[3]*dim(arra)[4],
+                    by = dim(arra)[4])
       df[,1] <- nombre
       df$veh <- rep(veh, nrow(df))
       df$size <- rep(size, nrow(df))
       df$fuel <- rep(fuel, nrow(df))
       df$pollutant <- rep(pollutant, nrow(df))
-      df$age <- rep(seq(1:dim(arra)[2]),24*7, by=7 )
+      df$age <- rep(seq(1:dim(arra)[2]),
+                    dim(arra)[3]*dim(arra)[4],
+                    by = dim(arra)[4])
       hour <- rep(1:(dim(arra)[3]*dim(arra)[4]), #hours x days
                   each = dim(arra)[2]) #veh cat
       df$hour <- hour

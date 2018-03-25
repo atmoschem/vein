@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.11</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.12</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.11</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.12</span>
 <span class="kw">library</span>(devtools) 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
@@ -146,26 +146,26 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## setwd('/tmp/RtmpGTi0DV/YourCity')</code></pre>
-<pre><code>## files at /tmp/RtmpGTi0DV/YourCity</code></pre>
+<pre><code>## setwd('/tmp/RtmpzlZbKA/YourCity')</code></pre>
+<pre><code>## files at /tmp/RtmpzlZbKA/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpGTi0DV/YourCity"             
-##  [2] "/tmp/RtmpGTi0DV/YourCity/ef"          
-##  [3] "/tmp/RtmpGTi0DV/YourCity/emi"         
-##  [4] "/tmp/RtmpGTi0DV/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpGTi0DV/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpGTi0DV/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpGTi0DV/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpGTi0DV/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpGTi0DV/YourCity/est"         
-## [10] "/tmp/RtmpGTi0DV/YourCity/images"      
-## [11] "/tmp/RtmpGTi0DV/YourCity/network"     
-## [12] "/tmp/RtmpGTi0DV/YourCity/post"        
-## [13] "/tmp/RtmpGTi0DV/YourCity/post/df"     
-## [14] "/tmp/RtmpGTi0DV/YourCity/post/grids"  
-## [15] "/tmp/RtmpGTi0DV/YourCity/post/streets"
-## [16] "/tmp/RtmpGTi0DV/YourCity/profiles"    
-## [17] "/tmp/RtmpGTi0DV/YourCity/veh"         
+##  [1] "/tmp/RtmpzlZbKA/YourCity"             
+##  [2] "/tmp/RtmpzlZbKA/YourCity/ef"          
+##  [3] "/tmp/RtmpzlZbKA/YourCity/emi"         
+##  [4] "/tmp/RtmpzlZbKA/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpzlZbKA/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpzlZbKA/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpzlZbKA/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpzlZbKA/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpzlZbKA/YourCity/est"         
+## [10] "/tmp/RtmpzlZbKA/YourCity/images"      
+## [11] "/tmp/RtmpzlZbKA/YourCity/network"     
+## [12] "/tmp/RtmpzlZbKA/YourCity/post"        
+## [13] "/tmp/RtmpzlZbKA/YourCity/post/df"     
+## [14] "/tmp/RtmpzlZbKA/YourCity/post/grids"  
+## [15] "/tmp/RtmpzlZbKA/YourCity/post/streets"
+## [16] "/tmp/RtmpzlZbKA/YourCity/profiles"    
+## [17] "/tmp/RtmpzlZbKA/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -187,10 +187,10 @@ PC_E25_<span class="dv">1400</span> &lt;-<span class="st"> </span><span class="k
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">"net"</span>)
 <span class="kw">data</span>(<span class="st">"pc_profile"</span>)
 pc_week &lt;-<span class="st"> </span><span class="kw"><a href="reference/temp_fact.html">temp_fact</a></span>(net<span class="op">$</span>ldv<span class="op">+</span>net<span class="op">$</span>hdv, pc_profile)
-dfspeed &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspeed.html">netspeed</a></span>(pc_week, net<span class="op">$</span>ps, net<span class="op">$</span>ffs, net<span class="op">$</span>capacity, net<span class="op">$</span>lkm)
+dfspeed &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspeed.html">netspeed</a></span>(pc_week, net<span class="op">$</span>ps, net<span class="op">$</span>ffs, net<span class="op">$</span>capacity, net<span class="op">$</span>lkm, <span class="dt">alpha =</span> <span class="fl">1.5</span>)
 <span class="kw">class</span>(dfspeed)</code></pre></div>
 <pre><code>## [1] "Speed"      "data.frame"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dfspeed, <span class="dt">xlab =</span> <span class="st">"hours"</span>) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dfspeed, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"Speed [km/h]"</span>) </code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </div>
 <div id="emission-factors" class="section level4">
@@ -235,7 +235,7 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
              <span class="dt">profile =</span> pc_profile)</code></pre></div>
 <pre><code>## Number of columns of 'veh' is different than length of 'ef'</code></pre>
 <pre><code>## adjusting length of ef to the number of colums of 'veh'</code></pre>
-<pre><code>## 119880.51 kg emissions in 24 hours and 7 days</code></pre>
+<pre><code>## 145655.81 kg emissions in 24 hours and 7 days</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(E_CO, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"[g/h]"</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
@@ -246,18 +246,18 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 <span class="kw">summary</span>(E_CO_STREETS)</code></pre></div>
 <pre><code>## Total emissions by column in study area = 
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   37008  252726  796862  713574 1062642 1671085 
+##   37008  263848  918692  866999 1280213 2445451 
 ## 
-## Average =  83.12 
+## Average =  82.64 
 ## 
 ## Emissions by street in study area = 
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##       0    5714   26499   79655   82742 3627689 
+##       0    5982   29290   96781   97648 4565179 
 ##  
 ## 
 ## Emissions by column and street in study area = 
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-##     0.00    16.63   100.56   474.14   433.28 49235.41</code></pre>
+##     0.00    16.71   104.18   576.08   484.23 83818.54</code></pre>
 <p>make grid. If you plan to run WRF, uses <a href="https://github.com/atmoschem/eixport">eixport::wrf_grid</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(net)
 net<span class="op">@</span>data &lt;-<span class="st"> </span><span class="kw">cbind</span>(net<span class="op">@</span>data, E_CO_STREETS)

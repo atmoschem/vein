@@ -55,7 +55,7 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.11
+# 0.3.12
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
@@ -132,9 +132,9 @@ temporal factors and netspeed
 data("net")
 data("pc_profile")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
-dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1.5)
 class(dfspeed)
-plot(dfspeed, xlab = "hours") 
+plot(dfspeed, xlab = "Hours", ylab = "Speed [km/h]") 
 ```
 
 #### 2) Emission Factors
