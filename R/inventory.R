@@ -212,7 +212,7 @@ inventory <- function(name,
     cat("# Your net must contain traffic per street at morning rush hour\n")
     cat("# Below an example using the data in VEIN\n")
     cat("data(net)\n")
-    cat("head(net)\n")
+    cat("net <- sp::spTransform(net, '+init=epsg:31983')\n")
     cat("saveRDS(net, 'network/net.rds')\n\n")
     cat("## Are you going to need Speed?\n")
     cat("data(pc_profile)\n")
@@ -237,7 +237,7 @@ inventory <- function(name,
     cat( "  source(inputs[i])\n" )
     cat("}\n")
     cat("# 4) Post-estimation #### \n")
-    cat("g <- make_grid(net, 1/102.47)\n")
+    cat("g <- make_grid(net, 3000)\n")
     cat("source('post.R')\n")
     sink()
 
