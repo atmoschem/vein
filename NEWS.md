@@ -1,7 +1,12 @@
 NEWS
 ===========
 
-# vein 0.3.12 (Release date: 2018-03-25)
+# vein 0.3.13 (Release date: 2018-03-28)
+
+- emis_grid internally filters inputs columns keeping only numeric
+columns.
+
+## vein 0.3.12 (Release date: 2018-03-25)
 
 - Change default values of hour and day in emis* functions (fix #76).
 - Add tests.
