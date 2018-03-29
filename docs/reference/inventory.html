@@ -57,7 +57,7 @@ fleet." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.12</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.13</span>
       </span>
     </div>
 
@@ -106,14 +106,15 @@ fleet.</p>
     
 
     <pre class="usage"><span class='fu'>inventory</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>rush.hour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name</th>
-      <td><p>one word indicating the name of the main directory for running
+      <td><p>Character, one word indicating the name of the main directory for running
 vein. It is better to write the pull path to the new directory.</p></td>
     </tr>
     <tr>
@@ -126,20 +127,24 @@ number allowed is 99 per category.</p></td>
     </tr>
     <tr>
       <th>scripts</th>
-      <td><p>Boolean value for aggregate or no scripts.</p></td>
+      <td><p>Logical value for aggregate or no scripts.</p></td>
     </tr>
     <tr>
       <th>show.dir</th>
-      <td><p>Boolean alue for printing the created directories.</p></td>
+      <td><p>Logical value for printing the created directories.</p></td>
     </tr>
     <tr>
       <th>show.scripts</th>
-      <td><p>Boolean value for printing the created scripts.</p></td>
+      <td><p>Logical value for printing the created scripts.</p></td>
     </tr>
     <tr>
       <th>clear</th>
-      <td><p>Boolean value for removing recursively the directory and create
+      <td><p>Logical value for removing recursively the directory and create
 another one.</p></td>
+    </tr>
+    <tr>
+      <th>rush.hour</th>
+      <td><p>Logical, to create a template for morning rush hour.</p></td>
     </tr>
     </table>
     
@@ -183,25 +188,25 @@ The user can rename these scripts.</p>
     <pre class="examples"><div class='input'>{
 <span class='no'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>)
 <span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>name</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
- <span class='fu'>source</span>(<span class='fu'>paste0</span>(<span class='no'>name</span>, <span class='st'>"/main.R"</span>))
-}</div><div class='output co'>#&gt; setwd('/tmp/RtmpVgW6M0/YourCity')</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpVgW6M0/YourCity</span></div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/RtmpVgW6M0/YourCity"             
-#&gt;  [2] "/tmp/RtmpVgW6M0/YourCity/ef"          
-#&gt;  [3] "/tmp/RtmpVgW6M0/YourCity/emi"         
-#&gt;  [4] "/tmp/RtmpVgW6M0/YourCity/emi/BUS_01"  
-#&gt;  [5] "/tmp/RtmpVgW6M0/YourCity/emi/HGV_01"  
-#&gt;  [6] "/tmp/RtmpVgW6M0/YourCity/emi/LCV_01"  
-#&gt;  [7] "/tmp/RtmpVgW6M0/YourCity/emi/MC_01"   
-#&gt;  [8] "/tmp/RtmpVgW6M0/YourCity/emi/PC_01"   
-#&gt;  [9] "/tmp/RtmpVgW6M0/YourCity/est"         
-#&gt; [10] "/tmp/RtmpVgW6M0/YourCity/images"      
-#&gt; [11] "/tmp/RtmpVgW6M0/YourCity/network"     
-#&gt; [12] "/tmp/RtmpVgW6M0/YourCity/post"        
-#&gt; [13] "/tmp/RtmpVgW6M0/YourCity/post/df"     
-#&gt; [14] "/tmp/RtmpVgW6M0/YourCity/post/grids"  
-#&gt; [15] "/tmp/RtmpVgW6M0/YourCity/post/streets"
-#&gt; [16] "/tmp/RtmpVgW6M0/YourCity/profiles"    
-#&gt; [17] "/tmp/RtmpVgW6M0/YourCity/veh"         
+<span class='fu'>source</span>(<span class='fu'>paste0</span>(<span class='no'>name</span>, <span class='st'>"/main.R"</span>))
+}</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmprfK0O2/YourCity</span></div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/RtmprfK0O2/YourCity"             
+#&gt;  [2] "/tmp/RtmprfK0O2/YourCity/ef"          
+#&gt;  [3] "/tmp/RtmprfK0O2/YourCity/emi"         
+#&gt;  [4] "/tmp/RtmprfK0O2/YourCity/emi/BUS_01"  
+#&gt;  [5] "/tmp/RtmprfK0O2/YourCity/emi/HGV_01"  
+#&gt;  [6] "/tmp/RtmprfK0O2/YourCity/emi/LCV_01"  
+#&gt;  [7] "/tmp/RtmprfK0O2/YourCity/emi/MC_01"   
+#&gt;  [8] "/tmp/RtmprfK0O2/YourCity/emi/PC_01"   
+#&gt;  [9] "/tmp/RtmprfK0O2/YourCity/est"         
+#&gt; [10] "/tmp/RtmprfK0O2/YourCity/images"      
+#&gt; [11] "/tmp/RtmprfK0O2/YourCity/network"     
+#&gt; [12] "/tmp/RtmprfK0O2/YourCity/post"        
+#&gt; [13] "/tmp/RtmprfK0O2/YourCity/post/df"     
+#&gt; [14] "/tmp/RtmprfK0O2/YourCity/post/grids"  
+#&gt; [15] "/tmp/RtmprfK0O2/YourCity/post/streets"
+#&gt; [16] "/tmp/RtmprfK0O2/YourCity/profiles"    
+#&gt; [17] "/tmp/RtmprfK0O2/YourCity/veh"         
 #&gt; Scripts:
 #&gt; [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 #&gt; [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
