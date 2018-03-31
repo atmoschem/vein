@@ -24,8 +24,8 @@
 vkm <- function (veh,
                  lkm,
                  profile,
-                 hour = 24,
-                 day = 7,
+                 hour = nrow(profile),
+                 day = ncol(profile),
                  array = T) {
   veh <- as.numeric(veh)
   lkm <- as.numeric(lkm)
