@@ -59,7 +59,7 @@ It depends on Average Daily Traffic (ADT)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.13</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.14</span>
       </span>
     </div>
 
@@ -109,7 +109,8 @@ It is assumed dry hours and anual aggregation should consider moisture factor.
 It depends on Average Daily Traffic (ADT)</p>
     
 
-    <pre class="usage"><span class='fu'>emis_paved</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>k</span>, <span class='no'>sL1</span>, <span class='no'>sL2</span>, <span class='no'>sL3</span>, <span class='no'>sL4</span>, <span class='no'>W</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_paved</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.62</span>, <span class='kw'>sL1</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>sL2</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>sL3</span> <span class='kw'>=</span> <span class='fl'>0.06</span>,
+  <span class='kw'>sL4</span> <span class='kw'>=</span> <span class='fl'>0.03</span>, <span class='no'>W</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -125,7 +126,8 @@ It is an array with dimenssions number of streets x hours of day x days of week<
     </tr>
     <tr>
       <th>k</th>
-      <td><p>K_PM30 = 3.23, K_PM15 = 0.77, K_PM10 = 0.62 and K_PM2.5 = 0.15</p></td>
+      <td><p>K_PM30 = 3.23 (g/vkm), K_PM15 = 0.77 (g/vkm), K_PM10 = 0.62 (g/vkm)
+and K_PM2.5 = 0.15  (g/vkm).</p></td>
     </tr>
     <tr>
       <th>sL1</th>
@@ -173,7 +175,7 @@ weight of traffic fleet in each road</p></td>
                        <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>)
 <span class='fu'>class</span>(<span class='no'>emi</span>)
 <span class='fu'>head</span>(<span class='no'>emi</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Estimation of dry hours only, aggregation should include rainy hours</span></div><div class='output co'>#&gt; [1] 4.072569e-08 3.526659e-08 3.864537e-08 5.227454e-08 4.476578e-08
+}</div><div class='output co'>#&gt; [1] 4.072569e-08 3.526659e-08 3.864537e-08 5.227454e-08 4.476578e-08
 #&gt; [6] 5.147427e-08</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
