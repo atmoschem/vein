@@ -9,7 +9,8 @@
 #' @param veh Numeric vector with length of elements equals to number of streets
 #' It is an array with dimenssions number of streets x hours of day x days of week
 #' @param lkm Length of each link
-#' @param k K_PM30 = 3.23, K_PM15 = 0.77, K_PM10 = 0.62 and K_PM2.5 = 0.15
+#' @param k K_PM30 = 3.23 (g/vkm), K_PM15 = 0.77 (g/vkm), K_PM10 = 0.62 (g/vkm)
+#' and K_PM2.5 = 0.15  (g/vkm).
 #' @param sL1 Silt loading (g/m2) for roads with ADT <= 500
 #' @param sL2 Silt loading (g/m2) for roads with ADT > 500 and <= 5000
 #' @param sL3 Silt loading (g/m2) for roads with ADT > 5000 and <= 1000
@@ -33,10 +34,16 @@
 #' class(emi)
 #' head(emi)
 #' }
-emis_paved <- function(veh, lkm, k, sL1, sL2, sL3, sL4, W) {
-  message("Estimation of dry hours only, aggregation should include rainy hours")
+emis_paved <- function(veh,
+                       lkm,
+                       k = 0.62,   # K_PM10 = 0.62 (g/vkm)
+                       sL1 = 0.6,  # g/m^2
+                       sL2 = 0.2,  # g/m^2
+                       sL3 = 0.06, # g/m^2
+                       sL4 = 0.03, # g/m^2
+                       W) {
   if (class(veh)!="array" | class(W)!="array") {
-    stop("class of veh or W should be array")
+    stop("class of veh and W should be array")
   }
   d <- sapply(1:dim(veh)[3], function(i) rowSums(veh[,,i]))
   sL <- sapply(1:ncol(d), function(i)
