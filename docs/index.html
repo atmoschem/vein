@@ -146,25 +146,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/Rtmpe4kEwl/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpHGvGiH/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/Rtmpe4kEwl/YourCity"             
-##  [2] "/tmp/Rtmpe4kEwl/YourCity/ef"          
-##  [3] "/tmp/Rtmpe4kEwl/YourCity/emi"         
-##  [4] "/tmp/Rtmpe4kEwl/YourCity/emi/BUS_01"  
-##  [5] "/tmp/Rtmpe4kEwl/YourCity/emi/HGV_01"  
-##  [6] "/tmp/Rtmpe4kEwl/YourCity/emi/LCV_01"  
-##  [7] "/tmp/Rtmpe4kEwl/YourCity/emi/MC_01"   
-##  [8] "/tmp/Rtmpe4kEwl/YourCity/emi/PC_01"   
-##  [9] "/tmp/Rtmpe4kEwl/YourCity/est"         
-## [10] "/tmp/Rtmpe4kEwl/YourCity/images"      
-## [11] "/tmp/Rtmpe4kEwl/YourCity/network"     
-## [12] "/tmp/Rtmpe4kEwl/YourCity/post"        
-## [13] "/tmp/Rtmpe4kEwl/YourCity/post/df"     
-## [14] "/tmp/Rtmpe4kEwl/YourCity/post/grids"  
-## [15] "/tmp/Rtmpe4kEwl/YourCity/post/streets"
-## [16] "/tmp/Rtmpe4kEwl/YourCity/profiles"    
-## [17] "/tmp/Rtmpe4kEwl/YourCity/veh"         
+##  [1] "/tmp/RtmpHGvGiH/YourCity"             
+##  [2] "/tmp/RtmpHGvGiH/YourCity/ef"          
+##  [3] "/tmp/RtmpHGvGiH/YourCity/emi"         
+##  [4] "/tmp/RtmpHGvGiH/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpHGvGiH/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpHGvGiH/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpHGvGiH/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpHGvGiH/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpHGvGiH/YourCity/est"         
+## [10] "/tmp/RtmpHGvGiH/YourCity/images"      
+## [11] "/tmp/RtmpHGvGiH/YourCity/network"     
+## [12] "/tmp/RtmpHGvGiH/YourCity/post"        
+## [13] "/tmp/RtmpHGvGiH/YourCity/post/df"     
+## [14] "/tmp/RtmpHGvGiH/YourCity/post/grids"  
+## [15] "/tmp/RtmpHGvGiH/YourCity/post/streets"
+## [16] "/tmp/RtmpHGvGiH/YourCity/profiles"    
+## [17] "/tmp/RtmpHGvGiH/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -234,7 +234,7 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
              <span class="dt">profile =</span> pc_profile)</code></pre></div>
 <pre><code>## Number of columns of 'veh' is different than length of 'ef'</code></pre>
 <pre><code>## adjusting length of ef to the number of colums of 'veh'</code></pre>
-<pre><code>## 145655.81 kg emissions in 24 hours and 7 days</code></pre>
+<pre><code>## 139727.29 kg emissions in 24 hours and 7 days</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(E_CO, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"[g/h]"</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
@@ -245,18 +245,18 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 <span class="kw">summary</span>(E_CO_STREETS)</code></pre></div>
 <pre><code>## Total emissions by column in study area = 
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   37008  263848  918692  866999 1280213 2445451 
+##   43384  286702  881897  831710 1238618 2331761 
 ## 
-## Average =  82.64 
+## Average =  82.93 
 ## 
 ## Emissions by street in study area = 
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##       0    5982   29290   96781   97648 4565179 
+##       0    5959   28952   92842   93507 4414472 
 ##  
 ## 
 ## Emissions by column and street in study area = 
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-##     0.00    16.71   104.18   576.08   484.23 83818.54</code></pre>
+##     0.00    17.18   106.87   552.63   479.81 93753.32</code></pre>
 <p>make grid. If you plan to run WRF, uses <a href="https://github.com/atmoschem/eixport">eixport::wrf_grid</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(net)
 net<span class="op">@</span>data &lt;-<span class="st"> </span><span class="kw">cbind</span>(net<span class="op">@</span>data, E_CO_STREETS)

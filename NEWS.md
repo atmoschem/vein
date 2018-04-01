@@ -5,6 +5,7 @@ NEWS
 
 - emis_paved now includes default values for k = 0.62 g/km,
 sL1 = 0.6 (g/m^2), sL2 = 0.2 (g/m^2), sL3 = 0.06 (g/m^2), sL4 = 0.03 (g/m^2).
+- profile in emis, vkm and emis_cold checks for data.frame, matrix and if its a vector, it is transformed into matrix.
 
 ## vein 0.3.13 (Release date: 2018-03-28)
 
