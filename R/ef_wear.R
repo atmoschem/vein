@@ -18,6 +18,17 @@
 #' # Do not run
 #' }
 ef_wear <- function (wear, type, pol = "TSP", speed, load = 0.5, axle=2) {
+  if(is.data.frame(speed)){
+    speed <- speed
+  } else if(is.matrix(speed)){
+    speed <- speed
+  } else if(is.vector(speed)){
+    speed <- matrix(speed, ncol = 1)
+  }
+  for (i  in 1:ncol(speed) ) {
+    speed[, i] <- as.numeric(speed[, i])
+  }
+
   if (wear == "tyre") {
     ef <- ifelse(type=="2W", 0.0046, ifelse(type=="PC",0.0107,
           ifelse(type=="LCV", 0.0109, ifelse(type=="HDV",
