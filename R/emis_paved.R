@@ -45,15 +45,14 @@ emis_paved <- function(veh,
   if (class(veh)!="array" | class(W)!="array") {
     stop("class of veh and W should be array")
   }
-  d <- sapply(1:dim(veh)[3], function(i) rowSums(veh[,,i]))
-  sL <- sapply(1:ncol(d), function(i)
-    ifelse(d[,i]<=500, sL1,
-           ifelse(d[,i]>500 & d[,i]<=5000, sL2,
-                  ifelse(d[,i]>5000 & d[,i]<= 10000, sL3,sL4)))
-  )
-  emi <-simplify2array(lapply(1:7, function(i)
-    veh[,,i]*lkm*k*sL[,i]^0.91*W[,,i]^1.02
-  ))
+  sL <- array(data = ifelse(veh <= 500, sL1,
+                            ifelse(veh > 500 & veh <= 5000, sL2,
+                                   ifelse(veh > 5000 & veh <=1000, sL3,
+                                          sL4))),
+              dim = dim(veh))
+  lkm <- array(lkm, dim = dim(veh))
+  k <- array(k, dim = dim(veh))
+  emi <- veh * lkm * k * sL^0.91 * W^1.02
   emi[is.na(emi)] <- 0
   return(EmissionsArray(emi))
 }

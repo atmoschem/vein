@@ -4,9 +4,9 @@
 \alias{emis}
 \title{Estimation of emissions}
 \usage{
-emis(veh, lkm, ef, speed = 34, agemax = if (!inherits(x = veh, what =
-  "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile,
-  hour = nrow(profile), day = ncol(profile), array = T)
+emis(veh, lkm, ef, speed = 34, agemax = ifelse(is.data.frame(veh),
+  ncol(veh), ncol(veh[[1]])), profile, hour = nrow(profile),
+  day = ncol(profile), array = T)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
@@ -63,14 +63,13 @@ veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 # Estimation for morning rush hour and local emission factors
 speed <- data.frame(S8 = net$ps)
-p1h <- matrix(1)
 lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-             profile = p1h)
+             profile = 1)
 # Estimation for 168 hour and local factors
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-lef <- fe2015[fe2015$Pollutant=="CO", "PC_G"]
+lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
              profile = profiles$PC_JUNE_2014)
 summary(E_CO)
