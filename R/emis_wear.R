@@ -29,6 +29,7 @@ emis_wear <- function (veh,
                        day = ncol(profile)) {
   veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)
+
     d <-  simplify2array(
     lapply(1:day,function(j){
       simplify2array(
