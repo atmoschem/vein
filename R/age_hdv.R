@@ -19,8 +19,15 @@
 #' plot(LT_B5)
 #'
 #' }
-age_hdv <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
-                     bystreet = F, message = TRUE){
+age_hdv <- function (x,
+                     name = "veh",
+                     a = 0.2,
+                     b = 17,
+                     agemin = 1,
+                     agemax = 50,
+                     k = 1,
+                     bystreet = F,
+                     message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){

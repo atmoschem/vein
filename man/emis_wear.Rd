@@ -10,7 +10,7 @@ emis_wear(veh, lkm, ef, agemax = ncol(veh), profile, hour = nrow(profile),
 \arguments{
 \item{veh}{Object of class "Vehicles"}
 
-\item{lkm}{Length of the road}
+\item{lkm}{Length of the road in km.}
 
 \item{ef}{list of emission factor functions class "EmissionFactorsList",
 length equals to hours.}
@@ -33,7 +33,13 @@ breaks and road surface.
 }
 \examples{
 \dontrun{
-# Do not run
+data(net)
+data(pc_profile)
+pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
+emi <- emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
+                 lkm = net$lkm, ef = ef, profile =  pc_profile)
 }
 }
 \references{

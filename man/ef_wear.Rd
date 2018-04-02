@@ -13,7 +13,7 @@ ef_wear(wear, type, pol = "TSP", speed, load = 0.5, axle = 2)
 
 \item{pol}{Character; pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"}
 
-\item{speed}{List of speeds}
+\item{speed}{Data.frame of speeds}
 
 \item{load}{Load of the HDV}
 
@@ -28,7 +28,11 @@ The sources are tyres, breaks and road surface.
 }
 \examples{
 \dontrun{
-# Do not run
+data(net)
+data(pc_profile)
+pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
 }
 }
 \references{

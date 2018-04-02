@@ -4,7 +4,7 @@
 #' breaks and road surface.
 #'
 #' @param veh Object of class "Vehicles"
-#' @param lkm Length of the road
+#' @param lkm Length of the road in km.
 #' @param ef list of emission factor functions class "EmissionFactorsList",
 #' length equals to hours.
 #' @param agemax Age of oldest vehicles for that category
@@ -18,7 +18,13 @@
 #' guidebook-2009. European Environment Agency, Copenhagen, 2016
 #' @export
 #' @examples \dontrun{
-#' # Do not run
+#' data(net)
+#' data(pc_profile)
+#' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+#' ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
+#' emi <- emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
+#'                  lkm = net$lkm, ef = ef, profile =  pc_profile)
 #' }
 emis_wear <- function (veh,
                        lkm,
@@ -27,16 +33,33 @@ emis_wear <- function (veh,
                        profile,
                        hour = nrow(profile),
                        day = ncol(profile)) {
+  if(units(lkm)$numerator == "m" ){
+    stop("Units of lkm is 'm'")
+  }
   veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)
+  if(is.data.frame(ef)){
+    ef <- ef
+  } else if(is.matrix(ef)){
+    ef <- ef
+  } else if(is.vector(ef)){
+    ef <- matrix(as.numeric(ef), ncol = 1)
+  }
+  if(ncol(ef)/24 != day){
+   stop("Number of days of ef and profile must be the same")
+  }
+lef <- lapply(1:day, function(i){
+    as.list(ef[, (24*(i-1) + 1):(24*i)])
+  })
 
-    d <-  simplify2array(
+    lapply(ef, as.list)
+      d <-  simplify2array(
     lapply(1:day,function(j){
       simplify2array(
         lapply(1:hour,function(i){
           simplify2array(
             lapply(1:agemax, function(k){
-              veh[, k]*profile[i,j]*lkm*ef[[i]]
+              veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]
             })
           )
         })

@@ -19,8 +19,15 @@
 #' PC_E25_1400 <- age_ldv(x = pc, name = "PC_E25_1400")
 #' plot(PC_E25_1400)
 #' }
-age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 1,
-                     bystreet = F, message = TRUE){
+age_ldv <- function (x,
+                     name = "veh",
+                     a = 1.698,
+                     b = -0.2,
+                     agemin = 1,
+                     agemax = 50,
+                     k = 1,
+                     bystreet = F,
+                     message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){

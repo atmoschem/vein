@@ -17,7 +17,11 @@
 #' PC_E25_1400 <- my_age(x = pc, y = dpc, name = "PC_E25_1400")
 #' plot(PC_E25_1400)
 #' }
-my_age <- function (x, y, name,  k = 1, message = TRUE){
+my_age <- function (x,
+                    y,
+                    name = "veh",
+                    k = 1,
+                    message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
     } else if (missing(y) | is.null(y)) {
