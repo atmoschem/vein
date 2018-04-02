@@ -1,9 +1,10 @@
 NEWS
 ===========
 
-# vein 0.3.14 (Release date: 2018-04-01)
+# vein 0.3.15 (Release date: 2018-04-01)
 
 - ef_wear and emis_wear updated.
+- age* functions now incldues default name "veh"
 
 ## vein 0.3.14 (Release date: 2018-03-31)
 

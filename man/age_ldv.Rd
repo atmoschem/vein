@@ -4,8 +4,8 @@
 \alias{age_ldv}
 \title{Returns amount of vehicles at each age}
 \usage{
-age_ldv(x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 1,
-  bystreet = F, message = TRUE)
+age_ldv(x, name = "veh", a = 1.698, b = -0.2, agemin = 1, agemax = 50,
+  k = 1, bystreet = F, message = TRUE)
 }
 \arguments{
 \item{x}{numerical vector of vehicles}

@@ -18,8 +18,15 @@
 #' MOTO_E25_500 <- age_moto(x = mc, name = "M_E25_500")
 #' plot(MOTO_E25_500)
 #' }
-age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
-                      bystreet = F, message = TRUE){
+age_moto <- function (x,
+                      name = "veh",
+                      a = 0.2,
+                      b = 17,
+                      agemin = 1,
+                      agemax = 50,
+                      k = 1,
+                      bystreet = F,
+                      message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){

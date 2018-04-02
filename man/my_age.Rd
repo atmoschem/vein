@@ -4,7 +4,7 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, name, k = 1, message = TRUE)
+my_age(x, y, name = "veh", k = 1, message = TRUE)
 }
 \arguments{
 \item{x}{numerical vector of vehicles.}

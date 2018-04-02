@@ -4,8 +4,8 @@
 \alias{age_moto}
 \title{Returns amount of vehicles at each age}
 \usage{
-age_moto(x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
-  bystreet = F, message = TRUE)
+age_moto(x, name = "veh", a = 0.2, b = 17, agemin = 1, agemax = 50,
+  k = 1, bystreet = F, message = TRUE)
 }
 \arguments{
 \item{x}{numerical vector of vehicles}
