@@ -17,14 +17,15 @@
 #' and road abrasion. In: EEA, EMEP. EEA air pollutant emission inventory
 #' guidebook-2009. European Environment Agency, Copenhagen, 2016
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
-#' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile[, 1])
 #' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 #' ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
 #' emi <- emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
-#'                  lkm = net$lkm, ef = ef, profile =  pc_profile)
+#'                  lkm = net$lkm, ef = ef, profile =  pc_profile[, 1])
+#' emi
 #' }
 emis_wear <- function (veh,
                        lkm,
@@ -38,16 +39,24 @@ emis_wear <- function (veh,
   }
   veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)
-  if(is.data.frame(ef)){
-    ef <- ef
+  if(is.data.frame(profile)){
+    profile <- profile
   } else if(is.matrix(ef)){
-    ef <- ef
-  } else if(is.vector(ef)){
-    ef <- matrix(as.numeric(ef), ncol = 1)
+    profile <- profile
+  } else if(is.vector(profile)){
+    profile <- matrix(as.numeric(profile), ncol = 1)
   }
   if(ncol(ef)/24 != day){
    stop("Number of days of ef and profile must be the same")
   }
+  if(!missing(profile) & is.data.frame(profile)){
+    profile <- profile
+  } else if(!missing(profile) & is.matrix(profile)){
+    profile <- profile
+  } else if(!missing(profile) & is.vector(profile)){
+    profile <- matrix(profile, ncol = 1)
+  }
+
 lef <- lapply(1:day, function(i){
     as.list(ef[, (24*(i-1) + 1):(24*i)])
   })
