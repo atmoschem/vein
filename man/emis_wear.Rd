@@ -32,14 +32,15 @@ emission estimation  g/h
 breaks and road surface.
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
-pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+pc_week <- temp_fact(net$ldv+net$hdv, pc_profile[, 1])
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
 emi <- emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
-                 lkm = net$lkm, ef = ef, profile =  pc_profile)
+                 lkm = net$lkm, ef = ef, profile =  pc_profile[, 1])
+emi
 }
 }
 \references{
