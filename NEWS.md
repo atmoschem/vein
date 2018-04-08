@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.3.16 (Release date: 2018-04-09)
+
+- fix bug in post.R by inventory.
+
 # vein 0.3.15 (Release date: 2018-04-01)
 
 - ef_wear and emis_wear updated.
