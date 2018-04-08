@@ -217,6 +217,7 @@ inventory <- function(name,
     cat("saveRDS(net, 'network/net.rds')\n\n")
     cat("## Are you going to need Speed?\n")
     cat("data(pc_profile)\n")
+
     if(rush.hour){
       cat("speed <- data.frame(S8 = net$ps)\n")
       cat("saveRDS(speed, 'network/speed.rds')\n\n")
@@ -225,6 +226,7 @@ inventory <- function(name,
       cat("speed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)\n")
       cat("saveRDS(speed, 'network/speed.rds')\n\n")
     }
+
     cat("# 2) Traffic ####\n")
     cat("# Edit your file traffic.R\n\n")
     cat("source('traffic.R') # Edit traffic.R\n\n")
@@ -238,7 +240,7 @@ inventory <- function(name,
     cat( "  source(inputs[i])\n" )
     cat("}\n")
     cat("# 4) Post-estimation #### \n")
-    cat("g <- make_grid(net, 3000)\n")
+    cat("g <- make_grid(net, 1000)\n")
     cat("source('post.R')\n")
     sink()
 
@@ -258,6 +260,7 @@ inventory <- function(name,
     cat("saveRDS(MC_01, file = 'veh/MC_01.rds')\n")
     cat(" # Add more\n")
     sink()
+
     sink(paste0(name, "/post.R"))
     cat("# streets ####\n")
     cat("CO <- emis_merge('CO', net = net)\n")
@@ -270,20 +273,6 @@ inventory <- function(name,
     cat("dfCO <- emis_merge('CO', what = 'DF.rds', FALSE)\n")
     cat("saveRDS(dfCO, 'post/df/dfCO.rds')\n")
     cat("aggregate(dfCO$g, by = list(dfCO$veh), sum, na.rm = TRUE) # Only an example\n\n")
-
-    cat("net <- readRDS('network/net.rds')\n")
-    cat("PC_01 <- age_ldv(x = net$ldv, name = 'PC', k = 3/4)\n")
-    cat("saveRDS(PC_01, file = 'veh/PC_01.rds')\n")
-    cat("LCV_01 <- age_ldv(x = net$ldv, name = 'LCV', k = 1/4/2)\n")
-    cat("saveRDS(PC_01, file = 'veh/LCV_01.rds')\n")
-    cat("HGV_01 <- age_ldv(x = net$hdv, name = 'HGV', k = 3/4)\n")
-    cat("saveRDS(PC_01, file = 'veh/HGV_01.rds')\n")
-    cat("BUS_01 <- age_ldv(x = net$hdv, name = 'BUS', k = 1/4)\n")
-    cat("# BUS only for example  purposes\n")
-    cat("# BUS a traffic simulation only for BUS, or other source of information\n")
-    cat("saveRDS(BUS_01, file = 'veh/BUS_01.rds')\n")
-    cat("MC_01 <- age_ldv(x = net$ldv, name = 'MC', k = 1/4/2)\n")
-    cat("saveRDS(MC_01, file = 'veh/MC_01.rds')\n")
     cat(" # Add more\n")
     sink()
   }

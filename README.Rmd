@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-![](https://raw.githubusercontent.com/atmoschem/vein/master/logovein_small.png)
+![](https://i.imgur.com/b2lQZzi.jpg){width=250px}
 
 
 
@@ -55,7 +55,7 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.15
+# 0.3.16
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
