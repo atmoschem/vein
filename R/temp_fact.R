@@ -4,9 +4,11 @@
 #' hourly expansion data-frames to obtain a data-frame of traffic
 #' at each link to every hour
 #'
-#' @param q traffic data per each link
-#' @param pro expansion factors data-frames
-#' @return data-frames of expanded traffic
+#' @param q Numeric; traffic data per each link
+#' @param pro Numeric; expansion factors data-frames
+#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
+#' @return data-frames of expanded traffic or sf.
+#' @importFrom sf st_sf st_as_sf
 #' @export
 #' @examples {
 #' # Do not run
@@ -14,12 +16,20 @@
 #' data(pc_profile)
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' plot(pc_week)
+#' pc_weeksf <- temp_fact(net$ldv+net$hdv, pc_profile, net = net)
+#' plot(pc_weeksf)
 #' }
-temp_fact <- function(q, pro) {
+temp_fact <- function(q, pro, net) {
   if (missing(q) | is.null(q)) {
     stop("No traffic data")
   } else {
    df <- Vehicles(as.data.frame(as.matrix(q) %*% matrix(unlist(pro), nrow=1)))
   }
-  return(df)
+  if(!missing(net)){
+  netsf <- sf::st_as_sf(net)
+  speed <- sf::st_sf(df, geometry = netsf$geometry)
+  return(speed)
+  } else {
+    return(df)
+  }
 }

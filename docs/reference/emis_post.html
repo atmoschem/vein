@@ -58,7 +58,7 @@ category, hour, including size, fuel and other characteristics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.17</span>
       </span>
     </div>
 
@@ -79,12 +79,7 @@ category, hour, including size, fuel and other characteristics." />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -97,7 +92,7 @@ category, hour, including size, fuel and other characteristics." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Post emissions</h1>
-    <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/emis_post.R'><code>R/emis_post.R</code></a></small>
+    
     </div>
 
     
@@ -107,7 +102,7 @@ with hourly emissions at each street, or a data base with emissions by vehicular
 category, hour, including size, fuel and other characteristics.</p>
     
 
-    <pre class="usage"><span class='fu'>emis_post</span>(<span class='no'>arra</span>, <span class='no'>veh</span>, <span class='no'>size</span>, <span class='no'>fuel</span>, <span class='no'>pollutant</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_post</span>(<span class='no'>arra</span>, <span class='no'>veh</span>, <span class='no'>size</span>, <span class='no'>fuel</span>, <span class='no'>pollutant</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='no'>net</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,13 +136,18 @@ category, hour, including size, fuel and other characteristics.</p>
 168 columns as the hours of a whole week and "streets_wide repeats the
 row number of streets by hour and day of the week</p></td>
     </tr>
+    <tr>
+      <th>net</th>
+      <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING". Only
+when by = 'streets_wide'</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>This function depends on EmissionsArray objests which currently has
 4 dimensions. However, a future version of VEIN will produce EmissionsArray
-with 3 dimensiones and his function also will change. This change will be
+with 3 dimensiones and his fungeorge soros drugsction also will change. This change will be
 made in order to not produce inconsistencies with previous versions, therefore,
 if the user count with an EmissionsArry with 4 dimension, it will be able
 to use this function.</p>
@@ -164,7 +164,7 @@ to use this function.</p>
           <span class='fl'>133833</span>,<span class='fl'>138441</span>,<span class='fl'>142682</span>,<span class='fl'>171029</span>,<span class='fl'>151048</span>,<span class='fl'>115228</span>,<span class='fl'>98664</span>,<span class='fl'>126444</span>,<span class='fl'>101027</span>,
           <span class='fl'>84771</span>,<span class='fl'>55864</span>,<span class='fl'>36306</span>,<span class='fl'>21079</span>,<span class='fl'>20138</span>,<span class='fl'>17439</span>, <span class='fl'>7854</span>,<span class='fl'>2215</span>,<span class='fl'>656</span>,<span class='fl'>1262</span>,<span class='fl'>476</span>,<span class='fl'>512</span>,
           <span class='fl'>1181</span>, <span class='fl'>4991</span>, <span class='fl'>3711</span>, <span class='fl'>5653</span>, <span class='fl'>7039</span>, <span class='fl'>5839</span>, <span class='fl'>4257</span>,<span class='fl'>3824</span>, <span class='fl'>3068</span>)
-<span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>PC_G</span> <span class='kw'>=</span> <span class='no'>PC_G</span>)
+<span class='no'>pc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='my_age.html'>my_age</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>PC_G</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)
 <span class='co'># Estimation for morning rush hour and local emission factors</span>
 <span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>S8</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ps</span>)
 <span class='no'>p1h</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fl'>1</span>)
@@ -173,6 +173,10 @@ to use this function.</p>
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>p1h</span>)
 <span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets_wide"</span>)
 <span class='fu'>summary</span>(<span class='no'>E_CO_STREETS</span>)
+<span class='no'>E_CO_STREETSsf</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
+                           <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets_wide"</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
+<span class='fu'>summary</span>(<span class='no'>E_CO_STREETSsf</span>)
+<span class='fu'>plot</span>(<span class='no'>E_CO_STREETSsf</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"CO emissions (g/h)"</span>)
 <span class='co'># arguments required: arra, veh, size, fuel, pollutant ad by</span>
 <span class='no'>E_CO_DF</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>,  <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='st'>"&lt;1400"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
 <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>)
@@ -186,7 +190,7 @@ to use this function.</p>
 <span class='co'>#vehicles newer than pre-euro</span>
 <span class='no'>co1</span> <span class='kw'>&lt;-</span> <span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, ] <span class='co'>#24 obs!!!</span>
 <span class='no'>cod</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>1</span>:<span class='fl'>24</span>]*<span class='fu'>c</span>(<span class='no'>cod1</span>,<span class='no'>cod2</span>),<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>25</span>:<span class='fu'>nrow</span>(<span class='no'>co1</span>)])
-<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></span>(<span class='no'>co1</span>, <span class='no'>cod</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,  <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
+<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></span>(<span class='kw'>dfcol</span> <span class='kw'>=</span> <span class='no'>cod</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,  <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
                      <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>eu</span><span class='kw'>=</span><span class='no'>co1</span>$<span class='no'>Euro_LDV</span>)
 <span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis.html'>emis</a></span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>41</span>,
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)

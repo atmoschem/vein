@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.16</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.17</span>
       </span>
     </div>
 
@@ -51,14 +51,7 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -107,7 +100,7 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.16</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.17</span>
 <span class="kw">library</span>(devtools) 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
@@ -136,6 +129,7 @@
 <li>Minor fix on demo(VEIN).</li>
 <li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
 <li>Revised all examples.</li>
+<li>returns sf in temp_fact, netspeed and emis_post! (0.3.17)</li>
 </ul>
 <p>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a></p>
 <div id="how-to-use-vein" class="section level3">
@@ -146,25 +140,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpDZmUah/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpAdi9vF/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpDZmUah/YourCity"             
-##  [2] "/tmp/RtmpDZmUah/YourCity/ef"          
-##  [3] "/tmp/RtmpDZmUah/YourCity/emi"         
-##  [4] "/tmp/RtmpDZmUah/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpDZmUah/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpDZmUah/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpDZmUah/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpDZmUah/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpDZmUah/YourCity/est"         
-## [10] "/tmp/RtmpDZmUah/YourCity/images"      
-## [11] "/tmp/RtmpDZmUah/YourCity/network"     
-## [12] "/tmp/RtmpDZmUah/YourCity/post"        
-## [13] "/tmp/RtmpDZmUah/YourCity/post/df"     
-## [14] "/tmp/RtmpDZmUah/YourCity/post/grids"  
-## [15] "/tmp/RtmpDZmUah/YourCity/post/streets"
-## [16] "/tmp/RtmpDZmUah/YourCity/profiles"    
-## [17] "/tmp/RtmpDZmUah/YourCity/veh"         
+##  [1] "/tmp/RtmpAdi9vF/YourCity"             
+##  [2] "/tmp/RtmpAdi9vF/YourCity/ef"          
+##  [3] "/tmp/RtmpAdi9vF/YourCity/emi"         
+##  [4] "/tmp/RtmpAdi9vF/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpAdi9vF/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpAdi9vF/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpAdi9vF/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpAdi9vF/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpAdi9vF/YourCity/est"         
+## [10] "/tmp/RtmpAdi9vF/YourCity/images"      
+## [11] "/tmp/RtmpAdi9vF/YourCity/network"     
+## [12] "/tmp/RtmpAdi9vF/YourCity/post"        
+## [13] "/tmp/RtmpAdi9vF/YourCity/post/df"     
+## [14] "/tmp/RtmpAdi9vF/YourCity/post/grids"  
+## [15] "/tmp/RtmpAdi9vF/YourCity/post/streets"
+## [16] "/tmp/RtmpAdi9vF/YourCity/profiles"    
+## [17] "/tmp/RtmpAdi9vF/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -303,8 +297,6 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.ht
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=vein">https://​cloud.r-project.org/​package=vein</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/atmoschem/vein">https://​github.com/​atmoschem/​vein</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/atmoschem/vein/issues/">https://​github.com/​atmoschem/​vein/​issues/​</a>
 </li>

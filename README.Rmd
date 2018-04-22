@@ -55,7 +55,7 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.16
+# 0.3.17
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
@@ -89,6 +89,7 @@ improvements.
 - emis and emis_cold adjust length of ef by length of columns of first
 element of the list of data-frames.
 - Revised all examples.
+- returns sf in temp_fact, netspeed and emis_post! (0.3.17)
 
 Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
