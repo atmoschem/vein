@@ -10,14 +10,17 @@
 #' @param agemax age of oldest vehicles for that category
 #' @param k multiplication factor
 #' @param bystreet when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
+#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
+#' @importFrom sf st_sf st_as_sf
 #' @export
 #' @examples {
-#' lt <- Vehicles(rnorm(100, 300, 10))
-#' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
+#' data(net)
+#' LT_B5 <- age_hdv(x = net$hdv,name = "LT_B5")
 #' plot(LT_B5)
-#'
+#' LT_B5 <- age_hdv(x = net$hdv, name = "LT_B5", net = net)
+#' plot(LT_B5)
 #' }
 age_hdv <- function (x,
                      name = "veh",
@@ -27,6 +30,7 @@ age_hdv <- function (x,
                      agemax = 50,
                      k = 1,
                      bystreet = F,
+                     net,
                      message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
@@ -62,7 +66,15 @@ age_hdv <- function (x,
                   sep=" ")
     )
     cat("\n")
-}
+    }
+    if(!missing(net)){
+      netsf <- sf::st_as_sf(net)
+      dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      return(dfsf)
+    } else {
+      return(Vehicles(df*k))
+    }
+
   } else {
     suca <- function (t) {1/(1 + exp(a*(t+b)))+1/(1 + exp(a*(t-b)))}
     anos <- seq(agemin,agemax)
@@ -85,7 +97,13 @@ age_hdv <- function (x,
                   sep=" ")
     )
     cat("\n")
-  } }
-  df <- Vehicles(df*k)
-  return(df)
+    }
+    if(!missing(net)){
+      netsf <- sf::st_as_sf(net)
+      dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      return(dfsf)
+    } else {
+      return(Vehicles(df*k))
+    }
+    }
 }

@@ -5,7 +5,7 @@
 \title{Returns amount of vehicles at each age}
 \usage{
 age_ldv(x, name = "veh", a = 1.698, b = -0.2, agemin = 1, agemax = 50,
-  k = 1, bystreet = F, message = TRUE)
+  k = 1, bystreet = F, net, message = TRUE)
 }
 \arguments{
 \item{x}{numerical vector of vehicles}
@@ -25,6 +25,8 @@ age_ldv(x, name = "veh", a = 1.698, b = -0.2, agemin = 1, agemax = 50,
 \item{bystreet}{when TRUE it is expecting that 'a' and 'b' are numeric
 vectors with length equal to x}
 
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
+
 \item{message}{message with average age and total numer of vehicles}
 }
 \value{
@@ -35,8 +37,10 @@ Returns amount of vehicles at each age
 }
 \examples{
 {
-pc <- rnorm(100, 300, 10)
-PC_E25_1400 <- age_ldv(x = pc, name = "PC_E25_1400")
+data(net)
+PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
+plot(PC_E25_1400)
+PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
 plot(PC_E25_1400)
 }
 }
