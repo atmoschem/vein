@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-![](https://i.imgur.com/b2lQZzi.jpg){width=250px}
+![](https://i.imgur.com/b2lQZzi.jpg)
 
 
 
@@ -187,6 +187,7 @@ E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 ```
 
 make a grid. If you plan to run WRF, use:
+
 - [eixport::wrf_grid](https://github.com/atmoschem/eixport)
 - [eixport::as4wrf](https://github.com/atmoschem/eixport)
 - emis_wrf will be deprecated.
@@ -195,7 +196,7 @@ make a grid. If you plan to run WRF, use:
 data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
-g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
+g <- make_grid(net, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
 plot(E_CO_g["V9"], axes = T)
 ```
