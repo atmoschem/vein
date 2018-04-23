@@ -140,25 +140,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpXyFMmZ/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmptYoIsj/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpXyFMmZ/YourCity"             
-##  [2] "/tmp/RtmpXyFMmZ/YourCity/ef"          
-##  [3] "/tmp/RtmpXyFMmZ/YourCity/emi"         
-##  [4] "/tmp/RtmpXyFMmZ/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpXyFMmZ/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpXyFMmZ/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpXyFMmZ/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpXyFMmZ/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpXyFMmZ/YourCity/est"         
-## [10] "/tmp/RtmpXyFMmZ/YourCity/images"      
-## [11] "/tmp/RtmpXyFMmZ/YourCity/network"     
-## [12] "/tmp/RtmpXyFMmZ/YourCity/post"        
-## [13] "/tmp/RtmpXyFMmZ/YourCity/post/df"     
-## [14] "/tmp/RtmpXyFMmZ/YourCity/post/grids"  
-## [15] "/tmp/RtmpXyFMmZ/YourCity/post/streets"
-## [16] "/tmp/RtmpXyFMmZ/YourCity/profiles"    
-## [17] "/tmp/RtmpXyFMmZ/YourCity/veh"         
+##  [1] "/tmp/RtmptYoIsj/YourCity"             
+##  [2] "/tmp/RtmptYoIsj/YourCity/ef"          
+##  [3] "/tmp/RtmptYoIsj/YourCity/emi"         
+##  [4] "/tmp/RtmptYoIsj/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmptYoIsj/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmptYoIsj/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmptYoIsj/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmptYoIsj/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmptYoIsj/YourCity/est"         
+## [10] "/tmp/RtmptYoIsj/YourCity/images"      
+## [11] "/tmp/RtmptYoIsj/YourCity/network"     
+## [12] "/tmp/RtmptYoIsj/YourCity/post"        
+## [13] "/tmp/RtmptYoIsj/YourCity/post/df"     
+## [14] "/tmp/RtmptYoIsj/YourCity/post/grids"  
+## [15] "/tmp/RtmptYoIsj/YourCity/post/streets"
+## [16] "/tmp/RtmptYoIsj/YourCity/profiles"    
+## [17] "/tmp/RtmptYoIsj/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -176,6 +176,14 @@ PC_E25_<span class="dv">1400</span> &lt;-<span class="st"> </span><span class="k
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <pre><code>## 
 ## Average =  11.17</code></pre>
+<p>If you want to know the vehicles per street and by age of use, just add the net. Age functions now returns ‘sf’ objects if the net argument is present.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">PC_E25_1400net &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_ldv.html">age_ldv</a></span>(<span class="dt">x =</span> net<span class="op">$</span>ldv, <span class="dt">name =</span> <span class="st">"PC_E25_1400"</span>, <span class="dt">net =</span> net)</code></pre></div>
+<pre><code>## Average age of PC_E25_1400 is 11.17</code></pre>
+<pre><code>## Number of PC_E25_1400 is 1946.95 * 10^3 veh</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(PC_E25_1400net, <span class="dt">main =</span> <span class="st">"PC by age of use"</span>, <span class="dt">axes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to
+## plot all</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>temporal factors and netspeed</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">"net"</span>)
 <span class="kw">data</span>(<span class="st">"pc_profile"</span>)
@@ -184,7 +192,12 @@ dfspeed &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspe
 <span class="kw">class</span>(dfspeed)</code></pre></div>
 <pre><code>## [1] "Speed"      "data.frame"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dfspeed, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"Speed [km/h]"</span>) </code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p>If you want ot check the speed at different hours by street, just add net:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfspeednet &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspeed.html">netspeed</a></span>(pc_week, net<span class="op">$</span>ps, net<span class="op">$</span>ffs, net<span class="op">$</span>capacity, net<span class="op">$</span>lkm,
+                       <span class="dt">alpha =</span> <span class="fl">1.5</span>, <span class="dt">net =</span> net)
+<span class="kw">plot</span>(dfspeednet[<span class="kw">c</span>(<span class="st">"S1"</span>, <span class="st">"S9"</span>)], <span class="dt">axes =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div id="emission-factors" class="section level4">
 <h4 class="hasAnchor">
@@ -214,7 +227,7 @@ ef1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/ef_ldv_spe
 ## [1] "(ifelse(V&lt;100, a*V^b, c*V +d))*1"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
 <span class="kw">plot</span>(<span class="kw"><a href="reference/Speed.html">Speed</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>), efs, <span class="dt">xlab =</span> <span class="st">"speed[km/h]"</span>, <span class="dt">type =</span> <span class="st">"b"</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div id="estimation-of-emissions" class="section level4">
 <h4 class="hasAnchor">
@@ -230,37 +243,22 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 <pre><code>## adjusting length of ef to the number of colums of 'veh'</code></pre>
 <pre><code>## 139727.29 kg emissions in 24 hours and 7 days</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(E_CO, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"[g/h]"</span>)</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="post-emissions" class="section level4">
 <h4 class="hasAnchor">
 <a href="#post-emissions" class="anchor"></a>4) Post Emissions</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>)
-<span class="kw">summary</span>(E_CO_STREETS)</code></pre></div>
-<pre><code>## Total emissions by column in study area = 
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   43384  286702  881897  831710 1238618 2331761 
-## 
-## Average =  82.93 
-## 
-## Emissions by street in study area = 
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##       0    5959   28952   92842   93507 4414472 
-##  
-## 
-## Emissions by column and street in study area = 
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-##     0.00    17.18   106.87   552.63   479.81 93753.32</code></pre>
-<p>make grid. If you plan to run WRF, uses <a href="https://github.com/atmoschem/eixport">eixport::wrf_grid</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>)</code></pre></div>
+<p>make a grid. If you plan to run WRF, use: - <a href="https://github.com/atmoschem/eixport">eixport::wrf_grid</a> - <a href="https://github.com/atmoschem/eixport">eixport::as4wrf</a> - emis_wrf will be deprecated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(net)
-net<span class="op">@</span>data &lt;-<span class="st"> </span><span class="kw">cbind</span>(net<span class="op">@</span>data, E_CO_STREETS)
-net<span class="op">@</span>data &lt;-<span class="st"> </span>net<span class="op">@</span>data[,<span class="op">-</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>)]
+E_CO_STREETSnet &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>,
+                             <span class="dt">net =</span> net)
 g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span></code></pre></div>
 <pre><code>## Warning: 'height' is deprecated, use width only</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> net, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
 <pre><code>## Transforming spatial objects to 'sr'</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(E_CO_g[<span class="st">"V9"</span>], <span class="dt">axes =</span> T)</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </div>
 </div>
 <div id="issues" class="section level3">

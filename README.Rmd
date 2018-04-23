@@ -2,7 +2,10 @@
 title: "VEIN model"
 author: "Sergio Ibarra-Espinosa"
 date: "22 de abril de 2017"
-output: html_document
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
 ---
 
 ```{r setup, include=FALSE}
@@ -128,6 +131,14 @@ PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
 ```
 
+If you want to know the vehicles per street and by age of use, just
+add the net. Age functions now returns 'sf' objects if the net argument is present.
+
+```{r}
+PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
+plot(PC_E25_1400net, main = "PC by age of use", axes = TRUE)
+```
+
 temporal factors and netspeed
 ```{r}
 data("net")
@@ -136,6 +147,14 @@ pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1.5)
 class(dfspeed)
 plot(dfspeed, xlab = "Hours", ylab = "Speed [km/h]") 
+```
+
+If you want ot check the speed at different hours by street, just add net:
+
+```{r}
+dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
+                       alpha = 1.5, net = net)
+plot(dfspeednet[c("S1", "S9")], axes = TRUE)
 ```
 
 #### 2) Emission Factors
@@ -165,17 +184,19 @@ plot(E_CO, xlab = "Hours", ylab = "[g/h]")
 
 ```{r}
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
-summary(E_CO_STREETS)
 ```
 
-make grid. If you plan to run WRF, uses [eixport::wrf_grid](https://github.com/atmoschem/eixport)
+make a grid. If you plan to run WRF, use:
+- [eixport::wrf_grid](https://github.com/atmoschem/eixport)
+- [eixport::as4wrf](https://github.com/atmoschem/eixport)
+- emis_wrf will be deprecated.
 
 ```{r}
 data(net)
-net@data <- cbind(net@data, E_CO_STREETS)
-net@data <- net@data[,- c(1:9)]
+E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
+                             net = net)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
-E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
+E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
 plot(E_CO_g["V9"], axes = T)
 ```
 
