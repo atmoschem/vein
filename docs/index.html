@@ -69,7 +69,7 @@
 <div class="contents">
 
 <div class="figure">
-<img src="https://i.imgur.com/b2lQZzi.jpg" width="250">
+<img src="https://i.imgur.com/b2lQZzi.jpg">
 </div>
 <div id="vein-package" class="section level2">
 <h2 class="hasAnchor">
@@ -140,25 +140,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmptYoIsj/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmphtxCeh/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmptYoIsj/YourCity"             
-##  [2] "/tmp/RtmptYoIsj/YourCity/ef"          
-##  [3] "/tmp/RtmptYoIsj/YourCity/emi"         
-##  [4] "/tmp/RtmptYoIsj/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmptYoIsj/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmptYoIsj/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmptYoIsj/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmptYoIsj/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmptYoIsj/YourCity/est"         
-## [10] "/tmp/RtmptYoIsj/YourCity/images"      
-## [11] "/tmp/RtmptYoIsj/YourCity/network"     
-## [12] "/tmp/RtmptYoIsj/YourCity/post"        
-## [13] "/tmp/RtmptYoIsj/YourCity/post/df"     
-## [14] "/tmp/RtmptYoIsj/YourCity/post/grids"  
-## [15] "/tmp/RtmptYoIsj/YourCity/post/streets"
-## [16] "/tmp/RtmptYoIsj/YourCity/profiles"    
-## [17] "/tmp/RtmptYoIsj/YourCity/veh"         
+##  [1] "/tmp/RtmphtxCeh/YourCity"             
+##  [2] "/tmp/RtmphtxCeh/YourCity/ef"          
+##  [3] "/tmp/RtmphtxCeh/YourCity/emi"         
+##  [4] "/tmp/RtmphtxCeh/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmphtxCeh/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmphtxCeh/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmphtxCeh/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmphtxCeh/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmphtxCeh/YourCity/est"         
+## [10] "/tmp/RtmphtxCeh/YourCity/images"      
+## [11] "/tmp/RtmphtxCeh/YourCity/network"     
+## [12] "/tmp/RtmphtxCeh/YourCity/post"        
+## [13] "/tmp/RtmphtxCeh/YourCity/post/df"     
+## [14] "/tmp/RtmphtxCeh/YourCity/post/grids"  
+## [15] "/tmp/RtmphtxCeh/YourCity/post/streets"
+## [16] "/tmp/RtmphtxCeh/YourCity/profiles"    
+## [17] "/tmp/RtmphtxCeh/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -249,13 +249,17 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 <h4 class="hasAnchor">
 <a href="#post-emissions" class="anchor"></a>4) Post Emissions</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>)</code></pre></div>
-<p>make a grid. If you plan to run WRF, use: - <a href="https://github.com/atmoschem/eixport">eixport::wrf_grid</a> - <a href="https://github.com/atmoschem/eixport">eixport::as4wrf</a> - emis_wrf will be deprecated.</p>
+<p>make a grid. If you plan to run WRF, use:</p>
+<ul>
+<li><a href="https://github.com/atmoschem/eixport">eixport::wrf_grid</a></li>
+<li><a href="https://github.com/atmoschem/eixport">eixport::as4wrf</a></li>
+<li>emis_wrf will be deprecated.</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(net)
 E_CO_STREETSnet &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>,
                              <span class="dt">net =</span> net)
-g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span></code></pre></div>
-<pre><code>## Warning: 'height' is deprecated, use width only</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
+g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span>
+E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
 <pre><code>## Transforming spatial objects to 'sr'</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(E_CO_g[<span class="st">"V9"</span>], <span class="dt">axes =</span> T)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
