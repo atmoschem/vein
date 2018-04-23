@@ -4,16 +4,18 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, name = "veh", k = 1, message = TRUE)
+my_age(x, y, name = "veh", k = 1, net, message = TRUE)
 }
 \arguments{
-\item{x}{numerical vector of vehicles.}
+\item{x}{Numeric; vehicles by street (or spatial feature).}
 
-\item{y}{Age dustribution of vehicles.}
+\item{y}{Numeric; vehicles by age of use}
 
 \item{name}{of vehicle assigned to columns of dataframe.}
 
 \item{k}{multiplication factor.}
+
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
 \item{message}{message with average age and total numer of vehicles.}
 }
@@ -26,10 +28,15 @@ numeric vector.
 }
 \examples{
 {
-# Do not run
-pc <- rnorm(100, 300, 10)
-dpc <- c(rnorm(10, 99, 1), NA, NA, NA)
-PC_E25_1400 <- my_age(x = pc, y = dpc, name = "PC_E25_1400")
+data(net)
+dpc <- c(seq(1,20,3), 20:10)
+PC_E25_1400 <- my_age(x = net$ldv, y = dpc, name = "PC_E25_1400")
+class(PC_E25_1400)
 plot(PC_E25_1400)
+PC_E25_1400sf <- my_age(x = net$ldv, y = dpc, name = "PC_E25_1400", net = net)
+class(PC_E25_1400sf)
+plot(PC_E25_1400sf)
+PC_E25_1400nsf <- sf::st_set_geometry(PC_E25_1400sf, NULL)
+class(PC_E25_1400nsf)
 }
 }

@@ -5,7 +5,7 @@
 \title{Returns amount of vehicles at each age}
 \usage{
 age_hdv(x, name = "veh", a = 0.2, b = 17, agemin = 1, agemax = 50,
-  k = 1, bystreet = F, message = TRUE)
+  k = 1, bystreet = F, net, message = TRUE)
 }
 \arguments{
 \item{x}{numerical vector of vehicles with length equal to lines features of raod network}
@@ -24,6 +24,8 @@ age_hdv(x, name = "veh", a = 0.2, b = 17, agemin = 1, agemax = 50,
 
 \item{bystreet}{when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x}
 
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
+
 \item{message}{message with average age and total numer of vehicles}
 }
 \value{
@@ -34,9 +36,10 @@ Returns amount of vehicles at each age
 }
 \examples{
 {
-lt <- Vehicles(rnorm(100, 300, 10))
-LT_B5 <- age_hdv(x = lt,name = "LT_B5")
+data(net)
+LT_B5 <- age_hdv(x = net$hdv,name = "LT_B5")
 plot(LT_B5)
-
+LT_B5 <- age_hdv(x = net$hdv, name = "LT_B5", net = net)
+plot(LT_B5)
 }
 }
