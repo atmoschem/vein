@@ -28,7 +28,7 @@ before_install:
   # sf dependencies:
   - sudo apt-get install --yes libproj-dev libgeos-dev libgdal-dev gdal-bin
 
-warnings_are_errors: true
+warnings_are_errors: false
 
 r_packages:
   - covr
