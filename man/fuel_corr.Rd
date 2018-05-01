@@ -20,12 +20,16 @@ den (density at 15 celcius degrees kg/m3), pah (%), cn (number), t95
 (Back end distillation in Celcius degrees) and s  (sulphur, ppm)}
 }
 \value{
-A list with the correction of emission factors
+A list with the correction of emission factors.
 }
 \description{
-TTake into account the effect of better fuels on vehicles with
+Take into account the effect of better fuels on vehicles with
 older technology. If the ratio is less than 1, return 1. It means that it is
 nota degradation function.
+}
+\note{
+This function cannot be used to account for deterioration, therefore,
+it is restricted to values between 0 and 1.
 }
 \examples{
 {

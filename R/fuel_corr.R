@@ -1,6 +1,6 @@
 #' Correction due Fuel effects
 #'
-#' @description TTake into account the effect of better fuels on vehicles with
+#' @description Take into account the effect of better fuels on vehicles with
 #' older technology. If the ratio is less than 1, return 1. It means that it is
 #' nota degradation function.
 #'
@@ -12,7 +12,9 @@
 #' @param d Numeric; vector with parameters for diesel with the names:
 #' den (density at 15 celcius degrees kg/m3), pah (%), cn (number), t95
 #' (Back end distillation in Celcius degrees) and s  (sulphur, ppm)
-#' @return A list with the correction of emission factors
+#' @return A list with the correction of emission factors.
+#' @note This function cannot be used to account for deterioration, therefore,
+#' it is restricted to values between 0 and 1.
 #' @export
 #' @examples {
 #' f <- fuel_corr(euro = "I")
@@ -405,20 +407,19 @@ fuel_corr <- function(euro,
   } else {
     fco_hdv_d <- fcov_hdv_d <- fnox_hdv_d <- fpm_hdv_d <- 1
   }
-  # }
-  fif <- function(x) ifelse(x < 0, 1, x)
+  fif <- function(x) ifelse(x > 1, 1, x)
   dfl <- list(
     LDVG = list(CO = list(fif(fco_ldv_g)),
-                  COV = list(fif(fcov_ldv_g)),
-                  NOx = list(fif(fnox_ldv_g))),
+                COV = list(fif(fcov_ldv_g)),
+                NOx = list(fif(fnox_ldv_g))),
     LDVD = list(CO = list(fif(fco_ldv_d)),
-                  COV = list(fif(fcov_ldv_d)),
-                  NOx = list(fif(fnox_ldv_d)),
-                  PM = list(fif(fnox_ldv_d))),
+                COV = list(fif(fcov_ldv_d)),
+                NOx = list(fif(fnox_ldv_d)),
+                PM = list(fif(fnox_ldv_d))),
     HDV = list(CO = list(fif(fco_hdv)),
-                 COV = list(fif(fcov_hdv)),
-                 NOx = list(fif(fnox_hdv)),
-                 PM = list(fif(fpm_hdv))))
+               COV = list(fif(fcov_hdv)),
+               NOx = list(fif(fnox_hdv)),
+               PM = list(fif(fpm_hdv))))
   return(dfl)
 
 }
