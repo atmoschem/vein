@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.3.18 (Release date: 2018-05-01)
+
+- add fuel_corr function #65.
+
 # vein 0.3.17 (Release date: 2018-04-22)
 
 - add net argument in temp_fact, netspeed and emis_post #70.

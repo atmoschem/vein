@@ -22,8 +22,10 @@ knitr::opts_chunk$set(echo = TRUE)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
 
 
+```{r}
+knitr::include_graphics("https://i.imgur.com/b2lQZzi.jpg")
+```
 
-![](https://i.imgur.com/b2lQZzi.jpg)
 
 
 
@@ -58,7 +60,7 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.17
+# 0.3.18
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
@@ -136,7 +138,10 @@ add the net. Age functions now returns 'sf' objects if the net argument is prese
 
 ```{r}
 PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
-plot(PC_E25_1400net, main = "PC by age of use", axes = TRUE)
+sp::spplot(as(PC_E25_1400net, "Spatial"),
+       c("PC_E25_1400_1", "PC_E25_1400_9"),
+       main = "PC by age of use", scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
 ```
 
 temporal factors and netspeed
@@ -154,7 +159,9 @@ If you want ot check the speed at different hours by street, just add net:
 ```{r}
 dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
                        alpha = 1.5, net = net)
-plot(dfspeednet[c("S1", "S9")], axes = TRUE)
+sp::spplot(as(dfspeednet, "Spatial"),
+       c("S1", "S9"), scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
 ```
 
 #### 2) Emission Factors
@@ -198,7 +205,9 @@ E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
-plot(E_CO_g["V9"], axes = T)
+sp::spplot(as(E_CO_g, "Spatial"),
+       c("V1", "V9"), scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
 ```
 
 
