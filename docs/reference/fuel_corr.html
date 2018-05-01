@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Returns amount of vehicles at each age — age_ldv • vein</title>
+<title>Correction due Fuel effects — fuel_corr • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,11 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Returns amount of vehicles at each age — age_ldv" />
+<meta property="og:title" content="Correction due Fuel effects — fuel_corr" />
 
-<meta property="og:description" content="Returns amount of vehicles at each age" />
+<meta property="og:description" content="TTake into account the effect of better fuels on vehicles with
+older technology. If the ratio is less than 1, return 1. It means that it is
+nota degradation function." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -88,77 +90,51 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Returns amount of vehicles at each age</h1>
+    <h1>Correction due Fuel effects</h1>
     
     </div>
 
     
-    <p>Returns amount of vehicles at each age</p>
+    <p>TTake into account the effect of better fuels on vehicles with
+older technology. If the ratio is less than 1, return 1. It means that it is
+nota degradation function.</p>
     
 
-    <pre class="usage"><span class='fu'>age_ldv</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1.698</span>, <span class='kw'>b</span> <span class='kw'>=</span> -<span class='fl'>0.2</span>, <span class='kw'>agemin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bystreet</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>net</span>, <span class='kw'>message</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>fuel_corr</span>(<span class='no'>euro</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>e100</span> <span class='kw'>=</span> <span class='fl'>52</span>, <span class='kw'>aro</span> <span class='kw'>=</span> <span class='fl'>39</span>, <span class='kw'>o2</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>e150</span> <span class='kw'>=</span> <span class='fl'>86</span>, <span class='kw'>olefin</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>s</span>
+  <span class='kw'>=</span> <span class='fl'>165</span>), <span class='kw'>d</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>den</span> <span class='kw'>=</span> <span class='fl'>840</span>, <span class='kw'>pah</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='kw'>cn</span> <span class='kw'>=</span> <span class='fl'>51</span>, <span class='kw'>t95</span> <span class='kw'>=</span> <span class='fl'>350</span>, <span class='kw'>s</span> <span class='kw'>=</span> <span class='fl'>400</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>numerical vector of vehicles</p></td>
+      <th>euro</th>
+      <td><p>Character; Euro standards ("PRE", "I", "II", "III", "IV", "V",
+VI, "VIc")</p></td>
     </tr>
     <tr>
-      <th>name</th>
-      <td><p>word of vehicle assigned to columns of dataframe</p></td>
+      <th>g</th>
+      <td><p>Numeric; vector with parameters of gasoline with the names:
+e100(vol. <!-- %), aro (vol. %), o2 (wt. %), e150 (%), olefin vol. % and s -->
+(sulphur, ppm)</p></td>
     </tr>
     <tr>
-      <th>a</th>
-      <td><p>parameter of survival equation</p></td>
-    </tr>
-    <tr>
-      <th>b</th>
-      <td><p>parameter of survival equation</p></td>
-    </tr>
-    <tr>
-      <th>agemin</th>
-      <td><p>age of newest vehicles for that category</p></td>
-    </tr>
-    <tr>
-      <th>agemax</th>
-      <td><p>age of oldest vehicles for that category</p></td>
-    </tr>
-    <tr>
-      <th>k</th>
-      <td><p>multiplication factor</p></td>
-    </tr>
-    <tr>
-      <th>bystreet</th>
-      <td><p>when TRUE it is expecting that 'a' and 'b' are numeric
-vectors with length equal to x</p></td>
-    </tr>
-    <tr>
-      <th>net</th>
-      <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></td>
-    </tr>
-    <tr>
-      <th>message</th>
-      <td><p>message with average age and total numer of vehicles</p></td>
+      <th>d</th>
+      <td><p>Numeric; vector with parameters for diesel with the names:
+den (density at 15 celcius degrees kg/m3), pah (<!-- %), cn (number), t95 -->
+(Back end distillation in Celcius degrees) and s  (sulphur, ppm)</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe of age distrubution of vehicles</p>
+    <p>A list with the correction of emission factors</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>age_ldv</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>)
-<span class='fu'>plot</span>(<span class='no'>PC_E25_1400</span>)
-<span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>age_ldv</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
-<span class='fu'>plot</span>(<span class='no'>PC_E25_1400</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.95 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; 
-#&gt; Average =  11.17</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.95 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot all</span></div><div class='img'><img src='age_ldv-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='age_ldv-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>fuel_corr</span>(<span class='kw'>euro</span> <span class='kw'>=</span> <span class='st'>"I"</span>)
+<span class='fu'>names</span>(<span class='no'>f</span>)
+}</div><div class='output co'>#&gt; [1] "LDVG" "LDVD" "HDV" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
