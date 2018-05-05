@@ -1,19 +1,23 @@
 NEWS
 ===========
 
+# vein 0.3.19 (Release date: 2018-05-05)
+
+- Fix #82.
+
 # vein 0.3.18 (Release date: 2018-05-01)
 
 - add fuel_corr function #65.
 
-# vein 0.3.17 (Release date: 2018-04-22)
+## vein 0.3.17 (Release date: 2018-04-22)
 
 - add net argument in temp_fact, netspeed and emis_post #70.
 
-# vein 0.3.16 (Release date: 2018-04-09)
+## vein 0.3.16 (Release date: 2018-04-09)
 
 - fix bug in post.R by inventory.
 
-# vein 0.3.15 (Release date: 2018-04-01)
+## vein 0.3.15 (Release date: 2018-04-01)
 
 - ef_wear and emis_wear updated.
 - age* functions now incldues default name "veh"
