@@ -1,7 +1,7 @@
 ---
 title: "VEIN model"
 author: "Sergio Ibarra-Espinosa"
-date: "22 de abril de 2017"
+date: "19 de Octubre de 2016"
 output:
   prettydoc::html_pretty:
     theme: architect
@@ -21,8 +21,19 @@ knitr::opts_chunk$set(echo = TRUE)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein) 
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
 
+# Paper 😃 Accepted 😃 on GMD!
 
-```{r}
+Our paper was just accepted on GMD
+
+https://www.geosci-model-dev-discuss.net/gmd-2017-193/
+
+```{r echo = FALSE}
+knitr::include_graphics("https://i.imgur.com/wp3fi1i.png")
+```
+
+
+
+```{r echo = FALSE, fig.height=5, fig.width=5}
 knitr::include_graphics("https://i.imgur.com/b2lQZzi.jpg")
 ```
 
@@ -75,7 +86,7 @@ install.packages("vein")
 library(vein)
 ```
 
-## What is new on 0.3.0 ?
+## What is new?
 
 I decided to jump into a new 'minor' version because it brings lots of cool
 improvements.

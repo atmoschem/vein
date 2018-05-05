@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Estimation of emissions — emis" />
 
 <meta property="og:description" content="emis estimates vehicular emissions as the product of the
@@ -57,7 +60,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.18</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.19</span>
       </span>
     </div>
 
@@ -80,6 +83,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,18 +91,21 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Estimation of emissions</h1>
     
+    <div class="hidden name"><code>emis.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>emis</code> estimates vehicular emissions as the product of the
 vehicles on a road, length of the road, emission factor avaliated at the
 respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fl'>34</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>is.data.frame</span>(<span class='no'>veh</span>),
   <span class='fu'>ncol</span>(<span class='no'>veh</span>), <span class='fu'>ncol</span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]])), <span class='no'>profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>profile</span>),
@@ -254,6 +261,8 @@ matrix.</p>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>
