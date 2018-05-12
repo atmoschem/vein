@@ -71,8 +71,8 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.18
-l20rary(devtools) 
+# 0.3.20
+library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
 demo(VEIN)
