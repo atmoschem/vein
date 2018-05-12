@@ -72,7 +72,7 @@ VEIN can be installed via CRAN or github
 
 ```{r eval = F}
 # 0.3.18
-library(devtools) 
+l20rary(devtools) 
 install_github("atmoschem/vein")
 library(vein)
 demo(VEIN)
