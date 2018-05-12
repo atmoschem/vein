@@ -1,11 +1,16 @@
 NEWS
 ===========
 
-# vein 0.3.19 (Release date: 2018-05-05)
+# vein 0.3.20 (Release date: 2018-05-12)
+
+- Fix #85. Add corrections in emis_wear.
+- Add test for emis_wear.
+
+## vein 0.3.19 (Release date: 2018-05-05)
 
 - Fix #82.
 
-# vein 0.3.18 (Release date: 2018-05-01)
+## vein 0.3.18 (Release date: 2018-05-01)
 
 - add fuel_corr function #65.
 

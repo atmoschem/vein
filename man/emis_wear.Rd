@@ -4,8 +4,8 @@
 \alias{emis_wear}
 \title{Emission estimation from tyre, break and road surface wear}
 \usage{
-emis_wear(veh, lkm, ef, agemax = ncol(veh), profile, hour = nrow(profile),
-  day = ncol(profile))
+emis_wear(veh, lkm, ef, what = "tyre", speed, agemax = ncol(veh), profile,
+  hour = nrow(profile), day = ncol(profile))
 }
 \arguments{
 \item{veh}{Object of class "Vehicles"}
@@ -14,6 +14,10 @@ emis_wear(veh, lkm, ef, agemax = ncol(veh), profile, hour = nrow(profile),
 
 \item{ef}{list of emission factor functions class "EmissionFactorsList",
 length equals to hours.}
+
+\item{what}{Character for indicating "tyre", "break" or "road"}
+
+\item{speed}{Speed data-frame with number of columns as hours}
 
 \item{agemax}{Age of oldest vehicles for that category}
 
@@ -39,7 +43,8 @@ pc_week <- temp_fact(net$ldv+net$hdv, pc_profile[, 1])
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
 emi <- emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
-                 lkm = net$lkm, ef = ef, profile =  pc_profile[, 1])
+                 lkm = net$lkm, ef = ef, speed = df,
+                 profile = pc_profile[, 1])
 emi
 }
 }
