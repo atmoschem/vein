@@ -27,7 +27,8 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{eu}{Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"}
 
-\item{p}{Pollutant: "CO", "FC", "NOx", "HC" or "PM"}
+\item{p}{Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
+is based on fuel, use "FC", if it is based on "HC", use "HC".}
 }
 \value{
 A list of scaled emission factors  g/km

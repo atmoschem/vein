@@ -19,7 +19,10 @@
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
 #' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
 #' @param eu Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"
-#' @param p Character; pollutant: "CO", "FC", "NOx", "HC" or "PM"
+#' @param p Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+#' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed.
+#' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
+#' "Pb", Lead in fuel in ppm.
 #' @param k Numeric; multiplication factor
 #' @param show.equation Logical; option to see or not the equation parameters
 #' @return An emission factor function which depends of the average speed V  g/km
@@ -37,6 +40,12 @@
 #' efs <- EmissionFactors(ef1(1:150))
 #' plot(Speed(1:150), efs, xlab = "speed[km/h]")
 #'
+#' # Quick view
+#' pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "Pb", "SO2")
+#' f <- sapply(1:length(pol), function(i){
+#' ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)
+#' })
+#' f
 #' # List of Copert emission factors for 40 years fleet of Passenger Cars.
 #' # Assuming a euro distribution of euro V, IV, III, II, and I of
 #' # 5 years each and the rest 15 as PRE euro:
@@ -68,7 +77,7 @@
 #' # Motorcycles
 #' V <- 0:150
 #' ef1 <- ef_ldv_speed(v = "Motorcycle",t = "4S", cc = "<=250", f = "G",
-#' eu = "PRE", p = "CO")
+#' eu = "PRE", p = "CO",show.equation = TRUE)
 #' efs <- EmissionFactors(ef1(1:150))
 #' plot(Speed(1:150), efs, xlab = "speed[km/h]")
 #' # euro for motorcycles
@@ -81,34 +90,49 @@
 #' plot(efs, xlab = "age")
 #' lines(efs, type = "l")
 #' }
-ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, k = 1, show.equation = TRUE){
+ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1,
+                         show.equation = FALSE){
   ef_ldv <- sysdata[[1]]
   df <- ef_ldv[ef_ldv$VEH == v &
-              ef_ldv$TYPE == t &
-             ef_ldv$CC == cc &
-             ef_ldv$FUEL == f &
-             ef_ldv$EURO == eu &
-             ef_ldv$POLLUTANT == p, ]
+                 ef_ldv$TYPE == t &
+                 ef_ldv$CC == cc &
+                 ef_ldv$FUEL == f &
+                 ef_ldv$EURO == eu &
+                 ef_ldv$POLLUTANT == p, ]
 
-  lista <- list(a = df$a,
-                b = df$b,
-                c = df$c,
-                d = df$d,
-                e = df$e,
-                f = df$f,
-                Equation = paste0("(",as.character(df$Y), ")", "*", k))
   if (show.equation == TRUE) {
-    print(lista)
+    cat(paste0("a = ", df$a,
+               ", b = ", df$b,
+               ", c = ", df$c,
+               ", d = ", df$d,
+               ", e = ", df$e,
+               ", f = ", df$f, "\n"))
+    cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
   }
-  f1 <- function(V){
-    a <- df$a
-    b <- df$b
-    c <- df$c
-    d <- df$d
-    e <- df$e
-    f <- df$f
-    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-    eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+  if(p %in% c("SO2","Pb")){
+    f1 <- function(V){
+      a <- df$a
+      b <- df$b
+      c <- df$c
+      d <- df$d
+      e <- df$e
+      f <- df$f
+      x <- x
+      V <- ifelse(V < df$MINV, df$MINV,
+                  ifelse(V > df$MAXV, df$MAXV, V))
+      eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+    }
+  } else {
+    f1 <- function(V){
+      a <- df$a
+      b <- df$b
+      c <- df$c
+      d <- df$d
+      e <- df$e
+      f <- df$f
+      V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+      eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+    }
   }
   return(f1)
 }

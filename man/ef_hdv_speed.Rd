@@ -4,8 +4,8 @@
 \alias{ef_hdv_speed}
 \title{Emissions factors for Heavy Duty Vehicles based on average speed}
 \usage{
-ef_hdv_speed(v, t, g, eu, gr = 0, l = 0.5, p, k = 1,
-  show.equation = TRUE)
+ef_hdv_speed(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
+  show.equation = FALSE)
 }
 \arguments{
 \item{v}{Category vehicle: "Coach", "Trucks" or "Ubus"}
@@ -18,11 +18,15 @@ ef_hdv_speed(v, t, g, eu, gr = 0, l = 0.5, p, k = 1,
 
 \item{eu}{Euro emission standard: "PRE", "I", "II", "III", "IV" and "V"}
 
+\item{x}{Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
+"Pb", Lead in fuel in ppm.}
+
 \item{gr}{Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06}
 
 \item{l}{Load of the vehicle: 0.0, 0.5 or 1.0}
 
-\item{p}{Pollutant: "CO", "FC", "NOx" or "HC"}
+\item{p}{Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed.}
 
 \item{k}{Multiplication factor}
 
@@ -38,6 +42,14 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 }
 \examples{
 {
+# Quick view
+pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2")
+f <- sapply(1:length(pol), function(i){
+print(pol[i])
+ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+l = 0.5, p = pol[i], x = 10)(30)
+})
+f
 V <- 0:130
 ef1 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
 l = 0.5, p = "HC")

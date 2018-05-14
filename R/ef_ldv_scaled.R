@@ -20,7 +20,8 @@
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
 #' @param f Type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
 #' @param eu Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"
-#' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM"
+#' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
+#' is based on fuel, use "FC", if it is based on "HC", use "HC".
 #' @return A list of scaled emission factors  g/km
 #' @keywords speed emission factors
 #' @note The length of the list should be equal to the name of the age categories of

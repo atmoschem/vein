@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.3.20 (Release date: 2018-05-12)
+# vein 0.3.21 (Release date: 2018-05-14)
+
+- Fix #84, #75, and #44. Add emission factors of CO2, SO2, NMHC and CH4.
+
+# vein 0.3.20 (Release date: 2018-05-13)
 
 - Fix #85. Add corrections in emis_wear.
 - Add test for emis_wear.
