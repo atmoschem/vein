@@ -22,11 +22,12 @@
 #' @examples {
 #' data(net)
 #' data(pc_profile)
-#' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile[, 1])
-#' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+#' pc_week <- temp_fact(net$ldv[1:10] + net$hdv[1:10], pc_profile[, 1])
+#' df <- netspeed(pc_week, net$ps[1:10], net$ffs[1:10],
+#'               net$capacity[1:10], net$lkm[1:10], alpha = 1)
 #' ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
-#' emi <- emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
-#'                  lkm = net$lkm, ef = ef, speed = df,
+#' emi <- emis_wear(veh = age_ldv(net$ldv[1:10], name = "VEH"),
+#'                  lkm = net$lkm[1:10], ef = ef, speed = df,
 #'                  profile = pc_profile[, 1])
 #' emi
 #' }

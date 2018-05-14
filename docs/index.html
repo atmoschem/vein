@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.20</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.21</span>
       </span>
     </div>
 
@@ -104,8 +104,8 @@
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.20</span>
-<span class="kw">library</span>(devtools) 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
+<span class="kw">li1rary</span>(devtools) 
+<span class="kw">install_github</span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 <p>or</p>
@@ -143,25 +143,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpioyC7T/YourCity</code></pre>
+<pre><code>## files at /tmp/Rtmp59CTU5/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpioyC7T/YourCity"             
-##  [2] "/tmp/RtmpioyC7T/YourCity/ef"          
-##  [3] "/tmp/RtmpioyC7T/YourCity/emi"         
-##  [4] "/tmp/RtmpioyC7T/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpioyC7T/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpioyC7T/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpioyC7T/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpioyC7T/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpioyC7T/YourCity/est"         
-## [10] "/tmp/RtmpioyC7T/YourCity/images"      
-## [11] "/tmp/RtmpioyC7T/YourCity/network"     
-## [12] "/tmp/RtmpioyC7T/YourCity/post"        
-## [13] "/tmp/RtmpioyC7T/YourCity/post/df"     
-## [14] "/tmp/RtmpioyC7T/YourCity/post/grids"  
-## [15] "/tmp/RtmpioyC7T/YourCity/post/streets"
-## [16] "/tmp/RtmpioyC7T/YourCity/profiles"    
-## [17] "/tmp/RtmpioyC7T/YourCity/veh"         
+##  [1] "/tmp/Rtmp59CTU5/YourCity"             
+##  [2] "/tmp/Rtmp59CTU5/YourCity/ef"          
+##  [3] "/tmp/Rtmp59CTU5/YourCity/emi"         
+##  [4] "/tmp/Rtmp59CTU5/YourCity/emi/BUS_01"  
+##  [5] "/tmp/Rtmp59CTU5/YourCity/emi/HGV_01"  
+##  [6] "/tmp/Rtmp59CTU5/YourCity/emi/LCV_01"  
+##  [7] "/tmp/Rtmp59CTU5/YourCity/emi/MC_01"   
+##  [8] "/tmp/Rtmp59CTU5/YourCity/emi/PC_01"   
+##  [9] "/tmp/Rtmp59CTU5/YourCity/est"         
+## [10] "/tmp/Rtmp59CTU5/YourCity/images"      
+## [11] "/tmp/Rtmp59CTU5/YourCity/network"     
+## [12] "/tmp/Rtmp59CTU5/YourCity/post"        
+## [13] "/tmp/Rtmp59CTU5/YourCity/post/df"     
+## [14] "/tmp/Rtmp59CTU5/YourCity/post/grids"  
+## [15] "/tmp/Rtmp59CTU5/YourCity/post/streets"
+## [16] "/tmp/Rtmp59CTU5/YourCity/profiles"    
+## [17] "/tmp/Rtmp59CTU5/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -210,28 +210,8 @@ sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.
 <a href="#emission-factors" class="anchor"></a>2) Emission Factors</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">150</span>
 ef1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span>(<span class="dt">v =</span> <span class="st">"PC"</span>,<span class="dt">t =</span> <span class="st">"4S"</span>, <span class="dt">cc =</span> <span class="st">"&lt;=1400"</span>, <span class="dt">f =</span> <span class="st">"G"</span>, <span class="dt">eu =</span> <span class="st">"PRE"</span>,
-<span class="dt">p =</span> <span class="st">"CO"</span>)</code></pre></div>
-<pre><code>## $a
-## [1] 281
-## 
-## $b
-## [1] -0.63
-## 
-## $c
-## [1] 0.112
-## 
-## $d
-## [1] 4.32
-## 
-## $e
-## [1] 0
-## 
-## $f
-## [1] 0
-## 
-## $Equation
-## [1] "(ifelse(V&lt;100, a*V^b, c*V +d))*1"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
+<span class="dt">p =</span> <span class="st">"CO"</span>)
+efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
 <span class="kw">plot</span>(<span class="kw"><a href="reference/Speed.html">Speed</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>), efs, <span class="dt">xlab =</span> <span class="st">"speed[km/h]"</span>, <span class="dt">type =</span> <span class="st">"b"</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>

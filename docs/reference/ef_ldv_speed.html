@@ -60,7 +60,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.20</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.21</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_ldv_speed</span>(<span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_ldv_speed</span>(<span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='no'>x</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,7 +138,13 @@ Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></td>
     </tr>
     <tr>
       <th>p</th>
-      <td><p>Character; pollutant: "CO", "FC", "NOx", "HC" or "PM"</p></td>
+      <td><p>Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed.</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
+"Pb", Lead in fuel in ppm.</p></td>
     </tr>
     <tr>
       <th>k</th>
@@ -178,6 +184,12 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>ef1</span>(<span class='fl'>1</span>:<span class='fl'>150</span>))
 <span class='fu'>plot</span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>)
 
+<span class='co'># Quick view</span>
+<span class='no'>pol</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"CO"</span>, <span class='st'>"NOx"</span>, <span class='st'>"HC"</span>, <span class='st'>"NMHC"</span>, <span class='st'>"CH4"</span>, <span class='st'>"FC"</span>, <span class='st'>"PM"</span>, <span class='st'>"CO2"</span>, <span class='st'>"Pb"</span>, <span class='st'>"SO2"</span>)
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>sapply</span>(<span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>pol</span>), <span class='kw'>function</span>(<span class='no'>i</span>){
+<span class='fu'>ef_ldv_speed</span>(<span class='st'>"PC"</span>, <span class='st'>"4S"</span>, <span class='st'>"&lt;=1400"</span>, <span class='st'>"G"</span>, <span class='st'>"PRE"</span>, <span class='no'>pol</span>[<span class='no'>i</span>], <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>10</span>)(<span class='fl'>30</span>)
+})
+<span class='no'>f</span>
 <span class='co'># List of Copert emission factors for 40 years fleet of Passenger Cars.</span>
 <span class='co'># Assuming a euro distribution of euro V, IV, III, II, and I of</span>
 <span class='co'># 5 years each and the rest 15 as PRE euro:</span>
@@ -209,7 +221,7 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 <span class='co'># Motorcycles</span>
 <span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>:<span class='fl'>150</span>
 <span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"Motorcycle"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=250"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
-<span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
+<span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,<span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>ef1</span>(<span class='fl'>1</span>:<span class='fl'>150</span>))
 <span class='fu'>plot</span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>)
 <span class='co'># euro for motorcycles</span>
@@ -221,67 +233,8 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>unlist</span>(<span class='no'>lef</span>)) <span class='co'>#returns 'units'</span>
 <span class='fu'>plot</span>(<span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
 <span class='fu'>lines</span>(<span class='no'>efs</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)
-}</div><div class='output co'>#&gt; $a
-#&gt; [1] 281
-#&gt; 
-#&gt; $b
-#&gt; [1] -0.63
-#&gt; 
-#&gt; $c
-#&gt; [1] 0.112
-#&gt; 
-#&gt; $d
-#&gt; [1] 4.32
-#&gt; 
-#&gt; $e
-#&gt; [1] 0
-#&gt; 
-#&gt; $f
-#&gt; [1] 0
-#&gt; 
-#&gt; $Equation
-#&gt; [1] "(ifelse(V&lt;100, a*V^b, c*V +d))*1"
-#&gt; </div><div class='img'><img src='ef_ldv_speed-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; $a
-#&gt; [1] 57.789
-#&gt; 
-#&gt; $b
-#&gt; [1] -1.5132
-#&gt; 
-#&gt; $c
-#&gt; [1] 0.01104
-#&gt; 
-#&gt; $d
-#&gt; [1] 0
-#&gt; 
-#&gt; $e
-#&gt; [1] 0
-#&gt; 
-#&gt; $f
-#&gt; [1] 0
-#&gt; 
-#&gt; $Equation
-#&gt; [1] "(a  + b*V + c*V^2)*1"
-#&gt; </div><div class='img'><img src='ef_ldv_speed-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; $a
-#&gt; [1] 42.06
-#&gt; 
-#&gt; $b
-#&gt; [1] -1.792
-#&gt; 
-#&gt; $c
-#&gt; [1] 0.0469
-#&gt; 
-#&gt; $d
-#&gt; [1] -0.0006358
-#&gt; 
-#&gt; $e
-#&gt; [1] 4.662e-06
-#&gt; 
-#&gt; $f
-#&gt; [1] -1.373e-08
-#&gt; 
-#&gt; $Equation
-#&gt; [1] "(a +b*V + c*V^2 + d*V^3 + e*V^4 + f*V^5)*1"
-#&gt; </div><div class='img'><img src='ef_ldv_speed-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-6.png' alt='' width='700' height='433' /></div></pre>
+}</div><div class='img'><img src='ef_ldv_speed-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; a = 42.06, b = -1.792, c = 0.0469, d = -0.0006358, e = 4.662e-06, f = -1.373e-08
+#&gt; Equation = (a +b*V + c*V^2 + d*V^3 + e*V^4 + f*V^5)*1</div><div class='img'><img src='ef_ldv_speed-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_ldv_speed-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

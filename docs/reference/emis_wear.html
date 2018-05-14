@@ -59,7 +59,7 @@ breaks and road surface." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.20</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.21</span>
       </span>
     </div>
 
@@ -166,15 +166,16 @@ guidebook-2009. European Environment Agency, Copenhagen, 2016</p>
     <pre class="examples"><div class='input'>{
 <span class='fu'>data</span>(<span class='no'>net</span>)
 <span class='fu'>data</span>(<span class='no'>pc_profile</span>)
-<span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>[, <span class='fl'>1</span>])
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>[<span class='fl'>1</span>:<span class='fl'>10</span>] + <span class='no'>net</span>$<span class='no'>hdv</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>pc_profile</span>[, <span class='fl'>1</span>])
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>net</span>$<span class='no'>ffs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>],
+              <span class='no'>net</span>$<span class='no'>capacity</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>net</span>$<span class='no'>lkm</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>ef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_wear.html'>ef_wear</a></span>(<span class='kw'>wear</span> <span class='kw'>=</span> <span class='st'>"tyre"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"PM10"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>df</span>)
-<span class='no'>emi</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_wear</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"VEH"</span>),
-                 <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>ef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>df</span>,
+<span class='no'>emi</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_wear</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"VEH"</span>),
+                 <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>ef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>df</span>,
                  <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>[, <span class='fl'>1</span>])
 <span class='no'>emi</span>
-}</div><div class='output co'>#&gt; <span class='message'>Average age of VEH is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of VEH is 1946.95 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; This EmissionsArray has
-#&gt;  1505 streets
+}</div><div class='output co'>#&gt; <span class='message'>Average age of VEH is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of VEH is 12.75 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; This EmissionsArray has
+#&gt;  10 streets
 #&gt;  50 vehicle categories
 #&gt;  24 hours
 #&gt;  1 days

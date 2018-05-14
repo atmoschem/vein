@@ -4,7 +4,7 @@
 \alias{ef_ldv_speed}
 \title{Emissions factors for Light Duty Vehicles and Motorcycles}
 \usage{
-ef_ldv_speed(v, t = "4S", cc, f, eu, p, k = 1, show.equation = TRUE)
+ef_ldv_speed(v, t = "4S", cc, f, eu, p, x, k = 1, show.equation = FALSE)
 }
 \arguments{
 \item{v}{Character; category vehicle: "PC", "LCV", "Motorcycle" or "Moped}
@@ -21,7 +21,11 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{eu}{Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"}
 
-\item{p}{Character; pollutant: "CO", "FC", "NOx", "HC" or "PM"}
+\item{p}{Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed.}
+
+\item{x}{Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
+"Pb", Lead in fuel in ppm.}
 
 \item{k}{Numeric; multiplication factor}
 
@@ -56,6 +60,12 @@ p = "CO")
 efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]")
 
+# Quick view
+pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "Pb", "SO2")
+f <- sapply(1:length(pol), function(i){
+ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)
+})
+f
 # List of Copert emission factors for 40 years fleet of Passenger Cars.
 # Assuming a euro distribution of euro V, IV, III, II, and I of
 # 5 years each and the rest 15 as PRE euro:
@@ -87,7 +97,7 @@ lines(efs, type = "l")
 # Motorcycles
 V <- 0:150
 ef1 <- ef_ldv_speed(v = "Motorcycle",t = "4S", cc = "<=250", f = "G",
-eu = "PRE", p = "CO")
+eu = "PRE", p = "CO",show.equation = TRUE)
 efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]")
 # euro for motorcycles
