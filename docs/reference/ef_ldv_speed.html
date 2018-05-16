@@ -60,7 +60,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.21</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.22</span>
       </span>
     </div>
 
@@ -139,7 +139,8 @@ Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></td>
     <tr>
       <th>p</th>
       <td><p>Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
-"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed.</p></td>
+"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
+polycyclic aromatic hydrocarbons (PAHs) andpersistent organi pollutants (POPs).</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -170,7 +171,17 @@ important ti know the combinations.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>t = "ALL" and cc == "ALL" works for several pollutants because emission
-fators are the same. Some exceptions are with NOx and FC because size of engine.</p>
+fators are the same. Some exceptions are with NOx and FC because size of engine.
+<strong>Pollutants</strong>: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+"Pb".
+<strong>PAH and POP</strong>: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+"benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
+"benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
+"benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
+"dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
+"benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
+"chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
+"dibenzo(ah)anthracene"</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -190,6 +201,12 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 <span class='fu'>ef_ldv_speed</span>(<span class='st'>"PC"</span>, <span class='st'>"4S"</span>, <span class='st'>"&lt;=1400"</span>, <span class='st'>"G"</span>, <span class='st'>"PRE"</span>, <span class='no'>pol</span>[<span class='no'>i</span>], <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>10</span>)(<span class='fl'>30</span>)
 })
 <span class='no'>f</span>
+<span class='co'># PAH POP</span>
+<span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
+<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"indeno(1,2,3-cd)pyrene"</span>)(<span class='fl'>10</span>)
+<span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
+<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"napthalene"</span>)(<span class='fl'>10</span>)
+
 <span class='co'># List of Copert emission factors for 40 years fleet of Passenger Cars.</span>
 <span class='co'># Assuming a euro distribution of euro V, IV, III, II, and I of</span>
 <span class='co'># 5 years each and the rest 15 as PRE euro:</span>

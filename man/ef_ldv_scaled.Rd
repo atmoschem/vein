@@ -4,11 +4,9 @@
 \alias{ef_ldv_scaled}
 \title{Scaling constant with speed emission factors of Light Duty Vehicles}
 \usage{
-ef_ldv_scaled(df, dfcol, SDC = 34.12, v, t = "4S", cc, f, eu, p)
+ef_ldv_scaled(dfcol, SDC = 34.12, v, t = "4S", cc, f, eu, p, df)
 }
 \arguments{
-\item{df}{Deprecated}
-
 \item{dfcol}{Column of the dataframe with the local emission factors eg df$dfcol}
 
 \item{SDC}{Speed of the driving cycle}
@@ -29,6 +27,8 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{p}{Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
 is based on fuel, use "FC", if it is based on "HC", use "HC".}
+
+\item{df}{Deprecated}
 }
 \value{
 A list of scaled emission factors  g/km
@@ -51,7 +51,7 @@ a specific type of vehicle. Thanks to Glauber Camponogara by the help.
 {
 data(fe2015)
 co1 <- fe2015[fe2015$Pollutant=="CO", ]
-lef <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",
+lef <- ef_ldv_scaled(dfcol = co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",
 eu = co1$Euro_LDV, p = "CO")
 length(lef)
 lef[[1]](40) # First element of the lit of speed functions at 40 km/h
