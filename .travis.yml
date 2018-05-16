@@ -9,7 +9,7 @@ r:
 
 sudo: required
 
-dist: trusty
+dist: xenial
 
 addons:
   postgresql: "9.6"
