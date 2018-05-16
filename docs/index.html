@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.21</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.22</span>
       </span>
     </div>
 
@@ -103,73 +103,52 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.21</span>
-<span class="kw">library</span>(devtools) 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools) 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 <p>or</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 0.3.9</span>
-<span class="kw">install.packages</span>(<span class="st">"vein"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"vein"</span>)
 <span class="kw">library</span>(vein)</code></pre></div>
 </div>
 </div>
-<div id="what-is-new" class="section level2">
+<div id="what-is-vein" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new" class="anchor"></a>What is new?</h2>
-<p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
-<ul>
-<li>vein imports <strong>sf</strong> functions.</li>
-<li>R packages -raster-, -rgdal- and -rgeos- not needed anymore.</li>
-<li>vein now imports <strong>data-table</strong>.</li>
-<li>Add class GriddedEmissionsArray.</li>
-<li>Fix #28, data.table imported in emis_grid. Now it is very fast!</li>
-<li>Fix #49: Documentation in inventory est.</li>
-<li>Fix #50: Fix repetition of x_DF.</li>
-<li>Fix #51: deparse text.</li>
-<li>Fix #52: separate objects in rm with ‘,’</li>
-<li>Fix #55.</li>
-<li>Minor fix on demo(VEIN).</li>
-<li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
-<li>Revised all examples.</li>
-<li>returns sf in temp_fact, netspeed and emis_post! (0.3.17)</li>
-</ul>
-<p>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a></p>
-<div id="how-to-use-vein" class="section level3">
-<h3 class="hasAnchor">
-<a href="#how-to-use-vein" class="anchor"></a>How to use vein</h3>
+<a href="#what-is-vein" class="anchor"></a>What is VEIN</h2>
+<p>Vehicular Emissions Inventories. An R package to estimate vehicular emissions. It currently covers the following pollutants:</p>
+<p><strong>Cr- iteria</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”. <strong>PA- H and POP</strong>: “indeno(1,2,3-cd)pyrene”, “benzo(k)fluoranthene”, “benzo(b)fluoranthene”, “benzo(ghi)perylene”, “fluoranthene”, “benzo(a)pyrene”, “pyrene”, “perylene”, “anthanthrene”, “benzo(b)fluorene”, “benzo(e)pyrene”, “triphenylene”, “benzo(j)fluoranthene”, “dibenzo(a,j)anthacene”, “dibenzo(a,l)pyrene”, “3,6-dimethyl-phenanthrene”, “benzo(a)anthracene”, “acenaphthylene”, “acenapthene”, “fluorene”, “chrysene”, “phenanthrene”, “napthalene”, “anthracene”, “coronene”, “dibenzo(ah)anthracene”</p>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, 1) pre-processing activity data, 2) preparing emissions factors, 3) estimating the emissions and 4) post-processing of emissions in maps and databases.”</p>
 <p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpilLpnY/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpNTJH8u/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpilLpnY/YourCity"             
-##  [2] "/tmp/RtmpilLpnY/YourCity/ef"          
-##  [3] "/tmp/RtmpilLpnY/YourCity/emi"         
-##  [4] "/tmp/RtmpilLpnY/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpilLpnY/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpilLpnY/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpilLpnY/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpilLpnY/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpilLpnY/YourCity/est"         
-## [10] "/tmp/RtmpilLpnY/YourCity/images"      
-## [11] "/tmp/RtmpilLpnY/YourCity/network"     
-## [12] "/tmp/RtmpilLpnY/YourCity/post"        
-## [13] "/tmp/RtmpilLpnY/YourCity/post/df"     
-## [14] "/tmp/RtmpilLpnY/YourCity/post/grids"  
-## [15] "/tmp/RtmpilLpnY/YourCity/post/streets"
-## [16] "/tmp/RtmpilLpnY/YourCity/profiles"    
-## [17] "/tmp/RtmpilLpnY/YourCity/veh"         
+##  [1] "/tmp/RtmpNTJH8u/YourCity"             
+##  [2] "/tmp/RtmpNTJH8u/YourCity/ef"          
+##  [3] "/tmp/RtmpNTJH8u/YourCity/emi"         
+##  [4] "/tmp/RtmpNTJH8u/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpNTJH8u/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpNTJH8u/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpNTJH8u/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpNTJH8u/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpNTJH8u/YourCity/est"         
+## [10] "/tmp/RtmpNTJH8u/YourCity/images"      
+## [11] "/tmp/RtmpNTJH8u/YourCity/network"     
+## [12] "/tmp/RtmpNTJH8u/YourCity/post"        
+## [13] "/tmp/RtmpNTJH8u/YourCity/post/df"     
+## [14] "/tmp/RtmpNTJH8u/YourCity/post/grids"  
+## [15] "/tmp/RtmpNTJH8u/YourCity/post/streets"
+## [16] "/tmp/RtmpNTJH8u/YourCity/profiles"    
+## [17] "/tmp/RtmpNTJH8u/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
 ## [7] "post.R"             "traffic.R"</code></pre>
 <p>Please, read the examples in the documentation of each function and run the demo.</p>
-<div id="examples-with-traffic-data" class="section level4">
-<h4 class="hasAnchor">
-<a href="#examples-with-traffic-data" class="anchor"></a>1) Examples with traffic data:</h4>
+<div id="examples-with-traffic-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#examples-with-traffic-data" class="anchor"></a>1) Examples with traffic data:</h3>
 <p>age functions</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">"net"</span>)
 PC_E25_<span class="dv">1400</span> &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_ldv.html">age_ldv</a></span>(<span class="dt">x =</span> net<span class="op">$</span>ldv, <span class="dt">name =</span> <span class="st">"PC_E25_1400"</span>)</code></pre></div>
@@ -205,9 +184,9 @@ sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
-<div id="emission-factors" class="section level4">
-<h4 class="hasAnchor">
-<a href="#emission-factors" class="anchor"></a>2) Emission Factors</h4>
+<div id="emission-factors" class="section level3">
+<h3 class="hasAnchor">
+<a href="#emission-factors" class="anchor"></a>2) Emission Factors</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">150</span>
 ef1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span>(<span class="dt">v =</span> <span class="st">"PC"</span>,<span class="dt">t =</span> <span class="st">"4S"</span>, <span class="dt">cc =</span> <span class="st">"&lt;=1400"</span>, <span class="dt">f =</span> <span class="st">"G"</span>, <span class="dt">eu =</span> <span class="st">"PRE"</span>,
 <span class="dt">p =</span> <span class="st">"CO"</span>)
@@ -215,9 +194,9 @@ efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFa
 <span class="kw">plot</span>(<span class="kw"><a href="reference/Speed.html">Speed</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>), efs, <span class="dt">xlab =</span> <span class="st">"speed[km/h]"</span>, <span class="dt">type =</span> <span class="st">"b"</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
-<div id="estimation-of-emissions" class="section level4">
-<h4 class="hasAnchor">
-<a href="#estimation-of-emissions" class="anchor"></a>3) Estimation of emissions</h4>
+<div id="estimation-of-emissions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#estimation-of-emissions" class="anchor"></a>3) Estimation of emissions</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">euro &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">"V"</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">"IV"</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">"III"</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">"II"</span>, <span class="dv">5</span>),
           <span class="kw">rep</span>(<span class="st">"I"</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">"PRE"</span>, <span class="dv">15</span>))
 lef &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">40</span>, <span class="cf">function</span>(i) {
@@ -231,14 +210,14 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(E_CO, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"[g/h]"</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
-<div id="post-emissions" class="section level4">
-<h4 class="hasAnchor">
-<a href="#post-emissions" class="anchor"></a>4) Post Emissions</h4>
+<div id="post-emissions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#post-emissions" class="anchor"></a>4) Post Emissions</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>)</code></pre></div>
 <p>make a grid. If you plan to run WRF, use:</p>
 <ul>
-<li><a href="https://github.com/atmoschem/eixport">eixport::wrf_grid</a></li>
-<li><a href="https://github.com/atmoschem/eixport">eixport::as4wrf</a></li>
+<li><a href="https://github.com/atmoschem/vein">vein::wrf_grid</a></li>
+<li><a href="https://github.com/atmoschem/vein">vein::as4wrf</a></li>
 <li>emis_wrf will be deprecated.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(net)
@@ -252,7 +231,6 @@ E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_gr
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
-</div>
 <div id="issues" class="section level3">
 <h3 class="hasAnchor">
 <a href="#issues" class="anchor"></a>Issues</h3>
@@ -260,6 +238,28 @@ E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_gr
 <p>If you have any suggestions just let me know to <a href="mailto:sergio.ibarra@usp.br">sergio.ibarra@usp.br</a>.</p>
 <p>Thanks and enjoy VEIN!</p>
 </div>
+</div>
+<div id="what-is-new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-is-new" class="anchor"></a>What is new?</h2>
+<p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
+<ul>
+<li>vein imports <strong>sf</strong> functions.</li>
+<li>R packages -raster-, -rgdal- and -rgeos- not needed anymore.</li>
+<li>vein now imports <strong>data-table</strong>.</li>
+<li>Add class GriddedEmissionsArray.</li>
+<li>Fix #28, data.table imported in emis_grid. Now it is very fast!</li>
+<li>Fix #49: Documentation in inventory est.</li>
+<li>Fix #50: Fix repetition of x_DF.</li>
+<li>Fix #51: deparse text.</li>
+<li>Fix #52: separate objects in rm with ‘,’</li>
+<li>Fix #55.</li>
+<li>Minor fix on demo(VEIN).</li>
+<li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
+<li>Revised all examples.</li>
+<li>returns sf in temp_fact, netspeed and emis_post! (0.3.17)</li>
+</ul>
+<p>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a></p>
 <div id="future-steps" class="section level3">
 <h3 class="hasAnchor">
 <a href="#future-steps" class="anchor"></a><strong>future steps</strong>
@@ -270,13 +270,18 @@ E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_gr
 <li>More speciations.</li>
 <li>A book (hopefully released in 2018).</li>
 </ul>
-<div id="note" class="section level4">
-<h4 class="hasAnchor">
-<a href="#note" class="anchor"></a>Note:</h4>
-<p>The paper of vein on GMDD under open review. If you use VEIN, please, cite it:</p>
-<p>Ibarra-Espinosa, S., Ynoue, R., O’Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories Geosci. Model Dev. Discus, <a href="https://doi.org/10.5194/gmd-2017-193" class="uri">https://doi.org/10.5194/gmd-2017-193</a>, in review, 2017.</p>
+</div>
+<div id="note" class="section level3">
+<h3 class="hasAnchor">
+<a href="#note" class="anchor"></a>Note:</h3>
+<p>If you use VEIN, please, cite it:</p>
+<p>Ibarra-Espinosa, S., Ynoue, R., O’Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories Geosci. Model Dev. Discus, <a href="https://doi.org/10.5194/gmd-2017-193" class="uri">https://doi.org/10.5194/gmd-2017-193</a>, in accepted, 2017.</p>
 <p><a href="https://doi.org/10.5194/gmd-2017-193" class="uri">https://doi.org/10.5194/gmd-2017-193</a></p>
 </div>
+<div id="contributing" class="section level3">
+<h3 class="hasAnchor">
+<a href="#contributing" class="anchor"></a>Contributing</h3>
+<p>Please, read <a href="https://github.com/atmoschem/vein/blob/master/CONTRIBUTING.html">this</a> guide. Contributions of all sorts are welcome, issues and pull requests are the preferred ways of sharing them. When contributing pull requests, please follow the <a href="https://google.github.io/styleguide/Rguide.xml">Google’s R Style Guide</a>. This project is released with a <a href="https://github.com/atmoschem/vein/blob/master/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
 </div>
 </div>
