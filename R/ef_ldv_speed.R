@@ -21,7 +21,7 @@
 #' @param eu Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"
 #' @param p Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
 #' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
-#' polycyclic aromatic hydrocarbons (PAHs) andpersistent organi pollutants (POPs).
+#' polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).
 #' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 #' "Pb", Lead in fuel in ppm.
 #' @param k Numeric; multiplication factor
