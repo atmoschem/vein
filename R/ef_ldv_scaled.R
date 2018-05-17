@@ -25,7 +25,7 @@
 #' @return A list of scaled emission factors  g/km
 #' @keywords speed emission factors
 #' @note The length of the list should be equal to the name of the age categories of
-#' a specific type of vehicle. Thanks to Glauber Camponogara by the help.
+#' a specific type of vehicle. Thanks to Glauber Camponogara for the help.
 #' @seealso ef_ldv_seed
 #' @export
 #' @examples {
@@ -44,8 +44,8 @@
 #' main = "Variation of emissions with speed of newest vehicle")
 #' }
 ef_ldv_scaled <- function(dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p, df) {
-  if(!missing(df)){
-    message("df is not needed")
+  if(!p %in% c("CO", "FC", "NOx", "HC", "PM")){
+    stop("p must be 'CO', 'FC', 'HC', 'NOx', or 'PM'")
   }
   lapply(1:length(dfcol), function(i)  {
     funIN <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,

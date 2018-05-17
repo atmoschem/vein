@@ -27,7 +27,9 @@ This function subset an internal database of emission factors with each argument
 }
 \examples{
 \dontrun{
-# Do not run
+data(fkm)
+pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
+cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 }
 }
 \keyword{deterioration}

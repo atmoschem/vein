@@ -1,18 +1,28 @@
 NEWS
 ===========
 
-# vein 0.3.22 (Release date: 2018-05-15)
+# vein 0.3.24 (Release date: 2018-05-14)
+
+- Add factors of Dioxins and furans: PCDD, PCDF and PCB expressed as 
+(g equivalent toxicity / km).
+
+## vein 0.3.23 (Release date: 2018-05-16)
+
+- Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and
+persistent organi pollutants (POPs) in ef_hdv_speed.
+
+## vein 0.3.22 (Release date: 2018-05-15)
 
 - Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and
 persistent organi pollutants (POPs) in ef_ldv_speed.
 - Add contributing.
 - remove warning about df in ef_ldv_scaled 
 
-# vein 0.3.21 (Release date: 2018-05-14)
+## vein 0.3.21 (Release date: 2018-05-14)
 
 - Fix #84, #75, and #44. Add emission factors of CO2, SO2, NMHC and CH4.
 
-# vein 0.3.20 (Release date: 2018-05-13)
+## vein 0.3.20 (Release date: 2018-05-13)
 
 - Fix #85. Add corrections in emis_wear.
 - Add test for emis_wear.

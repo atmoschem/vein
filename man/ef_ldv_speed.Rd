@@ -23,7 +23,7 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{p}{Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
 "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
-polycyclic aromatic hydrocarbons (PAHs) andpersistent organi pollutants (POPs).}
+polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).}
 
 \item{x}{Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 "Pb", Lead in fuel in ppm.}
@@ -49,8 +49,10 @@ important ti know the combinations.
 \note{
 t = "ALL" and cc == "ALL" works for several pollutants because emission
 fators are the same. Some exceptions are with NOx and FC because size of engine.
+
 \strong{Pollutants}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb".
+
 \strong{PAH and POP}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
@@ -58,7 +60,10 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
 "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
-"dibenzo(ah)anthracene"
+"dibenzo(ah)anthracene".
+
+\strong{Dioxins and furans}: PCDD, PCDF and PCB expressed as (g equivalent
+toxicity / km).
 }
 \examples{
 {
@@ -82,6 +87,10 @@ ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 p = "indeno(1,2,3-cd)pyrene")(10)
 ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 p = "napthalene")(10)
+
+# Dioxins and Furans
+ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+p = "PCB")(10)
 
 # List of Copert emission factors for 40 years fleet of Passenger Cars.
 # Assuming a euro distribution of euro V, IV, III, II, and I of
