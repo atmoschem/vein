@@ -89,9 +89,9 @@ library(vein)
 Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
 It currently covers the following pollutants:
 
-**Cr- iteria**: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+- **Criteria**: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb".
-**PA- H and POP**: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+- **PAH and POP**: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
 "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
@@ -99,6 +99,7 @@ It currently covers the following pollutants:
 "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
 "dibenzo(ah)anthracene"
+- **Dioxins and Furans**: PCDD, PCDF and PCB.
 
 VEIN consist of: "Elaboration of vehicular emissions inventories,
     consisting in four stages,

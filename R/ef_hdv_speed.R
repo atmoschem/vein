@@ -13,13 +13,28 @@
 #' @param gr Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06
 #' @param l Load of the vehicle: 0.0, 0.5 or 1.0
 #' @param p Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
-#' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed.
+#' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
+#' polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).
 #' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 #' "Pb", Lead in fuel in ppm.
 #' @param k Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
 #' @return an emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
+#' @note  \strong{Pollutants}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+#' "Pb".
+#'
+#' \strong{PAH and POP}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+#' "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
+#' "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
+#' "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
+#' "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
+#' "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
+#' "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
+#' "dibenzo(ah)anthracene".
+#'
+#' \strong{Dioxins and furans}: PCDD, PCDF and PCB expressed as (g equivalent
+#' toxicity / km).
 #' @export
 #' @examples {
 #' # Quick view
@@ -30,6 +45,16 @@
 #' l = 0.5, p = pol[i], x = 10)(30)
 #' })
 #' f
+#' # PAH POP
+#' ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+#' l = 0.5, p = "napthalene", x = 10)(30)
+#' ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+#' l = 0.5, p = "fluoranthene", x = 10)(30)
+#'
+#' # Dioxins and Furans
+#' ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+#' l = 0.5, p = "PCB", x = 10)(30)
+#'
 #' V <- 0:130
 #' ef1 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
 #' l = 0.5, p = "HC")

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.22</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.24</span>
       </span>
     </div>
 
@@ -116,31 +116,38 @@
 <h2 class="hasAnchor">
 <a href="#what-is-vein" class="anchor"></a>What is VEIN</h2>
 <p>Vehicular Emissions Inventories. An R package to estimate vehicular emissions. It currently covers the following pollutants:</p>
-<p><strong>Cr- iteria</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”. <strong>PA- H and POP</strong>: “indeno(1,2,3-cd)pyrene”, “benzo(k)fluoranthene”, “benzo(b)fluoranthene”, “benzo(ghi)perylene”, “fluoranthene”, “benzo(a)pyrene”, “pyrene”, “perylene”, “anthanthrene”, “benzo(b)fluorene”, “benzo(e)pyrene”, “triphenylene”, “benzo(j)fluoranthene”, “dibenzo(a,j)anthacene”, “dibenzo(a,l)pyrene”, “3,6-dimethyl-phenanthrene”, “benzo(a)anthracene”, “acenaphthylene”, “acenapthene”, “fluorene”, “chrysene”, “phenanthrene”, “napthalene”, “anthracene”, “coronene”, “dibenzo(ah)anthracene”</p>
+<ul>
+<li>
+<strong>Criteria</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”.</li>
+<li>
+<strong>PAH and POP</strong>: “indeno(1,2,3-cd)pyrene”, “benzo(k)fluoranthene”, “benzo(b)fluoranthene”, “benzo(ghi)perylene”, “fluoranthene”, “benzo(a)pyrene”, “pyrene”, “perylene”, “anthanthrene”, “benzo(b)fluorene”, “benzo(e)pyrene”, “triphenylene”, “benzo(j)fluoranthene”, “dibenzo(a,j)anthacene”, “dibenzo(a,l)pyrene”, “3,6-dimethyl-phenanthrene”, “benzo(a)anthracene”, “acenaphthylene”, “acenapthene”, “fluorene”, “chrysene”, “phenanthrene”, “napthalene”, “anthracene”, “coronene”, “dibenzo(ah)anthracene”</li>
+<li>
+<strong>Dioxins and Furans</strong>: PCDD, PCDF and PCB.</li>
+</ul>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, 1) pre-processing activity data, 2) preparing emissions factors, 3) estimating the emissions and 4) post-processing of emissions in maps and databases.”</p>
 <p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpNTJH8u/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpWLamdW/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpNTJH8u/YourCity"             
-##  [2] "/tmp/RtmpNTJH8u/YourCity/ef"          
-##  [3] "/tmp/RtmpNTJH8u/YourCity/emi"         
-##  [4] "/tmp/RtmpNTJH8u/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpNTJH8u/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpNTJH8u/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpNTJH8u/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpNTJH8u/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpNTJH8u/YourCity/est"         
-## [10] "/tmp/RtmpNTJH8u/YourCity/images"      
-## [11] "/tmp/RtmpNTJH8u/YourCity/network"     
-## [12] "/tmp/RtmpNTJH8u/YourCity/post"        
-## [13] "/tmp/RtmpNTJH8u/YourCity/post/df"     
-## [14] "/tmp/RtmpNTJH8u/YourCity/post/grids"  
-## [15] "/tmp/RtmpNTJH8u/YourCity/post/streets"
-## [16] "/tmp/RtmpNTJH8u/YourCity/profiles"    
-## [17] "/tmp/RtmpNTJH8u/YourCity/veh"         
+##  [1] "/tmp/RtmpWLamdW/YourCity"             
+##  [2] "/tmp/RtmpWLamdW/YourCity/ef"          
+##  [3] "/tmp/RtmpWLamdW/YourCity/emi"         
+##  [4] "/tmp/RtmpWLamdW/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpWLamdW/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpWLamdW/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpWLamdW/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpWLamdW/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpWLamdW/YourCity/est"         
+## [10] "/tmp/RtmpWLamdW/YourCity/images"      
+## [11] "/tmp/RtmpWLamdW/YourCity/network"     
+## [12] "/tmp/RtmpWLamdW/YourCity/post"        
+## [13] "/tmp/RtmpWLamdW/YourCity/post/df"     
+## [14] "/tmp/RtmpWLamdW/YourCity/post/grids"  
+## [15] "/tmp/RtmpWLamdW/YourCity/post/streets"
+## [16] "/tmp/RtmpWLamdW/YourCity/profiles"    
+## [17] "/tmp/RtmpWLamdW/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            

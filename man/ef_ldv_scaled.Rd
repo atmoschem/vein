@@ -45,7 +45,7 @@ FTP-75 test procedure, SDC = 34.12 km/h.
 }
 \note{
 The length of the list should be equal to the name of the age categories of
-a specific type of vehicle. Thanks to Glauber Camponogara by the help.
+a specific type of vehicle. Thanks to Glauber Camponogara for the help.
 }
 \examples{
 {

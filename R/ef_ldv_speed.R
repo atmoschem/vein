@@ -30,8 +30,10 @@
 #' @keywords speed emission factors
 #' @note t = "ALL" and cc == "ALL" works for several pollutants because emission
 #' fators are the same. Some exceptions are with NOx and FC because size of engine.
+#'
 #' \strong{Pollutants}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 #' "Pb".
+#'
 #' \strong{PAH and POP}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 #' "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 #' "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
@@ -39,7 +41,10 @@
 #' "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
 #' "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 #' "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
-#' "dibenzo(ah)anthracene"
+#' "dibenzo(ah)anthracene".
+#'
+#' \strong{Dioxins and furans}: PCDD, PCDF and PCB expressed as (g equivalent
+#' toxicity / km).
 #' @export
 #' @examples {
 #' # Do not run
@@ -62,6 +67,10 @@
 #' p = "indeno(1,2,3-cd)pyrene")(10)
 #' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 #' p = "napthalene")(10)
+#'
+#' # Dioxins and Furans
+#' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+#' p = "PCB")(10)
 #'
 #' # List of Copert emission factors for 40 years fleet of Passenger Cars.
 #' # Assuming a euro distribution of euro V, IV, III, II, and I of
