@@ -1,8 +1,11 @@
 ---
 title: "VEIN model"
 author: "Sergio Ibarra-Espinosa"
-date: "22 de abril de 2017"
-output: html_document
+date: "19 de Octubre de 2016"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
 ---
 
 ```{r setup, include=FALSE}
@@ -18,9 +21,22 @@ knitr::opts_chunk$set(echo = TRUE)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein) 
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
 
+# Paper 😃 Accepted 😃 on GMD 🎉🎉!
+
+Our paper was just accepted on GMD
+
+https://www.geosci-model-dev-discuss.net/gmd-2017-193/
+
+```{r echo = FALSE}
+knitr::include_graphics("https://i.imgur.com/wp3fi1i.png")
+```
+                         
 
 
-![](https://raw.githubusercontent.com/atmoschem/vein/master/logovein_small.png)
+```{r echo = FALSE, fig.height=5, fig.width=5}
+knitr::include_graphics("https://i.imgur.com/b2lQZzi.jpg")
+```
+
 
 
 
@@ -55,7 +71,6 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.13
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
@@ -65,35 +80,26 @@ demo(VEIN)
 or
 
 ```{r eval=F}
-# 0.3.9
 install.packages("vein")
 library(vein)
 ```
 
-## What is new on 0.3.0 ?
+## What is VEIN
 
-I decided to jump into a new 'minor' version because it brings lots of cool
-improvements.
+Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
+It currently covers the following pollutants:
 
-- vein imports **sf** functions.
-- R packages -raster-, -rgdal- and -rgeos- not needed anymore.
-- vein now imports **data-table**.
-- Add class GriddedEmissionsArray.
-- Fix #28, data.table imported in emis_grid. Now it is very fast!
-- Fix #49: Documentation in inventory est.
-- Fix #50: Fix repetition of x_DF.
-- Fix #51: deparse text.
-- Fix #52: separate objects in rm with ','
-- Fix #55.
-- Minor fix on demo(VEIN).
-- emis and emis_cold adjust length of ef by length of columns of first
-element of the list of data-frames.
-- Revised all examples.
-
-Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
-
-
-### How to use vein
+- **Criteria**: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+"Pb".
+- **PAH and POP**: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+"benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
+"benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
+"benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
+"dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
+"benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
+"chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
+"dibenzo(ah)anthracene"
+- **Dioxins and Furans**: PCDD, PCDF and PCB.
 
 VEIN consist of: "Elaboration of vehicular emissions inventories,
     consisting in four stages,
@@ -117,7 +123,7 @@ inventory(name = file.path(tempdir(), "YourCity"), show.dir = T,
 
 Please, read the examples in the documentation of each function and run the demo. 
 
-#### 1) Examples with traffic data:
+### 1) Examples with traffic data:
 
 age functions 
 
@@ -125,6 +131,17 @@ age functions
 data("net")
 PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
+```
+
+If you want to know the vehicles per street and by age of use, just
+add the net. Age functions now returns 'sf' objects if the net argument is present.
+
+```{r}
+PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
+sp::spplot(as(PC_E25_1400net, "Spatial"),
+       c("PC_E25_1400_1", "PC_E25_1400_9"),
+       main = "PC by age of use", scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
 ```
 
 temporal factors and netspeed
@@ -137,7 +154,17 @@ class(dfspeed)
 plot(dfspeed, xlab = "Hours", ylab = "Speed [km/h]") 
 ```
 
-#### 2) Emission Factors
+If you want ot check the speed at different hours by street, just add net:
+
+```{r}
+dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
+                       alpha = 1.5, net = net)
+sp::spplot(as(dfspeednet, "Spatial"),
+       c("S1", "S9"), scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
+```
+
+### 2) Emission Factors
 
 ```{r}
 V <- 0:150
@@ -147,7 +174,7 @@ efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 ```
 
-#### 3) Estimation of emissions
+### 3) Estimation of emissions
 
 ```{r}
 euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
@@ -160,22 +187,27 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
 plot(E_CO, xlab = "Hours", ylab = "[g/h]")
 ```
 
-#### 4) Post Emissions
+### 4) Post Emissions
 
 ```{r}
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
-summary(E_CO_STREETS)
 ```
 
-make grid. If you plan to run WRF, uses [eixport::wrf_grid](https://github.com/atmoschem/eixport)
+make a grid. If you plan to run WRF, use:
+
+- [vein::wrf_grid](https://github.com/atmoschem/vein)
+- [vein::as4wrf](https://github.com/atmoschem/vein)
+- emis_wrf will be deprecated.
 
 ```{r}
 data(net)
-net@data <- cbind(net@data, E_CO_STREETS)
-net@data <- net@data[,- c(1:9)]
-g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
-E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
-plot(E_CO_g["V9"], axes = T)
+E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
+                             net = net)
+g <- make_grid(net, 1/102.47/2) #500m in degrees
+E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
+sp::spplot(as(E_CO_g, "Spatial"),
+       c("V1", "V9"), scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
 ```
 
 
@@ -187,6 +219,29 @@ If you have any suggestions just let me know to sergio.ibarra@usp.br.
 
 Thanks and enjoy VEIN!
 
+## What is new?
+
+I decided to jump into a new 'minor' version because it brings lots of cool
+improvements.
+
+- vein imports **sf** functions.
+- R packages -raster-, -rgdal- and -rgeos- not needed anymore.
+- vein now imports **data-table**.
+- Add class GriddedEmissionsArray.
+- Fix #28, data.table imported in emis_grid. Now it is very fast!
+- Fix #49: Documentation in inventory est.
+- Fix #50: Fix repetition of x_DF.
+- Fix #51: deparse text.
+- Fix #52: separate objects in rm with ','
+- Fix #55.
+- Minor fix on demo(VEIN).
+- emis and emis_cold adjust length of ef by length of columns of first
+element of the list of data-frames.
+- Revised all examples.
+- returns sf in temp_fact, netspeed and emis_post! (0.3.17)
+
+Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
+
 ### **future steps**
 
 - Add more support to sf.
@@ -194,13 +249,20 @@ Thanks and enjoy VEIN!
 - More speciations.
 - A book (hopefully released in 2018).
 
-#### Note:
-The paper of vein on GMDD under open review. If you use VEIN, please, cite it:
+### Note:
+If you use VEIN, please, cite it:
 
 Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E.,
   Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R
   package for bottom-up Vehicular Emissions Inventories Geosci.
   Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, in
-  review, 2017.
+  accepted, 2017.
 
 https://doi.org/10.5194/gmd-2017-193
+
+### Contributing
+
+Please, read [this](https://github.com/atmoschem/vein/blob/master/CONTRIBUTING.md) guide.
+Contributions of all sorts are welcome, issues and pull requests are the preferred ways of sharing them.
+When contributing pull requests, please follow the [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml).
+This project is released with a [Contributor Code of Conduct](https://github.com/atmoschem/vein/blob/master/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.

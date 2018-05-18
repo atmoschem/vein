@@ -1,0 +1,29 @@
+context("emis_wear")
+data(net)
+data(pc_profile)
+pc_week <- temp_fact(net$ldv+net$hdv, pc_profile[, 1])
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
+
+test_that("emis_wear works", {
+  expect_equal(emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
+                         lkm = net$lkm, ef = ef, speed = df,
+                         profile = pc_profile[, 1])[1],
+               0.03503776)
+})
+
+test_that("emis_wear works", {
+  expect_equal(emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
+                         lkm = net$lkm, ef = ef, speed = df,
+                         what = "break",
+                         profile = pc_profile[, 1])[1],
+               0.03702493)
+})
+
+test_that("emis_wear works", {
+  expect_equal(emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
+                         lkm = net$lkm, ef = ef, speed = df,
+                         what = "road",
+                         profile = pc_profile[, 1])[1],
+               0.03094737)
+})

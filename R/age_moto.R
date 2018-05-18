@@ -10,16 +10,28 @@
 #' @param agemax age of oldest vehicles for that category
 #' @param k multiplication factor
 #' @param bystreet when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
+#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
+#' @importFrom sf st_sf st_as_sf
 #' @export
 #' @examples {
-#' mc <- rnorm(100, 300, 10)
-#' MOTO_E25_500 <- age_moto(x = mc, name = "M_E25_500")
+#' data(net)
+#' MOTO_E25_500 <- age_moto(x = net$ldv, name = "M_E25_500", k = 0.4)
+#' plot(MOTO_E25_500)
+#' MOTO_E25_500 <- age_moto(x = net$ldv, name = "M_E25_500", k = 0.4, net = net)
 #' plot(MOTO_E25_500)
 #' }
-age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
-                      bystreet = F, message = TRUE){
+age_moto <- function (x,
+                      name = "veh",
+                      a = 0.2,
+                      b = 17,
+                      agemin = 1,
+                      agemax = 50,
+                      k = 1,
+                      bystreet = F,
+                      net,
+                      message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){
@@ -54,7 +66,15 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   sep=" ")
     )
     cat("\n")
-}
+    }
+    if(!missing(net)){
+      netsf <- sf::st_as_sf(net)
+      dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      return(dfsf)
+    } else {
+      return(Vehicles(df*k))
+    }
+
   } else {
     suca <- function (t) {1/(1 + exp(a*(t+b)))+1/(1 + exp(a*(t-b)))}
     anos <- seq(agemin,agemax)
@@ -77,7 +97,14 @@ age_moto <- function (x, name, a = 0.2, b = 17, agemin = 1, agemax = 50, k = 1,
                   sep=" ")
     )
     cat("\n")
-  } }
-  df <- Vehicles(df*k)
-  return(df)
+    }
+    if(!missing(net)){
+      netsf <- sf::st_as_sf(net)
+      dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      return(dfsf)
+    } else {
+      return(Vehicles(df*k))
+    }
+
+    }
 }

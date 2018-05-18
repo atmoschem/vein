@@ -99,7 +99,15 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
     for(i in 1:ncol(veh)){
       veh[,i] <- as.numeric(veh[,i])
     }
-    if(ncol(veh) != length(ef)){
+    if(!missing(profile) & is.data.frame(profile)){
+      profile <- profile
+    } else if(!missing(profile) & is.matrix(profile)){
+      profile <- profile
+    } else if(!missing(profile) & is.vector(profile)){
+      profile <- matrix(profile, ncol = 1)
+    }
+
+      if(ncol(veh) != length(ef)){
       message("Number of columns of 'veh' is different than length of 'ef'")
       message("adjusting length of ef to the number of colums of 'veh'\n")
       if(ncol(veh) > length(ef)){

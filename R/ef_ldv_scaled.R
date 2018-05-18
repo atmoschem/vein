@@ -8,7 +8,6 @@
 #' of the local emission factor, e.g. If the local emission factors were tested with the
 #' FTP-75 test procedure, SDC = 34.12 km/h.
 #'
-#' @param df Deprecated
 #' @param dfcol Column of the dataframe with the local emission factors eg df$dfcol
 #' @param SDC Speed of the driving cycle
 #' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped
@@ -20,17 +19,19 @@
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
 #' @param f Type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
 #' @param eu Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"
-#' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM"
+#' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
+#' is based on fuel, use "FC", if it is based on "HC", use "HC".
+#' @param df Deprecated
 #' @return A list of scaled emission factors  g/km
 #' @keywords speed emission factors
 #' @note The length of the list should be equal to the name of the age categories of
-#' a specific type of vehicle. Thanks to Glauber Camponogara by the help.
+#' a specific type of vehicle. Thanks to Glauber Camponogara for the help.
 #' @seealso ef_ldv_seed
 #' @export
 #' @examples {
 #' data(fe2015)
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ]
-#' lef <- ef_ldv_scaled(co1, co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",
+#' lef <- ef_ldv_scaled(dfcol = co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",
 #' eu = co1$Euro_LDV, p = "CO")
 #' length(lef)
 #' lef[[1]](40) # First element of the lit of speed functions at 40 km/h
@@ -42,9 +43,9 @@
 #' pch = 16, xlab = "[km/h]",
 #' main = "Variation of emissions with speed of newest vehicle")
 #' }
-ef_ldv_scaled <- function(df,dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
-  if(!missing(df)){
-    .Deprecated(msg = "df is not needed")
+ef_ldv_scaled <- function(dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p, df) {
+  if(!p %in% c("CO", "FC", "NOx", "HC", "PM")){
+    stop("p must be 'CO', 'FC', 'HC', 'NOx', or 'PM'")
   }
   lapply(1:length(dfcol), function(i)  {
     funIN <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,
