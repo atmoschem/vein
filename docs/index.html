@@ -124,30 +124,63 @@
 <li>
 <strong>Dioxins and Furans</strong>: PCDD, PCDF and PCB.</li>
 </ul>
+</div>
+<div id="what-is-new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-is-new" class="anchor"></a>What is new?</h2>
+<p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
+<ul>
+<li>vein imports <strong>sf</strong> functions.</li>
+<li>R packages -raster-, -rgdal- and -rgeos- not needed anymore.</li>
+<li>vein now imports <strong>data-table</strong>.</li>
+<li>Add class GriddedEmissionsArray.</li>
+<li>Fix #28, data.table imported in emis_grid. Now it is very fast!</li>
+<li>Fix #49: Documentation in inventory est.</li>
+<li>Fix #50: Fix repetition of x_DF.</li>
+<li>Fix #51: deparse text.</li>
+<li>Fix #52: separate objects in rm with ‘,’</li>
+<li>Fix #55.</li>
+<li>Minor fix on demo(VEIN).</li>
+<li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
+<li>Revised all examples.</li>
+<li>returns sf in temp_fact, netspeed and emis_post! (0.3.17)</li>
+</ul>
+<p>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a></p>
+<p><strong>future steps</strong></p>
+<ul>
+<li>Add more support to sf.</li>
+<li>Estimation of evaporative emissions with Copert Tier 3.</li>
+<li>More speciations.</li>
+<li>A book (hopefully released in 2018).</li>
+</ul>
+</div>
+<div id="how-does-it-works" class="section level2">
+<h2 class="hasAnchor">
+<a href="#how-does-it-works" class="anchor"></a>How does it works?</h2>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, 1) pre-processing activity data, 2) preparing emissions factors, 3) estimating the emissions and 4) post-processing of emissions in maps and databases.”</p>
 <p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpWLamdW/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpCfwQVx/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpWLamdW/YourCity"             
-##  [2] "/tmp/RtmpWLamdW/YourCity/ef"          
-##  [3] "/tmp/RtmpWLamdW/YourCity/emi"         
-##  [4] "/tmp/RtmpWLamdW/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpWLamdW/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpWLamdW/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpWLamdW/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpWLamdW/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpWLamdW/YourCity/est"         
-## [10] "/tmp/RtmpWLamdW/YourCity/images"      
-## [11] "/tmp/RtmpWLamdW/YourCity/network"     
-## [12] "/tmp/RtmpWLamdW/YourCity/post"        
-## [13] "/tmp/RtmpWLamdW/YourCity/post/df"     
-## [14] "/tmp/RtmpWLamdW/YourCity/post/grids"  
-## [15] "/tmp/RtmpWLamdW/YourCity/post/streets"
-## [16] "/tmp/RtmpWLamdW/YourCity/profiles"    
-## [17] "/tmp/RtmpWLamdW/YourCity/veh"         
+##  [1] "/tmp/RtmpCfwQVx/YourCity"             
+##  [2] "/tmp/RtmpCfwQVx/YourCity/ef"          
+##  [3] "/tmp/RtmpCfwQVx/YourCity/emi"         
+##  [4] "/tmp/RtmpCfwQVx/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpCfwQVx/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpCfwQVx/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpCfwQVx/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpCfwQVx/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpCfwQVx/YourCity/est"         
+## [10] "/tmp/RtmpCfwQVx/YourCity/images"      
+## [11] "/tmp/RtmpCfwQVx/YourCity/network"     
+## [12] "/tmp/RtmpCfwQVx/YourCity/post"        
+## [13] "/tmp/RtmpCfwQVx/YourCity/post/df"     
+## [14] "/tmp/RtmpCfwQVx/YourCity/post/grids"  
+## [15] "/tmp/RtmpCfwQVx/YourCity/post/streets"
+## [16] "/tmp/RtmpCfwQVx/YourCity/profiles"    
+## [17] "/tmp/RtmpCfwQVx/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -196,8 +229,28 @@ sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.
 <a href="#emission-factors" class="anchor"></a>2) Emission Factors</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">150</span>
 ef1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span>(<span class="dt">v =</span> <span class="st">"PC"</span>,<span class="dt">t =</span> <span class="st">"4S"</span>, <span class="dt">cc =</span> <span class="st">"&lt;=1400"</span>, <span class="dt">f =</span> <span class="st">"G"</span>, <span class="dt">eu =</span> <span class="st">"PRE"</span>,
-<span class="dt">p =</span> <span class="st">"CO"</span>)
-efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
+<span class="dt">p =</span> <span class="st">"CO"</span>)</code></pre></div>
+<pre><code>## $a
+## [1] 281
+## 
+## $b
+## [1] -0.63
+## 
+## $c
+## [1] 0.112
+## 
+## $d
+## [1] 4.32
+## 
+## $e
+## [1] 0
+## 
+## $f
+## [1] 0
+## 
+## $Equation
+## [1] "(ifelse(V&lt;100, a*V^b, c*V +d))*1"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
 <span class="kw">plot</span>(<span class="kw"><a href="reference/Speed.html">Speed</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>), efs, <span class="dt">xlab =</span> <span class="st">"speed[km/h]"</span>, <span class="dt">type =</span> <span class="st">"b"</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
@@ -237,54 +290,30 @@ E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_gr
        <span class="kw">c</span>(<span class="st">"V1"</span>, <span class="st">"V9"</span>), <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">draw =</span> T),
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-</div>
-<div id="issues" class="section level3">
-<h3 class="hasAnchor">
-<a href="#issues" class="anchor"></a>Issues</h3>
-<p>If you encounter any issues while using VEIN, please submit your issues to: <a href="https://github.com/atmoschem/vein/issues/" class="uri">https://github.com/atmoschem/vein/issues/</a></p>
-<p>If you have any suggestions just let me know to <a href="mailto:sergio.ibarra@usp.br">sergio.ibarra@usp.br</a>.</p>
 <p>Thanks and enjoy VEIN!</p>
 </div>
 </div>
-<div id="what-is-new" class="section level2">
+<div id="citation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new" class="anchor"></a>What is new?</h2>
-<p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
-<ul>
-<li>vein imports <strong>sf</strong> functions.</li>
-<li>R packages -raster-, -rgdal- and -rgeos- not needed anymore.</li>
-<li>vein now imports <strong>data-table</strong>.</li>
-<li>Add class GriddedEmissionsArray.</li>
-<li>Fix #28, data.table imported in emis_grid. Now it is very fast!</li>
-<li>Fix #49: Documentation in inventory est.</li>
-<li>Fix #50: Fix repetition of x_DF.</li>
-<li>Fix #51: deparse text.</li>
-<li>Fix #52: separate objects in rm with ‘,’</li>
-<li>Fix #55.</li>
-<li>Minor fix on demo(VEIN).</li>
-<li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
-<li>Revised all examples.</li>
-<li>returns sf in temp_fact, netspeed and emis_post! (0.3.17)</li>
-</ul>
-<p>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a></p>
-<div id="future-steps" class="section level3">
-<h3 class="hasAnchor">
-<a href="#future-steps" class="anchor"></a><strong>future steps</strong>
-</h3>
-<ul>
-<li>Add more support to sf.</li>
-<li>Estimation of evaporative emissions with Copert Tier 3.</li>
-<li>More speciations.</li>
-<li>A book (hopefully released in 2018).</li>
-</ul>
-</div>
-<div id="note" class="section level3">
-<h3 class="hasAnchor">
-<a href="#note" class="anchor"></a>Note:</h3>
+<a href="#citation" class="anchor"></a>Citation</h2>
 <p>If you use VEIN, please, cite it:</p>
 <p>Ibarra-Espinosa, S., Ynoue, R., O’Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories Geosci. Model Dev. Discus, <a href="https://doi.org/10.5194/gmd-2017-193" class="uri">https://doi.org/10.5194/gmd-2017-193</a>, in accepted, 2017.</p>
 <p><a href="https://doi.org/10.5194/gmd-2017-193" class="uri">https://doi.org/10.5194/gmd-2017-193</a></p>
 </div>
+<div id="communications-doubts-etc" class="section level2">
+<h2 class="hasAnchor">
+<a href="#communications-doubts-etc" class="anchor"></a>Communications, doubts etc</h2>
+<ul>
+<li>There is a group about this VEIN here <a href="https://groups.google.com/forum/#!forum/veinmodel" class="uri">https://groups.google.com/forum/#!forum/veinmodel</a>
+</li>
+<li>Eventually you can ask on <a href="https://earthscience.stackexchange.com/">Eart Science Stackoverflow</a>,</li>
+</ul>
+</div>
+<div id="issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#issues" class="anchor"></a>Issues</h2>
+<p>If you encounter any issues while using VEIN, please submit your issues to: <a href="https://github.com/atmoschem/vein/issues/" class="uri">https://github.com/atmoschem/vein/issues/</a></p>
+<p>If you have any suggestions just let me know to <a href="mailto:sergio.ibarra@usp.br">sergio.ibarra@usp.br</a>.</p>
 <div id="contributing" class="section level3">
 <h3 class="hasAnchor">
 <a href="#contributing" class="anchor"></a>Contributing</h3>

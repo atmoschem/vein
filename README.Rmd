@@ -2,10 +2,7 @@
 title: "VEIN model"
 author: "Sergio Ibarra-Espinosa"
 date: "19 de Octubre de 2016"
-output:
-  prettydoc::html_pretty:
-    theme: architect
-    highlight: github
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -100,6 +97,40 @@ It currently covers the following pollutants:
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
 "dibenzo(ah)anthracene"
 - **Dioxins and Furans**: PCDD, PCDF and PCB.
+
+## What is new?
+
+I decided to jump into a new 'minor' version because it brings lots of cool
+improvements.
+
+- vein imports **sf** functions.
+- R packages -raster-, -rgdal- and -rgeos- not needed anymore.
+- vein now imports **data-table**.
+- Add class GriddedEmissionsArray.
+- Fix #28, data.table imported in emis_grid. Now it is very fast!
+- Fix #49: Documentation in inventory est.
+- Fix #50: Fix repetition of x_DF.
+- Fix #51: deparse text.
+- Fix #52: separate objects in rm with ','
+- Fix #55.
+- Minor fix on demo(VEIN).
+- emis and emis_cold adjust length of ef by length of columns of first
+element of the list of data-frames.
+- Revised all examples.
+- returns sf in temp_fact, netspeed and emis_post! (0.3.17)
+
+Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
+
+**future steps**
+
+- Add more support to sf.
+- Estimation of evaporative emissions with Copert Tier 3.
+- More speciations.
+- A book (hopefully released in 2018).
+
+
+
+## How does it works?
 
 VEIN consist of: "Elaboration of vehicular emissions inventories,
     consisting in four stages,
@@ -210,46 +241,10 @@ sp::spplot(as(E_CO_g, "Spatial"),
        col.regions = rev(cptcity::cpt()))
 ```
 
-
-###  Issues
-
-If you encounter any issues while using VEIN, please submit your issues to: https://github.com/atmoschem/vein/issues/
-
-If you have any suggestions just let me know to sergio.ibarra@usp.br.
-
 Thanks and enjoy VEIN!
 
-## What is new?
+## Citation
 
-I decided to jump into a new 'minor' version because it brings lots of cool
-improvements.
-
-- vein imports **sf** functions.
-- R packages -raster-, -rgdal- and -rgeos- not needed anymore.
-- vein now imports **data-table**.
-- Add class GriddedEmissionsArray.
-- Fix #28, data.table imported in emis_grid. Now it is very fast!
-- Fix #49: Documentation in inventory est.
-- Fix #50: Fix repetition of x_DF.
-- Fix #51: deparse text.
-- Fix #52: separate objects in rm with ','
-- Fix #55.
-- Minor fix on demo(VEIN).
-- emis and emis_cold adjust length of ef by length of columns of first
-element of the list of data-frames.
-- Revised all examples.
-- returns sf in temp_fact, netspeed and emis_post! (0.3.17)
-
-Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
-
-### **future steps**
-
-- Add more support to sf.
-- Estimation of evaporative emissions with Copert Tier 3.
-- More speciations.
-- A book (hopefully released in 2018).
-
-### Note:
 If you use VEIN, please, cite it:
 
 Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E.,
@@ -260,9 +255,23 @@ Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E.,
 
 https://doi.org/10.5194/gmd-2017-193
 
+
+## Communications, doubts etc
+
+- There is a group about this VEIN here [https://groups.google.com/forum/#!forum/veinmodel](https://groups.google.com/forum/#!forum/veinmodel)
+- Eventually you can ask on [Eart Science Stackoverflow](https://earthscience.stackexchange.com/), 
+
+##  Issues
+
+If you encounter any issues while using VEIN, please submit your issues to: https://github.com/atmoschem/vein/issues/
+
+If you have any suggestions just let me know to sergio.ibarra@usp.br.
+
+
 ### Contributing
 
 Please, read [this](https://github.com/atmoschem/vein/blob/master/CONTRIBUTING.md) guide.
 Contributions of all sorts are welcome, issues and pull requests are the preferred ways of sharing them.
 When contributing pull requests, please follow the [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml).
 This project is released with a [Contributor Code of Conduct](https://github.com/atmoschem/vein/blob/master/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+
