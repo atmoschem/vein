@@ -1,7 +1,60 @@
 NEWS
 ===========
 
-# vein 0.3.13 (Release date: 2018-03-28)
+# vein 0.3.24 (Release date: 2018-05-14)
+
+- Add factors of Dioxins and furans: PCDD, PCDF and PCB expressed as 
+(g equivalent toxicity / km).
+
+## vein 0.3.23 (Release date: 2018-05-16)
+
+- Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and
+persistent organi pollutants (POPs) in ef_hdv_speed.
+
+## vein 0.3.22 (Release date: 2018-05-15)
+
+- Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and
+persistent organi pollutants (POPs) in ef_ldv_speed.
+- Add contributing.
+- remove warning about df in ef_ldv_scaled 
+
+## vein 0.3.21 (Release date: 2018-05-14)
+
+- Fix #84, #75, and #44. Add emission factors of CO2, SO2, NMHC and CH4.
+
+## vein 0.3.20 (Release date: 2018-05-13)
+
+- Fix #85. Add corrections in emis_wear.
+- Add test for emis_wear.
+
+## vein 0.3.19 (Release date: 2018-05-05)
+
+- Fix #82.
+
+## vein 0.3.18 (Release date: 2018-05-01)
+
+- add fuel_corr function #65.
+
+## vein 0.3.17 (Release date: 2018-04-22)
+
+- add net argument in temp_fact, netspeed and emis_post #70.
+
+## vein 0.3.16 (Release date: 2018-04-09)
+
+- fix bug in post.R by inventory.
+
+## vein 0.3.15 (Release date: 2018-04-01)
+
+- ef_wear and emis_wear updated.
+- age* functions now incldues default name "veh"
+
+## vein 0.3.14 (Release date: 2018-03-31)
+
+- emis_paved now includes default values for k = 0.62 g/km,
+sL1 = 0.6 (g/m^2), sL2 = 0.2 (g/m^2), sL3 = 0.06 (g/m^2), sL4 = 0.03 (g/m^2).
+- profile in emis, vkm and emis_cold checks for data.frame, matrix and if its a vector, it is transformed into matrix.
+
+## vein 0.3.13 (Release date: 2018-03-28)
 
 - emis_grid internally filters inputs columns keeping only numeric
 columns.

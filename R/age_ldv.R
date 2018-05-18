@@ -11,16 +11,28 @@
 #' @param k multiplication factor
 #' @param bystreet when TRUE it is expecting that 'a' and 'b' are numeric
 #' vectors with length equal to x
+#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
+#' @importFrom sf st_sf st_as_sf
 #' @export
 #' @examples {
-#' pc <- rnorm(100, 300, 10)
-#' PC_E25_1400 <- age_ldv(x = pc, name = "PC_E25_1400")
+#' data(net)
+#' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
+#' plot(PC_E25_1400)
+#' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
 #' plot(PC_E25_1400)
 #' }
-age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 1,
-                     bystreet = F, message = TRUE){
+age_ldv <- function (x,
+                     name = "veh",
+                     a = 1.698,
+                     b = -0.2,
+                     agemin = 1,
+                     agemax = 50,
+                     k = 1,
+                     bystreet = F,
+                     net,
+                     message = TRUE){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){
@@ -58,6 +70,14 @@ age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 
     )
     cat("\n")
     }
+    if(!missing(net)){
+      netsf <- sf::st_as_sf(net)
+      dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      return(dfsf)
+    } else {
+      return(Vehicles(df*k))
+    }
+
   } else {
     suca <- function (t) {1 - exp(-exp(a + b*t))}
     anos <- seq(agemin,agemax)
@@ -80,8 +100,13 @@ age_ldv <- function (x, name, a = 1.698, b = -0.2, agemin = 1, agemax = 50, k = 
                   sep=" ")
     )
     cat("\n")
-}
+    }
+    if(!missing(net)){
+      netsf <- sf::st_as_sf(net)
+      dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      return(dfsf)
+    } else {
+      return(Vehicles(df*k))
+    }
   }
-  df <- Vehicles(df*k)
-  return(df)
 }

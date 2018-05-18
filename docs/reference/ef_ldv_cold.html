@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Cold-Start Emissions factors for Light Duty Vehicles — ef_ldv_cold" />
 
 <meta property="og:description" content="This function returns speed functions which depends on ambient temperature
@@ -58,7 +61,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.13</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.24</span>
       </span>
     </div>
 
@@ -79,13 +82,9 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -93,19 +92,22 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cold-Start Emissions factors for Light Duty Vehicles</h1>
-    <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/ef_ldv_cold.R'><code>R/ef_ldv_cold.R</code></a></small>
+    
+    <div class="hidden name"><code>ef_ldv_cold.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function returns speed functions which depends on ambient temperature
 average speed. The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>ef_ldv_cold</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"LDV"</span>, <span class='no'>ta</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
@@ -182,6 +184,8 @@ and ambient temperature. g/km</p>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

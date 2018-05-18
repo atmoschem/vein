@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Calculate speeds of traffic network — netspeed" />
 
 <meta property="og:description" content="netspeed Creates a dataframe of speeds fir diferent hours
@@ -56,7 +59,7 @@ and each link based on morning rush traffic data" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.13</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.24</span>
       </span>
     </div>
 
@@ -77,13 +80,9 @@ and each link based on morning rush traffic data" />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -91,19 +90,22 @@ and each link based on morning rush traffic data" />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate speeds of traffic network</h1>
-    <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/netspeed.R'><code>R/netspeed.R</code></a></small>
+    
+    <div class="hidden name"><code>netspeed.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>netspeed</code> Creates a dataframe of speeds fir diferent hours
 and each link based on morning rush traffic data</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>netspeed</span>(<span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ps</span>, <span class='no'>ffs</span>, <span class='no'>cap</span>, <span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+    <pre class="usage"><span class='fu'>netspeed</span>(<span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ps</span>, <span class='no'>ffs</span>, <span class='no'>cap</span>, <span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='no'>net</span>,
   <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>distance</span> <span class='kw'>=</span> <span class='st'>"km"</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='st'>"h"</span>, <span class='no'>isList</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -138,38 +140,31 @@ and each link based on morning rush traffic data</p>
       <td><p>Parameter of BPR curves</p></td>
     </tr>
     <tr>
+      <th>net</th>
+      <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></td>
+    </tr>
+    <tr>
       <th>scheme</th>
       <td><p>Logical to create a Speed data-frame with 24 hours and a
-default  profile. It needs ffs and ps:</p><table><tr><td>
-  00:00-06:00 </td>
-<td> ffs</td>
-</tr><tr><td><br />
-  06:00-07:00 </td>
-<td> average between ffs and ps</td>
-</tr><tr><td><br />
-  07:00-10:00 </td>
-<td> ps</td>
-</tr><tr><td><br />
-  10:00-17:00 </td>
-<td> average between ffs and ps</td>
-</tr><tr><td><br />
-  17:00-20:00 </td>
-<td> ps</td>
-</tr><tr><td><br />
-  20:00-22:00 </td>
-<td> average between ffs and ps</td>
-</tr><tr><td><br />
-  22:00-00:00 </td>
-<td> ffs</td>
-</tr></table></td>
+default  profile. It needs ffs and ps:</p><table class='table'>
+<tr><td>00:00-06:00</td><td>ffs</td></tr>
+<tr><td>06:00-07:00</td><td>average between ffs and ps</td></tr>
+<tr><td>07:00-10:00</td><td>ps</td></tr>
+<tr><td>10:00-17:00</td><td>average between ffs and ps</td></tr>
+<tr><td>17:00-20:00</td><td>ps</td></tr>
+<tr><td>20:00-22:00</td><td>average between ffs and ps</td></tr>
+<tr><td>22:00-00:00</td><td>ffs</td></tr>
+</table>
+</td>
     </tr>
     <tr>
       <th>distance</th>
-      <td><p>Character specifying the units for distance. Default is "km"</p></td>
+      <td><p>Deprecated. Character specifying the units for distance.
+Default is "km"</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>Character specifying the units for time Default is "h".</p></td>
+      <td><p>Deprecated. Character specifying the units for time Default is "h".</p></td>
     </tr>
     <tr>
       <th>isList</th>
@@ -179,7 +174,7 @@ default  profile. It needs ffs and ps:</p><table><tr><td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe speeds with units.</p>
+    <p>dataframe speeds with units or sf.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -187,13 +182,17 @@ default  profile. It needs ffs and ps:</p><table><tr><td>
 <span class='fu'>data</span>(<span class='no'>net</span>)
 <span class='fu'>data</span>(<span class='no'>pc_profile</span>)
 <span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'>class</span>(<span class='no'>df</span>)
 <span class='fu'>plot</span>(<span class='no'>df</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='kw'>ps</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ps</span>, <span class='kw'>ffs</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>class</span>(<span class='no'>df</span>)
 <span class='fu'>plot</span>(<span class='no'>df</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
-}</div><div class='img'><img src='netspeed-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='netspeed-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>dfsf</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='kw'>ps</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ps</span>, <span class='kw'>ffs</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
+<span class='fu'>class</span>(<span class='no'>dfsf</span>)
+<span class='fu'>head</span>(<span class='no'>dfsf</span>)
+<span class='fu'>plot</span>(<span class='no'>dfsf</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
+}</div><div class='img'><img src='netspeed-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 24 attributes; use max.plot = 24 to plot all</span></div><div class='img'><img src='netspeed-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='netspeed-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -219,6 +218,8 @@ default  profile. It needs ffs and ps:</p><table><tr><td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

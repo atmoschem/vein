@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Inventory function. — inventory" />
 
 <meta property="og:description" content="inventory produces an structure of directories and scripts
@@ -57,7 +60,7 @@ fleet." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.13</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.24</span>
       </span>
     </div>
 
@@ -78,13 +81,9 @@ fleet." />
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -92,18 +91,21 @@ fleet." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Inventory function.</h1>
-    <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/R/inventory.R'><code>R/inventory.R</code></a></small>
+    
+    <div class="hidden name"><code>inventory.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>inventory</code> produces an structure of directories and scripts
 in order to run vein. It is required to know the vehicular composition of the
 fleet.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>inventory</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -189,24 +191,24 @@ The user can rename these scripts.</p>
 <span class='no'>name</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='fu'>tempdir</span>(), <span class='st'>"YourCity"</span>)
 <span class='fu'>inventory</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>name</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>source</span>(<span class='fu'>paste0</span>(<span class='no'>name</span>, <span class='st'>"/main.R"</span>))
-}</div><div class='output co'>#&gt; <span class='message'>files at /tmp/RtmpF47sm8/YourCity</span></div><div class='output co'>#&gt; Directories:
-#&gt;  [1] "/tmp/RtmpF47sm8/YourCity"             
-#&gt;  [2] "/tmp/RtmpF47sm8/YourCity/ef"          
-#&gt;  [3] "/tmp/RtmpF47sm8/YourCity/emi"         
-#&gt;  [4] "/tmp/RtmpF47sm8/YourCity/emi/BUS_01"  
-#&gt;  [5] "/tmp/RtmpF47sm8/YourCity/emi/HGV_01"  
-#&gt;  [6] "/tmp/RtmpF47sm8/YourCity/emi/LCV_01"  
-#&gt;  [7] "/tmp/RtmpF47sm8/YourCity/emi/MC_01"   
-#&gt;  [8] "/tmp/RtmpF47sm8/YourCity/emi/PC_01"   
-#&gt;  [9] "/tmp/RtmpF47sm8/YourCity/est"         
-#&gt; [10] "/tmp/RtmpF47sm8/YourCity/images"      
-#&gt; [11] "/tmp/RtmpF47sm8/YourCity/network"     
-#&gt; [12] "/tmp/RtmpF47sm8/YourCity/post"        
-#&gt; [13] "/tmp/RtmpF47sm8/YourCity/post/df"     
-#&gt; [14] "/tmp/RtmpF47sm8/YourCity/post/grids"  
-#&gt; [15] "/tmp/RtmpF47sm8/YourCity/post/streets"
-#&gt; [16] "/tmp/RtmpF47sm8/YourCity/profiles"    
-#&gt; [17] "/tmp/RtmpF47sm8/YourCity/veh"         
+}</div><div class='output co'>#&gt; <span class='message'>files at /tmp/Rtmp2dJPeK/YourCity</span></div><div class='output co'>#&gt; Directories:
+#&gt;  [1] "/tmp/Rtmp2dJPeK/YourCity"             
+#&gt;  [2] "/tmp/Rtmp2dJPeK/YourCity/ef"          
+#&gt;  [3] "/tmp/Rtmp2dJPeK/YourCity/emi"         
+#&gt;  [4] "/tmp/Rtmp2dJPeK/YourCity/emi/BUS_01"  
+#&gt;  [5] "/tmp/Rtmp2dJPeK/YourCity/emi/HGV_01"  
+#&gt;  [6] "/tmp/Rtmp2dJPeK/YourCity/emi/LCV_01"  
+#&gt;  [7] "/tmp/Rtmp2dJPeK/YourCity/emi/MC_01"   
+#&gt;  [8] "/tmp/Rtmp2dJPeK/YourCity/emi/PC_01"   
+#&gt;  [9] "/tmp/Rtmp2dJPeK/YourCity/est"         
+#&gt; [10] "/tmp/Rtmp2dJPeK/YourCity/images"      
+#&gt; [11] "/tmp/Rtmp2dJPeK/YourCity/network"     
+#&gt; [12] "/tmp/Rtmp2dJPeK/YourCity/post"        
+#&gt; [13] "/tmp/Rtmp2dJPeK/YourCity/post/df"     
+#&gt; [14] "/tmp/Rtmp2dJPeK/YourCity/post/grids"  
+#&gt; [15] "/tmp/Rtmp2dJPeK/YourCity/post/streets"
+#&gt; [16] "/tmp/Rtmp2dJPeK/YourCity/profiles"    
+#&gt; [17] "/tmp/Rtmp2dJPeK/YourCity/veh"         
 #&gt; Scripts:
 #&gt; [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 #&gt; [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -219,7 +221,7 @@ The user can rename these scripts.</p>
 #&gt; [1] "CO"</div><div class='output co'>#&gt; <span class='message'>Number of columns of 'veh' is different than length of 'ef'</span></div><div class='output co'>#&gt; <span class='message'>adjusting length of ef to the number of colums of 'veh'</span></div><div class='output co'>#&gt; <span class='message'>105806.64 kg emissions in 24 hours and 7 days</span></div><div class='output co'>#&gt; 
 #&gt; Reading emissions from:
 #&gt; [1] "CO_BUS_01_STREETS.rds" "CO_HGV_01_STREETS.rds" "CO_LCV_01_STREETS.rds"
-#&gt; [4] "CO_MC_01_STREETS.rds"  "CO_PC_01_STREETS.rds" </div><div class='output co'>#&gt; $xlog
+#&gt; [4] "CO_MC_01_STREETS.rds"  "CO_PC_01_STREETS.rds" </div><div class='img'><img src='inventory-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; $xlog
 #&gt; [1] FALSE
 #&gt; 
 #&gt; $ylog
@@ -388,7 +390,7 @@ The user can rename these scripts.</p>
 #&gt; [1] -0.5
 #&gt; 
 #&gt; $usr
-#&gt; [1]  315090.3  328050.3 7385463.4 7399951.4
+#&gt; [1]  315090.3  328050.3 7384963.4 7399451.4
 #&gt; 
 #&gt; $xaxp
 #&gt; [1] 0 1 5
@@ -417,7 +419,7 @@ The user can rename these scripts.</p>
 #&gt; 
 #&gt; Reading emissions from:
 #&gt; [1] "CO_BUS_01_DF.rds" "CO_HGV_01_DF.rds" "CO_LCV_01_DF.rds" "CO_MC_01_DF.rds" 
-#&gt; [5] "CO_PC_01_DF.rds" </div><div class='output co'>#&gt; <span class='message'>Average age of PC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC is 1460.22 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of LCV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of LCV is 243.37 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of HGV is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of HGV is 111.09 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of BUS is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of BUS is 37.03 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of MC is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of MC is 243.37 * 10^3 veh</span></div><div class='img'><img src='inventory-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></pre>
+#&gt; [5] "CO_PC_01_DF.rds" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -443,6 +445,8 @@ The user can rename these scripts.</p>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

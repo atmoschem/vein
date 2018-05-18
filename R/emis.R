@@ -40,14 +40,13 @@
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 #' # Estimation for morning rush hour and local emission factors
 #' speed <- data.frame(S8 = net$ps)
-#' p1h <- matrix(1)
 #' lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-#'              profile = p1h)
+#'              profile = 1)
 #' # Estimation for 168 hour and local factors
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-#' lef <- fe2015[fe2015$Pollutant=="CO", "PC_G"]
+#' lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
 #'              profile = profiles$PC_JUNE_2014)
 #' summary(E_CO)
@@ -93,11 +92,8 @@ emis <- function (veh,
                   lkm,
                   ef,
                   speed = 34,
-                  agemax = if (!inherits(x = veh, what = "list")) {
-                    ncol(veh)
-                    } else {
-                      ncol(veh[[1]])
-                    },
+                  agemax = ifelse(is.data.frame(veh), ncol(veh),
+                      ncol(veh[[1]])),
                   profile,
                   hour = nrow(profile),
                   day = ncol(profile),
@@ -116,7 +112,16 @@ emis <- function (veh,
     for (i  in 1:ncol(veh) ) {
       veh[,i] <- as.numeric(veh[,i])
     }
-    if(ncol(veh) != length(ef)){
+
+    if(!missing(profile) & is.data.frame(profile)){
+      profile <- profile
+    } else if(!missing(profile) & is.matrix(profile)){
+      profile <- profile
+    } else if(!missing(profile) & is.vector(profile)){
+      profile <- matrix(profile, ncol = 1)
+    }
+
+      if(ncol(veh) != length(ef)){
       message("Number of columns of 'veh' is different than length of 'ef'")
       message("adjusting length of ef to the number of colums of 'veh'\n")
       if(ncol(veh) > length(ef)){
@@ -148,7 +153,7 @@ emis <- function (veh,
             lapply(1:hour,function(i){
               simplify2array(
                 lapply(1:agemax, function(k){
-                  veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
+                  veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i*j])
                   }) ) }) ) }) )
       message(round(sum(d, na.rm = T)/1000,2),
               " kg emissions in ", hour, " hours and ", day, " days")

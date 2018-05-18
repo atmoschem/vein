@@ -24,9 +24,16 @@
 vkm <- function (veh,
                  lkm,
                  profile,
-                 hour = 24,
-                 day = 7,
+                 hour = nrow(profile),
+                 day = ncol(profile),
                  array = T) {
+  if(!missing(profile) & is.data.frame(profile)){
+    profile <- profile
+  } else if(!missing(profile) & is.matrix(profile)){
+    profile <- profile
+  } else if(!missing(profile) & is.vector(profile)){
+    profile <- matrix(profile, ncol = 1)
+  }
   veh <- as.numeric(veh)
   lkm <- as.numeric(lkm)
   if(array == F){

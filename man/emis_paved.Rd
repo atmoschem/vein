@@ -4,7 +4,8 @@
 \alias{emis_paved}
 \title{Estimation of resuspension emissions from paved roads}
 \usage{
-emis_paved(veh, lkm, k, sL1, sL2, sL3, sL4, W)
+emis_paved(veh, lkm, k = 0.62, sL1 = 0.6, sL2 = 0.2, sL3 = 0.06,
+  sL4 = 0.03, W)
 }
 \arguments{
 \item{veh}{Numeric vector with length of elements equals to number of streets
@@ -12,7 +13,8 @@ It is an array with dimenssions number of streets x hours of day x days of week}
 
 \item{lkm}{Length of each link}
 
-\item{k}{K_PM30 = 3.23, K_PM15 = 0.77, K_PM10 = 0.62 and K_PM2.5 = 0.15}
+\item{k}{K_PM30 = 3.23 (g/vkm), K_PM15 = 0.77 (g/vkm), K_PM10 = 0.62 (g/vkm)
+and K_PM2.5 = 0.15  (g/vkm).}
 
 \item{sL1}{Silt loading (g/m2) for roads with ADT <= 500}
 
