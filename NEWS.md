@@ -3,7 +3,7 @@ NEWS
 
 # vein 0.3.25 (Release date: 2018-05-19)
 
-- Add factors of metals.
+- Add factors of metals and NMHC for speed functions.
 
 ## vein 0.3.24 (Release date: 2018-05-17)
 

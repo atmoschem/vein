@@ -37,6 +37,31 @@
 #' toxicity / km).
 #'
 #' \strong{Metals}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
+#' \strong{NMHC}:
+#'
+#' \emph{ALKANES}: "ethane", "propane", "butane", "isobutane", "pentane",
+#' "isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
+#' "TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
+#' "alcanes_C10_C12", "alkanes_C13".
+#'
+#' \emph{CYCLOALKANES}: "cycloalcanes".
+#'
+#' \emph{ALKENES}: "ethylene", "propylene", "propadiene", "ONE_butene",
+#' "isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
+#' "ONE_hexene", "dimethylhexene".
+#'
+#' \emph{ALKYNES}:"ONE_butine", "propine", "acetylene".
+#'
+#' \emph{ALDEHYDES}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+#' "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
+#' "propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
+#' "o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
+#'
+#' \emph{KETONES}: "acetone", "methylethlketone".
+#'
+#' \emph{AROMATICS}: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+#' "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
+#' "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 #' @export
 #' @examples {
 #' # Quick view
@@ -56,6 +81,10 @@
 #' # Dioxins and Furans
 #' ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
 #' l = 0.5, p = "PCB", x = 10)(30)
+#'
+#' # NMHC
+#' ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+#' l = 0.5, p = "heptane", x = 10)(30)
 #'
 #' V <- 0:130
 #' ef1 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,

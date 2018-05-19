@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.24</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.25</span>
       </span>
     </div>
 
@@ -118,11 +118,28 @@
 <p>Vehicular Emissions Inventories. An R package to estimate vehicular emissions. It currently covers the following pollutants:</p>
 <ul>
 <li>
-<strong>Criteria</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”.</li>
+<strong>Criteria</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”, “FC” (Fuel Consumption).</li>
 <li>
 <strong>PAH and POP</strong>: “indeno(1,2,3-cd)pyrene”, “benzo(k)fluoranthene”, “benzo(b)fluoranthene”, “benzo(ghi)perylene”, “fluoranthene”, “benzo(a)pyrene”, “pyrene”, “perylene”, “anthanthrene”, “benzo(b)fluorene”, “benzo(e)pyrene”, “triphenylene”, “benzo(j)fluoranthene”, “dibenzo(a,j)anthacene”, “dibenzo(a,l)pyrene”, “3,6-dimethyl-phenanthrene”, “benzo(a)anthracene”, “acenaphthylene”, “acenapthene”, “fluorene”, “chrysene”, “phenanthrene”, “napthalene”, “anthracene”, “coronene”, “dibenzo(ah)anthracene”</li>
 <li>
-<strong>Dioxins and Furans</strong>: PCDD, PCDF and PCB.</li>
+<strong>Dioxins and Furans</strong>: “PCDD”, “PCDF”, “PCB”.</li>
+<li>
+<strong>Metals</strong>: “As”, “Cd”, “Cr”, “Cu”, “Hg”, “Ni”, “Pb”, “Se”, “Zn”.</li>
+<li>
+<strong>NMHC</strong>:</li>
+<li>
+<em>ALKANES</em>: “ethane”, “propane”, “butane”, “isobutane”, “pentane”, “isopentane”, “hexane”, “heptane”, “octane”, “TWO_methylhexane”, “nonane”, “TWO_methylheptane”, “THREE_methylhexane”, “decane”, “THREE_methylheptane”, “alcanes_C10_C12”, “alkanes_C13”.</li>
+<li>
+<em>CYCLOALKANES</em>: “cycloalcanes”.</li>
+<li>
+<em>ALKENES</em>: “ethylene”, “propylene”, “propadiene”, “ONE_butene”, “isobutene”, “TWO_butene”, “ONE_3_butadiene”, “ONE_pentene”, “TWO_pentene”, “ONE_hexene”, “dimethylhexene”.</li>
+<li>
+<em>ALKYNES</em>:“ONE_butine”, “propine”, “acetylene”.</li>
+<li>
+<em>ALDEHYDES</em>: “formaldehyde”, “acetaldehyde”, “acrolein”, “benzaldehyde”, “crotonaldehyde”, “methacrolein”, “butyraldehyde”, “isobutanaldehyde”, “propionaldehyde”, “hexanal”, “i_valeraldehyde”, “valeraldehyde”, “o_tolualdehyde”, “m_tolualdehyde”, “p_tolualdehyde”.</li>
+<li>KETONES: “acetone”, “methylethlketone”.</li>
+<li>
+<em>AROMATICS</em>: “toluene”, “ethylbenzene”, “m_p_xylene”, “o_xylene”, “ONE_2_3_trimethylbenzene”, “ONE_2_4_trimethylbenzene”, “ONE_3_5_trimethylbenzene”, “styrene”, “benzene”, “C9”, “C10”, “C13”.</li>
 </ul>
 </div>
 <div id="what-is-new" class="section level2">
@@ -162,25 +179,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpCfwQVx/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpZqtcgn/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpCfwQVx/YourCity"             
-##  [2] "/tmp/RtmpCfwQVx/YourCity/ef"          
-##  [3] "/tmp/RtmpCfwQVx/YourCity/emi"         
-##  [4] "/tmp/RtmpCfwQVx/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpCfwQVx/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpCfwQVx/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpCfwQVx/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpCfwQVx/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpCfwQVx/YourCity/est"         
-## [10] "/tmp/RtmpCfwQVx/YourCity/images"      
-## [11] "/tmp/RtmpCfwQVx/YourCity/network"     
-## [12] "/tmp/RtmpCfwQVx/YourCity/post"        
-## [13] "/tmp/RtmpCfwQVx/YourCity/post/df"     
-## [14] "/tmp/RtmpCfwQVx/YourCity/post/grids"  
-## [15] "/tmp/RtmpCfwQVx/YourCity/post/streets"
-## [16] "/tmp/RtmpCfwQVx/YourCity/profiles"    
-## [17] "/tmp/RtmpCfwQVx/YourCity/veh"         
+##  [1] "/tmp/RtmpZqtcgn/YourCity"             
+##  [2] "/tmp/RtmpZqtcgn/YourCity/ef"          
+##  [3] "/tmp/RtmpZqtcgn/YourCity/emi"         
+##  [4] "/tmp/RtmpZqtcgn/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpZqtcgn/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpZqtcgn/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpZqtcgn/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpZqtcgn/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpZqtcgn/YourCity/est"         
+## [10] "/tmp/RtmpZqtcgn/YourCity/images"      
+## [11] "/tmp/RtmpZqtcgn/YourCity/network"     
+## [12] "/tmp/RtmpZqtcgn/YourCity/post"        
+## [13] "/tmp/RtmpZqtcgn/YourCity/post/df"     
+## [14] "/tmp/RtmpZqtcgn/YourCity/post/grids"  
+## [15] "/tmp/RtmpZqtcgn/YourCity/post/streets"
+## [16] "/tmp/RtmpZqtcgn/YourCity/profiles"    
+## [17] "/tmp/RtmpZqtcgn/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -229,28 +246,8 @@ sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.
 <a href="#emission-factors" class="anchor"></a>2) Emission Factors</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">V &lt;-<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">150</span>
 ef1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span>(<span class="dt">v =</span> <span class="st">"PC"</span>,<span class="dt">t =</span> <span class="st">"4S"</span>, <span class="dt">cc =</span> <span class="st">"&lt;=1400"</span>, <span class="dt">f =</span> <span class="st">"G"</span>, <span class="dt">eu =</span> <span class="st">"PRE"</span>,
-<span class="dt">p =</span> <span class="st">"CO"</span>)</code></pre></div>
-<pre><code>## $a
-## [1] 281
-## 
-## $b
-## [1] -0.63
-## 
-## $c
-## [1] 0.112
-## 
-## $d
-## [1] 4.32
-## 
-## $e
-## [1] 0
-## 
-## $f
-## [1] 0
-## 
-## $Equation
-## [1] "(ifelse(V&lt;100, a*V^b, c*V +d))*1"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
+<span class="dt">p =</span> <span class="st">"CO"</span>)
+efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
 <span class="kw">plot</span>(<span class="kw"><a href="reference/Speed.html">Speed</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>), efs, <span class="dt">xlab =</span> <span class="st">"speed[km/h]"</span>, <span class="dt">type =</span> <span class="st">"b"</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>

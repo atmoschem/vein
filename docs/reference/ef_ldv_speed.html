@@ -60,7 +60,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.24</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.25</span>
       </span>
     </div>
 
@@ -173,7 +173,7 @@ important ti know the combinations.</p>
     <p>t = "ALL" and cc == "ALL" works for several pollutants because emission
 fators are the same. Some exceptions are with NOx and FC because size of engine.</p>
 <p><strong>Pollutants</strong>: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
-"Pb".</p>
+"Pb", "FC".</p>
 <p><strong>PAH and POP</strong>: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
@@ -181,9 +181,28 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
 "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
-"dibenzo(ah)anthracene".</p>
-<p><strong>Dioxins and furans</strong>: PCDD, PCDF and PCB expressed as (g equivalent
+"dibenzo(ah)anthracene" (g/km).</p>
+<p><strong>Dioxins and furans</strong>: "PCDD", "PCDF" and "PCB" expressed as (g equivalent
 toxicity / km).</p>
+<p><strong>Metals</strong>: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).</p>
+<p><strong>NMHC</strong>:</p>
+<p><em>ALKANES</em>: "ethane", "propane", "butane", "isobutane", "pentane",
+"isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
+"TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
+"alcanes_C10_C12", "alkanes_C13".</p>
+<p><em>CYCLOALKANES</em>: "cycloalcanes".</p>
+<p><em>ALKENES</em>: "ethylene", "propylene", "propadiene", "ONE_butene",
+"isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
+"ONE_hexene", "dimethylhexene".</p>
+<p><em>ALKYNES</em>:"ONE_butine", "propine", "acetylene".</p>
+<p><em>ALDEHYDES</em>: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+"crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
+"propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
+"o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".</p>
+<p><em>KETONES</em>: "acetone", "methylethlketone".</p>
+<p><em>AROMATICS</em>: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+"ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
+"ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -212,6 +231,10 @@ toxicity / km).</p>
 <span class='co'># Dioxins and Furans</span>
 <span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
 <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PCB"</span>)(<span class='fl'>10</span>)
+
+<span class='co'># NMHC</span>
+<span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
+<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"hexane"</span>)(<span class='fl'>10</span>)
 
 <span class='co'># List of Copert emission factors for 40 years fleet of Passenger Cars.</span>
 <span class='co'># Assuming a euro distribution of euro V, IV, III, II, and I of</span>
