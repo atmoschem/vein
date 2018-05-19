@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.3.24 (Release date: 2018-05-14)
+# vein 0.3.25 (Release date: 2018-05-19)
+
+- Add factors of metals.
+
+## vein 0.3.24 (Release date: 2018-05-17)
 
 - Add factors of Dioxins and furans: PCDD, PCDF and PCB expressed as 
 (g equivalent toxicity / km).

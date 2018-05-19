@@ -32,7 +32,7 @@
 #' fators are the same. Some exceptions are with NOx and FC because size of engine.
 #'
 #' \strong{Pollutants}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
-#' "Pb".
+#' "Pb", "FC".
 #'
 #' \strong{PAH and POP}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 #' "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
@@ -41,10 +41,12 @@
 #' "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
 #' "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 #' "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
-#' "dibenzo(ah)anthracene".
+#' "dibenzo(ah)anthracene" (g/km).
 #'
-#' \strong{Dioxins and furans}: PCDD, PCDF and PCB expressed as (g equivalent
+#' \strong{Dioxins and furans}: "PCDD", "PCDF" and "PCB" expressed as (g equivalent
 #' toxicity / km).
+#'
+#' \strong{Metals}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
 #' @export
 #' @examples {
 #' # Do not run
