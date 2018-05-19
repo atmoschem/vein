@@ -87,7 +87,7 @@ Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
 It currently covers the following pollutants:
 
 - **Criteria**: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
-"Pb".
+"Pb", "FC" (Fuel Consumption).
 - **PAH and POP**: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
@@ -96,7 +96,27 @@ It currently covers the following pollutants:
 "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
 "dibenzo(ah)anthracene"
-- **Dioxins and Furans**: PCDD, PCDF and PCB.
+- **Dioxins and Furans**: "PCDD", "PCDF", "PCB".
+- **Metals**: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn".
+- **NMHC**:
+- _ALKANES_: "ethane", "propane", "butane", "isobutane", "pentane",
+"isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
+"TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
+"alcanes_C10_C12", "alkanes_C13".
+- _CYCLOALKANES_: "cycloalcanes".
+- _ALKENES_: "ethylene", "propylene", "propadiene", "ONE_butene",
+"isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
+"ONE_hexene", "dimethylhexene".
+- _ALKYNES_:"ONE_butine", "propine", "acetylene".
+- _ALDEHYDES_: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+"crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
+"propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
+"o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
+- KETONES: "acetone", "methylethlketone".
+- _AROMATICS_: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+"ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
+"ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
+
 
 ## What is new?
 

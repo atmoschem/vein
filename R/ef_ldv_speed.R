@@ -47,6 +47,32 @@
 #' toxicity / km).
 #'
 #' \strong{Metals}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
+#'
+#' \strong{NMHC}:
+#'
+#' \emph{ALKANES}: "ethane", "propane", "butane", "isobutane", "pentane",
+#' "isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
+#' "TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
+#' "alcanes_C10_C12", "alkanes_C13".
+#'
+#' \emph{CYCLOALKANES}: "cycloalcanes".
+#'
+#' \emph{ALKENES}: "ethylene", "propylene", "propadiene", "ONE_butene",
+#' "isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
+#' "ONE_hexene", "dimethylhexene".
+#'
+#' \emph{ALKYNES}:"ONE_butine", "propine", "acetylene".
+#'
+#' \emph{ALDEHYDES}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+#' "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
+#' "propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
+#' "o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
+#'
+#' \emph{KETONES}: "acetone", "methylethlketone".
+#'
+#' \emph{AROMATICS}: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+#' "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
+#' "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 #' @export
 #' @examples {
 #' # Do not run
@@ -73,6 +99,10 @@
 #' # Dioxins and Furans
 #' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 #' p = "PCB")(10)
+#'
+#' # NMHC
+#' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+#' p = "hexane")(10)
 #'
 #' # List of Copert emission factors for 40 years fleet of Passenger Cars.
 #' # Assuming a euro distribution of euro V, IV, III, II, and I of
