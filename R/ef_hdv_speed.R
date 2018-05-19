@@ -35,6 +35,8 @@
 #'
 #' \strong{Dioxins and furans}: PCDD, PCDF and PCB expressed as (g equivalent
 #' toxicity / km).
+#'
+#' \strong{Metals}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
 #' @export
 #' @examples {
 #' # Quick view
