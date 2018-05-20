@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Allocate emissions into a grid — emis_grid • vein</title>
+<title>Helper function to copy and zip projects — invcop • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,13 +28,9 @@
 
 
 
-<meta property="og:title" content="Allocate emissions into a grid — emis_grid" />
+<meta property="og:title" content="Helper function to copy and zip projects — invcop" />
 
-<meta property="og:description" content="emis_grid allocates emissions proportionally to each grid
- cell. The process is performed by intersection between geometries and the grid.
-It means that requires "sr" according with your location for the projection.
-It is assumed that spobj is a spatial*DataFrame or an "sf" with the pollutants
-in data. This function return an object class "sf"." />
+<meta property="og:description" content="invcop help to copy and zip projects" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,67 +92,83 @@ in data. This function return an object class "sf"." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Allocate emissions into a grid</h1>
+    <h1>Helper function to copy and zip projects</h1>
     
-    <div class="hidden name"><code>emis_grid.Rd</code></div>
+    <div class="hidden name"><code>invcop.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>emis_grid</code> allocates emissions proportionally to each grid
- cell. The process is performed by intersection between geometries and the grid.
-It means that requires "sr" according with your location for the projection.
-It is assumed that spobj is a spatial*DataFrame or an "sf" with the pollutants
-in data. This function return an object class "sf".</p>
+    <p><code>invcop</code> help to copy and zip projects</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_grid</span>(<span class='no'>spobj</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>)</pre>
+    <pre class="usage"><span class='fu'>invcop</span>(<span class='kw'>in_name</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='no'>out_name</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>est</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>network</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>veh_rds</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>veh_csv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>zip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>spobj</th>
-      <td><p>A spatial dataframe of class "sp" or "sf". When class is "sp"
-it is transformed to "sf".</p></td>
+      <th>in_name</th>
+      <td><p>Character; Name of current project.</p></td>
     </tr>
     <tr>
-      <th>g</th>
-      <td><p>A grid with class "SpatialPolygonsDataFrame" or "sf".</p></td>
+      <th>out_name</th>
+      <td><p>Character; Name of outtput project.</p></td>
     </tr>
     <tr>
-      <th>sr</th>
-      <td><p>Spatial reference e.g: 31983. It is required if spobj and g are
-not projected. Please, see http://spatialreference.org/.</p></td>
+      <th>main</th>
+      <td><p>Logical; copy or not.</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>type of geometry: "lines" or "points".</p></td>
+      <th>ef</th>
+      <td><p>Logical; copy or not.</p></td>
+    </tr>
+    <tr>
+      <th>est</th>
+      <td><p>Logical; copy or not.</p></td>
+    </tr>
+    <tr>
+      <th>network</th>
+      <td><p>Logical; copy or not.</p></td>
+    </tr>
+    <tr>
+      <th>veh_rds</th>
+      <td><p>Logical; copy or not.</p></td>
+    </tr>
+    <tr>
+      <th>veh_csv</th>
+      <td><p>Logical; copy or not.</p></td>
+    </tr>
+    <tr>
+      <th>zip</th>
+      <td><p>Logical; zip or not.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>emission estimation  g/h</p>
+    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>When spobj is a 'Spatial' object (class of sp), they are converted
- into 'sf'. Also, The aggregation of data ise done with data.table functions.</p>
+    <p>This function was created to copy and zip project without the emis.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
-<span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
-<span class='fu'>names</span>(<span class='no'>net</span>)
-<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
-<span class='fu'>plot</span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>plot</span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"># NOT RUN {
+# Do not run
+# }
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
