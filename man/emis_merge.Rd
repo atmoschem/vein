@@ -11,7 +11,8 @@ emis_merge(pol = "CO", what = "STREETS.rds", streets = T, net,
 \item{pol}{Character. Pollutant.}
 
 \item{what}{Character. Word to search the emissions names, "STREETS", "DF" or
-whatever name. It is important to include the extension .'rds'}
+whatever name. It is important to include the extension .'rds'. For instance,
+If you have several files "XX_CO_STREETS.rds", what should be "STREETS.rds"}
 
 \item{streets}{Logical. If true, \code{\link{emis_merge}} will read the street
 emissions created with \code{\link{emis_post}} by "streets_wide", returning an

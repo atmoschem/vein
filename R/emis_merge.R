@@ -6,7 +6,8 @@
 #' @param path Character. Path where emissions are located
 #' @param pol Character. Pollutant.
 #' @param what Character. Word to search the emissions names, "STREETS", "DF" or
-#' whatever name. It is important to include the extension .'rds'
+#' whatever name. It is important to include the extension .'rds'. For instance,
+#' If you have several files "XX_CO_STREETS.rds", what should be "STREETS.rds"
 #' @param net 'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
 #' It is expected #' that the number of rows is equal to the number of rows of
 #' street emissions. If #' not, the function will stop.
@@ -19,7 +20,6 @@
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
 #' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
-#' @importFrom utils glob2rx
 #' @export
 #' @examples \dontrun{
 #' # Do not run
@@ -32,12 +32,12 @@ emis_merge <- function (pol = "CO",
                         path = "emi",
                         crs){
   x <- list.files(path = path,
-                  pattern = glob2rx(paste0(pol, "_*", what)),
+                  pattern = paste0(pol, "_", what),
                   all.files = T,
                   full.names = T,
                   recursive = T)
   xx <- list.files(path = path,
-                   pattern = glob2rx(paste0(pol, "_*", what)),
+                   pattern = paste0(pol, "_", what),
                    recursive = T)
   cat("\nReading emissions from:\n")
   print(xx)
