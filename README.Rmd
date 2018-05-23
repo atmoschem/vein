@@ -246,9 +246,9 @@ E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 
 make a grid. If you plan to run WRF, use:
 
-- [vein::wrf_grid](https://github.com/atmoschem/vein)
-- [vein::as4wrf](https://github.com/atmoschem/vein)
-- emis_wrf will be deprecated.
+- [eixport::wrf_put](https://atmoschem.github.io/eixport/reference/wrf_put.html)
+- [eixport::as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
+- [vein::emis_wrf](https://atmoschem.github.io/vein/reference/emis_wrf.html) will be deprecated.
 
 ```{r}
 data(net)
