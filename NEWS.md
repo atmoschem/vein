@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.3.27 (Release date: 2018-05-23)
+
+- fix emis_merge. 
+
 # vein 0.3.26 (Release date: 2018-05-20)
 
 - fix #87 and #88
