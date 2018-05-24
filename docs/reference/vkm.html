@@ -60,7 +60,7 @@ vehiles and then extrapolates the vehicles" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.26</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.28</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ vehiles and then extrapolates the vehicles</p>
     </div>
 
     <pre class="usage"><span class='fu'>vkm</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>profile</span>), <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'>ncol</span>(<span class='no'>profile</span>),
-  <span class='kw'>array</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+  <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>as_df</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,6 +138,10 @@ vehiles and then extrapolates the vehicles</p>
       <td><p>When FALSE produces a dataframe of the estimation. When TRUE expects a
 profile as a dataframe producing an array with dimensions (streets x hours x days)</p></td>
     </tr>
+    <tr>
+      <th>as_df</th>
+      <td><p>Logical; when TRUE transform returning array in data.frame (streets x hour*days)</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -153,6 +157,9 @@ profile as a dataframe producing an array with dimensions (streets x hours x day
 <span class='no'>vkms</span>  <span class='kw'>&lt;-</span> <span class='fu'>vkm</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pro</span>)
 <span class='fu'>class</span>(<span class='no'>vkms</span>)
 <span class='fu'>dim</span>(<span class='no'>vkms</span>)
+<span class='no'>vkms2</span>  <span class='kw'>&lt;-</span> <span class='fu'>vkm</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pro</span>, <span class='kw'>as_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>class</span>(<span class='no'>vkms2</span>)
+<span class='fu'>dim</span>(<span class='no'>vkms2</span>)
 }</div><div class='output co'>#&gt; [1] 10 24  7</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

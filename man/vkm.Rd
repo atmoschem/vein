@@ -5,7 +5,7 @@
 \title{Estimation of VKM}
 \usage{
 vkm(veh, lkm, profile, hour = nrow(profile), day = ncol(profile),
-  array = T)
+  array = TRUE, as_df = TRUE)
 }
 \arguments{
 \item{veh}{Numeric vector with number of vehicles per street}
@@ -20,6 +20,8 @@ vkm(veh, lkm, profile, hour = nrow(profile), day = ncol(profile),
 
 \item{array}{When FALSE produces a dataframe of the estimation. When TRUE expects a
 profile as a dataframe producing an array with dimensions (streets x hours x days)}
+
+\item{as_df}{Logical; when TRUE transform returning array in data.frame (streets x hour*days)}
 }
 \value{
 emission estimation  of vkm
@@ -37,5 +39,8 @@ pro <- matrix(abs(rnorm(24*7,0.5,1)), ncol=7, nrow=24)
 vkms  <- vkm(veh = pc, lkm = lkm, profile = pro)
 class(vkms)
 dim(vkms)
+vkms2  <- vkm(veh = pc, lkm = lkm, profile = pro, as_df = FALSE)
+class(vkms2)
+dim(vkms2)
 }
 }
