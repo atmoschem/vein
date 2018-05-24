@@ -11,7 +11,9 @@ speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE)
 
 \item{spec}{speciation: The speciations are: "bcom", tyre", "break", "road",
 "iag", "nox" and "nmhc". 'iag' now includes a speciation for use of industrial and
-building paintings. "bcom" stands for black carbon and organic matter.}
+building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
+speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
+gridded emissions (flux).}
 
 \item{veh}{Type of vehicle:
 When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
@@ -59,6 +61,12 @@ when spec = "iag", veh is only "VEH", STANDARD is "Evaporative",
   VEH", STANDARD is "Evaporative",
 "Liquid" or "Exhaust", FUEL is "G" for gasoline (blended with 25\% ethanol),
  "E" for Ethanol and "D" for diesel (blended with 5\% of biodiesel).
+ @note emissions of "pmiag" speciate PM2.5 into E_SO4i, E_SO4j, E_NO3i,
+ E_NO3j, E_MP2.5i, E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj and H2O. Reference:
+ Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
+ cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
+ amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
+ Parana, 2015.
 }
 \examples{
 {

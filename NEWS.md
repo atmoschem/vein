@@ -6,6 +6,8 @@ NEWS
 - Adds argument as_df in vkm. This allows to transform the resulting
 array into with dimensions rows  = streets and columns  = hours x days.
 - Removes array requirement on emis_paved.
+- Add speciation PM pmiag for WRF Chem: E_SO4i, E_SO4j, E_NO3i, E_NO3j, E_MP2.5i
+E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj , H2O.
 
 # vein 0.3.27 (Release date: 2018-05-23)
 
