@@ -4,7 +4,8 @@ NEWS
 # vein 0.3.28 (Release date: 2018-05-24)
 
 - Adds argument as_df in vkm. This allows to transform the resulting
-array into with dimensions rows  = streets and columns  = hours x days
+array into with dimensions rows  = streets and columns  = hours x days.
+- Removes array requirement on emis_paved.
 
 # vein 0.3.27 (Release date: 2018-05-23)
 
