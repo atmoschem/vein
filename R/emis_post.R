@@ -179,7 +179,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
       return(df)
     } else if (by == "streets_wide") {
       df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
-      names(df) <- lapply(1:dim(arra)[3], function(i){paste0("h",i)})
+      names(df) <- paste0("h",1:length(df))
       if(!missing(net)){
         netsf <- sf::st_as_sf(net)
         dfsf <- sf::st_sf(Emissions(df), geometry = netsf$geometry)
