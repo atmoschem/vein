@@ -7,7 +7,9 @@
 #' @param x Emissions estimation
 #' @param spec speciation: The speciations are: "bcom", tyre", "break", "road",
 #' "iag", "nox" and "nmhc". 'iag' now includes a speciation for use of industrial and
-#' building paintings. "bcom" stands for black carbon and organic matter.
+#' building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
+#' speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
+#' gridded emissions (flux).
 #' @param veh Type of vehicle:
 #' When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
 #' When spec is "iag" veh can take two values depending:
@@ -34,6 +36,7 @@
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
 #' @importFrom units as_units
+#' @importFrom sf st_as_sf st_set_geometry
 #' @return dataframe of speciation in grams or mols
 #' @references "bcom": Ntziachristos and Zamaras. 2016. Passneger cars, light
 #' commercial trucks, heavy-duty vehicles including buses and motor cycles. In:
@@ -69,6 +72,12 @@
 #'   VEH", STANDARD is "Evaporative",
 #' "Liquid" or "Exhaust", FUEL is "G" for gasoline (blended with 25\% ethanol),
 #'  "E" for Ethanol and "D" for diesel (blended with 5\% of biodiesel).
+#'  @note emissions of "pmiag" speciate PM2.5 into E_SO4i, E_SO4j, E_NO3i,
+#'  E_NO3j, E_MP2.5i, E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj and H2O. Reference:
+#'  Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
+#'  cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
+#'  amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
+#'  Parana, 2015.
 #' @export
 #' @examples {
 #' # Do not run
@@ -191,6 +200,61 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
     if (show == TRUE) {print(df) } else if (list == TRUE){
       dfb <- as.list(dfb)
     }
+    # PM2.5 IAG ####
+  } else if(spec == "pmiag"){
+    message("To be used in emissions grid only, emissions must be in g/(Xkm^2)/h\n")
+    message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
+    if(class(x)[1] == "sf"){
+      x <- sf::st_set_geometry(x, NULL)
+    } else if(class(x) == "Spatial"){
+      x <- sf::st_as_sf(x)
+      x <- sf::st_set_geometry(x, NULL)
+    }
+    x$id <- NULL
+    x <- x/1000000/3600 # g to micro grams / h to seconds
+    df <- data.frame(E_SO4i = 0.0077,
+                     E_SO4j = 0.0623,
+                     E_NO3i = 0.00247,
+                     E_NO3j = 0.01053,
+                     E_MP2.5i = 0.1,
+                     E_MP2.5j = 0.3,
+                     E_ORGi = 0.0304,
+                     E_ORGj = 0.1296,
+                     E_ECi = 0.056,
+                     E_ECj = 0.024,
+                     H2O = 0.277
+    )
+    if (is.data.frame(x)) {
+      for (i in 1:ncol(x)) {
+        x[ , i] <- as.numeric(x[ , i])
+      }
+    }
+    if (list == T) {
+      dfx <- df
+      dfb <- lapply(1:ncol(dfx), function(i){
+        dfx[, i]*x
+      })
+      names(dfb) <- names(dfx)
+      for (j in 1:length(dfb)) {
+        for (i in 1:ncol(x)) {
+          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("g m-2 s-1")
+        }
+      }
+      if (show == TRUE) { print(df) }
+    } else {
+      dfx <- df
+      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
+        dfx[, i]*x
+      }))
+      names(dfb) <- names(dfx)
+      for (i in 1:ncol(x)) {
+        dfb[ , i] <- dfb[ , i] * units::as_units("g m-2 s-1")
+      }
+     }
+    if (show == TRUE) {
+      print(df)
+    }
+
   }
   return(dfb)
 }
