@@ -42,9 +42,6 @@ emis_paved <- function(veh,
                        sL3 = 0.06, # g/m^2
                        sL4 = 0.03, # g/m^2
                        W) {
-  if (class(veh)!="array" | class(W)!="array") {
-    stop("class of veh and W should be array")
-  }
   sL <- array(data = ifelse(veh <= 500, sL1,
                             ifelse(veh > 500 & veh <= 5000, sL2,
                                    ifelse(veh > 5000 & veh <=1000, sL3,
@@ -54,5 +51,9 @@ emis_paved <- function(veh,
   k <- array(k, dim = dim(veh))
   emi <- veh * lkm * k * sL^0.91 * W^1.02
   emi[is.na(emi)] <- 0
-  return(EmissionsArray(emi))
+  if(length(dim(emi)) == 2){
+    return(Emissions(emi))
+  } else {
+    return(EmissionsArray(emi))
+  }
 }
