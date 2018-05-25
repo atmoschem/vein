@@ -211,7 +211,10 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
       x <- sf::st_set_geometry(x, NULL)
     }
     x$id <- NULL
-    x <- x/1000000/3600 # g to micro grams / h to seconds
+    # x (g / Xkm^2 / h)
+    # x <- x*1000000 # g to micro grams
+    # x <- x*(1/1000)^2 # km^2 to m^2
+    x <- x/3600    # h to seconds
     df <- data.frame(E_SO4i = 0.0077,
                      E_SO4j = 0.0623,
                      E_NO3i = 0.00247,
