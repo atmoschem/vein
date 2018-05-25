@@ -65,26 +65,29 @@
 #' Associates, Inc. for David Niemi, Marc Deslauriers, and Lisa Graham of
 #' Environment Canada, September 26, 2006.
 #'
-#' @note when spec = "iag", veh is only "VEH", STANDARD is "Evaporative",
-#' "Liquid" or "Exhaust", FUEL is "G" for gasoline (blended with 25\% ethanol),
-#'  "E" for Ethanol and "D" for diesel (blended with 5\% of biodiesel).
-#'  When spec = "bcom", veh can be "PC", "LCV", "Motorcycle" or "HDV"
-#'   VEH", STANDARD is "Evaporative",
-#' "Liquid" or "Exhaust", FUEL is "G" for gasoline (blended with 25\% ethanol),
-#'  "E" for Ethanol and "D" for diesel (blended with 5\% of biodiesel).
-#'  @note emissions of "pmiag" speciate PM2.5 into E_SO4i, E_SO4j, E_NO3i,
-#'  E_NO3j, E_MP2.5i, E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj and H2O. Reference:
-#'  Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
-#'  cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
-#'  amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
-#'  Parana, 2015.
+#' @note when spec = "iag":
+#' veh is only "veh",
+#' fuel is "G"  (blended with 25\% ethanol), "D" (blended with 5\% of biodiesel)
+#' or "E" (Ethanol 100\%).
+#' eu is "Evaporative", "Liquid" or "Exhaust",
+#' @note emissions of "pmiag" speciate PM2.5 into E_SO4i, E_SO4j, E_NO3i,
+#' E_NO3j, E_MP2.5i, E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj and H2O. Reference:
+#' Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
+#' cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
+#' amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
+#' Parana, 2015.
 #' @export
 #' @examples {
 #' # Do not run
 #' pm <- rnorm(n = 100, mean = 400, sd = 2)
 #' df <- speciate(pm, veh = "PC", fuel = "G", eu = "I")
+#' dfa <- speciate(pm, spec = "e_eth", veh = "veh", fuel = "G", eu = "Exhaust")
+#' dfb <- speciate(pm, spec = "e_tol", veh = "veh", fuel = "G", eu = "Exhaust")
 #' }
 speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE) {
+  nvoc <- c('e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
+            'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket')
+
   # black carbon and organic matter
   if (spec=="bcom") {
     bcom <- sysdata[[4]]
@@ -156,6 +159,45 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
     if (show == TRUE) {
       print(df)
     }
+    # names VOC ####
+  } else if (spec %in% nvoc) {
+    iag <- sysdata[[6]]
+    df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , spec]
+    df <- data.frame(spec = df)
+    names(df) <- spec
+    if (is.data.frame(x)) {
+      for (i in 1:ncol(x)) {
+        x[ , i] <- as.numeric(x[ , i])
+      }
+    }
+    if (list == T) {
+      dfx <- df
+      dfb <- lapply(1:ncol(dfx), function(i){
+        dfx[, i]*x/100
+      })
+      names(dfb) <- names(dfx)
+      for (j in 1:length(dfb)) {
+        for (i in 1:ncol(x)) {
+          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("mol h-1")
+        }
+      }
+      if (show == TRUE) { print(df) }
+    } else {
+      dfx <- df
+      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
+        dfx[, i]*x/100
+      }))
+      names(dfb) <- names(dfx)
+      # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
+      # e_xyl, e_c2h5oh, e_hcho /100 because it is based on 100g of fuel
+      # e_ch3oh and e_ket /100 because it is percentage
+    }
+    if (show == TRUE) {
+      print(df)
+    }
+
+
+
     # nmhc ####
   } else if (spec=="nmhc") {
     iag <- sysdata[[9]]
@@ -253,7 +295,7 @@ speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALS
       for (i in 1:ncol(x)) {
         dfb[ , i] <- dfb[ , i] * units::as_units("g m-2 s-1")
       }
-     }
+    }
     if (show == TRUE) {
       print(df)
     }
