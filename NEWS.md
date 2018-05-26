@@ -1,7 +1,14 @@
 NEWS
 ===========
 
-# vein 0.3.29 (Release date: 2018-05-25)
+# vein 0.3.30 (Release date: 2018-05-26)
+
+- Prevent emis_grid to sum 1 + NA or 1 + NaN. Now it would be
+1 + 0.
+- Also, emis_merge now it is conservative.
+
+
+## vein 0.3.29 (Release date: 2018-05-25)
 
 - Fix emis_merge.
 
@@ -13,15 +20,15 @@ array into with dimensions rows  = streets and columns  = hours x days.
 - Add speciation PM pmiag for WRF Chem: E_SO4i, E_SO4j, E_NO3i, E_NO3j, E_MP2.5i
 E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj , H2O.
 
-# vein 0.3.27 (Release date: 2018-05-23)
+## vein 0.3.27 (Release date: 2018-05-23)
 
 - fix emis_merge. 
 
-# vein 0.3.26 (Release date: 2018-05-20)
+## vein 0.3.26 (Release date: 2018-05-20)
 
 - fix #87 and #88
 
-# vein 0.3.25 (Release date: 2018-05-19)
+## vein 0.3.25 (Release date: 2018-05-19)
 
 - Add factors of metals and NMHC for speed functions.
 
