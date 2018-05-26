@@ -32,15 +32,14 @@ emis_merge <- function (pol = "CO",
                         path = "emi",
                         crs){
   x <- list.files(path = path,
-                  pattern = paste0(pol, "_", what),
+                  pattern = what,
                   all.files = T,
                   full.names = T,
                   recursive = T)
-  xx <- list.files(path = path,
-                   pattern = paste0(pol, "_", what),
-                   recursive = T)
+  x <- x[grep(pattern = paste0(pol, "_"), x = x)]
+
   cat("\nReading emissions from:\n")
-  print(xx)
+  print(x)
   x_rds <- lapply(x, readRDS)
 
     nombres <- names(x_rds[[1]])
