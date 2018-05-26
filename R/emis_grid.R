@@ -21,7 +21,8 @@
 #' data(net)
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
 #' names(net)
-#' netg <- emis_grid(spobj = net, g = g, sr= 31983)
+#' netsf <- sf::st_as_sf(net)
+#' netg <- emis_grid(spobj = net[, c("ldv", "hdv")], g = g, sr= 31983)
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
 #' }
@@ -38,6 +39,8 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
 
   if (type == "lines" ) {
     netdf <- sf::st_set_geometry(net, NULL)
+
+    snetdf <- sum(netdf, na.rm = TRUE)
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
     # Filtrando solo columnas numericas
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
@@ -47,9 +50,13 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
     netg$LKM2 <- sf::st_length(netg)
     xgg <- data.table::data.table(netg)
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$LKM2/xgg$LKM)
+    xgg[is.na(xgg)] <- 0 # prevent 1+ NA = NA
     dfm <- xgg[, lapply(.SD, sum, na.rm=TRUE),
                by = "id",
                .SDcols = namesnet]
+    id <- dfm$id
+    dfm <- snetdf/sum(dfm, na.rm = TRUE)*dfm
+    dfm$id <- id
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by="id", all.x = TRUE)
@@ -64,6 +71,7 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
     xgg <- data.table::data.table(
       sf::st_set_geometry(sf::st_intersection(net, g), NULL)
       )
+    xgg[is.na(xgg)] <- 0
     dfm <- xgg[, lapply(.SD, sum, na.rm=TRUE),
                by = "id",
                .SDcols = namesnet ]
