@@ -3,10 +3,9 @@ NEWS
 
 # vein 0.3.30 (Release date: 2018-05-26)
 
-- Prevent emis_grid to sum 1 + NA or 1 + NaN. Now it would be
-1 + 0.
+- Prevent emis_grid to sum 1 + NA or 1 + NaN. Now it would be 1 + 0.
 - Also, emis_merge now it is conservative.
-
+- Deprecate emis_wrf in favout of eixport functions  to_wrf and to_as4wrf.
 
 ## vein 0.3.29 (Release date: 2018-05-25)
 
