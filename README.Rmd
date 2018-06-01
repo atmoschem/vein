@@ -155,7 +155,7 @@ Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
 
 
-## How does it works?
+## How does it work?
 
 VEIN consist of: "Elaboration of vehicular emissions inventories,
     consisting in four stages,
@@ -251,9 +251,12 @@ E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 
 make a grid. If you plan to run WRF, use:
 
-- [eixport::wrf_put](https://atmoschem.github.io/eixport/reference/wrf_put.html)
-- [eixport::as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
-- [vein::emis_wrf](https://atmoschem.github.io/vein/reference/emis_wrf.html) will be deprecated.
+when spobj is "character", it is a path to wrfinput file and
+then runs eixport::wrf_grid to create a grid based on a wrf_input file.
+
+1) Create a grid using `make_grid`.The spobj is the spatial net
+2) spobj is "character", it is a path to wrfinput file and the grid will have
+the size of the wrf_input.
 
 ```{r}
 data(net)
@@ -265,6 +268,30 @@ sp::spplot(as(E_CO_g, "Spatial"),
        c("V1", "V9"), scales = list(draw = T),
        col.regions = rev(cptcity::cpt()))
 ```
+
+### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
+
+1) If you created a grid using a wrfinput file and then ran emis_gris to
+grid your emissions, create a GriddedEmissionsArray and then  use
+
+
+a) [eixport::wrf_create](https://atmoschem.github.io/eixport/reference/wrf_create.html)
+to create a wrfchem input file with 0.
+b) [eixport::wrf_put](https://atmoschem.github.io/eixport/reference/wrf_put.html)
+to the wrfchem input file.
+
+```{r eval = FALSE}
+eixport::wrf_create(wrfinput_dir = "PathToWrfInput", wrfchemi_dir = "OutputPathWrfChemInput")
+gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
+eixport::wrf_put(file = "PathToWRFChemInputFile, name = "E_CO", POL = gr)
+```
+
+
+2) If you created a grid using a spatial net, use
+[eixport::as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
+and get the NCL script AS4WRF.ncl from the developer.
+
+
 
 Thanks and enjoy VEIN!
 

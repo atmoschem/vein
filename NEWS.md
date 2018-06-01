@@ -1,7 +1,13 @@
 NEWS
 ===========
 
-# vein 0.3.30 (Release date: 2018-05-26)
+# vein 0.3.31 (Release date: 2018-06-01)
+
+- Fix #69. Now make_grid prints the number of Longitude and Latitude cells
+(points). when spobj is "character", it is a path to wrfinput file and
+then runs eixport::wrf_grid to create a grid based on a wrf_input file.
+
+## vein 0.3.30 (Release date: 2018-05-26)
 
 - Prevent emis_grid to sum 1 + NA or 1 + NaN. Now it would be 1 + 0.
 - Also, emis_merge now it is conservative.
