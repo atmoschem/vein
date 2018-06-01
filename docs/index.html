@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.30</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
       </span>
     </div>
 
@@ -173,33 +173,33 @@
 <li>A book (hopefully released in 2018).</li>
 </ul>
 </div>
-<div id="how-does-it-works" class="section level2">
+<div id="how-does-it-work" class="section level2">
 <h2 class="hasAnchor">
-<a href="#how-does-it-works" class="anchor"></a>How does it works?</h2>
+<a href="#how-does-it-work" class="anchor"></a>How does it work?</h2>
 <p>VEIN consist of: “Elaboration of vehicular emissions inventories, consisting in four stages, 1) pre-processing activity data, 2) preparing emissions factors, 3) estimating the emissions and 4) post-processing of emissions in maps and databases.”</p>
 <p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpZZ8ggZ/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmplwYtRy/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpZZ8ggZ/YourCity"             
-##  [2] "/tmp/RtmpZZ8ggZ/YourCity/ef"          
-##  [3] "/tmp/RtmpZZ8ggZ/YourCity/emi"         
-##  [4] "/tmp/RtmpZZ8ggZ/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpZZ8ggZ/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpZZ8ggZ/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpZZ8ggZ/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpZZ8ggZ/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpZZ8ggZ/YourCity/est"         
-## [10] "/tmp/RtmpZZ8ggZ/YourCity/images"      
-## [11] "/tmp/RtmpZZ8ggZ/YourCity/network"     
-## [12] "/tmp/RtmpZZ8ggZ/YourCity/post"        
-## [13] "/tmp/RtmpZZ8ggZ/YourCity/post/df"     
-## [14] "/tmp/RtmpZZ8ggZ/YourCity/post/grids"  
-## [15] "/tmp/RtmpZZ8ggZ/YourCity/post/streets"
-## [16] "/tmp/RtmpZZ8ggZ/YourCity/profiles"    
-## [17] "/tmp/RtmpZZ8ggZ/YourCity/veh"         
+##  [1] "/tmp/RtmplwYtRy/YourCity"             
+##  [2] "/tmp/RtmplwYtRy/YourCity/ef"          
+##  [3] "/tmp/RtmplwYtRy/YourCity/emi"         
+##  [4] "/tmp/RtmplwYtRy/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmplwYtRy/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmplwYtRy/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmplwYtRy/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmplwYtRy/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmplwYtRy/YourCity/est"         
+## [10] "/tmp/RtmplwYtRy/YourCity/images"      
+## [11] "/tmp/RtmplwYtRy/YourCity/network"     
+## [12] "/tmp/RtmplwYtRy/YourCity/post"        
+## [13] "/tmp/RtmplwYtRy/YourCity/post/df"     
+## [14] "/tmp/RtmplwYtRy/YourCity/post/grids"  
+## [15] "/tmp/RtmplwYtRy/YourCity/post/streets"
+## [16] "/tmp/RtmplwYtRy/YourCity/profiles"    
+## [17] "/tmp/RtmplwYtRy/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -274,22 +274,43 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 <a href="#post-emissions" class="anchor"></a>4) Post Emissions</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>)</code></pre></div>
 <p>make a grid. If you plan to run WRF, use:</p>
-<ul>
-<li><a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">eixport::wrf_put</a></li>
-<li><a href="https://atmoschem.github.io/eixport/reference/to_as4wrf.html">eixport::as4wrf</a></li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/emis_wrf.html">vein::emis_wrf</a> will be deprecated.</li>
-</ul>
+<p>when spobj is “character”, it is a path to wrfinput file and then runs eixport::wrf_grid to create a grid based on a wrf_input file.</p>
+<ol style="list-style-type: decimal">
+<li>Create a grid using <code>make_grid</code>.The spobj is the spatial net</li>
+<li>spobj is “character”, it is a path to wrfinput file and the grid will have the size of the wrf_input.</li>
+</ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(net)
 E_CO_STREETSnet &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>,
                              <span class="dt">net =</span> net)
-g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span>
-E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
+g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span></code></pre></div>
+<pre><code>## Longitude points: 23
+## 
+## Latitude points: 19</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
 <pre><code>## Transforming spatial objects to 'sr'</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/spplot">spplot</a></span>(<span class="kw">as</span>(E_CO_g, <span class="st">"Spatial"</span>),
        <span class="kw">c</span>(<span class="st">"V1"</span>, <span class="st">"V9"</span>), <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">draw =</span> T),
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+</div>
+<div id="creating-a-wrfchem-input-file-using-eixport" class="section level3">
+<h3 class="hasAnchor">
+<a href="#creating-a-wrfchem-input-file-using-eixport" class="anchor"></a>Creating a WRFChem Input file using <a href="https://atmoschem.github.io/eixport/">eixport</a>:</h3>
+<ol style="list-style-type: decimal">
+<li>If you created a grid using a wrfinput file and then ran emis_gris to grid your emissions, create a GriddedEmissionsArray and then use</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>
+<a href="https://atmoschem.github.io/eixport/reference/wrf_create.html">eixport::wrf_create</a> to create a wrfchem input file with 0.</li>
+<li>
+<a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">eixport::wrf_put</a> to the wrfchem input file.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eixport<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/eixport/topics/wrf_create">wrf_create</a></span>(<span class="dt">wrfinput_dir =</span> <span class="st">"PathToWrfInput"</span>, <span class="dt">wrfchemi_dir =</span> <span class="st">"OutputPathWrfChemInput"</span>)
+gr &lt;-<span class="st"> </span><span class="kw"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span>(E_CO_g, <span class="dt">rows =</span> <span class="dv">19</span>, <span class="dt">cols =</span> <span class="dv">23</span>, <span class="dt">times =</span> <span class="dv">168</span>, T)
+eixport<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/eixport/topics/wrf_put">wrf_put</a></span>(<span class="dt">file =</span> <span class="st">"PathToWRFChemInputFile, name = "</span>E_CO<span class="st">", POL = gr)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>If you created a grid using a spatial net, use <a href="https://atmoschem.github.io/eixport/reference/to_as4wrf.html">eixport::as4wrf</a> and get the NCL script AS4WRF.ncl from the developer.</li>
+</ol>
 <p>Thanks and enjoy VEIN!</p>
 </div>
 </div>
