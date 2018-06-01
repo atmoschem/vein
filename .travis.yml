@@ -30,7 +30,7 @@ before_install:
   # units/udunits2 dependency:
   - sudo apt-get install --yes libudunits2-dev
   # sf dependencies:
-  - sudo apt-get install --yes libproj-dev libgeos-dev libgdal-dev gdal-bin
+  - sudo apt-get install --yes libproj-dev libgeos-dev libgdal-dev gdal-bin libnetcdf-dev  netcdf-bin
 
 warnings_are_errors: false
 
