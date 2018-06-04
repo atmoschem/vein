@@ -21,8 +21,13 @@
 #' data(net)
 #' grid <- make_grid(net, width = 0.5/102.47) #500 mts
 #' plot(grid, axes = TRUE) #class sf
+#' wrf <- paste(system.file("extdata", package = "eixport"),
+#' "/wrfinput_d02", sep="")
+#' gwrf  <- make_grid(wrf)
+#' plot(gwrf, axes = TRUE)
+#'
 #' }
-make_grid <- function(spobj, width, height = width,  polygon, crs, ...){
+make_grid <- function(spobj, width, height = width,  polygon, crs = 4326, ...){
   if(!missing(polygon)){
     .Deprecated(msg = "'polygon' is deprecated")
   }
@@ -39,8 +44,8 @@ makinggrid <- function (x,
   bb = sf::st_bbox(x)
   nx = ceiling((bb[3] - offset[1])/cellsize[1])
   ny = ceiling((bb[4] - offset[2])/cellsize[2])
-  cat(paste0("Longitude points: ", nx, "\n",
-             "Latitude points: ", ny, "\n\n"))
+  cat(paste0("Number of lon points: ", nx, "\n",
+             "Number of lat points: ", ny, "\n\n"))
   xc = offset[1] + (0:nx) * cellsize[1]
   yc = offset[2] + (0:ny) * cellsize[2]
 
@@ -65,7 +70,7 @@ g <- makinggrid(x = net, cellsize = c(width, height))
   gg <- eixport::wrf_grid(spobj,
                           type = "wrfinput",
                           matrix = F,
-                          epsg = sf::st_crs(spobj))
+                          epsg = crs)
   return(gg)
 }
 }
