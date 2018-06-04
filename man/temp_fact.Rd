@@ -4,15 +4,17 @@
 \alias{temp_fact}
 \title{Expansion of hourly traffic data}
 \usage{
-temp_fact(q, pro)
+temp_fact(q, pro, net)
 }
 \arguments{
-\item{q}{traffic data per each link}
+\item{q}{Numeric; traffic data per each link}
 
-\item{pro}{expansion factors data-frames}
+\item{pro}{Numeric; expansion factors data-frames}
+
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 }
 \value{
-data-frames of expanded traffic
+data-frames of expanded traffic or sf.
 }
 \description{
 \code{temp_fact} is a matrix multiplication between traffic and
@@ -26,5 +28,7 @@ data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 plot(pc_week)
+pc_weeksf <- temp_fact(net$ldv+net$hdv, pc_profile, net = net)
+plot(pc_weeksf)
 }
 }

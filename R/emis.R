@@ -1,4 +1,4 @@
-#' Estimation of hourly emissions
+#' Estimation of emissions
 #'
 #' @description \code{emis} estimates vehicular emissions as the product of the
 #' vehicles on a road, length of the road, emission factor avaliated at the
@@ -11,12 +11,19 @@
 #' @param ef List of functions of emission factors
 #' @param speed Speed data-frame with number of columns as hours
 #' @param agemax Age of oldest vehicles for that category
-#' @param profile Numerical or dataframe with nrows equal to 24 and ncol 7 day of the week
-#' @param hour Number of considered hours in estimation
+#' @param profile Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
+#' the week
+#' @param hour Number of considered hours in estimation. Default value us number
+#' of rows of profile
 #' @param day Number of considered days in estimation
 #' @param array When FALSE produces a dataframe of the estimation. When TRUE expects a
 #' profile as a dataframe producing an array with dimensions (streets x columns x hours x days)
 #' @return emission estimation  g/h
+#' @note If the user apply a top-down approach, the resulting units will be
+#' according its own data. For instance, if the vehicles are veh/day, the units
+#' of the emissions implicitly will be g/day.
+#' Hour and day will be deprecate because they can be infered from the profile
+#' matrix.
 #' @export
 #' @examples \dontrun{
 #' # Do not run
@@ -31,6 +38,29 @@
 #'           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
 #' veh <- data.frame(PC_G = PC_G)
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
+#' # Estimation for morning rush hour and local emission factors
+#' speed <- data.frame(S8 = net$ps)
+#' lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
+#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+#'              profile = 1)
+#' # Estimation for 168 hour and local factors
+#' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+#' lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
+#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+#'              profile = profiles$PC_JUNE_2014)
+#' summary(E_CO)
+#' # Estimation for 168 hour and COPERT factors
+#' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+#' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+#' euro <- as.character(fe2015[fe2015$Pollutant=="CO", "Euro_LDV"])
+#' lef <- lapply(1:length(euro), function(i) {
+#' ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G", p = "CO",
+#'              eu= euro[i], show.equation = FALSE)
+#' })
+#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+#'              profile = profiles$PC_JUNE_2014)
+#' # Estimation for 168 hour and scaled factors
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
@@ -58,13 +88,15 @@
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
 #'                hour = 2, day = 1)
 #' }
-emis <- function (veh, lkm, ef, speed = 34,
-                  agemax = if (!inherits(x = veh, what = "list")) {
-                    ncol(veh)
-                    } else {
-                      ncol(veh[[1]])
-                    },
-                  profile, hour = 24, day = 7,
+emis <- function (veh,
+                  lkm,
+                  ef,
+                  speed = 34,
+                  agemax = ifelse(is.data.frame(veh), ncol(veh),
+                      ncol(veh[[1]])),
+                  profile,
+                  hour = nrow(profile),
+                  day = ncol(profile),
                   array = T) {
   if(units(lkm)$numerator == "m" ){
     stop("Units of lkm is 'm'")
@@ -80,7 +112,16 @@ emis <- function (veh, lkm, ef, speed = 34,
     for (i  in 1:ncol(veh) ) {
       veh[,i] <- as.numeric(veh[,i])
     }
-    if(ncol(veh) != length(ef)){
+
+    if(!missing(profile) & is.data.frame(profile)){
+      profile <- profile
+    } else if(!missing(profile) & is.matrix(profile)){
+      profile <- profile
+    } else if(!missing(profile) & is.vector(profile)){
+      profile <- matrix(profile, ncol = 1)
+    }
+
+      if(ncol(veh) != length(ef)){
       message("Number of columns of 'veh' is different than length of 'ef'")
       message("adjusting length of ef to the number of colums of 'veh'\n")
       if(ncol(veh) > length(ef)){
@@ -112,7 +153,7 @@ emis <- function (veh, lkm, ef, speed = 34,
             lapply(1:hour,function(i){
               simplify2array(
                 lapply(1:agemax, function(k){
-                  veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
+                  veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i*j])
                   }) ) }) ) }) )
       message(round(sum(d, na.rm = T)/1000,2),
               " kg emissions in ", hour, " hours and ", day, " days")

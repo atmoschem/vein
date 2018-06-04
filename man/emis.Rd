@@ -2,11 +2,11 @@
 % Please edit documentation in R/emis.R
 \name{emis}
 \alias{emis}
-\title{Estimation of hourly emissions}
+\title{Estimation of emissions}
 \usage{
-emis(veh, lkm, ef, speed = 34, agemax = if (!inherits(x = veh, what =
-  "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile, hour = 24,
-  day = 7, array = T)
+emis(veh, lkm, ef, speed = 34, agemax = ifelse(is.data.frame(veh),
+  ncol(veh), ncol(veh[[1]])), profile, hour = nrow(profile),
+  day = ncol(profile), array = T)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
@@ -21,9 +21,11 @@ The number of rows is equal to the number of streets link}
 
 \item{agemax}{Age of oldest vehicles for that category}
 
-\item{profile}{Numerical or dataframe with nrows equal to 24 and ncol 7 day of the week}
+\item{profile}{Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
+the week}
 
-\item{hour}{Number of considered hours in estimation}
+\item{hour}{Number of considered hours in estimation. Default value us number
+of rows of profile}
 
 \item{day}{Number of considered days in estimation}
 
@@ -37,6 +39,13 @@ emission estimation  g/h
 \code{emis} estimates vehicular emissions as the product of the
 vehicles on a road, length of the road, emission factor avaliated at the
 respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
+}
+\note{
+If the user apply a top-down approach, the resulting units will be
+according its own data. For instance, if the vehicles are veh/day, the units
+of the emissions implicitly will be g/day.
+Hour and day will be deprecate because they can be infered from the profile
+matrix.
 }
 \examples{
 \dontrun{
@@ -52,6 +61,29 @@ PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
 veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
+# Estimation for morning rush hour and local emission factors
+speed <- data.frame(S8 = net$ps)
+lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+             profile = 1)
+# Estimation for 168 hour and local factors
+pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+             profile = profiles$PC_JUNE_2014)
+summary(E_CO)
+# Estimation for 168 hour and COPERT factors
+pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+euro <- as.character(fe2015[fe2015$Pollutant=="CO", "Euro_LDV"])
+lef <- lapply(1:length(euro), function(i) {
+ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G", p = "CO",
+             eu= euro[i], show.equation = FALSE)
+})
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+             profile = profiles$PC_JUNE_2014)
+# Estimation for 168 hour and scaled factors
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)

@@ -18,7 +18,6 @@
 #' @keywords cold emission factors
 #' @export
 #' @examples {
-#' V <- 0:150
 #' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "I", p = "CO")
 #' ef1(10)
 #' }

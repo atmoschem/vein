@@ -1,7 +1,109 @@
 NEWS
 ===========
 
-# vein 0.3.11 (Release date: 2018-03-09)
+# vein 0.3.31 (Release date: 2018-06-01)
+
+- Fix #69. Now make_grid prints the number of Longitude and Latitude cells
+(points). when spobj is "character", it is a path to wrfinput file and
+then runs eixport::wrf_grid to create a grid based on a wrf_input file.
+
+## vein 0.3.30 (Release date: 2018-05-26)
+
+- Prevent emis_grid to sum 1 + NA or 1 + NaN. Now it would be 1 + 0.
+- Also, emis_merge now it is conservative.
+- Deprecate emis_wrf in favout of eixport functions  to_wrf and to_as4wrf.
+
+## vein 0.3.29 (Release date: 2018-05-25)
+
+- Fix emis_merge.
+
+## vein 0.3.28 (Release date: 2018-05-24)
+
+- Adds argument as_df in vkm. This allows to transform the resulting
+array into with dimensions rows  = streets and columns  = hours x days.
+- Removes array requirement on emis_paved.
+- Add speciation PM pmiag for WRF Chem: E_SO4i, E_SO4j, E_NO3i, E_NO3j, E_MP2.5i
+E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj , H2O.
+
+## vein 0.3.27 (Release date: 2018-05-23)
+
+- fix emis_merge. 
+
+## vein 0.3.26 (Release date: 2018-05-20)
+
+- fix #87 and #88
+
+## vein 0.3.25 (Release date: 2018-05-19)
+
+- Add factors of metals and NMHC for speed functions.
+
+## vein 0.3.24 (Release date: 2018-05-17)
+
+- Add factors of Dioxins and furans: PCDD, PCDF and PCB expressed as 
+(g equivalent toxicity / km).
+
+## vein 0.3.23 (Release date: 2018-05-16)
+
+- Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and
+persistent organi pollutants (POPs) in ef_hdv_speed.
+
+## vein 0.3.22 (Release date: 2018-05-15)
+
+- Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and
+persistent organi pollutants (POPs) in ef_ldv_speed.
+- Add contributing.
+- remove warning about df in ef_ldv_scaled 
+
+## vein 0.3.21 (Release date: 2018-05-14)
+
+- Fix #84, #75, and #44. Add emission factors of CO2, SO2, NMHC and CH4.
+
+## vein 0.3.20 (Release date: 2018-05-13)
+
+- Fix #85. Add corrections in emis_wear.
+- Add test for emis_wear.
+
+## vein 0.3.19 (Release date: 2018-05-05)
+
+- Fix #82.
+
+## vein 0.3.18 (Release date: 2018-05-01)
+
+- add fuel_corr function #65.
+
+## vein 0.3.17 (Release date: 2018-04-22)
+
+- add net argument in temp_fact, netspeed and emis_post #70.
+
+## vein 0.3.16 (Release date: 2018-04-09)
+
+- fix bug in post.R by inventory.
+
+## vein 0.3.15 (Release date: 2018-04-01)
+
+- ef_wear and emis_wear updated.
+- age* functions now incldues default name "veh"
+
+## vein 0.3.14 (Release date: 2018-03-31)
+
+- emis_paved now includes default values for k = 0.62 g/km,
+sL1 = 0.6 (g/m^2), sL2 = 0.2 (g/m^2), sL3 = 0.06 (g/m^2), sL4 = 0.03 (g/m^2).
+- profile in emis, vkm and emis_cold checks for data.frame, matrix and if its a vector, it is transformed into matrix.
+
+## vein 0.3.13 (Release date: 2018-03-28)
+
+- emis_grid internally filters inputs columns keeping only numeric
+columns.
+
+## vein 0.3.12 (Release date: 2018-03-25)
+
+- Change default values of hour and day in emis* functions (fix #76).
+- Add tests.
+- emis_post now derives hours and days from EmissionsArray.
+- Inventory includes argument rush.hour for creating a template for estimations
+of only rush hour.
+
+## vein 0.3.11 (Release date: 2018-03-09)
 
 ### vein 0.3.10 (Release date: 2018-03-09)
 

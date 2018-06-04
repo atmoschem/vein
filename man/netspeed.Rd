@@ -4,7 +4,7 @@
 \alias{netspeed}
 \title{Calculate speeds of traffic network}
 \usage{
-netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
+netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, net,
   scheme = FALSE, distance = "km", time = "h", isList)
 }
 \arguments{
@@ -22,6 +22,8 @@ netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
 
 \item{beta}{Parameter of BPR curves}
 
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
+
 \item{scheme}{Logical to create a Speed data-frame with 24 hours and a
 default  profile. It needs ffs and ps:
 \tabular{rl}{
@@ -34,14 +36,15 @@ default  profile. It needs ffs and ps:
   22:00-00:00 \tab ffs\cr
 }}
 
-\item{distance}{Character specifying the units for distance. Default is "km"}
+\item{distance}{Deprecated. Character specifying the units for distance.
+Default is "km"}
 
-\item{time}{Character specifying the units for time Default is "h".}
+\item{time}{Deprecated. Character specifying the units for time Default is "h".}
 
 \item{isList}{Deprecated}
 }
 \value{
-dataframe speeds with units.
+dataframe speeds with units or sf.
 }
 \description{
 \code{netspeed} Creates a dataframe of speeds fir diferent hours
@@ -52,11 +55,15 @@ and each link based on morning rush traffic data
 data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
-df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 class(df)
 plot(df) #plot of the average speed at each hour, +- sd
 df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)
 class(df)
 plot(df) #plot of the average speed at each hour, +- sd
+dfsf <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)
+class(dfsf)
+head(dfsf)
+plot(dfsf) #plot of the average speed at each hour, +- sd
 }
 }

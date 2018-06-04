@@ -11,6 +11,7 @@
 #' @param day Number of considered days in estimation
 #' @param array When FALSE produces a dataframe of the estimation. When TRUE expects a
 #' profile as a dataframe producing an array with dimensions (streets x hours x days)
+#' @param as_df Logical; when TRUE transform returning array in data.frame (streets x hour*days)
 #' @return emission estimation  of vkm
 #' @export
 #' @examples {
@@ -20,13 +21,24 @@
 #' vkms  <- vkm(veh = pc, lkm = lkm, profile = pro)
 #' class(vkms)
 #' dim(vkms)
+#' vkms2  <- vkm(veh = pc, lkm = lkm, profile = pro, as_df = FALSE)
+#' class(vkms2)
+#' dim(vkms2)
 #' }
 vkm <- function (veh,
                  lkm,
                  profile,
-                 hour = 24,
-                 day = 7,
-                 array = T) {
+                 hour = nrow(profile),
+                 day = ncol(profile),
+                 array = TRUE,
+                 as_df = TRUE) {
+  if(!missing(profile) & is.data.frame(profile)){
+    profile <- profile
+  } else if(!missing(profile) & is.matrix(profile)){
+    profile <- profile
+  } else if(!missing(profile) & is.vector(profile)){
+    profile <- matrix(profile, ncol = 1)
+  }
   veh <- as.numeric(veh)
   lkm <- as.numeric(lkm)
   if(array == F){
@@ -42,7 +54,15 @@ vkm <- function (veh,
         veh* profile[i, j]*lkm
       }))
     }))
-    return(d)
+    if(as_df == FALSE){
+      return(d)
+    } else {
+      df <- as.data.frame(matrix(data = as.vector(d),
+                             nrow = length(d[,1, 1]),
+                             ncol = length(d[1, , ])))
+      names(df) <- paste0("h",1:length(df))
+      return(df)
+    }
   }
 }
 

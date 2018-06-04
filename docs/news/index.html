@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • vein</title>
+<title>Changelog • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Changelog" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">vein</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">vein</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,18 +71,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,17 +86,182 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="contents">
+    <div id="vein-0-3-31-release-date-2018-06-01" class="section level1">
+<h1 class="page-header">
+<a href="#vein-0-3-31-release-date-2018-06-01" class="anchor"></a>vein 0.3.31 (Release date: 2018-06-01)<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fix #69. Now make_grid prints the number of Longitude and Latitude cells (points). when spobj is “character”, it is a path to wrfinput file and then runs eixport::wrf_grid to create a grid based on a wrf_input file.</li>
+</ul>
+<div id="vein-0-3-30-release-date-2018-05-26" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-30-release-date-2018-05-26" class="anchor"></a>vein 0.3.30 (Release date: 2018-05-26)</h2>
+<ul>
+<li>Prevent emis_grid to sum 1 + NA or 1 + NaN. Now it would be 1 + 0.</li>
+<li>Also, emis_merge now it is conservative.</li>
+<li>Deprecate emis_wrf in favout of eixport functions to_wrf and to_as4wrf.</li>
+</ul>
+</div>
+<div id="vein-0-3-29-release-date-2018-05-25" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-29-release-date-2018-05-25" class="anchor"></a>vein 0.3.29 (Release date: 2018-05-25)</h2>
+<ul>
+<li>Fix emis_merge.</li>
+</ul>
+</div>
+<div id="vein-0-3-28-release-date-2018-05-24" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-28-release-date-2018-05-24" class="anchor"></a>vein 0.3.28 (Release date: 2018-05-24)</h2>
+<ul>
+<li>Adds argument as_df in vkm. This allows to transform the resulting array into with dimensions rows = streets and columns = hours x days.</li>
+<li>Removes array requirement on emis_paved.</li>
+<li>Add speciation PM pmiag for WRF Chem: E_SO4i, E_SO4j, E_NO3i, E_NO3j, E_MP2.5i E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj , H2O.</li>
+</ul>
+</div>
+<div id="vein-0-3-27-release-date-2018-05-23" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-27-release-date-2018-05-23" class="anchor"></a>vein 0.3.27 (Release date: 2018-05-23)</h2>
+<ul>
+<li>fix emis_merge.</li>
+</ul>
+</div>
+<div id="vein-0-3-26-release-date-2018-05-20" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-26-release-date-2018-05-20" class="anchor"></a>vein 0.3.26 (Release date: 2018-05-20)</h2>
+<ul>
+<li>fix #87 and #88</li>
+</ul>
+</div>
+<div id="vein-0-3-25-release-date-2018-05-19" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-25-release-date-2018-05-19" class="anchor"></a>vein 0.3.25 (Release date: 2018-05-19)</h2>
+<ul>
+<li>Add factors of metals and NMHC for speed functions.</li>
+</ul>
+</div>
+<div id="vein-0-3-24-release-date-2018-05-17" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-24-release-date-2018-05-17" class="anchor"></a>vein 0.3.24 (Release date: 2018-05-17)</h2>
+<ul>
+<li>Add factors of Dioxins and furans: PCDD, PCDF and PCB expressed as (g equivalent toxicity / km).</li>
+</ul>
+</div>
+<div id="vein-0-3-23-release-date-2018-05-16" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-23-release-date-2018-05-16" class="anchor"></a>vein 0.3.23 (Release date: 2018-05-16)</h2>
+<ul>
+<li>Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs) in ef_hdv_speed.</li>
+</ul>
+</div>
+<div id="vein-0-3-22-release-date-2018-05-15" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-22-release-date-2018-05-15" class="anchor"></a>vein 0.3.22 (Release date: 2018-05-15)</h2>
+<ul>
+<li>Emission factors of Also polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs) in ef_ldv_speed.</li>
+<li>Add contributing.</li>
+<li>remove warning about df in ef_ldv_scaled</li>
+</ul>
+</div>
+<div id="vein-0-3-21-release-date-2018-05-14" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-21-release-date-2018-05-14" class="anchor"></a>vein 0.3.21 (Release date: 2018-05-14)</h2>
+<ul>
+<li>Fix #84, #75, and #44. Add emission factors of CO2, SO2, NMHC and CH4.</li>
+</ul>
+</div>
+<div id="vein-0-3-20-release-date-2018-05-13" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-20-release-date-2018-05-13" class="anchor"></a>vein 0.3.20 (Release date: 2018-05-13)</h2>
+<ul>
+<li>Fix #85. Add corrections in emis_wear.</li>
+<li>Add test for emis_wear.</li>
+</ul>
+</div>
+<div id="vein-0-3-19-release-date-2018-05-05" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-19-release-date-2018-05-05" class="anchor"></a>vein 0.3.19 (Release date: 2018-05-05)</h2>
+<ul>
+<li>Fix #82.</li>
+</ul>
+</div>
+<div id="vein-0-3-18-release-date-2018-05-01" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-18-release-date-2018-05-01" class="anchor"></a>vein 0.3.18 (Release date: 2018-05-01)</h2>
+<ul>
+<li>add fuel_corr function #65.</li>
+</ul>
+</div>
+<div id="vein-0-3-17-release-date-2018-04-22" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-17-release-date-2018-04-22" class="anchor"></a>vein 0.3.17 (Release date: 2018-04-22)</h2>
+<ul>
+<li>add net argument in temp_fact, netspeed and emis_post #70.</li>
+</ul>
+</div>
+<div id="vein-0-3-16-release-date-2018-04-09" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-16-release-date-2018-04-09" class="anchor"></a>vein 0.3.16 (Release date: 2018-04-09)</h2>
+<ul>
+<li>fix bug in post.R by inventory.</li>
+</ul>
+</div>
+<div id="vein-0-3-15-release-date-2018-04-01" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-15-release-date-2018-04-01" class="anchor"></a>vein 0.3.15 (Release date: 2018-04-01)</h2>
+<ul>
+<li>ef_wear and emis_wear updated.</li>
+<li>age* functions now incldues default name “veh”</li>
+</ul>
+</div>
+<div id="vein-0-3-14-release-date-2018-03-31" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-14-release-date-2018-03-31" class="anchor"></a>vein 0.3.14 (Release date: 2018-03-31)</h2>
+<ul>
+<li>emis_paved now includes default values for k = 0.62 g/km, sL1 = 0.6 (g/m^2), sL2 = 0.2 (g/m^2), sL3 = 0.06 (g/m^2), sL4 = 0.03 (g/m^2).</li>
+<li>profile in emis, vkm and emis_cold checks for data.frame, matrix and if its a vector, it is transformed into matrix.</li>
+</ul>
+</div>
+<div id="vein-0-3-13-release-date-2018-03-28" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-13-release-date-2018-03-28" class="anchor"></a>vein 0.3.13 (Release date: 2018-03-28)</h2>
+<ul>
+<li>emis_grid internally filters inputs columns keeping only numeric columns.</li>
+</ul>
+</div>
+<div id="vein-0-3-12-release-date-2018-03-25" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-12-release-date-2018-03-25" class="anchor"></a>vein 0.3.12 (Release date: 2018-03-25)</h2>
+<ul>
+<li>Change default values of hour and day in emis* functions (fix #76).</li>
+<li>Add tests.</li>
+<li>emis_post now derives hours and days from EmissionsArray.</li>
+<li>Inventory includes argument rush.hour for creating a template for estimations of only rush hour.</li>
+</ul>
+</div>
+<div id="vein-0-3-11-release-date-2018-03-09" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-3-11-release-date-2018-03-09" class="anchor"></a>vein 0.3.11 (Release date: 2018-03-09)</h2>
+<div id="vein-0-3-10-release-date-2018-03-09" class="section level3">
+<h3 class="hasAnchor">
+<a href="#vein-0-3-10-release-date-2018-03-09" class="anchor"></a>vein 0.3.10 (Release date: 2018-03-09)</h3>
+<ul>
+<li>fix #74.</li>
+<li>Add tests.</li>
+</ul>
+</div>
+</div>
+</div>
     <div id="vein-0-3-10-release-date-2018-03-03" class="section level1">
-<h1 class="hasAnchor">
-<a href="#vein-0-3-10-release-date-2018-03-03" class="anchor"></a>vein 0.3.10 (Release date: 2018-03-03)</h1>
+<h1 class="page-header">
+<a href="#vein-0-3-10-release-date-2018-03-03" class="anchor"></a>vein 0.3.10 (Release date: 2018-03-03)<small> Unreleased </small>
+</h1>
 <div id="vein-0-3-10-release-date-2018-03-03-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0-3-10-release-date-2018-03-03-1" class="anchor"></a>vein 0.3.10 (Release date: 2018-03-03)</h3>
@@ -101,8 +272,9 @@
 </div>
 </div>
     <div id="vein-0-3-9-release-date-2018-03-01" class="section level1">
-<h1 class="hasAnchor">
-<a href="#vein-0-3-9-release-date-2018-03-01" class="anchor"></a>vein 0.3.9 (Release date: 2018-03-01)</h1>
+<h1 class="page-header">
+<a href="#vein-0-3-9-release-date-2018-03-01" class="anchor"></a>vein 0.3.9 (Release date: 2018-03-01)<small> 2018-03-01 </small>
+</h1>
 <div id="vein-0-3-9-release-date-2018-03-01-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0-3-9-release-date-2018-03-01-1" class="anchor"></a>vein 0.3.9 (Release date: 2018-03-01)</h3>
@@ -114,8 +286,9 @@
 </div>
 </div>
     <div id="vein-0-3-8-release-date-2018-02-27" class="section level1">
-<h1 class="hasAnchor">
-<a href="#vein-0-3-8-release-date-2018-02-27" class="anchor"></a>vein 0.3.8 (Release date: 2018-02-27)</h1>
+<h1 class="page-header">
+<a href="#vein-0-3-8-release-date-2018-02-27" class="anchor"></a>vein 0.3.8 (Release date: 2018-02-27)<small> Unreleased </small>
+</h1>
 <div id="vein-0-3-8-release-date-2018-02-27-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0-3-8-release-date-2018-02-27-1" class="anchor"></a>vein 0.3.8 (Release date: 2018-02-27)</h3>
@@ -126,8 +299,9 @@
 </div>
 </div>
     <div id="vein-0-3-7-release-date-2018-02-26" class="section level1">
-<h1 class="hasAnchor">
-<a href="#vein-0-3-7-release-date-2018-02-26" class="anchor"></a>vein 0.3.7 (Release date: 2018-02-26)</h1>
+<h1 class="page-header">
+<a href="#vein-0-3-7-release-date-2018-02-26" class="anchor"></a>vein 0.3.7 (Release date: 2018-02-26)<small> Unreleased </small>
+</h1>
 <div id="vein-0-3-7-release-date-2018-02-26-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0-3-7-release-date-2018-02-26-1" class="anchor"></a>vein 0.3.7 (Release date: 2018-02-26)</h3>
@@ -138,8 +312,9 @@
 </div>
 </div>
     <div id="vein-0-3-6-release-date-2018-02-22" class="section level1">
-<h1 class="hasAnchor">
-<a href="#vein-0-3-6-release-date-2018-02-22" class="anchor"></a>vein 0.3.6 (Release date: 2018-02-22)</h1>
+<h1 class="page-header">
+<a href="#vein-0-3-6-release-date-2018-02-22" class="anchor"></a>vein 0.3.6 (Release date: 2018-02-22)<small> Unreleased </small>
+</h1>
 <div id="vein-0-3-6-release-date-2018-02-22-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0-3-6-release-date-2018-02-22-1" class="anchor"></a>vein 0.3.6 (Release date: 2018-02-22)</h3>
@@ -187,8 +362,9 @@
 </div>
 </div>
     <div id="vein-0-3-0-release-date-2018-02-05" class="section level1">
-<h1 class="hasAnchor">
-<a href="#vein-0-3-0-release-date-2018-02-05" class="anchor"></a>vein 0.3.0 (Release date: 2018-02-05)</h1>
+<h1 class="page-header">
+<a href="#vein-0-3-0-release-date-2018-02-05" class="anchor"></a>vein 0.3.0 (Release date: 2018-02-05)<small> Unreleased </small>
+</h1>
 <div id="vein-0-3-0-release-date-2018-02-05-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0-3-0-release-date-2018-02-05-1" class="anchor"></a>vein 0.3.0 (Release date: 2018-02-05)</h3>
@@ -417,8 +593,9 @@
 </div>
 </div>
     <div id="vein-0-2-2-3-release-date-2017-08-03" class="section level1">
-<h1 class="hasAnchor">
-<a href="#vein-0-2-2-3-release-date-2017-08-03" class="anchor"></a>vein 0.2.2-3 (Release date: 2017-08-03)</h1>
+<h1 class="page-header">
+<a href="#vein-0-2-2-3-release-date-2017-08-03" class="anchor"></a>vein 0.2.2-3 (Release date: 2017-08-03)<small> 2017-08-03 </small>
+</h1>
 <ul>
 <li>speed in emis and emis cold is now a dataframe with columns as number of hours.</li>
 <li>netspeed argument isList changed to scheme</li>
@@ -473,8 +650,9 @@
 </div>
 </div>
     <div id="remi-0-1-0-0-release-date-2016-10-19" class="section level1">
-<h1 class="hasAnchor">
-<a href="#remi-0-1-0-0-release-date-2016-10-19" class="anchor"></a>REMI 0.1.0-0 (Release date: 2016-10-19)</h1>
+<h1 class="page-header">
+<a href="#remi-0-1-0-0-release-date-2016-10-19" class="anchor"></a>REMI 0.1.0-0 (Release date: 2016-10-19)<small> Unreleased </small>
+</h1>
 <ul>
 <li>REMI released.</li>
 <li>Prior REMI 0.1.0-0 (Release date: 2016-10-19)</li>
@@ -482,14 +660,13 @@
 </li>
 </ul>
 </div>
-    NA
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#vein-0-3-31-release-date-2018-06-01">0.3.31</a></li>
         <li><a href="#vein-0-3-10-release-date-2018-03-03">0.3.10</a></li>
         <li><a href="#vein-0-3-9-release-date-2018-03-01">0.3.9</a></li>
         <li><a href="#vein-0-3-8-release-date-2018-02-27">0.3.8</a></li>
@@ -498,7 +675,6 @@
         <li><a href="#vein-0-3-0-release-date-2018-02-05">0.3.0</a></li>
         <li><a href="#vein-0-2-2-3-release-date-2017-08-03">0.2.2-3</a></li>
         <li><a href="#remi-0-1-0-0-release-date-2016-10-19">0.1.0-0</a></li>
-        <li><a href="#NA">NA</a></li>
       </ul>
     </div>
   </div>
@@ -517,5 +693,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

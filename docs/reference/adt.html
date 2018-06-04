@@ -18,13 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Average daily traffic (ADT) from hourly traffic data. — adt" />
+
+<meta property="og:description" content="This function calculates ADT based on hourly traffic data. The
+input traffic data is usually for morning rush hours." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">vein</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">vein</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,18 +75,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,20 +90,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Average daily traffic (ADT) from hourly traffic data.</h1>
+    
+    <div class="hidden name"><code>adt.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function calculates ADT based on hourly traffic data. The
 input traffic data is usually for morning rush hours.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>adt</span>(<span class='no'>pc</span>, <span class='no'>lcv</span>, <span class='no'>hgv</span>, <span class='no'>bus</span>, <span class='no'>mc</span>, <span class='no'>p_pc</span>, <span class='no'>p_lcv</span>, <span class='no'>p_hgv</span>, <span class='no'>p_bus</span>, <span class='no'>p_mc</span>, <span class='kw'>expanded</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -118,23 +132,23 @@ input traffic data is usually for morning rush hours.</p>
     </tr>
     <tr>
       <th>p_pc</th>
-      <td><p>data-frame profile for passenger cars</p></td>
+      <td><p>data-frame profile for passenger cars, 24 hours only.</p></td>
     </tr>
     <tr>
       <th>p_lcv</th>
-      <td><p>data-frame profile for light commercial vehicles</p></td>
+      <td><p>data-frame profile for light commercial vehicles, 24 hours only.</p></td>
     </tr>
     <tr>
       <th>p_hgv</th>
-      <td><p>data-frame profile for heavy good vehicles or trucks</p></td>
+      <td><p>data-frame profile for heavy good vehicles or trucks, 24 hours only.</p></td>
     </tr>
     <tr>
       <th>p_bus</th>
-      <td><p>data-frame profile for bus</p></td>
+      <td><p>data-frame profile for bus, 24 hours only.</p></td>
     </tr>
     <tr>
       <th>p_mc</th>
-      <td><p>data-frame profile for motorcycles</p></td>
+      <td><p>data-frame profile for motorcycles, 24 hours only.</p></td>
     </tr>
     <tr>
       <th>expanded</th>
@@ -178,7 +192,7 @@ of expanded traffic</p>
             <span class='fl'>TRUE</span>)
 <span class='fu'>head</span>(<span class='no'>adt2</span>)
 <span class='fu'>plot</span>(<span class='no'>adt2</span>) <span class='co'># Class Vehicles</span>
-}</div><div class='img'><img src='adt-1.png' alt='' width='700' height='432.632880098887' /></div><div class='img'><img src='adt-2.png' alt='' width='700' height='432.632880098887' /></div><div class='output co'>#&gt; 
+}</div><div class='img'><img src='adt-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='adt-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; Average =  14.07</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -206,5 +220,8 @@ of expanded traffic</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

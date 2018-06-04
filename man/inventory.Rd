@@ -5,10 +5,11 @@
 \title{Inventory function.}
 \usage{
 inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-  scripts = TRUE, show.dir = TRUE, show.scripts = FALSE, clear = TRUE)
+  scripts = TRUE, show.dir = TRUE, show.scripts = FALSE, clear = TRUE,
+  rush.hour = FALSE)
 }
 \arguments{
-\item{name}{one word indicating the name of the main directory for running
+\item{name}{Character, one word indicating the name of the main directory for running
 vein. It is better to write the pull path to the new directory.}
 
 \item{vehcomp}{Vehicular composition of the fleet. It is required a named
@@ -17,14 +18,16 @@ case that tthere are no vehiles for one category of the composition, the name
 should be included with the number zero, for example PC = 0. The maximum
 number allowed is 99 per category.}
 
-\item{scripts}{Boolean value for aggregate or no scripts.}
+\item{scripts}{Logical value for aggregate or no scripts.}
 
-\item{show.dir}{Boolean alue for printing the created directories.}
+\item{show.dir}{Logical value for printing the created directories.}
 
-\item{show.scripts}{Boolean value for printing the created scripts.}
+\item{show.scripts}{Logical value for printing the created scripts.}
 
-\item{clear}{Boolean value for removing recursively the directory and create
+\item{clear}{Logical value for removing recursively the directory and create
 another one.}
+
+\item{rush.hour}{Logical, to create a template for morning rush hour.}
 }
 \value{
 Structure of directories and scripts for automating compilation of
@@ -77,6 +80,6 @@ fleet.
 {
 name = file.path(tempdir(), "YourCity")
 inventory(name = name, show.dir = TRUE, show.scripts = TRUE)
- source(paste0(name, "/main.R"))
+source(paste0(name, "/main.R"))
 }
 }
