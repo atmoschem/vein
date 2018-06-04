@@ -35,7 +35,6 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 }
 \examples{
 {
-V <- 0:150
 ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "I", p = "CO")
 ef1(10)
 }

@@ -1,7 +1,7 @@
 ---
 title: "VEIN model"
 author: "Sergio Ibarra-Espinosa"
-date: "22 de abril de 2017"
+date: "19 de Octubre de 2016"
 output: html_document
 ---
 
@@ -17,9 +17,22 @@ knitr::opts_chunk$set(echo = TRUE)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein) 
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
 
+# Paper 😃 Accepted 😃 on GMD 🎉🎉!
+
+Our paper was just accepted on GMD
+
+https://www.geosci-model-dev-discuss.net/gmd-2017-193/
+
+```{r echo = FALSE}
+knitr::include_graphics("https://i.imgur.com/wp3fi1i.png")
+```
+                         
 
 
-![](https://raw.githubusercontent.com/atmoschem/vein/master/logovein_small.png)
+```{r echo = FALSE, fig.height=5, fig.width=5}
+knitr::include_graphics("https://i.imgur.com/b2lQZzi.jpg")
+```
+
 
 
 
@@ -54,7 +67,6 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-# 0.3.1
 library(devtools) 
 install_github("atmoschem/vein")
 library(vein)
@@ -64,12 +76,53 @@ demo(VEIN)
 or
 
 ```{r eval=F}
-# 0.3.9
 install.packages("vein")
 library(vein)
 ```
 
-## What is new on 0.3.0 ?
+## What is VEIN
+
+Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
+It currently covers the following pollutants in speed functions:
+
+- **Criteria**: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+"Pb", "FC" (Fuel Consumption).
+- **PAH and POP**: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+"benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
+"benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
+"benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
+"dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
+"benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
+"chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
+"dibenzo(ah)anthracene"
+- **Dioxins and Furans**: "PCDD", "PCDF", "PCB".
+- **Metals**: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn".
+- **NMHC**:
+- _ALKANES_: "ethane", "propane", "butane", "isobutane", "pentane",
+"isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
+"TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
+"alcanes_C10_C12", "alkanes_C13".
+- _CYCLOALKANES_: "cycloalcanes".
+- _ALKENES_: "ethylene", "propylene", "propadiene", "ONE_butene",
+"isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
+"ONE_hexene", "dimethylhexene".
+- _ALKYNES_:"ONE_butine", "propine", "acetylene".
+- _ALDEHYDES_: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+"crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
+"propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
+"o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
+- KETONES: "acetone", "methylethlketone".
+- _AROMATICS_: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+"ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
+"ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
+
+Also, somre Brazilian emission factors and speciations for WRF-Chem, mechanisms:
+
+e_eth	e_hc3	e_hc5	e_hc8	e_ol2	e_olt	e_oli	e_iso	e_tol	e_xyl	e_c2h5oh	e_ald	e_hcho	e_ch3oh	e_ket
+E_SO4i	E_SO4j	E_NO3i	E_NO3j	E_MP2.5i	E_MP2.5j	E_ORGi	E_ORGj	E_ECi	E_ECj	H2O
+
+
+## What is new?
 
 I decided to jump into a new 'minor' version because it brings lots of cool
 improvements.
@@ -88,11 +141,20 @@ improvements.
 - emis and emis_cold adjust length of ef by length of columns of first
 element of the list of data-frames.
 - Revised all examples.
+- returns sf in temp_fact, netspeed and emis_post! (0.3.17)
 
 Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
+**future steps**
 
-### How to use vein
+- Add more support to sf.
+- Estimation of evaporative emissions with Copert Tier 3.
+- More speciations.
+- A book (hopefully released in 2018).
+
+
+
+## How does it work?
 
 VEIN consist of: "Elaboration of vehicular emissions inventories,
     consisting in four stages,
@@ -116,7 +178,7 @@ inventory(name = file.path(tempdir(), "YourCity"), show.dir = T,
 
 Please, read the examples in the documentation of each function and run the demo. 
 
-#### 1) Examples with traffic data:
+### 1) Examples with traffic data:
 
 age functions 
 
@@ -126,17 +188,38 @@ PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
 ```
 
+If you want to know the vehicles per street and by age of use, just
+add the net. Age functions now returns 'sf' objects if the net argument is present.
+
+```{r}
+PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
+sp::spplot(as(PC_E25_1400net, "Spatial"),
+       c("PC_E25_1400_1", "PC_E25_1400_9"),
+       main = "PC by age of use", scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
+```
+
 temporal factors and netspeed
 ```{r}
 data("net")
 data("pc_profile")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
-dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1.5)
 class(dfspeed)
-plot(dfspeed, xlab = "hours") 
+plot(dfspeed, xlab = "Hours", ylab = "Speed [km/h]") 
 ```
 
-#### 2) Emission Factors
+If you want ot check the speed at different hours by street, just add net:
+
+```{r}
+dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
+                       alpha = 1.5, net = net)
+sp::spplot(as(dfspeednet, "Spatial"),
+       c("S1", "S9"), scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
+```
+
+### 2) Emission Factors
 
 ```{r}
 V <- 0:150
@@ -146,7 +229,7 @@ efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 ```
 
-#### 3) Estimation of emissions
+### 3) Estimation of emissions
 
 ```{r}
 euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
@@ -159,47 +242,87 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
 plot(E_CO, xlab = "Hours", ylab = "[g/h]")
 ```
 
-#### 4) Post Emissions
+### 4) Post Emissions
 
 ```{r}
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
-summary(E_CO_STREETS)
 ```
 
-make grid. If you plan to run WRF, uses [eixport::wrf_grid](https://github.com/atmoschem/eixport)
+make a grid. If you plan to run WRF, use:
+
+when spobj is "character", it is a path to wrfinput file and
+then runs eixport::wrf_grid to create a grid based on a wrf_input file.
+
+1) Create a grid using `make_grid`.The spobj is the spatial net
+2) spobj is "character", it is a path to wrfinput file and the grid will have
+the size of the wrf_input.
 
 ```{r}
 data(net)
-net@data <- cbind(net@data, E_CO_STREETS)
-net@data <- net@data[,- c(1:9)]
-g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
-E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
-plot(E_CO_g["V9"], axes = T)
+E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
+                             net = net)
+g <- make_grid(net, 1/102.47/2) #500m in degrees
+E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
+sp::spplot(as(E_CO_g, "Spatial"),
+       c("V1", "V9"), scales = list(draw = T),
+       col.regions = rev(cptcity::cpt()))
+```
+
+### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
+
+1) If you created a grid using a wrfinput file and then ran emis_gris to
+grid your emissions, create a GriddedEmissionsArray and then  use
+
+
+a) [eixport::wrf_create](https://atmoschem.github.io/eixport/reference/wrf_create.html)
+to create a wrfchem input file with 0.
+b) [eixport::wrf_put](https://atmoschem.github.io/eixport/reference/wrf_put.html)
+to the wrfchem input file.
+
+```{r eval = FALSE}
+eixport::wrf_create(wrfinput_dir = "PathToWrfInput", wrfchemi_dir = "OutputPathWrfChemInput")
+gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
+eixport::wrf_put(file = "PathToWRFChemInputFile, name = "E_CO", POL = gr)
 ```
 
 
-###  Issues
+2) If you created a grid using a spatial net, use
+[eixport::as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
+and get the NCL script AS4WRF.ncl from the developer.
 
-If you encounter any issues while using VEIN, please submit your issues to: https://github.com/atmoschem/vein/issues/
 
-If you have any suggestions just let me know to sergio.ibarra@usp.br.
 
 Thanks and enjoy VEIN!
 
-### **future steps**
+## Citation
 
-- Add more support to sf.
-- Estimation of evaporative emissions with Copert Tier 3.
-- More speciations.
-- A book (hopefully released in 2018).
-
-#### Note:
-The paper of vein on GMDD under open review. If you use VEIN, please, cite it:
+If you use VEIN, please, cite it:
 
 Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E.,
   Andrade, M. D. F., and Osses, M. (2017). VEIN v0.2.2: an R
   package for bottom-up Vehicular Emissions Inventories Geosci.
   Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, in
-  review, 2017.
+  accepted, 2017.
 
 https://doi.org/10.5194/gmd-2017-193
+
+
+## Communications, doubts etc
+
+- There is a group about this VEIN here [https://groups.google.com/forum/#!forum/veinmodel](https://groups.google.com/forum/#!forum/veinmodel)
+- Eventually you can ask on [Eart Science Stackoverflow](https://earthscience.stackexchange.com/), 
+
+##  Issues
+
+If you encounter any issues while using VEIN, please submit your issues to: https://github.com/atmoschem/vein/issues/
+
+If you have any suggestions just let me know to sergio.ibarra@usp.br.
+
+
+### Contributing
+
+Please, read [this](https://github.com/atmoschem/vein/blob/master/CONTRIBUTING.md) guide.
+Contributions of all sorts are welcome, issues and pull requests are the preferred ways of sharing them.
+When contributing pull requests, please follow the [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml).
+This project is released with a [Contributor Code of Conduct](https://github.com/atmoschem/vein/blob/master/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+

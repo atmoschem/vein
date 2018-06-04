@@ -17,15 +17,15 @@ adt(pc, lcv, hgv, bus, mc, p_pc, p_lcv, p_hgv, p_bus, p_mc, expanded = FALSE)
 
 \item{mc}{numeric vector for motorcycles}
 
-\item{p_pc}{data-frame profile for passenger cars}
+\item{p_pc}{data-frame profile for passenger cars, 24 hours only.}
 
-\item{p_lcv}{data-frame profile for light commercial vehicles}
+\item{p_lcv}{data-frame profile for light commercial vehicles, 24 hours only.}
 
-\item{p_hgv}{data-frame profile for heavy good vehicles or trucks}
+\item{p_hgv}{data-frame profile for heavy good vehicles or trucks, 24 hours only.}
 
-\item{p_bus}{data-frame profile for bus}
+\item{p_bus}{data-frame profile for bus, 24 hours only.}
 
-\item{p_mc}{data-frame profile for motorcycles}
+\item{p_mc}{data-frame profile for motorcycles, 24 hours only.}
 
 \item{expanded}{boolean argument for returning numeric vector or "Vehicles"}
 }

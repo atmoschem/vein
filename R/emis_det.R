@@ -14,7 +14,9 @@
 #' @keywords deterioration emission factors
 #' @export
 #' @examples \dontrun{
-#' # Do not run
+#' data(fkm)
+#' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
+#' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 #' }
 emis_det <- function(po, cc, eu, km) {
   if (po == "CO" & (eu == "I" | eu == "II") &  cc <= 1400) {

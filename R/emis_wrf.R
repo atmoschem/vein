@@ -1,4 +1,4 @@
-#' Generates emissions dataframe to generate WRF-Chem inputs
+#' Generates emissions dataframe to generate WRF-Chem inputs (Deprecated, use exiport)
 #'
 #' \code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time
 #' and GMT time. This dataframe has the proper format to be used with WRF
@@ -21,7 +21,8 @@
 #' @importFrom sp coordinates spTransform CRS
 #' @return data-frame of gridded emissions  g/h
 #' @export
-#' @note The reference of the emissions assimilation system is Vara-Vela, A.,
+#' @note DEPRECATED, use eixport https://CRAN.R-project.org/package=eixport
+#' The reference of the emissions assimilation system is Vara-Vela, A.,
 #' Andrade, M. F., Kumar, P., Ynoue, R. Y., and Munoz, A. G.: Impact of
 #' vehicular emissions on the formation of fine particles in the Sao Paulo
 #' Metropolitan Area: a numerical study with the WRF-Chem model, Atmos. Chem.
@@ -39,7 +40,9 @@
 #' # Do not run
 #' }
 emis_wrf <- function(sdf,nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist){
-  warning("emis_wrf depends on the NCL script AAS4WRF. To create wrfchemi directly use the package 'eixport' https://CRAN.R-project.org/package=eixport")
+  .Deprecated(new = "to_wrf or to_as4wrf",
+              package = 'eixport',
+              msg = "use the function in 'eixport' https://CRAN.R-project.org/package=eixport")
   if(nr <= 0){
     stop("The argument 'nr' must be positive")
   } else if (islist == FALSE) {

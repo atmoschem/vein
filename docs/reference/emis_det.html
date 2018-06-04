@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Determine deterioration factors for urban conditions — emis_det" />
+
+<meta property="og:description" content="emis_det returns deterioration factors. The emission
+factors comes from the guidelines for developing emission factors of the
+EMEP/EEA air pollutant emission inventory guidebook
+http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+This function subset an internal database of emission factors with each argument" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +60,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">vein</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">vein</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -61,18 +78,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/atmoschem/vein">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,12 +93,15 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Determine deterioration factors for urban conditions</h1>
+    
+    <div class="hidden name"><code>emis_det.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>emis_det</code> returns deterioration factors. The emission
 factors comes from the guidelines for developing emission factors of the
@@ -93,10 +109,11 @@ EMEP/EEA air pollutant emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 This function subset an internal database of emission factors with each argument</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>emis_det</span>(<span class='no'>po</span>, <span class='no'>cc</span>, <span class='no'>eu</span>, <span class='no'>km</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -123,10 +140,11 @@ This function subset an internal database of emission factors with each argument
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-# Do not run
-# }
-</pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>data</span>(<span class='no'>fkm</span>)
+<span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'>cumsum</span>(<span class='no'>pckm</span>)
+<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>])
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -153,5 +171,8 @@ This function subset an internal database of emission factors with each argument
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -19,13 +19,60 @@
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
 #' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
 #' @param eu Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"
-#' @param p Character; pollutant: "CO", "FC", "NOx", "HC" or "PM"
+#' @param p Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+#' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
+#' polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).
+#' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
+#' "Pb", Lead in fuel in ppm.
 #' @param k Numeric; multiplication factor
 #' @param show.equation Logical; option to see or not the equation parameters
 #' @return An emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
 #' @note t = "ALL" and cc == "ALL" works for several pollutants because emission
 #' fators are the same. Some exceptions are with NOx and FC because size of engine.
+#'
+#' \strong{Pollutants}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+#' "Pb", "FC".
+#'
+#' \strong{PAH and POP}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+#' "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
+#' "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
+#' "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
+#' "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
+#' "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
+#' "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
+#' "dibenzo(ah)anthracene" (g/km).
+#'
+#' \strong{Dioxins and furans}: "PCDD", "PCDF" and "PCB" expressed as (g equivalent
+#' toxicity / km).
+#'
+#' \strong{Metals}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
+#'
+#' \strong{NMHC}:
+#'
+#' \emph{ALKANES}: "ethane", "propane", "butane", "isobutane", "pentane",
+#' "isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
+#' "TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
+#' "alcanes_C10_C12", "alkanes_C13".
+#'
+#' \emph{CYCLOALKANES}: "cycloalcanes".
+#'
+#' \emph{ALKENES}: "ethylene", "propylene", "propadiene", "ONE_butene",
+#' "isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
+#' "ONE_hexene", "dimethylhexene".
+#'
+#' \emph{ALKYNES}:"ONE_butine", "propine", "acetylene".
+#'
+#' \emph{ALDEHYDES}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+#' "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
+#' "propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
+#' "o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
+#'
+#' \emph{KETONES}: "acetone", "methylethlketone".
+#'
+#' \emph{AROMATICS}: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+#' "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
+#' "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 #' @export
 #' @examples {
 #' # Do not run
@@ -36,6 +83,26 @@
 #' p = "CO")
 #' efs <- EmissionFactors(ef1(1:150))
 #' plot(Speed(1:150), efs, xlab = "speed[km/h]")
+#'
+#' # Quick view
+#' pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "Pb", "SO2")
+#' f <- sapply(1:length(pol), function(i){
+#' ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)
+#' })
+#' f
+#' # PAH POP
+#' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+#' p = "indeno(1,2,3-cd)pyrene")(10)
+#' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+#' p = "napthalene")(10)
+#'
+#' # Dioxins and Furans
+#' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+#' p = "PCB")(10)
+#'
+#' # NMHC
+#' ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
+#' p = "hexane")(10)
 #'
 #' # List of Copert emission factors for 40 years fleet of Passenger Cars.
 #' # Assuming a euro distribution of euro V, IV, III, II, and I of
@@ -68,7 +135,7 @@
 #' # Motorcycles
 #' V <- 0:150
 #' ef1 <- ef_ldv_speed(v = "Motorcycle",t = "4S", cc = "<=250", f = "G",
-#' eu = "PRE", p = "CO")
+#' eu = "PRE", p = "CO",show.equation = TRUE)
 #' efs <- EmissionFactors(ef1(1:150))
 #' plot(Speed(1:150), efs, xlab = "speed[km/h]")
 #' # euro for motorcycles
@@ -81,34 +148,49 @@
 #' plot(efs, xlab = "age")
 #' lines(efs, type = "l")
 #' }
-ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, k = 1, show.equation = TRUE){
+ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1,
+                         show.equation = FALSE){
   ef_ldv <- sysdata[[1]]
   df <- ef_ldv[ef_ldv$VEH == v &
-              ef_ldv$TYPE == t &
-             ef_ldv$CC == cc &
-             ef_ldv$FUEL == f &
-             ef_ldv$EURO == eu &
-             ef_ldv$POLLUTANT == p, ]
+                 ef_ldv$TYPE == t &
+                 ef_ldv$CC == cc &
+                 ef_ldv$FUEL == f &
+                 ef_ldv$EURO == eu &
+                 ef_ldv$POLLUTANT == p, ]
 
-  lista <- list(a = df$a,
-                b = df$b,
-                c = df$c,
-                d = df$d,
-                e = df$e,
-                f = df$f,
-                Equation = paste0("(",as.character(df$Y), ")", "*", k))
   if (show.equation == TRUE) {
-    print(lista)
+    cat(paste0("a = ", df$a,
+               ", b = ", df$b,
+               ", c = ", df$c,
+               ", d = ", df$d,
+               ", e = ", df$e,
+               ", f = ", df$f, "\n"))
+    cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
   }
-  f1 <- function(V){
-    a <- df$a
-    b <- df$b
-    c <- df$c
-    d <- df$d
-    e <- df$e
-    f <- df$f
-    V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-    eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+  if(p %in% c("SO2","Pb")){
+    f1 <- function(V){
+      a <- df$a
+      b <- df$b
+      c <- df$c
+      d <- df$d
+      e <- df$e
+      f <- df$f
+      x <- x
+      V <- ifelse(V < df$MINV, df$MINV,
+                  ifelse(V > df$MAXV, df$MAXV, V))
+      eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+    }
+  } else {
+    f1 <- function(V){
+      a <- df$a
+      b <- df$b
+      c <- df$c
+      d <- df$d
+      e <- df$e
+      f <- df$f
+      V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+      eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+    }
   }
   return(f1)
 }

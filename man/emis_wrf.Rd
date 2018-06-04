@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis_wrf.R
 \name{emis_wrf}
 \alias{emis_wrf}
-\title{Generates emissions dataframe to generate WRF-Chem inputs}
+\title{Generates emissions dataframe to generate WRF-Chem inputs (Deprecated, use exiport)}
 \usage{
 emis_wrf(sdf, nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist)
 }
@@ -36,6 +36,7 @@ assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
 by Vera-Vala et al (2016)
 }
 \note{
+DEPRECATED, use eixport https://CRAN.R-project.org/package=eixport
 The reference of the emissions assimilation system is Vara-Vela, A.,
 Andrade, M. F., Kumar, P., Ynoue, R. Y., and Munoz, A. G.: Impact of
 vehicular emissions on the formation of fine particles in the Sao Paulo
