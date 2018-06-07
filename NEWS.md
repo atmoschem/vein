@@ -1,11 +1,15 @@
 NEWS
 ===========
 
-# vein 0.3.32 (Release date: 2018-06-04)
+# vein 0.3.33 (Release date: 2018-06-06)
 
-- make_grid with wrfinput fixed. Fix demo.
+- Fix demo. Add message in emis_grid of original and resulting emissions.
 
-# vein 0.3.31 (Release date: 2018-06-01)
+## vein 0.3.32 (Release date: 2018-06-04)
+
+- make_grid with wrfinput fixed.
+
+## vein 0.3.31 (Release date: 2018-06-01)
 
 - Fix #69. Now make_grid prints the number of Longitude and Latitude cells
 (points). when spobj is "character", it is a path to wrfinput file and
