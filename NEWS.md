@@ -3,7 +3,7 @@ NEWS
 
 # vein 0.3.32 (Release date: 2018-06-04)
 
-- make_grid with wrfinput fixed.
+- make_grid with wrfinput fixed. Fix demo.
 
 # vein 0.3.31 (Release date: 2018-06-01)
 

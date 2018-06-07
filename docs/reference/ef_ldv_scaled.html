@@ -59,7 +59,7 @@ emission factor which at a speed of the driving cycle (SDC) gives a desired valu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.32</span>
       </span>
     </div>
 
@@ -105,11 +105,15 @@ emission factor which at a speed of the driving cycle (SDC) gives a desired valu
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_ldv_scaled</span>(<span class='no'>dfcol</span>, <span class='kw'>SDC</span> <span class='kw'>=</span> <span class='fl'>34.12</span>, <span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='no'>df</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_ldv_scaled</span>(<span class='no'>df</span>, <span class='no'>dfcol</span>, <span class='kw'>SDC</span> <span class='kw'>=</span> <span class='fl'>34.12</span>, <span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>df</th>
+      <td><p>Deprecated</p></td>
+    </tr>
     <tr>
       <th>dfcol</th>
       <td><p>Column of the dataframe with the local emission factors eg df$dfcol</p></td>
@@ -146,10 +150,6 @@ Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></td>
       <th>p</th>
       <td><p>Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
 is based on fuel, use "FC", if it is based on "HC", use "HC".</p></td>
-    </tr>
-    <tr>
-      <th>df</th>
-      <td><p>Deprecated</p></td>
     </tr>
     </table>
     

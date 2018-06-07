@@ -24,18 +24,11 @@ Our paper was just accepted on GMD
 
 https://www.geosci-model-dev-discuss.net/gmd-2017-193/
 
-```{r echo = FALSE}
-knitr::include_graphics("https://i.imgur.com/wp3fi1i.png")
-```
-                         
-
-
-```{r echo = FALSE, fig.height=5, fig.width=5}
-knitr::include_graphics("https://i.imgur.com/b2lQZzi.jpg")
-```
+![](https://i.imgur.com/wp3fi1i.png)
 
 
 
+![](https://i.imgur.com/b2lQZzi.jpg)
 
 ## Vein Package
 
@@ -79,6 +72,7 @@ or
 ```{r eval=F}
 install.packages("vein")
 library(vein)
+demo(VEIN)
 ```
 
 ## What is VEIN
@@ -171,7 +165,7 @@ set of directories and scripts to run VEIN. Please, open the file 'main.R' and
 run each line to understand VEIN. **Remember, if you have doubts with any function,
 just type '?' with the name of the function. For intance: `?inventory`.**
 
-```{r eval = T}
+```{r eval = T, include = T, echo = T}
 library(vein)
 inventory(name = file.path(tempdir(), "YourCity"), show.dir = T,
           show.scripts = T)
@@ -183,7 +177,7 @@ Please, read the examples in the documentation of each function and run the demo
 
 age functions 
 
-```{r}
+```{r eval = T, include = T, echo = T}
 data("net")
 PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
@@ -192,7 +186,7 @@ plot(PC_E25_1400, xlab = "age of use")
 If you want to know the vehicles per street and by age of use, just
 add the net. Age functions now returns 'sf' objects if the net argument is present.
 
-```{r}
+```{r eval = T, include = T, echo = T}
 PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
 sp::spplot(as(PC_E25_1400net, "Spatial"),
        c("PC_E25_1400_1", "PC_E25_1400_9"),
@@ -201,7 +195,7 @@ sp::spplot(as(PC_E25_1400net, "Spatial"),
 ```
 
 temporal factors and netspeed
-```{r}
+```{r eval = T, include = T, echo = T}
 data("net")
 data("pc_profile")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -212,7 +206,7 @@ plot(dfspeed, xlab = "Hours", ylab = "Speed [km/h]")
 
 If you want ot check the speed at different hours by street, just add net:
 
-```{r}
+```{r eval = T, include = T, echo = T}
 dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
                        alpha = 1.5, net = net)
 sp::spplot(as(dfspeednet, "Spatial"),
@@ -222,7 +216,7 @@ sp::spplot(as(dfspeednet, "Spatial"),
 
 ### 2) Emission Factors
 
-```{r}
+```{r eval = T, include = T, echo = T}
 V <- 0:150
 ef1 <- ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 p = "CO")
@@ -232,7 +226,7 @@ plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 
 ### 3) Estimation of emissions
 
-```{r}
+```{r eval = T, include = T, echo = T}
 euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
           rep("I", 5), rep("PRE", 15))
 lef <- lapply(1:40, function(i) {
@@ -245,7 +239,7 @@ plot(E_CO, xlab = "Hours", ylab = "[g/h]")
 
 ### 4) Post Emissions
 
-```{r}
+```{r eval = T, include = T, echo = T}
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 ```
 
@@ -258,7 +252,7 @@ then runs eixport::wrf_grid to create a grid based on a wrf_input file.
 2) spobj is "character", it is a path to wrfinput file and the grid will have
 the size of the wrf_input.
 
-```{r}
+```{r eval = T, include = T, echo = T}
 data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
@@ -282,7 +276,9 @@ to the wrfchem input file.
 
 ```{r eval = FALSE}
 eixport::wrf_create(wrfinput_dir = "PathToWrfInput", wrfchemi_dir = "OutputPathWrfChemInput")
-gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
+gwrf <- eixport::wrf_grd("PathToWrfInput")
+E_CO_gwrf <- emis_grid(spobj = E_CO_STREETSnet, g = gwrf)
+gr <- GriddedEmissionsArray(E_CO_gwrf, rows = 19, cols = 23, times = 168, T)
 eixport::wrf_put(file = "PathToWRFChemInputFile, name = "E_CO", POL = gr)
 ```
 

@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.32</span>
       </span>
     </div>
 
@@ -72,8 +72,12 @@
 <a href="#paper-accepted-on-gmd" class="anchor"></a>Paper 😃 Accepted 😃 on GMD 🎉🎉!</h1></div>
 <p>Our paper was just accepted on GMD</p>
 <p><a href="https://www.geosci-model-dev-discuss.net/gmd-2017-193/" class="uri">https://www.geosci-model-dev-discuss.net/gmd-2017-193/</a></p>
-<p><img src="https://i.imgur.com/wp3fi1i.png"><!-- --></p>
-<p><img src="https://i.imgur.com/b2lQZzi.jpg"><!-- --></p>
+<div class="figure">
+<img src="https://i.imgur.com/wp3fi1i.png">
+</div>
+<div class="figure">
+<img src="https://i.imgur.com/b2lQZzi.jpg">
+</div>
 <div id="vein-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vein-package" class="anchor"></a>Vein Package</h2>
@@ -109,7 +113,8 @@
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 <p>or</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"vein"</span>)
-<span class="kw">library</span>(vein)</code></pre></div>
+<span class="kw">library</span>(vein)
+<span class="kw">demo</span>(VEIN)</code></pre></div>
 </div>
 </div>
 <div id="what-is-vein" class="section level2">
@@ -181,25 +186,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmplwYtRy/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpdCuEbf/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmplwYtRy/YourCity"             
-##  [2] "/tmp/RtmplwYtRy/YourCity/ef"          
-##  [3] "/tmp/RtmplwYtRy/YourCity/emi"         
-##  [4] "/tmp/RtmplwYtRy/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmplwYtRy/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmplwYtRy/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmplwYtRy/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmplwYtRy/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmplwYtRy/YourCity/est"         
-## [10] "/tmp/RtmplwYtRy/YourCity/images"      
-## [11] "/tmp/RtmplwYtRy/YourCity/network"     
-## [12] "/tmp/RtmplwYtRy/YourCity/post"        
-## [13] "/tmp/RtmplwYtRy/YourCity/post/df"     
-## [14] "/tmp/RtmplwYtRy/YourCity/post/grids"  
-## [15] "/tmp/RtmplwYtRy/YourCity/post/streets"
-## [16] "/tmp/RtmplwYtRy/YourCity/profiles"    
-## [17] "/tmp/RtmplwYtRy/YourCity/veh"         
+##  [1] "/tmp/RtmpdCuEbf/YourCity"             
+##  [2] "/tmp/RtmpdCuEbf/YourCity/ef"          
+##  [3] "/tmp/RtmpdCuEbf/YourCity/emi"         
+##  [4] "/tmp/RtmpdCuEbf/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpdCuEbf/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpdCuEbf/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpdCuEbf/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpdCuEbf/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpdCuEbf/YourCity/est"         
+## [10] "/tmp/RtmpdCuEbf/YourCity/images"      
+## [11] "/tmp/RtmpdCuEbf/YourCity/network"     
+## [12] "/tmp/RtmpdCuEbf/YourCity/post"        
+## [13] "/tmp/RtmpdCuEbf/YourCity/post/df"     
+## [14] "/tmp/RtmpdCuEbf/YourCity/post/grids"  
+## [15] "/tmp/RtmpdCuEbf/YourCity/post/streets"
+## [16] "/tmp/RtmpdCuEbf/YourCity/profiles"    
+## [17] "/tmp/RtmpdCuEbf/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -214,7 +219,7 @@ PC_E25_<span class="dv">1400</span> &lt;-<span class="st"> </span><span class="k
 <pre><code>## Average age of PC_E25_1400 is 11.17</code></pre>
 <pre><code>## Number of PC_E25_1400 is 1946.95 * 10^3 veh</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(PC_E25_<span class="dv">1400</span>, <span class="dt">xlab =</span> <span class="st">"age of use"</span>)</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <pre><code>## 
 ## Average =  11.17</code></pre>
 <p>If you want to know the vehicles per street and by age of use, just add the net. Age functions now returns ‘sf’ objects if the net argument is present.</p>
@@ -225,7 +230,7 @@ PC_E25_<span class="dv">1400</span> &lt;-<span class="st"> </span><span class="k
        <span class="kw">c</span>(<span class="st">"PC_E25_1400_1"</span>, <span class="st">"PC_E25_1400_9"</span>),
        <span class="dt">main =</span> <span class="st">"PC by age of use"</span>, <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">draw =</span> T),
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>temporal factors and netspeed</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">"net"</span>)
 <span class="kw">data</span>(<span class="st">"pc_profile"</span>)
@@ -234,14 +239,14 @@ dfspeed &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspe
 <span class="kw">class</span>(dfspeed)</code></pre></div>
 <pre><code>## [1] "Speed"      "data.frame"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dfspeed, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"Speed [km/h]"</span>) </code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>If you want ot check the speed at different hours by street, just add net:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfspeednet &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspeed.html">netspeed</a></span>(pc_week, net<span class="op">$</span>ps, net<span class="op">$</span>ffs, net<span class="op">$</span>capacity, net<span class="op">$</span>lkm,
                        <span class="dt">alpha =</span> <span class="fl">1.5</span>, <span class="dt">net =</span> net)
 sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/spplot">spplot</a></span>(<span class="kw">as</span>(dfspeednet, <span class="st">"Spatial"</span>),
        <span class="kw">c</span>(<span class="st">"S1"</span>, <span class="st">"S9"</span>), <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">draw =</span> T),
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div id="emission-factors" class="section level3">
 <h3 class="hasAnchor">
@@ -251,7 +256,7 @@ ef1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/ef_ldv_spe
 <span class="dt">p =</span> <span class="st">"CO"</span>)
 efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
 <span class="kw">plot</span>(<span class="kw"><a href="reference/Speed.html">Speed</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>), efs, <span class="dt">xlab =</span> <span class="st">"speed[km/h]"</span>, <span class="dt">type =</span> <span class="st">"b"</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div id="estimation-of-emissions" class="section level3">
 <h3 class="hasAnchor">
@@ -267,7 +272,7 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 <pre><code>## adjusting length of ef to the number of colums of 'veh'</code></pre>
 <pre><code>## 139727.29 kg emissions in 24 hours and 7 days</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(E_CO, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"[g/h]"</span>)</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div id="post-emissions" class="section level3">
 <h3 class="hasAnchor">
@@ -283,15 +288,14 @@ E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html
 E_CO_STREETSnet &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>,
                              <span class="dt">net =</span> net)
 g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span></code></pre></div>
-<pre><code>## Longitude points: 23
-## 
-## Latitude points: 19</code></pre>
+<pre><code>## Number of lon points: 23
+## Number of lat points: 19</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
 <pre><code>## Transforming spatial objects to 'sr'</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/spplot">spplot</a></span>(<span class="kw">as</span>(E_CO_g, <span class="st">"Spatial"</span>),
        <span class="kw">c</span>(<span class="st">"V1"</span>, <span class="st">"V9"</span>), <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">draw =</span> T),
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div id="creating-a-wrfchem-input-file-using-eixport" class="section level3">
 <h3 class="hasAnchor">
@@ -306,7 +310,9 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.ht
 <a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">eixport::wrf_put</a> to the wrfchem input file.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eixport<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/eixport/topics/wrf_create">wrf_create</a></span>(<span class="dt">wrfinput_dir =</span> <span class="st">"PathToWrfInput"</span>, <span class="dt">wrfchemi_dir =</span> <span class="st">"OutputPathWrfChemInput"</span>)
-gr &lt;-<span class="st"> </span><span class="kw"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span>(E_CO_g, <span class="dt">rows =</span> <span class="dv">19</span>, <span class="dt">cols =</span> <span class="dv">23</span>, <span class="dt">times =</span> <span class="dv">168</span>, T)
+gwrf &lt;-<span class="st"> </span>eixport<span class="op">::</span><span class="kw">wrf_grd</span>(<span class="st">"PathToWrfInput"</span>)
+E_CO_gwrf &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> gwrf)
+gr &lt;-<span class="st"> </span><span class="kw"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span>(E_CO_gwrf, <span class="dt">rows =</span> <span class="dv">19</span>, <span class="dt">cols =</span> <span class="dv">23</span>, <span class="dt">times =</span> <span class="dv">168</span>, T)
 eixport<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/eixport/topics/wrf_put">wrf_put</a></span>(<span class="dt">file =</span> <span class="st">"PathToWRFChemInputFile, name = "</span>E_CO<span class="st">", POL = gr)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>If you created a grid using a spatial net, use <a href="https://atmoschem.github.io/eixport/reference/to_as4wrf.html">eixport::as4wrf</a> and get the NCL script AS4WRF.ncl from the developer.</li>
