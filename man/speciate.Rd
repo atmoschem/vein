@@ -4,16 +4,20 @@
 \alias{speciate}
 \title{Speciation of emissions}
 \usage{
-speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE)
+speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE, dx)
 }
 \arguments{
 \item{x}{Emissions estimation}
 
-\item{spec}{speciation: The speciations are: "bcom", tyre", "break", "road",
+\item{spec}{speciation: The speciations are: "bcom", tyre" (or "tire"), "brake", "road",
 "iag", "nox" and "nmhc". 'iag' now includes a speciation for use of industrial and
 building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
 speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
-gridded emissions (flux).}
+gridded emissions (flux). It also accepts one of the following pollutants:
+'e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
+'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket',
+"e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
+"e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj". Also "h2o"}
 
 \item{veh}{Type of vehicle:
 When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
@@ -30,7 +34,7 @@ when spec is "nmhc" and fuel is "LPG", veh and eu must be "ALL"}
 
 \item{fuel}{Fuel. When spec is "bcom" fuel can be "G" or "D".
 When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
-be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "break" or "road".
+be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "brake" or "road".
 When spec is "nmhc" fuel can be G, D or LPG.}
 
 \item{eu}{Euro emission standard: "PRE", "ECE_1501", "ECE_1502", "ECE_1503",
@@ -38,12 +42,14 @@ When spec is "nmhc" fuel can be G, D or LPG.}
 "IV-ADFP","V-ADFP" and "OPEN_LOOP". When spec is "iag" accept the values
 "Exhaust" "Evaporative" and "Liquid". When spec is "nox" eu can be
 "PRE", "I", "II", "III", "IV", "V", "VI", "VIc", "III-DPF" or "III+CRT".
-Not required for "tyre", "break" or "road"}
+Not required for "tyre", "brake" or "road"}
 
 \item{show}{when TRUE shows row of table with respective speciation}
 
 \item{list}{when TRUE returns a list with number of elements of the list as
 the number species of pollutants}
+
+\item{dx}{Integer, used when spec = "pmiag". It is the spatial disntace}
 }
 \value{
 dataframe of speciation in grams or mols
@@ -60,8 +66,8 @@ fuel is "G"  (blended with 25\% ethanol), "D" (blended with 5\% of biodiesel)
 or "E" (Ethanol 100\%).
 eu is "Evaporative", "Liquid" or "Exhaust",
 
-emissions of "pmiag" speciate PM2.5 into E_SO4i, E_SO4j, E_NO3i,
-E_NO3j, E_MP2.5i, E_MP2.5j, E_ORGi, E_ORGj, E_ECi, E_ECj and H2O. Reference:
+emissions of "pmiag" speciate pm2.5 into e_so4i, e_so4j, e_no3i,
+e_no3j, e_mp2.5i, e_mp2.5j, e_orgi, e_orgj, e_eci, e_ecj and h2o. Reference:
 Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
 cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
 amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
@@ -74,6 +80,7 @@ pm <- rnorm(n = 100, mean = 400, sd = 2)
 df <- speciate(pm, veh = "PC", fuel = "G", eu = "I")
 dfa <- speciate(pm, spec = "e_eth", veh = "veh", fuel = "G", eu = "Exhaust")
 dfb <- speciate(pm, spec = "e_tol", veh = "veh", fuel = "G", eu = "Exhaust")
+dfc <- speciate(pm, spec = "e_so4i")
 }
 }
 \references{
@@ -82,8 +89,8 @@ commercial trucks, heavy-duty vehicles including buses and motor cycles. In:
 EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 Environment Agency, Copenhagen, 2016
 
-"tyre", "break" and "road": Ntziachristos and Boulter 2016.
-Automobile tyre and break wear and road abrasion. In: EEA, EMEP. EEA air
+"tyre", "brake" and "road": Ntziachristos and Boulter 2016.
+Automobile tyre and brake wear and road abrasion. In: EEA, EMEP. EEA air
 pollutant emission inventory
 guidebook-2009. European Environment Agency, Copenhagen, 2016
 
