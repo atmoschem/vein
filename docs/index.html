@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.32</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.33</span>
       </span>
     </div>
 
@@ -186,25 +186,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpdCuEbf/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpAsB7Kl/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpdCuEbf/YourCity"             
-##  [2] "/tmp/RtmpdCuEbf/YourCity/ef"          
-##  [3] "/tmp/RtmpdCuEbf/YourCity/emi"         
-##  [4] "/tmp/RtmpdCuEbf/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpdCuEbf/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpdCuEbf/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpdCuEbf/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpdCuEbf/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpdCuEbf/YourCity/est"         
-## [10] "/tmp/RtmpdCuEbf/YourCity/images"      
-## [11] "/tmp/RtmpdCuEbf/YourCity/network"     
-## [12] "/tmp/RtmpdCuEbf/YourCity/post"        
-## [13] "/tmp/RtmpdCuEbf/YourCity/post/df"     
-## [14] "/tmp/RtmpdCuEbf/YourCity/post/grids"  
-## [15] "/tmp/RtmpdCuEbf/YourCity/post/streets"
-## [16] "/tmp/RtmpdCuEbf/YourCity/profiles"    
-## [17] "/tmp/RtmpdCuEbf/YourCity/veh"         
+##  [1] "/tmp/RtmpAsB7Kl/YourCity"             
+##  [2] "/tmp/RtmpAsB7Kl/YourCity/ef"          
+##  [3] "/tmp/RtmpAsB7Kl/YourCity/emi"         
+##  [4] "/tmp/RtmpAsB7Kl/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpAsB7Kl/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpAsB7Kl/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpAsB7Kl/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpAsB7Kl/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpAsB7Kl/YourCity/est"         
+## [10] "/tmp/RtmpAsB7Kl/YourCity/images"      
+## [11] "/tmp/RtmpAsB7Kl/YourCity/network"     
+## [12] "/tmp/RtmpAsB7Kl/YourCity/post"        
+## [13] "/tmp/RtmpAsB7Kl/YourCity/post/df"     
+## [14] "/tmp/RtmpAsB7Kl/YourCity/post/grids"  
+## [15] "/tmp/RtmpAsB7Kl/YourCity/post/streets"
+## [16] "/tmp/RtmpAsB7Kl/YourCity/profiles"    
+## [17] "/tmp/RtmpAsB7Kl/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -292,6 +292,8 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.ht
 ## Number of lat points: 19</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</code></pre></div>
 <pre><code>## Transforming spatial objects to 'sr'</code></pre>
+<pre><code>## Sum of street emissions 139727288.63
+## Sum of gridded emissions 139727288.63</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/spplot">spplot</a></span>(<span class="kw">as</span>(E_CO_g, <span class="st">"Spatial"</span>),
        <span class="kw">c</span>(<span class="st">"V1"</span>, <span class="st">"V9"</span>), <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">draw =</span> T),
        <span class="dt">col.regions =</span> <span class="kw">rev</span>(cptcity<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>

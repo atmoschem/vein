@@ -22,13 +22,14 @@
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
 #' names(net)
 #' netsf <- sf::st_as_sf(net)
-#' netg <- emis_grid(spobj = net[, c("ldv", "hdv")], g = g, sr= 31983)
+#' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
 #' }
 emis_grid <- function(spobj, g, sr, type = "lines"){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
+
   g <- sf::st_as_sf(g)
 
   if(!missing(sr)){
@@ -39,8 +40,10 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
 
   if (type == "lines" ) {
     netdf <- sf::st_set_geometry(net, NULL)
-
     snetdf <- sum(netdf, na.rm = TRUE)
+
+    cat(paste0("Sum of street emissions ", round(snetdf, 2), "\n"))
+
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
     # Filtrando solo columnas numericas
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
@@ -55,7 +58,9 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
                by = "id",
                .SDcols = namesnet]
     id <- dfm$id
-    dfm <- snetdf/sum(dfm, na.rm = TRUE)*dfm
+    dfm <- dfm*snetdf/sum(dfm, na.rm = TRUE)
+    cat(paste0("Sum of gridded emissions ",
+               round(sum(dfm, na.rm = T), 2), "\n"))
     dfm$id <- id
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
