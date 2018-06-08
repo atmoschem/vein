@@ -14,6 +14,7 @@
 #' @param type type of geometry: "lines" or "points".
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection
 #' @importFrom data.table data.table .SD
+#' @importFrom sp CRS
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'. Also, The aggregation of data ise done with data.table functions.
@@ -29,10 +30,17 @@
 emis_grid <- function(spobj, g, sr, type = "lines"){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
-
+  netdata <- sf::st_set_geometry(net, NULL)
+  for(i in 1:length(netdata)){
+netdata[, i] <- as.numeric(netdata[, i])
+  }
+  net <- sf::st_sf(netdata, geometry = net$geometry)
   g <- sf::st_as_sf(g)
 
   if(!missing(sr)){
+    if(class(sr)[1] == "character"){
+      sr <- as.numeric(substr(sp::CRS(sr), 12, nchar(sr)))
+    }
     message("Transforming spatial objects to 'sr' ")
   net <- sf::st_transform(net, sr)
   g <- sf::st_transform(g, sr)
