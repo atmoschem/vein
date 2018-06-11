@@ -17,7 +17,9 @@
 #' @param utc ignored.
 #' @param islist logical value to indicate if sdf is a list or not
 #' @importFrom sp coordinates spTransform CRS
-#' @return data-frame of gridded emissions  g/h
+#' @importFrom sf st_coordinates  st_transform st_set_geometry st_as_sf
+#' @importFrom methods as
+#' @return data-frame of gridded emissions  (mass)/h. Remember convert to mol.
 #' @export
 #' @note
 #' The reference of the emissions assimilation system is Vara-Vela, A.,
@@ -89,6 +91,7 @@ emis_wrf <- function(sdf, nr = 1, dmyhm, tz, crs = 4326, islist, utc){
     # if(class(sdf)[1] == "sf"){
     #   sdf <- lapply(sdf, methods::as, "Spatial")
     # }
+    sdf <- lapply(sdf, sf::st_as_sf)
     dft <- as.data.frame(sf::st_coordinates(sf::st_transform(sdf[[1]], crs)))
     dft$N <- paste0(dft[, 3], "_", dft[, 4])
     dft = dft[!duplicated(dft$N),]

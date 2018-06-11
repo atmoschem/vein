@@ -29,7 +29,7 @@
 #' }
 make_grid <- function(spobj, width, height = width,  polygon, crs = 4326, ...){
   if(!missing(polygon)){
-    .Deprecated(msg = "'polygon' is deprecated")
+    message("argument 'polygon' is not needed")
   }
 
 if(class(spobj)[1] != "character"){

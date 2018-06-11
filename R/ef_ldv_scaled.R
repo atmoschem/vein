@@ -45,7 +45,7 @@
 #' }
 ef_ldv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
   if(!missing(df)){
-    message("argument df will be deprecated")
+    message("argument 'df' will be deprecated")
   }
 
   lapply(1:length(dfcol), function(i)  {

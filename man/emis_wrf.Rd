@@ -27,7 +27,7 @@ transform the coordinates of the output}
 \item{utc}{ignored.}
 }
 \value{
-data-frame of gridded emissions  g/h
+data-frame of gridded emissions  (mass)/h. Remember convert to mol.
 }
 \description{
 \code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time

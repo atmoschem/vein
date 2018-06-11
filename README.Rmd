@@ -284,7 +284,8 @@ eixport::wrf_put(file = "PathToWRFChemInputFile, name = "E_CO", POL = gr)
 
 
 2) If you created a grid using a spatial net, use
-[eixport::as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
+[vein::wmis_wrf](https://atmoschem.github.io/vein/reference/emis_wrf.html)
+ or [eixport::as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
 and get the NCL script AS4WRF.ncl from the developer.
 
 
