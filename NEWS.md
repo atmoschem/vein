@@ -1,9 +1,13 @@
 NEWS
 ===========
 
-# vein 0.3.33 (Release date: 2018-06-06)
+# vein 0.3.35 (Release date: 2018-06-11)
 
-- Fix demo. Add message in emis_grid of original and resulting emissions.
+- Fix emis_wrf. Minor fix for GMD.
+
+## vein 0.3.34 (Release date: 2018-06-08)
+
+- Add message in emis_grid of original and resulting emissions.
 Other minor fix for GMD.
 
 ## vein 0.3.32 (Release date: 2018-06-04)

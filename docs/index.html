@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.34</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.35</span>
       </span>
     </div>
 
@@ -186,25 +186,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpnSKERR/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpxuUJiV/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpnSKERR/YourCity"             
-##  [2] "/tmp/RtmpnSKERR/YourCity/ef"          
-##  [3] "/tmp/RtmpnSKERR/YourCity/emi"         
-##  [4] "/tmp/RtmpnSKERR/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpnSKERR/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpnSKERR/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpnSKERR/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpnSKERR/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpnSKERR/YourCity/est"         
-## [10] "/tmp/RtmpnSKERR/YourCity/images"      
-## [11] "/tmp/RtmpnSKERR/YourCity/network"     
-## [12] "/tmp/RtmpnSKERR/YourCity/post"        
-## [13] "/tmp/RtmpnSKERR/YourCity/post/df"     
-## [14] "/tmp/RtmpnSKERR/YourCity/post/grids"  
-## [15] "/tmp/RtmpnSKERR/YourCity/post/streets"
-## [16] "/tmp/RtmpnSKERR/YourCity/profiles"    
-## [17] "/tmp/RtmpnSKERR/YourCity/veh"         
+##  [1] "/tmp/RtmpxuUJiV/YourCity"             
+##  [2] "/tmp/RtmpxuUJiV/YourCity/ef"          
+##  [3] "/tmp/RtmpxuUJiV/YourCity/emi"         
+##  [4] "/tmp/RtmpxuUJiV/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpxuUJiV/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpxuUJiV/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpxuUJiV/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpxuUJiV/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpxuUJiV/YourCity/est"         
+## [10] "/tmp/RtmpxuUJiV/YourCity/images"      
+## [11] "/tmp/RtmpxuUJiV/YourCity/network"     
+## [12] "/tmp/RtmpxuUJiV/YourCity/post"        
+## [13] "/tmp/RtmpxuUJiV/YourCity/post/df"     
+## [14] "/tmp/RtmpxuUJiV/YourCity/post/grids"  
+## [15] "/tmp/RtmpxuUJiV/YourCity/post/streets"
+## [16] "/tmp/RtmpxuUJiV/YourCity/profiles"    
+## [17] "/tmp/RtmpxuUJiV/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -317,7 +317,7 @@ E_CO_gwrf &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis
 gr &lt;-<span class="st"> </span><span class="kw"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span>(E_CO_gwrf, <span class="dt">rows =</span> <span class="dv">19</span>, <span class="dt">cols =</span> <span class="dv">23</span>, <span class="dt">times =</span> <span class="dv">168</span>, T)
 eixport<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/eixport/topics/wrf_put">wrf_put</a></span>(<span class="dt">file =</span> <span class="st">"PathToWRFChemInputFile, name = "</span>E_CO<span class="st">", POL = gr)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li>If you created a grid using a spatial net, use <a href="https://atmoschem.github.io/eixport/reference/to_as4wrf.html">eixport::as4wrf</a> and get the NCL script AS4WRF.ncl from the developer.</li>
+<li>If you created a grid using a spatial net, use <a href="https://atmoschem.github.io/vein/reference/emis_wrf.html">vein::wmis_wrf</a> or <a href="https://atmoschem.github.io/eixport/reference/to_as4wrf.html">eixport::as4wrf</a> and get the NCL script AS4WRF.ncl from the developer.</li>
 </ol>
 <p>Thanks and enjoy VEIN!</p>
 </div>
