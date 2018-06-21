@@ -34,7 +34,7 @@ data(net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 names(net)
 netsf <- sf::st_as_sf(net)
-netg <- emis_grid(spobj = net[, c("ldv", "hdv")], g = g, sr= 31983)
+netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
 plot(netg["ldv"], axes = TRUE)
 plot(netg["hdv"], axes = TRUE)
 }

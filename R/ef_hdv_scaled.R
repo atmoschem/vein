@@ -39,7 +39,7 @@
 #' }
 ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
   if(!missing(df)){
-    .Deprecated(msg = "df is not needed")
+    message("argument 'df' will be deprecated")
   }
    lapply(1:length(dfcol), function(i)  {
     funIN <- ef_hdv_speed(v = v, t = t, g = g, eu = as.character(eu[i]),
