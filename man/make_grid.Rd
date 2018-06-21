@@ -4,7 +4,7 @@
 \alias{make_grid}
 \title{Creates rectangular grid for emission allocation}
 \usage{
-make_grid(spobj, width, height = width, polygon, crs, ...)
+make_grid(spobj, width, height = width, polygon, crs = 4326, ...)
 }
 \arguments{
 \item{spobj}{A spatial object of class sp or sf or a Character. When it is
@@ -35,5 +35,10 @@ reference is taken from the spatial object.
 data(net)
 grid <- make_grid(net, width = 0.5/102.47) #500 mts
 plot(grid, axes = TRUE) #class sf
+wrf <- paste(system.file("extdata", package = "eixport"),
+"/wrfinput_d02", sep="")
+gwrf  <- make_grid(wrf)
+plot(gwrf, axes = TRUE)
+
 }
 }

@@ -2,16 +2,14 @@
 % Please edit documentation in R/emis_wrf.R
 \name{emis_wrf}
 \alias{emis_wrf}
-\title{Generates emissions dataframe to generate WRF-Chem inputs (Deprecated, use exiport)}
+\title{Generates emissions dataframe to generate WRF-Chem inputs}
 \usage{
-emis_wrf(sdf, nr = 1, dmyhm, tz, crs = "+init=epsg:4326", islist)
+emis_wrf(sdf, nr = 1, dmyhm, tz, crs = 4326, islist, utc)
 }
 \arguments{
-\item{sdf}{Grid emissions, which can be a SpatialPolygonsDataFrame, or a list
-of SpatialPolygonsDataFrame. The user must enter a list with 36
-SpatialPolygonsDataFrame with emissions for the mechanism CBMZ. When there
-are no emissions available, the SpatialPolygonsDataFrame must contain
-0.}
+\item{sdf}{Gridded emissions, which can be a SpatialPolygonsDataFrame, or a list
+of SpatialPolygonsDataFrame, or a sf object of "POLYGON". The user must enter
+a list with 36 SpatialPolygonsDataFrame with emissions for the mechanism CBMZ.}
 
 \item{nr}{Number of repetitions of the emissions period}
 
@@ -25,18 +23,18 @@ hour of emissions in Local Time}
 transform the coordinates of the output}
 
 \item{islist}{logical value to indicate if sdf is a list or not}
+
+\item{utc}{ignored.}
 }
 \value{
-data-frame of gridded emissions  g/h
+data-frame of gridded emissions  (mass)/h. Remember convert to mol.
 }
 \description{
 \code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time
 and GMT time. This dataframe has the proper format to be used with WRF
-assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
-by Vera-Vala et al (2016)
+assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))
 }
 \note{
-DEPRECATED, use eixport https://CRAN.R-project.org/package=eixport
 The reference of the emissions assimilation system is Vara-Vela, A.,
 Andrade, M. F., Kumar, P., Ynoue, R. Y., and Munoz, A. G.: Impact of
 vehicular emissions on the formation of fine particles in the Sao Paulo

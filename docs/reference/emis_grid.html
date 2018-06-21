@@ -62,7 +62,7 @@ in data. This function return an object class "sf"." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.35</span>
       </span>
     </div>
 
@@ -148,13 +148,13 @@ not projected. Please, see http://spatialreference.org/.</p></td>
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
 <span class='fu'>names</span>(<span class='no'>net</span>)
 <span class='no'>netsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>net</span>)
-<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>[, <span class='fu'>c</span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
+<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'>c</span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
 <span class='fu'>plot</span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>plot</span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; Longitude points: 23
-#&gt; 
-#&gt; Latitude points: 19
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div></pre>
+}</div><div class='output co'>#&gt; Number of lon points: 23
+#&gt; Number of lat points: 19
+#&gt; </div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 2095073
+#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

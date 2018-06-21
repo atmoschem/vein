@@ -14,6 +14,7 @@
 #' @param type type of geometry: "lines" or "points".
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection
 #' @importFrom data.table data.table .SD
+#' @importFrom sp CRS
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'. Also, The aggregation of data ise done with data.table functions.
@@ -22,16 +23,24 @@
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
 #' names(net)
 #' netsf <- sf::st_as_sf(net)
-#' netg <- emis_grid(spobj = net[, c("ldv", "hdv")], g = g, sr= 31983)
+#' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
 #' }
 emis_grid <- function(spobj, g, sr, type = "lines"){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
+  netdata <- sf::st_set_geometry(net, NULL)
+  for(i in 1:length(netdata)){
+netdata[, i] <- as.numeric(netdata[, i])
+  }
+  net <- sf::st_sf(netdata, geometry = net$geometry)
   g <- sf::st_as_sf(g)
 
   if(!missing(sr)){
+    if(class(sr)[1] == "character"){
+      sr <- as.numeric(substr(sp::CRS(sr), 12, nchar(sr)))
+    }
     message("Transforming spatial objects to 'sr' ")
   net <- sf::st_transform(net, sr)
   g <- sf::st_transform(g, sr)
@@ -39,8 +48,10 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
 
   if (type == "lines" ) {
     netdf <- sf::st_set_geometry(net, NULL)
-
     snetdf <- sum(netdf, na.rm = TRUE)
+
+    cat(paste0("Sum of street emissions ", round(snetdf, 2), "\n"))
+
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
     # Filtrando solo columnas numericas
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
@@ -55,7 +66,9 @@ emis_grid <- function(spobj, g, sr, type = "lines"){
                by = "id",
                .SDcols = namesnet]
     id <- dfm$id
-    dfm <- snetdf/sum(dfm, na.rm = TRUE)*dfm
+    dfm <- dfm*snetdf/sum(dfm, na.rm = TRUE)
+    cat(paste0("Sum of gridded emissions ",
+               round(sum(dfm, na.rm = T), 2), "\n"))
     dfm$id <- id
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)

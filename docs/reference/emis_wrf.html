@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generates emissions dataframe to generate WRF-Chem inputs (Deprecated, use exiport) — emis_wrf • vein</title>
+<title>Generates emissions dataframe to generate WRF-Chem inputs — emis_wrf • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,12 +28,11 @@
 
 
 
-<meta property="og:title" content="Generates emissions dataframe to generate WRF-Chem inputs (Deprecated, use exiport) — emis_wrf" />
+<meta property="og:title" content="Generates emissions dataframe to generate WRF-Chem inputs — emis_wrf" />
 
 <meta property="og:description" content="emis_wrf returns a dataframes with columns lat, long, id, pollutants, local time
 and GMT time. This dataframe has the proper format to be used with WRF
-assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
-by Vera-Vala et al (2016)" />
+assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -61,7 +60,7 @@ by Vera-Vala et al (2016)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.31</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.35</span>
       </span>
     </div>
 
@@ -95,7 +94,7 @@ by Vera-Vala et al (2016)" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generates emissions dataframe to generate WRF-Chem inputs (Deprecated, use exiport)</h1>
+    <h1>Generates emissions dataframe to generate WRF-Chem inputs</h1>
     
     <div class="hidden name"><code>emis_wrf.Rd</code></div>
     </div>
@@ -104,23 +103,20 @@ by Vera-Vala et al (2016)" />
     
     <p><code>emis_wrf</code> returns a dataframes with columns lat, long, id, pollutants, local time
 and GMT time. This dataframe has the proper format to be used with WRF
-assimilation system: "Another Asimilation System 4 WRF (AAS4WRF)" as published
-by Vera-Vala et al (2016)</p>
+assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_wrf</span>(<span class='no'>sdf</span>, <span class='kw'>nr</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>dmyhm</span>, <span class='no'>tz</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='st'>"+init=epsg:4326"</span>, <span class='no'>islist</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_wrf</span>(<span class='no'>sdf</span>, <span class='kw'>nr</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>dmyhm</span>, <span class='no'>tz</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>, <span class='no'>islist</span>, <span class='no'>utc</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sdf</th>
-      <td><p>Grid emissions, which can be a SpatialPolygonsDataFrame, or a list
-of SpatialPolygonsDataFrame. The user must enter a list with 36
-SpatialPolygonsDataFrame with emissions for the mechanism CBMZ. When there
-are no emissions available, the SpatialPolygonsDataFrame must contain
-0.</p></td>
+      <td><p>Gridded emissions, which can be a SpatialPolygonsDataFrame, or a list
+of SpatialPolygonsDataFrame, or a sf object of "POLYGON". The user must enter
+a list with 36 SpatialPolygonsDataFrame with emissions for the mechanism CBMZ.</p></td>
     </tr>
     <tr>
       <th>nr</th>
@@ -145,16 +141,19 @@ transform the coordinates of the output</p></td>
       <th>islist</th>
       <td><p>logical value to indicate if sdf is a list or not</p></td>
     </tr>
+    <tr>
+      <th>utc</th>
+      <td><p>ignored.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data-frame of gridded emissions  g/h</p>
+    <p>data-frame of gridded emissions  (mass)/h. Remember convert to mol.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>DEPRECATED, use eixport https://CRAN.R-project.org/package=eixport
-The reference of the emissions assimilation system is Vara-Vela, A.,
+    <p>The reference of the emissions assimilation system is Vara-Vela, A.,
 Andrade, M. F., Kumar, P., Ynoue, R. Y., and Munoz, A. G.: Impact of
 vehicular emissions on the formation of fine particles in the Sao Paulo
 Metropolitan Area: a numerical study with the WRF-Chem model, Atmos. Chem.
