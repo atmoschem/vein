@@ -58,11 +58,12 @@
 #' traffic.R to generates objects of class "Vehicles".
 #' The user can rename these scripts.
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' name = file.path(tempdir(), "YourCity")
 #' inventory(name = name, show.dir = TRUE, show.scripts = TRUE)
 #' source(paste0(name, "/main.R"))
 #' }
+#'
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
                       scripts = TRUE,
