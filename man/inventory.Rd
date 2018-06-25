@@ -77,9 +77,10 @@ in order to run vein. It is required to know the vehicular composition of the
 fleet.
 }
 \examples{
-{
+\dontrun{
 name = file.path(tempdir(), "YourCity")
 inventory(name = name, show.dir = TRUE, show.scripts = TRUE)
 source(paste0(name, "/main.R"))
 }
+
 }

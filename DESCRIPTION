@@ -4,9 +4,14 @@ Title: Vehicular Emissions Inventories
 Version: 0.3.35
 Authors@R: c(
   person(given = "Sergio", family = "Ibarra-Espinosa",
-        role = c("aut", "cre"),
-        email = "sergio.ibarra@usp.br",
-        comment = c(ORCID = "0000-0002-3162-1905"))) 
+         role = c("aut", "cre"),
+         email = "sergio.ibarra@usp.br",
+         comment = c(ORCID = "0000-0002-3162-1905")),
+  person(given = "Daniel",
+         family = "Schuch",
+         role = c("aut"),
+         email = "schuch@usp.br",
+         comment = c(ORCID = "0000-0001-5977-4519"))) 
 Description: Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
