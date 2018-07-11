@@ -1,4 +1,4 @@
-citHeader("To cite vein in publications use at least the first, if not both, thanks:")
+citHeader("To cite vein in publications use at least the first, if not both:")
 
 citEntry(entry = "article",
    title          = "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
@@ -15,21 +15,9 @@ citEntry(entry = "article",
    textVersion  =
    paste("Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017).",
         "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
-        " Geosci. Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, in review, 2017.")
+        " Geosci. Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, 2017.")
 )
-year <- 2017
-note <- sprintf("R package version %s", meta$Version)
 
-citEntry(entry = "Manual",
-  title   = "vein: Vehicular Emissions Inventories",
-  author  = "Sergio Ibarra-Espinosa",
-  year    = "2017",
-  note    = note,
-  url     = "https://CRAN.R-project.org/package=vein",
-  textVersion =
-  paste("Sergio Ibarra-Espinosa (2017) vein: Vehicular Emissions Inventories. R package version 0.2.2-25. https://CRAN.R-project.org/package=vein")
-  )
+citation(auto = meta)
 
-
-
-
+citFooter("Thanks")
