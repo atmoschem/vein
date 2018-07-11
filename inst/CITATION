@@ -15,7 +15,7 @@ citEntry(entry = "article",
    textVersion  =
    paste("Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017).",
         "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
-        " Geosci. Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, in review, 2017.")
+        " Geosci. Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, 2017.")
 )
 year <- 2017
 note <- sprintf("R package version %s", meta$Version)
