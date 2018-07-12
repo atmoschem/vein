@@ -23,8 +23,8 @@ emis_source <- function(path = "est", pattern = ".R",
   inputs <- list.files(path = path, pattern = pattern,
                        recursive = recursive, full.names =  full.names)
   inputs <- inputs[!grepl(pattern = ignore, x = inputs)]
-  print(inputs)
   if(ask){
+    print(inputs)
     choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
     if(choice == 1){
       for(i in 1:length(inputs)){
