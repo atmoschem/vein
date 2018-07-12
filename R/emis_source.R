@@ -11,15 +11,15 @@
 #' @param pattern Character; extensions of R scripts. Default is ".R".
 #' @param recursive Logical; recursive or not. Default is "TRUE"
 #' @param full.names Logical; full.names or not. Default is "TRUE".
+#' @param first Character; first script.
 #' @importFrom utils menu
 #' @export
 #' @examples \dontrun{
 #' # Do not run
 #' }
 emis_source <- function(path = "est", pattern = ".R",
-                        ignore = "~", ask = FALSE,
-                        recursive = TRUE, full.names = TRUE
-){
+                        ignore = "~", first = NULL, ask = FALSE,
+                        recursive = TRUE, full.names = TRUE){
   inputs <- list.files(path = path, pattern = pattern,
                        recursive = recursive, full.names =  full.names)
   inputs <- inputs[!grepl(pattern = ignore, x = inputs)]

@@ -4,8 +4,8 @@
 \alias{emis_source}
 \title{A function to source vein scripts}
 \usage{
-emis_source(path = "est", pattern = ".R", ignore = "~", ask = FALSE,
-  recursive = TRUE, full.names = TRUE)
+emis_source(path = "est", pattern = ".R", ignore = "~", first = NULL,
+  ask = FALSE, recursive = TRUE, full.names = TRUE)
 }
 \arguments{
 \item{path}{Character; path to source scripts. Default is "est".}
@@ -15,6 +15,8 @@ emis_source(path = "est", pattern = ".R", ignore = "~", ask = FALSE,
 \item{ignore}{Character; caracter to be excluded. Default is "~". Sometimes,
 the OS creates automatic back-ups, for instance "run.R~", the ideia is to
 avoid sourcing these files.}
+
+\item{first}{Character; first script.}
 
 \item{ask}{Logical; Check inputs or not. Default is "FALSE". It allows to
 stop inputs}
