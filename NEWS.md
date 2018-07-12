@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.3.35 (Release date: 2018-06-11)
+# vein 0.3.36 (Release date: 2018-07-11)
+
+- add emis_order (alias weekly) and emis_source. Also, updated reference.
+
+## vein 0.3.35 (Release date: 2018-06-11)
 
 - Fix emis_wrf. Minor fix for GMD.
 

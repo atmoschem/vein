@@ -32,7 +32,7 @@ age_moto(x, name = "veh", a = 0.2, b = 17, agemin = 1, agemax = 50,
 dataframe of age distrubution of vehicles
 }
 \description{
-Returns amount of vehicles at each age
+\code{\link{age_moto}} returns amount of vehicles at each age
 }
 \examples{
 {
