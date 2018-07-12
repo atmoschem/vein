@@ -26,7 +26,7 @@ emis_source <- function(path = "est", pattern = ".R",
   print(inputs)
   if(ask){
     choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
-    if(choice == "yes"){
+    if(choice == 1){
       for(i in 1:length(inputs)){
         source(inputs[i])
         print(inputs[i])
