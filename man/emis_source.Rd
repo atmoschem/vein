@@ -4,7 +4,7 @@
 \alias{emis_source}
 \title{A function to source vein scripts}
 \usage{
-emis_source(path = "est", pattern = ".R", ignore = "~", first = NULL,
+emis_source(path = "est", pattern = ".R", ignore = "~", first,
   ask = FALSE, recursive = TRUE, full.names = TRUE)
 }
 \arguments{
