@@ -18,26 +18,49 @@
 #' # Do not run
 #' }
 emis_source <- function(path = "est", pattern = ".R",
-                        ignore = "~", first = NULL, ask = FALSE,
+                        ignore = "~", first, ask = FALSE,
                         recursive = TRUE, full.names = TRUE){
   inputs <- list.files(path = path, pattern = pattern,
                        recursive = recursive, full.names =  full.names)
   inputs <- inputs[!grepl(pattern = ignore, x = inputs)]
-  if(ask){
-    print(inputs)
-    choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
-    if(choice == 1){
+  if(!missing(first)){
+    inputsa <- c(inputs[grepl(pattern = first, x = inputs)],
+                 inputs[!grepl(pattern = first, x = inputs)])
+    if(ask){
+      print(inputsa)
+      choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
+      if(choice == 1){
+        for(i in 1:length(inputsa)){
+          source(inputsa[i])
+          print(inputsa[i])
+        }
+      } else {
+        stop("Change inputs")
+      }
+    } else {
+      for(i in 1:length(inputsa)){
+        source(inputsa[i])
+        print(inputsa[i])
+      }
+    }
+  } else {
+    if(ask){
+      print(inputs)
+      choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
+      if(choice == 1){
+        for(i in 1:length(inputs)){
+          source(inputs[i])
+          print(inputs[i])
+        }
+      } else {
+        stop("Change inputs")
+      }
+    } else {
       for(i in 1:length(inputs)){
         source(inputs[i])
         print(inputs[i])
       }
-    } else {
-      stop("Change inputs")
     }
-  } else {
-    for(i in 1:length(inputs)){
-      source(inputs[i])
-      print(inputs[i])
-    }
+
   }
 }

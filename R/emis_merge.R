@@ -36,7 +36,7 @@ emis_merge <- function (pol = "CO",
                   all.files = T,
                   full.names = T,
                   recursive = T)
-  x <- x[grep(pattern = paste0("_", pol, "_"), x = x)]
+  x <- x[grep(pattern = paste0(pol, "_"), x = x)]
 
   cat("\nReading emissions from:\n")
   print(x)
