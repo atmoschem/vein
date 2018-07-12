@@ -1,6 +1,6 @@
 #' Average daily traffic (ADT) from hourly traffic data.
 #'
-#' @description This function calculates ADT based on hourly traffic data. The
+#' @description \code{\link{adt}} calculates ADT based on hourly traffic data. The
 #' input traffic data is usually for morning rush hours.
 #'
 #' @param pc numeric vector for passenger cars

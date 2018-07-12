@@ -33,7 +33,7 @@ ef_hdv_scaled(df, dfcol, SDC = 34.12, v, t, g, eu, gr = 0, l = 0.5, p)
 A list of scaled emission factors g/km
 }
 \description{
-This function creates a list of scaled functions of emission factors. A scaled
+\code{\link{ef_hdv_scaled}} creates a list of scaled functions of emission factors. A scaled
 emission factor which at a speed of the dricing cycle (SDC) gives a desired value.
 This function needs a dataframe with local emission factors with a columns with
 the name "Euro_HDV" indicating the Euro equivalence standard, assuming that there are

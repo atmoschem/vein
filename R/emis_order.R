@@ -1,18 +1,26 @@
-#' Reordene the emission for simulation
+#' Re-order the emission to match specific hours and days
 #'
 #' @description returns the emission array matching with corresponding weekdays and with
 #' the desired number of hours, recycling or droping hours from the emission array.
 #'
-#' @param EMISSION GriddedEmissionsArray output
-#' @param start Date or the start weekday first 3 letters
-#' @param hours number of hours needed to the simualation
-#' @param verbose display additional information
+#' @param EMISSION GriddedEmissionsArray or array with characteristics of
+#' GriddedEmissionsArray
+#' @param start Date or the start weekday or first 3 letters
+#' @param hours Numeric; number of hours needed to the simualation
+#' @param verbose Logical; display additional information
+#' @aliases weekly
 #'
 #' @format Emissions
 #'
 #' @author Daniel Schuch
 #'
 #' @export
+#' @note This function assumes that the emissions have hours with length of
+#' factor of 24, e.g: 24 hours, 24*2 hours etc. Then, it re-order the emissions
+#' by the hours of estimations to match another length of emissions. For
+#' instance, if the input covers 168 hours and it is desired an object of 241
+#' hours that start saturday, this function can do that. It is useful when you
+#' are going to start a air quality simulation for specific periods of time.
 #'
 #' @examples \dontrun{
 #' wCO <- weekly(CO, start = "sat", hours = 24, verbose = TRUE)
@@ -20,7 +28,7 @@
 #' }
 #'
 
-weekly <- function(EMISSION, start = "mon", hours = 168, verbose = FALSE){
+emis_order <- function(EMISSION, start = "mon", hours = 168, verbose = FALSE){
   seg <- 1:24
   ter <- 25:48
   qua <- 49:72
@@ -71,8 +79,12 @@ weekly <- function(EMISSION, start = "mon", hours = 168, verbose = FALSE){
   }
 
   # this lines rearange the GriddedEmissionsArray output to be used in wrf_put
-  NEW   <- array(NA,dim = c(dim(EMISSION)[1],dim(EMISSION)[2],hours))
-  NEW   <- EMISSION[,,c(index)]
-
-  return(NEW)
+  if(class(EMISSION) %in% c("GriddedEmissionsArray", "array")){
+    NEW   <- array(NA, dim = c(dim(EMISSION)[1],dim(EMISSION)[2], hours))
+    NEW   <- EMISSION[, , c(index)]
+    class(NEW) <- "GriddedEmissionsArray"
+    return(NEW)
+  } else {
+    stop("Currently, only supports GriddedEmissionsArray or array\n")
+  }
 }

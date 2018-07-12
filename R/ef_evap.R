@@ -1,6 +1,6 @@
 #' Evaporative emission factor
 #'
-#' @description A lookup table with tier 2 evaporative emission factors
+#' @description \code{\link{ef_evap}} is a lookup table with tier 2 evaporative emission factors
 #' from EMEP/EEA emisison guidelines
 #'
 #' @param ef Name of  evaporative emission factor as *eshotc*: mean hot-soak with

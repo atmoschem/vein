@@ -33,7 +33,7 @@ emission factors in g/trip or g/proced. The object has class (g)
 but it order to know it is g/trip or g/proceed the argument show must by T
 }
 \description{
-A lookup table with tier 2 evaporative emission factors
+\code{\link{ef_evap}} is a lookup table with tier 2 evaporative emission factors
 from EMEP/EEA emisison guidelines
 }
 \examples{

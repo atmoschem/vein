@@ -33,7 +33,7 @@ vectors with length equal to x}
 dataframe of age distrubution of vehicles
 }
 \description{
-Returns amount of vehicles at each age
+\code{\link{age_ldv}} returns amount of vehicles at each age
 }
 \examples{
 {

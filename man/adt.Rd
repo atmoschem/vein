@@ -34,7 +34,7 @@ numeric vector of total volume of traffic per link, or data-frames
 of expanded traffic
 }
 \description{
-This function calculates ADT based on hourly traffic data. The
+\code{\link{adt}} calculates ADT based on hourly traffic data. The
 input traffic data is usually for morning rush hours.
 }
 \examples{

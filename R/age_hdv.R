@@ -1,6 +1,6 @@
 #' Returns amount of vehicles at each age
 #'
-#' @description Returns amount of vehicles at each age
+#' @description \code{\link{age_hdv}} returns amount of vehicles at each age
 #'
 #' @param x numerical vector of vehicles with length equal to lines features of raod network
 #' @param name of vehicle assigned to columns of dataframe

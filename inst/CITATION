@@ -2,20 +2,19 @@ citHeader("To cite vein in publications use at least the first, if not both:")
 
 citEntry(entry = "article",
    title          = "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
-   journal		    = "Geoscientific Model Development Discussions",
+   journal		    = "Geoscientific Model Development",
    author         = personList(person("Sergio", "Ibarra-Espinosa"),
                     person("Rita", "Ynoue"),
-                    person("Shane", "O' Sullivan"),
+                    person("Shane", "O'Sullivan"),
                     person("Edzer", "Pebesma"),
                     person("Maria de Fatima", "Andrade"),
                     person("Mauricio", "Osses")),
-   year           = "2017",
-   url            = "https://www.geosci-model-dev-discuss.net/gmd-2017-193",
+   year           = "2018",
+   url            = "https://www.geosci-model-dev.net/11/2209/2018/",
+   doi            = "10.5194/gmd-11-2209-2018",
 
    textVersion  =
-   paste("Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M. (2017).",
-        "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
-        " Geosci. Model Dev. Discus, https://doi.org/10.5194/gmd-2017-193, 2017.")
+   paste("Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M.: VEIN v0.2.2: an R package for bottom-up vehicular emissions inventories, Geosci. Model Dev., 11, 2209-2229, https://doi.org/10.5194/gmd-11-2209-2018, 2018.")
 )
 
 citation(auto = meta)
