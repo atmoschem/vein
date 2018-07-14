@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.36</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.0</span>
       </span>
     </div>
 
@@ -77,42 +77,9 @@
 </div>
 <p><strong>V</strong>ehicular <strong>E</strong>missions <strong>IN</strong>ventory <strong>(VEIN)</strong> model.</p>
 <p><em>Please read the documentation</em>.</p>
-<div id="system-requirements" class="section level3">
-<h3 class="hasAnchor">
-<a href="#system-requirements" class="anchor"></a>System requirements</h3>
-<p>vein imports functions from spatial packages listed below. In order to install these packages, firstly the user must install the requirements mentioned <a href="https://www.github.com/r-spatial/sf">here</a>.</p>
-</div>
-<div id="packages-needed" class="section level3">
-<h3 class="hasAnchor">
-<a href="#packages-needed" class="anchor"></a>Packages needed</h3>
-<p>After installing system dependencies, you need these packages:</p>
-<ul>
-<li><a href="https://github.com/r-spatial/sf">sf</a></li>
-<li><a href="https://github.com/edzer/sp/">sp</a></li>
-<li><a href="https://github.com/r-spatial/lwgeom/">lwgeom</a></li>
-<li><a href="https://github.com/edzer/units/">units</a></li>
-</ul>
-<p>In order to run the demo, this package is also needed:</p>
-<ul>
-<li><a href="https://github.com/tidyverse/ggplot2">ggplot2</a></li>
-</ul>
-</div>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
-<p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools) 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
-<span class="kw">library</span>(vein)
-<span class="kw">demo</span>(VEIN)</code></pre></div>
-<p>or</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"vein"</span>)
-<span class="kw">library</span>(vein)
-<span class="kw">demo</span>(VEIN)</code></pre></div>
-</div>
 <div id="what-is-vein" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-vein" class="anchor"></a>What is VEIN</h2>
+<a href="#what-is-vein" class="anchor"></a>What is VEIN ?</h2>
 <p>Vehicular Emissions Inventories. An R package to estimate vehicular emissions. It currently covers the following pollutants in speed functions:</p>
 <ul>
 <li>
@@ -141,34 +108,61 @@
 </ul>
 <p>Also, somre Brazilian emission factors and speciations for WRF-Chem, mechanisms:</p>
 <p>e_eth e_hc3 e_hc5 e_hc8 e_ol2 e_olt e_oli e_iso e_tol e_xyl e_c2h5oh e_ald e_hcho e_ch3oh e_ket E_SO4i E_SO4j E_NO3i E_NO3j E_MP2.5i E_MP2.5j E_ORGi E_ORGj E_ECi E_ECj H2O</p>
+<div id="system-requirements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#system-requirements" class="anchor"></a>System requirements</h3>
+<p>vein imports functions from spatial packages listed below. In order to install these packages, firstly the user must install the requirements mentioned <a href="https://www.github.com/r-spatial/sf">here</a>.</p>
 </div>
-<div id="what-is-new" class="section level2">
+<div id="packages-needed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#packages-needed" class="anchor"></a>Packages needed</h3>
+<p>After installing system dependencies, you will need these packages:</p>
+<ul>
+<li><a href="https://github.com/r-spatial/sf">sf</a></li>
+<li><a href="https://github.com/edzer/sp/">sp</a></li>
+<li><a href="https://github.com/r-spatial/lwgeom/">lwgeom</a></li>
+<li><a href="https://github.com/edzer/units/">units</a></li>
+<li><a href="https://github.com/atmoschem/eixport/">eixport</a></li>
+</ul>
+<p>In order to run the demo, this package is also needed:</p>
+<ul>
+<li><a href="https://github.com/tidyverse/ggplot2">ggplot2</a></li>
+</ul>
+</div>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<p>VEIN can be installed via CRAN or github</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools) 
+<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
+<span class="kw">library</span>(vein)
+<span class="kw">demo</span>(VEIN)</code></pre></div>
+<p>or</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"vein"</span>)
+<span class="kw">library</span>(vein)
+<span class="kw">demo</span>(VEIN)</code></pre></div>
+</div>
+</div>
+<div id="what-is-new-v0-4-0" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new" class="anchor"></a>What is new?</h2>
+<a href="#what-is-new-v0-4-0" class="anchor"></a>What is new? (v0.4.0)</h2>
 <p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
 <ul>
-<li>vein imports <strong>sf</strong> functions.</li>
-<li>R packages -raster-, -rgdal- and -rgeos- not needed anymore.</li>
-<li>vein now imports <strong>data-table</strong>.</li>
-<li>Add class GriddedEmissionsArray.</li>
-<li>Fix #28, data.table imported in emis_grid. Now it is very fast!</li>
-<li>Fix #49: Documentation in inventory est.</li>
-<li>Fix #50: Fix repetition of x_DF.</li>
-<li>Fix #51: deparse text.</li>
-<li>Fix #52: separate objects in rm with ‘,’</li>
-<li>Fix #55.</li>
-<li>Minor fix on demo(VEIN).</li>
-<li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
-<li>Revised all examples.</li>
-<li>returns sf in temp_fact, netspeed and emis_post! (0.3.17)</li>
+<li>VEIN imports <strong>sf</strong> functions.</li>
+<li>Covers estimations of compounds of pollutants (e.g.: isobutene)</li>
+<li>Add com util functions tuch as emis_spurce to source vein scripts.</li>
+<li>Add emis_dist function to distribute top-down emissions into ‘sf’ objects by feature, specifically, ir returns a vector of lines (streeets).</li>
+<li>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a>
+</li>
 </ul>
-<p>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a></p>
 <p><strong>future steps</strong></p>
 <ul>
-<li>Add more support to sf.</li>
+<li>Tests!</li>
+<li>Parallism. I’ve done some tests already.</li>
+<li>RCPP integration. I would like to do itspecifically in <code>emis</code>.</li>
 <li>Estimation of evaporative emissions with Copert Tier 3.</li>
 <li>More speciations.</li>
-<li>A book (hopefully released in 2018).</li>
+<li>A book (hopefully released in 2018). Currently 200 pags. No decided if it wiill be Leanpub or send to CRC.</li>
 </ul>
 </div>
 <div id="how-does-it-work" class="section level2">
@@ -179,25 +173,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/Rtmpl5JiZH/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpRH2NaV/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/Rtmpl5JiZH/YourCity"             
-##  [2] "/tmp/Rtmpl5JiZH/YourCity/ef"          
-##  [3] "/tmp/Rtmpl5JiZH/YourCity/emi"         
-##  [4] "/tmp/Rtmpl5JiZH/YourCity/emi/BUS_01"  
-##  [5] "/tmp/Rtmpl5JiZH/YourCity/emi/HGV_01"  
-##  [6] "/tmp/Rtmpl5JiZH/YourCity/emi/LCV_01"  
-##  [7] "/tmp/Rtmpl5JiZH/YourCity/emi/MC_01"   
-##  [8] "/tmp/Rtmpl5JiZH/YourCity/emi/PC_01"   
-##  [9] "/tmp/Rtmpl5JiZH/YourCity/est"         
-## [10] "/tmp/Rtmpl5JiZH/YourCity/images"      
-## [11] "/tmp/Rtmpl5JiZH/YourCity/network"     
-## [12] "/tmp/Rtmpl5JiZH/YourCity/post"        
-## [13] "/tmp/Rtmpl5JiZH/YourCity/post/df"     
-## [14] "/tmp/Rtmpl5JiZH/YourCity/post/grids"  
-## [15] "/tmp/Rtmpl5JiZH/YourCity/post/streets"
-## [16] "/tmp/Rtmpl5JiZH/YourCity/profiles"    
-## [17] "/tmp/Rtmpl5JiZH/YourCity/veh"         
+##  [1] "/tmp/RtmpRH2NaV/YourCity"             
+##  [2] "/tmp/RtmpRH2NaV/YourCity/ef"          
+##  [3] "/tmp/RtmpRH2NaV/YourCity/emi"         
+##  [4] "/tmp/RtmpRH2NaV/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpRH2NaV/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpRH2NaV/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpRH2NaV/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpRH2NaV/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpRH2NaV/YourCity/est"         
+## [10] "/tmp/RtmpRH2NaV/YourCity/images"      
+## [11] "/tmp/RtmpRH2NaV/YourCity/network"     
+## [12] "/tmp/RtmpRH2NaV/YourCity/post"        
+## [13] "/tmp/RtmpRH2NaV/YourCity/post/df"     
+## [14] "/tmp/RtmpRH2NaV/YourCity/post/grids"  
+## [15] "/tmp/RtmpRH2NaV/YourCity/post/streets"
+## [16] "/tmp/RtmpRH2NaV/YourCity/profiles"    
+## [17] "/tmp/RtmpRH2NaV/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            

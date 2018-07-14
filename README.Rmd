@@ -30,46 +30,7 @@ https://www.geosci-model-dev-dis.net/11/2209/2018/gmd-11-2209-2018.html
 
 _Please read the documentation_.
 
-### System requirements
-
-vein imports functions from spatial packages listed below. In order to
-install these packages, firstly the user must install the requirements
-mentioned [here](https://www.github.com/r-spatial/sf).
-
-### Packages needed
-
-After installing system dependencies, you need these packages:
-
-- [sf](https://github.com/r-spatial/sf)
-- [sp](https://github.com/edzer/sp/) 
-- [lwgeom](https://github.com/r-spatial/lwgeom/) 
-- [units](https://github.com/edzer/units/) 
-
-In order to run the demo, this package is also needed:
-
-- [ggplot2](https://github.com/tidyverse/ggplot2)
-
-
-### Installation
-
-VEIN can be installed via CRAN or github
-
-```{r eval = F}
-library(devtools) 
-install_github("atmoschem/vein")
-library(vein)
-demo(VEIN)
-```
-
-or
-
-```{r eval=F}
-install.packages("vein")
-library(vein)
-demo(VEIN)
-```
-
-## What is VEIN
+## What is VEIN ?
 
 Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
 It currently covers the following pollutants in speed functions:
@@ -111,35 +72,67 @@ e_eth	e_hc3	e_hc5	e_hc8	e_ol2	e_olt	e_oli	e_iso	e_tol	e_xyl	e_c2h5oh	e_ald	e_hch
 E_SO4i	E_SO4j	E_NO3i	E_NO3j	E_MP2.5i	E_MP2.5j	E_ORGi	E_ORGj	E_ECi	E_ECj	H2O
 
 
-## What is new?
+### System requirements
+
+vein imports functions from spatial packages listed below. In order to
+install these packages, firstly the user must install the requirements
+mentioned [here](https://www.github.com/r-spatial/sf).
+
+### Packages needed
+
+After installing system dependencies, you will need these packages:
+
+- [sf](https://github.com/r-spatial/sf)
+- [sp](https://github.com/edzer/sp/) 
+- [lwgeom](https://github.com/r-spatial/lwgeom/) 
+- [units](https://github.com/edzer/units/) 
+- [eixport](https://github.com/atmoschem/eixport/) 
+
+In order to run the demo, this package is also needed:
+
+- [ggplot2](https://github.com/tidyverse/ggplot2)
+
+
+### Installation
+
+VEIN can be installed via CRAN or github
+
+```{r eval = F}
+library(devtools) 
+install_github("atmoschem/vein")
+library(vein)
+demo(VEIN)
+```
+
+or
+
+```{r eval=F}
+install.packages("vein")
+library(vein)
+demo(VEIN)
+```
+
+
+## What is new? (v0.4.0)
 
 I decided to jump into a new 'minor' version because it brings lots of cool
 improvements.
 
-- vein imports **sf** functions.
-- R packages -raster-, -rgdal- and -rgeos- not needed anymore.
-- vein now imports **data-table**.
-- Add class GriddedEmissionsArray.
-- Fix #28, data.table imported in emis_grid. Now it is very fast!
-- Fix #49: Documentation in inventory est.
-- Fix #50: Fix repetition of x_DF.
-- Fix #51: deparse text.
-- Fix #52: separate objects in rm with ','
-- Fix #55.
-- Minor fix on demo(VEIN).
-- emis and emis_cold adjust length of ef by length of columns of first
-element of the list of data-frames.
-- Revised all examples.
-- returns sf in temp_fact, netspeed and emis_post! (0.3.17)
-
-Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
+- VEIN imports **sf** functions.
+- Covers estimations of compounds of pollutants (e.g.: isobutene)
+- Add com util functions tuch as emis_spurce to source vein scripts.
+- Add emis_dist function to distribute top-down emissions into 'sf' objects
+by feature, specifically, ir returns a vector of lines (streeets).
+- Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
 **future steps**
 
-- Add more support to sf.
+- Tests! 
+- Parallism. I've done some tests already.
+- RCPP integration. I would like to do itspecifically in `emis`.
 - Estimation of evaporative emissions with Copert Tier 3.
 - More speciations.
-- A book (hopefully released in 2018).
+- A book (hopefully released in 2018). Currently 200 pags. No decided if it wiill be Leanpub or send to CRC.
 
 
 

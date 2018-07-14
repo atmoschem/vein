@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Re-order the emission to match specific hours and days — emis_order • vein</title>
+<title>Allocate emissions into spatial objects — emis_dist • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,12 @@
 
 
 
-<meta property="og:title" content="Re-order the emission to match specific hours and days — emis_order" />
+<meta property="og:title" content="Allocate emissions into spatial objects — emis_dist" />
 
-<meta property="og:description" content="returns the emission array matching with corresponding weekdays and with
-the desired number of hours, recycling or droping hours from the emission array." />
+<meta property="og:description" content="emis_dist allocates emissions proportionally to
+each feature. &quot;Spatial&quot; objects are converter to &quot;sf&quot; objects. Currently,
+'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
+in each street." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,78 +98,80 @@ the desired number of hours, recycling or droping hours from the emission array.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Re-order the emission to match specific hours and days</h1>
+    <h1>Allocate emissions into spatial objects</h1>
     
-    <div class="hidden name"><code>emis_order.Rd</code></div>
+    <div class="hidden name"><code>emis_dist.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>returns the emission array matching with corresponding weekdays and with
-the desired number of hours, recycling or droping hours from the emission array.</p>
+    <p><code>emis_dist</code> allocates emissions proportionally to
+each feature. "Spatial" objects are converter to "sf" objects. Currently,
+'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
+in each street.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_order</span>(<span class='no'>EMISSION</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"mon"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_dist</span>(<span class='no'>gy</span>, <span class='no'>spobj</span>, <span class='no'>pro</span>, <span class='kw'>dyear</span> <span class='kw'>=</span> <span class='fl'>365</span>, <span class='no'>osm</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>EMISSION</th>
-      <td><p>GriddedEmissionsArray or array with characteristics of
-GriddedEmissionsArray</p></td>
+      <th>gy</th>
+      <td><p>Numeric; total (top-down) emissions (grams)</p></td>
     </tr>
     <tr>
-      <th>start</th>
-      <td><p>Date or the start weekday or first 3 letters</p></td>
+      <th>spobj</th>
+      <td><p>A spatial dataframe of class "sp" or "sf". When class is "sp"
+it is transformed to "sf".</p></td>
     </tr>
     <tr>
-      <th>hours</th>
-      <td><p>Numeric; number of hours needed to the simualation</p></td>
+      <th>pro</th>
+      <td><p>Matrix or data-frame profiles, for instance, pc_profile.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>Logical; display additional information</p></td>
+      <th>dyear</th>
+      <td><p>Numeric, Number of days of period of time, default is 365.</p></td>
+    </tr>
+    <tr>
+      <th>osm</th>
+      <td><p>Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
+The first element covers 'motorway' and 'motorway_link.
+The second element covers 'trunk' and 'trunk_link'.
+The third element covers 'primary' and 'primary_link'.
+The fourth element covers 'secondary' and 'secondary_link'.
+The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>Emissions</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>This function assumes that the emissions have hours with length of
-factor of 24, e.g: 24 hours, 24*2 hours etc. Then, it re-order the emissions
-by the hours of estimations to match another length of emissions. For
-instance, if the input covers 168 hours and it is desired an object of 241
-hours that start saturday, this function can do that. It is useful when you
-are going to start a air quality simulation for specific periods of time.</p>
+    <p>When spobj is a 'Spatial' object (class of sp), they are converted
+ into 'sf'.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>weekly</span>(<span class='no'>CO</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"sat"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>weekly</span>(<span class='no'>CO</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>as.Date</span>(<span class='st'>"2016-04-06"</span>), <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>241</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'>{
+<span class='fu'>data</span>(<span class='no'>net</span>)
+<span class='fu'>data</span>(<span class='no'>pc_profile</span>)
+<span class='no'>po</span> <span class='kw'>&lt;-</span> <span class='fl'>1000</span>
+<span class='no'>t1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_dist</span>(<span class='kw'>gy</span> <span class='kw'>=</span> <span class='no'>po</span>, <span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>)
+<span class='fu'>head</span>(<span class='no'>t1</span>)
+<span class='fu'>sum</span>(<span class='no'>t1</span>$<span class='no'>gy</span>)
+<span class='co'>#t1 &lt;- emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1) )</span>
+<span class='no'>t1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_dist</span>(<span class='kw'>gy</span> <span class='kw'>=</span> <span class='no'>po</span>, <span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>pro</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.2, GDAL 2.2.3, proj.4 4.9.3</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
-
-    <h2>Author</h2>
-    
-Daniel Schuch
 
   </div>
 </div>

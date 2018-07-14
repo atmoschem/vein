@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.3.36 (Release date: 2018-07-11)
+# vein 0.4.0 (Release date: 2018-07-13)
+
+- add emis_dist. Add test. 
+
+## vein 0.3.36 (Release date: 2018-07-11)
 
 - add emis_order (alias weekly) and emis_source. Also, updated reference.
 
