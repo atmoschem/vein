@@ -4,7 +4,7 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, name = "veh", k = 1, net, message = TRUE)
+my_age(x, y, name = "veh", k = 1, bystreet = F, net, message = TRUE)
 }
 \arguments{
 \item{x}{Numeric; vehicles by street (or spatial feature).}
@@ -14,6 +14,10 @@ my_age(x, y, name = "veh", k = 1, net, message = TRUE)
 \item{name}{of vehicle assigned to columns of dataframe.}
 
 \item{k}{multiplication factor.}
+
+\item{bystreet}{when TRUE it is expecting that 'y' is a matrix with number of
+rows of the road network and the columns are the distribution by age of use
+by each street.}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 

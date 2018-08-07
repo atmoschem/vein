@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.4.0 (Release date: 2018-07-13)
+# vein 0.4.1 (Release date: 2018-08-07)
+
+- add bystreet in my_age.
+
+## vein 0.4.0 (Release date: 2018-07-13)
 
 - add emis_dist. Add test. 
 

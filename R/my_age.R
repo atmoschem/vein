@@ -7,6 +7,9 @@
 #' @param y Numeric; vehicles by age of use
 #' @param name of vehicle assigned to columns of dataframe.
 #' @param k multiplication factor.
+#' @param bystreet when TRUE it is expecting that 'y' is a matrix with number of
+#' rows of the road network and the columns are the distribution by age of use
+#' by each street.
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message message with average age and total numer of vehicles.
 #' @return dataframe of age distrubution of vehicles.
@@ -28,6 +31,7 @@ my_age <- function (x,
                     y,
                     name = "veh",
                     k = 1,
+                    bystreet = F,
                     net,
                     message = TRUE){
   if (missing(x) | is.null(x)) {
@@ -36,9 +40,17 @@ my_age <- function (x,
       stop (print("Missing distributed vehicles"))
     } else {
       y <- y[!is.na(y)]
-    d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
-    df <- as.data.frame(as.matrix(x) %*%d)
-    names(df) <- paste(name,seq(1,length(y)),sep="_")
+      if(bystreet){
+        if(!class(y) %in% c("data.frame", "matrix"))
+          stop("'y' must be 'data.frame' or 'matrix'")
+        d <- as.matrix(y)
+        df <- as.data.frame(as.matrix(x) %*%d)
+        names(df) <- paste(name,seq(1,length(y)),sep="_")
+      } else {
+        d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
+        df <- as.data.frame(as.matrix(x) %*%d)
+        names(df) <- paste(name,seq(1,length(y)),sep="_")
+      }
     if(message){
       message(paste("Average age of",name, "is",
                   round(sum(seq(1,length(y))*base::colSums(df)/sum(df),na.rm = T), 2),
