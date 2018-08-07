@@ -45,10 +45,12 @@ my_age <- function (x,
         #   stop("'y' must be 'data.frame' or 'matrix'")
         # if(length(x) != nrow(y))
         #   stop(print("Lengths of 'x' and number of rows of 'y' must be the same"))
-        d <- do.call("rbind", lapply(1:nrow(y), function(i) {
-          y[i, ] <- y[i, ]/sum(y[i, ])
-        }))
-        df <- as.data.frame(as.matrix(x) * d)
+        # d <- do.call("rbind", lapply(1:nrow(y), function(i) { # too slow
+        #   y[i, ] <- y[i, ]/sum(y[i, ])
+        # }))
+        if(!class(y) %in% c("integer", "numeric"))
+          stop("'y' must be 'numeric'")
+        df <- as.data.frame(x * y)
         names(df) <- paste(name, seq(1, length(y)), sep="_")
       } else {
         if(mode(y) != "numeric") stop("'y' must be 'numeric'")
