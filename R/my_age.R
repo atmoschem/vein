@@ -41,22 +41,23 @@ my_age <- function (x,
     } else {
       y <- y[!is.na(y)]
       if(bystreet){
-        if(class(y) %in% c("data.frame", "matrix"))
-          stop("'y' must be 'data.frame' or 'matrix'")
-        if(length(x) != nrow(y))
-          stop((print("Lengths of 'x' and number of rows of 'y' must be the same")))
+        # if(class(y) %in% c("data.frame", "matrix"))
+        #   stop("'y' must be 'data.frame' or 'matrix'")
+        # if(length(x) != nrow(y))
+        #   stop(print("Lengths of 'x' and number of rows of 'y' must be the same"))
         d <- do.call("rbind", lapply(1:nrow(y), function(i) {
           y[i, ] <- y[i, ]/sum(y[i, ])
         }))
         df <- as.data.frame(as.matrix(x) * d)
         names(df) <- paste(name, seq(1, length(y)), sep="_")
       } else {
+        if(mode(y) != "numeric") stop("'y' must be 'numeric'")
         d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
         df <- as.data.frame(as.matrix(x) %*%d)
         names(df) <- paste(name, seq(1, length(y)), sep="_")
       }
     if(message){
-      message(paste("Average age of",name, "is",
+      message(paste("Average age of", name, "is",
                   round(sum(seq(1,length(y))*base::colSums(df)/sum(df),na.rm = T), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
