@@ -41,7 +41,7 @@ my_age <- function (x,
     } else {
       y <- y[!is.na(y)]
       if(bystreet){
-        if(!class(y) %in% c("data.frame", "matrix"))
+        if(class(y) %in% c("data.frame", "matrix"))
           stop("'y' must be 'data.frame' or 'matrix'")
         if(length(x) != nrow(y))
           stop((print("Lengths of 'x' and number of rows of 'y' must be the same")))
