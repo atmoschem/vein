@@ -51,12 +51,12 @@ my_age <- function (x,
         if(!class(y) %in% c("integer", "numeric"))
           stop("'y' must be 'numeric'")
         df <- as.data.frame(x * y)
-        names(df) <- paste(name, seq(1, length(y)), sep="_")
+        names(df) <- paste(name, seq(1, length(df)), sep="_")
       } else {
         if(mode(y) != "numeric") stop("'y' must be 'numeric'")
         d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
         df <- as.data.frame(as.matrix(x) %*%d)
-        names(df) <- paste(name, seq(1, length(y)), sep="_")
+        names(df) <- paste(name, seq(1, length(df)), sep="_")
       }
     if(message){
       message(paste("Average age of", name, "is",
