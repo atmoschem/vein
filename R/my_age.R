@@ -43,13 +43,17 @@ my_age <- function (x,
       if(bystreet){
         if(!class(y) %in% c("data.frame", "matrix"))
           stop("'y' must be 'data.frame' or 'matrix'")
-        d <- as.matrix(y)
-        df <- as.data.frame(as.matrix(x) %*%d)
-        names(df) <- paste(name,seq(1,length(y)),sep="_")
+        if(length(x) != nrow(y))
+          stop((print("Lengths of 'x' and number of rows of 'y' must be the same")))
+        d <- do.call("rbind", lapply(1:nrow(y), function(i) {
+          y[i, ] <- y[i, ]/sum(y[i, ])
+        }))
+        df <- as.data.frame(as.matrix(x) * d)
+        names(df) <- paste(name, seq(1, length(y)), sep="_")
       } else {
         d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
         df <- as.data.frame(as.matrix(x) %*%d)
-        names(df) <- paste(name,seq(1,length(y)),sep="_")
+        names(df) <- paste(name, seq(1, length(y)), sep="_")
       }
     if(message){
       message(paste("Average age of",name, "is",
