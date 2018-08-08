@@ -4,29 +4,29 @@
 \alias{age_moto}
 \title{Returns amount of vehicles at each age}
 \usage{
-age_moto(x, name = "veh", a = 0.2, b = 17, agemin = 1, agemax = 50,
+age_moto(x, name = "age", a = 0.2, b = 17, agemin = 1, agemax = 50,
   k = 1, bystreet = F, net, message = TRUE)
 }
 \arguments{
-\item{x}{numerical vector of vehicles}
+\item{x}{Numeric; numerical vector of vehicles with length equal to lines features of raod network}
 
-\item{name}{of vehicle assigned to columns of dataframe}
+\item{name}{Character; of vehicle assigned to columns of dataframe}
 
-\item{a}{parameter of survival equation}
+\item{a}{Numeric; parameter of survival equation}
 
-\item{b}{parameter of survival equation}
+\item{b}{Numeric; parameter of survival equation}
 
-\item{agemin}{age of newest vehicles for that category}
+\item{agemin}{Integer; age of newest vehicles for that category}
 
-\item{agemax}{age of oldest vehicles for that category}
+\item{agemax}{Integer; age of oldest vehicles for that category}
 
-\item{k}{multiplication factor}
+\item{k}{Integer; multiplication factor}
 
-\item{bystreet}{when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x}
+\item{bystreet}{Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
-\item{message}{message with average age and total numer of vehicles}
+\item{message}{Logical;  message with average age and total numer of vehicles}
 }
 \value{
 dataframe of age distrubution of vehicles
