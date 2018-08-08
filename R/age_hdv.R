@@ -12,7 +12,7 @@
 #' @param bystreet Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message Logical;  message with average age and total numer of vehicles
-#' @return dataframe of age distrubution of vehicles
+#' @return dataframe of age distrubution of vehicles at each street
 #' @importFrom sf st_sf st_as_sf
 #' @export
 #' @examples {
