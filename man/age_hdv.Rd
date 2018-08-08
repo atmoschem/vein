@@ -29,7 +29,7 @@ age_hdv(x, name = "age", a = 0.2, b = 17, agemin = 1, agemax = 50,
 \item{message}{Logical;  message with average age and total numer of vehicles}
 }
 \value{
-dataframe of age distrubution of vehicles
+dataframe of age distrubution of vehicles at each street
 }
 \description{
 \code{\link{age_hdv}} returns amount of vehicles at each age
