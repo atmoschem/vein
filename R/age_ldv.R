@@ -2,17 +2,16 @@
 #'
 #' @description \code{\link{age_ldv}} returns amount of vehicles at each age
 #'
-#' @param x numerical vector of vehicles
-#' @param name word of vehicle assigned to columns of dataframe
-#' @param a parameter of survival equation
-#' @param b parameter of survival equation
-#' @param agemin age of newest vehicles for that category
-#' @param agemax age of oldest vehicles for that category
-#' @param k multiplication factor
-#' @param bystreet when TRUE it is expecting that 'a' and 'b' are numeric
-#' vectors with length equal to x
+#' @param x Numeric; numerical vector of vehicles with length equal to lines features of raod network
+#' @param name Character; of vehicle assigned to columns of dataframe
+#' @param a Numeric; parameter of survival equation
+#' @param b Numeric; parameter of survival equation
+#' @param agemin Integer; age of newest vehicles for that category
+#' @param agemax Integer; age of oldest vehicles for that category
+#' @param k Integer; multiplication factor
+#' @param bystreet Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
-#' @param message message with average age and total numer of vehicles
+#' @param message Logical;  message with average age and total numer of vehicles
 #' @return dataframe of age distrubution of vehicles
 #' @importFrom sf st_sf st_as_sf
 #' @export
@@ -24,7 +23,7 @@
 #' plot(PC_E25_1400)
 #' }
 age_ldv <- function (x,
-                     name = "veh",
+                     name = "age",
                      a = 1.698,
                      b = -0.2,
                      agemin = 1,

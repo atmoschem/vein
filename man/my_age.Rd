@@ -4,24 +4,30 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, name = "veh", k = 1, bystreet = F, net, message = TRUE)
+my_age(x, y, name = "age", k = 1, pro_street, net, message = TRUE)
 }
 \arguments{
 \item{x}{Numeric; vehicles by street (or spatial feature).}
 
-\item{y}{Numeric; vehicles by age of use}
+\item{y}{Numeric or data.frame; when pro_street is not available, y must be
+'numeric', else, a 'data.frame'. The names of the columns of this data.frame
+must be the same of the elements of pro_street and each column must have a
+profile of age of use of vehicle. When 'y' is 'numeric' the vehicles
+has the same age distribution to all street. When 'y' is a data.frame,
+the distribution by age of use varies the streets.}
 
-\item{name}{of vehicle assigned to columns of dataframe.}
+\item{name}{Character; of vehicle assigned to columns of dataframe.}
 
-\item{k}{multiplication factor.}
+\item{k}{Integer; multiplication factor.}
 
-\item{bystreet}{when TRUE it is expecting that 'y' is a matrix with number of
-rows of the road network and the columns are the distribution by age of use
-by each street.}
+\item{pro_street}{Character; each category of profile for each street.
+The length of this character vector must be equal to the length of 'x'. The
+characters of this vector must be the same of the 'data.frame' 'y'. When
+pro_street is not used, 'y' must be a numeric vector.}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
-\item{message}{message with average age and total numer of vehicles.}
+\item{message}{Logical; message with average age and total numer of vehicles.}
 }
 \value{
 dataframe of age distrubution of vehicles.
@@ -42,5 +48,9 @@ class(PC_E25_1400sf)
 plot(PC_E25_1400sf)
 PC_E25_1400nsf <- sf::st_set_geometry(PC_E25_1400sf, NULL)
 class(PC_E25_1400nsf)
+yy <- data.frame(a = 1:5, b = 5:1)    # perfiles por categoria de calle
+pro_street <- c("a", "b", "a")         # categorias de cada calle
+x <- c(100,5000, 3)                               # vehiculos
+my_age(x = x, y =  yy, pro_street = pro_street)
 }
 }
