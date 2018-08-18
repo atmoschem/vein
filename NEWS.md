@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.4.1 (Release date: 2018-08-07)
+# vein 0.4.2 (Release date: 2018-08-18)
+
+- add function ef_fun #103.
+
+## vein 0.4.1 (Release date: 2018-08-07)
 
 - add bystreet in my_age.
 

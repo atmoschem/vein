@@ -21,11 +21,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -35,7 +33,6 @@
 <meta property="og:description" content="my_age returns amount of vehicles at each age using a
 numeric vector." />
 <meta name="twitter:card" content="summary" />
-
 
 
 <!-- mathjax -->
@@ -62,7 +59,7 @@ numeric vector." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.2</span>
       </span>
     </div>
 
@@ -108,7 +105,7 @@ numeric vector.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>my_age</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>net</span>, <span class='kw'>message</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>my_age</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>pro_street</span>, <span class='no'>net</span>, <span class='kw'>message</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -119,15 +116,27 @@ numeric vector.</p>
     </tr>
     <tr>
       <th>y</th>
-      <td><p>Numeric; vehicles by age of use</p></td>
+      <td><p>Numeric or data.frame; when pro_street is not available, y must be
+'numeric', else, a 'data.frame'. The names of the columns of this data.frame
+must be the same of the elements of pro_street and each column must have a
+profile of age of use of vehicle. When 'y' is 'numeric' the vehicles
+has the same age distribution to all street. When 'y' is a data.frame,
+the distribution by age of use varies the streets.</p></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>of vehicle assigned to columns of dataframe.</p></td>
+      <td><p>Character; of vehicle assigned to columns of dataframe.</p></td>
     </tr>
     <tr>
       <th>k</th>
-      <td><p>multiplication factor.</p></td>
+      <td><p>Integer; multiplication factor.</p></td>
+    </tr>
+    <tr>
+      <th>pro_street</th>
+      <td><p>Character; each category of profile for each street.
+The length of this character vector must be equal to the length of 'x'. The
+characters of this vector must be the same of the 'data.frame' 'y'. When
+pro_street is not used, 'y' must be a numeric vector.</p></td>
     </tr>
     <tr>
       <th>net</th>
@@ -135,7 +144,7 @@ numeric vector.</p>
     </tr>
     <tr>
       <th>message</th>
-      <td><p>message with average age and total numer of vehicles.</p></td>
+      <td><p>Logical; message with average age and total numer of vehicles.</p></td>
     </tr>
     </table>
     
@@ -156,8 +165,16 @@ numeric vector.</p>
 <span class='fu'>plot</span>(<span class='no'>PC_E25_1400sf</span>)
 <span class='no'>PC_E25_1400nsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_geometry'>st_set_geometry</a></span>(<span class='no'>PC_E25_1400sf</span>, <span class='kw'>NULL</span>)
 <span class='fu'>class</span>(<span class='no'>PC_E25_1400nsf</span>)
+<span class='no'>yy</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>5</span>:<span class='fl'>1</span>)    <span class='co'># perfiles por categoria de calle</span>
+<span class='no'>pro_street</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"a"</span>)         <span class='co'># categorias de cada calle</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>100</span>,<span class='fl'>5000</span>, <span class='fl'>3</span>)                               <span class='co'># vehiculos</span>
+<span class='fu'>my_age</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span>  <span class='no'>yy</span>, <span class='kw'>pro_street</span> <span class='kw'>=</span> <span class='no'>pro_street</span>)
 }</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 10.21</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.955 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; 
-#&gt; Average =  10.21</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 10.21</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.955 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 18 attributes; use max.plot = 18 to plot all</span></div><div class='img'><img src='my_age-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='my_age-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; [1] "data.frame"</div></pre>
+#&gt; Average =  10.21</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 10.21</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.955 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 18 attributes; use max.plot = 18 to plot all</span></div><div class='img'><img src='my_age-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>Average age of age is 3.67</span></div><div class='output co'>#&gt; <span class='message'>Number of age is 2.551 * 10^3 veh</span></div><div class='img'><img src='my_age-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Result for Vehicles 
+#&gt;              age_1            age_2       age_3           age_4           age_5
+#&gt; 1   3.333333 [1/h]   6.666667 [1/h]  10.0 [1/h]  13.33333 [1/h]  16.66667 [1/h]
+#&gt; 2 166.666667 [1/h] 333.333333 [1/h] 500.0 [1/h] 666.66667 [1/h] 833.33333 [1/h]
+#&gt; 3   0.500000 [1/h]   0.400000 [1/h]   0.3 [1/h]   0.20000 [1/h]   0.10000 [1/h]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
