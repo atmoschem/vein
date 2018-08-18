@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Allocate emissions into spatial objects — emis_dist • vein</title>
+<title>Experimental: Returns a function of Emission Factor by age of use — ef_fun • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,12 +28,9 @@
 
 
 
-<meta property="og:title" content="Allocate emissions into spatial objects — emis_dist" />
+<meta property="og:title" content="Experimental: Returns a function of Emission Factor by age of use — ef_fun" />
 
-<meta property="og:description" content="emis_dist allocates emissions proportionally to
-each feature. "Spatial" objects are converter to "sf" objects. Currently,
-'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
-in each street." />
+<meta property="og:description" content="ef_fun returns amount of vehicles at each age" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,77 +92,75 @@ in each street." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Allocate emissions into spatial objects</h1>
+    <h1>Experimental: Returns a function of Emission Factor by age of use</h1>
     
-    <div class="hidden name"><code>emis_dist.Rd</code></div>
+    <div class="hidden name"><code>ef_fun.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>emis_dist</code> allocates emissions proportionally to
-each feature. "Spatial" objects are converter to "sf" objects. Currently,
-'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
-in each street.</p>
+    <p><code>ef_fun</code> returns amount of vehicles at each age</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_dist</span>(<span class='no'>gy</span>, <span class='no'>spobj</span>, <span class='no'>pro</span>, <span class='kw'>dyear</span> <span class='kw'>=</span> <span class='fl'>365</span>, <span class='no'>osm</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_fun</span>(<span class='no'>ef</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"logistic"</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>ef</span>), <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>ef</span>), <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>,
+  <span class='kw'>L</span> <span class='kw'>=</span> <span class='fu'>max</span>(<span class='no'>ef</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>gy</th>
-      <td><p>Numeric; total (top-down) emissions (grams)</p></td>
+      <th>ef</th>
+      <td><p>Numeric; numeric vector of emission factors.</p></td>
     </tr>
     <tr>
-      <th>spobj</th>
-      <td><p>A spatial dataframe of class "sp" or "sf". When class is "sp"
-it is transformed to "sf".</p></td>
+      <th>type</th>
+      <td><p>Character; "logistic"  by default so far.</p></td>
     </tr>
     <tr>
-      <th>pro</th>
-      <td><p>Matrix or data-frame profiles, for instance, pc_profile.</p></td>
+      <th>x</th>
+      <td><p>Numeric; vector for ages of use.</p></td>
     </tr>
     <tr>
-      <th>dyear</th>
-      <td><p>Numeric, Number of days of period of time, default is 365.</p></td>
+      <th>x0</th>
+      <td><p>Numeric;  the x-value of the sigmoid's midpoint,</p></td>
     </tr>
     <tr>
-      <th>osm</th>
-      <td><p>Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
-The first element covers 'motorway' and 'motorway_link.
-The second element covers 'trunk' and 'trunk_link'.
-The third element covers 'primary' and 'primary_link'.
-The fourth element covers 'secondary' and 'secondary_link'.
-The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
+      <th>k</th>
+      <td><p>Numeric; the steepness of the curve.</p></td>
+    </tr>
+    <tr>
+      <th>L</th>
+      <td><p>Integer; the curve's maximum value.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>When spobj is a 'Spatial' object (class of sp), they are converted
- into 'sf'.</p>
+    <p>dataframe of age distrubution of vehicles at each street.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>https://en.wikipedia.org/wiki/Logistic_function</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='fu'>data</span>(<span class='no'>pc_profile</span>)
-<span class='no'>po</span> <span class='kw'>&lt;-</span> <span class='fl'>1000</span>
-<span class='no'>t1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_dist</span>(<span class='kw'>gy</span> <span class='kw'>=</span> <span class='no'>po</span>, <span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>)
-<span class='fu'>head</span>(<span class='no'>t1</span>)
-<span class='fu'>sum</span>(<span class='no'>t1</span>$<span class='no'>gy</span>)
-<span class='co'>#t1 &lt;- emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1) )</span>
-<span class='no'>t1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_dist</span>(<span class='kw'>gy</span> <span class='kw'>=</span> <span class='no'>po</span>, <span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>pro</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.2, GDAL 2.2.3, proj.4 4.9.3</span></div></pre>
+<span class='fu'>data</span>(<span class='no'>fe2015</span>)
+<span class='no'>CO</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>vein</span><span class='kw ns'>::</span><span class='fu'><a href='http://ibarraespinosa.github.io/vein//reference/EmissionFactors.html'>EmissionFactors</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span> <span class='kw'>==</span> <span class='st'>"CO"</span>, <span class='fl'>11</span>])
+<span class='no'>ef_logit</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_fun</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>CO</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fl'>27</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>33</span>)
+<span class='fu'>plot</span>(<span class='no'>ef_logit</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>)
+<span class='fu'>lines</span>(<span class='no'>ef_logit</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
+}</div><div class='img'><img src='ef_fun-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#note">Note</a></li>
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

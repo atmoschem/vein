@@ -8,8 +8,8 @@
 <title>Vehicular Emissions Inventories • vein</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Vehicular Emissions Inventories">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Vehicular Emissions Inventories">
 <meta property="og:description" content="Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.2</span>
       </span>
     </div>
 
@@ -69,9 +69,9 @@
 
 <div id="paper-published-on-gmd" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#paper-published-on-gmd" class="anchor"></a>Paper 😃 Published 😃 on GMD 🎉🎉!</h1></div>
+<a href="#paper-published-on-gmd" class="anchor"></a>Paper 😃 Published 😃 on GMD 🎉🎉 !!</h1></div>
 <p>Our paper was published on GMD:</p>
-<p><a href="https://www.geosci-model-dev-dis.net/11/2209/2018/gmd-11-2209-2018.html" class="uri">https://www.geosci-model-dev-dis.net/11/2209/2018/gmd-11-2209-2018.html</a></p>
+<p><a href="https://www.geosci-model-dev.net/11/2209/2018/" class="uri">https://www.geosci-model-dev.net/11/2209/2018/</a></p>
 <div class="figure">
 <img src="https://i.imgur.com/cGig6Qi.png">
 </div>
@@ -143,9 +143,9 @@
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 </div>
 </div>
-<div id="what-is-new-v0-4-0" class="section level2">
+<div id="what-is-new-v0-4-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new-v0-4-0" class="anchor"></a>What is new? (v0.4.0)</h2>
+<a href="#what-is-new-v0-4-2" class="anchor"></a>What is new? (v0.4.2)</h2>
 <p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
 <ul>
 <li>VEIN imports <strong>sf</strong> functions.</li>
@@ -180,25 +180,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpC84rPS/YourCity</code></pre>
+<pre><code>## files at /tmp/Rtmp9oa2yU/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpC84rPS/YourCity"             
-##  [2] "/tmp/RtmpC84rPS/YourCity/ef"          
-##  [3] "/tmp/RtmpC84rPS/YourCity/emi"         
-##  [4] "/tmp/RtmpC84rPS/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpC84rPS/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpC84rPS/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpC84rPS/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpC84rPS/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpC84rPS/YourCity/est"         
-## [10] "/tmp/RtmpC84rPS/YourCity/images"      
-## [11] "/tmp/RtmpC84rPS/YourCity/network"     
-## [12] "/tmp/RtmpC84rPS/YourCity/post"        
-## [13] "/tmp/RtmpC84rPS/YourCity/post/df"     
-## [14] "/tmp/RtmpC84rPS/YourCity/post/grids"  
-## [15] "/tmp/RtmpC84rPS/YourCity/post/streets"
-## [16] "/tmp/RtmpC84rPS/YourCity/profiles"    
-## [17] "/tmp/RtmpC84rPS/YourCity/veh"         
+##  [1] "/tmp/Rtmp9oa2yU/YourCity"             
+##  [2] "/tmp/Rtmp9oa2yU/YourCity/ef"          
+##  [3] "/tmp/Rtmp9oa2yU/YourCity/emi"         
+##  [4] "/tmp/Rtmp9oa2yU/YourCity/emi/BUS_01"  
+##  [5] "/tmp/Rtmp9oa2yU/YourCity/emi/HGV_01"  
+##  [6] "/tmp/Rtmp9oa2yU/YourCity/emi/LCV_01"  
+##  [7] "/tmp/Rtmp9oa2yU/YourCity/emi/MC_01"   
+##  [8] "/tmp/Rtmp9oa2yU/YourCity/emi/PC_01"   
+##  [9] "/tmp/Rtmp9oa2yU/YourCity/est"         
+## [10] "/tmp/Rtmp9oa2yU/YourCity/images"      
+## [11] "/tmp/Rtmp9oa2yU/YourCity/network"     
+## [12] "/tmp/Rtmp9oa2yU/YourCity/post"        
+## [13] "/tmp/Rtmp9oa2yU/YourCity/post/df"     
+## [14] "/tmp/Rtmp9oa2yU/YourCity/post/grids"  
+## [15] "/tmp/Rtmp9oa2yU/YourCity/post/streets"
+## [16] "/tmp/Rtmp9oa2yU/YourCity/profiles"    
+## [17] "/tmp/Rtmp9oa2yU/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -437,6 +437,7 @@ doi = {10.5194/gmd-11-2209-2018}
 <li><a href="https://codecov.io/github/atmoschem/vein?branch=master"><img src="https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg" alt="Coverage Status"></a></li>
 <li><a href="http://cran.r-project.org/web/packages/vein"><img src="http://www.r-pkg.org/badges/version/vein" alt="CRAN_Status_Badge"></a></li>
 <li><a href="http://cran.r-project.org/package=vein"><img src="http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange" alt="CRAN Downloads"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Package Status"></a></li>
 </ul>
 </div>
 </div>

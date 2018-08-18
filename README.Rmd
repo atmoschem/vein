@@ -114,7 +114,7 @@ demo(VEIN)
 ```
 
 
-## What is new? (v0.4.1)
+## What is new? (v0.4.2)
 
 I decided to jump into a new 'minor' version because it brings lots of cool
 improvements.
