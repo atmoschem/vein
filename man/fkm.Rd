@@ -21,7 +21,7 @@
   \item{KM_LDV_GNV}{Mileage in km of Light Duty Vehicles using Natural Gas}
 }}
 \source{
-\url{http://veicular.cetesb.sp.gov.br/relatorios-e-publicacoes/}
+\url{https://cetesb.sp.gov.br/}
 }
 \usage{
 data(fkm)
