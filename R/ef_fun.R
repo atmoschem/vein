@@ -30,7 +30,6 @@ ef_fun <- function(ef,
     }
     a <- vein::EmissionFactors(FD(x, x0 = x0, k = k, L = L))
     return(a)
-
   }
 }
 

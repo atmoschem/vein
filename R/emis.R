@@ -93,14 +93,18 @@ emis <- function (veh,
                   ef,
                   speed = 34,
                   agemax = ifelse(is.data.frame(veh), ncol(veh),
-                      ncol(veh[[1]])),
+                                  ncol(veh[[1]])),
                   profile,
                   hour = nrow(profile),
                   day = ncol(profile),
                   array = T) {
-  if(units(lkm)$numerator == "m" ){
-    stop("Units of lkm is 'm'")
+  if(class(lkm) != "units"){
+    stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
+  if(!class(ef) %in% c("list", "units", "EmissionFactorsList", "EmissionFactors", "data.frame")){
+    stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
+  }
+
   lkm <- as.numeric(lkm)
   speed <- as.data.frame(speed)
   for (i  in 1:ncol(speed) ) {
@@ -120,32 +124,41 @@ emis <- function (veh,
     } else if(!missing(profile) & is.vector(profile)){
       profile <- matrix(profile, ncol = 1)
     }
+    # top down
+    if(missing(profile)){
+      message("top down approach")
+      a <- veh * as.numeric(lkm) * as.numeric(ef)
+      for (i  in 1:ncol(a) ) {
+        a[, i] <- as.numeric(a[, i]) * units::as_units("g")
+      }
+      return(a)
+    }
 
-      if(ncol(veh) != length(ef)){
+    if(ncol(veh) != length(ef)){
       message("Number of columns of 'veh' is different than length of 'ef'")
       message("adjusting length of ef to the number of colums of 'veh'\n")
       if(ncol(veh) > length(ef)){
         for(i in (length(ef) + 1):ncol(veh) ){
-            ef[[i]] <- ef[[length(ef)]]
+          ef[[i]] <- ef[[length(ef)]]
+        }
+        if (ncol(veh) < length(ef)){
+          ff <- list()
+          for(i in 1:ncol(veh)){
+            ff[[i]] <- ef[[i]]
           }
-          if (ncol(veh) < length(ef)){
-            ff <- list()
-            for(i in 1:ncol(veh)){
-              ff[[i]] <- ef[[i]]
-            }
-            ef <- ff
-          }
+          ef <- ff
         }
       }
+    }
 
-      if(array == F){
-        lista <- lapply(1:day,function(j){
-          lapply(1:hour,function(i){
-            lapply(1:agemax, function(k){
+    if(array == F){
+      lista <- lapply(1:day,function(j){
+        lapply(1:hour,function(i){
+          lapply(1:agemax, function(k){
             veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
-            }) }) })
-        return(EmissionsList(lista))
-      } else {
+          }) }) })
+      return(EmissionsList(lista))
+    } else {
 
       d <-  simplify2array(
         lapply(1:day,function(j){
@@ -154,12 +167,12 @@ emis <- function (veh,
               simplify2array(
                 lapply(1:agemax, function(k){
                   veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i*j])
-                  }) ) }) ) }) )
+                }) ) }) ) }) )
       message(round(sum(d, na.rm = T)/1000,2),
               " kg emissions in ", hour, " hours and ", day, " days")
       return(EmissionsArray(d))
-      }
-  # veh is a list of "Vehicles" data-frames
+    }
+    # veh is a list of "Vehicles" data-frames
   } else {
     if(ncol(veh[[1]]) != length(ef)){
       message("Number of columns of 'veh' is different than length of 'ef'")
@@ -178,26 +191,26 @@ emis <- function (veh,
       }
     }
     for (j in 1:length(veh)) {
-        for (i  in 1:ncol(veh[[j]]) ) {
-          veh[[j]][,i] <- as.numeric(veh[[j]][,i])
-        } }
-        if(array == F){
-          lista <- lapply(1:length(veh),function(i){
-              lapply(1:agemax, function(k){
-                veh[[i]][, k]*lkm*ef[[k]](speed[, i])
-              } ) } )
-          return(EmissionsList(lista))
-        } else {
-          d <-  simplify2array(
-                lapply(1:length(veh),function(i){
-                  simplify2array(
-                    lapply(1:agemax, function(k){
-                      veh[[i]][, k]*lkm*ef[[k]](speed[, i])
-                   }) ) }) )
-          message(round(sum(d, na.rm = T)/1000,2),
-                  " kg emissions in ", hour, " hours")
-          return(EmissionsArray(d))
-        }
-      }
+      for (i  in 1:ncol(veh[[j]]) ) {
+        veh[[j]][,i] <- as.numeric(veh[[j]][,i])
+      } }
+    if(array == F){
+      lista <- lapply(1:length(veh),function(i){
+        lapply(1:agemax, function(k){
+          veh[[i]][, k]*lkm*ef[[k]](speed[, i])
+        } ) } )
+      return(EmissionsList(lista))
+    } else {
+      d <-  simplify2array(
+        lapply(1:length(veh),function(i){
+          simplify2array(
+            lapply(1:agemax, function(k){
+              veh[[i]][, k]*lkm*ef[[k]](speed[, i])
+            }) ) }) )
+      message(round(sum(d, na.rm = T)/1000,2),
+              " kg emissions in ", hour, " hours")
+      return(EmissionsArray(d))
+    }
+  }
 }
 
