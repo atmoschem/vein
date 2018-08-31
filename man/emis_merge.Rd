@@ -5,7 +5,7 @@
 \title{Merge several emissions files returning data-frames or 'sf' of lines}
 \usage{
 emis_merge(pol = "CO", what = "STREETS.rds", streets = T, net,
-  path = "emi", crs)
+  path = "emi", crs, under = "after")
 }
 \arguments{
 \item{pol}{Character. Pollutant.}
@@ -27,6 +27,9 @@ street emissions. If #' not, the function will stop.}
 
 \item{crs}{coordinate reference system in numeric format from
 http://spatialreference.org/ to transform/project spatial data using sf::st_transform}
+
+\item{under}{"Character"; "after" when you stored your pollutant x as 'X_'
+"before" when '_X' and "none" for merging directly the files.}
 }
 \value{
 'Spatial feature' of lines or a dataframe of emissions

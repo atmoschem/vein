@@ -17,6 +17,8 @@
 #' rbind them.
 #' @param crs coordinate reference system in numeric format from
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform
+#' @param under "Character"; "after" when you stored your pollutant x as 'X_'
+#' "before" when '_X' and "none" for merging directly the files.
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
 #' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
@@ -30,13 +32,21 @@ emis_merge <- function (pol = "CO",
                         streets = T,
                         net,
                         path = "emi",
-                        crs){
+                        crs,
+                        under = "after"){
   x <- list.files(path = path,
                   pattern = what,
                   all.files = T,
                   full.names = T,
                   recursive = T)
-  x <- x[grep(pattern = paste0(pol, "_"), x = x)]
+  if(under == "after"){
+    x <- x[grep(pattern = paste0(pol, "_"), x = x)]
+  } else if (under == "before"){
+    x <- x[grep(pattern = paste0(pol, "_"), x = x)]
+  } else {
+    x <- x
+  }
+
 
   cat("\nReading emissions from:\n")
   print(x)
