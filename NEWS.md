@@ -6,6 +6,7 @@ NEWS
 - add function ef_fun #106.
 - Fix missing isopentane #92.
 - Fix #107.
+- included more options to emis_merge
 
 ## vein 0.4.2 (Release date: 2018-08-18)
 
