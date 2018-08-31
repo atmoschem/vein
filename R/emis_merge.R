@@ -19,6 +19,7 @@
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform
 #' @param under "Character"; "after" when you stored your pollutant x as 'X_'
 #' "before" when '_X' and "none" for merging directly the files.
+#' @param as_list "Logical"; for returning the results as list or not.
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
 #' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
@@ -33,7 +34,8 @@ emis_merge <- function (pol = "CO",
                         net,
                         path = "emi",
                         crs,
-                        under = "after"){
+                        under = "after",
+                        as_list = FALSE){
   x <- list.files(path = path,
                   pattern = what,
                   all.files = T,
