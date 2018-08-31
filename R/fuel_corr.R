@@ -15,6 +15,19 @@
 #' @return A list with the correction of emission factors.
 #' @note This function cannot be used to account for deterioration, therefore,
 #' it is restricted to values between 0 and 1.
+#' Parameters for gasoline (g):
+#' O2 = Oxygenates in % ,
+#' S = Sulphur content in ppm,
+#' ARO = Aromatics content in %,
+#' OLEFIN = Olefins content in %,
+#' E100 = Mid range volatility in %,
+#' E150 = Tail-end volatility in %
+#' Parameters for diesel (d):
+#' DEN = Density at 15 °C (kg/m 3 ),
+#' S = Sulphur content in ppm,
+#' PAH = Polycyclic aromatics content in %,
+#' CN = Cetane number ,
+#' T95 = Back end distillation in o C.
 #' @export
 #' @examples {
 #' f <- fuel_corr(euro = "I")
