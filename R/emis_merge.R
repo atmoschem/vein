@@ -60,6 +60,8 @@ emis_merge <- function (pol = "CO",
     for (i in 1:length(x_rds)){
       x_rds[[i]]$id <- 1:nrow(x_rds[[i]])
     }
+    if(as_list) return(x_rds)
+
     x_st <- data.table::rbindlist(x_rds)
     x_st <- as.data.frame(x_st[, lapply(.SD, sum, na.rm=TRUE),
                                by = "id",
