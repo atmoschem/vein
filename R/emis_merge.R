@@ -41,6 +41,12 @@ emis_merge <- function (pol = "CO",
                   all.files = T,
                   full.names = T,
                   recursive = T)
+  xx <- list.files(path = path,
+                   pattern = what,
+                   all.files = T,
+                   full.names = F,
+                   recursive = T)
+
   if(under == "after"){
     x <- x[grep(pattern = paste0(pol, "_"), x = x)]
   } else if (under == "before"){
@@ -53,12 +59,12 @@ emis_merge <- function (pol = "CO",
   cat("\nReading emissions from:\n")
   print(x)
   x_rds <- lapply(x, readRDS)
+  names(x_rds) <- xx
+  if(as_list) return(x_rds)
 
-    if(as_list) return(x_rds)
+  nombres <- names(x_rds[[1]])
 
-    nombres <- names(x_rds[[1]])
-
-    if(streets){
+  if(streets){
     for (i in 1:length(x_rds)){
       x_rds[[i]]$id <- 1:nrow(x_rds[[i]])
     }
@@ -73,7 +79,7 @@ emis_merge <- function (pol = "CO",
     net <- sf::st_as_sf(net)
     if(!missing(crs)) {
       net <- sf::st_transform(net, crs)
-      }
+    }
     netx <- st_sf(x_st, geometry = sf::st_geometry(net))
     return(netx)
   } else{
