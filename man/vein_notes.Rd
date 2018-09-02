@@ -4,7 +4,7 @@
 \alias{vein_notes}
 \title{vein_notes for writting technical notes about the inventory}
 \usage{
-vein_notes(file = "README", title, yourname, notes, overwrite = FALSE)
+vein_notes(file = "README", title, yourname, notes)
 }
 \arguments{
 \item{file}{Character; Name of the file. The function will generate a file
@@ -16,8 +16,6 @@ Inventory of Region XX, Base year XX"}
 \item{yourname}{Character; Name of the inventor compiler.}
 
 \item{notes}{Character; vector of notes.}
-
-\item{overwrite}{Logical. Do you want to overwrite existing file?}
 }
 \value{
 A text file.

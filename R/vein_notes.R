@@ -9,7 +9,6 @@
 #' Inventory of Region XX, Base year XX"
 #' @param yourname Character; Name of the inventor compiler.
 #' @param notes Character; vector of notes.
-#' @param overwrite Logical. Do you want to overwrite existing file?
 #' @return A text file.
 #' @importFrom utils menu
 #' @export
@@ -20,8 +19,7 @@
 vein_notes <- function (file = "README",
                         title,
                         yourname,
-                        notes,
-                        overwrite = FALSE){
+                        notes){
   if(!missing(file)){
     file <- paste0(file,".txt")
   }
