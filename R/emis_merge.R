@@ -41,12 +41,6 @@ emis_merge <- function (pol = "CO",
                   all.files = T,
                   full.names = T,
                   recursive = T)
-  xx <- list.files(path = path,
-                   pattern = what,
-                   all.files = T,
-                   full.names = F,
-                   recursive = T)
-
   if(under == "after"){
     x <- x[grep(pattern = paste0(pol, "_"), x = x)]
   } else if (under == "before"){
@@ -55,11 +49,12 @@ emis_merge <- function (pol = "CO",
     x <-  x[grep(pattern = pol, x = x)]
   }
 
-
+nx <- gsub(pattern = paste0(getwd(), '/', path),
+           replacement = "", x = x)
   cat("\nReading emissions from:\n")
   print(x)
   x_rds <- lapply(x, readRDS)
-  names(x_rds) <- xx
+  names(x_rds) <- nx
   if(as_list) return(x_rds)
 
   nombres <- names(x_rds[[1]])
