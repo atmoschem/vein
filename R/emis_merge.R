@@ -50,9 +50,9 @@ emis_merge <- function (pol = "CO",
   if(under == "after"){
     x <- x[grep(pattern = paste0(pol, "_"), x = x)]
   } else if (under == "before"){
-    x <- x[grep(pattern = paste0(pol, "_"), x = x)]
+    x <- x[grep(pattern = paste0("_", pol), x = x)]
   } else {
-    x <- x
+    x <-  x[grep(pattern = pol, x = x)]
   }
 
 
