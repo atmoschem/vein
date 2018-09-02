@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.4.3 (Release date: 2018-08-29)
+# vein 0.4.4 (Release date: 2018-09-02)
+- add function vein_notes.
+
+
+## vein 0.4.3 (Release date: 2018-08-29)
 
 - add function ef_fun #106.
 - Fix missing isopentane #92.
