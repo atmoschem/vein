@@ -48,6 +48,7 @@ vein_notes <- function (file = "README",
   cat(paste0(title, "\n"))
   cat(rep("=", 40))
   cat(paste0("\nDirectory: ", getwd(), "\n"))
+  cat(paste0("\nLocal Time: ", Sys.time(), "\n"))
   cat(paste0("Inventory compiler: ", yourname, "\n"))
   cat(rep("=", 40))
   cat(paste0("\nsysname = ", Sys.info()["sysname"], "\n"))
