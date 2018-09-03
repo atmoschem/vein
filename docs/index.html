@@ -8,12 +8,12 @@
 <title>Vehicular Emissions Inventories • vein</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Vehicular Emissions Inventories">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="Vehicular Emissions Inventories">
 <meta property="og:description" content="Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases.">
+    in maps and databases. More details in Ibarra-Espinosa et al (2018) &lt;doi:10.5194/gmd-11-2209-2018&gt;.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.4</span>
       </span>
     </div>
 
@@ -106,8 +106,9 @@
 <li>
 <em>AROMATICS</em>: “toluene”, “ethylbenzene”, “m_p_xylene”, “o_xylene”, “ONE_2_3_trimethylbenzene”, “ONE_2_4_trimethylbenzene”, “ONE_3_5_trimethylbenzene”, “styrene”, “benzene”, “C9”, “C10”, “C13”.</li>
 </ul>
-<p>Also, somre Brazilian emission factors and speciations for WRF-Chem runs:</p>
+<p>Also, Brazilian emission factors and speciations for WRF-Chem runs:</p>
 <p>e_eth e_hc3 e_hc5 e_hc8 e_ol2 e_olt e_oli e_iso e_tol e_xyl e_c2h5oh e_ald e_hcho e_ch3oh e_ket E_SO4i E_SO4j E_NO3i E_NO3j E_MP2.5i E_MP2.5j E_ORGi E_ORGj E_ECi E_ECj</p>
+<p><strong>BONUS</strong>: I’ve added the CETESB Emissio Factors 2016!</p>
 <div id="system-requirements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#system-requirements" class="anchor"></a>System requirements</h3>
@@ -143,14 +144,15 @@
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 </div>
 </div>
-<div id="what-is-new-v0-4-2" class="section level2">
+<div id="what-is-new-v0-4-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new-v0-4-2" class="anchor"></a>What is new? (v0.4.2)</h2>
-<p>I decided to jump into a new ‘minor’ version because it brings lots of cool improvements.</p>
+<a href="#what-is-new-v0-4-4" class="anchor"></a>What is new? (v0.4.4)</h2>
 <ul>
+<li><a href="https://atmoschem.github.io/vein/reference/ef_cetesb.html">ef_cetesb</a></li>
+<li><a href="https://atmoschem.github.io/vein/reference/vein_notes.html">vein_notes</a></li>
 <li>VEIN imports <strong>sf</strong> functions.</li>
 <li>Covers estimations of compounds of pollutants (e.g.: isobutene)</li>
-<li>Add com util functions tuch as <a href="https://atmoschem.github.io/vein/reference/emis_source.html">emis_source</a> to source vein scripts.</li>
+<li>Add com util functions such as <a href="https://atmoschem.github.io/vein/reference/emis_source.html">emis_source</a> to source vein scripts.</li>
 <li>Add <a href="https://atmoschem.github.io/vein/reference/emis_dist.html">emis_dist</a> function to distribute top-down emissions into ‘sf’ objects by feature, specifically, ir returns a vector of lines (streeets).</li>
 <li>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a>
 </li>
@@ -180,25 +182,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpLeIblu/YourCity</code></pre>
+<pre><code>## files at /tmp/Rtmp2SmVeW/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpLeIblu/YourCity"             
-##  [2] "/tmp/RtmpLeIblu/YourCity/ef"          
-##  [3] "/tmp/RtmpLeIblu/YourCity/emi"         
-##  [4] "/tmp/RtmpLeIblu/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpLeIblu/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpLeIblu/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpLeIblu/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpLeIblu/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpLeIblu/YourCity/est"         
-## [10] "/tmp/RtmpLeIblu/YourCity/images"      
-## [11] "/tmp/RtmpLeIblu/YourCity/network"     
-## [12] "/tmp/RtmpLeIblu/YourCity/post"        
-## [13] "/tmp/RtmpLeIblu/YourCity/post/df"     
-## [14] "/tmp/RtmpLeIblu/YourCity/post/grids"  
-## [15] "/tmp/RtmpLeIblu/YourCity/post/streets"
-## [16] "/tmp/RtmpLeIblu/YourCity/profiles"    
-## [17] "/tmp/RtmpLeIblu/YourCity/veh"         
+##  [1] "/tmp/Rtmp2SmVeW/YourCity"             
+##  [2] "/tmp/Rtmp2SmVeW/YourCity/ef"          
+##  [3] "/tmp/Rtmp2SmVeW/YourCity/emi"         
+##  [4] "/tmp/Rtmp2SmVeW/YourCity/emi/BUS_01"  
+##  [5] "/tmp/Rtmp2SmVeW/YourCity/emi/HGV_01"  
+##  [6] "/tmp/Rtmp2SmVeW/YourCity/emi/LCV_01"  
+##  [7] "/tmp/Rtmp2SmVeW/YourCity/emi/MC_01"   
+##  [8] "/tmp/Rtmp2SmVeW/YourCity/emi/PC_01"   
+##  [9] "/tmp/Rtmp2SmVeW/YourCity/est"         
+## [10] "/tmp/Rtmp2SmVeW/YourCity/images"      
+## [11] "/tmp/Rtmp2SmVeW/YourCity/network"     
+## [12] "/tmp/Rtmp2SmVeW/YourCity/post"        
+## [13] "/tmp/Rtmp2SmVeW/YourCity/post/df"     
+## [14] "/tmp/Rtmp2SmVeW/YourCity/post/grids"  
+## [15] "/tmp/Rtmp2SmVeW/YourCity/post/streets"
+## [16] "/tmp/Rtmp2SmVeW/YourCity/profiles"    
+## [17] "/tmp/Rtmp2SmVeW/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            

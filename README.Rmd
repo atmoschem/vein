@@ -67,11 +67,12 @@ It currently covers the following pollutants in speed functions:
 "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
 "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 
-Also, somre Brazilian emission factors and speciations for WRF-Chem runs:
+Also, Brazilian emission factors and speciations for WRF-Chem runs:
 
 e_eth	e_hc3	e_hc5	e_hc8	e_ol2	e_olt	e_oli	e_iso	e_tol	e_xyl	e_c2h5oh	e_ald	e_hcho	e_ch3oh	e_ket
 E_SO4i	E_SO4j	E_NO3i	E_NO3j	E_MP2.5i	E_MP2.5j	E_ORGi	E_ORGj	E_ECi	E_ECj
 
+**BONUS**: I've added the CETESB Emissio Factors 2016!
 
 ### System requirements
 
@@ -114,14 +115,13 @@ demo(VEIN)
 ```
 
 
-## What is new? (v0.4.2)
+## What is new? (v0.4.4)
 
-I decided to jump into a new 'minor' version because it brings lots of cool
-improvements.
-
+- [ef_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html) 
+- [vein_notes](https://atmoschem.github.io/vein/reference/vein_notes.html) 
 - VEIN imports **sf** functions.
 - Covers estimations of compounds of pollutants (e.g.: isobutene)
-- Add com util functions tuch as [emis_source](https://atmoschem.github.io/vein/reference/emis_source.html) to source vein scripts.
+- Add com util functions such as [emis_source](https://atmoschem.github.io/vein/reference/emis_source.html) to source vein scripts.
 - Add [emis_dist](https://atmoschem.github.io/vein/reference/emis_dist.html) function to distribute top-down emissions into 'sf' objects
 by feature, specifically, ir returns a vector of lines (streeets).
 - Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
