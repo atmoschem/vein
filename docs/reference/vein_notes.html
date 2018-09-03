@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Returns amount of vehicles at each age — age_ldv • vein</title>
+<title>vein_notes for writting technical notes about the inventory — vein_notes • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Returns amount of vehicles at each age — age_ldv" />
+<meta property="og:title" content="vein_notes for writting technical notes about the inventory — vein_notes" />
 
-<meta property="og:description" content="age_ldv returns amount of vehicles at each age" />
+<meta property="og:description" content="vein_notes creates aa text file '.txt' for
+writting technical notes about this emissions inventory" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,79 +96,53 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Returns amount of vehicles at each age</h1>
+    <h1>vein_notes for writting technical notes about the inventory</h1>
     
-    <div class="hidden name"><code>age_ldv.Rd</code></div>
+    <div class="hidden name"><code>vein_notes.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>age_ldv</code> returns amount of vehicles at each age</p>
+    <p><code>vein_notes</code> creates aa text file '.txt' for
+writting technical notes about this emissions inventory</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>age_ldv</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1.698</span>, <span class='kw'>b</span> <span class='kw'>=</span> -<span class='fl'>0.2</span>, <span class='kw'>agemin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bystreet</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>net</span>, <span class='kw'>message</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>vein_notes</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"README"</span>, <span class='no'>title</span>, <span class='no'>yourname</span>, <span class='no'>notes</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Numeric; numerical vector of vehicles with length equal to lines features of raod network</p></td>
+      <th>file</th>
+      <td><p>Character; Name of the file. The function will generate a file
+with an extension '.txt'.</p></td>
     </tr>
     <tr>
-      <th>name</th>
-      <td><p>Character; of vehicle assigned to columns of dataframe</p></td>
+      <th>title</th>
+      <td><p>Character; Title of this file. For instance: "Vehicular Emissions
+Inventory of Region XX, Base year XX"</p></td>
     </tr>
     <tr>
-      <th>a</th>
-      <td><p>Numeric; parameter of survival equation</p></td>
+      <th>yourname</th>
+      <td><p>Character; Name of the inventor compiler.</p></td>
     </tr>
     <tr>
-      <th>b</th>
-      <td><p>Numeric; parameter of survival equation</p></td>
-    </tr>
-    <tr>
-      <th>agemin</th>
-      <td><p>Integer; age of newest vehicles for that category</p></td>
-    </tr>
-    <tr>
-      <th>agemax</th>
-      <td><p>Integer; age of oldest vehicles for that category</p></td>
-    </tr>
-    <tr>
-      <th>k</th>
-      <td><p>Integer; multiplication factor</p></td>
-    </tr>
-    <tr>
-      <th>bystreet</th>
-      <td><p>Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x</p></td>
-    </tr>
-    <tr>
-      <th>net</th>
-      <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></td>
-    </tr>
-    <tr>
-      <th>message</th>
-      <td><p>Logical;  message with average age and total numer of vehicles</p></td>
+      <th>notes</th>
+      <td><p>Character; vector of notes.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe of age distrubution of vehicles</p>
+    <p>A text file.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>age_ldv</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>)
-<span class='fu'>plot</span>(<span class='no'>PC_E25_1400</span>)
-<span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>age_ldv</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
-<span class='fu'>plot</span>(<span class='no'>PC_E25_1400</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.95 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; 
-#&gt; Average =  11.17</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.95 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot all</span></div><div class='img'><img src='age_ldv-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='age_ldv-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>tempfile</span>()
+<span class='fu'>vein_notes</span>(<span class='no'>a</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

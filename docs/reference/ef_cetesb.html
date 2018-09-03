@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Returns amount of vehicles at each age — age_ldv • vein</title>
+<title>Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2016 — ef_cetesb • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Returns amount of vehicles at each age — age_ldv" />
+<meta property="og:title" content="Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2016 — ef_cetesb" />
 
-<meta property="og:description" content="age_ldv returns amount of vehicles at each age" />
+<meta property="og:description" content="ef_cetesb returns a vector or data.frame of Brazilian emission factors." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -95,79 +95,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Returns amount of vehicles at each age</h1>
+    <h1>Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2016</h1>
     
-    <div class="hidden name"><code>age_ldv.Rd</code></div>
+    <div class="hidden name"><code>ef_cetesb.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>age_ldv</code> returns amount of vehicles at each age</p>
+    <p><code>ef_cetesb</code> returns a vector or data.frame of Brazilian emission factors.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>age_ldv</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1.698</span>, <span class='kw'>b</span> <span class='kw'>=</span> -<span class='fl'>0.2</span>, <span class='kw'>agemin</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bystreet</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>net</span>, <span class='kw'>message</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_cetesb</span>(<span class='no'>p</span>, <span class='no'>veh</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Numeric; numerical vector of vehicles with length equal to lines features of raod network</p></td>
+      <th>p</th>
+      <td><p>Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
+"PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd", "SO2"
+"CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO". The letter 'd' means deteriorated
+factor.</p></td>
     </tr>
     <tr>
-      <th>name</th>
-      <td><p>Character; of vehicle assigned to columns of dataframe</p></td>
+      <th>veh</th>
+      <td><p>Character; Vehicle categories: "PC_G", "PC_FG", "PC_FE", "PC_E"
+"LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT"
+"HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150", "M_G_150_500", "M_G_500"
+"M_FG_150", "M_FG_150_500", "M_FG_500". "M_FE_150", "M_FE_150_500",
+"M_FE_500", "CICLOMOTOR", "GNV</p></td>
     </tr>
     <tr>
-      <th>a</th>
-      <td><p>Numeric; parameter of survival equation</p></td>
-    </tr>
-    <tr>
-      <th>b</th>
-      <td><p>Numeric; parameter of survival equation</p></td>
-    </tr>
-    <tr>
-      <th>agemin</th>
-      <td><p>Integer; age of newest vehicles for that category</p></td>
-    </tr>
-    <tr>
-      <th>agemax</th>
-      <td><p>Integer; age of oldest vehicles for that category</p></td>
-    </tr>
-    <tr>
-      <th>k</th>
-      <td><p>Integer; multiplication factor</p></td>
-    </tr>
-    <tr>
-      <th>bystreet</th>
-      <td><p>Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x</p></td>
-    </tr>
-    <tr>
-      <th>net</th>
-      <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></td>
-    </tr>
-    <tr>
-      <th>message</th>
-      <td><p>Logical;  message with average age and total numer of vehicles</p></td>
+      <th>full</th>
+      <td><p>Logical; To return a data.frame instead or a vector adding
+Age, Year, Brazilian emissions standards and its euro equivalents.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe of age distrubution of vehicles</p>
+    <p>A vector of Emission Factor or a data.frame</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This emission factors are not exactly the same as the report of CETESB.</p>
+<p>1) In this emission factors, there is also NO and NO2 based on split by
+published in the EMEP/EEA air pollutant emission inventory guidebook.</p>
+<p>2) Also, the emission factors were extended till 50 years of use, repeating
+the oldest value.</p>
+<p>3) CNG emission factors were expanded to other pollutants by comparison
+of US.EPA-AP42 emission factor: Section 1.4 Natural Gas Combustion.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
+url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>age_ldv</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>)
-<span class='fu'>plot</span>(<span class='no'>PC_E25_1400</span>)
-<span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>age_ldv</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
-<span class='fu'>plot</span>(<span class='no'>PC_E25_1400</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.95 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; 
-#&gt; Average =  11.17</div><div class='output co'>#&gt; <span class='message'>Average age of PC_E25_1400 is 11.17</span></div><div class='output co'>#&gt; <span class='message'>Number of PC_E25_1400 is 1946.95 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot all</span></div><div class='img'><img src='age_ldv-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='age_ldv-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -175,6 +164,10 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

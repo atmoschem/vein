@@ -10,7 +10,7 @@
 #' @param yourname Character; Name of the inventor compiler.
 #' @param notes Character; vector of notes.
 #' @return A text file.
-#' @importFrom utils menu
+#' @importFrom utils menu object.size packageVersion
 #' @export
 #' @examples {
 #' a <- tempfile()
