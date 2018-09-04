@@ -51,6 +51,11 @@ emis_merge <- function (pol = "CO",
 
 nx <- gsub(pattern = paste0(getwd(), '/', path),
            replacement = "", x = x)
+kk <- substr(x = nx, start = 11, stop = 50)
+kk <- gsub(pattern = "/", replacement = "", kk)
+kk <- gsub(pattern = ".rds", replacement = "", kk)
+nx <- kk
+
   cat("\nReading emissions from:\n")
   print(x)
   x_rds <- lapply(x, readRDS)
