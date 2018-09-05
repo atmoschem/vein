@@ -1,11 +1,15 @@
 NEWS
 ===========
 
+# vein 0.4.5 (Release date: 2018-09-05)
+
+- enhances emis_order. Now covers GriddedEmissionsArray, sf, data.frame, matrix,
+or any Spatial. Fix #110.
+
 # vein 0.4.4 (Release date: 2018-09-02)
 
 - add function vein_notes.
 - add ef_cetesb #90. 
-
 
 ## vein 0.4.3 (Release date: 2018-08-29)
 

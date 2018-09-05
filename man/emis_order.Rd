@@ -9,14 +9,22 @@
 emis_order(EMISSION, start = "mon", hours = 168, verbose = FALSE)
 }
 \arguments{
-\item{EMISSION}{GriddedEmissionsArray or array with characteristics of
-GriddedEmissionsArray}
+\item{EMISSION}{one of the following:
+
+1) GriddedEmissionsArray or array with characteristics of GriddedEmissionsArray
+2) Spatial object of class "Spatial". Columns are hourly emissions.
+3) Spatial Object of class "sf". Columns are hourly emissions.
+4) "data.frame", "matrix" or "Emissions". Columns are hourly emissions.}
 
 \item{start}{Date or the start weekday or first 3 letters}
 
 \item{hours}{Numeric; number of hours needed to the simualation}
 
 \item{verbose}{Logical; display additional information}
+}
+\value{
+GriddedEmissionsArray, sf or data.frame, depending on the class of
+EMISSION
 }
 \description{
 returns the emission array matching with corresponding weekdays and with
@@ -32,11 +40,11 @@ are going to start a air quality simulation for specific periods of time.
 }
 \examples{
 \dontrun{
-wCO <- weekly(CO, start = "sat", hours = 24, verbose = TRUE)
-wCO <- weekly(CO, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
+wCO <- emis_order(CO, start = "sat", hours = 24, verbose = TRUE)
+wCO <- emis_order(CO, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
 }
 
 }
 \author{
-Daniel Schuch
+Daniel Schuch& Sergio Ibarra
 }
