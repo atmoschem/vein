@@ -22,6 +22,7 @@
 #' @format Emissions
 #'
 #' @author Daniel Schuch& Sergio Ibarra
+#' @importFrom data.table wday
 #' @return GriddedEmissionsArray, sf or data.frame, depending on the class of
 #' EMISSION
 #' @export
@@ -52,7 +53,7 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
   if(class(start)[1] == "Date"){
     if(verbose)
       cat("using date:", paste(start),"\n")
-    s <- as.numeric(strftime(start), fomat = "%d")
+    s <- data.table::wday(start)
     if(s == 1) start = "mon"
     if(s == 2) start = "tue"
     if(s == 3) start = "wed"
