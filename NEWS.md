@@ -4,6 +4,7 @@ NEWS
 # vein 0.4.6 (Release date: 2018-09-06)
 
 - Add base emission factors from IVE model.
+- Add argument utc to convert local emissions into UTC emissions.
 
 ## vein 0.4.5 (Release date: 2018-09-05)
 

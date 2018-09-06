@@ -6,7 +6,7 @@
 \title{Re-order the emission to match specific hours and days}
 \format{Emissions}
 \usage{
-emis_order(EMISSION, start = "mon", hours = 168, verbose = FALSE)
+emis_order(EMISSION, start = "mon", hours = 168, utc, verbose = FALSE)
 }
 \arguments{
 \item{EMISSION}{one of the following:
@@ -19,6 +19,10 @@ emis_order(EMISSION, start = "mon", hours = 168, verbose = FALSE)
 \item{start}{Date or the start weekday or first 3 letters}
 
 \item{hours}{Numeric; number of hours needed to the simualation}
+
+\item{utc}{Integer; transform local into UTC emissions. For instance,
+utc = -3 means that the first hour of emissions is at 21:00 of the previous
+day.}
 
 \item{verbose}{Logical; display additional information}
 }
