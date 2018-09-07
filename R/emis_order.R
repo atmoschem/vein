@@ -84,14 +84,17 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
     if(start == "sun")
       index <- suppressWarnings(matrix( c(dom,seg,ter,qua,qui,sex,sab),
                                         ncol = 1, nrow = hours, byrow = T ))
-    if(!missing(utc) & utc > 0){
-      index <- c(index[abs(-3):length(index)],
-                 max(index[abs(-3):length(index)]):(length(index) -1))
-    } else if(!missing(utc) & utc < 0){
-      AA <- length(index) + utc
-      a <- index[(AA + 1):length(index)]
-      b <- index[1:(length(index) + utc)]
-      index <- c(a, b)
+    if(!missing(utc)){
+      if(utc > 0){
+        index <- c(index[abs(-3):length(index)],
+                   max(index[abs(-3):length(index)]):(length(index) -1))
+
+      } else if(utc < 0){
+        AA <- length(index) + utc
+        a <- index[(AA + 1):length(index)]
+        b <- index[1:(length(index) + utc)]
+        index <- c(a, b)
+      }
     }
 
     if(verbose)
