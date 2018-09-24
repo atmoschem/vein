@@ -5,7 +5,8 @@
 \title{Estimation of evaporative emissions}
 \usage{
 emis_evap(veh, name, size, fuel, aged, nd4, nd3, nd2, nd1, hs_nd4, hs_nd3,
-  hs_nd2, hs_nd1, rl_nd4, rl_nd3, rl_nd2, rl_nd1, d_nd4, d_nd3, d_nd2, d_nd1)
+  hs_nd2, hs_nd1, rl_nd4, rl_nd3, rl_nd2, rl_nd1, d_nd4, d_nd3, d_nd2,
+  d_nd1)
 }
 \arguments{
 \item{veh}{Total number of vehicles by age of use. If is a lsit of 'Vehicles'

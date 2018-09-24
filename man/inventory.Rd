@@ -5,8 +5,8 @@
 \title{Inventory function.}
 \usage{
 inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-  scripts = TRUE, show.dir = TRUE, show.scripts = FALSE, clear = TRUE,
-  rush.hour = FALSE)
+  scripts = TRUE, show.dir = TRUE, show.scripts = FALSE,
+  clear = TRUE, rush.hour = FALSE)
 }
 \arguments{
 \item{name}{Character, one word indicating the name of the main directory for running

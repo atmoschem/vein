@@ -4,7 +4,8 @@
 \alias{speciate}
 \title{Speciation of emissions}
 \usage{
-speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE, dx)
+speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE,
+  dx)
 }
 \arguments{
 \item{x}{Emissions estimation}

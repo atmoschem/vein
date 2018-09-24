@@ -4,8 +4,8 @@
 \alias{ef_fun}
 \title{Experimental: Returns a function of Emission Factor by age of use}
 \usage{
-ef_fun(ef, type = "logistic", x = 1:length(ef), x0 = mean(ef), k = 1/4,
-  L = max(ef))
+ef_fun(ef, type = "logistic", x = 1:length(ef), x0 = mean(ef),
+  k = 1/4, L = max(ef))
 }
 \arguments{
 \item{ef}{Numeric; numeric vector of emission factors.}

@@ -5,9 +5,6 @@
 \alias{print.Evaporative}
 \alias{summary.Evaporative}
 \alias{plot.Evaporative}
-\alias{print.Evaporative}
-\alias{summary.Evaporative}
-\alias{plot.Evaporative}
 \title{Construction function for class "Evaporative"}
 \usage{
 Evaporative(x, ...)

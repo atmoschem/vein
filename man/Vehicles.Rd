@@ -5,9 +5,6 @@
 \alias{print.Vehicles}
 \alias{summary.Vehicles}
 \alias{plot.Vehicles}
-\alias{print.Vehicles}
-\alias{summary.Vehicles}
-\alias{plot.Vehicles}
 \title{Construction function for class "Vehicles"}
 \usage{
 Vehicles(x, ...)

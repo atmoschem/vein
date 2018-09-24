@@ -6,7 +6,8 @@
 \title{Re-order the emission to match specific hours and days}
 \format{Emissions}
 \usage{
-emis_order(EMISSION, start = "mon", hours = 168, utc, verbose = FALSE)
+emis_order(EMISSION, start = "mon", hours = 168, utc,
+  verbose = FALSE)
 }
 \arguments{
 \item{EMISSION}{one of the following:

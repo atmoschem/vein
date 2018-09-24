@@ -4,7 +4,8 @@
 \alias{ef_hdv_scaled}
 \title{Scaling constant with speed emission factors of Heavy Duty Vehicles}
 \usage{
-ef_hdv_scaled(df, dfcol, SDC = 34.12, v, t, g, eu, gr = 0, l = 0.5, p)
+ef_hdv_scaled(df, dfcol, SDC = 34.12, v, t, g, eu, gr = 0, l = 0.5,
+  p)
 }
 \arguments{
 \item{df}{Deprecated}

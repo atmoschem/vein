@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -33,6 +35,7 @@
 <meta property="og:description" content="returns the emission array matching with corresponding weekdays and with
 the desired number of hours, recycling or droping hours from the emission array." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -59,7 +62,7 @@ the desired number of hours, recycling or droping hours from the emission array.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
       </span>
     </div>
 
@@ -105,7 +108,8 @@ the desired number of hours, recycling or droping hours from the emission array.
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_order</span>(<span class='no'>EMISSION</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"mon"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_order</span>(<span class='no'>EMISSION</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"mon"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>utc</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -125,6 +129,12 @@ the desired number of hours, recycling or droping hours from the emission array.
     <tr>
       <th>hours</th>
       <td><p>Numeric; number of hours needed to the simualation</p></td>
+    </tr>
+    <tr>
+      <th>utc</th>
+      <td><p>Integer; transform local into UTC emissions. For instance,
+utc = -3 means that the first hour of emissions is at 21:00 of the previous
+day.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
