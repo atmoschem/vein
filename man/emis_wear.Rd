@@ -4,8 +4,8 @@
 \alias{emis_wear}
 \title{Emission estimation from tyre, break and road surface wear}
 \usage{
-emis_wear(veh, lkm, ef, what = "tyre", speed, agemax = ncol(veh), profile,
-  hour = nrow(profile), day = ncol(profile))
+emis_wear(veh, lkm, ef, what = "tyre", speed, agemax = ncol(veh),
+  profile, hour = nrow(profile), day = ncol(profile))
 }
 \arguments{
 \item{veh}{Object of class "Vehicles"}

@@ -5,9 +5,6 @@
 \alias{print.EmissionsList}
 \alias{summary.EmissionsList}
 \alias{plot.EmissionsList}
-\alias{print.EmissionsList}
-\alias{summary.EmissionsList}
-\alias{plot.EmissionsList}
 \title{Construction function for class "EmissionsList"}
 \usage{
 EmissionsList(x, ...)

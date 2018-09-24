@@ -5,12 +5,10 @@
 \alias{print.GriddedEmissionsArray}
 \alias{summary.GriddedEmissionsArray}
 \alias{plot.GriddedEmissionsArray}
-\alias{print.GriddedEmissionsArray}
-\alias{summary.GriddedEmissionsArray}
-\alias{plot.GriddedEmissionsArray}
 \title{Construction function for class "GriddedEmissionsArray"}
 \usage{
-GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate = FALSE)
+GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x),
+  rotate = FALSE)
 
 \method{print}{GriddedEmissionsArray}(x, ...)
 

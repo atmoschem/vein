@@ -4,9 +4,10 @@
 \alias{emis_cold}
 \title{Estimation of cold start emissions hourly for the of the week}
 \usage{
-emis_cold(veh, lkm, ef, efcold, beta, speed = 34, agemax = if (!inherits(x =
-  veh, what = "list")) {     ncol(veh) } else {     ncol(veh[[1]]) }, profile,
-  hour = nrow(profile), day = ncol(profile), array = TRUE)
+emis_cold(veh, lkm, ef, efcold, beta, speed = 34, agemax = if
+  (!inherits(x = veh, what = "list")) {     ncol(veh) } else {    
+  ncol(veh[[1]]) }, profile, hour = nrow(profile), day = ncol(profile),
+  array = TRUE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame

@@ -4,8 +4,8 @@
 \alias{age_ldv}
 \title{Returns amount of vehicles at each age}
 \usage{
-age_ldv(x, name = "age", a = 1.698, b = -0.2, agemin = 1, agemax = 50,
-  k = 1, bystreet = F, net, message = TRUE)
+age_ldv(x, name = "age", a = 1.698, b = -0.2, agemin = 1,
+  agemax = 50, k = 1, bystreet = F, net, message = TRUE)
 }
 \arguments{
 \item{x}{Numeric; numerical vector of vehicles with length equal to lines features of raod network}

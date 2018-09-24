@@ -5,9 +5,6 @@
 \alias{print.EmissionsArray}
 \alias{summary.EmissionsArray}
 \alias{plot.EmissionsArray}
-\alias{print.EmissionsArray}
-\alias{summary.EmissionsArray}
-\alias{plot.EmissionsArray}
 \title{Construction function for class "EmissionsArray"}
 \usage{
 EmissionsArray(x, ...)

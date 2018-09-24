@@ -1,6 +1,13 @@
 NEWS
 ===========
 
+# vein 0.5.0 (Release date: 2018-09-24) 'Takamatsu'
+
+- Consolidates all news functions.
+- Add function ef_im for emission factors with normal deterioration that would
+be approved in a inspection and mantainence program.
+- Add ef_fe for taking into account for high emitters.
+
 # vein 0.4.6 (Release date: 2018-09-06)
 
 - Add base emission factors from IVE model.

@@ -5,9 +5,6 @@
 \alias{print.Speed}
 \alias{summary.Speed}
 \alias{plot.Speed}
-\alias{print.Speed}
-\alias{summary.Speed}
-\alias{plot.Speed}
 \title{Construction function for class "Speed"}
 \usage{
 Speed(x, ...)

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Construction function for class "Speed" — Speed • vein</title>
+<title>Emission factors deoending on accumulated mileage — ef_im • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,13 @@
 
 
 
-<meta property="og:title" content="Construction function for class "Speed" — Speed" />
+<meta property="og:title" content="Emission factors deoending on accumulated mileage — ef_im" />
 
-<meta property="og:description" content="Speed returns a tranformed object with class &quot;Speed&quot; and units
- km/h. This functions includes two arguments, distance and time. Therefore,
- it is posibel to change the units of the speed to &quot;m&quot; to &quot;s&quot; for example.
- This function returns a dataframe with units for speed. When this function
- is applied to numeric vectors it add class &quot;units&quot;." />
+<meta property="og:description" content="ef_im calculate the theoretical emission factors of vehicles.
+The approache is different from including deterioration factors
+(emis_det)  but similar, because they represent how much emits
+a vehicle with a normal deterioration, but that it will pass the
+Inspection and Manteinance program." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -99,71 +99,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Construction function for class "Speed"</h1>
+    <h1>Emission factors deoending on accumulated mileage</h1>
     
-    <div class="hidden name"><code>Speed.Rd</code></div>
+    <div class="hidden name"><code>ef_im.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>Speed</code> returns a tranformed object with class "Speed" and units
- km/h. This functions includes two arguments, distance and time. Therefore,
- it is posibel to change the units of the speed to "m" to "s" for example.
- This function returns a dataframe with units for speed. When this function
- is applied to numeric vectors it add class "units".</p>
+    <p><code>ef_im</code> calculate the theoretical emission factors of vehicles.
+The approache is different from including deterioration factors
+(<code><a href='emis_det.html'>emis_det</a></code>)  but similar, because they represent how much emits
+a vehicle with a normal deterioration, but that it will pass the
+Inspection and Manteinance program.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>Speed</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Speed</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Speed</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Speed</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_im</span>(<span class='no'>ef</span>, <span class='no'>tc</span>, <span class='no'>amileage</span>, <span class='no'>max_amileage</span>, <span class='no'>max_ef</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Object with class "data.frame", "matrix" or "numeric"</p></td>
+      <th>ef</th>
+      <td><p>Numeric; emission factors of vehicles with <strong>0 mileage</strong>
+(new vehicles).</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>ignored</p></td>
+      <th>tc</th>
+      <td><p>Numeric; rate of growth of emissions by year of use.</p></td>
     </tr>
     <tr>
-      <th>object</th>
-      <td><p>Object with class "Speed"</p></td>
+      <th>amileage</th>
+      <td><p>Numeric; Accumulated mileage by age of use.</p></td>
+    </tr>
+    <tr>
+      <th>max_amileage</th>
+      <td><p>Numeric; Max accumulated mileage. This means that after
+this value, mileage is constant.</p></td>
+    </tr>
+    <tr>
+      <th>max_ef</th>
+      <td><p>Numeric; Max ef. This means that after this value, ef is constant.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; if you want detailed description.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Constructor for class "Speed" or "units"</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code>units</code></p></div>
+    <p>An emission factor of a deteriorated vehicle under normal conditions
+which would be approved in a inspection and mantainence program.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='fu'>data</span>(<span class='no'>pc_profile</span>)
-<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'>Speed</span>(<span class='no'>net</span>$<span class='no'>ps</span>)
-<span class='fu'>class</span>(<span class='no'>speed</span>)
-<span class='fu'>plot</span>(<span class='no'>speed</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)
-<span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>)
-<span class='fu'>summary</span>(<span class='no'>df</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Check units are km/h</span></div><div class='img'><img src='Speed-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Speeds by columns and street in study area = 
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   3.929  39.667  40.000  49.142  59.985 100.000 </div></pre>
+<span class='co'># Do not run</span>
+<span class='co'># Passenger Cars PC</span>
+<span class='fu'>data</span>(<span class='no'>fkm</span>)
+<span class='co'># cumulative mileage from 1 to 50 years of use, 40:50</span>
+<span class='no'>mil</span> <span class='kw'>&lt;-</span> <span class='fu'>cumsum</span>(<span class='no'>fkm</span>$<span class='fu'>KM_PC_E25</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
+<span class='fu'>ef_im</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'>seq</span>(<span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span>), <span class='fu'>seq</span>(<span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>), <span class='no'>mil</span>)
+}</div><div class='output co'>#&gt;  [1]    120.0677   1478.0517   5671.4320  14404.1184  29453.3460  52639.0895
+#&gt;  [7]  85795.8947 130747.1275 189281.6414 263132.8620</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -171,8 +170,6 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

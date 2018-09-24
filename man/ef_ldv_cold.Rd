@@ -4,7 +4,8 @@
 \alias{ef_ldv_cold}
 \title{Cold-Start Emissions factors for Light Duty Vehicles}
 \usage{
-ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1, show.equation = FALSE)
+ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1,
+  show.equation = FALSE)
 }
 \arguments{
 \item{v}{Category vehicle:  "LDV"}
