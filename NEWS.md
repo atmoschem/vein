@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.5.0 (Release date: 2018-09-24) 'Takamatsu'
+# vein 0.5.1 (Release date: 2018-09-30)
+
+- Improves emis_dist
+
+## vein 0.5.0 (Release date: 2018-09-24) 'Takamatsu'
 
 - Consolidates all news functions.
 - Add function ef_im for emission factors with normal deterioration that would
