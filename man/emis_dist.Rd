@@ -4,17 +4,15 @@
 \alias{emis_dist}
 \title{Allocate emissions into spatial objects}
 \usage{
-emis_dist(gy, spobj, pro, dyear = 365, osm)
+emis_dist(gy, spobj, pro, osm)
 }
 \arguments{
-\item{gy}{Numeric; total (top-down) emissions (grams)}
+\item{gy}{Numeric; a unique total (top-down) emissions (grams)}
 
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
 it is transformed to "sf".}
 
 \item{pro}{Matrix or data-frame profiles, for instance, pc_profile.}
-
-\item{dyear}{Numeric, Number of days of period of time, default is 365.}
 
 \item{osm}{Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
 The first element covers 'motorway' and 'motorway_link.

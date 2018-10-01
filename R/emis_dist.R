@@ -5,11 +5,10 @@
 #' 'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
 #' in each street.
 #'
-#' @param gy Numeric; total (top-down) emissions (grams)
+#' @param gy Numeric; a unique total (top-down) emissions (grams)
 #' @param spobj A spatial dataframe of class "sp" or "sf". When class is "sp"
 #' it is transformed to "sf".
 #' @param pro Matrix or data-frame profiles, for instance, pc_profile.
-#' @param dyear Numeric, Number of days of period of time, default is 365.
 #' @param osm Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
 #' The first element covers 'motorway' and 'motorway_link.
 #' The second element covers 'trunk' and 'trunk_link'.
@@ -31,79 +30,85 @@
 #' #t1 <- emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1) )
 #' t1 <- emis_dist(gy = po, spobj = net, pro = pc_profile)
 #' }
-emis_dist <- function(gy, spobj, pro, dyear = 365, osm){
-  spobj <- sf::st_as_sf(spobj)
+emis_dist <- function(gy,
+                      spobj,
+                      pro,
+                      osm){
   if(any(
     !unique(as.character(
       sf::st_geometry_type(spobj))) %in% c("LINESTRING", "MULTILINESTRING"))){
     stop("Currently, geometries supported are 'LINESTRING' or 'MULTILINESTRING'")
   }
-  net <- spobj
+  net <- sf::st_as_sf(spobj)
   net$lkm1 <- as.numeric(sf::st_length(net))
+  net <- net[,c("highway", "lkm1")]
+  st <-  c("motorway", "motorway_link",
+           "trunk", "trunk_link",
+           "primary", "primary_link",
+           "secondary", "secondary_link",
+           "tertiary", "tertiary_link")
+  net <- net[net$highway %in% st, ]
+  geo <- sf::st_geometry(net)
   lkm <- net$lkm1/sum(net$lkm1)
-  if(!missing(osm)){
+  e_street <- lkm*gy * units::as_units("g")
+
+  # PROFILE SECTION
+  if(missing(pro) & missing(osm)){
+    net$gy <- e_street
+    return(net)
+  }
+  if(!missing(pro) & missing(osm)){
+    pro <- pro/sum(pro)
+    df <- as.data.frame(as.matrix(e_street) %*% matrix(unlist(pro), nrow = 1))
+    net <- sf::st_sf(df, geometry = geo)
+    return(net)
+  }
+  if(missing(pro) & !missing(osm)){
     if(length(osm) != 5) stop("length of osm must be 5")
     if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
-    net <- net[,c("highway", "lkm1")]
-    net <- net[net$highway %in% c("motorway",
-                                  "motorway_link",
-                                  "trunk",
-                                  "trunk_link",
-                                  "primary",
-                                  "primary_link",
-                                  "secondary",
-                                  "secondary_link",
-                                  "tertiary",
-                                  "tertiary_link",
-                                  "residential"), ]
     osm <- osm/sum(osm)
     #motorway
-    net_m <- net[net$highway %in% c("motorway", "motorway_link"), ]
+    net_m <- net[net$highway %in% st[1:2], ]
     net_m$gy <- net_m$lkm1 / sum(net_m$lkm1) * gy * osm[1]
     #trunk
-    net_t <- net[net$highway %in% c("trunk", "trunk_link"), ]
+    net_t <- net[net$highway %in% st[3:4], ]
     net_t$gy <- net_t$lkm1 / sum(net_t$lkm1) * gy * osm[2]
     #primary
-    net_p <- net[net$highway %in% c("primary","primary_link"), ]
+    net_p <- net[net$highway %in% st[5:6], ]
     net_p$gy <- net_p$lkm1 / sum(net_p$lkm1) * gy * osm[3]
     #secondary
-    net_s <- net[net$highway %in% c("secondary", "secondary_link"), ]
+    net_s <- net[net$highway %in% st[7:8], ]
     net_s$gy <- net_s$lkm1 / sum(net_s$lkm1) * gy * osm[4]
     #tertiary
-    net_te <- net[net$highway %in% c("tertiary", "tertiary_link"), ]
+    net_te <- net[net$highway %in% st[9:10], ]
     net_te$gy <- net_te$lkm1 / sum(net_te$lkm1) * gy * osm[5]
     net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
+    return(net_all)
   }
-  if(missing(pro)){
-    if(missing(osm)){
-      spobj$gy <- lkm*gy * units::as_units("g")
-      return(spobj)
-    } else if(!missing(osm)){
-      net_all$lkm1 <- NULL
-      return(net_all)
-    }
-  } else if(!missing(pro)){
-    prop <- sapply(pro, sum)/sapply(pro, sum)[1]
-    pro <- unlist(lapply(1:ncol(pro), function(i){
-      pro[, i] <- pro[,i]/sum(pro[, i])
-    })) * prop
-    emispro <- gy/dyear*pro
-    if(missing(osm)){
-      mx <- as.matrix(lkm) %*% matrix(emispro, nrow = 1)
-      mx <- Emissions(as.data.frame(mx))
-      names(mx) <- paste0("h", 1:ncol(mx))
-      mx <- cbind(sf::st_set_geometry(net, NULL), mx)
-      net_all <- sf::st_sf(mx, geometry = net$geometry)
-      return(net_all)
-    } else if (!missing(osm)){
-      mx <- as.matrix(net_all$lkm1 / sum(net_all$lkm1)) %*% matrix(emispro,
-                                                                   nrow = 1)
-      mx <- Emissions(as.data.frame(mx))
-      names(mx) <- paste0("h", 1:ncol(mx))
-      mx <- cbind(sf::st_set_geometry(spobj, NULL), mx)
-      spobj <- sf::st_sf(mx, geometry = spobj$geometry)
-      spobj$lkm1 <- NULL
-      return(spobj)
-    }
+  if(!missing(pro) & !missing(osm)){
+    pro <- pro/sum(pro)
+
+    if(length(osm) != 5) stop("length of osm must be 5")
+    if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
+    osm <- osm/sum(osm)
+    #motorway
+    net_m <- net[net$highway %in% st[1:2], ]
+    net_m$gy <- net_m$lkm1 / sum(net_m$lkm1) * gy * osm[1]
+    #trunk
+    net_t <- net[net$highway %in% st[3:4], ]
+    net_t$gy <- net_t$lkm1 / sum(net_t$lkm1) * gy * osm[2]
+    #primary
+    net_p <- net[net$highway %in% st[5:6], ]
+    net_p$gy <- net_p$lkm1 / sum(net_p$lkm1) * gy * osm[3]
+    #secondary
+    net_s <- net[net$highway %in% st[7:8], ]
+    net_s$gy <- net_s$lkm1 / sum(net_s$lkm1) * gy * osm[4]
+    #tertiary
+    net_te <- net[net$highway %in% st[9:10], ]
+    net_te$gy <- net_te$lkm1 / sum(net_te$lkm1) * gy * osm[5]
+    net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
+    df <- as.data.frame(as.matrix(net_all$gy) %*% matrix(unlist(pro), nrow = 1))
+    net_all <- sf::st_sf(df, geometry = sf::st_geometry(net_all))
+    return(net_all)
   }
 }
