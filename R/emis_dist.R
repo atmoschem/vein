@@ -1,4 +1,4 @@
-#' Allocate emissions into spatial objects
+#' Allocate emissions into spatial objects (street emis to grid)
 #'
 #' @description \code{\link{emis_dist}} allocates emissions proportionally to
 #' each feature. "Spatial" objects are converter to "sf" objects. Currently,
@@ -34,27 +34,21 @@ emis_dist <- function(gy,
                       spobj,
                       pro,
                       osm){
+  net <- sf::st_as_sf(spobj)
   if(any(
     !unique(as.character(
-      sf::st_geometry_type(spobj))) %in% c("LINESTRING", "MULTILINESTRING"))){
+      sf::st_geometry_type(net))) %in% c("LINESTRING", "MULTILINESTRING"))){
     stop("Currently, geometries supported are 'LINESTRING' or 'MULTILINESTRING'")
   }
-  net <- sf::st_as_sf(spobj)
   net$lkm1 <- as.numeric(sf::st_length(net))
-  net <- net[,c("highway", "lkm1")]
-  st <-  c("motorway", "motorway_link",
-           "trunk", "trunk_link",
-           "primary", "primary_link",
-           "secondary", "secondary_link",
-           "tertiary", "tertiary_link")
-  net <- net[net$highway %in% st, ]
   geo <- sf::st_geometry(net)
   lkm <- net$lkm1/sum(net$lkm1)
   e_street <- lkm*gy * units::as_units("g")
 
   # PROFILE SECTION
   if(missing(pro) & missing(osm)){
-    net$gy <- e_street
+    net <- net[, "geometry"]
+    net$emission <- e_street
     return(net)
   }
   if(!missing(pro) & missing(osm)){
@@ -64,6 +58,13 @@ emis_dist <- function(gy,
     return(net)
   }
   if(missing(pro) & !missing(osm)){
+    net <- net[,c("highway", "lkm1")]
+    st <-  c("motorway", "motorway_link",
+             "trunk", "trunk_link",
+             "primary", "primary_link",
+             "secondary", "secondary_link",
+             "tertiary", "tertiary_link")
+    net <- net[net$highway %in% st, ]
     if(length(osm) != 5) stop("length of osm must be 5")
     if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
     osm <- osm/sum(osm)
@@ -86,6 +87,14 @@ emis_dist <- function(gy,
     return(net_all)
   }
   if(!missing(pro) & !missing(osm)){
+    net <- net[,c("highway", "lkm1")]
+    st <-  c("motorway", "motorway_link",
+             "trunk", "trunk_link",
+             "primary", "primary_link",
+             "secondary", "secondary_link",
+             "tertiary", "tertiary_link")
+    net <- net[net$highway %in% st, ]
+
     pro <- pro/sum(pro)
 
     if(length(osm) != 5) stop("length of osm must be 5")

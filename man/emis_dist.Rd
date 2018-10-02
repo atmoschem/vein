@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis_dist.R
 \name{emis_dist}
 \alias{emis_dist}
-\title{Allocate emissions into spatial objects}
+\title{Allocate emissions into spatial objects (street emis to grid)}
 \usage{
 emis_dist(gy, spobj, pro, osm)
 }

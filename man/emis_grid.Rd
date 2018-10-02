@@ -18,7 +18,7 @@ not projected. Please, see http://spatialreference.org/.}
 \item{type}{type of geometry: "lines" or "points".}
 }
 \description{
-\code{emis_grid} allocates emissions proportionally to each grid
+\code{\link{emis_grid}} allocates emissions proportionally to each grid
  cell. The process is performed by intersection between geometries and the grid.
 It means that requires "sr" according with your location for the projection.
 It is assumed that spobj is a spatial*DataFrame or an "sf" with the pollutants
