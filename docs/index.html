@@ -143,7 +143,7 @@
 <a href="#what-is-new-v0-5-2" class="anchor"></a>What is new? (v0.5.2)</h2>
 <ul>
 <li>
-<a href="https://atmoschem.github.io/vein/reference/grid_emi.html">grid_emi</a> To allocate gridded emissions to streets by grid cell.</li>
+<a href="https://atmoschem.github.io/vein/reference/grid_emis.html">grid_emis</a> To allocate gridded emissions to streets by grid cell.</li>
 <li>
 <a href="https://atmoschem.github.io/vein/reference/ef_ive.html">ef_ive</a> International Vehicular Emission Model - Base Emission Factors <a href="http://www.issrc.org/ive/">IVE</a>.</li>
 <li>
@@ -186,25 +186,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/Rtmpfsopen/YourCity</code></pre>
+<pre><code>## files at /tmp/RtmpEyPRrf/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/Rtmpfsopen/YourCity"             
-##  [2] "/tmp/Rtmpfsopen/YourCity/ef"          
-##  [3] "/tmp/Rtmpfsopen/YourCity/emi"         
-##  [4] "/tmp/Rtmpfsopen/YourCity/emi/BUS_01"  
-##  [5] "/tmp/Rtmpfsopen/YourCity/emi/HGV_01"  
-##  [6] "/tmp/Rtmpfsopen/YourCity/emi/LCV_01"  
-##  [7] "/tmp/Rtmpfsopen/YourCity/emi/MC_01"   
-##  [8] "/tmp/Rtmpfsopen/YourCity/emi/PC_01"   
-##  [9] "/tmp/Rtmpfsopen/YourCity/est"         
-## [10] "/tmp/Rtmpfsopen/YourCity/images"      
-## [11] "/tmp/Rtmpfsopen/YourCity/network"     
-## [12] "/tmp/Rtmpfsopen/YourCity/post"        
-## [13] "/tmp/Rtmpfsopen/YourCity/post/df"     
-## [14] "/tmp/Rtmpfsopen/YourCity/post/grids"  
-## [15] "/tmp/Rtmpfsopen/YourCity/post/streets"
-## [16] "/tmp/Rtmpfsopen/YourCity/profiles"    
-## [17] "/tmp/Rtmpfsopen/YourCity/veh"         
+##  [1] "/tmp/RtmpEyPRrf/YourCity"             
+##  [2] "/tmp/RtmpEyPRrf/YourCity/ef"          
+##  [3] "/tmp/RtmpEyPRrf/YourCity/emi"         
+##  [4] "/tmp/RtmpEyPRrf/YourCity/emi/BUS_01"  
+##  [5] "/tmp/RtmpEyPRrf/YourCity/emi/HGV_01"  
+##  [6] "/tmp/RtmpEyPRrf/YourCity/emi/LCV_01"  
+##  [7] "/tmp/RtmpEyPRrf/YourCity/emi/MC_01"   
+##  [8] "/tmp/RtmpEyPRrf/YourCity/emi/PC_01"   
+##  [9] "/tmp/RtmpEyPRrf/YourCity/est"         
+## [10] "/tmp/RtmpEyPRrf/YourCity/images"      
+## [11] "/tmp/RtmpEyPRrf/YourCity/network"     
+## [12] "/tmp/RtmpEyPRrf/YourCity/post"        
+## [13] "/tmp/RtmpEyPRrf/YourCity/post/df"     
+## [14] "/tmp/RtmpEyPRrf/YourCity/post/grids"  
+## [15] "/tmp/RtmpEyPRrf/YourCity/post/streets"
+## [16] "/tmp/RtmpEyPRrf/YourCity/profiles"    
+## [17] "/tmp/RtmpEyPRrf/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
