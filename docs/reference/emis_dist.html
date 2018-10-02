@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Allocate emissions into spatial objects — emis_dist • vein</title>
+<title>Allocate emissions into spatial objects (street emis to grid) — emis_dist • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,23 +21,20 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Allocate emissions into spatial objects — emis_dist" />
+<meta property="og:title" content="Allocate emissions into spatial objects (street emis to grid) — emis_dist" />
 
 <meta property="og:description" content="emis_dist allocates emissions proportionally to
-each feature. &quot;Spatial&quot; objects are converter to &quot;sf&quot; objects. Currently,
+each feature. "Spatial" objects are converter to "sf" objects. Currently,
 'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
 in each street." />
 <meta name="twitter:card" content="summary" />
-
 
 
 <!-- mathjax -->
@@ -64,7 +61,7 @@ in each street." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.2</span>
       </span>
     </div>
 
@@ -98,7 +95,7 @@ in each street." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Allocate emissions into spatial objects</h1>
+    <h1>Allocate emissions into spatial objects (street emis to grid)</h1>
     
     <div class="hidden name"><code>emis_dist.Rd</code></div>
     </div>
@@ -112,14 +109,14 @@ in each street.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_dist</span>(<span class='no'>gy</span>, <span class='no'>spobj</span>, <span class='no'>pro</span>, <span class='kw'>dyear</span> <span class='kw'>=</span> <span class='fl'>365</span>, <span class='no'>osm</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_dist</span>(<span class='no'>gy</span>, <span class='no'>spobj</span>, <span class='no'>pro</span>, <span class='no'>osm</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gy</th>
-      <td><p>Numeric; total (top-down) emissions (grams)</p></td>
+      <td><p>Numeric; a unique total (top-down) emissions (grams)</p></td>
     </tr>
     <tr>
       <th>spobj</th>
@@ -129,10 +126,6 @@ it is transformed to "sf".</p></td>
     <tr>
       <th>pro</th>
       <td><p>Matrix or data-frame profiles, for instance, pc_profile.</p></td>
-    </tr>
-    <tr>
-      <th>dyear</th>
-      <td><p>Numeric, Number of days of period of time, default is 365.</p></td>
     </tr>
     <tr>
       <th>osm</th>
@@ -161,7 +154,7 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
 <span class='fu'>sum</span>(<span class='no'>t1</span>$<span class='no'>gy</span>)
 <span class='co'>#t1 &lt;- emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1) )</span>
 <span class='no'>t1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_dist</span>(<span class='kw'>gy</span> <span class='kw'>=</span> <span class='no'>po</span>, <span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>pro</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.2, GDAL 2.2.3, proj.4 4.9.3</span></div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.2, GDAL 2.2.3, PROJ 4.9.3</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
