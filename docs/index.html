@@ -8,8 +8,8 @@
 <title>Vehicular Emissions Inventories • vein</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Vehicular Emissions Inventories">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Vehicular Emissions Inventories">
 <meta property="og:description" content="Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.2</span>
       </span>
     </div>
 
@@ -67,15 +67,9 @@
     
     
 
-<div id="paper-published-on-gmd" class="section level1">
+<div id="vehicular-emissions-inventory-vein-model-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#paper-published-on-gmd" class="anchor"></a>Paper 😃 Published 😃 on GMD 🎉🎉 !!</h1></div>
-<p>Our paper was published on GMD:</p>
-<p><a href="https://www.geosci-model-dev.net/11/2209/2018/" class="uri">https://www.geosci-model-dev.net/11/2209/2018/</a></p>
-<div class="figure">
-<img src="https://i.imgur.com/cGig6Qi.png">
-</div>
-<p><strong>V</strong>ehicular <strong>E</strong>missions <strong>IN</strong>ventory <strong>(VEIN)</strong> model.</p>
+<a href="#vehicular-emissions-inventory-vein-model-" class="anchor"></a><strong>V</strong>ehicular <strong>E</strong>missions <strong>IN</strong>ventory <strong>(VEIN)</strong> model.</h1></div>
 <p><a href="https://atmoschem.github.io/vein/"><em>Please read the documentation</em>.</a></p>
 <div id="what-is-vein" class="section level2">
 <h2 class="hasAnchor">
@@ -144,27 +138,37 @@
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 </div>
 </div>
-<div id="what-is-new-v0-4-4" class="section level2">
+<div id="what-is-new-v0-5-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new-v0-4-4" class="anchor"></a>What is new? (v0.4.4)</h2>
+<a href="#what-is-new-v0-5-2" class="anchor"></a>What is new? (v0.5.2)</h2>
 <ul>
-<li><a href="https://atmoschem.github.io/vein/reference/ef_cetesb.html">ef_cetesb</a></li>
-<li><a href="https://atmoschem.github.io/vein/reference/vein_notes.html">vein_notes</a></li>
-<li>VEIN imports <strong>sf</strong> functions.</li>
-<li>Covers estimations of compounds of pollutants (e.g.: isobutene)</li>
-<li>Add com util functions such as <a href="https://atmoschem.github.io/vein/reference/emis_source.html">emis_source</a> to source vein scripts.</li>
-<li>Add <a href="https://atmoschem.github.io/vein/reference/emis_dist.html">emis_dist</a> function to distribute top-down emissions into ‘sf’ objects by feature, specifically, ir returns a vector of lines (streeets).</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/grid_emi.html">grid_emi</a> To allocate gridded emissions to streets by grid cell.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/ef_ive.html">ef_ive</a> International Vehicular Emission Model - Base Emission Factors <a href="http://www.issrc.org/ive/">IVE</a>.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/ef_whe.html">ef_whe</a> to account for high emitters emission factor on fleet.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/ef_im.html">ef_im</a> emission factors by used vehicles with normal deterioration, depending on accumulated mileage.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/ef_cetesb.html">ef_cetesb</a> Emission factors of the <a href="https://cetesb.sp.gov.br/">Environmental Agency of São Paulo</a> State, Brazil.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/vein_notes.html">vein_notes</a> To generates .txt files which includes specification of the machine.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/emis_source.html">emis_source</a> to source vein scripts.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/emis_dist.html">emis_dist</a> function to distribute top-down emissions into ‘sf’ objects by feature, specifically, ir returns a vector of lines (streeets).</li>
 <li>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.html">NEWS</a>
 </li>
 </ul>
 <p><strong>future steps</strong></p>
 <ul>
-<li>Tests!</li>
+<li>More tests!</li>
 <li>Parallelism. I’ve done some tests already with good results.</li>
 <li>RCPP integration. I would like to do it, specifically in <code>emis</code>.</li>
 <li>Estimation of evaporative emissions with Copert Tier 3.</li>
 <li>More speciations.</li>
-<li>A book (hopefully released in 2018). Currently 200 pags. No decided if it wiill be Leanpub or send to CRC.</li>
+<li>A draft book already published <a href="https://bookdown.org/zergioibarra/veinbook/" class="uri">https://bookdown.org/zergioibarra/veinbook/</a> and source here: <a href="https://github.com/ibarraespinosa/VEINBOOK" class="uri">https://github.com/ibarraespinosa/VEINBOOK</a>.</li>
 </ul>
 </div>
 <div id="how-does-it-work" class="section level2">
@@ -182,25 +186,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/RtmpejVBVa/YourCity</code></pre>
+<pre><code>## files at /tmp/Rtmpfsopen/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/RtmpejVBVa/YourCity"             
-##  [2] "/tmp/RtmpejVBVa/YourCity/ef"          
-##  [3] "/tmp/RtmpejVBVa/YourCity/emi"         
-##  [4] "/tmp/RtmpejVBVa/YourCity/emi/BUS_01"  
-##  [5] "/tmp/RtmpejVBVa/YourCity/emi/HGV_01"  
-##  [6] "/tmp/RtmpejVBVa/YourCity/emi/LCV_01"  
-##  [7] "/tmp/RtmpejVBVa/YourCity/emi/MC_01"   
-##  [8] "/tmp/RtmpejVBVa/YourCity/emi/PC_01"   
-##  [9] "/tmp/RtmpejVBVa/YourCity/est"         
-## [10] "/tmp/RtmpejVBVa/YourCity/images"      
-## [11] "/tmp/RtmpejVBVa/YourCity/network"     
-## [12] "/tmp/RtmpejVBVa/YourCity/post"        
-## [13] "/tmp/RtmpejVBVa/YourCity/post/df"     
-## [14] "/tmp/RtmpejVBVa/YourCity/post/grids"  
-## [15] "/tmp/RtmpejVBVa/YourCity/post/streets"
-## [16] "/tmp/RtmpejVBVa/YourCity/profiles"    
-## [17] "/tmp/RtmpejVBVa/YourCity/veh"         
+##  [1] "/tmp/Rtmpfsopen/YourCity"             
+##  [2] "/tmp/Rtmpfsopen/YourCity/ef"          
+##  [3] "/tmp/Rtmpfsopen/YourCity/emi"         
+##  [4] "/tmp/Rtmpfsopen/YourCity/emi/BUS_01"  
+##  [5] "/tmp/Rtmpfsopen/YourCity/emi/HGV_01"  
+##  [6] "/tmp/Rtmpfsopen/YourCity/emi/LCV_01"  
+##  [7] "/tmp/Rtmpfsopen/YourCity/emi/MC_01"   
+##  [8] "/tmp/Rtmpfsopen/YourCity/emi/PC_01"   
+##  [9] "/tmp/Rtmpfsopen/YourCity/est"         
+## [10] "/tmp/Rtmpfsopen/YourCity/images"      
+## [11] "/tmp/Rtmpfsopen/YourCity/network"     
+## [12] "/tmp/Rtmpfsopen/YourCity/post"        
+## [13] "/tmp/Rtmpfsopen/YourCity/post/df"     
+## [14] "/tmp/Rtmpfsopen/YourCity/post/grids"  
+## [15] "/tmp/Rtmpfsopen/YourCity/post/streets"
+## [16] "/tmp/Rtmpfsopen/YourCity/profiles"    
+## [17] "/tmp/Rtmpfsopen/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -380,7 +384,8 @@ doi = {10.5194/gmd-11-2209-2018}
 <ul>
 <li>Drop me an email <a href="mailto:sergio.ibarra@usp.br">sergio.ibarra@usp.br</a>
 </li>
-<li>You can ask on <a href="https://earthscience.stackexchange.com/">Eart Science Stackoverflow</a>,</li>
+<li>You can ask on <a href="https://earthscience.stackexchange.com/">Eart Science Stackoverflow</a>,.</li>
+<li>Check the project on <a href="https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories">ResearchGate</a>.</li>
 </ul>
 </div>
 <div id="issues" class="section level2">
