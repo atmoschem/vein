@@ -108,7 +108,7 @@ demo(VEIN)
 
 ## What is new? (v0.5.2)
 
-- [grid_emi](https://atmoschem.github.io/vein/reference/grid_emi.html) To allocate gridded emissions to streets by grid cell.
+- [grid_emis](https://atmoschem.github.io/vein/reference/grid_emis.html) To allocate gridded emissions to streets by grid cell.
 - [ef_ive](https://atmoschem.github.io/vein/reference/ef_ive.html) International Vehicular Emission Model - Base Emission Factors [IVE](http://www.issrc.org/ive/). 
 - [ef_whe](https://atmoschem.github.io/vein/reference/ef_whe.html) to account for high emitters emission factor on fleet.
 - [ef_im](https://atmoschem.github.io/vein/reference/ef_im.html) emission factors by used vehicles with normal deterioration, depending on accumulated mileage.
