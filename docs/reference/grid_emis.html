@@ -185,10 +185,10 @@ gCO$emission <- gCO$V1
 <span class='co'>#do not run</span>
 <span class='fu'>library</span>(<span class='no'>osmdata</span>)
 <span class='fu'>library</span>(<span class='no'>sf</span>)
-<span class='no'>q0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/opq'>opq</a></span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>gCO</span>))
-<span class='no'>q1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/add_osm_feature'>add_osm_feature</a></span>(<span class='no'>q0</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>'name'</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/osmdata_sf'>osmdata_sf</a></span>(<span class='no'>q1</span>)
-<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='no'>x</span>$<span class='no'>osm_lines</span>[, <span class='st'>"highway"</span>]
+<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/osmdata_sf'>osmdata_sf</a></span>(
+<span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/add_osm_feature'>add_osm_feature</a></span>(
+<span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/opq'>opq</a></span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>gCO</span>)),
+<span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>'highway'</span>))$<span class='no'>osm_lines</span>[, <span class='fu'>c</span>(<span class='st'>"highway"</span>)]
 <span class='no'>st</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"motorway"</span>, <span class='st'>"motorway_link"</span>, <span class='st'>"trunk"</span>, <span class='st'>"trunk_link"</span>,
 <span class='st'>"primary"</span>, <span class='st'>"primary_link"</span>, <span class='st'>"secondary"</span>, <span class='st'>"secondary_link"</span>,
 <span class='st'>"tertiary"</span>, <span class='st'>"tertiary_link"</span>)

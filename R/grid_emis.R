@@ -50,10 +50,10 @@
 #' #do not run
 #' library(osmdata)
 #' library(sf)
-#' q0 <- opq(bbox = st_bbox(gCO))
-#' q1 <- add_osm_feature(q0, key = 'name')
-#' x <- osmdata_sf(q1)
-#' osm <- x$osm_lines[, "highway"]
+#' osm <- osmdata_sf(
+#' add_osm_feature(
+#' opq(bbox = st_bbox(gCO)),
+#' key = 'highway'))$osm_lines[, c("highway")]
 #' st <- c("motorway", "motorway_link", "trunk", "trunk_link",
 #' "primary", "primary_link", "secondary", "secondary_link",
 #' "tertiary", "tertiary_link")
@@ -77,7 +77,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
   net$lkm1 <- as.numeric(sf::st_length(net))
 
   geo <- sf::st_geometry(net)
-  xg <- st_intersection(net, g)
+  xg <- suppressWarnings(sf::st_intersection(net, g))
 
   if(sf::st_crs(g) != sf::st_crs(net)){
     if(verbose) message("Changing CRS of 'spobj' to match 'g'")
@@ -102,7 +102,8 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                     lapply(1:length(g$id),
                            function(i) {
                              emis_dist(gy = g[g$id == i,]$emission,
-                                       spobj = xg[xg$id == i, ])
+                                       spobj = xg[xg$id == i, ],
+                                       verbose = verbose)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sumg/sum(df, na.rm = TRUE)
@@ -113,7 +114,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
     }
     if(verbose) {
       cat(paste0("Sum of street emissions ",
-                 round(df, 2), "\n"))
+                 round(sum(df), 2), "\n"))
     }
     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
     return(df)
@@ -125,18 +126,19 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                            function(i) {
                              emis_dist(gy = g[g$id == i,]$emission,
                                        spobj = xg[xg$id == i, ],
-                                       pro = pro)
+                                       pro = pro,
+                                       verbose = verbose)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sum(sumg)/sum(df, na.rm = TRUE)
     df <- df*fx
     if(verbose) {
       cat(paste0("Sum of gridded emissions ",
-                 round(sumg, 2), "\n"))
+                 round(sum(df), 2), "\n"))
     }
     if(verbose) {
       cat(paste0("Sum of street emissions ",
-                 round(df, 2), "\n"))
+                 round(sum(df), 2), "\n"))
     }
     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
     return(df)
@@ -147,7 +149,8 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                            function(i) {
                              emis_dist(gy = g[g$id == i,]$emission,
                                        spobj = xg[xg$id == i, ],
-                                       osm = osm)
+                                       osm = osm,
+                                       verbose = verbose)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sum(sumg)/sum(df, na.rm = TRUE)
@@ -158,7 +161,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
     }
     if(verbose) {
       cat(paste0("Sum of street emissions ",
-                 round(df, 2), "\n"))
+                 round(sum(df), 2), "\n"))
     }
     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
     return(df)
@@ -169,7 +172,9 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                            function(i) {
                              emis_dist(gy = g[g$id == i,]$emission,
                                        spobj = xg[xg$id == i, ],
-                                       osm = osm, pro = pro)
+                                       osm = osm,
+                                       pro = pro,
+                                       verbose = verbose)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sum(sumg)/sum(df, na.rm = TRUE)
@@ -180,7 +185,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
     }
     if(verbose) {
       cat(paste0("Sum of street emissions ",
-                 round(df, 2), "\n"))
+                 round(sum(df), 2), "\n"))
     }
     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
     return(df)

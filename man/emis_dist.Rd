@@ -4,7 +4,7 @@
 \alias{emis_dist}
 \title{Allocate emissions into spatial objects (street emis to grid)}
 \usage{
-emis_dist(gy, spobj, pro, osm)
+emis_dist(gy, spobj, pro, osm, verbose = TRUE)
 }
 \arguments{
 \item{gy}{Numeric; a unique total (top-down) emissions (grams)}
@@ -20,6 +20,8 @@ The second element covers 'trunk' and 'trunk_link'.
 The third element covers 'primary' and 'primary_link'.
 The fourth element covers 'secondary' and 'secondary_link'.
 The fifth element covers 'tertiary' and 'tertiary_link'.}
+
+\item{verbose}{Logical; to show more info.}
 }
 \description{
 \code{\link{emis_dist}} allocates emissions proportionally to
