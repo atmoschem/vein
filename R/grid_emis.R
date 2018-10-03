@@ -67,6 +67,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
   if(!any(grepl(pattern = "emission", x = names(g)))){
     stop("The column 'emission' is not present in grid 'g'")
   }
+  if(!missing(osm)) stop("OSM not implemented yet")
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   netdata <- sf::st_set_geometry(net, NULL)
@@ -103,7 +104,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                            function(i) {
                              emis_dist(gy = g[g$id == i,]$emission,
                                        spobj = xg[xg$id == i, ],
-                                       verbose = verbose)
+                                       verbose = FALSE)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sumg/sum(df, na.rm = TRUE)
@@ -117,6 +118,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                  round(sum(df), 2), "\n"))
     }
     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
+    if(verbose) cat("Columns:", names(df), "\n")
     return(df)
   }
 
@@ -127,7 +129,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                              emis_dist(gy = g[g$id == i,]$emission,
                                        spobj = xg[xg$id == i, ],
                                        pro = pro,
-                                       verbose = verbose)
+                                       verbose = FALSE)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sum(sumg)/sum(df, na.rm = TRUE)
@@ -141,16 +143,18 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                  round(sum(df), 2), "\n"))
     }
     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
+    if(verbose) cat("Columns:", names(df), "\n")
     return(df)
   }
   if(missing(pro) & !missing(osm)){
+    stop("OSM not implemented yet")
     lxxy <- do.call("rbind",
                     lapply(1:length(g$id),
                            function(i) {
                              emis_dist(gy = g[g$id == i,]$emission,
                                        spobj = xg[xg$id == i, ],
                                        osm = osm,
-                                       verbose = verbose)
+                                       verbose = FALSE)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sum(sumg)/sum(df, na.rm = TRUE)
@@ -163,10 +167,13 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
       cat(paste0("Sum of street emissions ",
                  round(sum(df), 2), "\n"))
     }
-    df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
+    print(df <- sf::st_sf(df, geometry = lxxy$geometry))
+    if(verbose) cat("Columns:", names(df), "\n")
     return(df)
   }
   if(!missing(pro) & !missing(osm)){
+    stop("OSM not implemented yet")
+
     lxxy <- do.call("rbind",
                     lapply(1:length(g$id),
                            function(i) {
@@ -174,7 +181,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                                        spobj = xg[xg$id == i, ],
                                        osm = osm,
                                        pro = pro,
-                                       verbose = verbose)
+                                       verbose = FALSE)
                            }))
     df <- st_set_geometry(lxxy, NULL)
     fx <- sum(sumg)/sum(df, na.rm = TRUE)
@@ -188,6 +195,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
                  round(sum(df), 2), "\n"))
     }
     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
+    if(verbose) cat("Columns:", names(df), "\n")
     return(df)
   }
 }
