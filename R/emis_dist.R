@@ -51,14 +51,19 @@ emis_dist <- function(gy,
   if(missing(pro) & missing(osm)){
     net <- net[, "geometry"]
     net$emission <- e_street
-    if(verbose) cat("Columns:", names(net))
+    if(verbose) cat("Columns:", names(net), "\n")
     return(net)
   }
   if(!missing(pro) & missing(osm)){
     pro <- pro/sum(pro)
     df <- as.data.frame(as.matrix(e_street) %*% matrix(unlist(pro), nrow = 1))
     net <- sf::st_sf(df, geometry = geo)
-    if(verbose) cat("Columns:", names(net))
+    if(verbose) {
+      cat("Columns: ")
+      cat(names(net))
+      cat("\n")
+    }
+
     return(net)
   }
   if(missing(pro) & !missing(osm)){
@@ -68,7 +73,7 @@ emis_dist <- function(gy,
              "primary", "primary_link",
              "secondary", "secondary_link",
              "tertiary", "tertiary_link")
-    if(verbose) cat("Selecting:", st)
+    if(verbose) cat("Selecting:", st, "\n")
     net <- net[net$highway %in% st, ]
     if(length(osm) != 5) stop("length of osm must be 5")
     if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
@@ -91,7 +96,7 @@ emis_dist <- function(gy,
     net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
     net_all <- net_all[, c("gy", "highway")]
     names(net_all) <- c("emission", "highway", "geometry")
-    if(verbose) cat("Columns:", names(net_all))
+    if(verbose) cat("Columns:", names(net_all), "\n")
     return(net_all)
   }
   if(!missing(pro) & !missing(osm)){
@@ -101,7 +106,7 @@ emis_dist <- function(gy,
              "primary", "primary_link",
              "secondary", "secondary_link",
              "tertiary", "tertiary_link")
-    if(verbose) message("Selecting:", st)
+    if(verbose) cat("Selecting:", st, "\n")
     net <- net[net$highway %in% st, ]
 
     pro <- pro/sum(pro)
@@ -129,7 +134,11 @@ emis_dist <- function(gy,
     net_all <- sf::st_sf(df, geometry = sf::st_geometry(net_all))
     net_all <- net_all[, c("gy", "highway")]
     names(net_all) <- c("emission", "highway", "geometry")
-    if(verbose) cat("Columns:", names(net_all))
+    if(verbose) {
+      cat("Columns: ")
+      cat(names(net_all))
+      cat("\n")
+      }
     return(net_all)
   }
 }
