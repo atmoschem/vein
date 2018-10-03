@@ -7,6 +7,7 @@ NEWS
 each grid cell.
 - Improves emis_dist.
 - Improves emis_grid.
+- Add verbose in emis_dist and grid_emis.
 
 
 ## vein 0.5.1 (Release date: 2018-09-30)

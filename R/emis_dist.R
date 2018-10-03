@@ -15,6 +15,7 @@
 #' The third element covers 'primary' and 'primary_link'.
 #' The fourth element covers 'secondary' and 'secondary_link'.
 #' The fifth element covers 'tertiary' and 'tertiary_link'.
+#' @param verbose Logical; to show more info.
 #' @importFrom sf st_sf st_as_sf  st_length st_geometry_type st_set_geometry
 #' @importFrom units as_units
 #' @export
@@ -33,7 +34,8 @@
 emis_dist <- function(gy,
                       spobj,
                       pro,
-                      osm){
+                      osm,
+                      verbose = TRUE){
   net <- sf::st_as_sf(spobj)
   if(any(
     !unique(as.character(
@@ -49,12 +51,14 @@ emis_dist <- function(gy,
   if(missing(pro) & missing(osm)){
     net <- net[, "geometry"]
     net$emission <- e_street
+    if(verbose) cat("Columns:", names(net))
     return(net)
   }
   if(!missing(pro) & missing(osm)){
     pro <- pro/sum(pro)
     df <- as.data.frame(as.matrix(e_street) %*% matrix(unlist(pro), nrow = 1))
     net <- sf::st_sf(df, geometry = geo)
+    if(verbose) cat("Columns:", names(net))
     return(net)
   }
   if(missing(pro) & !missing(osm)){
@@ -64,6 +68,7 @@ emis_dist <- function(gy,
              "primary", "primary_link",
              "secondary", "secondary_link",
              "tertiary", "tertiary_link")
+    if(verbose) cat("Selecting:", st)
     net <- net[net$highway %in% st, ]
     if(length(osm) != 5) stop("length of osm must be 5")
     if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
@@ -84,6 +89,9 @@ emis_dist <- function(gy,
     net_te <- net[net$highway %in% st[9:10], ]
     net_te$gy <- net_te$lkm1 / sum(net_te$lkm1) * gy * osm[5]
     net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
+    net_all <- net_all[, c("gy", "highway")]
+    names(net_all) <- c("emission", "highway", "geometry")
+    if(verbose) cat("Columns:", names(net_all))
     return(net_all)
   }
   if(!missing(pro) & !missing(osm)){
@@ -93,6 +101,7 @@ emis_dist <- function(gy,
              "primary", "primary_link",
              "secondary", "secondary_link",
              "tertiary", "tertiary_link")
+    if(verbose) message("Selecting:", st)
     net <- net[net$highway %in% st, ]
 
     pro <- pro/sum(pro)
@@ -118,6 +127,9 @@ emis_dist <- function(gy,
     net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
     df <- as.data.frame(as.matrix(net_all$gy) %*% matrix(unlist(pro), nrow = 1))
     net_all <- sf::st_sf(df, geometry = sf::st_geometry(net_all))
+    net_all <- net_all[, c("gy", "highway")]
+    names(net_all) <- c("emission", "highway", "geometry")
+    if(verbose) cat("Columns:", names(net_all))
     return(net_all)
   }
 }

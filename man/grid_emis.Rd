@@ -65,10 +65,10 @@ gCO$emission <- gCO$V1
 #do not run
 library(osmdata)
 library(sf)
-q0 <- opq(bbox = st_bbox(gCO))
-q1 <- add_osm_feature(q0, key = 'name')
-x <- osmdata_sf(q1)
-osm <- x$osm_lines[, "highway"]
+osm <- osmdata_sf(
+add_osm_feature(
+opq(bbox = st_bbox(gCO)),
+key = 'highway'))$osm_lines[, c("highway")]
 st <- c("motorway", "motorway_link", "trunk", "trunk_link",
 "primary", "primary_link", "secondary", "secondary_link",
 "tertiary", "tertiary_link")
