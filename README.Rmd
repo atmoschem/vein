@@ -18,16 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
 [![Package Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
-# Paper 😃 Published 😃 on GMD 🎉🎉 !!
-
-Our paper was published on GMD:
- 
-https://www.geosci-model-dev.net/11/2209/2018/
-
-![](https://i.imgur.com/cGig6Qi.png)
-
-
-**V**ehicular **E**missions **IN**ventory **(VEIN)** model.
+# **V**ehicular **E**missions **IN**ventory **(VEIN)** model.
 
 [_Please read the documentation_.](https://atmoschem.github.io/vein/)
 
@@ -115,25 +106,27 @@ demo(VEIN)
 ```
 
 
-## What is new? (v0.4.4)
+## What is new? (v0.5.2)
 
-- [ef_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html) 
-- [vein_notes](https://atmoschem.github.io/vein/reference/vein_notes.html) 
-- VEIN imports **sf** functions.
-- Covers estimations of compounds of pollutants (e.g.: isobutene)
-- Add com util functions such as [emis_source](https://atmoschem.github.io/vein/reference/emis_source.html) to source vein scripts.
-- Add [emis_dist](https://atmoschem.github.io/vein/reference/emis_dist.html) function to distribute top-down emissions into 'sf' objects
+- [grid_emis](https://atmoschem.github.io/vein/reference/grid_emis.html) To allocate gridded emissions to streets by grid cell.
+- [ef_ive](https://atmoschem.github.io/vein/reference/ef_ive.html) International Vehicular Emission Model - Base Emission Factors [IVE](http://www.issrc.org/ive/). 
+- [ef_whe](https://atmoschem.github.io/vein/reference/ef_whe.html) to account for high emitters emission factor on fleet.
+- [ef_im](https://atmoschem.github.io/vein/reference/ef_im.html) emission factors by used vehicles with normal deterioration, depending on accumulated mileage.
+- [ef_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html) Emission factors of the [Environmental Agency of São Paulo](https://cetesb.sp.gov.br/) State, Brazil.
+- [vein_notes](https://atmoschem.github.io/vein/reference/vein_notes.html) To generates .txt files which includes specification of the machine.
+- [emis_source](https://atmoschem.github.io/vein/reference/emis_source.html) to source vein scripts.
+- [emis_dist](https://atmoschem.github.io/vein/reference/emis_dist.html) function to distribute top-down emissions into 'sf' objects
 by feature, specifically, ir returns a vector of lines (streeets).
 - Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
 **future steps**
 
-- Tests! 
+- More tests! 
 - Parallelism. I've done some tests already with good results.
 - RCPP integration. I would like to do it, specifically in `emis`.
 - Estimation of evaporative emissions with Copert Tier 3.
 - More speciations.
-- A book (hopefully released in 2018). Currently 200 pags. No decided if it wiill be Leanpub or send to CRC.
+- A draft book already published https://bookdown.org/zergioibarra/veinbook/ and source here: [https://github.com/ibarraespinosa/VEINBOOK](https://github.com/ibarraespinosa/VEINBOOK).
 
 
 
@@ -341,7 +334,8 @@ doi = {10.5194/gmd-11-2209-2018}
 ## Communications, doubts etc
 
 - Drop me an email sergio.ibarra@usp.br
-- You can ask on [Eart Science Stackoverflow](https://earthscience.stackexchange.com/), 
+- You can ask on [Eart Science Stackoverflow](https://earthscience.stackexchange.com/),.
+- Check the project on [ResearchGate](https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories).
 
 ##  Issues
 

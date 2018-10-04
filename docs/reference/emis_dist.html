@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Allocate emissions into spatial objects — emis_dist • vein</title>
+<title>Allocate emissions into spatial objects (street emis to grid) — emis_dist • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,23 +21,20 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
-
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Allocate emissions into spatial objects — emis_dist" />
+<meta property="og:title" content="Allocate emissions into spatial objects (street emis to grid) — emis_dist" />
 
 <meta property="og:description" content="emis_dist allocates emissions proportionally to
-each feature. &quot;Spatial&quot; objects are converter to &quot;sf&quot; objects. Currently,
+each feature. "Spatial" objects are converter to "sf" objects. Currently,
 'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
 in each street." />
 <meta name="twitter:card" content="summary" />
-
 
 
 <!-- mathjax -->
@@ -64,7 +61,7 @@ in each street." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.2</span>
       </span>
     </div>
 
@@ -98,7 +95,7 @@ in each street." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Allocate emissions into spatial objects</h1>
+    <h1>Allocate emissions into spatial objects (street emis to grid)</h1>
     
     <div class="hidden name"><code>emis_dist.Rd</code></div>
     </div>
@@ -112,14 +109,14 @@ in each street.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_dist</span>(<span class='no'>gy</span>, <span class='no'>spobj</span>, <span class='no'>pro</span>, <span class='kw'>dyear</span> <span class='kw'>=</span> <span class='fl'>365</span>, <span class='no'>osm</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_dist</span>(<span class='no'>gy</span>, <span class='no'>spobj</span>, <span class='no'>pro</span>, <span class='no'>osm</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gy</th>
-      <td><p>Numeric; total (top-down) emissions (grams)</p></td>
+      <td><p>Numeric; a unique total (top-down) emissions (grams)</p></td>
     </tr>
     <tr>
       <th>spobj</th>
@@ -131,10 +128,6 @@ it is transformed to "sf".</p></td>
       <td><p>Matrix or data-frame profiles, for instance, pc_profile.</p></td>
     </tr>
     <tr>
-      <th>dyear</th>
-      <td><p>Numeric, Number of days of period of time, default is 365.</p></td>
-    </tr>
-    <tr>
       <th>osm</th>
       <td><p>Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
 The first element covers 'motorway' and 'motorway_link.
@@ -142,6 +135,10 @@ The second element covers 'trunk' and 'trunk_link'.
 The third element covers 'primary' and 'primary_link'.
 The fourth element covers 'secondary' and 'secondary_link'.
 The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; to show more info.</p></td>
     </tr>
     </table>
     
@@ -161,7 +158,8 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
 <span class='fu'>sum</span>(<span class='no'>t1</span>$<span class='no'>gy</span>)
 <span class='co'>#t1 &lt;- emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1) )</span>
 <span class='no'>t1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_dist</span>(<span class='kw'>gy</span> <span class='kw'>=</span> <span class='no'>po</span>, <span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>pro</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.2, GDAL 2.2.3, proj.4 4.9.3</span></div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Linking to GEOS 3.6.2, GDAL 2.2.3, PROJ 4.9.3</span></div><div class='output co'>#&gt; Columns: geometry emission 
+#&gt; Columns: V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11 V12 V13 V14 V15 V16 V17 V18 V19 V20 V21 V22 V23 V24 V25 V26 V27 V28 V29 V30 V31 V32 V33 V34 V35 V36 V37 V38 V39 V40 V41 V42 V43 V44 V45 V46 V47 V48 V49 V50 V51 V52 V53 V54 V55 V56 V57 V58 V59 V60 V61 V62 V63 V64 V65 V66 V67 V68 V69 V70 V71 V72 V73 V74 V75 V76 V77 V78 V79 V80 V81 V82 V83 V84 V85 V86 V87 V88 V89 V90 V91 V92 V93 V94 V95 V96 V97 V98 V99 V100 V101 V102 V103 V104 V105 V106 V107 V108 V109 V110 V111 V112 V113 V114 V115 V116 V117 V118 V119 V120 V121 V122 V123 V124 V125 V126 V127 V128 V129 V130 V131 V132 V133 V134 V135 V136 V137 V138 V139 V140 V141 V142 V143 V144 V145 V146 V147 V148 V149 V150 V151 V152 V153 V154 V155 V156 V157 V158 V159 V160 V161 V162 V163 V164 V165 V166 V167 V168 geometry</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

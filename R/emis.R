@@ -101,7 +101,9 @@ emis <- function (veh,
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
-  if(!class(ef) %in% c("list", "units", "EmissionFactorsList", "EmissionFactors", "data.frame")){
+  #At least, on e of these
+  if(any(!class(ef) %in% c("list", "units", "EmissionFactorsList",
+                           "EmissionFactors", "data.frame"))){
     stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
   }
 
