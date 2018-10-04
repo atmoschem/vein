@@ -52,7 +52,7 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
   dom <- 145:168
   if(class(start)[1] == "Date"){
     if(verbose)
-      cat("using date:", paste(start),"\n")
+      cat("\nusing date:", paste(start),"\n")
     s <- data.table::wday(start)
     if(s == 1) start = "mon"
     if(s == 2) start = "tue"
