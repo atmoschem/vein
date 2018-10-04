@@ -1,7 +1,20 @@
 NEWS
 ===========
 
-# vein 0.5.0 (Release date: 2018-09-24) 'Takamatsu'
+# vein 0.5.2 (Release date: 2018-10-02)
+
+- Adds grid_emis. This function allocates a grid of emissions into streets by
+each grid cell.
+- Improves emis_dist.
+- Improves emis_grid.
+- Add verbose in emis_dist and grid_emis.
+
+
+## vein 0.5.1 (Release date: 2018-09-30)
+
+- Improves emis_dist
+
+## vein 0.5.0 (Release date: 2018-09-24) 'Takamatsu'
 
 - Consolidates all news functions.
 - Add function ef_im for emission factors with normal deterioration that would
