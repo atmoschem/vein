@@ -42,5 +42,5 @@ ef_im <- function(ef,
     ef <- ifelse(ef > max_ef, max_ef, ef)
   }
   nef <- ef * (1 + amileage * tc)
-  return(nef)
+  return(EmissionFactors(nef))
 }

@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.5.3 (Release date: 2018-10-02)
+
+- Adds evaporative emission factors on CETESB.
+
 # vein 0.5.2 (Release date: 2018-10-02)
 
 - Adds grid_emis. This function allocates a grid of emissions into streets by

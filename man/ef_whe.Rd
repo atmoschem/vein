@@ -37,7 +37,7 @@ co_efhe <- ef_cetesb(p = "COd", "PC_G") * 5
 perc <- c(seq(0.01, 0.3, 0.01), rep(0.3, 20))
 # Now, lets use our ef with normal deterioration
 co_ef_normal <- ef_cetesb(p = "COd", "PC_G")
-efd <- ef_whe(co_efhe, perc, co_ef_normal)
+efd <- ef_whe(efhe = co_efhe, phe = perc, ef = co_ef_normal)
 # now, we can plot the three ef
 plot(co_efhe)
 lines(co_ef_normal, pch = 16, col = "red" )
