@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -35,6 +37,7 @@ emis_grid. It allocates gridded emissions into streets.
 This function applies emis_dist into each grid cell using
 lapply. This function is in development and pull request are welcome." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -61,7 +64,7 @@ lapply. This function is in development and pull request are welcome." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.3</span>
       </span>
     </div>
 
@@ -185,9 +188,9 @@ gCO$emission <- gCO$V1
 <span class='co'>#do not run</span>
 <span class='fu'>library</span>(<span class='no'>osmdata</span>)
 <span class='fu'>library</span>(<span class='no'>sf</span>)
-<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/osmdata_sf'>osmdata_sf</a></span>(
-<span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/add_osm_feature'>add_osm_feature</a></span>(
-<span class='fu'><a href='http://www.rdocumentation.org/packages/osmdata/topics/opq'>opq</a></span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>gCO</span>)),
+<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'>osmdata_sf</span>(
+<span class='fu'>add_osm_feature</span>(
+<span class='fu'>opq</span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>gCO</span>)),
 <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>'highway'</span>))$<span class='no'>osm_lines</span>[, <span class='fu'>c</span>(<span class='st'>"highway"</span>)]
 <span class='no'>st</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"motorway"</span>, <span class='st'>"motorway_link"</span>, <span class='st'>"trunk"</span>, <span class='st'>"trunk_link"</span>,
 <span class='st'>"primary"</span>, <span class='st'>"primary_link"</span>, <span class='st'>"secondary"</span>, <span class='st'>"secondary_link"</span>,

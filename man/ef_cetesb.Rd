@@ -9,8 +9,11 @@ ef_cetesb(p, veh, full = FALSE)
 \arguments{
 \item{p}{Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
 "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd", "SO2"
-"CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO". The letter 'd' means deteriorated
-factor.}
+"CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO" (g/km). The letter 'd' means deteriorated
+factor. Also, evaporative emissions at average temperature ranges:
+"D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15"
+"S_0_15" and "R_0_15" where D means diurnal (g/day), S hot/warm soak (g/trip)
+and R hot/warm running losses (g/trip).}
 
 \item{veh}{Character; Vehicle categories: "PC_G", "PC_FG", "PC_FE", "PC_E"
 "LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT"
@@ -42,6 +45,7 @@ of US.EPA-AP42 emission factor: Section 1.4 Natural Gas Combustion.
 \examples{
 {
 a <- ef_cetesb("CO", "PC_G")
+b <- ef_cetesb("R_10_25", "PC_G")
 }
 }
 \references{

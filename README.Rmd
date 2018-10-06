@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [_Please read the documentation_.](https://atmoschem.github.io/vein/)
 
-## What is VEIN ?
+## What is VEIN?
 
 Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
 It currently covers the following pollutants in speed functions:
@@ -106,7 +106,7 @@ demo(VEIN)
 ```
 
 
-## What is new? (v0.5.2)
+## What is new? `r packageVersion("vein")`
 
 - [grid_emis](https://atmoschem.github.io/vein/reference/grid_emis.html) To allocate gridded emissions to streets by grid cell.
 - [ef_ive](https://atmoschem.github.io/vein/reference/ef_ive.html) International Vehicular Emission Model - Base Emission Factors [IVE](http://www.issrc.org/ive/). 
