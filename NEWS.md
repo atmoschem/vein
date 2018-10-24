@@ -6,6 +6,7 @@ NEWS
 - Fix evaporative emission factors on CETESB.
 - Remove SO2 from cetesb. It must be calculated based on FC and content
 of S. The same applies for Pb.
+- Add ignore in emis_merge.
 
 
 ## vein 0.5.3 (Release date: 2018-10-02)

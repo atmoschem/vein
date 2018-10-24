@@ -19,6 +19,7 @@
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform
 #' @param under "Character"; "after" when you stored your pollutant x as 'X_'
 #' "before" when '_X' and "none" for merging directly the files.
+#' @param ignore "Character"; Which case would you like to exclude?
 #' @param as_list "Logical"; for returning the results as list or not.
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
@@ -35,12 +36,27 @@ emis_merge <- function (pol = "CO",
                         path = "emi",
                         crs,
                         under = "after",
+                        ignore,
                         as_list = FALSE){
+  outersect <- function(x, y) {
+    sort(c(setdiff(x, y),
+           setdiff(y, x)))
+  }
+
   x <- list.files(path = path,
                   pattern = what,
                   all.files = T,
                   full.names = T,
                   recursive = T)
+  if(!missing(ignore)){
+    y <- list.files(path = path,
+                    pattern = ignore,
+                    all.files = T,
+                    full.names = T,
+                    recursive = T)
+    x <- outersect(x,y)
+  }
+
   if(under == "after"){
     x <- x[grep(pattern = paste0(pol, "_"), x = x)]
   } else if (under == "before"){
@@ -48,6 +64,8 @@ emis_merge <- function (pol = "CO",
   } else {
     x <-  x[grep(pattern = pol, x = x)]
   }
+
+
 
 nx <- gsub(pattern = paste0(getwd(), '/', path),
            replacement = "", x = x)
@@ -58,6 +76,11 @@ nx <- kk
 
   cat("\nReading emissions from:\n")
   print(x)
+  if(!missing(ignore)) {
+    choice <- utils::menu(c("Yes", "No"), title="Are you satisfied?")
+    if(choise == "No") stop("Change your inputs")
+
+  }
   x_rds <- lapply(x, readRDS)
   names(x_rds) <- nx
   if(as_list) return(x_rds)
