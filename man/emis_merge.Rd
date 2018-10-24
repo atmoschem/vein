@@ -5,7 +5,8 @@
 \title{Merge several emissions files returning data-frames or 'sf' of lines}
 \usage{
 emis_merge(pol = "CO", what = "STREETS.rds", streets = T, net,
-  path = "emi", crs, under = "after", ignore, as_list = FALSE)
+  path = "emi", crs, under = "after", ignore = FALSE,
+  as_list = FALSE)
 }
 \arguments{
 \item{pol}{Character. Pollutant.}
@@ -31,7 +32,7 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
 \item{under}{"Character"; "after" when you stored your pollutant x as 'X_'
 "before" when '_X' and "none" for merging directly the files.}
 
-\item{ignore}{"Character"; Which case would you like to exclude?}
+\item{ignore}{"Logical"; Would you liek your selection?}
 
 \item{as_list}{"Logical"; for returning the results as list or not.}
 }
