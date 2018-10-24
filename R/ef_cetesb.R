@@ -2,7 +2,7 @@
 #'
 #' \code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
 #' @param p Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
-#' "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd", "SO2"
+#' "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd",
 #' "CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO" (g/km). The letter 'd' means deteriorated
 #' factor. Also, evaporative emissions at average temperature ranges:
 #' "D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15"

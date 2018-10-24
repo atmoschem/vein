@@ -1,11 +1,18 @@
 NEWS
 ===========
 
-# vein 0.5.3 (Release date: 2018-10-02)
+# vein 0.5.4 (Release date: 2018-10-02)
+
+- Fix evaporative emission factors on CETESB.
+- Remove SO2 from cetesb. It must be calculated based on FC and content
+of S. The same applies for Pb.
+
+
+## vein 0.5.3 (Release date: 2018-10-02)
 
 - Adds evaporative emission factors on CETESB.
 
-# vein 0.5.2 (Release date: 2018-10-02)
+## vein 0.5.2 (Release date: 2018-10-02)
 
 - Adds grid_emis. This function allocates a grid of emissions into streets by
 each grid cell.
