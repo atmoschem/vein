@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.4</span>
       </span>
     </div>
 
@@ -75,6 +75,9 @@
 <h2 class="hasAnchor">
 <a href="#what-is-vein" class="anchor"></a>What is VEIN?</h2>
 <p>Vehicular Emissions Inventories. An R package to estimate vehicular emissions. It currently covers the following pollutants in speed functions:</p>
+<div id="european-emission-factors-for-all-available-vehicle-categories" class="section level3">
+<h3 class="hasAnchor">
+<a href="#european-emission-factors-for-all-available-vehicle-categories" class="anchor"></a>European emission factors for all available vehicle categories:</h3>
 <ul>
 <li>
 <strong>Criteria</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”, “FC” (Fuel Consumption).</li>
@@ -100,9 +103,22 @@
 <li>
 <em>AROMATICS</em>: “toluene”, “ethylbenzene”, “m_p_xylene”, “o_xylene”, “ONE_2_3_trimethylbenzene”, “ONE_2_4_trimethylbenzene”, “ONE_3_5_trimethylbenzene”, “styrene”, “benzene”, “C9”, “C10”, “C13”.</li>
 </ul>
-<p>Also, Brazilian emission factors and speciations for WRF-Chem runs:</p>
-<p>e_eth e_hc3 e_hc5 e_hc8 e_ol2 e_olt e_oli e_iso e_tol e_xyl e_c2h5oh e_ald e_hcho e_ch3oh e_ket E_SO4i E_SO4j E_NO3i E_NO3j E_MP2.5i E_MP2.5j E_ORGi E_ORGj E_ECi E_ECj</p>
-<p><strong>BONUS</strong>: I’ve added the CETESB Emissio Factors 2016!</p>
+</div>
+<div id="brazilian-emission-factors-for-all-available-vehicle-categories" class="section level3">
+<h3 class="hasAnchor">
+<a href="#brazilian-emission-factors-for-all-available-vehicle-categories" class="anchor"></a>Brazilian emission factors for all available vehicle categories:</h3>
+<p>“COd”, “HCd”, “NMHCd”, “CH4”, “NOxd”, “CO2” “PM”, “N2O”, “KML”, “FC”, “NO2d”, “NOd”, “gCO2/KWH”, “RCHOd”, “CO”, “HC”, “NMHC”, “NOx”, “NO2” ,“NO”, “RCHO”</p>
+</div>
+<div id="brazilian-speciation-based-on-iagusp-fatimas-group-studies" class="section level3">
+<h3 class="hasAnchor">
+<a href="#brazilian-speciation-based-on-iagusp-fatimas-group-studies" class="anchor"></a>Brazilian speciation based on IAG/USP (Fátima’s group) studies:</h3>
+<p>“e_eth”, “e_hc3”, “e_hc5”, “e_hc8”, “e_ol2”, “e_olt”, “e_oli”, “e_iso”, “e_tol”, “e_xyl”, “e_c2h5oh”, “e_ald”, “e_hcho”, “e_ch3oh”, “e_ket”, “E_SO4i”, “E_SO4j”, “E_NO3i”, “E_NO3j”, “E_MP2.5i”, “E_MP2.5j”, “E_ORGi”, “E_ORGj”, “E_ECi”, “E_ECj”</p>
+</div>
+<div id="base-emission-factors-from-international-emission-model-ive-for-all-available-vehicle-categories" class="section level3">
+<h3 class="hasAnchor">
+<a href="#base-emission-factors-from-international-emission-model-ive-for-all-available-vehicle-categories" class="anchor"></a>Base emission factors from International Emission Model (IVE) for all available vehicle categories:</h3>
+<p>“VOC_gkm”, “CO_gkm”, “NOx_gkm”, “PM_gkm”, “Pb_gkm”, “SO2_gkm”, “NH3_gkm”, “ONE_3_butadiene_gkm”, “formaldehyde_gkm”, “acetaldehyde_gkm”, “benzene_gkm”, “EVAP_gkm”, “CO2_gkm”, “N20_gkm”, “CH4_gkm”, “VOC_gstart”, “CO_gstart”, “NOx_gstart”, “PM_gstart”, “Pb_gstart”, “SO2_gstart”, “NH3_gstart”, “ONE_3butadiene_gstart”, “formaldehyde_gstart”,“acetaldehyde_gstart”, “benzene_gstart”, “EVAP_gstart”, “CO2_gstart”, “N20_gstart”, “CH4_gstart”</p>
+</div>
 <div id="system-requirements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#system-requirements" class="anchor"></a>System requirements</h3>
@@ -128,8 +144,8 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools) 
-<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(remotes) 
+<span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw">library</span>(vein)
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 <p>or</p>
@@ -138,9 +154,9 @@
 <span class="kw">demo</span>(VEIN)</code></pre></div>
 </div>
 </div>
-<div id="what-is-new-0-5-3" class="section level2">
+<div id="what-is-new-0-5-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new-0-5-3" class="anchor"></a>What is new? 0.5.3</h2>
+<a href="#what-is-new-0-5-4" class="anchor"></a>What is new? 0.5.4</h2>
 <ul>
 <li>
 <a href="https://atmoschem.github.io/vein/reference/grid_emis.html">grid_emis</a> To allocate gridded emissions to streets by grid cell.</li>
@@ -165,7 +181,7 @@
 <ul>
 <li>More tests!</li>
 <li>Parallelism. I’ve done some tests already with good results.</li>
-<li>RCPP integration. I would like to do it, specifically in <code>emis</code>.</li>
+<li>Fortran.</li>
 <li>Estimation of evaporative emissions with Copert Tier 3.</li>
 <li>More speciations.</li>
 <li>A draft book already published <a href="https://bookdown.org/zergioibarra/veinbook/" class="uri">https://bookdown.org/zergioibarra/veinbook/</a> and source here: <a href="https://github.com/ibarraespinosa/VEINBOOK" class="uri">https://github.com/ibarraespinosa/VEINBOOK</a>.</li>
@@ -186,25 +202,25 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(vein)
 <span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
           <span class="dt">show.scripts =</span> T)</code></pre></div>
-<pre><code>## files at /tmp/Rtmpjw27iu/YourCity</code></pre>
+<pre><code>## files at /tmp/Rtmp33lkvV/YourCity</code></pre>
 <pre><code>## Directories:
-##  [1] "/tmp/Rtmpjw27iu/YourCity"             
-##  [2] "/tmp/Rtmpjw27iu/YourCity/ef"          
-##  [3] "/tmp/Rtmpjw27iu/YourCity/emi"         
-##  [4] "/tmp/Rtmpjw27iu/YourCity/emi/BUS_01"  
-##  [5] "/tmp/Rtmpjw27iu/YourCity/emi/HGV_01"  
-##  [6] "/tmp/Rtmpjw27iu/YourCity/emi/LCV_01"  
-##  [7] "/tmp/Rtmpjw27iu/YourCity/emi/MC_01"   
-##  [8] "/tmp/Rtmpjw27iu/YourCity/emi/PC_01"   
-##  [9] "/tmp/Rtmpjw27iu/YourCity/est"         
-## [10] "/tmp/Rtmpjw27iu/YourCity/images"      
-## [11] "/tmp/Rtmpjw27iu/YourCity/network"     
-## [12] "/tmp/Rtmpjw27iu/YourCity/post"        
-## [13] "/tmp/Rtmpjw27iu/YourCity/post/df"     
-## [14] "/tmp/Rtmpjw27iu/YourCity/post/grids"  
-## [15] "/tmp/Rtmpjw27iu/YourCity/post/streets"
-## [16] "/tmp/Rtmpjw27iu/YourCity/profiles"    
-## [17] "/tmp/Rtmpjw27iu/YourCity/veh"         
+##  [1] "/tmp/Rtmp33lkvV/YourCity"             
+##  [2] "/tmp/Rtmp33lkvV/YourCity/ef"          
+##  [3] "/tmp/Rtmp33lkvV/YourCity/emi"         
+##  [4] "/tmp/Rtmp33lkvV/YourCity/emi/BUS_01"  
+##  [5] "/tmp/Rtmp33lkvV/YourCity/emi/HGV_01"  
+##  [6] "/tmp/Rtmp33lkvV/YourCity/emi/LCV_01"  
+##  [7] "/tmp/Rtmp33lkvV/YourCity/emi/MC_01"   
+##  [8] "/tmp/Rtmp33lkvV/YourCity/emi/PC_01"   
+##  [9] "/tmp/Rtmp33lkvV/YourCity/est"         
+## [10] "/tmp/Rtmp33lkvV/YourCity/images"      
+## [11] "/tmp/Rtmp33lkvV/YourCity/network"     
+## [12] "/tmp/Rtmp33lkvV/YourCity/post"        
+## [13] "/tmp/Rtmp33lkvV/YourCity/post/df"     
+## [14] "/tmp/Rtmp33lkvV/YourCity/post/grids"  
+## [15] "/tmp/Rtmp33lkvV/YourCity/post/streets"
+## [16] "/tmp/Rtmp33lkvV/YourCity/profiles"    
+## [17] "/tmp/Rtmp33lkvV/YourCity/veh"         
 ## Scripts:
 ## [1] "est/BUS_01_input.R" "est/HGV_01_input.R" "est/LCV_01_input.R"
 ## [4] "est/MC_01_input.R"  "est/PC_01_input.R"  "main.R"            
@@ -386,6 +402,7 @@ doi = {10.5194/gmd-11-2209-2018}
 </li>
 <li>You can ask on <a href="https://earthscience.stackexchange.com/">Eart Science Stackoverflow</a>,.</li>
 <li>Check the project on <a href="https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories">ResearchGate</a>.</li>
+<li>Check the group on GoogleGroups <a href="https://groups.google.com/d/forum/veinmodel">Group</a>.</li>
 </ul>
 </div>
 <div id="issues" class="section level2">
