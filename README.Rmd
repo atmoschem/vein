@@ -27,6 +27,8 @@ knitr::opts_chunk$set(echo = TRUE)
 Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
 It currently covers the following pollutants in speed functions:
 
+### European emission factors for all available vehicle categories:
+
 - **Criteria**: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb", "FC" (Fuel Consumption).
 - **PAH and POP**: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
@@ -58,12 +60,29 @@ It currently covers the following pollutants in speed functions:
 "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
 "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 
-Also, Brazilian emission factors and speciations for WRF-Chem runs:
+### Brazilian emission factors for all available vehicle categories:
 
-e_eth	e_hc3	e_hc5	e_hc8	e_ol2	e_olt	e_oli	e_iso	e_tol	e_xyl	e_c2h5oh	e_ald	e_hcho	e_ch3oh	e_ket
-E_SO4i	E_SO4j	E_NO3i	E_NO3j	E_MP2.5i	E_MP2.5j	E_ORGi	E_ORGj	E_ECi	E_ECj
+"COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
+"PM", "N2O", "KML", "FC", "NO2d", "NOd", "gCO2/KWH", "RCHOd",
+"CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO"
 
-**BONUS**: I've added the CETESB Emissio Factors 2016!
+### Brazilian speciation based on IAG/USP (Fátima's group) studies:
+
+"e_eth", "e_hc3", "e_hc5", "e_hc8", "e_ol2", "e_olt", "e_oli", "e_iso",
+"e_tol", "e_xyl", "e_c2h5oh", "e_ald", "e_hcho", "e_ch3oh", "e_ket",
+"E_SO4i", "E_SO4j", "E_NO3i", "E_NO3j", "E_MP2.5i", "E_MP2.5j", "E_ORGi",
+"E_ORGj", "E_ECi", "E_ECj"
+
+### Base emission factors from International Emission Model (IVE)  for all available vehicle categories:
+
+"VOC_gkm", "CO_gkm", "NOx_gkm", "PM_gkm", "Pb_gkm", "SO2_gkm", "NH3_gkm", 
+"ONE_3_butadiene_gkm", "formaldehyde_gkm", "acetaldehyde_gkm", "benzene_gkm",
+"EVAP_gkm", "CO2_gkm", "N20_gkm", "CH4_gkm", "VOC_gstart", "CO_gstart", 
+"NOx_gstart", "PM_gstart", "Pb_gstart", "SO2_gstart", "NH3_gstart",
+"ONE_3butadiene_gstart", "formaldehyde_gstart","acetaldehyde_gstart",
+"benzene_gstart", "EVAP_gstart", "CO2_gstart", "N20_gstart", 
+"CH4_gstart"
+
 
 ### System requirements
 
@@ -91,7 +110,7 @@ In order to run the demo, this package is also needed:
 VEIN can be installed via CRAN or github
 
 ```{r eval = F}
-library(devtools) 
+library(remotes) 
 install_github("atmoschem/vein")
 library(vein)
 demo(VEIN)
@@ -106,7 +125,7 @@ demo(VEIN)
 ```
 
 
-## What is new? `r packageVersion("vein")`
+## What is new? 0.5.4
 
 - [grid_emis](https://atmoschem.github.io/vein/reference/grid_emis.html) To allocate gridded emissions to streets by grid cell.
 - [ef_ive](https://atmoschem.github.io/vein/reference/ef_ive.html) International Vehicular Emission Model - Base Emission Factors [IVE](http://www.issrc.org/ive/). 
@@ -123,7 +142,7 @@ by feature, specifically, ir returns a vector of lines (streeets).
 
 - More tests! 
 - Parallelism. I've done some tests already with good results.
-- RCPP integration. I would like to do it, specifically in `emis`.
+- Fortran.
 - Estimation of evaporative emissions with Copert Tier 3.
 - More speciations.
 - A draft book already published https://bookdown.org/zergioibarra/veinbook/ and source here: [https://github.com/ibarraespinosa/VEINBOOK](https://github.com/ibarraespinosa/VEINBOOK).
@@ -336,6 +355,7 @@ doi = {10.5194/gmd-11-2209-2018}
 - Drop me an email sergio.ibarra@usp.br
 - You can ask on [Eart Science Stackoverflow](https://earthscience.stackexchange.com/),.
 - Check the project on [ResearchGate](https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories).
+- Check the group on GoogleGroups [Group](https://groups.google.com/d/forum/veinmodel).
 
 ##  Issues
 

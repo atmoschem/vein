@@ -1,7 +1,7 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 0.5.3
+Version: 0.5.4
 Date: 2018-10-05
 Authors@R: c(
   person(given = "Sergio", family = "Ibarra-Espinosa",
