@@ -109,7 +109,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>emis_merge</span>(<span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"STREETS.rds"</span>, <span class='kw'>streets</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='no'>net</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"emi"</span>, <span class='no'>crs</span>, <span class='kw'>under</span> <span class='kw'>=</span> <span class='st'>"after"</span>, <span class='kw'>as_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"emi"</span>, <span class='no'>crs</span>, <span class='kw'>under</span> <span class='kw'>=</span> <span class='st'>"after"</span>, <span class='kw'>ignore</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>as_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,6 +151,10 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
       <th>under</th>
       <td><p>"Character"; "after" when you stored your pollutant x as 'X_'
 "before" when '_X' and "none" for merging directly the files.</p></td>
+    </tr>
+    <tr>
+      <th>ignore</th>
+      <td><p>"Logical"; Would you liek your selection?</p></td>
     </tr>
     <tr>
       <th>as_list</th>
