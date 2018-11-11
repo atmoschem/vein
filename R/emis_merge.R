@@ -65,7 +65,7 @@ nx <- kk
   cat("\nReading emissions from:\n")
   print(x)
   if(ignore) {
-    ignore_this <- readline("Which numbers would you to exclude?")
+    ignore_this <- readline("Which ones would you to exclude?\n")
     x <- x[!x %in% ignore_this]
   }
   x_rds <- lapply(x, readRDS)

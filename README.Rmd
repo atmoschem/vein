@@ -5,9 +5,6 @@ date: "19 de Octubre de 2016"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 [![Travis-CI Build Status](https://travis-ci.org/atmoschem/vein.svg?branch=master)](https://travis-ci.org/atmoschem/vein)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
@@ -110,7 +107,7 @@ In order to run the demo, this package is also needed:
 
 VEIN can be installed via CRAN or github
 
-```{r eval = F}
+```r
 library(remotes) 
 install_github("atmoschem/vein")
 library(vein)
@@ -119,7 +116,7 @@ demo(VEIN)
 
 or
 
-```{r eval=F}
+```r
 install.packages("vein")
 library(vein)
 demo(VEIN)
@@ -168,7 +165,7 @@ just type '?' with the name of the function. For intance: `?inventory`.**
 
 Using [inventory](https://atmoschem.github.io/vein/reference/inventory.html)
 
-```{r eval = T, include = T, echo = T}
+```r
 library(vein)
 inventory(name = file.path(tempdir(), "YourCity"), show.dir = T,
           show.scripts = T)
@@ -185,7 +182,7 @@ age functions:
 - [age_moto](https://atmoschem.github.io/vein/reference/age_moto.html)
 - [my_age](https://atmoschem.github.io/vein/reference/my_age.html)
 
-```{r eval = T, include = T, echo = T}
+```r
 data("net")
 PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
@@ -194,7 +191,7 @@ plot(PC_E25_1400, xlab = "age of use")
 If you want to know the vehicles per street and by age of use, just
 add the net. Age functions now returns 'sf' objects if the net argument is present.
 
-```{r eval = T, include = T, echo = T}
+```r
 PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
 sp::spplot(as(PC_E25_1400net, "Spatial"),
        c("PC_E25_1400_1", "PC_E25_1400_9"),
@@ -205,7 +202,8 @@ sp::spplot(as(PC_E25_1400net, "Spatial"),
 - [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
 
 temporal factors and netspeed
-```{r eval = T, include = T, echo = T}
+
+```r
 data("net")
 data("pc_profile")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -216,7 +214,7 @@ plot(dfspeed, xlab = "Hours", ylab = "Speed [km/h]")
 
 If you want ot check the speed at different hours by street, just add net:
 
-```{r eval = T, include = T, echo = T}
+```r
 dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
                        alpha = 1.5, net = net)
 sp::spplot(as(dfspeednet, "Spatial"),
@@ -233,7 +231,7 @@ sp::spplot(as(dfspeednet, "Spatial"),
 - [EmissionFactors](https://atmoschem.github.io/vein/reference/EmissionFactors.html)
 - [EmissionFactorsList](https://atmoschem.github.io/vein/reference/EmissionFactorsList.html)
 
-```{r eval = T, include = T, echo = T}
+```r
 V <- 0:150
 ef1 <- ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 p = "CO")
@@ -245,7 +243,7 @@ plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 
 - [emis](https://atmoschem.github.io/vein/reference/emis.html)
 
-```{r eval = T, include = T, echo = T}
+```r
 euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
           rep("I", 5), rep("PRE", 15))
 lef <- lapply(1:40, function(i) {
@@ -265,7 +263,7 @@ hour.
 by street. In this cae, if you add the argument net with the respective streets,
 it returns an spatial net with the hourly emissions.
 
-```{r eval = T, include = T, echo = T}
+```r
 E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
 pollutant = "CO", by = "veh")
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
@@ -286,7 +284,7 @@ the grid has the size of the net. You have to specify the grid spacing.
 2) Create a grid using a path to wrfinput file instead a net. The grid will have
 the size of the wrf_input. You don't have to specify the grid spacing.
 
-```{r eval = T, include = T, echo = T}
+```r
 data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
@@ -308,7 +306,7 @@ sp::spplot(as(E_CO_g, "Spatial"),
 5. Put the [GriddedEmissionsArray](https://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html)
 into the wrf chem input file using [eixport::wrf_put](https://atmoschem.github.io/eixport/reference/wrf_put.html).
 
-```{r eval = FALSE}
+```r
 eixport::wrf_create(wrfinput_dir = "PathToWrfInput", wrfchemi_dir = "OutputPathWrfChemInput")
 gwrf <- eixport::wrf_grd("PathToWrfInput")
 E_CO_gwrf <- emis_grid(spobj = E_CO_STREETSnet, g = gwrf)
