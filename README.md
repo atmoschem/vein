@@ -16,9 +16,12 @@ output: html_document
 [![Package Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Github Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
 
-# **V**ehicular **E**missions **IN**ventory **(VEIN)** model.
+# **V**ehicular **E**missions **IN**ventory **(VEIN)** model. ![](https://i.imgur.com/dp8spyp.png)
 
 [_Please read the documentation_.](https://atmoschem.github.io/vein/)
+
+
+
 
 ## What is VEIN?
 
