@@ -63,7 +63,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.5</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
 
     <pre class="usage"><span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fl'>34</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(<span class='fu'>is.data.frame</span>(<span class='no'>veh</span>),
   <span class='fu'>ncol</span>(<span class='no'>veh</span>), <span class='fu'>ncol</span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]])), <span class='no'>profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>profile</span>),
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'>ncol</span>(<span class='no'>profile</span>), <span class='kw'>array</span> <span class='kw'>=</span> <span class='no'>T</span>)</pre>
+  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'>ncol</span>(<span class='no'>profile</span>), <span class='kw'>array</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +157,10 @@ of rows of profile</p></td>
       <th>array</th>
       <td><p>When FALSE produces a dataframe of the estimation. When TRUE expects a
 profile as a dataframe producing an array with dimensions (streets x columns x hours x days)</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; To show more information</p></td>
     </tr>
     </table>
     
@@ -236,6 +240,11 @@ matrix.</p>
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>)
 <span class='no'>E_COv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>lpc</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
                <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='co'># top down</span>
+<span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>[<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+<span class='no'>mil</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span>$<span class='fu'>KM_PC_E25</span>(<span class='fl'>1</span>:<span class='fl'>4</span>)
+<span class='no'>ef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span>(<span class='st'>"COd"</span>, <span class='st'>"PC_G"</span>)[<span class='fl'>1</span>:<span class='fl'>4</span>]
+<span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

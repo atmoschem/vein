@@ -6,7 +6,7 @@
 \usage{
 emis(veh, lkm, ef, speed = 34, agemax = ifelse(is.data.frame(veh),
   ncol(veh), ncol(veh[[1]])), profile, hour = nrow(profile),
-  day = ncol(profile), array = T)
+  day = ncol(profile), array = T, verbose = FALSE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
@@ -31,6 +31,8 @@ of rows of profile}
 
 \item{array}{When FALSE produces a dataframe of the estimation. When TRUE expects a
 profile as a dataframe producing an array with dimensions (streets x columns x hours x days)}
+
+\item{verbose}{Logical; To show more information}
 }
 \value{
 emission estimation  g/h
@@ -110,5 +112,10 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
              profile = profiles$PC_JUNE_2014)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
                hour = 2, day = 1)
+# top down
+veh <- age_ldv(x = net$ldv[1:2], name = "PC_E25_1400", agemax = 4)
+mil <- fkm$KM_PC_E25(1:4)
+ef <- ef_cetesb("COd", "PC_G")[1:4]
+emis(veh, lkm, ef)
 }
 }
