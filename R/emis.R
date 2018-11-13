@@ -18,6 +18,7 @@
 #' @param day Number of considered days in estimation
 #' @param array When FALSE produces a dataframe of the estimation. When TRUE expects a
 #' profile as a dataframe producing an array with dimensions (streets x columns x hours x days)
+#' @param verbose Logical; To show more information
 #' @return emission estimation  g/h
 #' @note If the user apply a top-down approach, the resulting units will be
 #' according its own data. For instance, if the vehicles are veh/day, the units
@@ -87,6 +88,11 @@
 #'              profile = profiles$PC_JUNE_2014)
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed,
 #'                hour = 2, day = 1)
+#' # top down
+#' veh <- age_ldv(x = net$ldv[1:2], name = "PC_E25_1400", agemax = 4)
+#' mil <- fkm$KM_PC_E25(1:4)
+#' ef <- ef_cetesb("COd", "PC_G")[1:4]
+#' emis(veh, lkm, ef)
 #' }
 emis <- function (veh,
                   lkm,
@@ -97,7 +103,8 @@ emis <- function (veh,
                   profile,
                   hour = nrow(profile),
                   day = ncol(profile),
-                  array = T) {
+                  array = T,
+                  verbose = FALSE) {
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
@@ -120,8 +127,14 @@ emis <- function (veh,
     }
     # top down
     if(missing(profile)){
-      message("top down approach")
-      a <- veh * as.numeric(lkm) * as.numeric(ef)
+   if(verbose)  message("top down approach")
+      a <- lapply(1:ncol(veh), function(i){
+        veh[, i] * as.numeric(lkm)[i] * as.numeric(ef)[i]
+      })
+      a <- as.data.frame(matrix(unlist(a),
+                                ncol = ncol(veh),
+                                nrow = nrow(veh)))
+
       for (i  in 1:ncol(a) ) {
         a[, i] <- as.numeric(a[, i]) * units::as_units("g")
       }
@@ -137,8 +150,8 @@ emis <- function (veh,
     }
 
     if(ncol(veh) != length(ef)){
-      message("Number of columns of 'veh' is different than length of 'ef'")
-      message("adjusting length of ef to the number of colums of 'veh'\n")
+      if(verbose) message("Number of columns of 'veh' is different than length of 'ef'")
+      if(verbose) message("adjusting length of ef to the number of colums of 'veh'\n")
       if(ncol(veh) > length(ef)){
         for(i in (length(ef) + 1):ncol(veh) ){
           ef[[i]] <- ef[[length(ef)]]
@@ -177,8 +190,8 @@ emis <- function (veh,
     # veh is a list of "Vehicles" data-frames
   } else {
     if(ncol(veh[[1]]) != length(ef)){
-      message("Number of columns of 'veh' is different than length of 'ef'")
-      message("adjusting length of ef to the number of colums of 'veh'\n")
+      if(verbose) message("Number of columns of 'veh' is different than length of 'ef'")
+      if(verbose) message("adjusting length of ef to the number of colums of 'veh'\n")
       if(ncol(veh[[1]]) > length(ef)){
         for(i in (length(ef) + 1):ncol(veh[[1]]) ){
           ef[[i]] <- ef[[length(ef)]]
@@ -209,8 +222,7 @@ emis <- function (veh,
             lapply(1:agemax, function(k){
               veh[[i]][, k]*lkm*ef[[k]](speed[, i])
             }) ) }) )
-      message(round(sum(d, na.rm = T)/1000,2),
-              " kg emissions in ", hour, " hours")
+      if(verbose) message(round(sum(d, na.rm = T)/1000,2), " kg emissions in ", hour, " hours")
       return(EmissionsArray(d))
     }
   }

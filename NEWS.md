@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.5.4 (Release date: 2018-10-02)
+# vein 0.5.5 (Release date: 2018-11-13)
+
+- Fix top-down estimation
+
+## vein 0.5.4 (Release date: 2018-10-02)
 
 - Fix evaporative emission factors on CETESB.
 - Remove SO2 from cetesb. It must be calculated based on FC and content
