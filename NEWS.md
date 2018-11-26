@@ -1,7 +1,13 @@
 NEWS
 ===========
 
-# vein 0.5.5 (Release date: 2018-11-13)
+
+# vein 0.5.6 (Release date: 2018-11-26)
+
+- Add matvect, just a helper function to multiply matrices by row or 
+column with vectors.
+
+## vein 0.5.5 (Release date: 2018-11-13)
 
 - Fix top-down estimation
 
