@@ -18,7 +18,7 @@
 #' # Do not run
 #' }
 emis_source <- function(path = "est", pattern = ".R",
-                        ignore = "~", first, ask = FALSE,
+                        ignore = "~", first, ask = TRUE,
                         recursive = TRUE, full.names = TRUE){
   inputs <- list.files(path = path, pattern = pattern,
                        recursive = recursive, full.names =  full.names)
