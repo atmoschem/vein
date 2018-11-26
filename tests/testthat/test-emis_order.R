@@ -17,9 +17,11 @@ lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
              profile = 1)
 
-
+df <- Emissions(E_CO[,,1,1])
+dim(df)
+df$id <- 1:nrow(df)
 test_that("emis_order works", {
-  expect_equal(emis_order(E_CO[,,1,1],
+  expect_equal(emis_order(df,
                           start = "sat",
                           hours = 41,
                           verbose = FALSE)[1,1],
