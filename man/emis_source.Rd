@@ -5,7 +5,7 @@
 \title{A function to source vein scripts}
 \usage{
 emis_source(path = "est", pattern = ".R", ignore = "~", first,
-  ask = FALSE, recursive = TRUE, full.names = TRUE)
+  ask = TRUE, recursive = TRUE, full.names = TRUE)
 }
 \arguments{
 \item{path}{Character; path to source scripts. Default is "est".}
