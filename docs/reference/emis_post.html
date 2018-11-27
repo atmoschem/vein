@@ -36,6 +36,8 @@
 vehicle or by street. It reads EmissionsArray. It can return an dataframe
 with hourly emissions at each street, or a data base with emissions by vehicular
 category, hour, including size, fuel and other characteristics." />
+
+<meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +66,7 @@ category, hour, including size, fuel and other characteristics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.6</span>
       </span>
     </div>
 
@@ -141,9 +143,9 @@ category, hour, including size, fuel and other characteristics.</p>
     <tr>
       <th>by</th>
       <td><p>Type of output, "veh" for total vehicular category ,
-"streets_narrow" or "streets_wide". "streets_wide" returns  a dataframe with
+"streets_narrow" or "streets". "streets" returns  a dataframe with
  rows as number of streets and columns the hours as days*hours considered, e.g.
-168 columns as the hours of a whole week and "streets_wide repeats the
+168 columns as the hours of a whole week and "streets repeats the
 row number of streets by hour and day of the week</p></td>
     </tr>
     <tr>
@@ -205,7 +207,7 @@ to use this function.</p>
 <span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis.html'>emis</a></span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>41</span>,
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)
 <span class='co'># arguments required: arra, pollutant ad by</span>
-<span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets_wide"</span>)
+<span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets"</span>)
 <span class='fu'>summary</span>(<span class='no'>E_CO_STREETS</span>)
 <span class='co'># arguments required: arra, veh, size, fuel, pollutant ad by</span>
 <span class='no'>E_CO_DF</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>,  <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='st'>"&lt;1400"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>,

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Construction function for class "Speed" — Speed • vein</title>
+<title>Matrix and vector multiplication — matvect • vein</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,13 +30,10 @@
 
 
 
-<meta property="og:title" content="Construction function for class "Speed" — Speed" />
+<meta property="og:title" content="Matrix and vector multiplication — matvect" />
 
-<meta property="og:description" content="Speed returns a tranformed object with class &quot;Speed&quot; and units
- km/h. This functions includes two arguments, distance and time. Therefore,
- it is posibel to change the units of the speed to &quot;m&quot; to &quot;s&quot; for example.
- This function returns a dataframe with units for speed. When this function
- is applied to numeric vectors it add class &quot;units&quot;." />
+<meta property="og:description" content="matvect it is a helper function to multiply matrices
+with vector by rows or columns" />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -101,71 +98,57 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Construction function for class "Speed"</h1>
+    <h1>Matrix and vector multiplication</h1>
     
-    <div class="hidden name"><code>Speed.Rd</code></div>
+    <div class="hidden name"><code>matvect.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>Speed</code> returns a tranformed object with class "Speed" and units
- km/h. This functions includes two arguments, distance and time. Therefore,
- it is posibel to change the units of the speed to "m" to "s" for example.
- This function returns a dataframe with units for speed. When this function
- is applied to numeric vectors it add class "units".</p>
+    <p><code>matvect</code> it is a helper function to multiply matrices
+with vector by rows or columns</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>Speed</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Speed</span>
-<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Speed</span>
-<span class='fu'>summary</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Speed</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>matvect</span>(<span class='no'>df</span>, <span class='no'>x</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"row"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>df</th>
+      <td><p>Numeric Data-frame or matrix.</p></td>
+    </tr>
+    <tr>
       <th>x</th>
-      <td><p>Object with class "data.frame", "matrix" or "numeric"</p></td>
+      <td><p>Numeric vector.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>ignored</p></td>
-    </tr>
-    <tr>
-      <th>object</th>
-      <td><p>Object with class "Speed"</p></td>
+      <th>by</th>
+      <td><p>Character, with two value "row" or "col"</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Constructor for class "Speed" or "units"</p>
+    <p>data-frame</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <div class='dont-index'><p><code>units</code></p></div>
+    <p>This function multiplies matrices with vectors by rows or colums.
+If by = "row" all values of each row will be multiplied with each value
+of the vector x.
+If by = "col" all values of each column will be multiplied with each value
+of the vector x.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Do not run</span>
 <span class='fu'>data</span>(<span class='no'>net</span>)
-<span class='fu'>data</span>(<span class='no'>pc_profile</span>)
-<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'>Speed</span>(<span class='no'>net</span>$<span class='no'>ps</span>)
-<span class='fu'>class</span>(<span class='no'>speed</span>)
-<span class='fu'>plot</span>(<span class='no'>speed</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)
-<span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>)
-<span class='fu'>summary</span>(<span class='no'>df</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Check units are km/h</span></div><div class='img'><img src='Speed-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Speeds by columns and street in study area = 
-#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;   3.929  39.667  40.000  49.142  59.985 100.000 </div></pre>
+<span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+<span class='fu'>matvect</span>(<span class='no'>veh</span>, <span class='fl'>1</span>:<span class='fl'>4</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -174,7 +157,7 @@
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
