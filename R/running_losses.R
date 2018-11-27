@@ -13,6 +13,7 @@
 #' @param erhotfi average daily hot running losses evaporative factor
 #' for vehicles with fuel injection and returnless fuel systems
 #' @return numeric vector of emission estimation in grams
+#' @importFrom units as_units
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
@@ -24,7 +25,6 @@
 #' summary(ev)
 #' }
 running_losses <- function(x,carb,p,erhotc,erwarmc,erhotfi) {
-  evap <- x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi)
-  Evaporative(evap)
+x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi)*units::as_units("g d-1")
 }
 
