@@ -33,7 +33,12 @@
 <meta property="og:title" content="Re-order the emission to match specific hours and days — emis_order" />
 
 <meta property="og:description" content="returns the emission array matching with corresponding weekdays and with
-the desired number of hours, recycling or droping hours from the emission array." />
+the desired number of hours, recycling or droping hours from the emission array. For
+instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
+want to reorder them to start saturday you with a total a new length of hours
+of 241, you must :emis_order(EMISSION, as.Date(&quot;2016-04-06&quot;), 241)" />
+
+<meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +67,7 @@ the desired number of hours, recycling or droping hours from the emission array.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.6</span>
       </span>
     </div>
 
@@ -104,12 +109,14 @@ the desired number of hours, recycling or droping hours from the emission array.
     <div class="ref-description">
     
     <p>returns the emission array matching with corresponding weekdays and with
-the desired number of hours, recycling or droping hours from the emission array.</p>
+the desired number of hours, recycling or droping hours from the emission array. For
+instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
+want to reorder them to start saturday you with a total a new length of hours
+of 241, you must :emis_order(EMISSION, as.Date("2016-04-06"), 241)</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_order</span>(<span class='no'>EMISSION</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"mon"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>utc</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_order</span>(<span class='no'>EMISSION</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"mon"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>utc</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
