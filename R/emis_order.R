@@ -1,7 +1,10 @@
 #' Re-order the emission to match specific hours and days
 #'
 #' @description returns the emission array matching with corresponding weekdays and with
-#' the desired number of hours, recycling or droping hours from the emission array.
+#' the desired number of hours, recycling or droping hours from the emission array. For
+#' instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
+#' want to reorder them to start saturday you with a total a new length of hours
+#' of 241, you must :emis_order(EMISSION, as.Date("2016-04-06"), 241)
 #'
 #' @param EMISSION one of the following:
 #'
@@ -38,11 +41,15 @@
 #' }
 #'
 emis_order <- function(EMISSION, start = "mon", hours = 168,
-                       utc, verbose = FALSE){
+                        utc, verbose = TRUE){
   if(verbose){
-    cat(paste0("Dimensions of emissions :\n"))
+    cat("Class :", class(EMISSION), '\n')
+    cat(paste0("Dimensions :\n"))
     cat(dim(EMISSION))
+    cat("\n\n")
+
   }
+
   seg <- 1:24
   ter <- 25:48
   qua <- 49:72
@@ -103,7 +110,10 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
   else{
     stop("invalid start argument!\n") # nocov
   }
-  if(class(EMISSION)[1] %in% c("GriddedEmissionsArray", "array")){
+  if(class(EMISSION)[1] %in% c("EmissionsArray")){
+    stop("Plese, convert to an object with length of dimensions of 2 or 3, such as 'GriddedEmissionsArray'")
+    return(NEW)
+  } else if(class(EMISSION)[1] %in% c("GriddedEmissionsArray", "array")){
     # this lines rearange the GriddedEmissionsArray output to be used in wrf_put
     NEW   <- array(NA, dim = c(dim(EMISSION)[1],dim(EMISSION)[2], hours))
     NEW   <- EMISSION[, , c(index)]
@@ -129,8 +139,13 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
     dft <- cbind(data.frame(id = id), dft)
     dft <- sf::st_sf(dft, geometry = geo, crs = sf::st_crs(EMISSION))
     return(dft)
-  }
-  if(class(EMISSION)[1] %in% c("data.frame", "matrix", "Emissions")){
+  } else if (class(EMISSION)[1] %in% c("matrix")){
+    id <- 1:nrow(EMISSION)
+    df <- as.data.frame(EMISSION)
+    dft   <- df[, index]
+    dft <- cbind(data.frame(id = id), dft)
+    return(dft)
+  } else  if(class(EMISSION)[1] %in% c("data.frame",  "Emissions")){
     id <- 1:nrow(EMISSION)
     EMISSION$id <- NULL
     df <- as.data.frame(EMISSION)

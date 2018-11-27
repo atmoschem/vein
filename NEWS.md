@@ -6,6 +6,8 @@ NEWS
 
 - Add matvect, just a helper function to multiply matrices by row or 
 column with vectors.
+- Add logo at help page.
+- Add tests.
 
 ## vein 0.5.5 (Release date: 2018-11-13)
 

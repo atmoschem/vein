@@ -6,8 +6,7 @@
 \title{Re-order the emission to match specific hours and days}
 \format{Emissions}
 \usage{
-emis_order(EMISSION, start = "mon", hours = 168, utc,
-  verbose = FALSE)
+emis_order(EMISSION, start = "mon", hours = 168, utc, verbose = TRUE)
 }
 \arguments{
 \item{EMISSION}{one of the following:
@@ -33,7 +32,10 @@ EMISSION
 }
 \description{
 returns the emission array matching with corresponding weekdays and with
-the desired number of hours, recycling or droping hours from the emission array.
+the desired number of hours, recycling or droping hours from the emission array. For
+instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
+want to reorder them to start saturday you with a total a new length of hours
+of 241, you must :emis_order(EMISSION, as.Date("2016-04-06"), 241)
 }
 \note{
 This function assumes that the emissions have hours with length of

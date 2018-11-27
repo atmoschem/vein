@@ -32,7 +32,7 @@ if ( is.numeric(ev) ) {
 #' @method print Evaporative
 #' @export
 print.Evaporative <- function(x, ...) {
-  cat("Result for Evaporative")
+  # cat("Result for Evaporative\n")
   print(x,  ...)
 }
 

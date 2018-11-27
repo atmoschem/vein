@@ -12,9 +12,9 @@
 #' @param fuel Fuel
 #' @param pollutant Pollutant
 #' @param by Type of output, "veh" for total vehicular category ,
-#' "streets_narrow" or "streets_wide". "streets_wide" returns  a dataframe with
+#' "streets_narrow" or "streets". "streets" returns  a dataframe with
 #'  rows as number of streets and columns the hours as days*hours considered, e.g.
-#' 168 columns as the hours of a whole week and "streets_wide repeats the
+#' 168 columns as the hours of a whole week and "streets repeats the
 #' row number of streets by hour and day of the week
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING". Only
 #' when by = 'streets_wide'
@@ -67,7 +67,7 @@
 #' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 #'              profile = pc_profile)
 #' # arguments required: arra, pollutant ad by
-#' E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
+#' E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets")
 #' summary(E_CO_STREETS)
 #' # arguments required: arra, veh, size, fuel, pollutant ad by
 #' E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
@@ -134,7 +134,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
       df[,1] <- seq(1,dim(arra)[1])
       df[,2] <- df[,2] * units::as_units("g h-1")
       return(df)
-    } else if (by == "streets_wide") {
+    } else if (by %in% c("streets_wide", "streets")) {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
         unlist(lapply (1:dim(arra)[3],function(i) { # hora
           rowSums(arra[,,i,j], na.rm = T)
