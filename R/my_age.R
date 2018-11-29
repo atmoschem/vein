@@ -11,7 +11,7 @@
 #' has the same age distribution to all street. When 'y' is a data.frame,
 #' the distribution by age of use varies the streets.
 #' @param name Character; of vehicle assigned to columns of dataframe.
-#' @param k Integer; multiplication factor.
+#' @param k Integer; multiplication factor. If its length is > 1, it must match the length of x
 #' @param pro_street Character; each category of profile for each street.
 #' The length of this character vector must be equal to the length of 'x'. The
 #' characters of this vector must be the same of the 'data.frame' 'y'. When
@@ -70,6 +70,13 @@ my_age <- function (x,
     }
     if(message){
       if(!missing(pro_street)){
+
+        if(length(k) > 1){
+          df <- vein::Vehicles(vein::matvect(df = df, x = k))
+        } else {
+          df <- df*k
+        }
+
         message(paste("Average age of", name, "is",
                       round(sum(seq(1,ncol(df))*base::colSums(df)/sum(df),na.rm = T), 2),
                       sep=" "))
@@ -81,19 +88,30 @@ my_age <- function (x,
         cat("\n")
 
       } else {
+        if(length(k) > 1){
+          df <- vein::Vehicles(vein::matvect(df = df, x = k))
+        } else {
+          df <- df*k
+        }
+
       message(paste("Average age of", name, "is",
                     round(sum(seq(1,length(y))*base::colSums(df)/sum(df),na.rm = T), 2),
                     sep=" "))
       message(paste("Number of",name, "is",
-                    round(sum(df*k, na.rm = T)/1000, 3),
+                    round(sum(df, na.rm = T)/1000, 3),
                     "* 10^3 veh",
                     sep=" ")
       )
       cat("\n")
       }
       }
-    }
-  df <- vein::Vehicles(df*k)
+  }
+  if(length(k) > 1){
+    df <- vein::Vehicles(vein::matvect(df = df, x = k))
+  } else {
+    df <- vein::Vehicles(df*k)
+  }
+
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)
     dfsf <- sf::st_sf(df, geometry = netsf$geometry)

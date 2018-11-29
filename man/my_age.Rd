@@ -18,7 +18,7 @@ the distribution by age of use varies the streets.}
 
 \item{name}{Character; of vehicle assigned to columns of dataframe.}
 
-\item{k}{Integer; multiplication factor.}
+\item{k}{Integer; multiplication factor. If its length is > 1, it must match the length of x}
 
 \item{pro_street}{Character; each category of profile for each street.
 The length of this character vector must be equal to the length of 'x'. The
