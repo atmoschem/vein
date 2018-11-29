@@ -8,7 +8,7 @@
 #' @param b Numeric; parameter of survival equation
 #' @param agemin Integer; age of newest vehicles for that category
 #' @param agemax Integer; age of oldest vehicles for that category
-#' @param k Integer; multiplication factor
+#' @param k Integer; multiplication factor. If its length is > 1, it must match the length of x
 #' @param bystreet Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message Logical;  message with average age and total numer of vehicles
@@ -56,12 +56,19 @@ age_hdv <- function (x,
                   df)
     } else {df <- df}
     if(message){
+
+      if(length(k) > 1){
+        df <- vein::matvect(df = df, x = k)
+      } else {
+        df <- df*k
+      }
+
     names(df) <- paste(name,seq(1,agemax),sep="_")
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
-                  round(sum(df*k, na.rm = T)/1000, 2),
+                  round(sum(df, na.rm = T)/1000, 2),
                   "* 10^3 veh",
                   sep=" ")
     )
@@ -87,12 +94,19 @@ age_hdv <- function (x,
                   df)
     } else {df <- df}
     if(message){
+
+      if(length(k) > 1){
+        df <- vein::matvect(df = df, x = k)
+      } else {
+        df <- df*k
+      }
+
     names(df) <- paste(name,seq(1,agemax),sep="_")
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
-                  round(sum(df*k, na.rm = T)/1000, 2),
+                  round(sum(df, na.rm = T)/1000, 2),
                   "* 10^3 veh",
                   sep=" ")
     )
@@ -100,10 +114,10 @@ age_hdv <- function (x,
     }
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
-      dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)
       return(dfsf)
     } else {
-      return(Vehicles(df*k))
+      return(Vehicles(df))
     }
     }
 }

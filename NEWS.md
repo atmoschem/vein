@@ -4,7 +4,8 @@ NEWS
 
 # vein 0.5.7 (Release date: 2018-11-29)
 
-- Opens main.R in inventory().
+- Opens main.R in inventory(, fix #132.
+- Adds matvect in any age* by row, fix #130.
 
 ## vein 0.5.6 (Release date: 2018-11-26)
 
