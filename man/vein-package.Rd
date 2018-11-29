@@ -24,9 +24,9 @@ Useful links:
 \author{
 \strong{Maintainer}: Sergio Ibarra-Espinosa \email{sergio.ibarra@usp.br} (0000-0002-3162-1905)
 
-Authors:
+Other contributors:
 \itemize{
-  \item Daniel Schuch \email{schuch@usp.br} (0000-0001-5977-4519)
+  \item Daniel Schuch \email{schuch@usp.br} (0000-0001-5977-4519) [contributor]
 }
 
 }

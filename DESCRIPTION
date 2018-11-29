@@ -10,7 +10,7 @@ Authors@R: c(
          comment = c(ORCID = "0000-0002-3162-1905")),
   person(given = "Daniel",
          family = "Schuch",
-         role = c("aut"),
+         role = c("ctb"),
          email = "schuch@usp.br",
          comment = c(ORCID = "0000-0001-5977-4519"))) 
 Description: Elaboration of vehicular emissions inventories,
