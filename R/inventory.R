@@ -294,4 +294,5 @@ inventory <- function(name,
     cat("Scripts:\n")
     print(sc)
   }
+  file.edit(paste0(name, "/main.R"))
 }

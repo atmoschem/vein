@@ -2,7 +2,11 @@ NEWS
 ===========
 
 
-# vein 0.5.6 (Release date: 2018-11-26)
+# vein 0.5.7 (Release date: 2018-11-29)
+
+- Opens main.R in inventory().
+
+## vein 0.5.6 (Release date: 2018-11-26)
 
 - Add matvect, just a helper function to multiply matrices by row or 
 column with vectors.
