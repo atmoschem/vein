@@ -77,9 +77,13 @@ my_age <- function (x,
           df <- df*k
         }
 
+        secu <- seq(1, ncol(df))
+        colus <- colSums(df, na.rm = T)
+        sumdf <- sum(df, na.rm = T)
         message(paste("Average age of", name, "is",
-                      round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
+                      round(sum(secu*colus/sumdf, na.rm = T), 2),
                       sep=" "))
+
         message(paste("Number of",name, "is",
                       round(sum(df, na.rm = T)/1000, 3),
                       "* 10^3 veh",
@@ -94,17 +98,21 @@ my_age <- function (x,
           df <- df*k
         }
 
-      message(paste("Average age of", name, "is",
-                    round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
-                    sep=" "))
-      message(paste("Number of",name, "is",
-                    round(sum(df, na.rm = T)/1000, 3),
-                    "* 10^3 veh",
-                    sep=" ")
-      )
-      cat("\n")
+        secu <- seq(1, ncol(df))
+        colus <- colSums(df, na.rm = T)
+        sumdf <- sum(df, na.rm = T)
+        message(paste("Average age of", name, "is",
+                      round(sum(secu*colus/sumdf, na.rm = T), 2),
+                      sep=" "))
+
+        message(paste("Number of",name, "is",
+                      round(sum(df, na.rm = T)/1000, 3),
+                      "* 10^3 veh",
+                      sep=" ")
+        )
+        cat("\n")
       }
-      }
+    }
   }
   if(length(k) > 1){
     df <- vein::Vehicles(vein::matvect(df = df, x = k))
