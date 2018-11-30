@@ -78,7 +78,7 @@ my_age <- function (x,
         }
 
         message(paste("Average age of", name, "is",
-                      round(sum(seq(1,ncol(df))*base::colSums(df)/sum(df),na.rm = T), 2),
+                      round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
                       sep=" "))
         message(paste("Number of",name, "is",
                       round(sum(df, na.rm = T)/1000, 3),
@@ -95,7 +95,7 @@ my_age <- function (x,
         }
 
       message(paste("Average age of", name, "is",
-                    round(sum(seq(1,length(y))*base::colSums(df)/sum(df),na.rm = T), 2),
+                    round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
                     sep=" "))
       message(paste("Number of",name, "is",
                     round(sum(df, na.rm = T)/1000, 3),
