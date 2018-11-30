@@ -26,6 +26,7 @@
 #' Hour and day will be deprecate because they can be infered from the profile
 #' matrix.
 #' @export
+#' @importFrom sf st_set_geometry
 #' @examples \dontrun{
 #' # Do not run
 #' data(net)
@@ -112,6 +113,10 @@ emis <- function (veh,
   if(any(!class(ef) %in% c("list", "units", "EmissionFactorsList",
                            "EmissionFactors", "data.frame"))){
     stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
+  }
+
+  if(any(class(veh) %in% "sf")){
+    veh <- sf::st_set_geometry(veh, NULL)
   }
 
   lkm <- as.numeric(lkm)
