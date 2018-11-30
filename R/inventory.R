@@ -58,6 +58,7 @@
 #' traffic.R to generates objects of class "Vehicles".
 #' The user can rename these scripts.
 #' @export
+#' @importFrom utils file.edit
 #' @examples \dontrun{
 #' name = file.path(tempdir(), "YourCity")
 #' inventory(name = name, show.dir = TRUE, show.scripts = TRUE)
@@ -294,5 +295,5 @@ inventory <- function(name,
     cat("Scripts:\n")
     print(sc)
   }
-  file.edit(paste0(name, "/main.R"))
+  utils::file.edit(paste0(name, "/main.R"))
 }
