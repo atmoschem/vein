@@ -68,7 +68,7 @@ age_ldv <- function (x,
     if(message){
     names(df) <- paste(name,seq(1,agemax),sep="_")
     message(paste("Average age of",name, "is",
-                  round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
+                  round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
                   round(sum(df, na.rm = T)/1000, 2),
@@ -106,7 +106,7 @@ age_ldv <- function (x,
     if(message){
     names(df) <- paste(name,seq(1,agemax),sep="_")
     message(paste("Average age of",name, "is",
-                  round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
+                  round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
                   round(sum(df, na.rm = T)/1000, 2),
