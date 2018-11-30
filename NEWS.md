@@ -6,6 +6,7 @@ NEWS
 
 - Opens main.R in inventory(, fix #132.
 - Adds matvect in any age* by row, fix #130.
+- emis can read vehicles as 'sf' objects setting geometry to NULL, fix #116.
 
 ## vein 0.5.6 (Release date: 2018-11-26)
 
