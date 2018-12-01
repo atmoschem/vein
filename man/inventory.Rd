@@ -5,8 +5,8 @@
 \title{Inventory function.}
 \usage{
 inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-  scripts = TRUE, show.dir = TRUE, show.scripts = FALSE,
-  clear = TRUE, rush.hour = FALSE)
+  show.main = TRUE, scripts = TRUE, show.dir = TRUE,
+  show.scripts = FALSE, clear = TRUE, rush.hour = FALSE)
 }
 \arguments{
 \item{name}{Character, one word indicating the name of the main directory for running
@@ -18,7 +18,9 @@ case that tthere are no vehiles for one category of the composition, the name
 should be included with the number zero, for example PC = 0. The maximum
 number allowed is 99 per category.}
 
-\item{scripts}{Logical value for aggregate or no scripts.}
+\item{show.main}{Logical; Do you want to see the new main.R file?}
+
+\item{scripts}{Logical value for generate or no scripts.}
 
 \item{show.dir}{Logical value for printing the created directories.}
 
@@ -35,9 +37,7 @@ vehicular emissions inventory. The structure can be used with other type of
 sources of emissions. The structure of the directories is: daily, ef, emi,
 est, images, network and veh. This structure is a suggestion and the user can
 use another.
-
-daily: it is for storing the profiles saved as .csv files
-
+'
 ef: it is for storing the emission factors data-frame, similar to data(fe2015)
 but including one column for each of the categories of the vehicular
 composition. For intance, if PC = 5, there should be 5 columns with emission
