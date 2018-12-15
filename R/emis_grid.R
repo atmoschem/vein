@@ -57,7 +57,7 @@ netdata[, i] <- as.numeric(netdata[, i])
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(sf::st_set_geometry(net, NULL))
     net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) == 1,]))
-    netg <- suppressWarnings(st_intersection(net, g))
+    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
     netg$LKM2 <- sf::st_length(netg)
     xgg <- data.table::data.table(netg)
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$LKM2/xgg$LKM)

@@ -253,7 +253,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     }
     # PM2.5 IAG ####
   } else if(spec == "pmiag"){
-    message("To be used in emissions grid only, emissions must be in g/(Xkm^2)/h\n")
+    message("For emissions grid only, emissions must be in g/(Xkm^2)/h\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
     if(class(x)[1] == "sf"){
       x <- sf::st_set_geometry(x, NULL)
