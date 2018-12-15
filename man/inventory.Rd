@@ -20,7 +20,7 @@ number allowed is 99 per category.}
 
 \item{show.main}{Logical; Do you want to see the new main.R file?}
 
-\item{scripts}{Logical value for generate or no scripts.}
+\item{scripts}{Logical Do you want to generate or no R scripts?}
 
 \item{show.dir}{Logical value for printing the created directories.}
 

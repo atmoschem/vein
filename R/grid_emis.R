@@ -78,7 +78,7 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
   net$lkm1 <- as.numeric(sf::st_length(net))
 
   geo <- sf::st_geometry(net)
-  xg <- suppressWarnings(sf::st_intersection(net, g))
+  xg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
 
   if(sf::st_crs(g) != sf::st_crs(net)){
     if(verbose) message("Changing CRS of 'spobj' to match 'g'")

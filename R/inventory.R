@@ -12,7 +12,7 @@
 #' should be included with the number zero, for example PC = 0. The maximum
 #' number allowed is 99 per category.
 #' @param show.main Logical; Do you want to see the new main.R file?
-#' @param scripts Logical value for generate or no scripts.
+#' @param scripts Logical Do you want to generate or no R scripts?
 #' @param show.dir Logical value for printing the created directories.
 #' @param show.scripts Logical value for printing the created scripts.
 #' @param clear Logical value for removing recursively the directory and create
