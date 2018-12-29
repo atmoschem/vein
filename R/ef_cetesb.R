@@ -36,7 +36,7 @@
 #' b <- ef_cetesb("R_10_25", "PC_G")
 #' }
 ef_cetesb <- function(p, veh, full = FALSE){
-  ef <- sysdata[["cetesb"]]
+  ef <- sysdata$cetesb
   ef <-  ef[ef$Age <= 50, ]
   evapd <- c("D_20_35","D_10_25","D_0_15")
   evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
