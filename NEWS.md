@@ -2,6 +2,10 @@ NEWS
 ===========
 
 
+# vein 0.5.8 (Release date: 2018-12-29)
+
+- Fix EF of metals fix #91.
+
 # vein 0.5.7 (Release date: 2018-11-29)
 
 - Opens main.R in inventory(, fix #132.

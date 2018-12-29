@@ -102,7 +102,22 @@
 #' }
 ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
                          show.equation = FALSE){
-  ef_hdv <- sysdata[[2]]
+  p_cri <- as.character(unique(sysdata$hdv_criteria$POLLUTANT))
+  p_met <- as.character(unique(sysdata$hdv_metals$POLLUTANT))
+  p_ghg <- as.character(unique(sysdata$hdv_ghg$POLLUTANT))
+  p_pah <- as.character(unique(sysdata$hdv_pah$POLLUTANT))
+  p_nmhc <- as.character(unique(sysdata$hdv_nmhc$POLLUTANT))
+  if(p %in% p_cri){
+    ef_hdv <- sysdata$hdv_criteria
+  } else if(p %in%p_met){
+    ef_hdv <- sysdata$hdv_metals
+  } else if(p %in% p_ghg){
+    ef_hdv <- sysdata$hdv_ghg
+  } else if(p %in% p_pah){
+    ef_hdv <- sysdata$hdv_pah
+  } else if(p %in% p_nmhc){
+    ef_hdv <- sysdata$hdv_nmhc
+  }
   df <- ef_hdv[ef_hdv$VEH == v &
                  ef_hdv$TYPE == t &
                  ef_hdv$GW == g &
