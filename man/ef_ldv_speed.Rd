@@ -22,7 +22,7 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{eu}{Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"}
 
-\item{p}{Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+\item{p}{Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
 polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).}
 

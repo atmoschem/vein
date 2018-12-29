@@ -32,7 +32,7 @@
 #' efe50(10)
 #' }
 ef_nitro <- function(v, t, cc, f, eu, p, S, k = 1, show.equation = TRUE){
-  ef <- sysdata[[8]]
+  ef <- sysdata$nitro
   df <- ef[ef$VEH        == v &
            ef$TYPE       == t &
            ef$CONDITION  == cc &

@@ -25,7 +25,7 @@ ef_hdv_speed(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
 
 \item{l}{Load of the vehicle: 0.0, 0.5 or 1.0}
 
-\item{p}{Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+\item{p}{Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
 polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).}
 

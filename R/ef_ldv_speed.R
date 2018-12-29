@@ -19,7 +19,7 @@
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
 #' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
 #' @param eu Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"
-#' @param p Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+#' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 #' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
 #' polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).
 #' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
@@ -150,7 +150,7 @@
 #' }
 ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1,
                          show.equation = FALSE){
-  ef_ldv <- sysdata[[1]]
+  ef_ldv <- sysdata$ldv
   df <- ef_ldv[ef_ldv$VEH == v &
                  ef_ldv$TYPE == t &
                  ef_ldv$CC == cc &

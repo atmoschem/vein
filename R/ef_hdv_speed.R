@@ -12,7 +12,7 @@
 #' @param eu Euro emission standard: "PRE", "I", "II", "III", "IV" and "V"
 #' @param gr Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06
 #' @param l Load of the vehicle: 0.0, 0.5 or 1.0
-#' @param p Character; pollutant: "CO", "FC", "NOx", "HC", "PM", "NMHC", "CH4",
+#' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 #' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
 #' polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).
 #' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is

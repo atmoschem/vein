@@ -18,11 +18,11 @@
 #' @keywords cold emission factors
 #' @export
 #' @examples {
-#' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "I", p = "CO")
+#' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO")
 #' ef1(10)
 #' }
 ef_ldv_cold <- function(v = "LDV", ta, cc, f, eu, p, k = 1, show.equation = FALSE){
-  ef_ldv <- sysdata[[5]]
+  ef_ldv <- sysdata$cold
   df <- ef_ldv[ef_ldv$VEH == v &
              ef_ldv$CC == cc &
              ef_ldv$FUEL == f &
