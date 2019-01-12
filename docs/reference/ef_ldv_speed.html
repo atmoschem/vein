@@ -67,7 +67,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -148,7 +148,8 @@ Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></td>
       <th>p</th>
       <td><p>Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
-polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).</p></td>
+polycyclic aromatic hydrocarbons (PAHs), persistent organi pollutants (POPs),
+and Number of particles and Active Surface.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -179,38 +180,40 @@ important ti know the combinations.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>t = "ALL" and cc == "ALL" works for several pollutants because emission
-fators are the same. Some exceptions are with NOx and FC because size of engine.</p>
-<p><strong>Pollutants</strong>: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+fators are the same. Some exceptions are with NOx and FC because size of engine.
+<strong>Pollutants (g/km)</strong>: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb", "FC".</p>
-<p><strong>PAH and POP</strong>: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+<p><strong>PAH and POP (g/km)</strong>: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
 "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
 "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
 "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
-"dibenzo(ah)anthracene" (g/km).</p>
-<p><strong>Dioxins and furans</strong>: "PCDD", "PCDF" and "PCB" expressed as (g equivalent
-toxicity / km).</p>
-<p><strong>Metals</strong>: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).</p>
-<p><strong>NMHC</strong>:</p>
-<p><em>ALKANES</em>: "ethane", "propane", "butane", "isobutane", "pentane",
+"dibenzo(ah)anthracene".</p>
+<p><strong>Dioxins and furans(g equivalent toxicity / km)</strong>: "PCDD", "PCDF" and "PCB".</p>
+<p><strong>Metals (g/km)</strong>: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn".</p>
+<p><strong>NMHC (g/km)</strong>:</p>
+<p><em>ALKANES (g/km)</em>: "ethane", "propane", "butane", "isobutane", "pentane",
 "isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
 "TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
 "alcanes_C10_C12", "alkanes_C13".</p>
-<p><em>CYCLOALKANES</em>: "cycloalcanes".</p>
-<p><em>ALKENES</em>: "ethylene", "propylene", "propadiene", "ONE_butene",
+<p><em>CYCLOALKANES (g/km)</em>: "cycloalcanes".</p>
+<p><em>ALKENES (g/km)</em>: "ethylene", "propylene", "propadiene", "ONE_butene",
 "isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
 "ONE_hexene", "dimethylhexene".</p>
-<p><em>ALKYNES</em>:"ONE_butine", "propine", "acetylene".</p>
-<p><em>ALDEHYDES</em>: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+<p><em>ALKYNES (g/km)</em>:"ONE_butine", "propine", "acetylene".</p>
+<p><em>ALDEHYDES (g/km)</em>: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
 "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
 "propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
 "o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".</p>
-<p><em>KETONES</em>: "acetone", "methylethlketone".</p>
-<p><em>AROMATICS</em>: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+<p><em>KETONES (g/km)</em>: "acetone", "methylethlketone".</p>
+<p><em>AROMATICS (g/km)</em>: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
 "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
 "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".</p>
+<p><em>Active Surface (cm2/km)</em>: "AS_urban", "AS_rural", "AS_highway"</p>
+<p><em>Total Number of particles (N/km)</em>: "N_urban", "N_rural", "N_highway",
+"N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -225,7 +228,10 @@ toxicity / km).</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>)
 
 <span class='co'># Quick view</span>
-<span class='no'>pol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CO"</span>, <span class='st'>"NOx"</span>, <span class='st'>"HC"</span>, <span class='st'>"NMHC"</span>, <span class='st'>"CH4"</span>, <span class='st'>"FC"</span>, <span class='st'>"PM"</span>, <span class='st'>"CO2"</span>, <span class='st'>"Pb"</span>, <span class='st'>"SO2"</span>)
+<span class='no'>pol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CO"</span>, <span class='st'>"NOx"</span>, <span class='st'>"HC"</span>, <span class='st'>"NMHC"</span>, <span class='st'>"CH4"</span>, <span class='st'>"FC"</span>, <span class='st'>"PM"</span>, <span class='st'>"CO2"</span>, <span class='st'>"SO2"</span>,
+<span class='st'>"AS_urban"</span>, <span class='st'>"AS_rural"</span>, <span class='st'>"AS_highway"</span>,
+<span class='st'>"N_urban"</span>, <span class='st'>"N_rural"</span>, <span class='st'>"N_highway"</span>,
+<span class='st'>"N_50nm_urban"</span>, <span class='st'>"N_50_100nm_rural"</span>, <span class='st'>"N_100_1000nm_highway"</span>)
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>pol</span>), <span class='kw'>function</span>(<span class='no'>i</span>){
 <span class='fu'>ef_ldv_speed</span>(<span class='st'>"PC"</span>, <span class='st'>"4S"</span>, <span class='st'>"&lt;=1400"</span>, <span class='st'>"G"</span>, <span class='st'>"PRE"</span>, <span class='no'>pol</span>[<span class='no'>i</span>], <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>10</span>)(<span class='fl'>30</span>)
 })
@@ -313,7 +319,7 @@ toxicity / km).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
 </div>
       </footer>
    </div>

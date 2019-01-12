@@ -2,6 +2,13 @@ NEWS
 ===========
 
 
+# vein 0.6.0 (Release date: 2019-01-11)
+
+- Add PM characteristics:
+- Add Active Surface (cm2/km): "AS_urban", "AS_rural", "AS_highway",
+- Add number of particles: "N_urban", "N_rural", "N_highway",
+"N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
+
 # vein 0.5.9 (Release date: 2019-01-11)
 
 - fix #134.
