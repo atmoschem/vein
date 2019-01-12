@@ -21,7 +21,8 @@
 #' @param eu Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"
 #' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 #' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
-#' polycyclic aromatic hydrocarbons (PAHs) and persistent organi pollutants (POPs).
+#' polycyclic aromatic hydrocarbons (PAHs), persistent organi pollutants (POPs),
+#' and Number of particles and Active Surface.
 #' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 #' "Pb", Lead in fuel in ppm.
 #' @param k Numeric; multiplication factor
@@ -30,49 +31,52 @@
 #' @keywords speed emission factors
 #' @note t = "ALL" and cc == "ALL" works for several pollutants because emission
 #' fators are the same. Some exceptions are with NOx and FC because size of engine.
-#'
-#' \strong{Pollutants}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
+#' \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 #' "Pb", "FC".
 #'
-#' \strong{PAH and POP}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
+#' \strong{PAH and POP (g/km)}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 #' "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 #' "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
 #' "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
 #' "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
 #' "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 #' "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
-#' "dibenzo(ah)anthracene" (g/km).
+#' "dibenzo(ah)anthracene".
 #'
-#' \strong{Dioxins and furans}: "PCDD", "PCDF" and "PCB" expressed as (g equivalent
-#' toxicity / km).
+#' \strong{Dioxins and furans(g equivalent toxicity / km)}: "PCDD", "PCDF" and "PCB".
 #'
-#' \strong{Metals}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
+#' \strong{Metals (g/km)}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn".
 #'
-#' \strong{NMHC}:
+#' \strong{NMHC (g/km)}:
 #'
-#' \emph{ALKANES}: "ethane", "propane", "butane", "isobutane", "pentane",
+#' \emph{ALKANES (g/km)}: "ethane", "propane", "butane", "isobutane", "pentane",
 #' "isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
 #' "TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
 #' "alcanes_C10_C12", "alkanes_C13".
 #'
-#' \emph{CYCLOALKANES}: "cycloalcanes".
+#' \emph{CYCLOALKANES (g/km)}: "cycloalcanes".
 #'
-#' \emph{ALKENES}: "ethylene", "propylene", "propadiene", "ONE_butene",
+#' \emph{ALKENES (g/km)}: "ethylene", "propylene", "propadiene", "ONE_butene",
 #' "isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
 #' "ONE_hexene", "dimethylhexene".
 #'
-#' \emph{ALKYNES}:"ONE_butine", "propine", "acetylene".
+#' \emph{ALKYNES (g/km)}:"ONE_butine", "propine", "acetylene".
 #'
-#' \emph{ALDEHYDES}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
+#' \emph{ALDEHYDES (g/km)}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
 #' "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
 #' "propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
 #' "o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
 #'
-#' \emph{KETONES}: "acetone", "methylethlketone".
+#' \emph{KETONES (g/km)}: "acetone", "methylethlketone".
 #'
-#' \emph{AROMATICS}: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
+#' \emph{AROMATICS (g/km)}: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
 #' "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
 #' "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
+#'
+#' \emph{Active Surface (cm2/km)}: "AS_urban", "AS_rural", "AS_highway"
+#'
+#' \emph{Total Number of particles (N/km)}: "N_urban", "N_rural", "N_highway",
+#' "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
 #' @export
 #' @examples {
 #' # Do not run
@@ -85,7 +89,10 @@
 #' plot(Speed(1:150), efs, xlab = "speed[km/h]")
 #'
 #' # Quick view
-#' pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "Pb", "SO2")
+#' pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2",
+#' "AS_urban", "AS_rural", "AS_highway",
+#' "N_urban", "N_rural", "N_highway",
+#' "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway")
 #' f <- sapply(1:length(pol), function(i){
 #' ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)
 #' })

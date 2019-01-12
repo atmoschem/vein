@@ -22,7 +22,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -63,17 +63,16 @@
 
       
       </header><div class="row">
-  <div class="col-md-9 contents">
-    
-
-    
-    
+  <div class="contents col-md-9">
 
 <div id="vehicular-emissions-inventory-vein-model-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#vehicular-emissions-inventory-vein-model-" class="anchor"></a><strong>V</strong>ehicular <strong>E</strong>missions <strong>IN</strong>ventory <strong>(VEIN)</strong> model. <img src="https://i.imgur.com/dp8spyp.png">
 </h1></div>
-<p><a href="https://atmoschem.github.io/vein/"><em>Please read the documentation</em>.</a></p>
+<p>You can learn more about VEIN reading the documentation in <a href="https://cran.r-project.org/web/packages/vein/vein.pdf">PDF</a>, <a href="https://atmoschem.github.io/vein/">online</a>, reading the book <a href="https://ibarraespinosa.github.io/VEINBOOK/">online</a>, or buy it in <a href="https://www.amazon.com/VEINBOOK-Estimating-vehicular-emissions-package-ebook-dp-B07L7XRFKC/dp/B07L7XRFKC/ref=mt_kindle?_encoding=UTF8&amp;me=&amp;qid=">Kindle</a> or <a href="https://www.amazon.com/gp/product/1791571158?pf_rd_p=1581d9f4-062f-453c-b69e-0f3e00ba2652&amp;pf_rd_r=EMDPZM3G7BWCHAD9F4QP">Paperback</a></p>
+<div class="figure">
+<img src="https://i.imgur.com/RcfNmDm.jpg">
+</div>
 <div id="what-is-vein" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-is-vein" class="anchor"></a>What is VEIN?</h2>
@@ -83,15 +82,15 @@
 <a href="#european-emission-factors-for-all-available-vehicle-categories" class="anchor"></a>European emission factors for all available vehicle categories:</h3>
 <ul>
 <li>
-<strong>Criteria</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”, “FC” (Fuel Consumption), “NO”, “NO2”.</li>
+<strong>Criteria (g/km)</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”, “FC” (Fuel Consumption),“NO”, “NO2”.</li>
 <li>
 <strong>PAH and POP</strong>: “indeno(1,2,3-cd)pyrene”, “benzo(k)fluoranthene”, “benzo(b)fluoranthene”, “benzo(ghi)perylene”, “fluoranthene”, “benzo(a)pyrene”, “pyrene”, “perylene”, “anthanthrene”, “benzo(b)fluorene”, “benzo(e)pyrene”, “triphenylene”, “benzo(j)fluoranthene”, “dibenzo(a,j)anthacene”, “dibenzo(a,l)pyrene”, “3,6-dimethyl-phenanthrene”, “benzo(a)anthracene”, “acenaphthylene”, “acenapthene”, “fluorene”, “chrysene”, “phenanthrene”, “napthalene”, “anthracene”, “coronene”, “dibenzo(ah)anthracene”</li>
 <li>
-<strong>Dioxins and Furans</strong>: “PCDD”, “PCDF”, “PCB”.</li>
+<strong>Dioxins and Furans (g/km)</strong>: “PCDD”, “PCDF”, “PCB”.</li>
 <li>
-<strong>Metals</strong>: “As”, “Cd”, “Cr”, “Cu”, “Hg”, “Ni”, “Pb”, “Se”, “Zn”.</li>
+<strong>Metals (g/km)</strong>: “As”, “Cd”, “Cr”, “Cu”, “Hg”, “Ni”, “Pb”, “Se”, “Zn”.</li>
 <li>
-<strong>NMHC</strong>:</li>
+<strong>NMHC (g/km)</strong>:</li>
 <li>
 <em>ALKANES</em>: “ethane”, “propane”, “butane”, “isobutane”, “pentane”, “isopentane”, “hexane”, “heptane”, “octane”, “TWO_methylhexane”, “nonane”, “TWO_methylheptane”, “THREE_methylhexane”, “decane”, “THREE_methylheptane”, “alcanes_C10_C12”, “alkanes_C13”.</li>
 <li>
@@ -105,22 +104,32 @@
 <li>KETONES: “acetone”, “methylethlketone”.</li>
 <li>
 <em>AROMATICS</em>: “toluene”, “ethylbenzene”, “m_p_xylene”, “o_xylene”, “ONE_2_3_trimethylbenzene”, “ONE_2_4_trimethylbenzene”, “ONE_3_5_trimethylbenzene”, “styrene”, “benzene”, “C9”, “C10”, “C13”.</li>
+<li><strong>Active Surface (cm2/km)</strong></li>
+<li>“AS_urban”, “AS_rural”, “AS_highway”.</li>
+<li><strong>Total Number of particles (N/km)</strong></li>
+<li>“N_urban”, “N_rural”, “N_highway”, “N_50nm_urban”, “N_50_100nm_rural”, “N_100_1000nm_highway”.</li>
 </ul>
 </div>
 <div id="brazilian-emission-factors-for-all-available-vehicle-categories" class="section level3">
 <h3 class="hasAnchor">
 <a href="#brazilian-emission-factors-for-all-available-vehicle-categories" class="anchor"></a>Brazilian emission factors for all available vehicle categories:</h3>
-<p>“COd”, “HCd”, “NMHCd”, “CH4”, “NOxd”, “CO2” “PM”, “N2O”, “KML”, “FC”, “NO2d”, “NOd”, “gCO2/KWH”, “RCHOd”, “CO”, “HC”, “NMHC”, “NOx”, “NO2” ,“NO”, “RCHO”</p>
+<ul>
+<li>“COd”, “HCd”, “NMHCd”, “CH4”, “NOxd”, “CO2” “PM”, “N2O”, “KML”, “FC”, “NO2d”, “NOd”, “gCO2/KWH”, “RCHOd”, “CO”, “HC”, “NMHC”, “NOx”, “NO2” ,“NO”, “RCHO”</li>
+</ul>
 </div>
 <div id="brazilian-speciation-based-on-iagusp-fatimas-group-studies" class="section level3">
 <h3 class="hasAnchor">
 <a href="#brazilian-speciation-based-on-iagusp-fatimas-group-studies" class="anchor"></a>Brazilian speciation based on IAG/USP (Fátima’s group) studies:</h3>
-<p>“e_eth”, “e_hc3”, “e_hc5”, “e_hc8”, “e_ol2”, “e_olt”, “e_oli”, “e_iso”, “e_tol”, “e_xyl”, “e_c2h5oh”, “e_ald”, “e_hcho”, “e_ch3oh”, “e_ket”, “E_SO4i”, “E_SO4j”, “E_NO3i”, “E_NO3j”, “E_MP2.5i”, “E_MP2.5j”, “E_ORGi”, “E_ORGj”, “E_ECi”, “E_ECj”</p>
+<ul>
+<li>“e_eth”, “e_hc3”, “e_hc5”, “e_hc8”, “e_ol2”, “e_olt”, “e_oli”, “e_iso”, “e_tol”, “e_xyl”, “e_c2h5oh”, “e_ald”, “e_hcho”, “e_ch3oh”, “e_ket”, “E_SO4i”, “E_SO4j”, “E_NO3i”, “E_NO3j”, “E_MP2.5i”, “E_MP2.5j”, “E_ORGi”, “E_ORGj”, “E_ECi”, “E_ECj”</li>
+</ul>
 </div>
 <div id="base-emission-factors-from-international-emission-model-ive-for-all-available-vehicle-categories" class="section level3">
 <h3 class="hasAnchor">
 <a href="#base-emission-factors-from-international-emission-model-ive-for-all-available-vehicle-categories" class="anchor"></a>Base emission factors from International Emission Model (IVE) for all available vehicle categories:</h3>
-<p>“VOC_gkm”, “CO_gkm”, “NOx_gkm”, “PM_gkm”, “Pb_gkm”, “SO2_gkm”, “NH3_gkm”, “ONE_3_butadiene_gkm”, “formaldehyde_gkm”, “acetaldehyde_gkm”, “benzene_gkm”, “EVAP_gkm”, “CO2_gkm”, “N20_gkm”, “CH4_gkm”, “VOC_gstart”, “CO_gstart”, “NOx_gstart”, “PM_gstart”, “Pb_gstart”, “SO2_gstart”, “NH3_gstart”, “ONE_3butadiene_gstart”, “formaldehyde_gstart”,“acetaldehyde_gstart”, “benzene_gstart”, “EVAP_gstart”, “CO2_gstart”, “N20_gstart”, “CH4_gstart”</p>
+<ul>
+<li>“VOC_gkm”, “CO_gkm”, “NOx_gkm”, “PM_gkm”, “Pb_gkm”, “SO2_gkm”, “NH3_gkm”, “ONE_3_butadiene_gkm”, “formaldehyde_gkm”, “acetaldehyde_gkm”, “benzene_gkm”, “EVAP_gkm”, “CO2_gkm”, “N20_gkm”, “CH4_gkm”, “VOC_gstart”, “CO_gstart”, “NOx_gstart”, “PM_gstart”, “Pb_gstart”, “SO2_gstart”, “NH3_gstart”, “ONE_3butadiene_gstart”, “formaldehyde_gstart”,“acetaldehyde_gstart”, “benzene_gstart”, “EVAP_gstart”, “CO2_gstart”, “N20_gstart”, “CH4_gstart”</li>
+</ul>
 </div>
 <div id="system-requirements" class="section level3">
 <h3 class="hasAnchor">
@@ -157,37 +166,28 @@
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/demo">demo</a></span>(VEIN)</code></pre></div>
 </div>
 </div>
-<div id="what-is-new-0-5-4" class="section level2">
+<div id="what-is-new-0-6-0" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new-0-5-4" class="anchor"></a>What is new? 0.5.4</h2>
+<a href="#what-is-new-0-6-0" class="anchor"></a>What is new? 0.6.0</h2>
 <ul>
 <li>
 <a href="https://atmoschem.github.io/vein/reference/grid_emis.html">grid_emis</a> To allocate gridded emissions to streets by grid cell.</li>
 <li>
-<a href="https://atmoschem.github.io/vein/reference/ef_ive.html">ef_ive</a> International Vehicular Emission Model - Base Emission Factors <a href="http://www.issrc.org/ive/">IVE</a>.</li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/ef_whe.html">ef_whe</a> to account for high emitters emission factor on fleet.</li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/ef_im.html">ef_im</a> emission factors by used vehicles with normal deterioration, depending on accumulated mileage.</li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/ef_cetesb.html">ef_cetesb</a> Emission factors of the <a href="https://cetesb.sp.gov.br/">Environmental Agency of São Paulo</a> State, Brazil.</li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/vein_notes.html">vein_notes</a> To generates .txt files which includes specification of the machine.</li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/emis_source.html">emis_source</a> to source vein scripts.</li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/emis_dist.html">emis_dist</a> function to distribute top-down emissions into ‘sf’ objects by feature, specifically, ir returns a vector of lines (streeets).</li>
+<a href="https://atmoschem.github.io/vein/reference/matvect.html">matvect</a> To multiply matrices with vectors.</li>
+<li>Add Active Surface (cm2/km): “AS_urban”, “AS_rural”, “AS_highway”.</li>
+<li>Add number of particles (N/km): “N_urban”, “N_rural”, “N_highway”, “N_50nm_urban”, “N_50_100nm_rural”, “N_100_1000nm_highway”.</li>
+<li>Fix minor bugs.</li>
 <li>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.md">NEWS</a>
 </li>
 </ul>
-<p><strong>future steps</strong></p>
+<p>future steps:</p>
 <ul>
-<li>More tests!</li>
-<li>Parallelism. I’ve done some tests already with good results.</li>
+<li>Enhance <a href="https://atmoschem.github.io/vein/reference/inventory.html">inventory</a>.</li>
+<li>Add a standard fleet categorization.</li>
+<li>Add HBEFA EF.</li>
 <li>Fortran.</li>
 <li>Estimation of evaporative emissions with Copert Tier 3.</li>
-<li>More speciations.</li>
-<li>A draft book already published <a href="https://bookdown.org/zergioibarra/veinbook/" class="uri">https://bookdown.org/zergioibarra/veinbook/</a> and source here: <a href="https://github.com/ibarraespinosa/VEINBOOK" class="uri">https://github.com/ibarraespinosa/VEINBOOK</a>.</li>
+<li>Group species by chemical mechanism.</li>
 </ul>
 </div>
 <div id="how-does-it-work" class="section level2">
@@ -381,7 +381,7 @@ doi = {10.5194/gmd-11-2209-2018}
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3" id="sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
@@ -413,7 +413,7 @@ doi = {10.5194/gmd-11-2209-2018}
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/atmoschem/vein"><img src="https://travis-ci.org/atmoschem/vein.svg?branch=master" alt="Travis-CI Build Status"></a></li>
@@ -428,7 +428,6 @@ doi = {10.5194/gmd-11-2209-2018}
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -437,7 +436,7 @@ doi = {10.5194/gmd-11-2209-2018}
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
 </div>
       </footer>
 </div>
