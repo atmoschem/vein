@@ -2,7 +2,7 @@ NEWS
 ===========
 
 
-# vein 0.6.0 (Release date: 2019-01-11)
+# vein 0.6.0 (Release date: 2019-01-11) 'Changchung'
 
 - Add PM characteristics:
 - Add Active Surface (cm2/km): "AS_urban", "AS_rural", "AS_highway",
