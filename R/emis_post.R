@@ -88,10 +88,10 @@
 #' head(E_CO_DFv2)
 #' }
 emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
-  if ( class(arra) != "EmissionsArray" && !is.array(arra) ){
+  if ( class(arra)[1] != "EmissionsArray"){
     stop("No EmissionsArray")
   } else if (length(dim(arra)) == 4){
-    if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
+    if (by == "veh"){
       x <- unlist(lapply(1:dim(arra)[4], function(j) {
         unlist(lapply (1:dim(arra)[3],function(i) {
           colSums(arra[,,i,j], na.rm = TRUE)
@@ -153,7 +153,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
     }
 
   } else {
-    if (by == "veh" & class(arra)=="EmissionsArray" && is.array(arra) ){
+    if (by == "veh"){
       x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
       df <- cbind(deparse(substitute(arra)),
                   as.data.frame(x))

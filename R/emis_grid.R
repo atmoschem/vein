@@ -36,6 +36,7 @@ netdata[, i] <- as.numeric(netdata[, i])
   }
   net <- sf::st_sf(netdata, geometry = net$geometry)
   g <- sf::st_as_sf(g)
+  g$id <- 1:nrow(g)
 
   if(!missing(sr)){
     if(class(sr)[1] == "character"){

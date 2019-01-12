@@ -16,7 +16,8 @@ ef_hdv_speed(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
 ">7.5 & <=12", ">12 & <=14", ">14 & <=20", ">20 & <=26", ">26 & <=28", ">28 & <=32",
 ">32", ">20 & <=28", ">28 & <=34", ">34 & <=40", ">40 & <=50" or ">50 & <=60"}
 
-\item{eu}{Euro emission standard: "PRE", "I", "II", "III", "IV" and "V"}
+\item{eu}{Euro emission standard: "PRE", "I", "II", "III", "IV", "V", "II+CRDPF",
+"III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR".}
 
 \item{x}{Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 "Pb", Lead in fuel in ppm.}
@@ -88,6 +89,16 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 
 \emph{Total Number of particles (N/km)}: "N_urban", "N_rural", "N_highway",
 "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
+
+The available standards for Active Surface or number of particles are:
+Euro II and III
+Euro II and III + CRDPF
+Euro II and III + SCR
+Euro IV + CRDPF
+Euro V + SCR
+
+The categories Pre Euro and Euro I were assigned with the factors of Euro II and Euro III
+The categories euro IV and euro V were assigned with euro III + SCR
 }
 \examples{
 {

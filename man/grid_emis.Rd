@@ -54,7 +54,7 @@ pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 lef <- EmissionFactorsList(ef_cetesb("CO", "PC_G"))
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef,
             profile = 1)
-E_CO_STREETS <- emis_post(arra = E_CO, by = "streets_wide", net = net)
+E_CO_STREETS <- emis_post(arra = E_CO, by = "streets", net = net)
 
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 
