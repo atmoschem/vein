@@ -9,7 +9,8 @@
 #' @param g Gross weight of each category: "<=18", ">18", "<=15", ">15 & <=18", "<=7.5",
 #' ">7.5 & <=12", ">12 & <=14", ">14 & <=20", ">20 & <=26", ">26 & <=28", ">28 & <=32",
 #' ">32", ">20 & <=28", ">28 & <=34", ">34 & <=40", ">40 & <=50" or ">50 & <=60"
-#' @param eu Euro emission standard: "PRE", "I", "II", "III", "IV" and "V"
+#' @param eu Euro emission standard: "PRE", "I", "II", "III", "IV", "V", "II+CRDPF",
+#' "III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR".
 #' @param gr Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06
 #' @param l Load of the vehicle: 0.0, 0.5 or 1.0
 #' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
@@ -68,6 +69,18 @@
 #'
 #' \emph{Total Number of particles (N/km)}: "N_urban", "N_rural", "N_highway",
 #' "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
+#'
+#' The available standards for Active Surface or number of particles are:
+#' Euro II and III
+#' Euro II and III + CRDPF
+#' Euro II and III + SCR
+#' Euro IV + CRDPF
+#' Euro V + SCR
+#'
+#' The categories Pre Euro and Euro I were assigned with the factors of Euro II and Euro III
+#' The categories euro IV and euro V were assigned with euro III + SCR
+#'
+#'
 #' @export
 #' @examples {
 #' # Quick view

@@ -20,7 +20,8 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{f}{Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)}
 
-\item{eu}{Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc"}
+\item{eu}{Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
+When the pollutan is active surface or number of particles, eu can also be "III+DISI"}
 
 \item{p}{Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
@@ -97,6 +98,10 @@ fators are the same. Some exceptions are with NOx and FC because size of engine.
 
 \emph{Total Number of particles (N/km)}: "N_urban", "N_rural", "N_highway",
 "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
+
+The available standards for Active Surface or number of particles are Euro I,
+II, III, III+DPF dor diesle and III+DISI for gasoline. Pre euro vehicles
+has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.
 }
 \examples{
 {
