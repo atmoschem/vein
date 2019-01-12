@@ -494,3 +494,5 @@ inventories for cities with lack of data. Journal of Earth Sciences &
 Geotechnical Engineering. issn 1792--9660.
 URL =
 https://www.researchgate.net/publication/313253283_REMI_model_Bottom-up_emissions_inventories_for_cities_with_lack_of_data
+
+
