@@ -47,3 +47,5 @@ split_emis <- function(net, distance, verbose = TRUE){
   gnet <- sf::st_sf(gnet, geometry = geo)
   return(gnet)
 }
+
+
