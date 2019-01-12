@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Helper function to copy and zip projects — invcop • vein</title>
+<title>Split street emissions based on a grid — split_emis • vein</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Helper function to copy and zip projects — invcop" />
+<meta property="og:title" content="Split street emissions based on a grid — split_emis" />
 
-<meta property="og:description" content="invcop help to copy and zip projects" />
+<meta property="og:description" content="split_emis split street emissions into a grid." />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -99,90 +99,58 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Helper function to copy and zip projects</h1>
+    <h1>Split street emissions based on a grid</h1>
     
-    <div class="hidden name"><code>invcop.Rd</code></div>
+    <div class="hidden name"><code>split_emis.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>invcop</code> help to copy and zip projects</p>
+    <p><code>split_emis</code> split street emissions into a grid.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>invcop</span>(<span class='kw'>in_name</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(), <span class='no'>out_name</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ef</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>est</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>network</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>veh_rds</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>veh_csv</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>zip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>split_emis</span>(<span class='no'>net</span>, <span class='no'>distance</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>in_name</th>
-      <td><p>Character; Name of current project.</p></td>
+      <th>net</th>
+      <td><p>A spatial dataframe of class "sp" or "sf". When class is "sp"
+it is transformed to "sf" with emissions.</p></td>
     </tr>
     <tr>
-      <th>out_name</th>
-      <td><p>Character; Name of outtput project.</p></td>
+      <th>distance</th>
+      <td><p>Numeric distance or a grid with class "sf".</p></td>
     </tr>
     <tr>
-      <th>all</th>
-      <td><p>Logical; copy ALL (and for once) or not.</p></td>
-    </tr>
-    <tr>
-      <th>main</th>
-      <td><p>Logical; copy or not.</p></td>
-    </tr>
-    <tr>
-      <th>ef</th>
-      <td><p>Logical; copy or not.</p></td>
-    </tr>
-    <tr>
-      <th>est</th>
-      <td><p>Logical; copy or not.</p></td>
-    </tr>
-    <tr>
-      <th>network</th>
-      <td><p>Logical; copy or not.</p></td>
-    </tr>
-    <tr>
-      <th>veh_rds</th>
-      <td><p>Logical; copy or not.</p></td>
-    </tr>
-    <tr>
-      <th>veh_csv</th>
-      <td><p>Logical; copy or not.</p></td>
-    </tr>
-    <tr>
-      <th>zip</th>
-      <td><p>Logical; zip or not.</p></td>
+      <th>verbose</th>
+      <td><p>Logical, to show more information.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>emission estimation  g/h</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>This function was created to copy and zip project without the emis.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-# Do not run
-# }
-</pre>
+    <pre class="examples"><div class='input'>{
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>net</span>)
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>net</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>net</span>)
+<span class='no'>netsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>net</span>)[, <span class='st'>"ldv"</span>]
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>split_emis</span>(<span class='no'>netsf</span>, <span class='no'>g</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>x</span>)
+}</div><div class='output co'>#&gt; Number of lon points: 23
+#&gt; Number of lat points: 19
+#&gt; 
+#&gt; Total Emissions 1946.955  kg 
+#&gt; Intersecting</div><div class='output co'>#&gt; <span class='message'>although coordinates are longitude/latitude, st_intersection assumes that they are planar</span></div><div class='output co'>#&gt; <span class='warning'>Warning: attribute variables are assumed to be spatially constant throughout all geometries</span></div><div class='output co'>#&gt; Total Emissions 1946.955  kg </div><div class='output co'>#&gt; [1] 2936    3</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

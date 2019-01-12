@@ -2,6 +2,10 @@ NEWS
 ===========
 
 
+# vein 0.6.1 (Release date: 2019-01-11)
+
+- Adds split_emis. Fix #135
+
 # vein 0.6.0 (Release date: 2019-01-11) 'Changchung'
 
 - Add PM characteristics:
