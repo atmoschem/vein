@@ -12,7 +12,7 @@ library(ggplot2)
 data(net)
 class(net$ldv) <- "numeric"
 
-spplot(net, "ldv", scales=list(draw=T),cuts=12,
+spplot(net, "ldv", scales=list(Draw=T),cuts=12,
        colorkey = list(space = "bottom", height = 1),
        col.regions = rev(bpy.colors(13)))
 
@@ -91,7 +91,7 @@ net@data$nts <- as.factor(
 
 net@data <- cbind(net@data,df)
 
-spplot(net, c("S8","S23"), scales=list(draw=T),
+spplot(net, c("S8","S23"), scales=list(Draw=T),
        col.regions = rev(bpy.colors(16)))
 
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
@@ -214,7 +214,7 @@ for (i in 1:ncol(E_CO_STREETS)) {
 net@data <- cbind(net@data, E_CO_STREETS)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2, polygon = T)
 gg <- as(g, "Spatial")
-spplot(net, "V138", scales=list(draw=T), cuts = 15,
+spplot(net, "V138", scales=list(Draw=T), cuts = 15,
        colorkey = list(space = "bottom", height = 1),
        col.regions = rev(bpy.colors(16)),
        sp.layout = list("sp.polygons", gg, pch = 13, cex = 2))
@@ -223,7 +223,7 @@ spplot(net, "V138", scales=list(draw=T), cuts = 15,
 net@data <- net@data[,- c(1:9)]
 E_CO_g <- emis_grid(spobj = net, g = g, sr = 31983, type = "lines")
 E_CO_g <- as(E_CO_g, "Spatial")
-spplot(E_CO_g, "V138", scales=list(draw=T),cuts=8,
+spplot(E_CO_g, "V138", scales=list(Draw=T),cuts=8,
        colorkey = list(space = "bottom", height = 1),
        col.regions = rev(bpy.colors(9)),
        sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
