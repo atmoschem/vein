@@ -198,7 +198,7 @@ add the net. Age functions now returns 'sf' objects if the net argument is prese
 PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
 sp::spplot(as(PC_E25_1400net, "Spatial"),
        c("PC_E25_1400_1", "PC_E25_1400_9"),
-       main = "PC by age of use", scales = list(draw = T),
+       main = "PC by age of use", scales = list(Draw = T),
        col.regions = rev(cptcity::cpt()))
 ```
 - [temp_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
@@ -221,7 +221,7 @@ If you want ot check the speed at different hours by street, just add net:
 dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
                        alpha = 1.5, net = net)
 sp::spplot(as(dfspeednet, "Spatial"),
-       c("S1", "S9"), scales = list(draw = T),
+       c("S1", "S9"), scales = list(Draw = T),
        col.regions = rev(cptcity::cpt()))
 ```
 
@@ -294,7 +294,7 @@ E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
 sp::spplot(as(E_CO_g, "Spatial"),
-       c("V1", "V9"), scales = list(draw = T),
+       c("V1", "V9"), scales = list(Draw = T),
        col.regions = rev(cptcity::cpt()))
 ```
 
