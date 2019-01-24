@@ -375,3 +375,13 @@ Contributions of all sorts are welcome, issues and pull requests are the preferr
 When contributing pull requests, please follow the [Google's R Style Guide](https://google.github.io/styleguide/Rguide.xml).
 This project is released with a [Contributor Code of Conduct](https://github.com/atmoschem/vein/blob/master/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
+### Note for non-english and anaconda users
+
+Sometimes you need to install R and all dependencies and a way for doing that is using anaconda. Well, as my system is in portuguese, after installing R using anaconda it changed the decimal character to ','. In order to change it back to english meaning decimal separator as '.', I added this variable  into the .bashrc
+
+```
+nano ~/.bashrc
+export Lang=C
+```
+
+More details on [StackOverflow](https://stackoverflow.com/questions/13575180/how-to-change-language-settings-in-r) 
