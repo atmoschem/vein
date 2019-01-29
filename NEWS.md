@@ -2,18 +2,24 @@ NEWS
 ===========
 
 
-# vein 0.6.1 (Release date: 2019-01-11)
+# vein 0.6.2 (Release date: 2019-01-29)
+
+- fix some metals in ldv, m
+- Adds data with name of all pollutants covered.
+
+
+## vein 0.6.1 (Release date: 2019-01-11)
 
 - Adds split_emis. Fix #135
 
-# vein 0.6.0 (Release date: 2019-01-11) 'Changchung'
+## vein 0.6.0 (Release date: 2019-01-11) 'Changchung'
 
 - Add PM characteristics:
 - Add Active Surface (cm2/km): "AS_urban", "AS_rural", "AS_highway",
 - Add number of particles: "N_urban", "N_rural", "N_highway",
 "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
 
-# vein 0.5.9 (Release date: 2019-01-11)
+## vein 0.5.9 (Release date: 2019-01-11)
 
 - fix #134.
 

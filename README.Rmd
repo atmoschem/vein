@@ -38,7 +38,7 @@ It currently covers the following pollutants in speed functions:
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
 "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
-"dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
+"dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "THREE_6-dimethyl-phenanthrene",
 "benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
 "dibenzo(ah)anthracene"
