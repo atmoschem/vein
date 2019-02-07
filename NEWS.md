@@ -4,7 +4,8 @@ NEWS
 
 # vein 0.6.3 (Release date: 2019-02-07)
 
-- Fix milage equation of  fkm$KM_LDV_GNV. Fix #137
+- Fix milage equation of  fkm$KM_LDV_GNV. Fix #137.
+- Fix "V", "VI", "VIc". Fix #138
 
 ## vein 0.6.2 (Release date: 2019-01-29)
 

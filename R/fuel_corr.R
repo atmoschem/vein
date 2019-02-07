@@ -195,7 +195,7 @@ fuel_corr <- function(euro,
                   olefin = bg2005[["olefin"]],
                   o2 = bg2005[["o2"]],
                   e150 = bg2005[["e150"]])
-  } else {
+  } else if(euro %in% c("V", "VI", "VIc")){
     fco_ldv_g <- fcov_ldv_g <- fnox_ldv_g <- 1
   }
 
@@ -307,7 +307,7 @@ fuel_corr <- function(euro,
                  cn = bd2005[["cn"]],
                  t95 = bd2005[["t95"]],
                  s = bd2005[["s"]])
-  } else {
+  } else if(euro %in% c("V", "VI", "VIc")){
     fco_ldv_d <- fco_ldv_d <- fco_ldv_d <- fpm_ldv_d <- 1
   }
 
@@ -417,7 +417,7 @@ fuel_corr <- function(euro,
                cn = bd2005[["cn"]],
                t95 = bd2005[["t95"]],
                s = bd2005[["s"]])
-  } else {
+  } else if(euro %in% c("V", "VI", "VIc")){
     fco_hdv_d <- fcov_hdv_d <- fnox_hdv_d <- fpm_hdv_d <- 1
   }
   fif <- function(x) ifelse(x > 1, 1, x)
