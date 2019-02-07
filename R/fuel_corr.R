@@ -308,7 +308,7 @@ fuel_corr <- function(euro,
                  t95 = bd2005[["t95"]],
                  s = bd2005[["s"]])
   } else if(euro %in% c("V", "VI", "VIc")){
-    fco_ldv_d <- fco_ldv_d <- fco_ldv_d <- fpm_ldv_d <- 1
+    fco_ldv_d <- fcov_ldv_d <- fnox_ldv_d <- fpm_ldv_d <- 1
   }
 
   # } else if(tveh == "HDV"){
@@ -418,9 +418,9 @@ fuel_corr <- function(euro,
                t95 = bd2005[["t95"]],
                s = bd2005[["s"]])
   } else if(euro %in% c("V", "VI", "VIc")){
-    fco_hdv_d <- fcov_hdv_d <- fnox_hdv_d <- fpm_hdv_d <- 1
+    fco_hdv <- fcov_hdv <- fnox_hdv <- fpm_hdv <- 1
   }
-  fif <- function(x) ifelse(x > 1, 1, x)
+  fif <- function(x) ifelse(x >= 1, 1, x)
   dfl <- list(
     LDVG = list(CO = list(fif(fco_ldv_g)),
                 COV = list(fif(fcov_ldv_g)),
