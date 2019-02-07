@@ -133,7 +133,7 @@ This function subset an internal database of emission factors with each argument
     </tr>
     <tr>
       <th>eu</th>
-      <td><p>Character; Euro standard:  "I", "II", "III", "III", "IV"</p></td>
+      <td><p>Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"</p></td>
     </tr>
     <tr>
       <th>km</th>
@@ -150,7 +150,8 @@ This function subset an internal database of emission factors with each argument
     <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>fkm</span>)
 <span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cumsum'>cumsum</a></span>(<span class='no'>pckm</span>)
-(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>]))
+<span class='no'>km</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/units/topics/set_units'>set_units</a></span>(<span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>], <span class='no'>km</span>)
+(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>))
 }</div><div class='output co'>#&gt;  [1] 1.000000 1.000000 1.038520 1.135721 1.235592 1.337570 1.441121 1.545738
 #&gt;  [9] 1.650946 1.756295 1.861367</div></pre>
   </div>
