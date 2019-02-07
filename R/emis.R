@@ -1,6 +1,6 @@
 #' Estimation of emissions
 #'
-#' @description \code{emis} estimates vehicular emissions as the product of the
+#' @description \code{\link{emis}} estimates vehicular emissions as the product of the
 #' vehicles on a road, length of the road, emission factor avaliated at the
 #' respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
 #'

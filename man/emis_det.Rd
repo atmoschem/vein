@@ -7,29 +7,29 @@
 emis_det(po, cc, eu, km)
 }
 \arguments{
-\item{po}{Pollutant}
+\item{po}{Character; Pollutant "CO", "NOx" or "HC"}
 
-\item{cc}{Size of engine in cc}
+\item{cc}{Character; Size of engine in cc converin "<=1400", "1400_2000" or ">2000"}
 
-\item{eu}{Euro standard: "PRE", "I", "II", "III", "III", "IV", "V", "VI"}
+\item{eu}{Character; Euro standard: "PRE", "I", "II", "III", "III", "IV", "V", "VI"}
 
-\item{km}{mileage in km}
+\item{km}{Numeric; accumulated mileage in km}
 }
 \value{
-It returns a numeric vector without "units"
+It returns a numeric vector representing the increase in emissions due to normal deterioring
 }
 \description{
-\code{emis_det} returns deterioration factors. The emission
+\code{\link{emis_det}} returns deterioration factors. The emission
 factors comes from the guidelines for developing emission factors of the
 EMEP/EEA air pollutant emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 This function subset an internal database of emission factors with each argument
 }
 \examples{
-\dontrun{
+{
 data(fkm)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
-cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = pckma[1:11]))
 }
 }
 \keyword{deterioration}
