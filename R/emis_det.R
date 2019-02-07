@@ -16,12 +16,18 @@
 #' @examples {
 #' data(fkm)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
-#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = pckma[1:11]))
+#' km <- units::set_units(pckma[1:11], km)
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = km))
 #' }
 emis_det <- function(po, cc, eu, km) {
   if (po %in% c("PRE", "V", "VI", "VIc")) {
     stop("No deterioration factors for this standards, yet")
   }
+  if(class(km) != "units"){
+    stop("km neeeds to has class 'units' in 'km'. Please, check package 'units'")
+  }
+  km <- as.numeric(km)
+
   if (po == "CO" & eu %in% c("I", "II") &  cc == "<=1400") {
     mc <- ifelse(km<120000, 1.523e-05*km+0.557, 2.39)
   } else if (po == "CO" & eu %in% c("I", "II") & cc == "1400_2000") {
