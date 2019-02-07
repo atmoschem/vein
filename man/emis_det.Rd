@@ -29,7 +29,8 @@ This function subset an internal database of emission factors with each argument
 {
 data(fkm)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
-(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = pckma[1:11]))
+km <- units::set_units(pckma[1:11], km)
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = km))
 }
 }
 \keyword{deterioration}
