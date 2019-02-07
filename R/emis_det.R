@@ -8,7 +8,7 @@
 #'
 #' @param po Character; Pollutant "CO", "NOx" or "HC"
 #' @param cc Character; Size of engine in cc converin "<=1400", "1400_2000" or ">2000"
-#' @param eu Character; Euro standard:  "I", "II", "III", "III", "IV"
+#' @param eu Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"
 #' @param km Numeric; accumulated mileage in km
 #' @return It returns a numeric vector representing the increase in emissions due to normal deterioring
 #' @keywords deterioration emission factors
@@ -20,9 +20,13 @@
 #' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = km))
 #' }
 emis_det <- function(po, cc, eu, km) {
-  if (po %in% c("PRE", "V", "VI", "VIc")) {
+  if (po %in% c("PRE")) {
     stop("No deterioration factors for this standards, yet")
   }
+  if (po %in% c("V", "VI", "VIc")) {
+    message("Assuming the same deterioration as euro III and IV")
+  }
+
   if(class(km) != "units"){
     stop("km neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }

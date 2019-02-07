@@ -11,7 +11,7 @@ emis_det(po, cc, eu, km)
 
 \item{cc}{Character; Size of engine in cc converin "<=1400", "1400_2000" or ">2000"}
 
-\item{eu}{Character; Euro standard:  "I", "II", "III", "III", "IV"}
+\item{eu}{Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"}
 
 \item{km}{Numeric; accumulated mileage in km}
 }
