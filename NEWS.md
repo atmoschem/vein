@@ -2,7 +2,11 @@ NEWS
 ===========
 
 
-# vein 0.6.2 (Release date: 2019-01-29)
+# vein 0.6.3 (Release date: 2019-02-07)
+
+- Fix milage equation of  fkm$KM_LDV_GNV. Fix #137
+
+## vein 0.6.2 (Release date: 2019-01-29)
 
 - fix some metals in ldv, m
 - Adds data with name of all pollutants covered.
