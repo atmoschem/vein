@@ -23,6 +23,7 @@
 #' }
 ef_ldv_cold <- function(v = "LDV", ta, cc, f, eu, p, k = 1, show.equation = FALSE){
   ef_ldv <- sysdata$cold
+  eu = as.character(eu)
   df <- ef_ldv[ef_ldv$VEH == v &
              ef_ldv$CC == cc &
              ef_ldv$FUEL == f &

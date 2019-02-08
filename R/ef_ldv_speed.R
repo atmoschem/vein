@@ -164,6 +164,7 @@
 ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1,
                          show.equation = FALSE){
   ef_ldv <- sysdata$ldv
+  eu = as.character(eu)
   df <- ef_ldv[ef_ldv$VEH == v &
                  ef_ldv$TYPE == t &
                  ef_ldv$CC == cc &
