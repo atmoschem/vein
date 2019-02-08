@@ -9,7 +9,7 @@ NEWS
 - Fix #139
 - Fix #140. Add base year in ef_cetesb.
 - Fix #141
-
+    
 ## vein 0.6.2 (Release date: 2019-01-29)
 
 - fix some metals in ldv, m
