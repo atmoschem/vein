@@ -12,7 +12,8 @@
 #' "LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT"
 #' "HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150", "M_G_150_500", "M_G_500"
 #' "M_FG_150", "M_FG_150_500", "M_FG_500". "M_FE_150", "M_FE_150_500",
-#' "M_FE_500", "CICLOMOTOR", "GNV
+#' "M_FE_500", "CICLOMOTOR", "GNV"
+#' @param year Numeric; Filter the emission factor to start from a specific base year.
 #' @param full Logical; To return a data.frame instead or a vector adding
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
 #' @return A vector of Emission Factor or a data.frame
@@ -35,9 +36,10 @@
 #' a <- ef_cetesb("CO", "PC_G")
 #' b <- ef_cetesb("R_10_25", "PC_G")
 #' }
-ef_cetesb <- function(p, veh, full = FALSE){
+ef_cetesb <- function(p, veh, year = 2016, full = FALSE){
   ef <- sysdata$cetesb
   ef <-  ef[ef$Age <= 50, ]
+  ef <- ef[ef$Year <= year, ]
   evapd <- c("D_20_35","D_10_25","D_0_15")
   evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
   pols <- as.character(unique(ef$Pollutant))

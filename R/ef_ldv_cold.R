@@ -5,13 +5,13 @@
 #' emission inventory guidebook
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 #'
-#' @param v Category vehicle:  "LDV"
-#' @param ta Ambient temperature. Monthly men can be used
-#' @param cc Size of engine in cc: "<=1400",  "1400_2000" or ">2000"
-#' @param f Type of fuel: "G", "D" or "LPG"
-#' @param eu Euro standard: "PRE", "I", "II", "III",  "IV", "V", "VI" or "VIc"
-#' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM"
-#' @param k Multiplication factor
+#' @param v Character; Category vehicle:  "LDV"
+#' @param ta Numeric; Ambient temperature. Monthly mean can be used
+#' @param cc Character; Size of engine in cc: "<=1400",  "1400_2000" or ">2000"
+#' @param f Character; Type of fuel: "G", "D" or "LPG"
+#' @param eu Character; Euro standard: "PRE", "I", "II", "III",  "IV", "V", "VI" or "VIc"
+#' @param p Character; Pollutant: "CO", "FC", "NOx", "HC" or "PM"
+#' @param k Numeric; Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
 #' @return an emission factor function which depends of the average speed V
 #' and ambient temperature. g/km

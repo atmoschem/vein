@@ -8,19 +8,19 @@ ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1,
   show.equation = FALSE)
 }
 \arguments{
-\item{v}{Category vehicle:  "LDV"}
+\item{v}{Character; Category vehicle:  "LDV"}
 
-\item{ta}{Ambient temperature. Monthly men can be used}
+\item{ta}{Numeric; Ambient temperature. Monthly mean can be used}
 
-\item{cc}{Size of engine in cc: "<=1400",  "1400_2000" or ">2000"}
+\item{cc}{Character; Size of engine in cc: "<=1400",  "1400_2000" or ">2000"}
 
-\item{f}{Type of fuel: "G", "D" or "LPG"}
+\item{f}{Character; Type of fuel: "G", "D" or "LPG"}
 
-\item{eu}{Euro standard: "PRE", "I", "II", "III",  "IV", "V", "VI" or "VIc"}
+\item{eu}{Character; Euro standard: "PRE", "I", "II", "III",  "IV", "V", "VI" or "VIc"}
 
-\item{p}{Pollutant: "CO", "FC", "NOx", "HC" or "PM"}
+\item{p}{Character; Pollutant: "CO", "FC", "NOx", "HC" or "PM"}
 
-\item{k}{Multiplication factor}
+\item{k}{Numeric; Multiplication factor}
 
 \item{show.equation}{Option to see or not the equation parameters}
 }
