@@ -110,7 +110,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_cetesb</span>(<span class='no'>p</span>, <span class='no'>veh</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_cetesb</span>(<span class='no'>p</span>, <span class='no'>veh</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,7 +131,11 @@ and R hot/warm running losses (g/trip).</p></td>
 "LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT"
 "HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150", "M_G_150_500", "M_G_500"
 "M_FG_150", "M_FG_150_500", "M_FG_500". "M_FE_150", "M_FE_150_500",
-"M_FE_500", "CICLOMOTOR", "GNV</p></td>
+"M_FE_500", "CICLOMOTOR", "GNV"</p></td>
+    </tr>
+    <tr>
+      <th>year</th>
+      <td><p>Numeric; Filter the emission factor to start from a specific base year.</p></td>
     </tr>
     <tr>
       <th>full</th>

@@ -6,6 +6,8 @@ NEWS
 
 - Fix milage equation of  fkm$KM_LDV_GNV. Fix #137.
 - Fix "V", "VI", "VIc". Fix #138
+- Fix #139
+- Fix #140. Add base year in ef_cetesb.
 
 ## vein 0.6.2 (Release date: 2019-01-29)
 
