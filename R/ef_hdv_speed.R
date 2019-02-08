@@ -130,6 +130,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
   p_pah <- as.character(unique(sysdata$hdv_pah$POLLUTANT))
   p_nmhc <- as.character(unique(sysdata$hdv_nmhc$POLLUTANT))
   p_pm <- as.character(unique(sysdata$hdv_pm$POLLUTANT))
+  eu = as.character(eu)
   if(p %in% p_cri){
     ef_hdv <- sysdata$hdv_criteria
   } else if(p %in%p_met){
