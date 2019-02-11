@@ -7,7 +7,7 @@
 emis_cold(veh, lkm, ef, efcold, beta, speed = 34, agemax = if
   (!inherits(x = veh, what = "list")) {     ncol(veh) } else {    
   ncol(veh[[1]]) }, profile, hour = nrow(profile), day = ncol(profile),
-  array = TRUE)
+  array = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
@@ -37,6 +37,8 @@ of the week}
 \item{array}{When FALSE produces a dataframe of the estimation. When TRUE
 expects a profile as a dataframe producing an array with dimensions
 (streets x columns x hours x days)}
+
+\item{verbose}{Logical; To show more information}
 }
 \value{
 EmissionsArray  g/h

@@ -2,6 +2,7 @@
 % Please edit documentation in R/emis.R
 \name{emis}
 \alias{emis}
+\alias{emis_hot}
 \title{Estimation of emissions}
 \usage{
 emis(veh, lkm, ef, speed = 34, agemax = ifelse(is.data.frame(veh),

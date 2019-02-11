@@ -3,6 +3,7 @@
 #' @description \code{\link{emis}} estimates vehicular emissions as the product of the
 #' vehicles on a road, length of the road, emission factor avaliated at the
 #' respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
+#' @aliases emis_hot
 #'
 #' @param veh "Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 #' as number of columns matching the age distribution of that ype of vehicle.
@@ -106,16 +107,21 @@ emis <- function (veh,
                   day = ncol(profile),
                   array = T,
                   verbose = FALSE) {
+  # Check units
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
-  #At least, on e of these
+  if(units(lkm)$numerator == "m" ){
+    stop("Units of lkm is 'm' ")
+  }
+  # At least, on e of these
   if(any(!class(ef) %in% c("list", "units", "EmissionFactorsList",
                            "EmissionFactors", "data.frame"))){
     stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
   }
-
+  # Checking sf
   if(any(class(veh) %in% "sf")){
+    if(verbose) message("converting sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }
 

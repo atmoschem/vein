@@ -68,7 +68,7 @@ mileage driven" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.4</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@ mileage driven</p>
     <pre class="usage"><span class='fu'>emis_cold</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>efcold</span>, <span class='no'>beta</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fl'>34</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='kw'>if</span>
   (!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/class'>inherits</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"list"</span>)) {     <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>veh</span>) } <span class='kw'>else</span> {
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]]) }, <span class='no'>profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>profile</span>), <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>profile</span>),
-  <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,6 +173,10 @@ of the week</p></td>
       <td><p>When FALSE produces a dataframe of the estimation. When TRUE
 expects a profile as a dataframe producing an array with dimensions
 (streets x columns x hours x days)</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; To show more information</p></td>
     </tr>
     </table>
     
