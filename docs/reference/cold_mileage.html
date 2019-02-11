@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>vein: Vehicular Emissions Inventories — vein-package • vein</title>
+<title>Fraction of mileage driven with a cold engine or catalizer below normal temperature — cold_mileage • vein</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,11 @@
 
 
 
-<meta property="og:title" content="vein: Vehicular Emissions Inventories — vein-package" />
+<meta property="og:title" content="Fraction of mileage driven with a cold engine or catalizer below normal temperature — cold_mileage" />
 
-<meta property="og:description" content="
-Elaboration of vehicular emissions inventories,
-    consisting in four stages, pre-processing activity data, preparing 
-    emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases. More details in Ibarra-Espinosa et al (2018) &amp;lt;doi:10.5194/gmd-11-2209-2018&amp;gt;. It is recommended to start with the function inventory, which requires that the user must know the vehicular composition of its study area,or in other words, the combination of of type of vehicles, size and fuel of the fleet." />
+<meta property="og:description" content="This function depends length of trip and on ambient temperature.
+From the guidelines  EMEP/EEA air pollutant emission inventory guidebook
+http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook" />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -103,44 +101,47 @@ Elaboration of vehicular emissions inventories,
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>vein: Vehicular Emissions Inventories</h1>
+    <h1>Fraction of mileage driven with a cold engine or catalizer below normal temperature</h1>
     
-    <div class="hidden name"><code>vein-package.Rd</code></div>
+    <div class="hidden name"><code>cold_mileage.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><img src='figures/logo.png' align='right' /></p>
-<p>Elaboration of vehicular emissions inventories,
-    consisting in four stages, pre-processing activity data, preparing 
-    emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases. More details in Ibarra-Espinosa et al (2018) &lt;doi:10.5194/gmd-11-2209-2018&gt;. It is recommended to start with the function inventory, which requires that the user must know the vehicular composition of its study area,or in other words, the combination of of type of vehicles, size and fuel of the fleet.</p>
+    <p>This function depends length of trip and on ambient temperature.
+From the guidelines  EMEP/EEA air pollutant emission inventory guidebook
+http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://atmoschem.github.io/vein/'>https://atmoschem.github.io/vein/</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/atmoschem/vein/issues/'>https://github.com/atmoschem/vein/issues/</a></p></li>
-</ul></div>
+    <pre class="usage"><span class='fu'>cold_mileage</span>(<span class='no'>ltrip</span>, <span class='no'>ta</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>ltrip</th>
+      <td><p>Numeric; Length of trip.</p></td>
+    </tr>
+    <tr>
+      <th>ta</th>
+      <td><p>Numeric; average monthly temperature</p></td>
+    </tr>
+    </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>{
+<span class='fu'>cold_mileage</span>(<span class='fl'>10</span>, <span class='fl'>0</span>)
+}</div><div class='output co'>#&gt; [1] 0.3929</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#see-also">See also</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    <p><strong>Maintainer</strong>: Sergio Ibarra-Espinosa <a href='mailto:sergio.ibarra@usp.br'>sergio.ibarra@usp.br</a> (0000-0002-3162-1905)</p>
-<p>Other contributors:</p><ul>
-<li><p>Daniel Schuch <a href='mailto:schuch@usp.br'>schuch@usp.br</a> (0000-0001-5977-4519) [contributor]</p></li>
-</ul>
-
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

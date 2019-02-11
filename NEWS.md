@@ -2,6 +2,22 @@ NEWS
 ===========
 
 
+# vein 0.6.4 (Release date: 2019-02-11)
+
+- Adds support for top-down estimation in emis_cold. Fix ##142.]
+This is, it returns a data-frame when profile is missing.
+What would happen if annaul activity is used when profile?
+WHat happen if this profile are normalized projections for future?
+The result would be an EmissionsArray with emissions projections.
+However, the emission factors would be contant, which would be incorrect
+due to emissions degradations. Thusm it would be a good idea start to think
+in a dedicated function for top-down estimations, which ideally, would cover
+cold start and evaporative cases. Also, what happens for automatic monthly estimation?
+Perhaps, 0.7.
+- Adds cold_mileage depending on length of trip and temperature, from 
+EMEP/EEA air pollutant emission inventory guidebook, p60.
+
+
 # vein 0.6.3 (Release date: 2019-02-07)
 
 - Fix milage equation of  fkm$KM_LDV_GNV. Fix #137.

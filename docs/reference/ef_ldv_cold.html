@@ -68,7 +68,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.4</span>
       </span>
     </div>
 
@@ -166,7 +166,16 @@ and ambient temperature. g/km</p>
     <pre class="examples"><div class='input'>{
 <span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
 <span class='fu'>ef1</span>(<span class='fl'>10</span>)
-}</div><div class='output co'>#&gt; [1] 2.35</div></pre>
+<span class='co'># lets create a matrix of ef cold at different speeds and temperatures</span>
+<span class='no'>te</span> <span class='kw'>&lt;-</span> -<span class='fl'>50</span>:<span class='fl'>50</span>
+<span class='no'>lf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>te</span>), <span class='kw'>function</span>(<span class='no'>i</span>){
+<span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='no'>te</span>[<span class='no'>i</span>], <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"I"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)(<span class='fl'>1</span>:<span class='fl'>120</span>)
+})
+<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>lf</span>)){
+<span class='no'>lf</span>[, <span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(<span class='no'>lf</span>[, <span class='no'>i</span>] <span class='kw'>&lt;</span> <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='no'>lf</span>[, <span class='no'>i</span>])
+}
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/filled.contour'>filled.contour</a></span>(<span class='no'>lf</span>, <span class='kw'>col</span><span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/lucky'>lucky</a></span>())
+}</div><div class='output co'>#&gt; Colour gradient: gacruxa_fuath_fuath_04, number: 2494</div><div class='img'><img src='ef_ldv_cold-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

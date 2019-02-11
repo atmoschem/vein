@@ -20,6 +20,15 @@
 #' @examples {
 #' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO")
 #' ef1(10)
+#' # lets create a matrix of ef cold at different speeds and temperatures
+#' te <- -50:50
+#' lf <- sapply(1:length(te), function(i){
+#' ef_ldv_cold(ta = te[i], cc = "<=1400", f ="G", eu = "I", p = "CO")(1:120)
+#' })
+#' for(i in 1:ncol(lf)){
+#' lf[, i] <- ifelse(lf[, i] < 0, 0, lf[, i])
+#' }
+#' filled.contour(lf, col= cptcity::lucky())
 #' }
 ef_ldv_cold <- function(v = "LDV", ta, cc, f, eu, p, k = 1, show.equation = FALSE){
   ef_ldv <- sysdata$cold
