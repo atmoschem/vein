@@ -129,17 +129,25 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This function is set so that values vaires between 0 and 1.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='fu'>cold_mileage</span>(<span class='fl'>10</span>, <span class='fl'>0</span>)
-}</div><div class='output co'>#&gt; [1] 0.3929</div></pre>
+<span class='no'>a</span> <span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></span>(<span class='fl'>1</span>:<span class='fl'>50</span>, <span class='kw'>function</span>(<span class='no'>i</span>){<span class='fu'>cold_mileage</span>(<span class='fl'>0</span>:<span class='fl'>40</span>, (<span class='fl'>1</span>:<span class='fl'>50</span>)[<span class='no'>i</span>])})
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/filled.contour'>filled.contour</a></span>(<span class='no'>a</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/cpt'>cpt</a></span>(<span class='fl'>2860</span>))
+}</div><div class='img'><img src='cold_mileage-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#note">Note</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
