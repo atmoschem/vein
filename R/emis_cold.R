@@ -25,11 +25,6 @@
 #' @param verbose Logical; To show more information
 #' @return EmissionsArray  g/h
 #' @export
-#' @note Actually dcold is not necessary, it would be enough to multiply
-#' an existing cold-start distribution with the daily profile, but it was added
-#' because it is important to clarify both, the data and the concepts.
-#' Hour and day will be deprecate because they can be infered from the profile
-#' matrix.
 #' @examples \dontrun{
 #' # Do not run
 #' data(net)
@@ -122,18 +117,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
 
     # top down
     if(missing(profile)){
-      if(verbose)  message("top down approach")
-      a <- lapply(1:ncol(veh), function(i){
-        beta*veh[, i] * as.numeric(lkm)[i] * as.numeric(ef)[i] * as.numeric(efcold)[i]
-      })
-      a <- as.data.frame(matrix(unlist(a),
-                                ncol = ncol(veh),
-                                nrow = nrow(veh)))
-
-      for (i  in 1:ncol(a) ) {
-        a[, i] <- as.numeric(a[, i]) * units::as_units("g")
-      }
-      return(a)
+      if(verbose)  message("For top down approach, use 'emis_cold_td'")
     }
 
     if(!missing(profile) & is.data.frame(profile)){

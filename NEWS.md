@@ -2,7 +2,14 @@ NEWS
 ===========
 
 
-# vein 0.6.4 (Release date: 2019-02-11)
+# vein 0.6.5 (Release date: 2019-02-12)
+
+- Created function emis_cold_td for top-down approach. Fix #142
+- no more time units,fix #118
+- Add new unit 'veh', for vehicles, dimensionless.
+- Deprecates classes Evaporative and EmissionsList.
+
+## vein 0.6.4 (Release date: 2019-02-11)
 
 - Adds support for top-down estimation in emis_cold. Fix ##142.]
 This is, it returns a data-frame when profile is missing.
@@ -18,7 +25,7 @@ Perhaps, 0.7.
 EMEP/EEA air pollutant emission inventory guidebook, p60.
 
 
-# vein 0.6.3 (Release date: 2019-02-07)
+## vein 0.6.3 (Release date: 2019-02-07)
 
 - Fix milage equation of  fkm$KM_LDV_GNV. Fix #137.
 - Fix "V", "VI", "VIc". Fix #138

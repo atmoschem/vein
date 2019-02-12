@@ -51,20 +51,20 @@ Emissions <- function(x, ...) {
   if ( is.matrix(x) ) {
     e <- as.data.frame(x)
     for(i in 1:ncol(e)){
-      e[,i] <- e[,i]*units::as_units("g h-1")
+      e[,i] <- e[,i]*units::as_units("g")
     }
     class(e) <- c("Emissions", class(e))
   } else if ( is.data.frame(x) ) {
     e <- x
     for(i in 1:ncol(x)){
-      e[,i] <- e[,i]*units::as_units("g h-1")
+      e[,i] <- e[,i]*units::as_units("g")
     }
     class(e) <- c("Emissions",class(x))
   } else if ( class(x) == "units" ) {
     e <- x
-    warning("Check units are g/h")
+    if(units(x)$numerator != "g") stop("units are not 'g'")
   } else if( class(x) == "numeric" | class(x) == "integer") {
-    e <- x*units::as_units("g h-1")
+    e <- x*units::as_units("g")
   }
   return(e)
 }

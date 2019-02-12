@@ -29,12 +29,9 @@ Objects of class "Vehicles" or "units"
 }
 \description{
 \code{Vehicles} returns a tranformed object with class "Vehicles" and units
- 1/h. The type of objects supported are of classes "matrix", "data.frame",
+ 'veh'. The type of objects supported are of classes "matrix", "data.frame",
  "numeric" and "array". If the object is a matrix it is converted to data.frame.
- If the object is "numeric" it is converted to class "units". The function
- \code{\link{emis_paved}} needs veh to be an array, therefore in this case,
- veh must be an array in the total fleet at each street and dimensions
- total fleet, hours and days
+ If the object is "numeric" it is converted to class "units".
 }
 \examples{
 {

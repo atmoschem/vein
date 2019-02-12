@@ -24,5 +24,5 @@
 #' eshotfi = 1)
 #' }
 hot_soak <- function(x,carb,p,eshotc,eswarmc,eshotfi) {
-  x*(carb*(p*eshotc+(1-p)*eswarmc)+(1-carb)*eshotfi)*units::as_units("g d-1")
+  Emissions(x*(carb*(p*eshotc+(1-p)*eswarmc)+(1-carb)*eshotfi))
 }

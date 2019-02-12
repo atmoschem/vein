@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>vein: Vehicular Emissions Inventories — vein-package • vein</title>
+<title>Estimation of cold start emissions with top-down approach — emis_cold_td • vein</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,16 @@
 
 
 
-<meta property="og:title" content="vein: Vehicular Emissions Inventories — vein-package" />
+<meta property="og:title" content="Estimation of cold start emissions with top-down approach — emis_cold_td" />
 
-<meta property="og:description" content="
-Elaboration of vehicular emissions inventories,
-    consisting in four stages, pre-processing activity data, preparing 
-    emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases. More details in Ibarra-Espinosa et al (2018) &amp;lt;doi:10.5194/gmd-11-2209-2018&amp;gt;. It is recommended to start with the function inventory, which requires that the user must know the vehicular composition of its study area,or in other words, the combination of of type of vehicles, size and fuel of the fleet." />
+<meta property="og:description" content="emis_cold_td estimates cld start emissions with
+a top-down appraoch. This is, annual or monthly emissions or region.
+Especifically, the emissions are esitmated for row of the simple feature (row
+of the spatial feature).
+In general was designed so that each simple feature is a region with
+different average monthly temperature.
+This funcion, as other in this package, adapts to the class of the input data.
+providing flexibility to the user." />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -103,44 +106,85 @@ Elaboration of vehicular emissions inventories,
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>vein: Vehicular Emissions Inventories</h1>
+    <h1>Estimation of cold start emissions with top-down approach</h1>
     
-    <div class="hidden name"><code>vein-package.Rd</code></div>
+    <div class="hidden name"><code>emis_cold_td.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><img src='figures/logo.png' align='right' /></p>
-<p>Elaboration of vehicular emissions inventories,
-    consisting in four stages, pre-processing activity data, preparing 
-    emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases. More details in Ibarra-Espinosa et al (2018) &lt;doi:10.5194/gmd-11-2209-2018&gt;. It is recommended to start with the function inventory, which requires that the user must know the vehicular composition of its study area,or in other words, the combination of of type of vehicles, size and fuel of the fleet.</p>
+    <p><code>emis_cold_td</code> estimates cld start emissions with
+a top-down appraoch. This is, annual or monthly emissions or region.
+Especifically, the emissions are esitmated for row of the simple feature (row
+of the spatial feature).</p>
+<p>In general was designed so that each simple feature is a region with
+different average monthly temperature.
+This funcion, as other in this package, adapts to the class of the input data.
+providing flexibility to the user.</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <pre class="usage"><span class='fu'>emis_cold_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>efcold</span>, <span class='no'>beta</span>, <span class='no'>pro_month</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>veh</th>
+      <td><p>"Vehicles" data-frame or spatial feature, wwhere columns are the
+ age distribution of that vehicle. and rows each simple feature or region.
+The number of rows is equal to the number of streets link</p></td>
+    </tr>
+    <tr>
+      <th>lkm</th>
+      <td><p>Numeric; mileage by the age of use of each vehicle.</p></td>
+    </tr>
+    <tr>
+      <th>ef</th>
+      <td><p>Numeric; emission factor with</p></td>
+    </tr>
+    <tr>
+      <th>efcold</th>
+      <td><p>Data.frame or list of data.frames. When it is a data.frame, each column is for each
+type of vehicle by age of use, rows are are each simple feature. When it is
+a list of data.frames, each element of the list it is a month of the year.
+efcold should be different for each simple feature, assuming different average temperature.</p></td>
+    </tr>
+    <tr>
+      <th>beta</th>
+      <td><p>Data.frame with the fraction of cold starts. The rows are the fraction
+for each spatial feature or subregion, the columns are the age of use of vehicle.</p></td>
+    </tr>
+    <tr>
+      <th>pro_month</th>
+      <td><p>Numeric; montly profile to distribuite annual mileage in each month.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; To show more information</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://atmoschem.github.io/vein/'>https://atmoschem.github.io/vein/</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/atmoschem/vein/issues/'>https://github.com/atmoschem/vein/issues/</a></p></li>
-</ul></div>
+    <p>Emissions data.frame</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"># NOT RUN {
+# Do not run
+# }
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
-          </ul>
-
-    <h2>Author</h2>
-    <p><strong>Maintainer</strong>: Sergio Ibarra-Espinosa <a href='mailto:sergio.ibarra@usp.br'>sergio.ibarra@usp.br</a> (0000-0002-3162-1905)</p>
-<p>Other contributors:</p><ul>
-<li><p>Daniel Schuch <a href='mailto:schuch@usp.br'>schuch@usp.br</a> (0000-0001-5977-4519) [contributor]</p></li>
-</ul>
-
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

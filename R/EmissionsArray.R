@@ -82,7 +82,7 @@ summary.EmissionsArray <- function(object, ...) {
       Min <- unlist(lapply(df, min))
       Max <- unlist(lapply(df, max))
       dfx <- data.frame(Mean, SD, Min, Max)
-      cat("Hourly emissions\n")
+      cat("Emissions\n")
       return(dfx)
     } else if (length(dim(e)) == 3 ){
       #TODO: improve
@@ -97,7 +97,6 @@ plot.EmissionsArray <- function(x, ...) {
   e <- x
   if (length(dim(e)) == 4 ) {
     df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
-    names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
   Mean <- colMeans(df)
   SD <- unlist(lapply(df, stats::sd))
   Min <- unlist(lapply(df, min))

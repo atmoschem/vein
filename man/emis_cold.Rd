@@ -49,13 +49,6 @@ vehicles on a road, length of the road, emission factor avaliated at the
 respective speed.The estimation considers beta parameter, the fraction of
 mileage driven
 }
-\note{
-Actually dcold is not necessary, it would be enough to multiply
-an existing cold-start distribution with the daily profile, but it was added
-because it is important to clarify both, the data and the concepts.
-Hour and day will be deprecate because they can be infered from the profile
-matrix.
-}
 \examples{
 \dontrun{
 # Do not run
