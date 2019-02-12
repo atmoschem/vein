@@ -1,12 +1,9 @@
 #' Construction function for class "Vehicles"
 #'
 #' @description \code{Vehicles} returns a tranformed object with class "Vehicles" and units
-#'  1/h. The type of objects supported are of classes "matrix", "data.frame",
+#'  'veh'. The type of objects supported are of classes "matrix", "data.frame",
 #'  "numeric" and "array". If the object is a matrix it is converted to data.frame.
-#'  If the object is "numeric" it is converted to class "units". The function
-#'  \code{\link{emis_paved}} needs veh to be an array, therefore in this case,
-#'  veh must be an array in the total fleet at each street and dimensions
-#'  total fleet, hours and days
+#'  If the object is "numeric" it is converted to class "units".
 #'
 #' @return Objects of class "Vehicles" or "units"
 #'
@@ -14,7 +11,7 @@
 #' @param object Object with class "Vehicles"
 #' @param ... ignored
 #' @param message message with average age
-#' @importFrom units as_units
+#' @importFrom units as_units install_symbolic_unit
 #'
 #' @rdname Vehicles
 #' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
@@ -31,23 +28,24 @@
 #' }
 #' @export
 Vehicles <- function(x, ...) {
+  units::install_symbolic_unit("veh", warn = F)
   if  ( is.matrix(x) ) {
     veh <- as.data.frame(x)
     for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i]*units::as_units("km h-1")
+      veh[,i] <- veh[,i]*units::as_units("veh")
     }
     class(veh) <- c("Vehicles",class(x))
   } else if ( is.data.frame(x) ) {
     veh <- x
     for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i]*units::as_units("h-1")
+      veh[,i] <- veh[,i]*units::as_units("veh")
     }
     class(veh) <- c("Vehicles",class(x))
   } else if ( class(x) == "units" ) {
     veh <- x
-    message("Check units are 1/h")
+    if(units(x)$numerator != "veh") stop("units are not 'veh'")
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
-    veh <- x*units::as_units("h-1")
+    veh <- x*units::as_units("veh")
   }
   return(veh)
 }
@@ -85,9 +83,9 @@ plot.Vehicles <- function(x,  ..., message = TRUE) {
   if ( inherits(veh, "data.frame") ) {
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
     Veh <- colSums(veh)
-    Veh <- Veh*units::as_units("h-1")
+    Veh <- Veh*units::as_units("veh")
     graphics::plot(Veh, type="l", ...)
-    graphics::abline(v = avage, col="red")
+    graphics::abline(v = avage, col = "red")
     if(message){
     cat("\nAverage = ",round(avage,2))
   }}

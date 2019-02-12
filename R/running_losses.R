@@ -25,6 +25,6 @@
 #' summary(ev)
 #' }
 running_losses <- function(x,carb,p,erhotc,erwarmc,erhotfi) {
-x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi)*units::as_units("g d-1")
+Emissions(x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi))
 }
 

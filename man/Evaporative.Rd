@@ -5,7 +5,7 @@
 \alias{print.Evaporative}
 \alias{summary.Evaporative}
 \alias{plot.Evaporative}
-\title{Construction function for class "Evaporative"}
+\title{DEPRECATED - Construction function for class "Evaporative"}
 \usage{
 Evaporative(x, ...)
 
@@ -27,13 +27,13 @@ Objects of class "Evaporative" or "units"
 }
 \description{
 \code{Evaporative} returns a tranformed object with class "Evaporative" and
-units g/day. This class represents the daily emissions presented by
+units g. This class represents the daily emissions presented by
 Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 it will be incorporated the techniques of Tier 3.
 }
 \examples{
-{
-ef1 <- ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
-ef1
+\dontrun{
+# do not run
+# DEPRECATED
 }
 }
