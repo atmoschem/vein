@@ -2,7 +2,7 @@
 % Please edit documentation in R/running_losses.R
 \name{running_losses}
 \alias{running_losses}
-\title{Estimation of average running losses evaporative emissions}
+\title{Estimation of average daily running losses evaporative emissions}
 \usage{
 running_losses(x, carb, p, erhotc, erwarmc, erhotfi)
 }

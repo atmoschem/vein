@@ -1,4 +1,4 @@
-#' Estimation of average running hot-soak evaporative emissions
+#' Estimation of average daily  hot-soak evaporative emissions
 #'
 #' @description \code{hot_soak} estimates of evaporative emissions from EMEP/EEA
 #' emisison guidelines

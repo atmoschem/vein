@@ -2,7 +2,12 @@ NEWS
 ===========
 
 
-# vein 0.6.5 (Release date: 2019-02-12)
+# vein 0.6.6 (Release date: 2019-02-14)
+
+- Fix #146. now dt of ef_evap accept numeric or character vectors.
+- Other arguments of ef_evap can be several.
+
+## vein 0.6.5 (Release date: 2019-02-12)
 
 - Created function emis_cold_td for top-down approach. Fix #142
 - no more time units,fix #118

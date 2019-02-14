@@ -11,8 +11,8 @@
 #' @param v Type of vehicles, "PC", "Motorcycles", "Motorcycles_2S" and "Moped"
 #' @param cc Size of engine in cc. PC "<=1400",  "1400_2000" and "2000"
 #' Motorcycles_2S:  "<=50". Motorcyces: ">50", "<250", "250_750" and ">750"
-#' @param dt Average daily temperature variation: "-5_10", "0_15", "10_25"
-#' and "20_35"
+#' @param dt Character or Numeric: Average monthly temperature variation: "-5_10", "0_15", "10_25"
+#' and "20_35". This argument can vector with several elements.
 #' @param ca Size of canister: "no" meaning no canister, "small", "medium" and
 #' "large"
 #' @param k multiplication factor
@@ -22,20 +22,54 @@
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
+#' @importFrom data.table rbindlist
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
-#' ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+#' ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+#' show = TRUE)
+#' ef_evap(ef = c("erhotc",  "eshotc"), v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+#' show = TRUE)
+#' temps <- 10:20
+#' ef_evap(ef = c("erhotc",  "eshotc"), v = "PC", cc = "<=1400", dt = temps, ca = "no",
 #' show = TRUE)
 #' }
-ef_evap <- function (ef, v, cc, dt, ca, k = 1, show = FALSE)
-{
+ef_evap <- function (ef, v, cc, dt, ca, k = 1, show = FALSE){
+  a <- (-5+10)/2
+  b <-   (0+15)/2
+  c <- (10+25)/2
+  d <- (20+35)/2
+  ta <- "-5_10"
+  tb <- "0_15"
+  tc <- "10_25"
+  td <- "20_35"
   ef_ev <- sysdata$ev
-  df <- ef_ev[ef_ev$ef == ef & ef_ev$veh == v & ef_ev$cc == cc &
-                ef_ev$dt == dt & ef_ev$canister == ca, ]
-  g <- df$g*k * units::as_units("g")
-  if (show == TRUE) {
-    print(df)
+  if(class(dt) == "factor"){
+    dt <-as.character(dt)
   }
-  return(g)
+  if(is.numeric(dt)){
+    dt = ifelse(dt < a, ta,
+                ifelse(dt >=a & dt < b, tb,
+                       ifelse(dt >= b & dt < c, tc, td
+                       )))
+  }
+
+  if(length(dt) == 1){
+    df <- ef_ev[ef_ev$ef %in% ef & ef_ev$veh %in% v & ef_ev$cc %in% cc &
+                  ef_ev$dt == dt & ef_ev$canister %in% ca, ]
+
+  } else {
+    df <- do.call("rbind",
+                  lapply(1:length(dt), function(i){
+                    ef_ev[ef_ev$ef %in% ef & ef_ev$veh %in% v & ef_ev$cc %in% cc &
+                            ef_ev$dt == dt[i] & ef_ev$canister %in% ca, ]
+                  }))
+
+  }
+  g <- Emissions(df$g*k)
+  if (show == TRUE) {
+    return(df)
+  } else {
+    return(g)
+  }
 }
