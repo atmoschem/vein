@@ -112,7 +112,7 @@ from EMEP/EEA emisison guidelines</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_evap</span>(<span class='no'>ef</span>, <span class='no'>v</span>, <span class='no'>cc</span>, <span class='no'>dt</span>, <span class='no'>ca</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_evap</span>(<span class='no'>ef</span>, <span class='no'>v</span>, <span class='no'>cc</span>, <span class='no'>dt</span>, <span class='no'>ca</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ltrip</span>, <span class='no'>kmday</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,7 +123,7 @@ from EMEP/EEA emisison guidelines</p>
 carburator, *eswarmc*: mean cold and warm-soak with carburator, eshotfi: mean
 hot-soak with fuel injection, *erhotc*: mean hot running losses with
 carburator, *erwarmc* mean cold and warm running losses, *erhotfi* mean hot
-running losses with fuel injection</p></td>
+running losses with fuel injection. Length of ef 1.</p></td>
     </tr>
     <tr>
       <th>v</th>
@@ -142,11 +142,22 @@ and "20_35". This argument can vector with several elements.</p></td>
     <tr>
       <th>ca</th>
       <td><p>Size of canister: "no" meaning no canister, "small", "medium" and
-"large"</p></td>
+"large".</p></td>
     </tr>
     <tr>
       <th>k</th>
       <td><p>multiplication factor</p></td>
+    </tr>
+    <tr>
+      <th>ltrip</th>
+      <td><p>Numeric; Length of trip. Experimental feature to conter g/trip
+and g/proced (assuming proced similar to trip) in g/km.</p></td>
+    </tr>
+    <tr>
+      <th>kmday</th>
+      <td><p>Numeric; average daily mileage. Experimental option
+to convert g/day in g/km.
+it is an information more solid than to know the average number of trips per day.</p></td>
     </tr>
     <tr>
       <th>show</th>
@@ -159,6 +170,11 @@ and "20_35". This argument can vector with several elements.</p></td>
     <p>emission factors in g/trip or g/proced. The object has class (g)
 but it order to know it is g/trip or g/proceed the argument show must by T</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Diurnal loses occur with daily temperature variations. Running loses
+occur during vehicles use. Hot soak emission occur following vehicles use.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
@@ -169,36 +185,29 @@ Environment Agency, Copenhagen, 2009</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='co'># Do not run</span>
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"ed"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
+<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
 <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"erhotc"</span>,  <span class='st'>"eshotc"</span>), <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"eshotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
+<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
 <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>temps</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>:<span class='fl'>20</span>
-<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"erhotc"</span>,  <span class='st'>"eshotc"</span>), <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>temps</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>temps</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
 <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt;         ef    units veh     cc    dt canister    g
-#&gt; 11  eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 14  erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 111 eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 141 erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 112 eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 142 erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 113 eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 143 erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 114 eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 144 erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 115 eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 145 erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 116 eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 146 erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 117 eshotc g/proced  PC &lt;=1400 10_25       no 3.40
-#&gt; 147 erhotc   g/trip  PC &lt;=1400 10_25       no 3.25
-#&gt; 4   eshotc g/proced  PC &lt;=1400 20_35       no 5.65
-#&gt; 7   erhotc   g/trip  PC &lt;=1400 20_35       no 5.42
-#&gt; 41  eshotc g/proced  PC &lt;=1400 20_35       no 5.65
-#&gt; 71  erhotc   g/trip  PC &lt;=1400 20_35       no 5.42
-#&gt; 42  eshotc g/proced  PC &lt;=1400 20_35       no 5.65
-#&gt; 72  erhotc   g/trip  PC &lt;=1400 20_35       no 5.42</div></pre>
+}</div><div class='output co'>#&gt;         ef  units veh     cc    dt canister        g
+#&gt; 14  erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 141 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 142 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 143 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 144 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 145 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 146 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 147 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
+#&gt; 7   erhotc g/trip  PC &lt;=1400 20_35       no 5.42 [g]
+#&gt; 71  erhotc g/trip  PC &lt;=1400 20_35       no 5.42 [g]
+#&gt; 72  erhotc g/trip  PC &lt;=1400 20_35       no 5.42 [g]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -206,6 +215,8 @@ Environment Agency, Copenhagen, 2009</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#references">References</a></li>
       

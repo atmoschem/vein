@@ -1,0 +1,34 @@
+---
+title: "Traffic"
+author: "SergioIbarra"
+date: "14 de fevereiro de 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Traffic flow
+
+```{r}
+library(vein)
+library(sf)
+library(cptcity)
+data(net)
+net <- st_as_sf(net)
+plot(net["ldv"], axes = T, pal = lucky(colorRampPalette = T))
+```
+
+
+## Speed
+```{r}
+data(net)
+data(pc_profile)
+pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+df <- as.matrix(netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm))
+sequ <- seq(min(df), max(df))
+filled.contour(df, col = cpt(pal = "mpl_viridis", n = 20))
+filled.contour(df, col = lucky(n = 20), main = "I'm feeling lucky!")
+```
+
