@@ -44,6 +44,13 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, show = FALSE){
   tc <- "10_25"
   td <- "20_35"
   ef_ev <- sysdata$ev
+  efs <- as.character(unique(ef_ev$ef))
+  if(any(!ef %in% efs)) {
+    cat("Please, select any of: \n")
+    cat(efs)
+    cat("\n")
+    stop()
+  }
   if(class(dt) == "factor"){
     dt <-as.character(dt)
   }
