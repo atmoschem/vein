@@ -2,7 +2,7 @@
 % Please edit documentation in R/hot_soak.R
 \name{hot_soak}
 \alias{hot_soak}
-\title{Estimation of average running hot-soak evaporative emissions}
+\title{Estimation of average daily  hot-soak evaporative emissions}
 \usage{
 hot_soak(x, carb, p, eshotc, eswarmc, eshotfi)
 }

@@ -1,4 +1,4 @@
-#' Estimation of average running losses evaporative emissions
+#' Estimation of average daily running losses evaporative emissions
 #'
 #' @description \code{running_losses} estimates evaporative emissions from
 #' EMEP/EEA emisison guidelines

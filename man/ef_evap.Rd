@@ -18,8 +18,8 @@ running losses with fuel injection}
 \item{cc}{Size of engine in cc. PC "<=1400",  "1400_2000" and "2000"
 Motorcycles_2S:  "<=50". Motorcyces: ">50", "<250", "250_750" and ">750"}
 
-\item{dt}{Average daily temperature variation: "-5_10", "0_15", "10_25"
-and "20_35"}
+\item{dt}{Character or Numeric: Average monthly temperature variation: "-5_10", "0_15", "10_25"
+and "20_35". This argument can vector with several elements.}
 
 \item{ca}{Size of canister: "no" meaning no canister, "small", "medium" and
 "large"}
@@ -37,9 +37,14 @@ but it order to know it is g/trip or g/proceed the argument show must by T
 from EMEP/EEA emisison guidelines
 }
 \examples{
-\dontrun{
+{
 # Do not run
-ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+show = TRUE)
+ef_evap(ef = c("erhotc",  "eshotc"), v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+show = TRUE)
+temps <- 10:20
+ef_evap(ef = c("erhotc",  "eshotc"), v = "PC", cc = "<=1400", dt = temps, ca = "no",
 show = TRUE)
 }
 }
