@@ -4,14 +4,14 @@
 \alias{ef_evap}
 \title{Evaporative emission factor}
 \usage{
-ef_evap(ef, v, cc, dt, ca, k = 1, show = FALSE)
+ef_evap(ef, v, cc, dt, ca, k = 1, ltrip, kmday, show = FALSE)
 }
 \arguments{
 \item{ef}{Name of  evaporative emission factor as *eshotc*: mean hot-soak with
 carburator, *eswarmc*: mean cold and warm-soak with carburator, eshotfi: mean
 hot-soak with fuel injection, *erhotc*: mean hot running losses with
 carburator, *erwarmc* mean cold and warm running losses, *erhotfi* mean hot
-running losses with fuel injection}
+running losses with fuel injection. Length of ef 1.}
 
 \item{v}{Type of vehicles, "PC", "Motorcycles", "Motorcycles_2S" and "Moped"}
 
@@ -22,9 +22,16 @@ Motorcycles_2S:  "<=50". Motorcyces: ">50", "<250", "250_750" and ">750"}
 and "20_35". This argument can vector with several elements.}
 
 \item{ca}{Size of canister: "no" meaning no canister, "small", "medium" and
-"large"}
+"large".}
 
 \item{k}{multiplication factor}
+
+\item{ltrip}{Numeric; Length of trip. Experimental feature to conter g/trip
+and g/proced (assuming proced similar to trip) in g/km.}
+
+\item{kmday}{Numeric; average daily mileage. Experimental option
+to convert g/day in g/km.
+it is an information more solid than to know the average number of trips per day.}
 
 \item{show}{when TRUE shows row of table with respective emission factor.}
 }
@@ -36,15 +43,23 @@ but it order to know it is g/trip or g/proceed the argument show must by T
 \code{\link{ef_evap}} is a lookup table with tier 2 evaporative emission factors
 from EMEP/EEA emisison guidelines
 }
+\note{
+Diurnal loses occur with daily temperature variations. Running loses
+occur during vehicles use. Hot soak emission occur following vehicles use.
+}
 \examples{
 {
 # Do not run
+ef_evap(ef = "ed", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+show = TRUE)
 ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 show = TRUE)
-ef_evap(ef = c("erhotc",  "eshotc"), v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+ef_evap(ef = "eshotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+show = TRUE)
+ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 show = TRUE)
 temps <- 10:20
-ef_evap(ef = c("erhotc",  "eshotc"), v = "PC", cc = "<=1400", dt = temps, ca = "no",
+ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = temps, ca = "no",
 show = TRUE)
 }
 }

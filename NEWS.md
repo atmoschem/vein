@@ -6,6 +6,8 @@ NEWS
 
 - Fix #146. now dt of ef_evap accept numeric or character vectors.
 - Other arguments of ef_evap can be several.
+- Add stop message on ef_evap.
+- Add argument of ltrip to convert g/trip in g/km and kmday to convert g/day to g/km
 
 ## vein 0.6.5 (Release date: 2019-02-12)
 
