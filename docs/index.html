@@ -207,8 +207,38 @@
 <p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
 <p>Using <a href="https://atmoschem.github.io/vein/reference/inventory.html">inventory</a></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vein)
-<span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(), <span class="st">"YourCity"</span>), <span class="dt">show.dir =</span> T,
+<span class="kw"><a href="reference/inventory.html">inventory</a></span>(<span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/tempfile">tempdir</a></span>(), <span class="st">"YourCity"</span>), 
+          <span class="dt">vehcomp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dt">PC =</span> <span class="dv">1</span>, <span class="dt">LCV =</span> <span class="dv">1</span>, <span class="dt">HGV =</span> <span class="dv">1</span>, <span class="dt">BUS =</span> <span class="dv">1</span>, <span class="dt">MC =</span> <span class="dv">1</span>),
+          <span class="dt">show.dir =</span> T, 
           <span class="dt">show.scripts =</span> T)</code></pre></div>
+<pre><code>files at /tmp/RtmpEorTs8/YourCity
+Directories:
+ [1] "/tmp/RtmpEorTs8/YourCity"              
+ [2] "/tmp/RtmpEorTs8/YourCity/ef"           
+ [3] "/tmp/RtmpEorTs8/YourCity/emi"          
+ [4] "/tmp/RtmpEorTs8/YourCity/emi/BUS_01"  
+ [5] "/tmp/RtmpEorTs8/YourCity/emi/HGV_01"   
+ [6] "/tmp/RtmpEorTs8/YourCity/emi/LCV_01"  
+ [7] "/tmp/RtmpEorTs8/YourCity/emi/MC_01"    
+ [8] "/tmp/RtmpEorTs8/YourCity/emi/PC_01"   
+ [9] "/tmp/RtmpEorTs8/YourCity/est"          
+ [10] "/tmp/RtmpEorTs8/YourCity/images"       
+ [11] "/tmp/RtmpEorTs8/YourCity/network"      
+ [12] "/tmp/RtmpEorTs8/YourCity/post"        
+ [13] "/tmp/RtmpEorTs8/YourCity/post/df"      
+ [14] "/tmp/RtmpEorTs8/YourCity/post/grids"   
+ [15] "/tmp/RtmpEorTs8/YourCity/post/streets" 
+ [16] "/tmp/RtmpEorTs8/YourCity/profiles"    
+ [17] "/tmp/RtmpEorTs8/YourCity/veh"         
+Scripts:
+ [1] "est/BUS_01_input.R" 
+ [2] "est/HGV_01_input.R" 
+ [3] "est/LCV_01_input.R" 
+ [4] "est/MC_01_input.R"  
+ [5] "est/PC_01_input.R"  
+ [6] "main.R"             
+ [7] "post.R"            
+ [8] "traffic.R" </code></pre>
 <p>Please, read the examples in the documentation of each function and run the demo.</p>
 <div id="examples-with-traffic-data" class="section level3">
 <h3 class="hasAnchor">
@@ -223,12 +253,15 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"net"</span>)
 PC_E25_<span class="dv">1400</span> &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_ldv.html">age_ldv</a></span>(<span class="dt">x =</span> net<span class="op">$</span>ldv, <span class="dt">name =</span> <span class="st">"PC_E25_1400"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(PC_E25_<span class="dv">1400</span>, <span class="dt">xlab =</span> <span class="st">"age of use"</span>)</code></pre></div>
+<div class="figure">
+<img src="https://atmoschem.github.io/vein/reference/age_ldv-1.png">
+</div>
 <p>If you want to know the vehicles per street and by age of use, just add the net. Age functions now returns ‘sf’ objects if the net argument is present.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">PC_E25_1400net &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_ldv.html">age_ldv</a></span>(<span class="dt">x =</span> net<span class="op">$</span>ldv, <span class="dt">name =</span> <span class="st">"PC_E25_1400"</span>, <span class="dt">net =</span> net)
-sp<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sp/topics/spplot">spplot</a></span>(<span class="kw">as</span>(PC_E25_1400net, <span class="st">"Spatial"</span>),
-       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"PC_E25_1400_1"</span>, <span class="st">"PC_E25_1400_9"</span>),
-       <span class="dt">main =</span> <span class="st">"PC by age of use"</span>, <span class="dt">scales =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">Draw =</span> T),
-       <span class="dt">col.regions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rev">rev</a></span>(cptcity<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(PC_E25_1400net)</code></pre></div>
+<div class="figure">
+<img src="https://atmoschem.github.io/vein/reference/age_ldv-2.png">
+</div>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/temp_fact.html">temp_fact</a></li>
 <li><a href="https://atmoschem.github.io/vein/reference/netspeed.html">netspeed</a></li>
@@ -238,8 +271,10 @@ sp<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"pc_profile"</span>)
 pc_week &lt;-<span class="st"> </span><span class="kw"><a href="reference/temp_fact.html">temp_fact</a></span>(net<span class="op">$</span>ldv<span class="op">+</span>net<span class="op">$</span>hdv, pc_profile)
 dfspeed &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspeed.html">netspeed</a></span>(pc_week, net<span class="op">$</span>ps, net<span class="op">$</span>ffs, net<span class="op">$</span>capacity, net<span class="op">$</span>lkm, <span class="dt">alpha =</span> <span class="fl">1.5</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(dfspeed)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(dfspeed, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"Speed [km/h]"</span>) </code></pre></div>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(dfspeed)</code></pre></div>
+<div class="figure">
+<img src="https://atmoschem.github.io/vein/reference/netspeed-1.png">
+</div>
 <p>If you want ot check the speed at different hours by street, just add net:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dfspeednet &lt;-<span class="st"> </span><span class="kw"><a href="reference/netspeed.html">netspeed</a></span>(pc_week, net<span class="op">$</span>ps, net<span class="op">$</span>ffs, net<span class="op">$</span>capacity, net<span class="op">$</span>lkm,
                        <span class="dt">alpha =</span> <span class="fl">1.5</span>, <span class="dt">net =</span> net)
@@ -263,6 +298,9 @@ ef1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/ef_ldv_spe
 <span class="dt">p =</span> <span class="st">"CO"</span>)
 efs &lt;-<span class="st"> </span><span class="kw"><a href="reference/EmissionFactors.html">EmissionFactors</a></span>(<span class="kw">ef1</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>))
 <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="reference/Speed.html">Speed</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">150</span>), efs, <span class="dt">xlab =</span> <span class="st">"speed[km/h]"</span>, <span class="dt">type =</span> <span class="st">"b"</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
+<div class="figure">
+<img src="https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png">
+</div>
 </div>
 <div id="estimation-of-emissions" class="section level3">
 <h3 class="hasAnchor">
@@ -277,7 +315,7 @@ lef &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumen
           <span class="dt">eu =</span> euro[i], <span class="dt">p =</span> <span class="st">"CO"</span>, <span class="dt">show.equation =</span> <span class="ot">FALSE</span>) })
 E_CO &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis.html">emis</a></span>(<span class="dt">veh =</span> PC_E25_<span class="dv">1400</span>, <span class="dt">lkm =</span> net<span class="op">$</span>lkm, <span class="dt">ef =</span> lef, <span class="dt">speed =</span> dfspeed,
              <span class="dt">profile =</span> pc_profile)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(E_CO, <span class="dt">xlab =</span> <span class="st">"Hours"</span>, <span class="dt">ylab =</span> <span class="st">"[g/h]"</span>)</code></pre></div>
+<span class="co">#plot(E_CO, xlab = "Hours", ylab = "[g/h]")</span></code></pre></div>
 </div>
 <div id="post-emissions" class="section level3">
 <h3 class="hasAnchor">
@@ -307,10 +345,14 @@ E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/e
 E_CO_STREETSnet &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>,
                              <span class="dt">net =</span> net)
 g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(g)
 E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)
-sp<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sp/topics/spplot">spplot</a></span>(<span class="kw">as</span>(E_CO_g, <span class="st">"Spatial"</span>),
-       <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"V1"</span>, <span class="st">"V9"</span>), <span class="dt">scales =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">Draw =</span> T),
-       <span class="dt">col.regions =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rev">rev</a></span>(cptcity<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/cptcity/topics/cpt">cpt</a></span>()))</code></pre></div>
+<span class="co">#sp::spplot(as(E_CO_g, "Spatial"),</span>
+<span class="co">#       c("V1", "V9"), scales = list(Draw = T),</span>
+<span class="co">#       col.regions = rev(cptcity::cpt()))</span></code></pre></div>
+<div class="figure">
+<img src="https://atmoschem.github.io/vein/reference/make_grid-1.png">
+</div>
 <p><strong>At this step, you can feed you grid with emissions from other sources!</strong></p>
 </div>
 </div>

@@ -8,6 +8,9 @@ NEWS
 - Other arguments of ef_evap can be several.
 - Add stop message on ef_evap.
 - Add argument of ltrip to convert g/trip in g/km and kmday to convert g/day to g/km
+- Add new emis_evap function, and the older now has the name emis_evap2.
+- Deprecates running_losses and hot_soak and replaced by the new emis_evap
+function.
 
 ## vein 0.6.5 (Release date: 2019-02-12)
 

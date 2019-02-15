@@ -1,5 +1,4 @@
 #' DEPRECATED Construction function for class "EmissionsList"
-#' Not exported
 #'
 #' @description \code{EmissionsList} returns a tranformed object with class "EmissionsList".
 #'
@@ -8,45 +7,27 @@
 #' @param x object with class "EmissionList"
 #' @param object object with class "EmissionList"
 #' @param ... ignored
-#' @rdname EmissionsList
 #' @aliases EmissionsList print.EmissionsList summary.EmissionsList
 #' plot.EmissionsList
+#' @name vein-deprecated
+#' @seealso \code{\link{vein-deprecated}}
+#' @keywords internal
+NULL
+
+#' @rdname vein-deprecated
+#'
 #' @export
 #' @examples \dontrun{
 #' # do not run
 #' # DEPRECATED
 #' }
 EmissionsList <- function(x,  ...) {
-  e <- x
-  if ( !is.list(e) ) {
-    stop("Class of e must b 'list'")
-  } else if ( is.list(e) && is.numeric(e[[1]]) ){
-    ex <-  lapply(1:length(e), function(i)  {
-      e[[i]] <- e[[i]]*units::as_units("g h-1")
-    })
-    class(ex) <- c("EmissionsList",class(e))
-  } else if ( is.list(e) && is.list(e[[1]]) && is.numeric(e[[1]][[1]]) ) {
-    ex <-  lapply(1:length(e), function(i)  {
-      lapply(1:length(e[[1]]), function(j)  {
-        e[[i]][[j]] <- e[[i]][[j]]*units::as_units("g h-1")
-      }) })
-    class(ex) <- c("EmissionsList",class(e))
-    class(ex[[1]]) <- c("EmissionsList",class(e))
-  } else if ( is.list(e) && is.list(e[[1]]) && is.list(e[[1]][[1]] ) &&
-              is.numeric(e[[1]][[1]][[1]]) ){
-    ex <-  lapply(1:length(e), function(i)  {
-      lapply(1:length(e[[1]]), function(j) {
-        lapply(1:length(e[[1]][[1]]), function(k) {
-          e[[i]][[j]][[k]] <- e[[i]][[j]][[k]]*units::as_units("g h-1")
-        }) }) })
-    class(ex[[1]][[1]]) <- c("EmissionsList",class(e))
-    class(ex[[1]]) <- c("EmissionsList",class(e))
-    class(ex) <- c("EmissionsList",class(e))
-  }
-  return(ex)
+  .Deprecated("EmissionsList")
+  "EmissionsList"
 }
 
-#' @rdname EmissionsList
+
+#' @rdname vein-deprecated
 #' @method print EmissionsList
 #' @export
 print.EmissionsList <- function(x,  ...) {
@@ -81,12 +62,12 @@ print.EmissionsList <- function(x,  ...) {
 }
 
 
-#' @rdname EmissionsList
+#' @rdname vein-deprecated
 #' @method summary EmissionsList
 #' @export
 summary.EmissionsList <- function(object, ...) {
   e <- object
- if ( is.list(e) && is.numeric(e[[1]]) ){ #dont work
+  if ( is.list(e) && is.numeric(e[[1]]) ){ #dont work
     cat("This EmissionsList has\n", length(e),
         "vehicle categories\n")
     cat(length(e[[1]]), "streets\n")
@@ -109,7 +90,7 @@ summary.EmissionsList <- function(object, ...) {
   }
 }
 
-#' @rdname EmissionsList
+#' @rdname vein-deprecated
 #' @method plot EmissionsList
 #' @export
 plot.EmissionsList <- function(x, ...) {

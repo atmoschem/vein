@@ -1,136 +1,121 @@
 #' Estimation of evaporative emissions
 #'
-#' @description \code{emis_evap} performs the estimation of evaporative emissions
-#' from EMEP/EEA emisison guidelines with Tier 2.
+#' @description \code{emis_evap} estimates evaporative emissions from
+#' EMEP/EEA emisison guidelines
 #'
-#' @param veh Total number of vehicles by age of use. If is a lsit of 'Vehicles'
-#' data-frames, it will sum the columns of the eight element of the list
-#' representing the 8th hour. It was chosen this hour because it is morning rush
-#' hour but the user can adapt the data to this function
-#' @param name Character of type of vehicle
-#' @param size Character of size of vehicle
-#' @param fuel Character of fuel of vehicle
-#' @param aged Age distribution vector. E.g.: 1:40
-#' @param nd4 Number of days with temperature between 20 and 35 celcius degrees
-#' @param nd3 Number of days with temperature between 10 and 25 celcius degrees
-#' @param nd2 Number of days with temperature between 0 and 15 celcius degrees
-#' @param nd1 Number of days with temperature between -5 and 10 celcius degrees
-#' @param hs_nd4 average daily hot-soak evaporative emissions for days with
-#' temperature between 20 and 35 celcius degrees
-#' @param hs_nd3 average daily hot-soak evaporative emissions for days with
-#' temperature between 10 and 25 celcius degrees
-#' @param hs_nd2 average daily hot-soak evaporative emissions for days with
-#' temperature between 0 and 15 celcius degrees
-#' @param hs_nd1 average daily hot-soak evaporative emissions for days with
-#' temperature between -5 and 10 celcius degrees
-#' @param rl_nd4 average daily running losses evaporative emissions for days with
-#' temperature between 20 and 35 celcius degrees
-#' @param rl_nd3 average daily running losses evaporative emissions for days with
-#' temperature between 10 and 25 celcius degrees
-#' @param rl_nd2 average daily running losses evaporative emissions for days with
-#' temperature between 0 and 15 celcius degrees
-#' @param rl_nd1 average daily running losses evaporative emissions for days with
-#' temperature between -5 and 10 celcius degrees
-#' @param d_nd4 average daily diurnal evaporative emissions for days with
-#' temperature between 20 and 35 celcius degrees
-#' @param d_nd3 average daily diurnal evaporative emissions for days with
-#' temperature between 10 and 25 celcius degrees
-#' @param d_nd2 average daily diurnal evaporative emissions for days with
-#' temperature between 0 and 15 celcius degrees
-#' @param d_nd1 average daily diurnal evaporative emissions for days with
-#' temperature between -5 and 10 celcius degrees
-#' @return dataframe of emission estimation in grams/days
+#' @param veh Numeric or data.frame of Vehicles with untis 'veh'.
+#' @param x Numeric which can be either, daily mileage by age of use
+#' with units 'lkm', number of trips or number of proc. When it
+#' has units 'lkm', all the emission factors must be in 'g/km'.
+#' When ed is in g/day, x it is the number of days (without units).
+#' When hotfi, hotc or warmc are in g/trip, x it is the number of trips (without units).
+#' When hotfi, hotc or warmc are in g/proced, x it is the number of proced (without units).
+#' @param ed average daily evaporative emisisons. If x has units 'lkm', the units
+#' of ed must be 'g/km', other case, this are simply g/day (without units)
+#' @param hotfi average hot running losses or soak evaporative factor
+#' for vehicles with fuel injection and returnless fuel systems.
+#'  If x has units 'lkm', the units of ed must be 'g/km',
+#'  other case, this are simply g/trip or g/proced
+#' @param carb fraction of gasoline vehicles with carburator or fuel return system.
+#' @param p Fraction of trips finished with hot engine
+#' @param hotc average running losses or soak evaporative factor for vehicles with
+#' carburator or fuel return system
+#' for vehicles with fuel injection and returnless fuel systems.
+#'  If x has units 'lkm', the units of ed must be 'g/km',
+#' @param warmc average cold and warm running losses or soak evaporative factor
+#' for vehicles with carburator or fuel return system
+#' for vehicles with fuel injection and returnless fuel systems.
+#'  If x has units 'lkm', the units of ed must be 'g/km',
+#' @return numeric vector of emission estimation in grams
+#' @importFrom units as_units
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
 #' @export
 #' @examples {
-#' data(net)
-#' PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
-#'           133833,138441,142682,171029,151048,115228,98664,126444,101027,
-#'           84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
-#'           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
-#' veh <- data.frame(PC_G = PC_G)
-#' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
-#' ef1 <- ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
-#' dfe <- emis_evap(veh = pc1,
-#'                  name = "PC",
-#'                  size = "<=1400",
-#'                  fuel = "G",
-#'                  aged = 1:ncol(pc1),
-#'                  nd4 = 10,
-#'                  nd3 = 4,
-#'                  nd2 = 2,
-#'                  nd1 = 1,
-#'                  hs_nd4 = ef1*1:ncol(pc1),
-#'                  hs_nd3 = ef1*1:ncol(pc1),
-#'                  hs_nd2 = ef1*1:ncol(pc1),
-#'                  hs_nd1 = ef1*1:ncol(pc1),
-#'                  d_nd4 = ef1*1:ncol(pc1),
-#'                  d_nd3 = ef1*1:ncol(pc1),
-#'                  d_nd2 = ef1*1:ncol(pc1),
-#'                  d_nd1 = ef1*1:ncol(pc1),
-#'                  rl_nd4 = ef1*1:ncol(pc1),
-#'                  rl_nd3 = ef1*1:ncol(pc1),
-#'                  rl_nd2 = ef1*1:ncol(pc1),
-#'                  rl_nd1 = ef1*1:ncol(pc1))
-#' lpc <- list(pc1, pc1, pc1, pc1,
-#'             pc1, pc1, pc1, pc1)
-#' dfe <- emis_evap(veh = lpc,
-#'                  name = "PC",
-#'                  size = "<=1400",
-#'                  fuel = "G",
-#'                  aged = 1:ncol(pc1),
-#'                  nd4 = 10,
-#'                  nd3 = 4,
-#'                  nd2 = 2,
-#'                  nd1 = 1,
-#'                  hs_nd4 = ef1*1:ncol(pc1),
-#'                  hs_nd3 = ef1*1:ncol(pc1),
-#'                  hs_nd2 = ef1*1:ncol(pc1),
-#'                  hs_nd1 = ef1*1:ncol(pc1),
-#'                  d_nd4 = ef1*1:ncol(pc1),
-#'                  d_nd3 = ef1*1:ncol(pc1),
-#'                  d_nd2 = ef1*1:ncol(pc1),
-#'                  d_nd1 = ef1*1:ncol(pc1),
-#'                  rl_nd4 = ef1*1:ncol(pc1),
-#'                  rl_nd3 = ef1*1:ncol(pc1),
-#'                  rl_nd2 = ef1*1:ncol(pc1),
-#'                  rl_nd1 = ef1*1:ncol(pc1))
+#' (a <- Vehicles(1:10))
+#' (lkm <- units::as_units(1:10, "km"))
+#' (ef <- EmissionFactors(1:10))
+#' (ev <- emis_evap(veh = a, x = lkm, hotfi = ef))
 #' }
 emis_evap <- function(veh,
-                      name, size, fuel, aged,
-                      nd4, nd3, nd2, nd1,
-                      hs_nd4, hs_nd3, hs_nd2, hs_nd1,
-                      rl_nd4, rl_nd3, rl_nd2, rl_nd1,
-                      d_nd4, d_nd3, d_nd2, d_nd1) {
-  if (missing(veh) | is.null(veh)) {
-    stop (print("Missing vehicles"))
-  } else {
-    veh <- if (inherits(veh, "list")){colSums(veh[[8]])
-    } else { colSums(veh) }
-  df <- data.frame(name = rep(name, max(aged)*4*3),
-                   size = rep(size, max(aged)*4*3),
-                   age = rep(aged, 4*3),
-                   evaporative = c(rep("Hot Soak", 4*max(aged)),
-                                   rep("Running Losses", 4*max(aged)),
-                                   rep("Diurnal", 4*max(aged))),
-                   g = c(hs_nd4, hs_nd3, hs_nd2, hs_nd1,
-                       rl_nd4, rl_nd3, rl_nd2, rl_nd1,
-                       d_nd4, d_nd3, d_nd2, d_nd1)*veh,
-                   days = rep(c(rep(nd4,max(aged)),
-                                rep(nd3,max(aged)),
-                                rep(nd2,max(aged)),
-                                rep(nd1,max(aged))),3),
-                   Temperature = rep(c(rep("20_35",max(aged)),
-                                rep("10_25",max(aged)),
-                                rep("0_10",max(aged)),
-                                rep("-5_10",max(aged))),3))
-  message(paste0("Evaporative NMHC emissions of ",
-                 name, "_", size, " are ",
-                 round(sum(df$g*df$days, na.rm = T)/1000000,2),
-                 " t/(time-lapse)"))
+                      x,
+                      ed,
+                      hotfi, hotc, warmc,
+                      carb = 0, p) { # hot or warm soak
+  # Check y
+  if(!missing(x)){
+    if(units(x)$numerator == "km"){
+      # ed
+      if(!missing(ed)){
+        if(units(ed)$numerator != "g" | units(ed)$denominator != "km"){
+          stop("Emission factor must be g/km ")
+        }
+      }
+      # hotfi
+      if(!missing(hotfi)){
+        if(units(hotfi)$numerator != "g" | units(hotfi)$denominator != "km"){
+          stop("Emission factor must be g/km ")
+        }
+      }
+      # hotc
+      if(!missing(hotc)){
+        if(units(hotc)$numerator != "g" | units(hotc)$denominator != "km"){
+          stop("Emission factor must be g/km ")
+        }
+      }
+      # warmc
+      if(!missing(warmc)){
+        if(units(warmc)$numerator != "g" | units(warmc)$denominator != "km"){
+          stop("Emission factor must be g/km ")
+        }
+      }
+    }
   }
-  return(df)
-}
+  # Check x for data.frame
+  if(is.data.frame(veh)){
+    # DO I need check for 'Vehicles'?
+    for(i in 1:ncol(veh)){
+      veh[,i] <- as.numeric(veh[, i])
+    }
+    # in bottom-up approach, length of x is the number of streets
+    # in top-down, length of x is the number of columns of veh
+    # This is top-down
+  } else {
+    veh <- as.numeric(veh)
+  }
 
+
+  # ed
+  if(!missing(ed)){
+    if(is.data.frame(veh)){
+      e <- Emissions(do.call("rbind", lapply(1:ncol(x), function(i){
+        veh[, i]*x[i]*ed[i]
+      })))
+    } else {
+      e <- Emissions(veh*x*ed)
+    }
+  } else {
+    if(carb > 0){
+      if(is.data.frame(veh)){
+        e <- Emissions(do.call("rbind",lapply(1:ncol(x), function(i){
+          veh[, i]*x[i]*(carb*(p*hotc[i]+(1-p)*warmc[i])+(1-carb)*hotfi[i])
+        })))
+      } else {
+        e <- veh*x*(carb*(p*hotc+(1-p)*warmc)+(1-carb)*hotfi)
+      }
+    } else if (carb < 0){
+      stop("carb is a positive fraction or 0")
+
+    } else {
+      if(is.data.frame(veh)){
+        e <- Emissions(do.call("rbind",lapply(1:ncol(x), function(i){
+          veh[, i]*x[i]*hotfi[i]
+        })))
+      } else {
+        e <- veh*x*hotfi
+      }
+    }
+  }
+  return(e)
+}

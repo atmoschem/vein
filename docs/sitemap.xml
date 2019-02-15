@@ -16,12 +16,6 @@
     <loc>http://ibarraespinosa.github.io/vein//reference/EmissionsArray.html</loc>
   </url>
   <url>
-    <loc>http://ibarraespinosa.github.io/vein//reference/EmissionsList.html</loc>
-  </url>
-  <url>
-    <loc>http://ibarraespinosa.github.io/vein//reference/Evaporative.html</loc>
-  </url>
-  <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/GriddedEmissionsArray.html</loc>
   </url>
   <url>
@@ -106,6 +100,9 @@
     <loc>http://ibarraespinosa.github.io/vein//reference/emis_evap.html</loc>
   </url>
   <url>
+    <loc>http://ibarraespinosa.github.io/vein//reference/emis_evap2.html</loc>
+  </url>
+  <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/emis_grid.html</loc>
   </url>
   <url>
@@ -142,9 +139,6 @@
     <loc>http://ibarraespinosa.github.io/vein//reference/grid_emis.html</loc>
   </url>
   <url>
-    <loc>http://ibarraespinosa.github.io/vein//reference/hot_soak.html</loc>
-  </url>
-  <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/invcop.html</loc>
   </url>
   <url>
@@ -175,7 +169,7 @@
     <loc>http://ibarraespinosa.github.io/vein//reference/profiles.html</loc>
   </url>
   <url>
-    <loc>http://ibarraespinosa.github.io/vein//reference/running_losses.html</loc>
+    <loc>http://ibarraespinosa.github.io/vein//reference/running_losses-deprecated.html</loc>
   </url>
   <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/speciate.html</loc>
@@ -185,6 +179,9 @@
   </url>
   <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/temp_fact.html</loc>
+  </url>
+  <url>
+    <loc>http://ibarraespinosa.github.io/vein//reference/vein-deprecated.html</loc>
   </url>
   <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/vein-package.html</loc>

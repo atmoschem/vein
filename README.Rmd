@@ -170,10 +170,42 @@ Using [inventory](https://atmoschem.github.io/vein/reference/inventory.html)
 
 ```r
 library(vein)
-inventory(name = file.path(tempdir(), "YourCity"), show.dir = T,
+inventory(name = file.path(tempdir(), "YourCity"), 
+          vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
+          show.dir = T, 
           show.scripts = T)
 ```
 
+```
+files at /tmp/RtmpEorTs8/YourCity
+Directories:
+ [1] "/tmp/RtmpEorTs8/YourCity"              
+ [2] "/tmp/RtmpEorTs8/YourCity/ef"           
+ [3] "/tmp/RtmpEorTs8/YourCity/emi"          
+ [4] "/tmp/RtmpEorTs8/YourCity/emi/BUS_01"  
+ [5] "/tmp/RtmpEorTs8/YourCity/emi/HGV_01"   
+ [6] "/tmp/RtmpEorTs8/YourCity/emi/LCV_01"  
+ [7] "/tmp/RtmpEorTs8/YourCity/emi/MC_01"    
+ [8] "/tmp/RtmpEorTs8/YourCity/emi/PC_01"   
+ [9] "/tmp/RtmpEorTs8/YourCity/est"          
+ [10] "/tmp/RtmpEorTs8/YourCity/images"       
+ [11] "/tmp/RtmpEorTs8/YourCity/network"      
+ [12] "/tmp/RtmpEorTs8/YourCity/post"        
+ [13] "/tmp/RtmpEorTs8/YourCity/post/df"      
+ [14] "/tmp/RtmpEorTs8/YourCity/post/grids"   
+ [15] "/tmp/RtmpEorTs8/YourCity/post/streets" 
+ [16] "/tmp/RtmpEorTs8/YourCity/profiles"    
+ [17] "/tmp/RtmpEorTs8/YourCity/veh"         
+Scripts:
+ [1] "est/BUS_01_input.R" 
+ [2] "est/HGV_01_input.R" 
+ [3] "est/LCV_01_input.R" 
+ [4] "est/MC_01_input.R"  
+ [5] "est/PC_01_input.R"  
+ [6] "main.R"             
+ [7] "post.R"            
+ [8] "traffic.R" 
+```
 Please, read the examples in the documentation of each function and run the demo. 
 
 ### 1) Examples with traffic data:
@@ -190,17 +222,17 @@ data("net")
 PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
 ```
+![](https://atmoschem.github.io/vein/reference/age_ldv-1.png)
 
 If you want to know the vehicles per street and by age of use, just
 add the net. Age functions now returns 'sf' objects if the net argument is present.
 
 ```r
 PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
-sp::spplot(as(PC_E25_1400net, "Spatial"),
-       c("PC_E25_1400_1", "PC_E25_1400_9"),
-       main = "PC by age of use", scales = list(Draw = T),
-       col.regions = rev(cptcity::cpt()))
+plot(PC_E25_1400net)
 ```
+![](https://atmoschem.github.io/vein/reference/age_ldv-2.png)
+
 - [temp_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
 - [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
 
@@ -211,9 +243,10 @@ data("net")
 data("pc_profile")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1.5)
-class(dfspeed)
-plot(dfspeed, xlab = "Hours", ylab = "Speed [km/h]") 
+plot(dfspeed)
+
 ```
+![](https://atmoschem.github.io/vein/reference/netspeed-1.png)
 
 If you want ot check the speed at different hours by street, just add net:
 
@@ -241,6 +274,7 @@ p = "CO")
 efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 ```
+![](https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png)
 
 ### 3) Estimation of emissions
 
@@ -254,7 +288,7 @@ ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euro[i], p = "CO", show.equation = FALSE) })
 E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
              profile = pc_profile)
-plot(E_CO, xlab = "Hours", ylab = "[g/h]")
+#plot(E_CO, xlab = "Hours", ylab = "[g/h]")
 ```
 
 ### 4) Post Emissions
@@ -292,11 +326,13 @@ data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
+plot(g)
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
-sp::spplot(as(E_CO_g, "Spatial"),
-       c("V1", "V9"), scales = list(Draw = T),
-       col.regions = rev(cptcity::cpt()))
+#sp::spplot(as(E_CO_g, "Spatial"),
+#       c("V1", "V9"), scales = list(Draw = T),
+#       col.regions = rev(cptcity::cpt()))
 ```
+![](https://atmoschem.github.io/vein/reference/make_grid-1.png)
 
 **At this step, you can feed you grid with emissions from other sources!**
 
