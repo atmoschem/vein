@@ -3,28 +3,36 @@
 #' @description \code{running_losses} estimates evaporative emissions from
 #' EMEP/EEA emisison guidelines
 #'
-#' @param x Mean number of trips per vehicle per day
-#' @param carb fraction of gasoline vehicles with carburator or fuel return system
+#' @param x Numeric or data.frame; Mean number of trips per vehicle per day or Vehicles.
+#' @param erhotfi average daily hot running losses evaporative factor
+#' for vehicles with fuel injection and returnless fuel systems
+#' @param lkm Numeric with class untis and unit km.
+#' @param carb fraction of gasoline vehicles with carburator or fuel return system.
 #' @param p Fraction of trips finished with hot engine
 #' @param erhotc average daily running losses evaporative factor for vehicles with
 #' carburator or fuel return system
 #' @param erwarmc average daily cold and warm running losses evaporative factor
 #' for vehicles with carburator or fuel return system
-#' @param erhotfi average daily hot running losses evaporative factor
-#' for vehicles with fuel injection and returnless fuel systems
 #' @return numeric vector of emission estimation in grams
-#' @importFrom units as_units
+#' @name running_losses-deprecated
+#' @seealso \code{\link{vein-deprecated}}
+#' @keywords internal
+NULL
+
+#' @rdname vein-deprecated
+#' @section \code{Evaporative}:
+#' For \code{running_losses}, use \code{\link{emis_evap}}.
+#'
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
-#' ev <- running_losses(x = 1:10, carb = 0, p = 1, erhot = 1, erwarmc =1,
-#' erhotfi = 1)
-#' summary(ev)
 #' }
-running_losses <- function(x,carb,p,erhotc,erwarmc,erhotfi) {
-Emissions(x*(carb*(p*erhotc+(1-p)*erwarmc)+(1-carb)*erhotfi))
+#'
+running_losses <- function(x, erhotfi, lkm, carb, p, erhotc, erwarmc) {
+  .Deprecated("emis_evap")
+  "Evaporative emissions"
 }
 

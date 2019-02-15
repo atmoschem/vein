@@ -4,129 +4,53 @@
 \alias{emis_evap}
 \title{Estimation of evaporative emissions}
 \usage{
-emis_evap(veh, name, size, fuel, aged, nd4, nd3, nd2, nd1, hs_nd4, hs_nd3,
-  hs_nd2, hs_nd1, rl_nd4, rl_nd3, rl_nd2, rl_nd1, d_nd4, d_nd3, d_nd2,
-  d_nd1)
+emis_evap(veh, x, ed, hotfi, hotc, warmc, carb = 0, p)
 }
 \arguments{
-\item{veh}{Total number of vehicles by age of use. If is a lsit of 'Vehicles'
-data-frames, it will sum the columns of the eight element of the list
-representing the 8th hour. It was chosen this hour because it is morning rush
-hour but the user can adapt the data to this function}
+\item{veh}{Numeric or data.frame of Vehicles with untis 'veh'.}
 
-\item{name}{Character of type of vehicle}
+\item{x}{Numeric which can be either, daily mileage by age of use
+with units 'lkm', number of trips or number of proc. When it
+has units 'lkm', all the emission factors must be in 'g/km'.
+When ed is in g/day, x it is the number of days (without units).
+When hotfi, hotc or warmc are in g/trip, x it is the number of trips (without units).
+When hotfi, hotc or warmc are in g/proced, x it is the number of proced (without units).}
 
-\item{size}{Character of size of vehicle}
+\item{ed}{average daily evaporative emisisons. If x has units 'lkm', the units
+of ed must be 'g/km', other case, this are simply g/day (without units)}
 
-\item{fuel}{Character of fuel of vehicle}
+\item{hotfi}{average hot running losses or soak evaporative factor
+for vehicles with fuel injection and returnless fuel systems.
+ If x has units 'lkm', the units of ed must be 'g/km',
+ other case, this are simply g/trip or g/proced}
 
-\item{aged}{Age distribution vector. E.g.: 1:40}
+\item{hotc}{average running losses or soak evaporative factor for vehicles with
+carburator or fuel return system
+for vehicles with fuel injection and returnless fuel systems.
+ If x has units 'lkm', the units of ed must be 'g/km',}
 
-\item{nd4}{Number of days with temperature between 20 and 35 celcius degrees}
+\item{warmc}{average cold and warm running losses or soak evaporative factor
+for vehicles with carburator or fuel return system
+for vehicles with fuel injection and returnless fuel systems.
+ If x has units 'lkm', the units of ed must be 'g/km',}
 
-\item{nd3}{Number of days with temperature between 10 and 25 celcius degrees}
+\item{carb}{fraction of gasoline vehicles with carburator or fuel return system.}
 
-\item{nd2}{Number of days with temperature between 0 and 15 celcius degrees}
-
-\item{nd1}{Number of days with temperature between -5 and 10 celcius degrees}
-
-\item{hs_nd4}{average daily hot-soak evaporative emissions for days with
-temperature between 20 and 35 celcius degrees}
-
-\item{hs_nd3}{average daily hot-soak evaporative emissions for days with
-temperature between 10 and 25 celcius degrees}
-
-\item{hs_nd2}{average daily hot-soak evaporative emissions for days with
-temperature between 0 and 15 celcius degrees}
-
-\item{hs_nd1}{average daily hot-soak evaporative emissions for days with
-temperature between -5 and 10 celcius degrees}
-
-\item{rl_nd4}{average daily running losses evaporative emissions for days with
-temperature between 20 and 35 celcius degrees}
-
-\item{rl_nd3}{average daily running losses evaporative emissions for days with
-temperature between 10 and 25 celcius degrees}
-
-\item{rl_nd2}{average daily running losses evaporative emissions for days with
-temperature between 0 and 15 celcius degrees}
-
-\item{rl_nd1}{average daily running losses evaporative emissions for days with
-temperature between -5 and 10 celcius degrees}
-
-\item{d_nd4}{average daily diurnal evaporative emissions for days with
-temperature between 20 and 35 celcius degrees}
-
-\item{d_nd3}{average daily diurnal evaporative emissions for days with
-temperature between 10 and 25 celcius degrees}
-
-\item{d_nd2}{average daily diurnal evaporative emissions for days with
-temperature between 0 and 15 celcius degrees}
-
-\item{d_nd1}{average daily diurnal evaporative emissions for days with
-temperature between -5 and 10 celcius degrees}
+\item{p}{Fraction of trips finished with hot engine}
 }
 \value{
-dataframe of emission estimation in grams/days
+numeric vector of emission estimation in grams
 }
 \description{
-\code{emis_evap} performs the estimation of evaporative emissions
-from EMEP/EEA emisison guidelines with Tier 2.
+\code{emis_evap} estimates evaporative emissions from
+EMEP/EEA emisison guidelines
 }
 \examples{
 {
-data(net)
-PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
-          133833,138441,142682,171029,151048,115228,98664,126444,101027,
-          84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
-          1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
-veh <- data.frame(PC_G = PC_G)
-pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
-ef1 <- ef_evap(ef = "erhotc",v = "PC", cc = "<=1400", dt = "0_15", ca = "no")
-dfe <- emis_evap(veh = pc1,
-                 name = "PC",
-                 size = "<=1400",
-                 fuel = "G",
-                 aged = 1:ncol(pc1),
-                 nd4 = 10,
-                 nd3 = 4,
-                 nd2 = 2,
-                 nd1 = 1,
-                 hs_nd4 = ef1*1:ncol(pc1),
-                 hs_nd3 = ef1*1:ncol(pc1),
-                 hs_nd2 = ef1*1:ncol(pc1),
-                 hs_nd1 = ef1*1:ncol(pc1),
-                 d_nd4 = ef1*1:ncol(pc1),
-                 d_nd3 = ef1*1:ncol(pc1),
-                 d_nd2 = ef1*1:ncol(pc1),
-                 d_nd1 = ef1*1:ncol(pc1),
-                 rl_nd4 = ef1*1:ncol(pc1),
-                 rl_nd3 = ef1*1:ncol(pc1),
-                 rl_nd2 = ef1*1:ncol(pc1),
-                 rl_nd1 = ef1*1:ncol(pc1))
-lpc <- list(pc1, pc1, pc1, pc1,
-            pc1, pc1, pc1, pc1)
-dfe <- emis_evap(veh = lpc,
-                 name = "PC",
-                 size = "<=1400",
-                 fuel = "G",
-                 aged = 1:ncol(pc1),
-                 nd4 = 10,
-                 nd3 = 4,
-                 nd2 = 2,
-                 nd1 = 1,
-                 hs_nd4 = ef1*1:ncol(pc1),
-                 hs_nd3 = ef1*1:ncol(pc1),
-                 hs_nd2 = ef1*1:ncol(pc1),
-                 hs_nd1 = ef1*1:ncol(pc1),
-                 d_nd4 = ef1*1:ncol(pc1),
-                 d_nd3 = ef1*1:ncol(pc1),
-                 d_nd2 = ef1*1:ncol(pc1),
-                 d_nd1 = ef1*1:ncol(pc1),
-                 rl_nd4 = ef1*1:ncol(pc1),
-                 rl_nd3 = ef1*1:ncol(pc1),
-                 rl_nd2 = ef1*1:ncol(pc1),
-                 rl_nd1 = ef1*1:ncol(pc1))
+(a <- Vehicles(1:10))
+(lkm <- units::as_units(1:10, "km"))
+(ef <- EmissionFactors(1:10))
+(ev <- emis_evap(veh = a, x = lkm, hotfi = ef))
 }
 }
 \references{
