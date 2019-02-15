@@ -100,9 +100,6 @@ emis_evap <- function(veh,
 
         if(!missing(pro_month)){
           if(length(pro_month) != 12) stop("Length of pro_month must be 12")
-          if(dim(veh) != dim(hotc) | dim(veh[[1]]) != dim(warmc[[1]])  | dim(veh) != dim(hotfi[[1]]) ) {
-            stop("veh and the emission factors inside the lists must have the same dimensions")
-          }
           mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
           e <- do.call("rbind", lapply(1:12, function(j){
             e <- do.call("cbind", lapply(1:ncol(veh), function(i){
@@ -133,7 +130,6 @@ emis_evap <- function(veh,
       if(is.data.frame(veh)){
         if(!missing(pro_month)){
           if(length(pro_month) != 12) stop("Length of pro_month must be 12")
-          if(dim(veh) != dim(hotfi[[1]]) ) stop("veh and the emission factors inside the lists must have the same dimensions")
           mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
           e <- do.call("rbind", lapply(1:12, function(j){
             e <- do.call("cbind", lapply(1:ncol(veh), function(i){
