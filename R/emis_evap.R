@@ -44,137 +44,167 @@ emis_evap <- function(veh,
                       ed,
                       hotfi, hotc, warmc,
                       carb = 0, p,
-                      pro_month) { # hot or warm soak
-  # Check y
-  if(!missing(x)){
-    if(units(x)$numerator != "km"){
-      stop("units needs to be km")
-    }
-    # ed
-    if(!missing(ed)){
-      if(units(ed)$numerator != "g" | units(ed)$denominator != "km"){
-        stop("Emission factor must be g/km ")
-      }
-    }
-    # hotfi
-    if(!missing(x) & !missing(hotfi)){
-      if(units(hotfi)$numerator != "g" | units(hotfi)$denominator != "km"){
-        stop("Emission factor must be g/km ")
-      }
-    }
-    # hotc
-    if(!missing(x) & !missing(hotc)){
-      if(units(hotc)$numerator != "g" | units(hotc)$denominator != "km"){
-        stop("Emission factor must be g/km ")
-      }
-    }
-    # warmc
-    if(!missing(x) & !missing(warmc)){
-      if(units(warmc)$numerator != "g" | units(warmc)$denominator != "km"){
-        stop("Emission factor must be g/km ")
-      }
-    }
-  }
-
-  # Check x for data.frame
-  if(is.data.frame(veh) ){
-    # DO I need check for 'Vehicles'?
+                      pro_month) {
+    # Check veh
+  if(is.data.frame(veh)){
     for(i in 1:ncol(veh)){
       veh[,i] <- as.numeric(veh[, i])
     }
-    # in bottom-up approach, length of x is the number of streets
-    # in top-down, length of x is the number of columns of veh
-    # This is top-down
+    # Check x
+    if(units(x)$numerator != "km" & missing(pro_month)){
+      # ed
+      if(!missing(ed)){
+        if(class(ed)[1] != "EmissionFactors"){
+          stop("Class of ed must be EmissionFactors with units g/km ")
+        }
+      }
+      # hotfi
+      if(!missing(hotfi)){
+        if(class(hotfi)[1] != "EmissionFactors"){
+          stop("Class of hotfi must be EmissionFactors with units g/km ")
+        }
+      }
+      # hotc
+      if(!missing(hotc)){
+        if(class(hotc)[1] != "EmissionFactors"){
+          stop("Class of hotc must be EmissionFactors with units g/km ")
+        }
+      }
+      # warmc
+      if(!missing(warmc)){
+        if(class(warmc)[1] != "EmissionFactors"){
+          stop("Class of ed must be EmissionFactors with units g/km ")
+        }
+      }
+    } else if (units(x)$numerator != "km" & !missing(pro_month)) {
+      # ed
+      if(!missing(ed)){
+        if(class(ed[[1]])[1] != "EmissionFactors"){
+          stop("You need list of EmissionFactors with units g/km ")
+        }
+      }
+      # hotfi
+      if(!missing(hotfi)){
+        if(class(hotfi[[1]])[1] != "EmissionFactors"){
+          stop("Class of hotfi must be EmissionFactors with units g/km ")
+        }
+      }
+      # hotc
+      if(!missing(hotc)){
+        if(class(hotc[[1]])[1] != "EmissionFactors"){
+          stop("You need list of EmissionFactors with units g/km ")
+        }
+      }
+      # warmc
+      if(!missing(warmc)){
+        if(class(warmc[[1]])[1] != "EmissionFactors"){
+          stop("You need list of EmissionFactors with units g/km ")
+        }
+      }
+    }
   } else {
     veh <- as.numeric(veh)
+
   }
-
-
-
-  # ed
-  if(!missing(ed)){
-    if(is.data.frame(veh)){
-
-      if(!is.data.frame(ed)) stop("as veh is a data.frame ed needs to be a data.frame qith the same dimensions")
-
-      if(!missing(pro_month)){
-        if(length(pro_month) != 12) stop("Length of pro_month must be 12")
-        mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
-        e <- do.call("rbind", lapply(1:12, function(j){
-          e <- do.call("cbind", lapply(1:ncol(veh), function(i){
-            veh[, i]*x[i]*ed[[j]][, i]*pro_month[j]
-          }))
-          e <- Emissions(e)
-          e$month <- mes[j]
-          e
-        }))
-      } else {
-        e <- Emissions(do.call("cbind", lapply(1:ncol(veh), function(i){
-          veh[, i]*x[i]*ed[, i]
-        })))
-
+    # Check x for data.frame
+    if(is.data.frame(veh) ){
+      # DO I need check for 'Vehicles'?
+      for(i in 1:ncol(veh)){
+        veh[,i] <- as.numeric(veh[, i])
       }
+      # in bottom-up approach, length of x is the number of streets
+      # in top-down, length of x is the number of columns of veh
+      # This is top-down
     } else {
-      e <- Emissions(veh*x*ed)
+      veh <- as.numeric(veh)
     }
 
-  } else {
-    if(carb > 0){
+
+
+    # ed
+    if(!missing(ed)){
       if(is.data.frame(veh)){
-        if(!is.data.frame(hotc)) stop("as hotc is a data.frame ed needs to be a data.frame qith the same dimensions")
-        if(!is.data.frame(warmc)) stop("as warmc is a data.frame ed needs to be a data.frame qith the same dimensions")
+
+        if(!is.data.frame(ed)) stop("as veh is a data.frame ed needs to be a data.frame qith the same dimensions")
 
         if(!missing(pro_month)){
           if(length(pro_month) != 12) stop("Length of pro_month must be 12")
           mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
           e <- do.call("rbind", lapply(1:12, function(j){
             e <- do.call("cbind", lapply(1:ncol(veh), function(i){
-              veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[j]
+              veh[, i]*x[i]*ed[[j]][, i]*pro_month[j]
             }))
             e <- Emissions(e)
             e$month <- mes[j]
             e
           }))
-
-        } else{
-          e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
-            veh[, i]*x[i]*(carb*(p*hotc[, i]+(1-p)*warmc[, i])+(1-carb)*hotfi[, i])
+        } else {
+          e <- Emissions(do.call("cbind", lapply(1:ncol(veh), function(i){
+            veh[, i]*x[i]*ed[, i]
           })))
 
         }
-
       } else {
-        e <- veh*x*(carb*(p*hotc+(1-p)*warmc)+(1-carb)*hotfi)
+        e <- Emissions(veh*x*ed)
       }
-    } else if (carb < 0){
-      stop("carb is a positive fraction or 0")
 
     } else {
-      if(is.data.frame(veh)){
-        if(!is.data.frame(hotfi)) stop("as hotfi is a data.frame ed needs to be a data.frame qith the same dimensions")
-        if(!missing(pro_month)){
-          if(length(pro_month) != 12) stop("Length of pro_month must be 12")
-          mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
-          e <- do.call("rbind", lapply(1:12, function(j){
-            e <- do.call("cbind", lapply(1:ncol(veh), function(i){
-              veh[, i]*x[i]*hotfi[[j]][, i]*pro_month[j]
+      if(carb > 0){
+        if(is.data.frame(veh)){
+          if(!is.data.frame(hotc)) stop("as hotc is a data.frame ed needs to be a data.frame qith the same dimensions")
+          if(!is.data.frame(warmc)) stop("as warmc is a data.frame ed needs to be a data.frame qith the same dimensions")
+
+          if(!missing(pro_month)){
+            if(length(pro_month) != 12) stop("Length of pro_month must be 12")
+            mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
+            e <- do.call("rbind", lapply(1:12, function(j){
+              e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+                veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[j]
+              }))
+              e <- Emissions(e)
+              e$month <- mes[j]
+              e
             }))
-            e <- Emissions(e)
-            e$month <- mes[j]
-            e
-          }))
+
+          } else{
+            e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
+              veh[, i]*x[i]*(carb*(p*hotc[, i]+(1-p)*warmc[, i])+(1-carb)*hotfi[, i])
+            })))
+
+          }
 
         } else {
-          e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
-            veh[, i]*x[i]*hotfi[, i]
-          })))
-
+          e <- veh*x*(carb*(p*hotc+(1-p)*warmc)+(1-carb)*hotfi)
         }
+      } else if (carb < 0){
+        stop("carb is a positive fraction or 0")
+
       } else {
-        e <- veh*x*hotfi
+        if(is.data.frame(veh)){
+          if(!is.data.frame(hotfi)) stop("as hotfi is a data.frame ed needs to be a data.frame qith the same dimensions")
+          if(!missing(pro_month)){
+            if(length(pro_month) != 12) stop("Length of pro_month must be 12")
+            mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
+            e <- do.call("rbind", lapply(1:12, function(j){
+              e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+                veh[, i]*x[i]*hotfi[[j]][, i]*pro_month[j]
+              }))
+              e <- Emissions(e)
+              e$month <- mes[j]
+              e
+            }))
+
+          } else {
+            e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
+              veh[, i]*x[i]*hotfi[, i]
+            })))
+
+          }
+        } else {
+          e <- veh*x*hotfi
+        }
       }
     }
-  }
 
-  return(e)
-}
+    return(e)
+  }
