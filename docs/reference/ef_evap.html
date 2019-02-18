@@ -112,7 +112,8 @@ from EMEP/EEA emisison guidelines</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_evap</span>(<span class='no'>ef</span>, <span class='no'>v</span>, <span class='no'>cc</span>, <span class='no'>dt</span>, <span class='no'>ca</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ltrip</span>, <span class='no'>kmday</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_evap</span>(<span class='no'>ef</span>, <span class='no'>v</span>, <span class='no'>cc</span>, <span class='no'>dt</span>, <span class='no'>ca</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ltrip</span>, <span class='no'>kmday</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,7 +138,9 @@ Motorcycles_2S:  "&lt;=50". Motorcyces: "&gt;50", "&lt;250", "250_750" and "&gt;
     <tr>
       <th>dt</th>
       <td><p>Character or Numeric: Average monthly temperature variation: "-5_10", "0_15", "10_25"
-and "20_35". This argument can vector with several elements.</p></td>
+and "20_35". This argument can vector with several elements. dt can also be data.frame,
+but it is recommended that the number of columns are each month. So that dt
+varies in each row and each column.</p></td>
     </tr>
     <tr>
       <th>ca</th>
@@ -163,6 +166,10 @@ it is an information more solid than to know the average number of trips per day
       <th>show</th>
       <td><p>when TRUE shows row of table with respective emission factor.</p></td>
     </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; To show more information</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -187,8 +194,12 @@ Environment Agency, Copenhagen, 2009</p>
 <span class='co'># Do not run</span>
 <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"ed"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
 <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"erhotc"</span>, <span class='st'>"erhotc"</span>), <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
+<span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
 <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"erhotc"</span>, <span class='st'>"erhotc"</span>), <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
+ <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
+<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"eshotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
 <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
@@ -196,18 +207,33 @@ Environment Agency, Copenhagen, 2009</p>
 <span class='no'>temps</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>:<span class='fl'>20</span>
 <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>temps</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
 <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt;         ef  units veh     cc    dt canister        g
-#&gt; 14  erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 141 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 142 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 143 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 144 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 145 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 146 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 147 erhotc g/trip  PC &lt;=1400 10_25       no 3.25 [g]
-#&gt; 7   erhotc g/trip  PC &lt;=1400 20_35       no 5.42 [g]
-#&gt; 71  erhotc g/trip  PC &lt;=1400 20_35       no 5.42 [g]
-#&gt; 72  erhotc g/trip  PC &lt;=1400 20_35       no 5.42 [g]</div></pre>
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span><span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
+<span class='kw'>dt</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='no'>temps</span>, <span class='no'>temps</span>), <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>)
+<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"erhotc"</span>, <span class='st'>"erhotc"</span>), <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
+<span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='no'>temps</span>, <span class='no'>temps</span>), <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>)
+}</div><div class='output co'>#&gt;             V1 cols_temp   V1 cols_temp
+#&gt; 1  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 2  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 3  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 4  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 5  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 6  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 7  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 8  3.25 [g/km]  1 [g/km] 3.25         1
+#&gt; 9  5.42 [g/km]  1 [g/km] 5.42         1
+#&gt; 10 5.42 [g/km]  1 [g/km] 5.42         1
+#&gt; 11 5.42 [g/km]  1 [g/km] 5.42         1
+#&gt; 12 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 13 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 14 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 15 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 16 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 17 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 18 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 19 3.25 [g/km]  2 [g/km] 3.25         2
+#&gt; 20 5.42 [g/km]  2 [g/km] 5.42         2
+#&gt; 21 5.42 [g/km]  2 [g/km] 5.42         2
+#&gt; 22 5.42 [g/km]  2 [g/km] 5.42         2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
