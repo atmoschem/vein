@@ -124,6 +124,9 @@ emis <- function (veh,
     if(verbose) message("converting sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }
+  if(!missing(hour) | !missing(day)){
+    warning("Arguments  hour and day will be deprecated, they will derived from profile")
+  }
 
   lkm <- as.numeric(lkm)
   speed <- as.data.frame(speed)
@@ -178,8 +181,8 @@ emis <- function (veh,
     }
 
     if(array == F){
-      lista <- lapply(1:day,function(j){
-        lapply(1:hour,function(i){
+      lista <- lapply(1:ncol(profile),function(j){
+        lapply(1:nrow(profile),function(i){
           lapply(1:agemax, function(k){
             veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
           }) }) })
@@ -187,15 +190,14 @@ emis <- function (veh,
     } else {
 
       d <-  simplify2array(
-        lapply(1:day,function(j){
+        lapply(1:ncol(profile),function(j){
           simplify2array(
-            lapply(1:hour,function(i){
+            lapply(1:nrow(profile),function(i){
               simplify2array(
                 lapply(1:agemax, function(k){
                   veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i*j])
                 }) ) }) ) }) )
-      message(round(sum(d, na.rm = T)/1000,2),
-              " kg emissions in ", hour, " hours and ", day, " days")
+      if(verbose) message(round(sum(d, na.rm = T)/1000,2), " kg emissions")
       return(EmissionsArray(d))
     }
     # veh is a list of "Vehicles" data-frames
@@ -233,7 +235,7 @@ emis <- function (veh,
             lapply(1:agemax, function(k){
               veh[[i]][, k]*lkm*ef[[k]](speed[, i])
             }) ) }) )
-      if(verbose) message(round(sum(d, na.rm = T)/1000,2), " kg emissions in ", hour, " hours")
+      if(verbose) message(round(sum(d, na.rm = T)/1000,2), " kg emissions ")
       return(EmissionsArray(d))
     }
   }

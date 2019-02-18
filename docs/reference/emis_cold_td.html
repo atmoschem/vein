@@ -72,7 +72,7 @@ providing flexibility to the user." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.7</span>
       </span>
     </div>
 
@@ -124,7 +124,8 @@ providing flexibility to the user.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_cold_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>efcold</span>, <span class='no'>beta</span>, <span class='no'>pro_month</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_cold_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>efcold</span>, <span class='no'>beta</span>, <span class='no'>pro_month</span>, <span class='no'>params</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,6 +159,10 @@ for each spatial feature or subregion, the columns are the age of use of vehicle
     <tr>
       <th>pro_month</th>
       <td><p>Numeric; montly profile to distribuite annual mileage in each month.</p></td>
+    </tr>
+    <tr>
+      <th>params</th>
+      <td><p>Character; Add columns with information to returning data.frame</p></td>
     </tr>
     <tr>
       <th>verbose</th>

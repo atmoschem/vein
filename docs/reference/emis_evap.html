@@ -66,7 +66,7 @@ EMEP/EEA emisison guidelines" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.7</span>
       </span>
     </div>
 
@@ -112,7 +112,8 @@ EMEP/EEA emisison guidelines</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_evap</span>(<span class='no'>veh</span>, <span class='no'>x</span>, <span class='no'>ed</span>, <span class='no'>hotfi</span>, <span class='no'>hotc</span>, <span class='no'>warmc</span>, <span class='kw'>carb</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>p</span>, <span class='no'>pro_month</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_evap</span>(<span class='no'>veh</span>, <span class='no'>x</span>, <span class='no'>ed</span>, <span class='no'>hotfi</span>, <span class='no'>hotc</span>, <span class='no'>warmc</span>, <span class='kw'>carb</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>p</span>, <span class='no'>params</span>, <span class='no'>pro_month</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,8 +166,16 @@ for vehicles with fuel injection and returnless fuel systems.
       <td><p>Fraction of trips finished with hot engine</p></td>
     </tr>
     <tr>
+      <th>params</th>
+      <td><p>Character; Add columns with information to returning data.frame</p></td>
+    </tr>
+    <tr>
       <th>pro_month</th>
       <td><p>Numeric; montly profile to distribuite annual mileage in each month.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; To show more information</p></td>
     </tr>
     </table>
     
@@ -187,7 +196,7 @@ Environment Agency, Copenhagen, 2009</p>
 (<span class='no'>lkm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/units/topics/as_units'>as_units</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='st'>"km"</span>))
 (<span class='no'>ef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 (<span class='no'>ev</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_evap</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>a</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>hotfi</span> <span class='kw'>=</span> <span class='no'>ef</span>))
-}</div><div class='output co'>#&gt; Units: [g]
+}</div><div class='output co'>#&gt; <span class='message'>Emission factors must have units g/km</span></div><div class='output co'>#&gt; Units: [g]
 #&gt;  [1]    1    8   27   64  125  216  343  512  729 1000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

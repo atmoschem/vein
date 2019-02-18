@@ -118,11 +118,11 @@ data(fe2015)
 data(pc_profile)
 data(fkm)
 pckm <- fkm[[1]](1:24)
-pckma <- cumsum(pckm)
-cod1 <- emis_det(po = "CO", cc = 1000,
-                 eu = "III", km = pckma[1:11])
-cod2 <- emis_det(po = "CO", cc = 1000,
-                 eu = "I", km = pckma[12:24])
+pkcma <- cumsum(pckm)
+kma <- units::set_units(pckma[1:11], km)
+kmb <- units::set_units(pckma[12:24], km)
+cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = kma)
+cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = kmb)
 co1 <- fe2015[fe2015$Pollutant=="CO", ]
 cod <- c(co1$PC_G[1:24] * c(cod1,cod2),
          co1$PC_G[25:nrow(co1)])
@@ -131,8 +131,8 @@ cod <- c(co1$PC_G[1:24] * c(cod1,cod2),
 data(fe2015)
 data(fkm)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
-cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
-cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
+cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = kma)
+cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = kmb)
 #vehicles newer than pre-euro
 co1 <- fe2015[fe2015$Pollutant == "CO", ] #24 obs!!!
 cod <- c(co1$PC_G[1:24] * c(cod1, cod2), co1$PC_G[25:nrow(co1)])
@@ -163,7 +163,7 @@ df$day <- factor(df$Day,
                  levels =  c("Monday", "Tuesday", "Wednesday", "Thursday",
                              "Friday", "Saturday", "Sunday"))
 
-ggplot(df, aes(x=Hour, y=unclass(g_CO), colour = day, shape = day)) +
+ggplot(df, aes(x=Hour, y=unclass(g_CO), colour = day)) +
   geom_line() + geom_point(size = 4) + theme_bw() +
   theme(legend.key.size = unit(0.6,"cm")) +
   labs(x="Hour", y=expression(g%.%h^-1))
@@ -212,7 +212,7 @@ for (i in 1:ncol(E_CO_STREETS)) {
   E_CO_STREETS[,i] <- as.numeric(E_CO_STREETS[,i])
 }
 net@data <- cbind(net@data, E_CO_STREETS)
-g <- make_grid(net, 1/102.47/2, 1/102.47/2, polygon = T)
+g <- make_grid(net, 1/102.47/2, 1/102.47/2)
 gg <- as(g, "Spatial")
 spplot(net, "V138", scales=list(Draw=T), cuts = 15,
        colorkey = list(space = "bottom", height = 1),
