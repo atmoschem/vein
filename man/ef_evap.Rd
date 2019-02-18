@@ -4,7 +4,8 @@
 \alias{ef_evap}
 \title{Evaporative emission factor}
 \usage{
-ef_evap(ef, v, cc, dt, ca, k = 1, ltrip, kmday, show = FALSE)
+ef_evap(ef, v, cc, dt, ca, k = 1, ltrip, kmday, show = FALSE,
+  verbose = FALSE)
 }
 \arguments{
 \item{ef}{Name of  evaporative emission factor as *eshotc*: mean hot-soak with
@@ -19,7 +20,9 @@ running losses with fuel injection. Length of ef 1.}
 Motorcycles_2S:  "<=50". Motorcyces: ">50", "<250", "250_750" and ">750"}
 
 \item{dt}{Character or Numeric: Average monthly temperature variation: "-5_10", "0_15", "10_25"
-and "20_35". This argument can vector with several elements.}
+and "20_35". This argument can vector with several elements. dt can also be data.frame,
+but it is recommended that the number of columns are each month. So that dt
+varies in each row and each column.}
 
 \item{ca}{Size of canister: "no" meaning no canister, "small", "medium" and
 "large".}
@@ -34,6 +37,8 @@ to convert g/day in g/km.
 it is an information more solid than to know the average number of trips per day.}
 
 \item{show}{when TRUE shows row of table with respective emission factor.}
+
+\item{verbose}{Logical; To show more information}
 }
 \value{
 emission factors in g/trip or g/proced. The object has class (g)
@@ -52,8 +57,12 @@ occur during vehicles use. Hot soak emission occur following vehicles use.
 # Do not run
 ef_evap(ef = "ed", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 show = TRUE)
-ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+ef_evap(ef = c("erhotc", "erhotc"), v = "PC", cc = "<=1400",
+dt = "0_15", ca = "no",
 show = TRUE)
+ef_evap(ef = c("erhotc", "erhotc"), v = "PC", cc = "<=1400",
+ dt = "0_15", ca = "no",
+show = FALSE)
 ef_evap(ef = "eshotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 show = TRUE)
 ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
@@ -61,6 +70,10 @@ show = TRUE)
 temps <- 10:20
 ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = temps, ca = "no",
 show = TRUE)
+ef_evap(ef ="erhotc", v = "PC", cc = "<=1400",
+dt = data.frame(temps, temps), ca = "no")
+ef_evap(ef = c("erhotc", "erhotc"), v = "PC",
+cc = "<=1400", dt = data.frame(temps, temps), ca = "no")
 }
 }
 \references{

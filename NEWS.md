@@ -6,6 +6,9 @@ NEWS
 
 - Fix #150. Add options to emis_cold_td and emis_evap to add columns to output.
 - Add verbose argument in emis_cold_td and emis_evap.
+- Add message in emis. hour and day will be deprecated.
+- Add warnings in ef_evap, and now has options for months and accepts several ef.
+
 
 ## vein 0.6.6 (Release date: 2019-02-14)
 
