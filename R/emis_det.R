@@ -31,6 +31,13 @@ emis_det <- function(po, cc, eu, km) {
     stop("km neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
   km <- as.numeric(km)
+  #Check cc
+  if(is.numeric(cc)){
+    cc <- ifelse(cc <= 1400, "<=1400",
+                 ifelse(cc >= 1400 & cc < 2000,
+                        "1400_2000", ">2000"
+                 ))
+  }
 
   if (po == "CO" & eu %in% c("I", "II") &  cc == "<=1400") {
     mc <- ifelse(km<120000, 1.523e-05*km+0.557, 2.39)
@@ -57,11 +64,11 @@ emis_det <- function(po, cc, eu, km) {
     mc <- ifelse(km<120000, 1.212e-05*km+0.509, 1.99)
   } else if (po == "HC" & eu %in% c("I", "II") & cc == ">2000") {
     mc <- ifelse(km<120000, 1.208e-05*km+0.432, 1.88)
-    } else if (po == "HC" & eu %in% c("III", "IV") & cc ==  "<=1400") {
-      mc <- ifelse(km<160000, 3.419e-06*km+0.891, 1.44)
-    } else if (po == "HC" & eu %in% c("III", "IV") & cc %in% c("1400_2000", ">2000")) {
-      mc <- ifelse(km<160000, 1, 1)
-    }
+  } else if (po == "HC" & eu %in% c("III", "IV") & cc ==  "<=1400") {
+    mc <- ifelse(km<160000, 3.419e-06*km+0.891, 1.44)
+  } else if (po == "HC" & eu %in% c("III", "IV") & cc %in% c("1400_2000", ">2000")) {
+    mc <- ifelse(km<160000, 1, 1)
+  }
   mc <- ifelse(mc < 1, 1, mc)
   return(mc)
 }

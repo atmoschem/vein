@@ -4,7 +4,8 @@
 \alias{emis_cold_td}
 \title{Estimation of cold start emissions with top-down approach}
 \usage{
-emis_cold_td(veh, lkm, ef, efcold, beta, pro_month, verbose = FALSE)
+emis_cold_td(veh, lkm, ef, efcold, beta, pro_month, params,
+  verbose = FALSE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or spatial feature, wwhere columns are the
@@ -24,6 +25,8 @@ efcold should be different for each simple feature, assuming different average t
 for each spatial feature or subregion, the columns are the age of use of vehicle.}
 
 \item{pro_month}{Numeric; montly profile to distribuite annual mileage in each month.}
+
+\item{params}{Character; Add columns with information to returning data.frame}
 
 \item{verbose}{Logical; To show more information}
 }

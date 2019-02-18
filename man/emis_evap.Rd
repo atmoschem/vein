@@ -4,7 +4,8 @@
 \alias{emis_evap}
 \title{Estimation of evaporative emissions}
 \usage{
-emis_evap(veh, x, ed, hotfi, hotc, warmc, carb = 0, p, pro_month)
+emis_evap(veh, x, ed, hotfi, hotc, warmc, carb = 0, p, params, pro_month,
+  verbose = FALSE)
 }
 \arguments{
 \item{veh}{Numeric or data.frame of Vehicles with untis 'veh'.}
@@ -38,7 +39,11 @@ for vehicles with fuel injection and returnless fuel systems.
 
 \item{p}{Fraction of trips finished with hot engine}
 
+\item{params}{Character; Add columns with information to returning data.frame}
+
 \item{pro_month}{Numeric; montly profile to distribuite annual mileage in each month.}
+
+\item{verbose}{Logical; To show more information}
 }
 \value{
 numeric vector of emission estimation in grams

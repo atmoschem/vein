@@ -2,7 +2,12 @@ NEWS
 ===========
 
 
-# vein 0.6.6 (Release date: 2019-02-14)
+# vein 0.6.7 (Release date: 2019-02-18)
+
+- Fix #150. Add options to emis_cold_td and emis_evap to add columns to output.
+- Add verbose argument in emis_cold_td and emis_evap.
+
+## vein 0.6.6 (Release date: 2019-02-14)
 
 - Fix #146. now dt of ef_evap accept numeric or character vectors.
 - Other arguments of ef_evap can be several.
