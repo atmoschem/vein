@@ -11,7 +11,7 @@
 #' When hotfi, hotc or warmc are in g/trip, x it is the number of trips (without units).
 #' When hotfi, hotc or warmc are in g/proced, x it is the number of proced (without units).
 #' @param ed average daily evaporative emisisons. If x has units 'lkm', the units
-#' of ed must be 'g/km', other case, this are simply g/day (without units)
+#' of ed must be 'g/km', other case, this are simply g/day (without units).
 #' @param hotfi average hot running losses or soak evaporative factor
 #' for vehicles with fuel injection and returnless fuel systems.
 #'  If x has units 'lkm', the units of ed must be 'g/km',
@@ -34,6 +34,10 @@
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
+#' @note  When veh is a "Vehicles" data.frame, emission factors are evaluated till the
+#' number of columns of veh. For instance, if the length of the emision factor is 20
+#' but the number of columns of veh is 10, the 10 first emission factors are used
+#'
 #' @export
 #' @examples {
 #' (a <- Vehicles(1:10))
@@ -48,8 +52,7 @@ emis_evap <- function(veh,
                       carb = 0, p,
                       params,
                       pro_month,
-                      verbose = FALSE) { # hot or warm soak
-  # If months exists, it must the last column to be added
+                      verbose = FALSE) {
   # Check y
   if(!missing(x)){
     if(units(x)$numerator == "km"){
@@ -74,11 +77,6 @@ emis_evap <- function(veh,
   } else {
     veh <- as.numeric(veh)
   }
- if(!missing(params)){
-  if(verbose) message("Params will be added")
- }
-
-
   # ed
   if(!missing(ed)){
     if(is.data.frame(veh)){
@@ -93,13 +91,6 @@ emis_evap <- function(veh,
             veh[, i]*x[i]*ed[[j]][, i]*pro_month[j]
           }))
           e <- Emissions(e)
-          if(!missing(params)){
-            for (i in 1:length(params)){
-              e <- as.data.frame(e)
-              e[, params[i]] <- params[i]
-            }
-          }
-
           e$month <- mes[j]
           e
         }))
@@ -111,24 +102,10 @@ emis_evap <- function(veh,
           veh[, i]*x[i]*ed[, i]
         })))
         if(verbose) cat("Sum of emissions:", sum(e), "\n")
-        if(!missing(params)){
-          for (i in 1:length(params)){
-            e <- as.data.frame(e)
-            e[, params[i]] <- params[i]
-          }
-        }
-
       }
     } else {
       e <- Emissions(veh*x*ed)
       if(verbose) cat("Sum of emissions:", sum(e), "\n")
-      if(!missing(params)){
-        for (i in 1:length(params)){
-          e <- as.data.frame(e)
-          e[, params[i]] <- params[i]
-        }
-      }
-
     }
 
   } else {
@@ -138,18 +115,16 @@ emis_evap <- function(veh,
         if(!missing(pro_month)){
           if(length(pro_month) != 12) stop("Length of pro_month must be 12")
           mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
+
+          warmc$month <- hotc$month <- rep(1:12, each = nrow(veh))
+          warmc <- split(warmc, warmc$month)
+          hotc <- split(hotc, warmc$month)
+
           e <- do.call("rbind", lapply(1:12, function(j){
             e <- do.call("cbind", lapply(1:ncol(veh), function(i){
               veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[j]
             }))
             e <- Emissions(e)
-            if(!missing(params)){
-              for (i in 1:length(params)){
-                e <- as.data.frame(e)
-                e[, params[i]] <- params[i]
-              }
-            }
-
             e$month <- mes[j]
             e
           }))
@@ -163,24 +138,10 @@ emis_evap <- function(veh,
             veh[, i]*x[i]*(carb*(p*hotc[, i]+(1-p)*warmc[, i])+(1-carb)*hotfi[, i])
           })))
           if(verbose) cat("Sum of emissions:", sum(e), "\n")
-          if(!missing(params)){
-            for (i in 1:length(params)){
-              e <- as.data.frame(e)
-              e[, params[i]] <- params[i]
-            }
-          }
-
         }
 
       } else {
         e <- veh*x*(carb*(p*hotc+(1-p)*warmc)+(1-carb)*hotfi)
-        if(!missing(params)){
-          for (i in 1:length(params)){
-            e <- as.data.frame(e)
-            e[, params[i]] <- params[i]
-          }
-        }
-
       }
     } else if (carb < 0){
       stop("carb is a positive fraction or 0")
@@ -190,17 +151,15 @@ emis_evap <- function(veh,
         if(!missing(pro_month)){
           if(length(pro_month) != 12) stop("Length of pro_month must be 12")
           mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
+
+          hotfi$month <- rep(1:12, each = nrow(veh))
+          hotfi <- split(hotfi, hotfi$month)
+
           e <- do.call("rbind", lapply(1:12, function(j){
             e <- do.call("cbind", lapply(1:ncol(veh), function(i){
               veh[, i]*x[i]*hotfi[[j]][, i]*pro_month[j]
             }))
             e <- Emissions(e)
-            if(!missing(params)){
-              for (i in 1:length(params)){
-                e <- as.data.frame(e)
-                e[, params[i]] <- params[i]
-              }
-            }
             e$month <- mes[j]
             e
           }))
@@ -212,26 +171,25 @@ emis_evap <- function(veh,
             veh[, i]*x[i]*hotfi[, i]
           })))
           if (verbose) cat("Sum of emissions:", sum(e), "\n")
-          if(!missing(params)){
-            for (i in 1:length(params)){
-              e <- as.data.frame(e)
-              e[, params[i]] <- params[i]
-            }
-          }
-
         }
       } else {
         e <- veh*x*hotfi
-        if(!missing(params)){
-          for (i in 1:length(params)){
-            e <- as.data.frame(e)
-            e[, params[i]] <- params[i]
-          }
-        }
-
+      }
+    }
+  }
+  if(!missing(params)){
+    if(is.data.frame(e)){
+      for (i in 1:length(params)){
+        e[, names(params)[i]] <- params[[i]]
+      }
+    } else {
+      for (i in 1:length(params)){
+        e <- as.data.frame(e)
+        e[, names(params)[i]] <- params[[i]]
       }
 
     }
   }
+
   return(e)
 }
