@@ -134,7 +134,7 @@ When hotfi, hotc or warmc are in g/proced, x it is the number of proced (without
     <tr>
       <th>ed</th>
       <td><p>average daily evaporative emisisons. If x has units 'lkm', the units
-of ed must be 'g/km', other case, this are simply g/day (without units)</p></td>
+of ed must be 'g/km', other case, this are simply g/day (without units).</p></td>
     </tr>
     <tr>
       <th>hotfi</th>
@@ -183,6 +183,12 @@ for vehicles with fuel injection and returnless fuel systems.
 
     <p>numeric vector of emission estimation in grams</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>When veh is a "Vehicles" data.frame, emission factors are evaluated till the
+number of columns of veh. For instance, if the length of the emision factor is 20
+but the number of columns of veh is 10, the 10 first emission factors are used</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
@@ -205,6 +211,8 @@ Environment Agency, Copenhagen, 2009</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#references">References</a></li>
       

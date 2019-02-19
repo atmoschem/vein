@@ -18,7 +18,7 @@ When hotfi, hotc or warmc are in g/trip, x it is the number of trips (without un
 When hotfi, hotc or warmc are in g/proced, x it is the number of proced (without units).}
 
 \item{ed}{average daily evaporative emisisons. If x has units 'lkm', the units
-of ed must be 'g/km', other case, this are simply g/day (without units)}
+of ed must be 'g/km', other case, this are simply g/day (without units).}
 
 \item{hotfi}{average hot running losses or soak evaporative factor
 for vehicles with fuel injection and returnless fuel systems.
@@ -51,6 +51,11 @@ numeric vector of emission estimation in grams
 \description{
 \code{emis_evap} estimates evaporative emissions from
 EMEP/EEA emisison guidelines
+}
+\note{
+When veh is a "Vehicles" data.frame, emission factors are evaluated till the
+number of columns of veh. For instance, if the length of the emision factor is 20
+but the number of columns of veh is 10, the 10 first emission factors are used
 }
 \examples{
 {
