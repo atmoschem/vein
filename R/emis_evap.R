@@ -81,11 +81,15 @@ emis_evap <- function(veh,
   if(!missing(ed)){
     if(is.data.frame(veh)){
 
-      if(!is.data.frame(ed) & !missing(pro_month)) stop("as veh is a data.frame ed needs to be a data.frame qith the same dimensions")
+      if(!is.data.frame(ed)) stop("as veh is a data.frame ed needs to be a data.frame")
 
       if(!missing(pro_month)){
         if(length(pro_month) != 12) stop("Length of pro_month must be 12")
-        mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
+        mes <- ifelse(nchar(1:12) < 2, paste0(0, 1:12), 1:12)
+
+        ed$month <- ed$month <- rep(1:12, each = nrow(veh))
+        ed <- split(ed, ed$month)
+
         e <- do.call("rbind", lapply(1:12, function(j){
           e <- do.call("cbind", lapply(1:ncol(veh), function(i){
             veh[, i]*x[i]*ed[[j]][, i]*pro_month[j]
@@ -97,7 +101,7 @@ emis_evap <- function(veh,
         if(verbose) cat("Sum of emissions:", sum(e[-"month"]), "\n")
 
       } else {
-        if(!is.data.frame(ed)) stop("'ed' must be a data.frame with the same dimensions of 'veh'")
+        if(!is.data.frame(ed)) stop("'ed' must be a data.frame")
         e <- Emissions(do.call("cbind", lapply(1:ncol(veh), function(i){
           veh[, i]*x[i]*ed[, i]
         })))
@@ -131,8 +135,8 @@ emis_evap <- function(veh,
           if(verbose) cat("Sum of emissions:", sum(e[-"month"]), "\n")
 
         } else {
-          if(!is.data.frame(hotc)) stop("hotc' must be a data.frame with the same dimensions of 'veh'")
-          if(!is.data.frame(warmc)) stop("warmc' must be a data.frame with the same dimensions of 'veh'")
+          if(!is.data.frame(hotc)) stop("hotc' must be a data.frame")
+          if(!is.data.frame(warmc)) stop("warmc' must be a data.frame")
 
           e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
             veh[, i]*x[i]*(carb*(p*hotc[, i]+(1-p)*warmc[, i])+(1-carb)*hotfi[, i])
@@ -166,7 +170,7 @@ emis_evap <- function(veh,
           if(verbose) cat("Sum of emissions:", sum(e[-"month"]), "\n")
 
         } else {
-          if(!is.data.frame(hotfi)) stop("'hotfi' must be a data.frame with the same dimensions of 'veh'")
+          if(!is.data.frame(hotfi)) stop("'hotfi' must be a data.frame")
           e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
             veh[, i]*x[i]*hotfi[, i]
           })))
