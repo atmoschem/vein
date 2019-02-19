@@ -70,10 +70,13 @@ show = TRUE)
 temps <- 10:20
 ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = temps, ca = "no",
 show = TRUE)
+dt <- matrix(rep(1:24,5), ncol = 12) # 12 months
 ef_evap(ef ="erhotc", v = "PC", cc = "<=1400",
-dt = data.frame(temps, temps), ca = "no")
-ef_evap(ef = c("erhotc", "erhotc"), v = "PC",
-cc = "<=1400", dt = data.frame(temps, temps), ca = "no")
+dt = dt, ca = "no")
+ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = 20,
+dt = dt, ca = "no")
+ef_evap(ef = rep("erhotc", 8), v = "PC", cc = "<=1400", ltrip = 20,
+dt = dt, ca = "no")
 }
 }
 \references{
