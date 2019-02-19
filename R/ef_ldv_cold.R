@@ -14,12 +14,14 @@
 #' @param k Numeric; Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
 #' @param speed Numeric; Speed to return Number of emission factor and not a function.
+#' @param i ignore
 #' @return an emission factor function which depends of the average speed V
 #' and ambient temperature. g/km
 #' @keywords cold emission factors
 #' @export
 #' @examples {
-#' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO", show.equation = T)
+#' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
+#' show.equation = TRUE)
 #' ef1(10)
 #' speed <- Speed(10)
 #' ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO", speed = speed)
@@ -42,7 +44,7 @@ ef_ldv_cold <- function(v = "LDV",
                         cc, f,
                         eu, # can vary horizontally
                         p, k = 1,
-                        show.equation = FALSE, speed){
+                        show.equation = FALSE, speed, i){
   ef_ldv <- sysdata$cold
   eu = as.character(eu)
   # Check speed
@@ -135,7 +137,7 @@ ef_ldv_cold <- function(v = "LDV",
           f1(speed)
         }))
         dff <- EmissionFactors(dff)
-        names(dff) <- paste0(eu, i)
+        names(dff) <- paste0(eu, "_", 1:length(eu))
         dff$speed <- speed
         dff$ta <- ta[j,k]
         dff
