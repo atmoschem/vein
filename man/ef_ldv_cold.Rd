@@ -5,7 +5,7 @@
 \title{Cold-Start Emissions factors for Light Duty Vehicles}
 \usage{
 ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1,
-  show.equation = FALSE, speed)
+  show.equation = FALSE, speed, i)
 }
 \arguments{
 \item{v}{Character; Category vehicle:  "LDV"}
@@ -25,6 +25,8 @@ ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1,
 \item{show.equation}{Option to see or not the equation parameters}
 
 \item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
+
+\item{i}{ignore}
 }
 \value{
 an emission factor function which depends of the average speed V
@@ -38,7 +40,8 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 }
 \examples{
 {
-ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO", show.equation = T)
+ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
+show.equation = TRUE)
 ef1(10)
 speed <- Speed(10)
 ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO", speed = speed)

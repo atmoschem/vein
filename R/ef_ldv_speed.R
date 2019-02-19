@@ -263,7 +263,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
       f1(speed)
     }))
     dff <- EmissionFactors(dff)
-    names(dff) <- paste0(eu, 1:length(eu))
+    names(dff) <- paste0(eu, "_", 1:length(eu))
     dff$speed <- speed
     return(dff)
   }

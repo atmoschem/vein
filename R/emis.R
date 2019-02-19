@@ -3,7 +3,6 @@
 #' @description \code{\link{emis}} estimates vehicular emissions as the product of the
 #' vehicles on a road, length of the road, emission factor avaliated at the
 #' respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
-#' @aliases emis_hot
 #'
 #' @param veh "Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 #' as number of columns matching the age distribution of that ype of vehicle.
