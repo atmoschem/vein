@@ -8,6 +8,7 @@ NEWS
 - Add verbose argument in emis_cold_td and emis_evap.
 - Add message in emis. hour and day will be deprecated.
 - Add warnings in ef_evap, and now has options for months and accepts several ef.
+- Add argument speed in ef_ldv_speed, ef_hdv_speed and ef_ldv_cold.
 
 
 ## vein 0.6.6 (Release date: 2019-02-14)

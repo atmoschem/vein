@@ -39,13 +39,13 @@ emis_cold_td <- function (veh,
                        verbose = FALSE) {
   # Check units
   if(class(lkm) != "units"){
-    stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
+    stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
   if(units(lkm)$numerator == "m" ){
     stop("Units of lkm is 'm' ")
   }
   if(class(ef) != "units"){
-    stop("ef neeeds to has class 'units' in 'g/km'. Please, check package 'units'")
+    stop("ef neeeds to has class 'units' in 'g/km'. Please, check package '?units::set_units'")
   }
   if(units(ef)$numerator != "g" | units(ef)$denominator != "km"){
     stop("Units of g must be 'g/km' ")
