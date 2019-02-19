@@ -115,7 +115,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     </div>
 
     <pre class="usage"><span class='fu'>ef_hdv_speed</span>(<span class='no'>v</span>, <span class='no'>t</span>, <span class='no'>g</span>, <span class='no'>eu</span>, <span class='no'>x</span>, <span class='kw'>gr</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>l</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>speed</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +166,10 @@ and Number of particles and Active Surface.</p></td>
     <tr>
       <th>show.equation</th>
       <td><p>Option to see or not the equation parameters</p></td>
+    </tr>
+    <tr>
+      <th>speed</th>
+      <td><p>Numeric; Speed to return Number of emission factor and not a function.</p></td>
     </tr>
     </table>
     
@@ -258,6 +262,13 @@ The categories euro IV and euro V were assigned with euro III + SCR</p>
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlist'>unlist</a></span>(<span class='no'>lef</span>)) <span class='co'>#returns 'units'</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"age"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>efs</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_hdv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"Trucks"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"RT"</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='st'>"&gt;32"</span>, <span class='kw'>gr</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+<span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euro</span>, <span class='kw'>l</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NOx"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>0</span>:<span class='fl'>125</span>))
+<span class='no'>a</span>$<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/filled.contour'>filled.contour</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>a</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/lucky'>lucky</a></span>(),
+<span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Speed"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Age"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/persp'>persp</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>a</span>), <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>35</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Speed"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Age"</span>,
+<span class='kw'>zlab</span> <span class='kw'>=</span> <span class='st'>"NOx [g/km]"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/lucky'>lucky</a></span>(), <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>25</span>)
 }</div><div class='output co'>#&gt; [1] "CO"
 #&gt; [1] "NOx"
 #&gt; [1] "HC"
@@ -275,7 +286,7 @@ The categories euro IV and euro V were assigned with euro III + SCR</p>
 #&gt; [1] "N_highway"
 #&gt; [1] "N_50nm_urban"
 #&gt; [1] "N_50_100nm_rural"
-#&gt; [1] "N_100_1000nm_highway"</div><div class='img'><img src='ef_hdv_speed-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_hdv_speed-2.png' alt='' width='700' height='433' /></div></pre>
+#&gt; [1] "N_100_1000nm_highway"</div><div class='img'><img src='ef_hdv_speed-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_hdv_speed-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Colour gradient: gacruxa_fuath_fuath_04, number: 2494</div><div class='img'><img src='ef_hdv_speed-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='ef_hdv_speed-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Colour gradient: pm_f_23_28_3, number: 6764</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
