@@ -5,7 +5,7 @@
 \title{Emissions factors for Heavy Duty Vehicles based on average speed}
 \usage{
 ef_hdv_speed(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
-  show.equation = FALSE)
+  show.equation = FALSE, speed)
 }
 \arguments{
 \item{v}{Category vehicle: "Coach", "Trucks" or "Ubus"}
@@ -34,6 +34,8 @@ and Number of particles and Active Surface.}
 \item{k}{Multiplication factor}
 
 \item{show.equation}{Option to see or not the equation parameters}
+
+\item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
 }
 \value{
 an emission factor function which depends of the average speed V  g/km
@@ -140,6 +142,13 @@ show.equation = FALSE)(25) })
 efs <- EmissionFactors(unlist(lef)) #returns 'units'
 plot(efs, xlab = "age")
 lines(efs, type = "l")
+a <- ef_hdv_speed(v = "Trucks", t = "RT", g = ">32", gr = 0,
+eu = euro, l = 0.5, p = "NOx", speed = Speed(0:125))
+a$speed <- NULL
+filled.contour(as.matrix(a), col = cptcity::lucky(),
+xlab = "Speed", ylab = "Age")
+persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Age",
+zlab = "NOx [g/km]", col = cptcity::lucky(), phi = 25)
 }
 }
 \keyword{emission}

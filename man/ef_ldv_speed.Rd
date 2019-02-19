@@ -4,7 +4,7 @@
 \alias{ef_ldv_speed}
 \title{Emissions factors for Light Duty Vehicles and Motorcycles}
 \usage{
-ef_ldv_speed(v, t = "4S", cc, f, eu, p, x, k = 1,
+ef_ldv_speed(v, t = "4S", cc, f, eu, p, x, k = 1, speed,
   show.equation = FALSE)
 }
 \arguments{
@@ -33,7 +33,9 @@ and Number of particles and Active Surface.}
 
 \item{k}{Numeric; multiplication factor}
 
-\item{show.equation}{Logical; option to see or not the equation parameters}
+\item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
+
+\item{show.equation}{Logical; option to see or not the equation parameters.}
 }
 \value{
 An emission factor function which depends of the average speed V  g/km
@@ -180,6 +182,13 @@ show.equation = FALSE)(25) })
 efs <- EmissionFactors(unlist(lef)) #returns 'units'
 plot(efs, xlab = "age")
 lines(efs, type = "l")
+a <- ef_ldv_speed(v = "Motorcycle", t = "4S", cc = "<=250", f = "G",
+eu = eurom, p = "CO", speed = Speed(0:125))
+a$speed <- NULL
+filled.contour(as.matrix(a), col = cptcity::lucky(),
+xlab = "Speed", ylab = "Age")
+persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Age",
+zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
 }
 }
 \keyword{emission}
