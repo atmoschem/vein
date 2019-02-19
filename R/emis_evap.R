@@ -36,7 +36,7 @@
 #' Environment Agency, Copenhagen, 2009
 #' @note  When veh is a "Vehicles" data.frame, emission factors are evaluated till the
 #' number of columns of veh. For instance, if the length of the emision factor is 20
-#' but the number of columns of veh is 10, the 10 first emission factors are used
+#' but the number of columns of veh is 10, the 10 first emission factors are used.
 #'
 #' @export
 #' @examples {
