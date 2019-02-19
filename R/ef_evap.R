@@ -54,9 +54,10 @@
 #' dt <- matrix(rep(1:24,5), ncol = 12) # 12 months
 #' ef_evap(ef ="erhotc", v = "PC", cc = "<=1400",
 #' dt = dt, ca = "no")
-#' ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = 20,
+#' lkm <- units::set_units(10, km)
+#' ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = lkm,
 #' dt = dt, ca = "no")
-#' ef_evap(ef = rep("erhotc", 8), v = "PC", cc = "<=1400", ltrip = 20,
+#' ef_evap(ef = rep("erhotc", 8), v = "PC", cc = "<=1400", ltrip = lkm,
 #' dt = dt, ca = "no")
 #' }
 ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
@@ -81,6 +82,36 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
     stop("You can convert to g/km runing losses and soak with ltrip OR diurnal with kmday. Not both at the same time")
   }
   if(is.matrix(dt)) dt <- as.data.frame(dt)
+  # Checking length of ef and ltrip and kmday
+  if(!missing(ltrip)){
+    if(length(ltrip) > 1) stop("Please, enter one value of 'ltrip'")
+    # Check units
+    if(class(ltrip) != "units"){
+      stop("ltrip neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
+    }
+    if(units(ltrip)$numerator == "m" ){
+      stop("Units of ltrip is 'm'. Please, check package '?units::set_units'")
+    }
+    if(units(ltrip)$numerator == "km" ){
+      ltrip <- as.numeric(ltrip)
+    }
+
+  }
+  if(!missing(kmday)){
+    if(length(kmday) > 1) stop("Please, enter one value of 'kmday'")
+    # Check units
+    if(class(kmday) != "units"){
+      stop("kmday neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
+    }
+    if(units(kmday)$numerator == "m" ){
+      stop("Units of kmday is 'm'. Please, check package '?units::set_units'")
+    }
+    if(units(kmday)$numerator == "km" ){
+      kmday <- as.numeric(kmday)
+    }
+
+  }
+
 
   if(!is.data.frame(dt)){
     if(class(dt) == "factor"){
@@ -221,7 +252,7 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
       }
     } else if(length(dt) > 1 & length(ef) > 1){
       df <- do.call("rbind", lapply(1:ncol(dt), function(k){
-          df <- do.call("cbind", lapply(1:length(ef), function(j){
+        df <- do.call("cbind", lapply(1:length(ef), function(j){
           do.call("rbind",
                   lapply(1:nrow(dt), function(i){
                     ef_ev[ef_ev$ef == ef[j] & ef_ev$veh == v & ef_ev$cc == cc &
@@ -234,6 +265,7 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
         df <- EmissionFactors(df*k/ltrip)
         df$col_temp <- rep(1:ncol(dt), each = nrow(dt))
       } else if(!missing(kmday)){
+
         df <- EmissionFactors(df*k/kmday)
         df$col_temp <- rep(1:ncol(dt), each = nrow(dt))
       } else if(missing(ltrip) & missing(kmday)){

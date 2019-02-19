@@ -73,9 +73,10 @@ show = TRUE)
 dt <- matrix(rep(1:24,5), ncol = 12) # 12 months
 ef_evap(ef ="erhotc", v = "PC", cc = "<=1400",
 dt = dt, ca = "no")
-ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = 20,
+lkm <- units::set_units(10, km)
+ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = lkm,
 dt = dt, ca = "no")
-ef_evap(ef = rep("erhotc", 8), v = "PC", cc = "<=1400", ltrip = 20,
+ef_evap(ef = rep("erhotc", 8), v = "PC", cc = "<=1400", ltrip = lkm,
 dt = dt, ca = "no")
 }
 }

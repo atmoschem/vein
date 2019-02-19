@@ -112,7 +112,7 @@ emis <- function (veh,
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
   if(units(lkm)$numerator == "m" ){
-    stop("Units of lkm is 'm' ")
+    stop("Units of lkm is 'm'. Please, check package '?units::set_units'")
   }
   # At least, on e of these
   if(any(!class(ef) %in% c("list", "units", "EmissionFactorsList",
