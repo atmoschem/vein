@@ -55,9 +55,7 @@ efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euros, p = "CO", speed = Speed(34))
 efh <- EmissionFactors(unlist(efh))
 lkm <- units::as_units(18:10, "km")*1000
-cold_lkm <- as.data.frame(sapply(1:ncol(dt), function(i) {
-cold_mileage(ltrip = 20, ta = dt[, i])
-}))
+cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 names(cold_lkm) <- paste0("Month_", 1:12)
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 veh <- age_ldv(1:10, agemax = 8)

@@ -149,9 +149,9 @@ ef_ldv_cold <- function(v = "LDV",
                        ef_ldv$FUEL == f &
                        ef_ldv$EURO == eu[i] &
                        ef_ldv$POLLUTANT == p, ]
-        k <- lala(eu[i])
 
         f1 <- function(V){
+          k <- lala(eu[i])
           a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
           g <- df$g; h <- df$h; i <- df$i
           V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
@@ -176,10 +176,10 @@ ef_ldv_cold <- function(v = "LDV",
                            ef_ldv$FUEL == f &
                            ef_ldv$EURO == eu[i] &
                            ef_ldv$POLLUTANT == p, ]
-            k <- lala(eu[i])
 
             f1 <- function(V){
               ta <- ta[j, k]
+              k <- lala(eu[i])
               a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
               g <- df$g; h <- df$h; i <- df$i
               V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
@@ -213,9 +213,9 @@ ef_ldv_cold <- function(v = "LDV",
                          ef_ldv$FUEL == f &
                          ef_ldv$EURO == eu[j,i][[1]] &
                          ef_ldv$POLLUTANT == p, ]
-          k <- lala(eu[j,i][[1]])
 
           f1 <- function(V){
+            k <- lala(eu[j,i][[1]])
             a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
             g <- df$g; h <- df$h; i <- df$i
             V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
@@ -247,10 +247,10 @@ ef_ldv_cold <- function(v = "LDV",
                            ef_ldv$FUEL == f &
                            ef_ldv$EURO == eu[j,i][[1]] &
                            ef_ldv$POLLUTANT == p, ]
-            k <- lala(eu[j,i][[1]])
 
             f1 <- function(V){
               ta <- ta[j, k]
+              k <- lala(eu[j,i][[1]])
               a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
               g <- df$g; h <- df$h; i <- df$i
               V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
@@ -262,7 +262,6 @@ ef_ldv_cold <- function(v = "LDV",
           }))
           dff <- EmissionFactors(dff)
           dff$speed <- speed
-          # dff$euros <- rep(paste0("Row eu ", 1:nrow(eu)), each = length(speed))
           dff$ta <- ta[j,k]
           dff$row_eu <- j
           dff
