@@ -6,7 +6,11 @@
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 #'
 #' @param v Character; Category vehicle:  "LDV"
-#' @param ta Numeric; Ambient temperature. Monthly mean can be used
+#' @param ta Numeric; Ambient temperature. Monthly mean can be used. When
+#' ta is a data.frame, one option is that the number of rows should be the number of
+#' rows of your  Vehicles data.frame. This is convenient for top-down approach
+#' when each simple feature can be a polygon, with a monthly average temperature for
+#' each simple feature. In this case, the number of columns can be the 12 months.
 #' @param cc Character; Size of engine in cc: "<=1400",  "1400_2000" or ">2000"
 #' @param f Character; Type of fuel: "G", "D" or "LPG"
 #' @param eu Character; Euro standard: "PRE", "I", "II", "III",  "IV", "V", "VI" or "VIc"
@@ -36,7 +40,7 @@
 #' lf <-  ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0:120))
 #' dt <- matrix(rep(2:25,5), ncol = 12) # 12 months
 #' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = "I", p = "CO", speed = Speed(0))
-#' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0))
+#' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 #' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0:120))
 #' }
 ef_ldv_cold <- function(v = "LDV",

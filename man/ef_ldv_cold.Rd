@@ -10,7 +10,11 @@ ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1,
 \arguments{
 \item{v}{Character; Category vehicle:  "LDV"}
 
-\item{ta}{Numeric; Ambient temperature. Monthly mean can be used}
+\item{ta}{Numeric; Ambient temperature. Monthly mean can be used. When
+ta is a data.frame, one option is that the number of rows should be the number of
+rows of your  Vehicles data.frame. This is convenient for top-down approach
+when each simple feature can be a polygon, with a monthly average temperature for
+each simple feature. In this case, the number of columns can be the 12 months.}
 
 \item{cc}{Character; Size of engine in cc: "<=1400",  "1400_2000" or ">2000"}
 
@@ -56,7 +60,7 @@ ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(
 lf <-  ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0:120))
 dt <- matrix(rep(2:25,5), ncol = 12) # 12 months
 ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = "I", p = "CO", speed = Speed(0))
-ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0))
+ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0:120))
 }
 }

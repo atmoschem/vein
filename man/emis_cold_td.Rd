@@ -16,17 +16,17 @@ The number of rows is equal to the number of streets link}
 
 \item{ef}{Numeric; emission factor with}
 
-\item{efcold}{Data.frame or list of data.frames. When it is a data.frame, each column is for each
-type of vehicle by age of use, rows are are each simple feature. When it is
-a list of data.frames, each element of the list it is a month of the year.
-efcold should be different for each simple feature, assuming different average temperature.}
+\item{efcold}{Data.frame. When it is a data.frame, each column is for each
+type of vehicle by age of use, rows are are each simple feature. When you have
+emission factors for each month, the order should a data.frame ina long format,
+as rurned by \code{\link{ef_ldv_cold}}.}
 
 \item{beta}{Data.frame with the fraction of cold starts. The rows are the fraction
 for each spatial feature or subregion, the columns are the age of use of vehicle.}
 
 \item{pro_month}{Numeric; montly profile to distribuite annual mileage in each month.}
 
-\item{params}{Character; Add columns with information to returning data.frame}
+\item{params}{List of parameters; Add columns with information to returning data.frame}
 
 \item{verbose}{Logical; To show more information}
 }
@@ -47,5 +47,29 @@ providing flexibility to the user.
 \examples{
 \dontrun{
 # Do not run
+euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
+dt <- matrix(rep(2:25,5), ncol = 12, nrow = 10) # 12 months, 10 rows
+row.names(dt) <- paste0("Simple_Feature_", 1:10)
+efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
+efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+          eu = euros, p = "CO", speed = Speed(34))
+efh <- EmissionFactors(unlist(efh))
+lkm <- units::as_units(18:10, "km")*1000
+cold_lkm <- as.data.frame(sapply(1:ncol(dt), function(i) {
+cold_mileage(ltrip = 20, ta = dt[, i])
+}))
+names(cold_lkm) <- paste0("Month_", 1:12)
+veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
+veh <- age_ldv(1:10, agemax = 8)
+emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
+beta = cold_lkm[,1], verbose = TRUE)
+aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
+beta = cold_lkm, pro_month = veh_month, verbose = TRUE)
+aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
+beta = cold_lkm, pro_month = veh_month, verbose = FALSE,
+params = list(paste0("data_", 1:10)))
 }
+}
+\seealso{
+\code{\link{ef_ldv_cold}}
 }
