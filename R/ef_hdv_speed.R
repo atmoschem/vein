@@ -22,6 +22,9 @@
 #' @param k Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
 #' @param speed Numeric; Speed to return Number of emission factor and not a function.
+#' @param fcorr Numeric; Correction by fuel properties by euro technology.
+#' See \code{\link{fuel_corr}}. The order from first to last is
+#' "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1
 #' @return an emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
 #' @note
@@ -82,6 +85,7 @@
 #' The categories euro IV and euro V were assigned with euro III + SCR
 #'
 #'
+#' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 #' @export
 #' @examples {
 #' # Quick view
@@ -133,7 +137,7 @@
 #' eu = rbind(euro, euro), l = 0.5, p = "NOx", speed = Speed(0:125))
 #' }
 ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
-                         show.equation = FALSE, speed){
+                         show.equation = FALSE, speed, fcorr = rep(1, 8)){
   p_cri <- as.character(unique(sysdata$hdv_criteria$POLLUTANT))
   p_met <- as.character(unique(sysdata$hdv_metals$POLLUTANT))
   p_ghg <- as.character(unique(sysdata$hdv_ghg$POLLUTANT))
@@ -176,6 +180,23 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
       speed <- as.numeric(speed)
     }
   }
+  #Function to case when
+  lala <- function(x) {
+    ifelse(x == "PRE", fcorr[1],
+           ifelse(
+             x == "I", fcorr[2],
+             ifelse(
+               x == "II", fcorr[3],
+               ifelse(
+                 x == "III", fcorr[4],
+                 ifelse(
+                   x == "IV", fcorr[5],
+                   ifelse(
+                     x == "V", fcorr[6],
+                     ifelse(
+                       x == "VI", fcorr[7],
+                       fcorr[8])))))))
+  }
 
   # fun starts
   if(!is.data.frame(eu)){
@@ -187,6 +208,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
                      ef_hdv$GRA == gr &
                      ef_hdv$LOAD == l &
                      ef_hdv$POLLUTANT == p, ]
+      k <- lala(eu)
 
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
@@ -233,6 +255,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
                        ef_hdv$GRA == gr &
                        ef_hdv$LOAD == l &
                        ef_hdv$POLLUTANT == p, ]
+        k <- lala(eu[i])
 
         if(p %in% c("SO2","Pb")){
           f1 <- function(V){
@@ -272,6 +295,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
                        ef_hdv$GRA == gr &
                        ef_hdv$LOAD == l &
                        ef_hdv$POLLUTANT == p, ]
+        k <- lala(eu[j,i][[1]])
 
         if(p %in% c("SO2","Pb")){
           f1 <- function(V){

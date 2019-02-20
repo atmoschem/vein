@@ -115,7 +115,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     </div>
 
     <pre class="usage"><span class='fu'>ef_hdv_speed</span>(<span class='no'>v</span>, <span class='no'>t</span>, <span class='no'>g</span>, <span class='no'>eu</span>, <span class='no'>x</span>, <span class='kw'>gr</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>l</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>speed</span>)</pre>
+  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>speed</span>, <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,6 +171,12 @@ and Number of particles and Active Surface.</p></td>
       <th>speed</th>
       <td><p>Numeric; Speed to return Number of emission factor and not a function.</p></td>
     </tr>
+    <tr>
+      <th>fcorr</th>
+      <td><p>Numeric; Correction by fuel properties by euro technology.
+See <code><a href='fuel_corr.html'>fuel_corr</a></code>. The order from first to last is
+"PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -220,6 +226,10 @@ Euro IV + CRDPF
 Euro V + SCR</p>
 <p>The categories Pre Euro and Euro I were assigned with the factors of Euro II and Euro III
 The categories euro IV and euro V were assigned with euro III + SCR</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='fuel_corr.html'>fuel_corr</a></code> <code><a href='emis.html'>emis</a></code> <code><a href='ef_ldv_cold.html'>ef_ldv_cold</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -298,6 +308,8 @@ The categories euro IV and euro V were assigned with euro III + SCR</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#note">Note</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

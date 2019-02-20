@@ -5,7 +5,7 @@
 \title{Emissions factors for Light Duty Vehicles and Motorcycles}
 \usage{
 ef_ldv_speed(v, t = "4S", cc, f, eu, p, x, k = 1, speed,
-  show.equation = FALSE)
+  show.equation = FALSE, fcorr = rep(1, 8))
 }
 \arguments{
 \item{v}{Character; category vehicle: "PC", "LCV", "Motorcycle" or "Moped}
@@ -37,6 +37,10 @@ and Number of particles and Active Surface.}
 \item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
 
 \item{show.equation}{Logical; option to see or not the equation parameters.}
+
+\item{fcorr}{Numeric; Correction by fuel properties by euro technology.
+See \code{\link{fuel_corr}}. The order from first to last is
+"PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1}
 }
 \value{
 An emission factor function which depends of the average speed V  g/km
@@ -217,6 +221,9 @@ xlab = "Speed", ylab = "Age")
 persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Euros",
 zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
 }
+}
+\seealso{
+\code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 }
 \keyword{emission}
 \keyword{factors}

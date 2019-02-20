@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Cold-Start Emissions factors for Light Duty Vehicles — ef_ldv_cold" />
 
-<meta property="og:description" content="This function returns speed functions which depends on ambient temperature
+<meta property="og:description" content="ef_ldv_cold returns speed functions or data.frames which depends on ambient temperature
 average speed. The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook" />
@@ -109,7 +109,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 
     <div class="ref-description">
     
-    <p>This function returns speed functions which depends on ambient temperature
+    <p><code>ef_ldv_cold</code> returns speed functions or data.frames which depends on ambient temperature
 average speed. The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook</p>
@@ -117,7 +117,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     </div>
 
     <pre class="usage"><span class='fu'>ef_ldv_cold</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"LDV"</span>, <span class='no'>ta</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>speed</span>, <span class='no'>i</span>)</pre>
+  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>speed</span>, <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,8 +166,10 @@ When you want that each simple feature or region has a different emission standa
       <td><p>Numeric; Speed to return Number of emission factor and not a function.</p></td>
     </tr>
     <tr>
-      <th>i</th>
-      <td><p>ignore</p></td>
+      <th>fcorr</th>
+      <td><p>Numeric; Correction by fuel properties by euro technology.
+See <code><a href='fuel_corr.html'>fuel_corr</a></code>. The order from first to last is
+"PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1</p></td>
     </tr>
     </table>
     
@@ -175,6 +177,10 @@ When you want that each simple feature or region has a different emission standa
 
     <p>an emission factor function which depends of the average speed V
 and ambient temperature. g/km</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='fuel_corr.html'>fuel_corr</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -201,58 +207,21 @@ and ambient temperature. g/km</p>
 <span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>dfe</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>0</span>))
 
 <span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='no'>dt</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,], <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>dfe</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>0</span>))
+<span class='co'># Fuel corrections</span>
+<span class='no'>fcorr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.5</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0.9</span>,<span class='fl'>0.9</span>,<span class='fl'>0.9</span>,<span class='fl'>0.9</span>)
+<span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
+<span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='no'>fcorr</span>)
+<span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>dfe</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>0</span>),
+<span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='no'>fcorr</span>)
 }</div><div class='output co'>#&gt; a = 3.7, b = -0.09, c = NA, d = NA, e = NA, f = NA
-#&gt; Equation = (a + b*ta)*1</div><div class='output co'>#&gt; Colour gradient: es_ocean_breeze_es_ocean_breeze_041, number: 1543</div><div class='img'><img src='ef_ldv_cold-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; EmissionFactors:
-#&gt;                V1             V2             V3              V4              V5
-#&gt; 1  0.71802 [g/km] 0.71802 [g/km] 0.71802 [g/km]  2.47318 [g/km]  2.87208 [g/km]
-#&gt; 2  0.69012 [g/km] 0.69012 [g/km] 0.69012 [g/km]  0.69012 [g/km]  0.69012 [g/km]
-#&gt; 3  0.87804 [g/km] 0.87804 [g/km] 0.87804 [g/km]  3.02436 [g/km]  3.51216 [g/km]
-#&gt; 4  0.82224 [g/km] 0.82224 [g/km] 0.82224 [g/km]  0.82224 [g/km]  0.82224 [g/km]
-#&gt; 5  0.24813 [g/km] 0.24813 [g/km] 0.24813 [g/km]  0.85467 [g/km]  0.99252 [g/km]
-#&gt; 6  0.00837 [g/km] 0.00837 [g/km] 0.00837 [g/km]  0.00837 [g/km]  0.00837 [g/km]
-#&gt; 7  2.20248 [g/km] 2.20248 [g/km] 2.20248 [g/km]  7.58632 [g/km]  8.80992 [g/km]
-#&gt; 8  2.09088 [g/km] 2.09088 [g/km] 2.09088 [g/km]  2.09088 [g/km]  2.09088 [g/km]
-#&gt; 9  2.01195 [g/km] 2.01195 [g/km] 2.01195 [g/km]  6.93005 [g/km]  8.04780 [g/km]
-#&gt; 10 1.61235 [g/km] 1.61235 [g/km] 1.61235 [g/km]  1.61235 [g/km]  1.61235 [g/km]
-#&gt; 11 3.97332 [g/km] 3.97332 [g/km] 3.97332 [g/km] 13.68588 [g/km] 15.89328 [g/km]
-#&gt; 12 3.80592 [g/km] 3.80592 [g/km] 3.80592 [g/km]  3.80592 [g/km]  3.80592 [g/km]
-#&gt; 13 2.68254 [g/km] 2.68254 [g/km] 2.68254 [g/km]  9.23986 [g/km] 10.73016 [g/km]
-#&gt; 14 2.48724 [g/km] 2.48724 [g/km] 2.48724 [g/km]  2.48724 [g/km]  2.48724 [g/km]
-#&gt; 15 0.00000 [g/km] 0.00000 [g/km] 0.00000 [g/km]  0.00000 [g/km]  0.00000 [g/km]
-#&gt; 16 0.00000 [g/km] 0.00000 [g/km] 0.00000 [g/km]  0.00000 [g/km]  0.00000 [g/km]
-#&gt; 17 4.45338 [g/km] 4.45338 [g/km] 4.45338 [g/km] 15.33942 [g/km] 17.81352 [g/km]
-#&gt; 18 4.20228 [g/km] 4.20228 [g/km] 4.20228 [g/km]  4.20228 [g/km]  4.20228 [g/km]
-#&gt; 19 2.42550 [g/km] 2.42550 [g/km] 2.42550 [g/km]  8.35450 [g/km]  9.70200 [g/km]
-#&gt; 20 1.62630 [g/km] 1.62630 [g/km] 1.62630 [g/km]  1.62630 [g/km]  1.62630 [g/km]
-#&gt; 21 6.67062 [g/km] 6.67062 [g/km] 6.67062 [g/km] 22.97658 [g/km] 26.68248 [g/km]
-#&gt; 22 6.36372 [g/km] 6.36372 [g/km] 6.36372 [g/km]  6.36372 [g/km]  6.36372 [g/km]
-#&gt; 23 6.74676 [g/km] 6.74676 [g/km] 6.74676 [g/km] 23.23884 [g/km] 26.98704 [g/km]
-#&gt; 24 5.78772 [g/km] 5.78772 [g/km] 5.78772 [g/km]  5.78772 [g/km]  5.78772 [g/km]
-#&gt;                 V6              V7              V8 speed ta row_eu
-#&gt; 1   3.98900 [g/km]  3.52000 [g/km]  3.52000 [g/km]     0  2      1
-#&gt; 2   0.69012 [g/km]  2.37708 [g/km]  2.37708 [g/km]     0  3      2
-#&gt; 3   4.87800 [g/km]  5.24000 [g/km]  5.24000 [g/km]     0 12      1
-#&gt; 4   0.82224 [g/km]  2.83216 [g/km]  2.83216 [g/km]     0 13      2
-#&gt; 5   1.37850 [g/km]  5.16000 [g/km]  5.16000 [g/km]     0 22      1
-#&gt; 6   0.00837 [g/km]  0.02883 [g/km]  0.02883 [g/km]     0 23      2
-#&gt; 7  12.23600 [g/km] 11.92000 [g/km] 11.92000 [g/km]     0  8      1
-#&gt; 8   2.09088 [g/km]  7.20192 [g/km]  7.20192 [g/km]     0  9      2
-#&gt; 9  11.17750 [g/km] 10.40000 [g/km] 10.40000 [g/km]     0 18      1
-#&gt; 10  1.61235 [g/km]  5.55365 [g/km]  5.55365 [g/km]     0 19      2
-#&gt; 11 22.07400 [g/km] 20.04000 [g/km] 20.04000 [g/km]     0  4      1
-#&gt; 12  3.80592 [g/km] 13.10928 [g/km] 13.10928 [g/km]     0  5      2
-#&gt; 13 14.90300 [g/km] 17.08000 [g/km] 17.08000 [g/km]     0 14      1
-#&gt; 14  2.48724 [g/km]  8.56716 [g/km]  8.56716 [g/km]     0 15      2
-#&gt; 15  0.00000 [g/km] 12.32000 [g/km] 12.32000 [g/km]     0 24      1
-#&gt; 16  0.00000 [g/km]  0.00000 [g/km]  0.00000 [g/km]     0 25      2
-#&gt; 17 24.74100 [g/km] 25.20000 [g/km] 25.20000 [g/km]     0 10      1
-#&gt; 18  4.20228 [g/km] 14.47452 [g/km] 14.47452 [g/km]     0 11      2
-#&gt; 19 13.47500 [g/km] 19.00000 [g/km] 19.00000 [g/km]     0 20      1
-#&gt; 20  1.62630 [g/km]  5.60170 [g/km]  5.60170 [g/km]     0 21      2
-#&gt; 21 37.05900 [g/km] 34.76000 [g/km] 34.76000 [g/km]     0  6      1
-#&gt; 22  6.36372 [g/km] 21.91948 [g/km] 21.91948 [g/km]     0  7      2
-#&gt; 23 37.48200 [g/km] 27.12000 [g/km] 27.12000 [g/km]     0 16      1
-#&gt; 24  5.78772 [g/km] 19.93548 [g/km] 19.93548 [g/km]     0 17      2</div></pre>
+#&gt; Equation = (a + b*ta)*1</div><div class='output co'>#&gt; Colour gradient: es_ocean_breeze_es_ocean_breeze_041, number: 1543</div><div class='img'><img src='ef_ldv_cold-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; a = 3.7, b = -0.09, c = NA, d = NA, e = NA, f = NA
+#&gt; Equation = (a + b*ta)*0.5</div><div class='output co'>#&gt; EmissionFactors:
+#&gt;                V1              V2              V3              V4
+#&gt; 1 0.445338 [g/km] 0.445338 [g/km] 0.445338 [g/km] 1.704380 [g/km]
+#&gt; 2 0.445338 [g/km] 0.445338 [g/km] 0.445338 [g/km] 0.445338 [g/km]
+#&gt;                V5              V6             V7             V8 speed ta
+#&gt; 1 1.979280 [g/km] 2.749000 [g/km] 1.40000 [g/km] 1.40000 [g/km]     0 10
+#&gt; 2 0.445338 [g/km] 0.445338 [g/km] 1.70438 [g/km] 1.70438 [g/km]     0 10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -260,6 +229,8 @@ and ambient temperature. g/km</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
