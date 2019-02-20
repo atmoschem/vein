@@ -145,7 +145,7 @@ lines(efs, type = "l")
 a <- ef_hdv_speed(v = "Trucks", t = "RT", g = ">32", gr = 0,
 eu = euro, l = 0.5, p = "NOx", speed = Speed(0:125))
 a$speed <- NULL
-filled.contour(as.matrix(a), col = cptcity::lucky(),
+filled.contour(as.matrix(a), col = cptcity::lucky(n = 24),
 xlab = "Speed", ylab = "Age")
 persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Age",
 zlab = "NOx [g/km]", col = cptcity::lucky(), phi = 25)
