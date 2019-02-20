@@ -1,6 +1,7 @@
 #' Emissions factors for Light Duty Vehicles and Motorcycles
 #'
-#' \code{\link{ef_ldv_speed}} returns speed dependent emission factors. The emission factors
+#' \code{\link{ef_ldv_speed}} returns speed dependent emission factors, data.frames or
+#' list of emission factors. The emission factors
 #'  comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 #'
@@ -126,11 +127,31 @@
 #' speed <- 25
 #' lef <- lapply(1:40, function(i) {
 #' ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+#'           eu = euro[i], p = "CO")
+#' ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
 #'           eu = euro[i], p = "CO", show.equation = FALSE)(25) })
 #' # to check the emission factor with a plot
 #' efs <- EmissionFactors(unlist(lef)) #returns 'units'
 #' plot(efs, xlab = "age")
 #' lines(efs, type = "l")
+#' euros <- c("VI", "V", "IV", "III", "II")
+#' ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+#'           eu = euros, p = "CO")
+#' a <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+#'           eu = euros, p = "CO", speed = Speed(0:120))
+#' head(a)
+#' filled.contour(as.matrix(a)[1:10, 1:length(euros)], col = cptcity::cpt(n = 18))
+#' filled.contour(as.matrix(a)[110:120, 1:length(euros)], col = cptcity::cpt(n = 16))
+#' filled.contour(as.matrix(a)[, 1:length(euros)], col = cptcity::cpt(n = 21))
+#' filled.contour(as.matrix(a)[, 1:length(euros)],
+#' col = cptcity::cpt("mpl_viridis", n = 21))
+#' filled.contour(as.matrix(a)[, 1:length(euros)],
+#' col = cptcity::cpt("mpl_magma", n = 21))
+#' persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 0)
+#' persp(as.matrix(a)[, 1:length(euros)], phi = 25, theta = 45)
+#' persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 90)
+#' persp(as.matrix(a)[, 1:length(euros)], phi = 25, theta = 90+45)
+#' persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 180)
 #'
 #' # Light Commercial Vehicles
 #' V <- 0:150
@@ -233,40 +254,74 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
     }
 
   } else if(length(eu) > 1){
-    if(missing(speed)) stop("if length(eu) > 1, 'speed' is needed")
-    dff <- do.call("cbind", lapply(1:length(eu), function(i){
-      df <- ef_ldv[ef_ldv$VEH == v &
-                     ef_ldv$TYPE == t &
-                     ef_ldv$CC == cc &
-                     ef_ldv$FUEL == f &
-                     ef_ldv$EURO == eu[i] &
-                     ef_ldv$POLLUTANT == p, ]
+    if(!missing(speed)){
+      dff <- do.call("cbind", lapply(1:length(eu), function(i){
+        df <- ef_ldv[ef_ldv$VEH == v &
+                       ef_ldv$TYPE == t &
+                       ef_ldv$CC == cc &
+                       ef_ldv$FUEL == f &
+                       ef_ldv$EURO == eu[i] &
+                       ef_ldv$POLLUTANT == p, ]
 
-      if(p %in% c("SO2","Pb")){
-        f1 <- function(V){
-          a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
-          V <- ifelse(V < df$MINV, df$MINV,
-                      ifelse(V > df$MAXV, df$MAXV, V))
-          ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
-                 0,
-                 eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+        if(p %in% c("SO2","Pb")){
+          f1 <- function(V){
+            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
+            V <- ifelse(V < df$MINV, df$MINV,
+                        ifelse(V > df$MAXV, df$MAXV, V))
+            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                   0,
+                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+          }
+        } else {
+          f1 <- function(V){
+            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
+            V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                   0,
+                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+          }
         }
-      } else {
-        f1 <- function(V){
-          a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
-          V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-          ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
-                 0,
-                 eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+        f1(speed)
+      }))
+      dff <- EmissionFactors(dff)
+      names(dff) <- paste0(eu, 1:length(eu))
+      dff$speed <- speed
+      return(dff)
+    } else {
+      dff <- lapply(1:length(eu), function(i){
+        df <- ef_ldv[ef_ldv$VEH == v &
+                       ef_ldv$TYPE == t &
+                       ef_ldv$CC == cc &
+                       ef_ldv$FUEL == f &
+                       ef_ldv$EURO == eu[i] &
+                       ef_ldv$POLLUTANT == p, ]
+
+        if(p %in% c("SO2","Pb")){
+          f1 <- function(V){
+            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
+            V <- ifelse(V < df$MINV, df$MINV,
+                        ifelse(V > df$MAXV, df$MAXV, V))
+            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                   0,
+                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+          }
+        } else {
+          f1 <- function(V){
+            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
+            V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                   0,
+                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+          }
         }
-      }
-      f1(speed)
-    }))
-    dff <- EmissionFactors(dff)
-    names(dff) <- paste0(eu, "_", 1:length(eu))
-    dff$speed <- speed
-    return(dff)
-  }
+        f1
+      })
+      names(dff) <- paste0(eu, 1:length(eu))
+      return(EmissionFactorsList(dff))
+
+    }
+
+    }
 
 
 

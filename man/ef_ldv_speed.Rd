@@ -41,7 +41,8 @@ and Number of particles and Active Surface.}
 An emission factor function which depends of the average speed V  g/km
 }
 \description{
-\code{\link{ef_ldv_speed}} returns speed dependent emission factors. The emission factors
+\code{\link{ef_ldv_speed}} returns speed dependent emission factors, data.frames or
+list of emission factors. The emission factors
  comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 }
@@ -147,11 +148,31 @@ euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
 speed <- 25
 lef <- lapply(1:40, function(i) {
 ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+          eu = euro[i], p = "CO")
+ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euro[i], p = "CO", show.equation = FALSE)(25) })
 # to check the emission factor with a plot
 efs <- EmissionFactors(unlist(lef)) #returns 'units'
 plot(efs, xlab = "age")
 lines(efs, type = "l")
+euros <- c("VI", "V", "IV", "III", "II")
+ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+          eu = euros, p = "CO")
+a <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+          eu = euros, p = "CO", speed = Speed(0:120))
+head(a)
+filled.contour(as.matrix(a)[1:10, 1:length(euros)], col = cptcity::cpt(n = 18))
+filled.contour(as.matrix(a)[110:120, 1:length(euros)], col = cptcity::cpt(n = 16))
+filled.contour(as.matrix(a)[, 1:length(euros)], col = cptcity::cpt(n = 21))
+filled.contour(as.matrix(a)[, 1:length(euros)],
+col = cptcity::cpt("mpl_viridis", n = 21))
+filled.contour(as.matrix(a)[, 1:length(euros)],
+col = cptcity::cpt("mpl_magma", n = 21))
+persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 0)
+persp(as.matrix(a)[, 1:length(euros)], phi = 25, theta = 45)
+persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 90)
+persp(as.matrix(a)[, 1:length(euros)], phi = 25, theta = 90+45)
+persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 180)
 
 # Light Commercial Vehicles
 V <- 0:150
