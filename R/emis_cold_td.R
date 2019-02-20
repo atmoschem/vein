@@ -37,9 +37,7 @@
 #'           eu = euros, p = "CO", speed = Speed(34))
 #' efh <- EmissionFactors(unlist(efh))
 #' lkm <- units::as_units(18:10, "km")*1000
-#' cold_lkm <- as.data.frame(sapply(1:ncol(dt), function(i) {
-#' cold_mileage(ltrip = 20, ta = dt[, i])
-#' }))
+#' cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 #' names(cold_lkm) <- paste0("Month_", 1:12)
 #' veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 #' veh <- age_ldv(1:10, agemax = 8)
@@ -55,13 +53,13 @@
 #' params = list(paste0("data_", 1:10), "moredata"))
 #' }
 emis_cold_td <- function (veh,
-                       lkm,
-                       ef,
-                       efcold,
-                       beta,
-                       pro_month,
-                       params,
-                       verbose = FALSE) {
+                          lkm,
+                          ef,
+                          efcold,
+                          beta,
+                          pro_month,
+                          params,
+                          verbose = FALSE) {
   # Check units
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
@@ -72,17 +70,36 @@ emis_cold_td <- function (veh,
   if(units(lkm)$numerator == "km" ) {
     lkm <- as.numeric(lkm)
   }
+
   # Checking ef
-  if(class(ef) != "units"){
-    stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
+  if(is.matrix(ef) | is.data.frame(ef)){
+    ef <- as.data.frame(ef)
+    if(class(ef[, 1]) != "units"){
+      stop("columns of ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
+    }
+    if(units(ef[, 1])$numerator != "g" | units(ef[, 1])$denominator != "km"){
+      stop("Units of efcold must be 'g/km' ")
+    }
+    if(units(ef[, 1])$numerator == "g" | units(ef[, 1])$denominator == "km"){
+      for(i in 1:ncol(veh)){
+        ef[, i] <- as.numeric(ef[, i])
+      }
+
+    }
+
+  } else {
+    if(class(ef) != "units"){
+      stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
+    }
+    if(units(ef)$numerator != "g" | units(ef)$denominator != "km"){
+      stop("Units of ef must be 'g/km' ")
+    }
+    if(units(ef)$numerator == "g" | units(ef)$denominator == "km"){
+      ef <- as.numeric(ef)
+    }
+
   }
-  if(units(ef)$numerator != "g" | units(ef)$denominator != "km"){
-    stop("Units of ef must be 'g/km' ")
-  }
-  if(units(ef)$numerator == "g" & units(ef)$denominator == "km"){
-    ef <- as.numeric(ef)
-  }
-  # Checking ef
+  # Checking ef cold
   if(class(efcold[, 1]) != "units"){
     stop("columns of efcold must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
   }
@@ -104,54 +121,88 @@ emis_cold_td <- function (veh,
     if(verbose) message("converting sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }
-# checking beta
+  # checking beta
   beta <- as.data.frame(beta)
 
   # Checking pro_month
   if(!missing(pro_month)){
+
     if(verbose) message("Estimation with monthly profile")
+
     if(length(pro_month) != 12) stop("Length of pro_month must be 12")
+
     mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
 
-#TODO, IMPROVE
-    if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
+    if(is.data.frame(ef)){
+      if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
-    efcold$month <- rep(1:12, each = nrow(veh))
-    efcold <- split(efcold, efcold$month)
+      efcold$month <- rep(1:12, each = nrow(veh))
+      efcold <- split(efcold, efcold$month)
 
-    e <- do.call("rbind",lapply(1:12, function(k){
+      e <- do.call("rbind",lapply(1:12, function(k){
         dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
-          beta[i, k]*as.numeric(lkm)[i]*veh[, i] * pro_month[k] *as.numeric(ef)[i] * efcold[[k]][, i]
+          beta[, k]*lkm[i]*veh[, i] * pro_month[k] *ef[,i] * efcold[[k]][, i]
         }))
         dfi <- Emissions(dfi)
         names(dfi) <- paste0("Age", 1:ncol(dfi))
         dfi$month <- mes[k]
         dfi
+      }))
+      if(!missing(params)){
+        if(!is.list(params)) stop("'params' must be a list")
+        if(is.null(names(params))) {
+          if(verbose) message("Adding names to params")
+          names(params) <- paste0("P_", 1:length(params))
+        }
+        for (i in 1:length(params)){
+          e[, names(params)[i]] <- params[[i]]
+        }
+      }
+
+      if(verbose) cat("Sum of emissions:", sum(e[, 1:ncol(veh)]), "\n")
+    } else{
+      if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
+
+      efcold$month <- rep(1:12, each = nrow(veh))
+      efcold <- split(efcold, efcold$month)
+
+      e <- do.call("rbind",lapply(1:12, function(k){
+        dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
+          beta[, k]*lkm[i]*veh[, i] * pro_month[k] *ef[i] * efcold[[k]][, i]
+        }))
+        dfi <- Emissions(dfi)
+        names(dfi) <- paste0("Age", 1:ncol(dfi))
+        dfi$month <- mes[k]
+        dfi
+      }))
+      if(!missing(params)){
+        if(!is.list(params)) stop("'params' must be a list")
+        if(is.null(names(params))) {
+          if(verbose) message("Adding names to params")
+          names(params) <- paste0("P_", 1:length(params))
+        }
+        for (i in 1:length(params)){
+          e[, names(params)[i]] <- params[[i]]
+        }
+      }
+
+      if(verbose) cat("Sum of emissions:", sum(e[, 1:ncol(veh)]), "\n")
+    }
+
+
+  } else {
+    if(verbose) message("Estimation without monthly profile")
+
+    e <-  do.call("cbind",lapply(1:ncol(veh), function(i){
+      unlist(beta)[i]*as.numeric(lkm[i])*veh[, i] *as.numeric(ef[i]) * as.numeric(efcold[, i])
     }))
+    e <- Emissions(e)
+    names(e) <- paste0("Age", 1:ncol(e))
+
     if(!missing(params)){
       if(!is.list(params)) stop("'params' must be a list")
       if(is.null(names(params))) {
         if(verbose) message("Adding names to params")
-        names(params) <- paste0("P_", 1:length(params))
-      }
-      for (i in 1:length(params)){
-        e[, names(params)[i]] <- params[[i]]
-      }
-    }
-
-  if(verbose) cat("Sum of emissions:", sum(e[, 1:ncol(veh)]), "\n")
-  } else {
-    if(verbose) message("Estimation without monthly profile")
-
-    e <- dfi <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
-          unlist(beta)[i]*as.numeric(lkm)[i]*veh[, i] *as.numeric(ef)[i] * efcold[, i]
-        })))
-        names(dfi) <- paste0("Age", 1:ncol(dfi))
-
-    if(!missing(params)){
-      if(!is.list(params)) stop("'params' must be a list")
-      if(is.null(names(params))) {
-      if(verbose) message("Adding names to params")
         names(params) <- paste0("P_", 1:length(params))
       }
       for (i in 1:length(params)){
