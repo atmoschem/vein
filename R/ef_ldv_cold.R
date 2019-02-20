@@ -6,14 +6,17 @@
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 #'
 #' @param v Character; Category vehicle:  "LDV"
-#' @param ta Numeric; Ambient temperature. Monthly mean can be used. When
+#' @param ta Numeric vector or data.frame; Ambient temperature. Monthly mean can be used. When
 #' ta is a data.frame, one option is that the number of rows should be the number of
 #' rows of your  Vehicles data.frame. This is convenient for top-down approach
 #' when each simple feature can be a polygon, with a monthly average temperature for
 #' each simple feature. In this case, the number of columns can be the 12 months.
 #' @param cc Character; Size of engine in cc: "<=1400",  "1400_2000" or ">2000"
 #' @param f Character; Type of fuel: "G", "D" or "LPG"
-#' @param eu Character; Euro standard: "PRE", "I", "II", "III",  "IV", "V", "VI" or "VIc"
+#' @param eu Character or data.frame of Characters; Euro standard: "PRE", "I",
+#'  "II", "III",  "IV", "V", "VI" or "VIc". When 'eu' is a data.frame and
+#'  'ta' is also a data.frame both has to have the same number of rows. For instance,
+#'  When you want that each simple feature or region has a different emission standard.
 #' @param p Character; Pollutant: "CO", "FC", "NOx", "HC" or "PM"
 #' @param k Numeric; Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
@@ -41,7 +44,10 @@
 #' dt <- matrix(rep(2:25,5), ncol = 12) # 12 months
 #' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = "I", p = "CO", speed = Speed(0))
 #' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
-#' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0:120))
+#' euros2 <- c("V", "V", "V", "IV", "IV", "IV", "III", "III")
+#' dfe <- rbind(euros, euros2)
+#' ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
+#' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
 #' }
 ef_ldv_cold <- function(v = "LDV",
                         ta, # can vary vertically, for each simple feature, and horizontally, for each month
@@ -50,7 +56,14 @@ ef_ldv_cold <- function(v = "LDV",
                         p, k = 1,
                         show.equation = FALSE, speed, i){
   ef_ldv <- sysdata$cold
-  eu = as.character(eu)
+  #Check eu
+  if(is.matrix(eu) | is.data.frame(eu)){
+    eu <- as.data.frame(eu)
+    for(i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
+  } else {
+    eu = as.character(eu)
+
+  }
   # Check speed
   if(!missing(speed)){
     if(class(speed) != "units"){
@@ -66,44 +79,25 @@ ef_ldv_cold <- function(v = "LDV",
   if(is.matrix(ta)){
     ta <- as.data.frame(ta)
   }
-  # Check ta, eu and speed
-  if(is.data.frame(ta) | length(eu) > 1){
-    if(missing(speed)) stop("when 'ta' is data.frame or eu > 1, 'speed' is needed")
-  }
-  # go
-  if (is.numeric(ta) & length(ta) == 1 & length(eu) == 1){
-    df <- ef_ldv[ef_ldv$VEH == v &
-                   ef_ldv$CC == cc &
-                   ef_ldv$FUEL == f &
-                   ef_ldv$EURO == eu &
-                   ef_ldv$POLLUTANT == p, ]
-
-    if (show.equation == TRUE) {
-      cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
-                 ", e = ", df$e, ", f = ", df$f, "\n"))
-      cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
-    }
-    f1 <- function(V){
-      a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
-      g <- df$g; h <- df$h; i <- df$i
-      V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-      ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
-             0,
-             eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
-    }
-    if(!missing(speed)) {
-      return(EmissionFactors(f1(speed)))
-    } else {
-      return(f1)
+  # When eu is not a data.frame!
+  if(!is.data.frame(eu)){
+    # Check ta, eu and speed
+    if(is.data.frame(ta) | length(eu) > 1){
+      if(missing(speed)) stop("when 'ta' is data.frame or eu > 1, 'speed' is needed")
     }
 
-  } else if(is.numeric(ta) & length(ta) == 1 & length(eu) > 1){
-    dff <- do.call("cbind", lapply(1:length(eu), function(i){
+    if (is.numeric(ta) & length(ta) == 1 & length(eu) == 1){
       df <- ef_ldv[ef_ldv$VEH == v &
                      ef_ldv$CC == cc &
                      ef_ldv$FUEL == f &
-                     ef_ldv$EURO == eu[i] &
+                     ef_ldv$EURO == eu &
                      ef_ldv$POLLUTANT == p, ]
+
+      if (show.equation == TRUE) {
+        cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
+                   ", e = ", df$e, ", f = ", df$f, "\n"))
+        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
+      }
       f1 <- function(V){
         a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
         g <- df$g; h <- df$h; i <- df$i
@@ -112,25 +106,80 @@ ef_ldv_cold <- function(v = "LDV",
                0,
                eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
       }
-      f1(speed)
-    }))
-    dff <- EmissionFactors(dff)
-    names(dff) <- paste0(eu)
-    dff$speed <- speed
-    dff$ta <- ta
-    return(dff)
+      if(!missing(speed)) {
+        return(EmissionFactors(f1(speed)))
+      } else {
+        return(f1)
+      }
 
-  } else if(is.data.frame(ta)){
-    dff <- do.call("rbind", lapply(1:ncol(ta), function(k){
-      do.call("rbind", lapply(1:nrow(ta), function(j){
-        dff <- do.call("cbind", lapply(1:length(eu), function(i){
+    } else if(is.numeric(ta) & length(ta) == 1 & length(eu) > 1){
+      dff <- do.call("cbind", lapply(1:length(eu), function(i){
+        df <- ef_ldv[ef_ldv$VEH == v &
+                       ef_ldv$CC == cc &
+                       ef_ldv$FUEL == f &
+                       ef_ldv$EURO == eu[i] &
+                       ef_ldv$POLLUTANT == p, ]
+        f1 <- function(V){
+          a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
+          g <- df$g; h <- df$h; i <- df$i
+          V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+          ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                 0,
+                 eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+        }
+        f1(speed)
+      }))
+      dff <- EmissionFactors(dff)
+      names(dff) <- paste0(eu)
+      dff$speed <- speed
+      dff$ta <- ta
+      return(dff)
+
+    } else if(is.data.frame(ta)){
+      dff <- do.call("rbind", lapply(1:ncol(ta), function(k){
+        do.call("rbind", lapply(1:nrow(ta), function(j){
+          dff <- do.call("cbind", lapply(1:length(eu), function(i){
+            df <- ef_ldv[ef_ldv$VEH == v &
+                           ef_ldv$CC == cc &
+                           ef_ldv$FUEL == f &
+                           ef_ldv$EURO == eu[i] &
+                           ef_ldv$POLLUTANT == p, ]
+            f1 <- function(V){
+              ta <- ta[j, k]
+              a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
+              g <- df$g; h <- df$h; i <- df$i
+              V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                     0,
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+            }
+            f1(speed)
+          }))
+          dff <- EmissionFactors(dff)
+          names(dff) <- paste0(eu, "_", 1:length(eu))
+          dff$speed <- speed
+          dff$ta <- ta[j,k]
+          dff
+        }))
+      }))
+      return(dff)
+    }
+    # This is new!!!!!!!!
+  } else if(is.data.frame(eu) | is.matrix(eu)){
+    # Check ta, eu and speed
+    if(is.data.frame(ta) | length(eu) > 1){
+      if(missing(speed)) stop("when 'ta' is data.frame or eu > 1, 'speed' is needed")
+    }
+
+    if(is.numeric(ta) & length(ta) == 1){
+      dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
+        dff <- do.call("cbind", lapply(1:ncol(eu), function(i){
           df <- ef_ldv[ef_ldv$VEH == v &
                          ef_ldv$CC == cc &
                          ef_ldv$FUEL == f &
-                         ef_ldv$EURO == eu[i] &
+                         ef_ldv$EURO == eu[j,i][[1]] &
                          ef_ldv$POLLUTANT == p, ]
           f1 <- function(V){
-            ta <- ta[j, k]
             a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
             g <- df$g; h <- df$h; i <- df$i
             V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
@@ -141,12 +190,43 @@ ef_ldv_cold <- function(v = "LDV",
           f1(speed)
         }))
         dff <- EmissionFactors(dff)
-        names(dff) <- paste0(eu, "_", 1:length(eu))
         dff$speed <- speed
-        dff$ta <- ta[j,k]
+        dff$ta <- ta
         dff
       }))
-    }))
-    return(dff)
+      return(dff)
+
+    } else if(is.data.frame(ta)){
+      dff <- do.call("rbind", lapply(1:ncol(ta), function(k){
+        do.call("rbind", lapply(1:nrow(ta), function(j){
+          dff <- do.call("cbind", lapply(1:length(eu), function(i){
+            df <- ef_ldv[ef_ldv$VEH == v &
+                           ef_ldv$CC == cc &
+                           ef_ldv$FUEL == f &
+                           ef_ldv$EURO == eu[j,i][[1]] &
+                           ef_ldv$POLLUTANT == p, ]
+            f1 <- function(V){
+              ta <- ta[j, k]
+              a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
+              g <- df$g; h <- df$h; i <- df$i
+              V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                     0,
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+            }
+            f1(speed)
+          }))
+          dff <- EmissionFactors(dff)
+          dff$speed <- speed
+          dff$ta <- ta[j,k]
+          dff
+        }))
+      }))
+      return(dff)
+    }
+
+
   }
+
+
 }

@@ -10,7 +10,7 @@ ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1,
 \arguments{
 \item{v}{Character; Category vehicle:  "LDV"}
 
-\item{ta}{Numeric; Ambient temperature. Monthly mean can be used. When
+\item{ta}{Numeric vector or data.frame; Ambient temperature. Monthly mean can be used. When
 ta is a data.frame, one option is that the number of rows should be the number of
 rows of your  Vehicles data.frame. This is convenient for top-down approach
 when each simple feature can be a polygon, with a monthly average temperature for
@@ -20,7 +20,10 @@ each simple feature. In this case, the number of columns can be the 12 months.}
 
 \item{f}{Character; Type of fuel: "G", "D" or "LPG"}
 
-\item{eu}{Character; Euro standard: "PRE", "I", "II", "III",  "IV", "V", "VI" or "VIc"}
+\item{eu}{Character or data.frame of Characters; Euro standard: "PRE", "I",
+"II", "III",  "IV", "V", "VI" or "VIc". When 'eu' is a data.frame and
+'ta' is also a data.frame both has to have the same number of rows. For instance,
+When you want that each simple feature or region has a different emission standard.}
 
 \item{p}{Character; Pollutant: "CO", "FC", "NOx", "HC" or "PM"}
 
@@ -61,7 +64,9 @@ lf <-  ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = euros, p = "CO", speed =
 dt <- matrix(rep(2:25,5), ncol = 12) # 12 months
 ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = "I", p = "CO", speed = Speed(0))
 ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
-ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(0:120))
+euros2 <- c("V", "V", "V", "IV", "IV", "IV", "III", "III")
+dfe <- rbind(euros, euros2)
+ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
 }
 }
 \keyword{cold}

@@ -62,12 +62,15 @@ names(cold_lkm) <- paste0("Month_", 1:12)
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 veh <- age_ldv(1:10, agemax = 8)
 emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
-beta = cold_lkm[,1], verbose = TRUE)
+beta = cold_lkm[,1], verbose = TRUE,)
+emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
+beta = cold_lkm[,1], verbose = TRUE,
+params = list(paste0("data_", 1:10), "moredata"))
 aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
 beta = cold_lkm, pro_month = veh_month, verbose = TRUE)
 aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
 beta = cold_lkm, pro_month = veh_month, verbose = FALSE,
-params = list(paste0("data_", 1:10)))
+params = list(paste0("data_", 1:10), "moredata"))
 }
 }
 \seealso{
