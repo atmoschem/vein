@@ -31,6 +31,9 @@
 #' @param k Numeric; multiplication factor
 #' @param show.equation Logical; option to see or not the equation parameters.
 #' @param speed Numeric; Speed to return Number of emission factor and not a function.
+#' @param fcorr Numeric; Correction by fuel properties by euro technology.
+#' See \code{\link{fuel_corr}}. The order from first to last is
+#' "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1
 #' @return An emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
 #' @note t = "ALL" and cc == "ALL" works for several pollutants because emission
@@ -85,7 +88,7 @@
 #' The available standards for Active Surface or number of particles are Euro I,
 #' II, III, III+DPF dor diesle and III+DISI for gasoline. Pre euro vehicles
 #' has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.
-#'
+#' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 #' @export
 #' @examples {
 #' # Do not run
@@ -197,7 +200,7 @@
 #' zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
 #' }
 ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
-                         show.equation = FALSE){
+                         show.equation = FALSE, fcorr = rep(1, 8)){
   ef_ldv <- sysdata$ldv
   xas <-  c("AS_urban", "AS_rural", "AS_highway")
   npm <- c("N_urban", "N_rural", "N_highway",
@@ -223,6 +226,24 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
     }
   }
 
+  #Function to case when
+  lala <- function(x) {
+    ifelse(x == "PRE", fcorr[1],
+           ifelse(
+             x == "I", fcorr[2],
+             ifelse(
+               x == "II", fcorr[3],
+               ifelse(
+                 x == "III", fcorr[4],
+                 ifelse(
+                   x == "IV", fcorr[5],
+                   ifelse(
+                     x == "V", fcorr[6],
+                     ifelse(
+                       x == "VI", fcorr[7],
+                       fcorr[8])))))))
+  }
+
 # Message for units
   if(!missing(speed)){
     if( p %in% xas) {
@@ -241,6 +262,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                      ef_ldv$FUEL == f &
                      ef_ldv$EURO == eu &
                      ef_ldv$POLLUTANT == p, ]
+      k <- lala(eu)
 
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
@@ -277,6 +299,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                          ef_ldv$FUEL == f &
                          ef_ldv$EURO == eu[i] &
                          ef_ldv$POLLUTANT == p, ]
+          k <- lala(eu[i])
 
           if(p %in% c("SO2","Pb")){
             f1 <- function(V){
@@ -310,6 +333,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                          ef_ldv$FUEL == f &
                          ef_ldv$EURO == eu[i] &
                          ef_ldv$POLLUTANT == p, ]
+          k <- lala(eu[i])
 
           if(p %in% c("SO2","Pb")){
             f1 <- function(V){
@@ -346,6 +370,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                        ef_ldv$FUEL == f &
                        ef_ldv$EURO == eu[j,i][[1]] &
                        ef_ldv$POLLUTANT == p, ]
+        k <- lala(eu[j,i][[1]])
 
         if(p %in% c("SO2","Pb")){
           f1 <- function(V){

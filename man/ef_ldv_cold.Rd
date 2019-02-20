@@ -5,7 +5,7 @@
 \title{Cold-Start Emissions factors for Light Duty Vehicles}
 \usage{
 ef_ldv_cold(v = "LDV", ta, cc, f, eu, p, k = 1,
-  show.equation = FALSE, speed, i)
+  show.equation = FALSE, speed, fcorr = rep(1, 8))
 }
 \arguments{
 \item{v}{Character; Category vehicle:  "LDV"}
@@ -33,14 +33,16 @@ When you want that each simple feature or region has a different emission standa
 
 \item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
 
-\item{i}{ignore}
+\item{fcorr}{Numeric; Correction by fuel properties by euro technology.
+See \code{\link{fuel_corr}}. The order from first to last is
+"PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1}
 }
 \value{
 an emission factor function which depends of the average speed V
 and ambient temperature. g/km
 }
 \description{
-This function returns speed functions which depends on ambient temperature
+\code{\link{ef_ldv_cold}} returns speed functions or data.frames which depends on ambient temperature
 average speed. The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
@@ -69,7 +71,16 @@ dfe <- rbind(euros, euros2)
 ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
 
 ef_ldv_cold(ta = dt[1:2,], cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
+# Fuel corrections
+fcorr <- c(0.5,1,1,1,0.9,0.9,0.9,0.9)
+ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
+show.equation = TRUE, fcorr = fcorr)
+ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0),
+fcorr = fcorr)
 }
+}
+\seealso{
+\code{\link{fuel_corr}}
 }
 \keyword{cold}
 \keyword{emission}

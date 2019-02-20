@@ -1,6 +1,6 @@
 #' Cold-Start Emissions factors for Light Duty Vehicles
 #'
-#' This function returns speed functions which depends on ambient temperature
+#' \code{\link{ef_ldv_cold}} returns speed functions or data.frames which depends on ambient temperature
 #' average speed. The emission factors comes from the guidelines  EMEP/EEA air pollutant
 #' emission inventory guidebook
 #' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
@@ -21,10 +21,13 @@
 #' @param k Numeric; Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
 #' @param speed Numeric; Speed to return Number of emission factor and not a function.
-#' @param i ignore
+#' @param fcorr Numeric; Correction by fuel properties by euro technology.
+#' See \code{\link{fuel_corr}}. The order from first to last is
+#' "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1
 #' @return an emission factor function which depends of the average speed V
 #' and ambient temperature. g/km
 #' @keywords cold emission factors
+#' @seealso \code{\link{fuel_corr}}
 #' @export
 #' @examples {
 #' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
@@ -49,13 +52,19 @@
 #' ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
 #'
 #' ef_ldv_cold(ta = dt[1:2,], cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
+#' # Fuel corrections
+#' fcorr <- c(0.5,1,1,1,0.9,0.9,0.9,0.9)
+#' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
+#' show.equation = TRUE, fcorr = fcorr)
+#' ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0),
+#' fcorr = fcorr)
 #' }
 ef_ldv_cold <- function(v = "LDV",
                         ta, # can vary vertically, for each simple feature, and horizontally, for each month
                         cc, f,
                         eu, # can vary horizontally
                         p, k = 1,
-                        show.equation = FALSE, speed, i){
+                        show.equation = FALSE, speed, fcorr = rep(1, 8)){
   ef_ldv <- sysdata$cold
   #Check eu
   if(is.matrix(eu) | is.data.frame(eu)){
@@ -79,6 +88,26 @@ ef_ldv_cold <- function(v = "LDV",
   if(is.matrix(ta)){
     ta <- as.data.frame(ta)
   }
+  #Function to case when
+  lala <- function(x) {
+    ifelse(x == "PRE", fcorr[1],
+           ifelse(
+             x == "I", fcorr[2],
+             ifelse(
+               x == "II", fcorr[3],
+               ifelse(
+                 x == "III", fcorr[4],
+                 ifelse(
+                   x == "IV", fcorr[5],
+                   ifelse(
+                     x == "V", fcorr[6],
+                     ifelse(
+                       x == "VI", fcorr[7],
+                       fcorr[8])))))))
+  }
+
+
+
   # When eu is not a data.frame!
   if(!is.data.frame(eu)){
     # Check ta, eu and speed
@@ -92,6 +121,7 @@ ef_ldv_cold <- function(v = "LDV",
                      ef_ldv$FUEL == f &
                      ef_ldv$EURO == eu &
                      ef_ldv$POLLUTANT == p, ]
+      k <- lala(eu)
 
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
@@ -119,6 +149,8 @@ ef_ldv_cold <- function(v = "LDV",
                        ef_ldv$FUEL == f &
                        ef_ldv$EURO == eu[i] &
                        ef_ldv$POLLUTANT == p, ]
+        k <- lala(eu[i])
+
         f1 <- function(V){
           a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
           g <- df$g; h <- df$h; i <- df$i
@@ -144,6 +176,8 @@ ef_ldv_cold <- function(v = "LDV",
                            ef_ldv$FUEL == f &
                            ef_ldv$EURO == eu[i] &
                            ef_ldv$POLLUTANT == p, ]
+            k <- lala(eu[i])
+
             f1 <- function(V){
               ta <- ta[j, k]
               a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
@@ -179,6 +213,8 @@ ef_ldv_cold <- function(v = "LDV",
                          ef_ldv$FUEL == f &
                          ef_ldv$EURO == eu[j,i][[1]] &
                          ef_ldv$POLLUTANT == p, ]
+          k <- lala(eu[j,i][[1]])
+
           f1 <- function(V){
             a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
             g <- df$g; h <- df$h; i <- df$i
@@ -211,6 +247,8 @@ ef_ldv_cold <- function(v = "LDV",
                            ef_ldv$FUEL == f &
                            ef_ldv$EURO == eu[j,i][[1]] &
                            ef_ldv$POLLUTANT == p, ]
+            k <- lala(eu[j,i][[1]])
+
             f1 <- function(V){
               ta <- ta[j, k]
               a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f

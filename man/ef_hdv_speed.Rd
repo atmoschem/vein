@@ -5,7 +5,7 @@
 \title{Emissions factors for Heavy Duty Vehicles based on average speed}
 \usage{
 ef_hdv_speed(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
-  show.equation = FALSE, speed)
+  show.equation = FALSE, speed, fcorr = rep(1, 8))
 }
 \arguments{
 \item{v}{Category vehicle: "Coach", "Trucks" or "Ubus"}
@@ -36,6 +36,10 @@ and Number of particles and Active Surface.}
 \item{show.equation}{Option to see or not the equation parameters}
 
 \item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
+
+\item{fcorr}{Numeric; Correction by fuel properties by euro technology.
+See \code{\link{fuel_corr}}. The order from first to last is
+"PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1}
 }
 \value{
 an emission factor function which depends of the average speed V  g/km
@@ -152,6 +156,9 @@ zlab = "NOx [g/km]", col = cptcity::lucky(), phi = 25)
 aa <- ef_hdv_speed(v = "Trucks", t = "RT", g = ">32", gr = 0,
 eu = rbind(euro, euro), l = 0.5, p = "NOx", speed = Speed(0:125))
 }
+}
+\seealso{
+\code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 }
 \keyword{emission}
 \keyword{factors}

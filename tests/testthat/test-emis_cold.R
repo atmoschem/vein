@@ -39,5 +39,5 @@ test_that("emis_cold works", {
   expect_equal(
     emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
               beta = pcf, speed = speed, profile = pc_profile[, 1])[10],
-    0.101 + 3.6e-07 + 0.000259)
+    0.09558028)
 })
