@@ -20,7 +20,8 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{f}{Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)}
 
-\item{eu}{Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
+\item{eu}{Character or data.frame of characters; euro standard:
+ "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
 When the pollutan is active surface or number of particles, eu can also be "III+DISI"}
 
 \item{p}{Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
@@ -173,7 +174,12 @@ persp(as.matrix(a)[, 1:length(euros)], phi = 25, theta = 45)
 persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 90)
 persp(as.matrix(a)[, 1:length(euros)], phi = 25, theta = 90+45)
 persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 180)
-
+new_euro <- c("VI", "VI", "V", "V", "V")
+euro <- c("V", "V", "IV", "III", "II")
+old_euro <- c("III", "II", "I", "PRE", "PRE")
+meuros <- rbind(new_euro, euro, old_euro)
+aa <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+          eu = meuros, p = "CO", speed = Speed(10:11))
 # Light Commercial Vehicles
 V <- 0:150
 ef1 <- ef_ldv_speed(v = "LCV",t = "4S", cc = "<3.5", f = "G", eu = "PRE",
@@ -208,7 +214,7 @@ eu = eurom, p = "CO", speed = Speed(0:125))
 a$speed <- NULL
 filled.contour(as.matrix(a), col = cptcity::lucky(),
 xlab = "Speed", ylab = "Age")
-persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Age",
+persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Euros",
 zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
 }
 }

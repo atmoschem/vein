@@ -63,7 +63,6 @@ ef_ldv_cold <- function(v = "LDV",
     for(i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
   } else {
     eu = as.character(eu)
-
   }
   # Check speed
   if(!missing(speed)){
@@ -192,6 +191,7 @@ ef_ldv_cold <- function(v = "LDV",
         }))
         dff <- EmissionFactors(dff)
         dff$speed <- speed
+        # dff$euros <- rep(paste0("Row eu ", 1:nrow(eu)), each = length(speed))
         dff$ta <- ta
         dff
       }))
@@ -224,7 +224,9 @@ ef_ldv_cold <- function(v = "LDV",
           }))
           dff <- EmissionFactors(dff)
           dff$speed <- speed
+          # dff$euros <- rep(paste0("Row eu ", 1:nrow(eu)), each = length(speed))
           dff$ta <- ta[j,k]
+          dff$row_eu <- j
           dff
         }))
       }))

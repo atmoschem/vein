@@ -19,7 +19,8 @@
 #' "<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
 #' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
-#' @param eu Character; euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
+#' @param eu Character or data.frame of characters; euro standard:
+#'  "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
 #' When the pollutan is active surface or number of particles, eu can also be "III+DISI"
 #' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 #' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
@@ -152,7 +153,12 @@
 #' persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 90)
 #' persp(as.matrix(a)[, 1:length(euros)], phi = 25, theta = 90+45)
 #' persp(as.matrix(a)[, 1:length(euros)], phi = 0, theta = 180)
-#'
+#' new_euro <- c("VI", "VI", "V", "V", "V")
+#' euro <- c("V", "V", "IV", "III", "II")
+#' old_euro <- c("III", "II", "I", "PRE", "PRE")
+#' meuros <- rbind(new_euro, euro, old_euro)
+#' aa <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
+#'           eu = meuros, p = "CO", speed = Speed(10:11))
 #' # Light Commercial Vehicles
 #' V <- 0:150
 #' ef1 <- ef_ldv_speed(v = "LCV",t = "4S", cc = "<3.5", f = "G", eu = "PRE",
@@ -187,16 +193,23 @@
 #' a$speed <- NULL
 #' filled.contour(as.matrix(a), col = cptcity::lucky(),
 #' xlab = "Speed", ylab = "Age")
-#' persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Age",
+#' persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Euros",
 #' zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
 #' }
 ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                          show.equation = FALSE){
   ef_ldv <- sysdata$ldv
-  eu = as.character(eu)
   xas <-  c("AS_urban", "AS_rural", "AS_highway")
   npm <- c("N_urban", "N_rural", "N_highway",
            "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway")
+  #Check eu
+  if(is.matrix(eu) | is.data.frame(eu)){
+    eu <- as.data.frame(eu)
+    for(i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
+  } else {
+    eu = as.character(eu)
+  }
+
   # Check speed
   if(!missing(speed)){
     if(class(speed) != "units"){
@@ -210,57 +223,128 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
     }
   }
 
-  if(length(eu) == 1){
-    df <- ef_ldv[ef_ldv$VEH == v &
-                   ef_ldv$TYPE == t &
-                   ef_ldv$CC == cc &
-                   ef_ldv$FUEL == f &
-                   ef_ldv$EURO == eu &
-                   ef_ldv$POLLUTANT == p, ]
+# Message for units
+  if(!missing(speed)){
+    if( p %in% xas) {
+      cat("Units of Active Surface: cm^2/km\n")
+    } else if (p %in% npm){
+      cat("Units of Number of Particles: n/km\n")
+    }
+  }
 
-    if (show.equation == TRUE) {
-      cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
-                 ", e = ", df$e, ", f = ", df$f, "\n"))
-      cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
-    }
-    if(p %in% c("SO2","Pb")){
-      f1 <- function(V){
-        a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
-        V <- ifelse(V < df$MINV, df$MINV,
-                    ifelse(V > df$MAXV, df$MAXV, V))
-        eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+  # fun starts
+  if(!is.data.frame(eu)){
+    if(length(eu) == 1){
+      df <- ef_ldv[ef_ldv$VEH == v &
+                     ef_ldv$TYPE == t &
+                     ef_ldv$CC == cc &
+                     ef_ldv$FUEL == f &
+                     ef_ldv$EURO == eu &
+                     ef_ldv$POLLUTANT == p, ]
+
+      if (show.equation == TRUE) {
+        cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
+                   ", e = ", df$e, ", f = ", df$f, "\n"))
+        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
       }
-    } else {
-      f1 <- function(V){
-        a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
-        V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-        eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
-      }
-    }
-    if(!missing(speed)){
-      if( p %in% xas) {
-        cat("Units of Active Surface: cm^2/km\n")
-        f1 <- f1(speed)
-        return(f1)
-      } else if (p %in% npm){
-        cat("Units of Number of Particles: n/km\n")
-        f1 <- f1(speed)
+      if(p %in% c("SO2","Pb")){
+        f1 <- function(V){
+          a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
+          V <- ifelse(V < df$MINV, df$MINV,
+                      ifelse(V > df$MAXV, df$MAXV, V))
+          eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+        }
       } else {
-        f1 <- EmissionFactors(f1(speed))
+        f1 <- function(V){
+          a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
+          V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+          eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+        }
       }
-      return(f1)
-    } else {
-      return(f1)
-    }
+      if(!missing(speed)){
+          f1 <- f1(speed)
+          return(f1)
+        } else {
+        return(f1)
+      }
 
-  } else if(length(eu) > 1){
-    if(!missing(speed)){
-      dff <- do.call("cbind", lapply(1:length(eu), function(i){
+    } else if(length(eu) > 1){
+      if(!missing(speed)){
+        dff <- do.call("cbind", lapply(1:length(eu), function(i){
+          df <- ef_ldv[ef_ldv$VEH == v &
+                         ef_ldv$TYPE == t &
+                         ef_ldv$CC == cc &
+                         ef_ldv$FUEL == f &
+                         ef_ldv$EURO == eu[i] &
+                         ef_ldv$POLLUTANT == p, ]
+
+          if(p %in% c("SO2","Pb")){
+            f1 <- function(V){
+              a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
+              V <- ifelse(V < df$MINV, df$MINV,
+                          ifelse(V > df$MAXV, df$MAXV, V))
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                     0,
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+            }
+          } else {
+            f1 <- function(V){
+              a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
+              V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                     0,
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+            }
+          }
+          f1(speed)
+        }))
+        dff <- EmissionFactors(dff)
+        names(dff) <- paste0(eu, 1:length(eu))
+        dff$speed <- speed
+        return(dff)
+      } else {
+        dff <- lapply(1:length(eu), function(i){
+          df <- ef_ldv[ef_ldv$VEH == v &
+                         ef_ldv$TYPE == t &
+                         ef_ldv$CC == cc &
+                         ef_ldv$FUEL == f &
+                         ef_ldv$EURO == eu[i] &
+                         ef_ldv$POLLUTANT == p, ]
+
+          if(p %in% c("SO2","Pb")){
+            f1 <- function(V){
+              a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
+              V <- ifelse(V < df$MINV, df$MINV,
+                          ifelse(V > df$MAXV, df$MAXV, V))
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                     0,
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+            }
+          } else {
+            f1 <- function(V){
+              a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
+              V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+                     0,
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+            }
+          }
+          f1
+        })
+        names(dff) <- paste0(eu, 1:length(eu))
+        return(EmissionFactorsList(dff))
+      }
+    }
+    # New stuffs!
+  } else if (is.data.frame(eu)){
+    if(missing(speed)) stop("Add 'speed' please")
+    dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
+      do.call("cbind", lapply(1:ncol(eu), function(i){
         df <- ef_ldv[ef_ldv$VEH == v &
                        ef_ldv$TYPE == t &
                        ef_ldv$CC == cc &
                        ef_ldv$FUEL == f &
-                       ef_ldv$EURO == eu[i] &
+                       ef_ldv$EURO == eu[j,i][[1]] &
                        ef_ldv$POLLUTANT == p, ]
 
         if(p %in% c("SO2","Pb")){
@@ -283,46 +367,10 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
         }
         f1(speed)
       }))
-      dff <- EmissionFactors(dff)
-      names(dff) <- paste0(eu, 1:length(eu))
-      dff$speed <- speed
-      return(dff)
-    } else {
-      dff <- lapply(1:length(eu), function(i){
-        df <- ef_ldv[ef_ldv$VEH == v &
-                       ef_ldv$TYPE == t &
-                       ef_ldv$CC == cc &
-                       ef_ldv$FUEL == f &
-                       ef_ldv$EURO == eu[i] &
-                       ef_ldv$POLLUTANT == p, ]
-
-        if(p %in% c("SO2","Pb")){
-          f1 <- function(V){
-            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
-            V <- ifelse(V < df$MINV, df$MINV,
-                        ifelse(V > df$MAXV, df$MAXV, V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
-                   0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
-          }
-        } else {
-          f1 <- function(V){
-            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
-            V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
-                   0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
-          }
-        }
-        f1
-      })
-      names(dff) <- paste0(eu, 1:length(eu))
-      return(EmissionFactorsList(dff))
-
-    }
-
-    }
-
-
-
+    }))
+    dff <- EmissionFactors(dff)
+    dff$speed <- speed
+    dff$row_eu <- rep(1:nrow(eu), each = length(speed))
+    return(dff)
+  }
 }
