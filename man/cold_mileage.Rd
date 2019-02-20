@@ -7,9 +7,10 @@
 cold_mileage(ltrip, ta)
 }
 \arguments{
-\item{ltrip}{Numeric; Length of trip.}
+\item{ltrip}{Numeric; Length of trip. It must be in 'units' km.}
 
-\item{ta}{Numeric; average monthly temperature}
+\item{ta}{Numeric or data.frame; average monthly temperature Celsius. It if is a
+data.frame, it is convenient that each column is each month.}
 }
 \description{
 This function depends length of trip and on ambient temperature.
@@ -21,9 +22,11 @@ This function is set so that values vaires between 0 and 1.
 }
 \examples{
 {
-cold_mileage(10, 0)
-a <-sapply(1:50, function(i){cold_mileage(0:40, (1:50)[i])})
-filled.contour(a, col = cptcity::cpt(2860))
+lkm <- units::set_units(1:10, km)
+ta <- celsius(matrix(0:9, ncol = 12, nrow = 10))
+a <- cold_mileage(lkm, rbind(ta, ta))
+(a)
+filled.contour(as.matrix(a), col = cptcity::lucky(n = 16))
 }
 }
 \keyword{cold}
