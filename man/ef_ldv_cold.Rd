@@ -67,6 +67,8 @@ ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(
 euros2 <- c("V", "V", "V", "IV", "IV", "IV", "III", "III")
 dfe <- rbind(euros, euros2)
 ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
+
+ef_ldv_cold(ta = dt[1:2,], cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
 }
 }
 \keyword{cold}

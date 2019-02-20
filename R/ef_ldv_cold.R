@@ -47,7 +47,8 @@
 #' euros2 <- c("V", "V", "V", "IV", "IV", "IV", "III", "III")
 #' dfe <- rbind(euros, euros2)
 #' ef_ldv_cold(ta = 10, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
-#' ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
+#'
+#' ef_ldv_cold(ta = dt[1:2,], cc = "<=1400", f ="G", eu = dfe, p = "CO", speed = Speed(0))
 #' }
 ef_ldv_cold <- function(v = "LDV",
                         ta, # can vary vertically, for each simple feature, and horizontally, for each month
@@ -197,9 +198,14 @@ ef_ldv_cold <- function(v = "LDV",
       return(dff)
 
     } else if(is.data.frame(ta)){
+      if(nrow(ta) != nrow(eu)) {
+        cat("Number of rows of 'eu': ", nrow(eu), "\n")
+        cat("Number of rows of 'ta': ", nrow(ta), "\n")
+        stop("Number of rows of 'eu' and 'ta' must be the same")
+      }
       dff <- do.call("rbind", lapply(1:ncol(ta), function(k){
         do.call("rbind", lapply(1:nrow(ta), function(j){
-          dff <- do.call("cbind", lapply(1:length(eu), function(i){
+          dff <- do.call("cbind", lapply(1:ncol(eu), function(i){
             df <- ef_ldv[ef_ldv$VEH == v &
                            ef_ldv$CC == cc &
                            ef_ldv$FUEL == f &
