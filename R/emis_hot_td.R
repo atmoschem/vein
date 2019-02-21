@@ -29,7 +29,18 @@
 #' lkm <- units::as_units(18:10, "km")*1000
 #' veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 #' veh <- age_ldv(1:10, agemax = 8)
-#' emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE)
+#' a <- emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE)
+#' print(a)
+#' plot(a)
+#' emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE,
+#' params = list(paste0("data_", 1:10), "moredata"))
+#' aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
+#' pro_month = veh_month, verbose = TRUE)
+#' head(aa)
+#' aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
+#' pro_month = veh_month, verbose = FALSE,
+#' params = list(paste0("data_", 1:10), "moredata"))
+#' head(as)
 #' }
 emis_hot_td <- function (veh,
                           lkm,
@@ -55,13 +66,16 @@ emis_hot_td <- function (veh,
       stop("columns of ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
     if(units(ef[, 1])$numerator != "g" | units(ef[, 1])$denominator != "km"){
-      stop("Units of efcold must be 'g/km' ")
+      stop("Units of ef must be 'g/km' ")
     }
     if(units(ef[, 1])$numerator == "g" | units(ef[, 1])$denominator == "km"){
       for(i in 1:ncol(veh)){
         ef[, i] <- as.numeric(ef[, i])
       }
-
+    }
+    # When row = 1, transform to vector.
+    if(nrow(ef) == 1){
+      ef <- as.numeric(ef)
     }
 
   } else {
@@ -111,9 +125,6 @@ emis_hot_td <- function (veh,
     if(is.data.frame(ef)){
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
-      efcold$month <- rep(1:12, each = nrow(veh))
-      efcold <- split(efcold, efcold$month)
-
       #when pro_month varies in each simple feature
       if(is.data.frame(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
@@ -152,9 +163,6 @@ emis_hot_td <- function (veh,
       if(verbose) cat("Sum of emissions:", sum(e[, 1:ncol(veh)]), "\n")
     } else{
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
-
-      efcold$month <- rep(1:12, each = nrow(veh))
-      efcold <- split(efcold, efcold$month)
 
       # when pro_month variy each month
       if(is.data.frame(pro_month)){
