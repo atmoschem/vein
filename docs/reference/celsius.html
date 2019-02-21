@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fraction of mileage driven with a cold engine or catalizer below normal temperature — cold_mileage • vein</title>
+<title>Construction function for class "Emissions" — celsius • vein</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,10 @@
 
 
 
-<meta property="og:title" content="Fraction of mileage driven with a cold engine or catalizer below normal temperature — cold_mileage" />
+<meta property="og:title" content="Construction function for class "Emissions" — celsius" />
 
-<meta property="og:description" content="This function depends length of trip and on ambient temperature.
-From the guidelines  EMEP/EEA air pollutant emission inventory guidebook
-http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook" />
+<meta property="og:description" content="celsius jsut convert add unit celsius to different
+R objects" />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -101,55 +100,68 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fraction of mileage driven with a cold engine or catalizer below normal temperature</h1>
+    <h1>Construction function for class "Emissions"</h1>
     
-    <div class="hidden name"><code>cold_mileage.Rd</code></div>
+    <div class="hidden name"><code>celsius.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function depends length of trip and on ambient temperature.
-From the guidelines  EMEP/EEA air pollutant emission inventory guidebook
-http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook</p>
+    <p><code>celsius</code> jsut convert add unit celsius to different
+R objects</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cold_mileage</span>(<span class='no'>ltrip</span>, <span class='no'>ta</span>)</pre>
+    <pre class="usage"><span class='fu'>celsius</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ltrip</th>
-      <td><p>Numeric; Length of trip. It must be in 'units' km.</p></td>
-    </tr>
-    <tr>
-      <th>ta</th>
-      <td><p>Numeric or data.frame; average monthly temperature Celsius. It if is a
-data.frame, it is convenient that each column is each month.</p></td>
+      <th>x</th>
+      <td><p>Object with class "data.frame", "matrix",  "numeric" or "integer"</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function is set so that values vaires between 0 and 1.</p>
+    <p>Objects of class "data.frame" or "units"</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='no'>lkm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/units/topics/set_units'>set_units</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='no'>km</span>)
-<span class='no'>ta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fl'>0</span>:<span class='fl'>9</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>))
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>cold_mileage</span>(<span class='no'>lkm</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='no'>ta</span>, <span class='no'>ta</span>))
-(<span class='no'>a</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/filled.contour'>filled.contour</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>a</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/lucky'>lucky</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>16</span>))
-}</div><div class='output co'>#&gt; Colour gradient: gacruxa_higuey_higuey_15, number: 2577</div><div class='img'><img src='cold_mileage-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>celsius</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)*<span class='fl'>10</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>a</span>)
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>celsius</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)*<span class='fl'>10</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>10</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>b</span>))
+}</div><div class='img'><img src='celsius-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;                 V1              V2              V3               V4
+#&gt; 1  -4.2938009 [°C] -11.533984 [°C] -3.3893587 [°C]   2.3742535 [°C]
+#&gt; 2  13.6046133 [°C]  -3.406379 [°C] -0.7557425 [°C] -13.1281425 [°C]
+#&gt; 3  -0.7085743 [°C]   7.863626 [°C]  0.4020439 [°C]   7.4702859 [°C]
+#&gt; 4  -2.7215368 [°C] -12.705131 [°C]  1.2430107 [°C] -15.6251843 [°C]
+#&gt; 5 -24.4668003 [°C]   5.421415 [°C] -9.9843255 [°C]   0.7105336 [°C]
+#&gt; 6   0.6548664 [°C]   0.751059 [°C] 12.3339006 [°C]  -6.3953477 [°C]
+#&gt;                V5              V6               V7                V8
+#&gt; 1  -9.028149 [°C]  -8.302143 [°C]   1.4967935 [°C]   0.60898893 [°C]
+#&gt; 2  13.176337 [°C]  -5.035929 [°C] -14.3332110 [°C] -21.77576028 [°C]
+#&gt; 3  11.001897 [°C] -11.936412 [°C]  -0.1030332 [°C]  -1.17860143 [°C]
+#&gt; 4  12.037678 [°C]  -7.517233 [°C]  -2.1223603 [°C]   1.12294787 [°C]
+#&gt; 5 -14.312708 [°C]  14.558414 [°C]  -9.0634018 [°C]   0.07886198 [°C]
+#&gt; 6  13.829109 [°C]  -8.286035 [°C] -21.0215248 [°C]  18.77743872 [°C]
+#&gt;               V9             V10
+#&gt; 1 10.120018 [°C]  -1.740864 [°C]
+#&gt; 2 -9.190516 [°C]  -2.217445 [°C]
+#&gt; 3  5.633801 [°C] -10.095287 [°C]
+#&gt; 4  3.224827 [°C]   4.807253 [°C]
+#&gt; 5  3.666744 [°C]  16.044073 [°C]
+#&gt; 6 11.298352 [°C] -15.150245 [°C]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#note">Note</a></li>
+      <li><a href="#value">Value</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
