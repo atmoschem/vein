@@ -9,8 +9,11 @@
 #' @param po Character; Pollutant "CO", "NOx" or "HC"
 #' @param cc Character; Size of engine in cc converin "<=1400", "1400_2000" or ">2000"
 #' @param eu Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"
+#' @param speed Numeric; Speed to return Number of emission factor and not a function.
+#' It needs units in km/h
 #' @param km Numeric; accumulated mileage in km.
 #' @param verbose Logical; To show more information
+#' @param show.equation Option to see or not the equation parameters
 #' @return It returns a numeric vector representing the increase in emissions due to normal deterioring
 #' @keywords deterioration emission factors
 #' @note The deterioration factors functions are available for technologies
@@ -23,14 +26,29 @@
 #' data(fkm)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 #' km <- units::set_units(pckma[1:11], km)
-#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = km))
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", speed = Speed(30),
+#' km = km[5], show.equation = T))
+#' # (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(30),
+#' # km = km[4]))
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(30),
+#' km = km[4:5]))
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(0:130),
+#' km = km[4:5]))
+#' euros <- c("V","V","V", "IV", "IV", "IV", "III", "III", "III", "III")
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, speed = Speed(1:100),
+#' km = km[1:10]))
+#' cod1 <- as.matrix(cod1[, 1:11])
+#' filled.contour(cod1, col = cptcity::lucky(n = 20))
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", speed = Speed(19:23),
+#' km = km[1], show.equation = T))
 #' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = cbind("III", "III"), km = km))
 #' euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
 #'           rep("I", 5), rep("PRE", 15))
 #' euros <- rbind(euro, euro)
-#' cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, km = km)
+#' cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros[, 1:11], km = km)
 #' }
-emis_det <- function(po, cc, eu, km, verbose = FALSE) {
+emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.equation = FALSE) {
+  ldv_det <- sysdata$ldv_det
 
   # Check km
   if(class(km) != "units"){
@@ -55,96 +73,138 @@ emis_det <- function(po, cc, eu, km, verbose = FALSE) {
     for(i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
   } else {
     eu = as.character(eu)
-    if(length(eu) > 1) stop("if 'eu' is a character vector, it must have length 1")
   }
 
+  if(class(speed) != "units"){
+    stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
+  }
+  if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){
+    stop("Units of g must be 'km/h' ")
+  }
+  if(units(speed)$numerator == "km" & units(speed)$denominator == "h"){
+    speed <- as.numeric(speed)
+  }
 
   if(!is.data.frame(eu)){
-    if (eu %in% c("V", "VI", "VIc")) {
+    if (any(eu %in% c("V", "VI", "VIc"))) {
       if (verbose) message("Assuming the same deterioration as euro III and IV")
     }
-    if (po == "CO" & eu %in% c("I", "II") &  cc == "<=1400") {
-      mc <- ifelse(km<120000, 1.523e-05*km+0.557, 2.39)
-    } else if (po == "CO" & eu %in% c("I", "II") & cc == "1400_2000") {
-      mc <- ifelse(km<120000, 1.148e-05*km+0.543, 1.92)
-    } else if (po == "CO" & eu %in% c("I", "II") & cc == ">2000") {
-      mc <- ifelse(km<120000, 9.243e-06*km+0.565, 1.67)
-    } else if (po == "CO" & eu %in% c("III", "IV", "IV", "V", "VIc") & cc == "<=1400") {
-      mc <- ifelse(km<160000, 7.129e-06*km+0.769, 1.91)
-    } else if (po == "CO" & eu %in% c("III", "IV", "V", "VIc") & cc %in% c("1400_2000", ">2000")) {
-      mc <- ifelse(km<160000, 2.670e-06*km+0.955, 1.38)
-
-    } else if (po == "NOx" & eu %in% c("I", "II") & cc %in% c("<=1400" , "1400_2000", ">2000")) {
-      mc <- ifelse(km<120000, 1.598e-05*km+0.282, 2.2)
-
-    } else if (po == "NOx" &  eu %in% c("III", "IV", "V", "VIc") & cc == "<=1400") {
-      mc <- ifelse(km<160000, 1, 1)
-    } else if (po == "NOx" &  eu %in% c("III", "IV", "V", "VIc") & cc %in% c("1400_2000", ">2000")) {
-      mc <- ifelse(km<160000, 3.986e-06*km+0.932, 1.57)
-
-    } else if (po == "HC" & eu %in% c("I", "II") & cc == "<=1400") {
-      mc <- ifelse(km<120000, 1.215e-05*km+0.647, 2.1)
-    } else if (po == "HC" & eu %in% c("I", "II") & cc == "1400_2000") {
-      mc <- ifelse(km<120000, 1.212e-05*km+0.509, 1.99)
-    } else if (po == "HC" & eu %in% c("I", "II") & cc == ">2000") {
-      mc <- ifelse(km<120000, 1.208e-05*km+0.432, 1.88)
-    } else if (po == "HC" & eu %in% c("III", "IV", "V", "VIc") & cc ==  "<=1400") {
-      mc <- ifelse(km<160000, 3.419e-06*km+0.891, 1.44)
-    } else if (po == "HC" & eu %in% c("III", "IV", "V", "VIc") & cc %in% c("1400_2000", ">2000")) {
-      mc <- ifelse(km<160000, 1, 1)
+    if (length(eu) == 1 & length(km) == 1){
+      df <- ldv_det[ldv_det$POLLUTANT == po &
+                      ldv_det$CC == cc &
+                      ldv_det$EURO == eu, ]
+      if (show.equation) {
+        cat(paste0("b = ", df$b, ", c = ", df$c, ", MAX MC URBAN = ", df$d,
+                   ", \nf = ", df$f,", g = ", df$g , ", MAX MC ROAD = ", df$h, "\n"))
+        cat("V < 19: MC_URBAN = b*km + c\n")
+        cat("V >= 63: MC_ROAD = f*km + g\n")
+        cat("19 <= V < 63: MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44\n")
+      }
+      f1 <- function(V, km){
+        a <- df$a; b <- df$b; c <- df$c; d <- df$d;
+        e <- df$e; f <- df$f; g <- df$g; h <- df$h
+        # eval(parse(text = paste0("(",as.character(df$Y), ")")))
+        MC_URBAN <- ifelse(km<a, b*km+c, d)
+        MC_ROAD <- ifelse(km<e, f*km+g, h)
+        ifelse(
+          V<19, MC_URBAN,
+          ifelse(V>63, MC_ROAD,
+                 MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
+          ))
+      }
     }
-    if (eu %in% c("PRE")) {
-      if (verbose) message("Deterioration = 1")
-      mc <- 1
+    if(length(km) > 1 | length(eu) > 1){
+      if(length(eu) > length(km)) stop("'eu' and 'km' must have same length")
+
+      mc <- do.call("cbind", lapply(1:length(km), function(i){
+        df <- ldv_det[ldv_det$POLLUTANT == po &
+                        ldv_det$CC == cc &
+                        ldv_det$EURO == eu[i], ]
+        f1 <- function(V, km){
+          a <- df$a; b <- df$b; c <- df$c; d <- df$d;
+          e <- df$e; f <- df$f; g <- df$g; h <- df$h
+          MC_URBAN <- ifelse(km<a, b*km+c, d)
+          MC_ROAD <- ifelse(km<e, f*km+g, h)
+          ifelse(
+            V<19, MC_URBAN,
+            ifelse(V>63, MC_ROAD,
+                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
+            ))
+        }
+
+        ifelse(f1(V = speed, km = km[i]) < 1 , 1 ,
+               f1(V = speed, km = km[i]))
+      }))
+      mc <- as.data.frame(mc)
+      mc$speed <- Speed(speed)
+    } else {
+      f1 <- function(V, km){
+        a <- df$a; b <- df$b; c <- df$c; d <- df$d;
+        e <- df$e; f <- df$f; g <- df$g; h <- df$h
+        MC_URBAN <- ifelse(km<a, b*km+c, d)
+        MC_ROAD <- ifelse(km<e, f*km+g, h)
+        ifelse(
+          V<19, MC_URBAN,
+          ifelse(V>63, MC_ROAD,
+                 MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
+          ))
+      }
+      mc <- ifelse(f1(V = speed, km = km) <1, 1, f1(V = speed, km = km))
+      mc <- as.data.frame(mc)
+      mc$speed <- Speed(speed)
     }
-    mc <- ifelse(mc < 1, 1, mc)
     return(mc)
 
-  } else if(is.data.frame(eu)){
+  } else if(is.data.frame(eu) & !is.data.frame(km)){
+    if(ncol(eu) != length(km)) stop("Length of km must be the same as number of columns of 'eu'")
 
-    df <- do.call("rbind", lapply(1:nrow(eu), function(j) {
-      do.call("cbind", lapply(1:ncol(eu), function(i){
-        print(eu[j,i])
-        if (eu[j,i] %in% c("V", "VI", "VIc")) {
-          if (verbose) message("Assuming the same deterioration as euro III and IV")
-        }
-        if (po == "CO" & eu[j,i] %in% c("I", "II") &  cc == "<=1400") {
-          mc <- ifelse(km<120000, 1.523e-05*km+0.557, 2.39)
-        } else if (po == "CO" & eu[j,i] %in% c("I", "II") & cc == "1400_2000") {
-          mc <- ifelse(km<120000, 1.148e-05*km+0.543, 1.92)
-        } else if (po == "CO" & eu[j,i] %in% c("I", "II") & cc == ">2000") {
-          mc <- ifelse(km<120000, 9.243e-06*km+0.565, 1.67)
-        } else if (po == "CO" & eu[j,i] %in% c("III", "IV", "V", "VIc") & cc == "<=1400") {
-          mc <- ifelse(km<160000, 7.129e-06*km+0.769, 1.91)
-        } else if (po == "CO" & eu[j,i] %in% c("III", "IV", "V", "VIc") & cc %in% c("1400_2000", ">2000")) {
-          mc <- ifelse(km<160000, 2.670e-06*km+0.955, 1.38)
-
-        } else if (po == "NOx" & eu[j,i] %in% c("I", "II") & cc %in% c("<=1400" , "1400_2000", ">2000")) {
-          mc <- ifelse(km<120000, 1.598e-05*km+0.282, 2.2)
-
-        } else if (po == "NOx" &  eu[j,i] %in% c("III", "IV", "V", "VIc") & cc == "<=1400") {
-          mc <- ifelse(km<160000, 1, 1)
-        } else if (po == "NOx" &  eu[j,i] %in% c("III", "IV", "V", "VIc") & cc %in% c("1400_2000", ">2000")) {
-          mc <- ifelse(km<160000, 3.986e-06*km+0.932, 1.57)
-
-        } else if (po == "HC" & eu[j,i] %in% c("I", "II") & cc == "<=1400") {
-          mc <- ifelse(km<120000, 1.215e-05*km+0.647, 2.1)
-        } else if (po == "HC" & eu[j,i] %in% c("I", "II") & cc == "1400_2000") {
-          mc <- ifelse(km<120000, 1.212e-05*km+0.509, 1.99)
-        } else if (po == "HC" & eu[j,i] %in% c("I", "II") & cc == ">2000") {
-          mc <- ifelse(km<120000, 1.208e-05*km+0.432, 1.88)
-        } else if (po == "HC" & eu[j,i] %in% c("III", "IV", "V", "VIc") & cc ==  "<=1400") {
-          mc <- ifelse(km<160000, 3.419e-06*km+0.891, 1.44)
-        } else if (po == "HC" & eu[j,i] %in% c("III", "IV", "V", "VIc") & cc %in% c("1400_2000", ">2000")) {
-          mc <- ifelse(km<160000, 1, 1)
-        }
-        if (eu[j,i] %in% c("PRE")) {
-          if (verbose) message("Deterioration = 1")
-          mc <- 1
-        }
-        ifelse(mc < 1, 1, mc)
+    mc <- do.call("rbind", lapply(1:nrow(eu), function(j){
+      dff <- do.call("cbind", lapply(1:ncol(eu), function(i){
+        df <- ldv_det[ldv_det$POLLUTANT == po &
+                        ldv_det$CC == cc &
+                        ldv_det$EURO == eu[j,i], ]
+        f1 <- function(V, km){
+          a <- df$a; b <- df$b; c <- df$c; d <- df$d;
+          e <- df$e; f <- df$f; g <- df$g; h <- df$h
+          MC_URBAN <- ifelse(km<a, b*km+c, d)
+          MC_ROAD <- ifelse(km<e, f*km+g, h)
+          ifelse(
+            V<19, MC_URBAN,
+            ifelse(V>63, MC_ROAD,
+                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
+            ))}
+        ifelse(f1(V = speed, km = km[i]) < 1 , 1 ,
+               f1(V = speed, km = km[i]))
       }))
+      dff <- as.data.frame(dff)
+      dff$speed <- Speed(speed)
+      dff
     }))
-    return(as.data.frame(df))
+
+    return(mc)
+  } else if(is.data.frame(eu) & is.data.frame(km)){
+
+    mc <- do.call("rbind", lapply(1:nrow(eu), function(j){
+      mc <- do.call("cbind", lapply(1:ncol(eu), function(i){
+        df <- ldv_det[ldv_det$POLLUTANT == po &
+                        ldv_det$CC == cc &
+                        ldv_det$EURO == eu[j,i], ]
+        f1 <- function(V, km){
+          a <- df$a; b <- df$b; c <- df$c; d <- df$d;
+          e <- df$e; f <- df$f; g <- df$g; h <- df$h
+          MC_URBAN <- ifelse(km<a, b*km+c, d)
+          MC_ROAD <- ifelse(km<e, f*km+g, h)
+          ifelse(
+            V<19, MC_URBAN,
+            ifelse(V>63, MC_ROAD,
+                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44))
+        }
+        ifelse(f1(V = speed, km = km[i,j]) < 1 , 1 ,
+               f1(V = speed, km = km[i,j]))
+      }))
+      mc <- as.data.frame(mc)
+      mc$speed <- Speed(speed)
+    }))
+    return(mc)
   }
 }

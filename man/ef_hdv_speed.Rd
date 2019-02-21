@@ -35,7 +35,8 @@ and Number of particles and Active Surface.}
 
 \item{show.equation}{Option to see or not the equation parameters}
 
-\item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
+\item{speed}{Numeric; Speed to return Number of emission factor and not a function.
+It needs units in km/h}
 
 \item{fcorr}{Numeric; Correction by fuel properties by euro technology.
 See \code{\link{fuel_corr}}. The order from first to last is
