@@ -4,7 +4,7 @@
 \alias{emis_det}
 \title{Determine deterioration factors for urban conditions}
 \usage{
-emis_det(po, cc, eu, km)
+emis_det(po, cc, eu, km, verbose = FALSE)
 }
 \arguments{
 \item{po}{Character; Pollutant "CO", "NOx" or "HC"}
@@ -13,7 +13,9 @@ emis_det(po, cc, eu, km)
 
 \item{eu}{Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"}
 
-\item{km}{Numeric; accumulated mileage in km}
+\item{km}{Numeric; accumulated mileage in km.}
+
+\item{verbose}{Logical; To show more information}
 }
 \value{
 It returns a numeric vector representing the increase in emissions due to normal deterioring
@@ -25,12 +27,24 @@ EMEP/EEA air pollutant emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 This function subset an internal database of emission factors with each argument
 }
+\note{
+The deterioration factors functions are available for technologies
+euro "II", "III" and "IV". In order to cover all euro technologies, this
+function assumes that the deterioration function of "III" and "IV" applies
+for "V", "VI" and "VIc". However, as these technologies are relative
+new,  accumulated milage is low and hence, deteerioration factors small.
+}
 \examples{
 {
 data(fkm)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 km <- units::set_units(pckma[1:11], km)
 (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = km))
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = cbind("III", "III"), km = km))
+euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
+          rep("I", 5), rep("PRE", 15))
+euros <- rbind(euro, euro)
+cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, km = km)
 }
 }
 \keyword{deterioration}
