@@ -118,7 +118,8 @@ This function subset an internal database of emission factors with each argument
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_det</span>(<span class='no'>po</span>, <span class='no'>cc</span>, <span class='no'>eu</span>, <span class='no'>km</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_det</span>(<span class='no'>po</span>, <span class='no'>cc</span>, <span class='no'>eu</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>18.9</span>), <span class='no'>km</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,8 +137,21 @@ This function subset an internal database of emission factors with each argument
       <td><p>Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"</p></td>
     </tr>
     <tr>
+      <th>speed</th>
+      <td><p>Numeric; Speed to return Number of emission factor and not a function.
+It needs units in km/h</p></td>
+    </tr>
+    <tr>
       <th>km</th>
-      <td><p>Numeric; accumulated mileage in km</p></td>
+      <td><p>Numeric; accumulated mileage in km.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; To show more information</p></td>
+    </tr>
+    <tr>
+      <th>show.equation</th>
+      <td><p>Option to see or not the equation parameters</p></td>
     </tr>
     </table>
     
@@ -145,15 +159,54 @@ This function subset an internal database of emission factors with each argument
 
     <p>It returns a numeric vector representing the increase in emissions due to normal deterioring</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>The deterioration factors functions are available for technologies
+euro "II", "III" and "IV". In order to cover all euro technologies, this
+function assumes that the deterioration function of "III" and "IV" applies
+for "V", "VI" and "VIc". However, as these technologies are relative
+new,  accumulated milage is low and hence, deteerioration factors small.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>fkm</span>)
 <span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cumsum'>cumsum</a></span>(<span class='no'>pckm</span>)
 <span class='no'>km</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/units/topics/set_units'>set_units</a></span>(<span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>], <span class='no'>km</span>)
-(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>))
-}</div><div class='output co'>#&gt;  [1] 1.000000 1.000000 1.038520 1.135721 1.235592 1.337570 1.441121 1.545738
-#&gt;  [9] 1.650946 1.756295 1.861367</div></pre>
+<span class='co'># length eu = length km = 1</span>
+<span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>5</span>], <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># length eu = length km = 1, length speed &gt; 1</span>
+<span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>5</span>], <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
+<span class='co'># length km != length eu error</span>
+<span class='co'># (cod1 &lt;- emis_det(po = "CO", cc = "&lt;=1400", eu = c("III", "IV"), speed = Speed(30),</span>
+<span class='co'># km = km[4]))</span>
+<span class='co'># length eu = 1 length km &gt; 1</span>
+<span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>)
+<span class='co'># length eu = 2, length km = 2 (if different length, error!)</span>
+(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"III"</span>, <span class='st'>"IV"</span>), <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>4</span>:<span class='fl'>5</span>]))
+<span class='co'># length eu = 2, length km = 2, length speed &gt; 1</span>
+(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"III"</span>, <span class='st'>"IV"</span>), <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>0</span>:<span class='fl'>130</span>),
+<span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>4</span>:<span class='fl'>5</span>]))
+<span class='no'>euros</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"V"</span>,<span class='st'>"V"</span>,<span class='st'>"V"</span>, <span class='st'>"IV"</span>, <span class='st'>"IV"</span>, <span class='st'>"IV"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>)
+<span class='co'># length eu = 2, length km = 2, length speed &gt; 1</span>
+(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euros</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>100</span>),
+<span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))
+<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>cod1</span>[, <span class='fl'>1</span>:<span class='fl'>11</span>])
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/filled.contour'>filled.contour</a></span>(<span class='no'>cod1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/cpt'>cpt</a></span>(<span class='fl'>6277</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/filled.contour'>filled.contour</a></span>(<span class='no'>cod1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/lucky'>lucky</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>19</span>))
+<span class='no'>euro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"V"</span>, <span class='fl'>5</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='st'>"IV"</span>, <span class='fl'>5</span>), <span class='st'>"III"</span>)
+<span class='no'>euros</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='no'>euro</span>, <span class='no'>euro</span>)
+(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euros</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>))
+}</div><div class='output co'>#&gt; b = 7.13e-06, c = 0.769, MAX MC URBAN = 1.91, 
+#&gt; f = 1.5e-06, g = 0.955, MAX MC ROAD = 1.2
+#&gt; V &lt; 19: MC_URBAN = b*km + c
+#&gt; V &gt;= 63: MC_ROAD = f*km + g
+#&gt; 19 &lt;= V &lt; 63: MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44</div><div class='img'><img src='emis_det-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Colour gradient: ocal_pastel_blue, number: 6293</div><div class='img'><img src='emis_det-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   V1 V2       V3       V4       V5      V6       V7       V8       V9      V10
+#&gt; 1  1  1 1.038558 1.135773 1.235658 1.33765 1.441215 1.545847 1.651069 1.756434
+#&gt; 2  1  1 1.038558 1.135773 1.235658 1.33765 1.441215 1.545847 1.651069 1.756434
+#&gt;       V11       speed
+#&gt; 1 1.86152 18.9 [km/h]
+#&gt; 2 1.86152 18.9 [km/h]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -161,6 +214,8 @@ This function subset an internal database of emission factors with each argument
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
