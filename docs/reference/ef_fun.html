@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.8</span>
       </span>
     </div>
 
@@ -154,7 +154,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>fe2015</span>)
-<span class='no'>CO</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>vein</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/vein/topics/EmissionFactors'>EmissionFactors</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span> <span class='kw'>==</span> <span class='st'>"CO"</span>, <span class='fl'>11</span>])
+<span class='no'>CO</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>vein</span><span class='kw ns'>::</span><span class='fu'><a href='http://ibarraespinosa.github.io/vein//reference/EmissionFactors.html'>EmissionFactors</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span> <span class='kw'>==</span> <span class='st'>"CO"</span>, <span class='fl'>11</span>])
 <span class='no'>ef_logit</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_fun</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>CO</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fl'>27</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>33</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>ef_logit</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>ef_logit</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)

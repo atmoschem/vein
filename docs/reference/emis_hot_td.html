@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimation of cold start emissions with top-down approach — emis_cold_td • vein</title>
+<title>Estimation of hot exhaust emissions with top-down approach — emis_hot_td • vein</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Estimation of cold start emissions with top-down approach — emis_cold_td" />
+<meta property="og:title" content="Estimation of hot exhaust emissions with top-down approach — emis_hot_td" />
 
-<meta property="og:description" content="emis_cold_td estimates cld start emissions with
+<meta property="og:description" content="emis_hot_td estimates cld start emissions with
 a top-down appraoch. This is, annual or monthly emissions or region.
 Especifically, the emissions are esitmated for row of the simple feature (row
 of the spatial feature).
@@ -106,14 +106,14 @@ providing flexibility to the user." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimation of cold start emissions with top-down approach</h1>
+    <h1>Estimation of hot exhaust emissions with top-down approach</h1>
     
-    <div class="hidden name"><code>emis_cold_td.Rd</code></div>
+    <div class="hidden name"><code>emis_hot_td.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>emis_cold_td</code> estimates cld start emissions with
+    <p><code>emis_hot_td</code> estimates cld start emissions with
 a top-down appraoch. This is, annual or monthly emissions or region.
 Especifically, the emissions are esitmated for row of the simple feature (row
 of the spatial feature).</p>
@@ -124,8 +124,7 @@ providing flexibility to the user.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_cold_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>efcold</span>, <span class='no'>beta</span>, <span class='no'>pro_month</span>, <span class='no'>params</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_hot_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>pro_month</span>, <span class='no'>params</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,18 +142,6 @@ The number of rows is equal to the number of streets link</p></td>
     <tr>
       <th>ef</th>
       <td><p>Numeric; emission factor with</p></td>
-    </tr>
-    <tr>
-      <th>efcold</th>
-      <td><p>Data.frame. When it is a data.frame, each column is for each
-type of vehicle by age of use, rows are are each simple feature. When you have
-emission factors for each month, the order should a data.frame ina long format,
-as rurned by <code><a href='ef_ldv_cold.html'>ef_ldv_cold</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>beta</th>
-      <td><p>Data.frame with the fraction of cold starts. The rows are the fraction
-for each spatial feature or subregion, the columns are the age of use of vehicle.</p></td>
     </tr>
     <tr>
       <th>pro_month</th>
@@ -176,34 +163,24 @@ for each spatial feature or subregion, the columns are the age of use of vehicle
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='ef_ldv_cold.html'>ef_ldv_cold</a></code></p></div>
+    <div class='dont-index'><p><code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>{
 <span class='co'># Do not run</span>
 <span class='no'>euros</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"V"</span>, <span class='st'>"V"</span>, <span class='st'>"IV"</span>, <span class='st'>"III"</span>, <span class='st'>"II"</span>, <span class='st'>"I"</span>, <span class='st'>"PRE"</span>, <span class='st'>"PRE"</span>)
-<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>2</span>:<span class='fl'>25</span>,<span class='fl'>5</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>) <span class='co'># 12 months, 10 rows</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/row.names'>row.names</a></span>(<span class='no'>dt</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"Simple_Feature_"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='no'>efc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_cold.html'>ef_ldv_cold</a></span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='no'>dt</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euros</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>34</span>))
 <span class='no'>efh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_speed.html'>ef_ldv_speed</a></span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
           <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euros</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>34</span>))
 <span class='no'>lkm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/units/topics/as_units'>as_units</a></span>(<span class='fl'>18</span>:<span class='fl'>10</span>, <span class='st'>"km"</span>)*<span class='fl'>1000</span>
-<span class='no'>cold_lkm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cold_mileage.html'>cold_mileage</a></span>(<span class='kw'>ltrip</span> <span class='kw'>=</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/units/topics/as_units'>as_units</a></span>(<span class='fl'>20</span>, <span class='st'>"km"</span>), <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='no'>dt</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>cold_lkm</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"Month_"</span>, <span class='fl'>1</span>:<span class='fl'>12</span>)
 <span class='no'>veh_month</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>8</span>, <span class='fl'>1</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>10</span>, <span class='fl'>5</span>), <span class='fl'>9</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>10</span>, <span class='fl'>5</span>))
 <span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>8</span>)
-<span class='fu'>emis_cold_td</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>efh</span>, <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>efc</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ],
-<span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>cold_lkm</span>[,<span class='fl'>1</span>], <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,)
-<span class='fu'>emis_cold_td</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>efh</span>, <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>efc</span>[<span class='fl'>1</span>:<span class='fl'>10</span>, ],
-<span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>cold_lkm</span>[,<span class='fl'>1</span>], <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-<span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"data_"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>), <span class='st'>"moredata"</span>))
-<span class='no'>aa</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_cold_td</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>efh</span>, <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>efc</span>,
-<span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>cold_lkm</span>, <span class='kw'>pro_month</span> <span class='kw'>=</span> <span class='no'>veh_month</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>aa</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_cold_td</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>efh</span>, <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>efc</span>,
-<span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>cold_lkm</span>, <span class='kw'>pro_month</span> <span class='kw'>=</span> <span class='no'>veh_month</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-<span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"data_"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>), <span class='st'>"moredata"</span>))
-<span class='co'># }</span></pre>
+<span class='fu'>emis_hot_td</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>efh</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Average age of age is 4.87</span></div><div class='output co'>#&gt; <span class='message'>Number of age is 0.06 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; Sum of emissions: 110741.3 </div><div class='output co'>#&gt; Result for Emissions 
+#&gt;          Age1         Age2         Age3         Age4         Age5         Age6
+#&gt; 1 395.417 [g] 414.5562 [g] 327.4584 [g] 931.3546 [g] 1360.369 [g] 3688.562 [g]
+#&gt;           Age7         Age8
+#&gt; 1 54064.45 [g] 49559.08 [g]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

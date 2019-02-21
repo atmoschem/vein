@@ -2,7 +2,7 @@
 % Please edit documentation in R/celsius.R
 \name{celsius}
 \alias{celsius}
-\title{Construction function for class "Emissions"}
+\title{Construction function for Celsius temperature}
 \usage{
 celsius(x)
 }

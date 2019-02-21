@@ -49,7 +49,7 @@ for vehicles with fuel injection and returnless fuel systems.
 numeric vector of emission estimation in grams
 }
 \description{
-\code{emis_evap} estimates evaporative emissions from
+\code{\link{emis_evap}} estimates evaporative emissions from
 EMEP/EEA emisison guidelines
 }
 \note{
@@ -69,4 +69,7 @@ but the number of columns of veh is 10, the 10 first emission factors are used.
 Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 Environment Agency, Copenhagen, 2009
+}
+\seealso{
+\code{\link{ef_evap}}
 }

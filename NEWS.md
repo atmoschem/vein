@@ -2,7 +2,14 @@ NEWS
 ===========
 
 
-# vein 0.6.7 (Release date: 2019-02-18)
+# vein 0.6.8 (Release date: 2019-02-21)
+
+- Fix #152. Adds emis_hot_td hot exhaust estimation with top-down approach.
+- Improve documentation.
+- Allow pro_month varies across each simple feature or row os Vehicle data.frame.
+- Fix minor bugs.
+
+## vein 0.6.7 (Release date: 2019-02-18)
 
 - Fix #150. Add options to emis_cold_td and emis_evap to add columns to output.
 - Add verbose argument in emis_cold_td and emis_evap.
