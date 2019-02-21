@@ -26,26 +26,30 @@
 #' data(fkm)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 #' km <- units::set_units(pckma[1:11], km)
-#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", speed = Speed(30),
-#' km = km[5], show.equation = T))
+#' # length eu = length km = 1
+#' emis_det(po = "CO", cc = "<=1400", eu = "III", km = km[5], show.equation = TRUE)
+#' # length eu = length km = 1, length speed > 1
+#' emis_det(po = "CO", cc = "<=1400", eu = "III", km = km[5], speed = Speed(1:10))
+#' # length km != length eu error
 #' # (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(30),
 #' # km = km[4]))
-#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(30),
-#' km = km[4:5]))
+#' # length eu = 1 length km > 1
+#' emis_det(po = "CO", cc = "<=1400", eu = "III", km = km)
+#' # length eu = 2, length km = 2 (if different length, error!)
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), km = km[4:5]))
+#' # length eu = 2, length km = 2, length speed > 1
 #' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(0:130),
 #' km = km[4:5]))
 #' euros <- c("V","V","V", "IV", "IV", "IV", "III", "III", "III", "III")
+#' # length eu = 2, length km = 2, length speed > 1
 #' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, speed = Speed(1:100),
 #' km = km[1:10]))
 #' cod1 <- as.matrix(cod1[, 1:11])
-#' filled.contour(cod1, col = cptcity::lucky(n = 20))
-#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", speed = Speed(19:23),
-#' km = km[1], show.equation = T))
-#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = cbind("III", "III"), km = km))
-#' euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
-#'           rep("I", 5), rep("PRE", 15))
+#' filled.contour(cod1, col = cptcity::cpt(6277, n = 20))
+#' filled.contour(cod1, col = cptcity::lucky(n = 19))
+#' euro <- c(rep("V", 5), rep("IV", 5), "III")
 #' euros <- rbind(euro, euro)
-#' cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros[, 1:11], km = km)
+#' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, km = km))
 #' }
 emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.equation = FALSE) {
   ldv_det <- sysdata$ldv_det
@@ -103,20 +107,56 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
       f1 <- function(V, km){
         a <- df$a; b <- df$b; c <- df$c; d <- df$d;
         e <- df$e; f <- df$f; g <- df$g; h <- df$h
-        # eval(parse(text = paste0("(",as.character(df$Y), ")")))
         MC_URBAN <- ifelse(km<a, b*km+c, d)
         MC_ROAD <- ifelse(km<e, f*km+g, h)
         ifelse(
           V<19, MC_URBAN,
           ifelse(V>63, MC_ROAD,
-                 MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
-          ))
+                 MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44))
+        }
+      mc <- f1(V = speed, km = km)
+      if(length(speed) > 1) {
+        if(verbose) message("As speed has many values, this a data.frame")
+        mc <- as.data.frame(mc)
+        mc$speed <- Speed(speed)
       }
-    }
-    if(length(km) > 1 | length(eu) > 1){
-      if(length(eu) > length(km)) stop("'eu' and 'km' must have same length")
+      return(mc)
 
-      mc <- do.call("cbind", lapply(1:length(km), function(i){
+    } else if(length(km) > 1 & length(eu) == 1){
+      if(length(eu) > length(km)) stop("length 'eu' cant be bigger than length 'km'")
+
+      mc <- lapply(1:length(km), function(i){
+        df <- ldv_det[ldv_det$POLLUTANT == po &
+                        ldv_det$CC == cc &
+                        ldv_det$EURO == eu, ]
+        f1 <- function(V, km){
+          a <- df$a; b <- df$b; c <- df$c; d <- df$d;
+          e <- df$e; f <- df$f; g <- df$g; h <- df$h
+          MC_URBAN <- ifelse(km<a, b*km+c, d)
+          MC_ROAD <- ifelse(km<e, f*km+g, h)
+          ifelse(
+            V<19, MC_URBAN,
+            ifelse(V>63, MC_ROAD,
+                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44))
+        }
+        ifelse(f1(V = speed, km = km[i]) < 1 , 1 ,
+               f1(V = speed, km = km[i]))
+      })
+      if(length(speed) > 1) {
+        if(verbose) message("As speed has many values, this a data.frame")
+        mc <- do.call("cbind", mc)
+        mc <- as.data.frame(mc)
+        names(mc) <- paste0("km", 1:length(km))
+        mc$speed <- Speed(speed)
+      } else {
+        if(verbose) message("As speed has 1 value, this a vector")
+        mc <- unlist(mc)
+      }
+      return(mc)
+
+    } else if(length(km) > 1 & length(eu) > 1){
+      if(length(eu) != length(km)) stop("length 'eu' cant be bigger than length 'km'")
+      mc <- lapply(1:length(km), function(i){
         df <- ldv_det[ldv_det$POLLUTANT == po &
                         ldv_det$CC == cc &
                         ldv_det$EURO == eu[i], ]
@@ -128,16 +168,25 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
           ifelse(
             V<19, MC_URBAN,
             ifelse(V>63, MC_ROAD,
-                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
-            ))
+                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44))
         }
-
         ifelse(f1(V = speed, km = km[i]) < 1 , 1 ,
                f1(V = speed, km = km[i]))
-      }))
-      mc <- as.data.frame(mc)
-      mc$speed <- Speed(speed)
+      })
+      if(length(speed) > 1) {
+        if(verbose) message("As speed has many values, this a data.frame")
+        mc <- do.call("cbind", mc)
+        mc <- as.data.frame(mc)
+        names(mc) <- paste0("km", 1:length(km))
+        mc$speed <- Speed(speed)
+      } else {
+        if(verbose) message("As speed has 1 value, this a vector")
+        mc <- unlist(mc)
+      }
+      return(mc)
+
     } else {
+      print("aqui")
       f1 <- function(V, km){
         a <- df$a; b <- df$b; c <- df$c; d <- df$d;
         e <- df$e; f <- df$f; g <- df$g; h <- df$h
@@ -146,13 +195,21 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
         ifelse(
           V<19, MC_URBAN,
           ifelse(V>63, MC_ROAD,
-                 MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
-          ))
+                 MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44))
       }
       mc <- ifelse(f1(V = speed, km = km) <1, 1, f1(V = speed, km = km))
-      mc <- as.data.frame(mc)
-      mc$speed <- Speed(speed)
-    }
+      return(mc)
+      if(length(speed) > 1) {
+        if(verbose) message("As speed has many values, this a data.frame")
+        mc <- do.call("cbind", mc)
+        mc <- as.data.frame(mc)
+        mc$speed <- Speed(speed)
+      } else {
+        if(verbose) message("As speed has 1 value, this a vector")
+        mc <- unlist(mc)
+      }
+
+        }
     return(mc)
 
   } else if(is.data.frame(eu) & !is.data.frame(km)){
@@ -171,11 +228,12 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
           ifelse(
             V<19, MC_URBAN,
             ifelse(V>63, MC_ROAD,
-                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44
-            ))}
+                   MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44))
+          }
         ifelse(f1(V = speed, km = km[i]) < 1 , 1 ,
                f1(V = speed, km = km[i]))
       }))
+      if(verbose) message("as 'eu' is a data.frame, this is a data.frame")
       dff <- as.data.frame(dff)
       dff$speed <- Speed(speed)
       dff
@@ -202,6 +260,7 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
         ifelse(f1(V = speed, km = km[i,j]) < 1 , 1 ,
                f1(V = speed, km = km[i,j]))
       }))
+      if(verbose) message("as 'eu' is a data.frame, this is a data.frame")
       mc <- as.data.frame(mc)
       mc$speed <- Speed(speed)
     }))
