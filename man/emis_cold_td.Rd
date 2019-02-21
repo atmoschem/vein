@@ -34,7 +34,7 @@ for each spatial feature or subregion, the columns are the age of use of vehicle
 Emissions data.frame
 }
 \description{
-\code{emis_cold_td} estimates cld start emissions with
+\code{\link{emis_cold_td}} estimates cld start emissions with
 a top-down appraoch. This is, annual or monthly emissions or region.
 Especifically, the emissions are esitmated for row of the simple feature (row
 of the spatial feature).
@@ -53,7 +53,6 @@ row.names(dt) <- paste0("Simple_Feature_", 1:10)
 efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euros, p = "CO", speed = Speed(34))
-efh <- EmissionFactors(unlist(efh))
 lkm <- units::as_units(18:10, "km")*1000
 cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 names(cold_lkm) <- paste0("Month_", 1:12)

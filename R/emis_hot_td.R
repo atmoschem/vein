@@ -1,6 +1,6 @@
-#' Estimation of cold start emissions with top-down approach
+#' Estimation of hot exhaust emissions with top-down approach
 #'
-#' @description \code{\link{emis_cold_td}} estimates cld start emissions with
+#' @description \code{\link{emis_hot_td}} estimates cld start emissions with
 #' a top-down appraoch. This is, annual or monthly emissions or region.
 #' Especifically, the emissions are esitmated for row of the simple feature (row
 #' of the spatial feature).
@@ -15,47 +15,25 @@
 #' The number of rows is equal to the number of streets link
 #' @param lkm Numeric; mileage by the age of use of each vehicle.
 #' @param ef Numeric; emission factor with
-#' @param efcold Data.frame. When it is a data.frame, each column is for each
-#' type of vehicle by age of use, rows are are each simple feature. When you have
-#' emission factors for each month, the order should a data.frame ina long format,
-#' as rurned by \code{\link{ef_ldv_cold}}.
-#' @param beta Data.frame with the fraction of cold starts. The rows are the fraction
-#' for each spatial feature or subregion, the columns are the age of use of vehicle.
 #' @param pro_month Numeric; montly profile to distribuite annual mileage in each month.
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
 #' @return Emissions data.frame
-#' @seealso \code{\link{ef_ldv_cold}}
+#' @seealso \code{\link{ef_ldv_speed}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
-#' dt <- matrix(rep(2:25,5), ncol = 12, nrow = 10) # 12 months, 10 rows
-#' row.names(dt) <- paste0("Simple_Feature_", 1:10)
-#' efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 #' efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
 #'           eu = euros, p = "CO", speed = Speed(34))
 #' lkm <- units::as_units(18:10, "km")*1000
-#' cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
-#' names(cold_lkm) <- paste0("Month_", 1:12)
 #' veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 #' veh <- age_ldv(1:10, agemax = 8)
-#' emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
-#' beta = cold_lkm[,1], verbose = TRUE,)
-#' emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
-#' beta = cold_lkm[,1], verbose = TRUE,
-#' params = list(paste0("data_", 1:10), "moredata"))
-#' aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-#' beta = cold_lkm, pro_month = veh_month, verbose = TRUE)
-#' aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-#' beta = cold_lkm, pro_month = veh_month, verbose = FALSE,
-#' params = list(paste0("data_", 1:10), "moredata"))
+#' emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE)
 #' }
-emis_cold_td <- function (veh,
+emis_hot_td <- function (veh,
                           lkm,
                           ef,
-                          efcold,
-                          beta,
                           pro_month,
                           params,
                           verbose = FALSE) {
@@ -98,18 +76,6 @@ emis_cold_td <- function (veh,
     }
 
   }
-  # Checking ef cold
-  if(class(efcold[, 1]) != "units"){
-    stop("columns of efcold must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
-  }
-  if(units(efcold[, 1])$numerator != "g" | units(efcold[, 1])$denominator != "km"){
-    stop("Units of efcold must be 'g/km' ")
-  }
-  if(units(efcold[, 1])$numerator == "g" & units(efcold[, 1])$denominator == "km"){
-    for(i in 1:ncol(veh)){
-      efcold[, i] <- as.numeric(efcold[, i])
-    }
-  }
   # Checking veh
   for(i in 1:ncol(veh)){
     veh[, i] <- as.numeric(veh[, i])
@@ -120,8 +86,6 @@ emis_cold_td <- function (veh,
     if(verbose) message("converting sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }
-  # checking beta
-  beta <- as.data.frame(beta)
 
   # pro_month
   if(!missing(pro_month)){
@@ -154,7 +118,7 @@ emis_cold_td <- function (veh,
       if(is.data.frame(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[,k] *ef[,i] * efcold[[k]][, i]
+            lkm[i]*veh[, i] * pro_month[,k] *ef[,i]
           }))
           dfi <- Emissions(dfi)
           names(dfi) <- paste0("Age", 1:ncol(dfi))
@@ -165,7 +129,7 @@ emis_cold_td <- function (veh,
       } else if(is.numeric(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[k] *ef[,i] * efcold[[k]][, i]
+            lkm[i]*veh[, i] * pro_month[k] *ef[,i]
           }))
           dfi <- Emissions(dfi)
           names(dfi) <- paste0("Age", 1:ncol(dfi))
@@ -196,7 +160,7 @@ emis_cold_td <- function (veh,
       if(is.data.frame(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[, k] *ef[i] * efcold[[k]][, i]
+            lkm[i]*veh[, i] * pro_month[, k] *ef[i]
           }))
           dfi <- Emissions(dfi)
           names(dfi) <- paste0("Age", 1:ncol(dfi))
@@ -207,7 +171,7 @@ emis_cold_td <- function (veh,
       } else if(is.numeric(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[k] *ef[i] * efcold[[k]][, i]
+            lkm[i]*veh[, i] * pro_month[k] *ef[i]
           }))
           dfi <- Emissions(dfi)
           names(dfi) <- paste0("Age", 1:ncol(dfi))
@@ -235,7 +199,7 @@ emis_cold_td <- function (veh,
     if(verbose) message("Estimation without monthly profile")
 
     e <-  do.call("cbind",lapply(1:ncol(veh), function(i){
-      unlist(beta)[i]*as.numeric(lkm[i])*veh[, i] *as.numeric(ef[i]) * as.numeric(efcold[, i])
+      lkm[i]*veh[, i] *ef[i]
     }))
     e <- Emissions(e)
     names(e) <- paste0("Age", 1:ncol(e))

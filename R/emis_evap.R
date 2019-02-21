@@ -1,6 +1,6 @@
 #' Estimation of evaporative emissions
 #'
-#' @description \code{emis_evap} estimates evaporative emissions from
+#' @description \code{\link{emis_evap}} estimates evaporative emissions from
 #' EMEP/EEA emisison guidelines
 #'
 #' @param veh Numeric or data.frame of Vehicles with untis 'veh'.
@@ -30,6 +30,7 @@
 #' @param pro_month Numeric; montly profile to distribuite annual mileage in each month.
 #' @param verbose Logical; To show more information
 #' @return numeric vector of emission estimation in grams
+#' @seealso \code{\link{ef_evap}}
 #' @importFrom units as_units
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
@@ -77,6 +78,19 @@ emis_evap <- function(veh,
   } else {
     veh <- as.numeric(veh)
   }
+  # pro_month
+  if(!missing(pro_month)){
+    if(is.data.frame(pro_month) | is.matrix(pro_month)){
+      pro_month <- as.data.frame(pro_month)
+      for(i in 1:nrow(pro_month)){
+        pro_month[i, ] <- pro_month[i, ]/sum(pro_month[i, ])
+      }
+    } else if (is.numeric(pro_month)){
+      pro_month <- pro_month/sum(pro_month)
+    }
+  }
+
+
   # ed
   if(!missing(ed)){
     if(is.data.frame(veh)){
@@ -90,14 +104,27 @@ emis_evap <- function(veh,
         ed$month <- ed$month <- rep(1:12, each = nrow(veh))
         ed <- split(ed, ed$month)
 
-        e <- do.call("rbind", lapply(1:12, function(j){
-          e <- do.call("cbind", lapply(1:ncol(veh), function(i){
-            veh[, i]*x[i]*ed[[j]][, i]*pro_month[j]
+        if(is.data.frame(pro_month)){
+          e <- do.call("rbind", lapply(1:12, function(j){
+            e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+              veh[, i]*x[i]*ed[[j]][, i]*pro_month[, j]
+            }))
+            e <- Emissions(e)
+            e$month <- mes[j]
+            e
           }))
-          e <- Emissions(e)
-          e$month <- mes[j]
-          e
-        }))
+
+        } else if(is.numeric(pro_month)){
+          e <- do.call("rbind", lapply(1:12, function(j){
+            e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+              veh[, i]*x[i]*ed[[j]][, i]*pro_month[j]
+            }))
+            e <- Emissions(e)
+            e$month <- mes[j]
+            e
+          }))
+
+        }
         if(verbose) cat("Sum of emissions:", sum(e[-"month"]), "\n")
 
       } else {
@@ -124,14 +151,27 @@ emis_evap <- function(veh,
           warmc <- split(warmc, warmc$month)
           hotc <- split(hotc, warmc$month)
 
-          e <- do.call("rbind", lapply(1:12, function(j){
-            e <- do.call("cbind", lapply(1:ncol(veh), function(i){
-              veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[j]
+          if(is.data.frame(pro_month)){
+            e <- do.call("rbind", lapply(1:12, function(j){
+              e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+                veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[, j]
+              }))
+              e <- Emissions(e)
+              e$month <- mes[j]
+              e
             }))
-            e <- Emissions(e)
-            e$month <- mes[j]
-            e
-          }))
+
+          } else if (is.numeric(pro_month)){
+            e <- do.call("rbind", lapply(1:12, function(j){
+              e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+                veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[j]
+              }))
+              e <- Emissions(e)
+              e$month <- mes[j]
+              e
+            }))
+
+          }
           if(verbose) cat("Sum of emissions:", sum(e[-"month"]), "\n")
 
         } else {
@@ -159,14 +199,26 @@ emis_evap <- function(veh,
           hotfi$month <- rep(1:12, each = nrow(veh))
           hotfi <- split(hotfi, hotfi$month)
 
-          e <- do.call("rbind", lapply(1:12, function(j){
-            e <- do.call("cbind", lapply(1:ncol(veh), function(i){
-              veh[, i]*x[i]*hotfi[[j]][, i]*pro_month[j]
+          if(is.data.frame(pro_month)){
+            e <- do.call("rbind", lapply(1:12, function(j){
+              e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+                veh[, i]*x[i]*hotfi[[j]][, i]*pro_month[, j]
+              }))
+              e <- Emissions(e)
+              e$month <- mes[j]
+              e
             }))
-            e <- Emissions(e)
-            e$month <- mes[j]
-            e
-          }))
+          } else if (is.numeric(pro_month)){
+            e <- do.call("rbind", lapply(1:12, function(j){
+              e <- do.call("cbind", lapply(1:ncol(veh), function(i){
+                veh[, i]*x[i]*hotfi[[j]][, i]*pro_month[j]
+              }))
+              e <- Emissions(e)
+              e$month <- mes[j]
+              e
+            }))
+
+          }
           if(verbose) cat("Sum of emissions:", sum(e[-"month"]), "\n")
 
         } else {

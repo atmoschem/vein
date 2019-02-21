@@ -1,4 +1,4 @@
-#' Construction function for class "Emissions"
+#' Construction function for Celsius temperature
 #'
 #' @description \code{celsius} jsut convert add unit celsius to different
 #' R objects
