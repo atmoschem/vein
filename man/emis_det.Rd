@@ -4,7 +4,8 @@
 \alias{emis_det}
 \title{Determine deterioration factors for urban conditions}
 \usage{
-emis_det(po, cc, eu, km, verbose = FALSE)
+emis_det(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE,
+  show.equation = FALSE)
 }
 \arguments{
 \item{po}{Character; Pollutant "CO", "NOx" or "HC"}
@@ -13,9 +14,14 @@ emis_det(po, cc, eu, km, verbose = FALSE)
 
 \item{eu}{Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"}
 
+\item{speed}{Numeric; Speed to return Number of emission factor and not a function.
+It needs units in km/h}
+
 \item{km}{Numeric; accumulated mileage in km.}
 
 \item{verbose}{Logical; To show more information}
+
+\item{show.equation}{Option to see or not the equation parameters}
 }
 \value{
 It returns a numeric vector representing the increase in emissions due to normal deterioring
@@ -39,12 +45,26 @@ new,  accumulated milage is low and hence, deteerioration factors small.
 data(fkm)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 km <- units::set_units(pckma[1:11], km)
-(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", km = km))
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", speed = Speed(30),
+km = km[5], show.equation = T))
+# (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(30),
+# km = km[4]))
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(30),
+km = km[4:5]))
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(0:130),
+km = km[4:5]))
+euros <- c("V","V","V", "IV", "IV", "IV", "III", "III", "III", "III")
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, speed = Speed(1:100),
+km = km[1:10]))
+cod1 <- as.matrix(cod1[, 1:11])
+filled.contour(cod1, col = cptcity::lucky(n = 20))
+(cod1 <- emis_det(po = "CO", cc = "<=1400", eu = "III", speed = Speed(19:23),
+km = km[1], show.equation = T))
 (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = cbind("III", "III"), km = km))
 euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
           rep("I", 5), rep("PRE", 15))
 euros <- rbind(euro, euro)
-cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, km = km)
+cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros[, 1:11], km = km)
 }
 }
 \keyword{deterioration}
