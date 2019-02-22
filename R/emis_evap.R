@@ -110,6 +110,7 @@ emis_evap <- function(veh,
               veh[, i]*x[i]*ed[[j]][, i]*pro_month[, j]
             }))
             e <- Emissions(e)
+            names(e) <- paste0("Age", 1:ncol(e))
             e$month <- mes[j]
             e
           }))
@@ -120,6 +121,7 @@ emis_evap <- function(veh,
               veh[, i]*x[i]*ed[[j]][, i]*pro_month[j]
             }))
             e <- Emissions(e)
+            names(e) <- paste0("Age", 1:ncol(e))
             e$month <- mes[j]
             e
           }))
@@ -132,6 +134,7 @@ emis_evap <- function(veh,
         e <- Emissions(do.call("cbind", lapply(1:ncol(veh), function(i){
           veh[, i]*x[i]*ed[, i]
         })))
+        names(e) <- paste0("Age", 1:ncol(e))
         if(verbose) cat("Sum of emissions:", sum(e), "\n")
       }
     } else {
@@ -157,6 +160,7 @@ emis_evap <- function(veh,
                 veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[, j]
               }))
               e <- Emissions(e)
+              names(e) <- paste0("Age", 1:ncol(e))
               e$month <- mes[j]
               e
             }))
@@ -167,6 +171,7 @@ emis_evap <- function(veh,
                 veh[, i]*x[i]*(carb*(p*hotc[[j]][, i]+(1-p)*warmc[[j]][, i])+(1-carb)*hotfi[[j]][, i])*pro_month[j]
               }))
               e <- Emissions(e)
+              names(e) <- paste0("Age", 1:ncol(e))
               e$month <- mes[j]
               e
             }))
@@ -181,6 +186,7 @@ emis_evap <- function(veh,
           e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
             veh[, i]*x[i]*(carb*(p*hotc[, i]+(1-p)*warmc[, i])+(1-carb)*hotfi[, i])
           })))
+          names(e) <- paste0("Age", 1:ncol(e))
           if(verbose) cat("Sum of emissions:", sum(e), "\n")
         }
 
@@ -205,6 +211,7 @@ emis_evap <- function(veh,
                 veh[, i]*x[i]*hotfi[[j]][, i]*pro_month[, j]
               }))
               e <- Emissions(e)
+              names(e) <- paste0("Age", 1:ncol(e))
               e$month <- mes[j]
               e
             }))
@@ -226,6 +233,7 @@ emis_evap <- function(veh,
           e <- Emissions(do.call("cbind",lapply(1:ncol(veh), function(i){
             veh[, i]*x[i]*hotfi[, i]
           })))
+          names(e) <- paste0("Age", 1:ncol(e))
           if (verbose) cat("Sum of emissions:", sum(e), "\n")
         }
       } else {
