@@ -30,8 +30,8 @@
 #' veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 #' veh <- age_ldv(1:10, agemax = 8)
 #' a <- emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE)
-#' print(a)
-#' plot(a)
+#' head(a)
+#' plot(aggregate(a$emissions, by = list(a$age), sum)$x,type ="b")
 #' emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE,
 #' params = list(paste0("data_", 1:10), "moredata"))
 #' aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
@@ -40,7 +40,6 @@
 #' aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
 #' pro_month = veh_month, verbose = FALSE,
 #' params = list(paste0("data_", 1:10), "moredata"))
-#' head(as)
 #' }
 emis_hot_td <- function (veh,
                           lkm,
@@ -128,23 +127,29 @@ emis_hot_td <- function (veh,
       #when pro_month varies in each simple feature
       if(is.data.frame(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
+          dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[,k] *ef[,i]
           }))
+          dfi <- as.data.frame(dfi)
+          names(dfi) <- "emissions"
           dfi <- Emissions(dfi)
-          names(dfi) <- paste0("Age", 1:ncol(dfi))
-          dfi$month <- mes[k]
+          dfi$rows <- row.names(veh)
+          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+          dfi$month <- (1:length(pro_month))[k]
           dfi
         }))
 
       } else if(is.numeric(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
+          dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[k] *ef[,i]
           }))
+          dfi <- as.data.frame(dfi)
+          names(dfi) <- "emissions"
           dfi <- Emissions(dfi)
-          names(dfi) <- paste0("Age", 1:ncol(dfi))
-          dfi$month <- mes[k]
+          dfi$rows <- row.names(veh)
+          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+          dfi$month <- (1:length(pro_month))[k]
           dfi
         }))
 
@@ -160,30 +165,36 @@ emis_hot_td <- function (veh,
         }
       }
 
-      if(verbose) cat("Sum of emissions:", sum(e[, 1:ncol(veh)]), "\n")
+      if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
     } else{
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
       # when pro_month variy each month
       if(is.data.frame(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
+          dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[, k] *ef[i]
           }))
+          dfi <- as.data.frame(dfi)
+          names(dfi) <- "emissions"
           dfi <- Emissions(dfi)
-          names(dfi) <- paste0("Age", 1:ncol(dfi))
-          dfi$month <- mes[k]
+          dfi$rows <- row.names(veh)
+          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+          dfi$month <- (1:length(pro_month))[k]
           dfi
         }))
 
       } else if(is.numeric(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- do.call("cbind",lapply(1:ncol(veh), function(i){
+          dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[k] *ef[i]
           }))
+          dfi <- as.data.frame(dfi)
+          names(dfi) <- "emissions"
           dfi <- Emissions(dfi)
-          names(dfi) <- paste0("Age", 1:ncol(dfi))
-          dfi$month <- mes[k]
+          dfi$rows <- row.names(veh)
+          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+          dfi$month <- (1:length(pro_month))[k]
           dfi
         }))
 
@@ -199,18 +210,21 @@ emis_hot_td <- function (veh,
         }
       }
 
-      if(verbose) cat("Sum of emissions:", sum(e[, 1:ncol(veh)]), "\n")
+      if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
     }
 
 
   } else {
     if(verbose) message("Estimation without monthly profile")
 
-    e <-  do.call("cbind",lapply(1:ncol(veh), function(i){
+    e <-  unlist(lapply(1:ncol(veh), function(i){
       lkm[i]*veh[, i] *ef[i]
     }))
+    e <- as.data.frame(e)
+    names(e) <- "emissions"
     e <- Emissions(e)
-    names(e) <- paste0("Age", 1:ncol(e))
+    e$rows <- row.names(e)
+    e$age <- rep(1:ncol(veh), each = nrow(veh))
 
     if(!missing(params)){
       if(!is.list(params)) stop("'params' must be a list")
@@ -222,7 +236,7 @@ emis_hot_td <- function (veh,
         e[, names(params)[i]] <- params[[i]]
       }
     }
-    if(verbose) cat("Sum of emissions:", sum(e[, 1:ncol(veh)]), "\n")
+    if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
 
   }
 

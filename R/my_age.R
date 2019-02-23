@@ -18,6 +18,8 @@
 #' pro_street is not used, 'y' must be a numeric vector.
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message Logical; message with average age and total numer of vehicles.
+#' @param namerows Any vector to be change row.names. For instance, name of
+#' regions or streets.
 #' @return dataframe of age distrubution of vehicles.
 #' @importFrom sf st_sf st_as_sf
 #' @export
@@ -43,7 +45,8 @@ my_age <- function (x,
                     k = 1,
                     pro_street,
                     net,
-                    message = TRUE){
+                    message = TRUE,
+                    namerows){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (missing(y) | is.null(y)) {
@@ -120,11 +123,13 @@ my_age <- function (x,
     df <- vein::Vehicles(df*k)
   }
 
+  if(!missing(namerows)) {
+    if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
+    row.names(df) <- namerows
+  }
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)
-    dfsf <- sf::st_sf(df, geometry = netsf$geometry)
-    return(dfsf)
-  } else {
-    return(df)
+    df <- sf::st_sf(df, geometry = netsf$geometry)
   }
+    return(df)
 }

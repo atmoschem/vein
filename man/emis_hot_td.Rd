@@ -45,8 +45,8 @@ lkm <- units::as_units(18:10, "km")*1000
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 veh <- age_ldv(1:10, agemax = 8)
 a <- emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE)
-print(a)
-plot(a)
+head(a)
+plot(aggregate(a$emissions, by = list(a$age), sum)$x,type ="b")
 emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE,
 params = list(paste0("data_", 1:10), "moredata"))
 aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
@@ -55,7 +55,6 @@ head(aa)
 aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
 pro_month = veh_month, verbose = FALSE,
 params = list(paste0("data_", 1:10), "moredata"))
-head(as)
 }
 }
 \seealso{
