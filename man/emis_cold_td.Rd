@@ -64,7 +64,7 @@ emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
 beta = cold_lkm[,1], verbose = TRUE,
 params = list(paste0("data_", 1:10), "moredata"))
 aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-beta = cold_lkm, pro_month = veh_month, verbose = TRUE)
+beta = cold_lkm, pro_month = veh_month, verbose = T)
 aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
 beta = cold_lkm, pro_month = veh_month, verbose = FALSE,
 params = list(paste0("data_", 1:10), "moredata"))

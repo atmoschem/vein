@@ -12,6 +12,8 @@
 #' @param bystreet Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param message Logical;  message with average age and total numer of vehicles
+#' @param namerows Any vector to be change row.names. For instance, name of
+#' regions or streets.
 #' @return dataframe of age distrubution of vehicles at each street
 #' @importFrom sf st_sf st_as_sf
 #' @export
@@ -31,7 +33,8 @@ age_hdv <- function (x,
                      k = 1,
                      bystreet = F,
                      net,
-                     message = TRUE){
+                     message = TRUE,
+                     namerows){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){
@@ -74,6 +77,10 @@ age_hdv <- function (x,
     )
     cat("\n")
     }
+    if(!missing(namerows)) {
+      if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
+      row.names(df) <- namerows
+    }
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
@@ -111,6 +118,10 @@ age_hdv <- function (x,
                   sep=" ")
     )
     cat("\n")
+    }
+    if(!missing(namerows)) {
+      if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
+      row.names(df) <- namerows
     }
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)

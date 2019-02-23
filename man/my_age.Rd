@@ -4,7 +4,8 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, name = "age", k = 1, pro_street, net, message = TRUE)
+my_age(x, y, name = "age", k = 1, pro_street, net, message = TRUE,
+  namerows)
 }
 \arguments{
 \item{x}{Numeric; vehicles by street (or spatial feature).}
@@ -28,6 +29,9 @@ pro_street is not used, 'y' must be a numeric vector.}
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
 \item{message}{Logical; message with average age and total numer of vehicles.}
+
+\item{namerows}{Any vector to be change row.names. For instance, name of
+regions or streets.}
 }
 \value{
 dataframe of age distrubution of vehicles.
