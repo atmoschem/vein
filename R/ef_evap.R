@@ -9,7 +9,7 @@
 #' carburator, *erwarmc* mean cold and warm running losses, *erhotfi* mean hot
 #' running losses with fuel injection. Length of ef 1.
 #' @param v Type of vehicles, "PC", "Motorcycles", "Motorcycles_2S" and "Moped"
-#' @param cc Size of engine in cc. PC "<=1400",  "1400_2000" and "2000"
+#' @param cc Size of engine in cc. PC "<=1400",  "1400_2000" and ">2000"
 #' Motorcycles_2S:  "<=50". Motorcyces: ">50", "<250", "250_750" and ">750"
 #' @param dt Character or Numeric: Average monthly temperature variation: "-5_10", "0_15", "10_25"
 #' and "20_35". This argument can vector with several elements. dt can also be data.frame,
