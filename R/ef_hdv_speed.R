@@ -214,7 +214,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
                    ", e = ", df$e, ", f = ", df$f, "\n"))
-        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
+        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "\n"))
       }
       if(p %in% c("SO2","Pb")){
         f1 <- function(V){

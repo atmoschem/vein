@@ -273,7 +273,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
                    ", e = ", df$e, ", f = ", df$f, "\n"))
-        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
+        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "\n"))
       }
       if(p %in% c("SO2","Pb")){
         f1 <- function(V){
