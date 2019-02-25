@@ -1,8 +1,8 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 0.6.8
-Date: 2019-02-21
+Version: 0.6.9
+Date: 2019-02-25
 Authors@R: c(
   person(given = "Sergio", family = "Ibarra-Espinosa",
          role = c("aut", "cre"),
@@ -16,7 +16,10 @@ Authors@R: c(
 Description: Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases. More details in Ibarra-Espinosa et al (2018) <doi:10.5194/gmd-11-2209-2018>. It is recommended to start with the function inventory, which requires that the user must know the vehicular composition of its study area,or in other words, the combination of of type of vehicles, size and fuel of the fleet.
+    in maps and databases. More details in Ibarra-Espinosa et al (2018) <doi:10.5194/gmd-11-2209-2018>.
+    Before ussing VEIN you need to know the vehicular composition of your study area, in other words,
+    the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
+    start with the function inventory to create a structure of directories and template scripts.
 License: MIT + file LICENSE
 URL: https://atmoschem.github.io/vein/
 BugReports: https://github.com/atmoschem/vein/issues/

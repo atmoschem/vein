@@ -11,7 +11,10 @@
 Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases. More details in Ibarra-Espinosa et al (2018) <doi:10.5194/gmd-11-2209-2018>. It is recommended to start with the function inventory, which requires that the user must know the vehicular composition of its study area,or in other words, the combination of of type of vehicles, size and fuel of the fleet.
+    in maps and databases. More details in Ibarra-Espinosa et al (2018) <doi:10.5194/gmd-11-2209-2018>.
+    Before ussing VEIN you need to know the vehicular composition of your study area, in other words,
+    the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
+    start with the function inventory to create a structure of directories and template scripts.
 }
 \seealso{
 Useful links:
