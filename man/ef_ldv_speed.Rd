@@ -62,8 +62,7 @@ t = "ALL" and cc == "ALL" works for several pollutants because emission
 fators are the same. Some exceptions are with NOx and FC because size of engine.
 
 \strong{Hybrid cars}: the only cover "PC" and according to EMEP/EEA air pollutant emission inventory
-guidebook 2016 (Ntziachristos and Samaras, 2016) only for euro IV. I projected
-these factors to euro V, VI and VIc with the sames vales. When new literature
+guidebook 2016 (Ntziachristos and Samaras, 2016) only for euro IV. When new literature
 is available, I will update these factors.
 
 \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
