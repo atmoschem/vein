@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
       </span>
     </div>
 
@@ -101,16 +101,26 @@
       
     </div>
 
-    <div id="vein-0-6-8-release-date-2019-02-21" class="section level1">
+    <div id="vein-0-6-9-release-date-2019-02-25" class="section level1">
 <h1 class="page-header">
-<a href="#vein-0-6-8-release-date-2019-02-21" class="anchor"></a>vein 0.6.8 (Release date: 2019-02-21)<small> Unreleased </small>
+<a href="#vein-0-6-9-release-date-2019-02-25" class="anchor"></a>vein 0.6.9 (Release date: 2019-02-25)<small> Unreleased </small>
 </h1>
+<ul>
+<li>Fix #157. age_ldv(1, agemax = 1) now returns 1 [veh]</li>
+<li>Fix #158, new argument namerows to change row.names oin age* functions.</li>
+<li>Change argument message to verbose in all age* functions default = FALSE.</li>
+<li>Add emission factors of hybrid vehicles. EMEP/EEA air pollutant emission inventory guidebook 2016 (Leonidas Ntziachristos, Zissis Samaras, 2016), only publish factors for Euro IV technology. In order to have a complete data base I projected these factors to euro V, VI and VIc with the same values as IV. When new literature is available this will be updated.</li>
+</ul>
+<div id="vein-0-6-8-release-date-2019-02-21" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vein-0-6-8-release-date-2019-02-21" class="anchor"></a>vein 0.6.8 (Release date: 2019-02-21)</h2>
 <ul>
 <li>Fix #152. Adds emis_hot_td hot exhaust estimation with top-down approach.</li>
 <li>Improve documentation.</li>
 <li>Allow pro_month varies across each simple feature or row os Vehicle data.frame.</li>
 <li>Fix minor bugs.</li>
 </ul>
+</div>
 <div id="vein-0-6-7-release-date-2019-02-18" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vein-0-6-7-release-date-2019-02-18" class="anchor"></a>vein 0.6.7 (Release date: 2019-02-18)</h2>
@@ -926,7 +936,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#vein-0-6-8-release-date-2019-02-21">0.6.8</a></li>
+        <li><a href="#vein-0-6-9-release-date-2019-02-25">0.6.9</a></li>
         <li><a href="#vein-0-4-6-release-date-2018-09-06">0.4.6</a></li>
         <li><a href="#vein-0-3-10-release-date-2018-03-03">0.3.10</a></li>
         <li><a href="#vein-0-3-9-release-date-2018-03-01">0.3.9</a></li>

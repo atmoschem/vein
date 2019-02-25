@@ -11,7 +11,7 @@
 #' @param k Integer; multiplication factor. If its length is > 1, it must match the length of x
 #' @param bystreet Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
-#' @param message Logical;  message with average age and total numer of vehicles
+#' @param verbose Logical;  message with average age and total numer of vehicles
 #' @param namerows Any vector to be change row.names. For instance, name of
 #' regions or streets.
 #' @return dataframe of age distrubution of vehicles
@@ -31,10 +31,13 @@ age_moto <- function (x,
                       agemin = 1,
                       agemax = 50,
                       k = 1,
-                      bystreet = F,
+                      bystreet = FALSE,
                       net,
-                      message = TRUE,
+                      verbose = FALSE,
                       namerows){
+  #check agemax
+  if(agemax < 1) stop("Agemax should be bigger than 1")
+
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   } else if (bystreet == T){
@@ -56,10 +59,12 @@ age_moto <- function (x,
     for (i in seq_along(x)) {
       df[i,] <- d[[i]]
     }
-      if (agemin > 1) {
-      df <- cbind(as.data.frame(matrix(0,ncol=agemin-1, nrow=length(x))),
-                  df)
-      } else {df <- df}
+
+    df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
+                                                   nrow=length(x))),
+                              df))
+
+    names(df) <- paste(name,seq(1,agemax),sep="_")
 
 
     if(length(k) > 1){
@@ -68,9 +73,9 @@ age_moto <- function (x,
       df <- df*k
     }
 
-    if(message){
 
-      names(df) <- paste(name,seq(1,agemax),sep="_")
+    if(verbose){
+
       message(paste("Average age of",name, "is",
                     round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
                     sep=" "))
@@ -105,34 +110,35 @@ age_moto <- function (x,
     d[length(d)+1] <- d[length(d)]
     d <- d + (1 - sum(d))/length(d)
     df <- as.data.frame(as.matrix(x) %*%matrix(d,ncol=length(anos), nrow=1))
-    if (agemin > 1) {
-      df <- cbind(as.data.frame(matrix(0,ncol=agemin-1, nrow=length(x))),
-                  df)
-    } else {df <- df}
 
-    if(length(k) > 1){
-      df <- vein::matvect(df = df, x = k)
-    } else {
-      df <- df*k
-    }
-    if(length(k) > 1){
-      df <- vein::matvect(df = df, x = k)
-    } else {
-      df <- df*k
-    }
+    df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
+                                                   nrow=length(x))),
+                              df))
 
-
-    if(message){
     names(df) <- paste(name,seq(1,agemax),sep="_")
-    message(paste("Average age of",name, "is",
-                  round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
-                  sep=" "))
-    message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000, 2),
-                  "* 10^3 veh",
-                  sep=" ")
-    )
-    cat("\n")
+
+    if(length(k) > 1){
+      df <- vein::matvect(df = df, x = k)
+    } else {
+      df <- df*k
+    }
+    if(length(k) > 1){
+      df <- vein::matvect(df = df, x = k)
+    } else {
+      df <- df*k
+    }
+
+
+    if(verbose){
+      message(paste("Average age of",name, "is",
+                    round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
+                    sep=" "))
+      message(paste("Number of",name, "is",
+                    round(sum(df, na.rm = T)/1000, 2),
+                    "* 10^3 veh",
+                    sep=" ")
+      )
+      cat("\n")
     }
     if(!missing(namerows)) {
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
@@ -147,5 +153,5 @@ age_moto <- function (x,
       return(Vehicles(df))
     }
 
-    }
+  }
 }

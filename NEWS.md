@@ -2,7 +2,18 @@ NEWS
 ===========
 
 
-# vein 0.6.8 (Release date: 2019-02-21)
+# vein 0.6.9 (Release date: 2019-02-25)
+
+- Fix #157. age_ldv(1, agemax = 1) now returns 1 [veh]
+- Fix #158, new argument namerows to change row.names oin age* functions.
+- Change argument message to verbose in all age* functions default = FALSE.
+- Add emission factors of hybrid vehicles. EMEP/EEA air pollutant emission inventory
+guidebook 2016 (Leonidas Ntziachristos, Zissis Samaras, 2016), only publish
+factors for Euro IV technology. In order to have a complete data base I projected
+these factors to euro V, VI and VIc with the same values as IV. When new 
+literature is available this will be updated.
+
+## vein 0.6.8 (Release date: 2019-02-21)
 
 - Fix #152. Adds emis_hot_td hot exhaust estimation with top-down approach.
 - Improve documentation.

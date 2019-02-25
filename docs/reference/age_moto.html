@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
       </span>
     </div>
 
@@ -111,7 +111,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>age_moto</span>(<span class='no'>x</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"age"</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>17</span>, <span class='kw'>agemin</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bystreet</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='no'>net</span>, <span class='kw'>message</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>namerows</span>)</pre>
+  <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bystreet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>net</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>namerows</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,7 +154,7 @@
       <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></td>
     </tr>
     <tr>
-      <th>message</th>
+      <th>verbose</th>
       <td><p>Logical;  message with average age and total numer of vehicles</p></td>
     </tr>
     <tr>
@@ -175,8 +176,8 @@ regions or streets.</p></td>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>MOTO_E25_500</span>)
 <span class='no'>MOTO_E25_500</span> <span class='kw'>&lt;-</span> <span class='fu'>age_moto</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"M_E25_500"</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>MOTO_E25_500</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Average age of M_E25_500 is 17.12</span></div><div class='output co'>#&gt; <span class='message'>Number of M_E25_500 is 311.51 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; 
-#&gt; Average =  17.12</div><div class='output co'>#&gt; <span class='message'>Average age of M_E25_500 is 17.12</span></div><div class='output co'>#&gt; <span class='message'>Number of M_E25_500 is 311.51 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot all</span></div><div class='img'><img src='age_moto-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='age_moto-2.png' alt='' width='700' height='433' /></div></pre>
+}</div><div class='output co'>#&gt; 
+#&gt; Average =  17.12</div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot all</span></div><div class='img'><img src='age_moto-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='age_moto-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

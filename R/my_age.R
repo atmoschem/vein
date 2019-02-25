@@ -17,7 +17,7 @@
 #' characters of this vector must be the same of the 'data.frame' 'y'. When
 #' pro_street is not used, 'y' must be a numeric vector.
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
-#' @param message Logical; message with average age and total numer of vehicles.
+#' @param verbose Logical; message with average age and total numer of vehicles.
 #' @param namerows Any vector to be change row.names. For instance, name of
 #' regions or streets.
 #' @return dataframe of age distrubution of vehicles.
@@ -45,7 +45,7 @@ my_age <- function (x,
                     k = 1,
                     pro_street,
                     net,
-                    message = TRUE,
+                    verbose = TRUE,
                     namerows){
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
@@ -71,7 +71,7 @@ my_age <- function (x,
       df <- as.data.frame(as.matrix(x) %*%d)
       names(df) <- paste(name, seq(1, length(df)), sep="_")
     }
-    if(message){
+    if(verbose){
       if(!missing(pro_street)){
 
         if(length(k) > 1){
