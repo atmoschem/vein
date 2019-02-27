@@ -128,12 +128,17 @@ efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]")
 
 # Quick view
-pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2",
-"AS_urban", "AS_rural", "AS_highway",
+pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2")
+f <- sapply(1:length(pol), function(i){
+ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)
+})
+f
+# PM Characteristics
+pol <- c("AS_urban", "AS_rural", "AS_highway",
 "N_urban", "N_rural", "N_highway",
 "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway")
 f <- sapply(1:length(pol), function(i){
-ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)
+ef_ldv_speed("PC", "4S", "<=1400", "D", "PRE", pol[i], x = 10)(30)
 })
 f
 # PAH POP
