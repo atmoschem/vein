@@ -9,8 +9,9 @@
 #' @param g Gross weight of each category: "<=18", ">18", "<=15", ">15 & <=18", "<=7.5",
 #' ">7.5 & <=12", ">12 & <=14", ">14 & <=20", ">20 & <=26", ">26 & <=28", ">28 & <=32",
 #' ">32", ">20 & <=28", ">28 & <=34", ">34 & <=40", ">40 & <=50" or ">50 & <=60"
-#' @param eu Euro emission standard: "PRE", "I", "II", "III", "IV", "V", "II+CRDPF",
-#' "III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR".
+#' @param eu Euro emission standard: "PRE", "I", "II", "III", "IV", "V". Also "II+CRDPF",
+#' "III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR" for pollutants
+#' Number of particles and Active Surface.
 #' @param gr Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06
 #' @param l Load of the vehicle: 0.0, 0.5 or 1.0
 #' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
@@ -70,9 +71,9 @@
 #' "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
 #' "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 #'
-#' \emph{Active Surface (cm2/km)}: "AS_urban", "AS_rural", "AS_highway"
+#' \emph{Active Surface (cm2/km) (gr = 0 and l = 0.5)}: "AS_urban", "AS_rural", "AS_highway"
 #'
-#' \emph{Total Number of particles (N/km)}: "N_urban", "N_rural", "N_highway",
+#' \emph{Total Number of particles (N/km) (gr = 0 and l = 0.5)}: "N_urban", "N_rural", "N_highway",
 #' "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
 #'
 #' The available standards for Active Surface or number of particles are:
