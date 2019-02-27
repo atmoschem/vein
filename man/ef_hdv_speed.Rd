@@ -16,8 +16,9 @@ ef_hdv_speed(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
 ">7.5 & <=12", ">12 & <=14", ">14 & <=20", ">20 & <=26", ">26 & <=28", ">28 & <=32",
 ">32", ">20 & <=28", ">28 & <=34", ">34 & <=40", ">40 & <=50" or ">50 & <=60"}
 
-\item{eu}{Euro emission standard: "PRE", "I", "II", "III", "IV", "V", "II+CRDPF",
-"III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR".}
+\item{eu}{Euro emission standard: "PRE", "I", "II", "III", "IV", "V". Also "II+CRDPF",
+"III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR" for pollutants
+Number of particles and Active Surface.}
 
 \item{x}{Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 "Pb", Lead in fuel in ppm.}
@@ -92,9 +93,9 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 "ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
 "ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 
-\emph{Active Surface (cm2/km)}: "AS_urban", "AS_rural", "AS_highway"
+\emph{Active Surface (cm2/km) (gr = 0 and l = 0.5)}: "AS_urban", "AS_rural", "AS_highway"
 
-\emph{Total Number of particles (N/km)}: "N_urban", "N_rural", "N_highway",
+\emph{Total Number of particles (N/km) (gr = 0 and l = 0.5)}: "N_urban", "N_rural", "N_highway",
 "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
 
 The available standards for Active Surface or number of particles are:
