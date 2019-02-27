@@ -252,12 +252,17 @@ has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>)
 
 <span class='co'># Quick view</span>
-<span class='no'>pol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CO"</span>, <span class='st'>"NOx"</span>, <span class='st'>"HC"</span>, <span class='st'>"NMHC"</span>, <span class='st'>"CH4"</span>, <span class='st'>"FC"</span>, <span class='st'>"PM"</span>, <span class='st'>"CO2"</span>, <span class='st'>"SO2"</span>,
-<span class='st'>"AS_urban"</span>, <span class='st'>"AS_rural"</span>, <span class='st'>"AS_highway"</span>,
+<span class='no'>pol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CO"</span>, <span class='st'>"NOx"</span>, <span class='st'>"HC"</span>, <span class='st'>"NMHC"</span>, <span class='st'>"CH4"</span>, <span class='st'>"FC"</span>, <span class='st'>"PM"</span>, <span class='st'>"CO2"</span>, <span class='st'>"SO2"</span>)
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>pol</span>), <span class='kw'>function</span>(<span class='no'>i</span>){
+<span class='fu'>ef_ldv_speed</span>(<span class='st'>"PC"</span>, <span class='st'>"4S"</span>, <span class='st'>"&lt;=1400"</span>, <span class='st'>"G"</span>, <span class='st'>"PRE"</span>, <span class='no'>pol</span>[<span class='no'>i</span>], <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>10</span>)(<span class='fl'>30</span>)
+})
+<span class='no'>f</span>
+<span class='co'># PM Characteristics</span>
+<span class='no'>pol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AS_urban"</span>, <span class='st'>"AS_rural"</span>, <span class='st'>"AS_highway"</span>,
 <span class='st'>"N_urban"</span>, <span class='st'>"N_rural"</span>, <span class='st'>"N_highway"</span>,
 <span class='st'>"N_50nm_urban"</span>, <span class='st'>"N_50_100nm_rural"</span>, <span class='st'>"N_100_1000nm_highway"</span>)
 <span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>pol</span>), <span class='kw'>function</span>(<span class='no'>i</span>){
-<span class='fu'>ef_ldv_speed</span>(<span class='st'>"PC"</span>, <span class='st'>"4S"</span>, <span class='st'>"&lt;=1400"</span>, <span class='st'>"G"</span>, <span class='st'>"PRE"</span>, <span class='no'>pol</span>[<span class='no'>i</span>], <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>10</span>)(<span class='fl'>30</span>)
+<span class='fu'>ef_ldv_speed</span>(<span class='st'>"PC"</span>, <span class='st'>"4S"</span>, <span class='st'>"&lt;=1400"</span>, <span class='st'>"D"</span>, <span class='st'>"PRE"</span>, <span class='no'>pol</span>[<span class='no'>i</span>], <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>10</span>)(<span class='fl'>30</span>)
 })
 <span class='no'>f</span>
 <span class='co'># PAH POP</span>
