@@ -200,35 +200,35 @@ guidebook 2016 (Ntziachristos and Samaras, 2016) only for euro IV. When new lite
 is available, I will update these factors.</p>
 <p><strong>Pollutants (g/km)</strong>: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb", "FC".</p>
-<p><strong>Black CArbon and Organic Matter (g/km)</strong>: "BC", "OM"</p>
+<p><strong>Black Carbon and Organic Matter (g/km)</strong>: "BC", "OM"</p>
 <p><strong>PAH and POP (g/km)</strong>: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
 "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
 "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
-"benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
+"benzo(a)anthracene", "acenaphthylene", "acenapthene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
 "dibenzo(ah)anthracene".</p>
 <p><strong>Dioxins and furans(g equivalent toxicity / km)</strong>: "PCDD", "PCDF" and "PCB".</p>
 <p><strong>Metals (g/km)</strong>: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn".</p>
 <p><strong>NMHC (g/km)</strong>:</p>
 <p><em>ALKANES (g/km)</em>: "ethane", "propane", "butane", "isobutane", "pentane",
-"isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
-"TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
-"alcanes_C10_C12", "alkanes_C13".</p>
-<p><em>CYCLOALKANES (g/km)</em>: "cycloalcanes".</p>
-<p><em>ALKENES (g/km)</em>: "ethylene", "propylene", "propadiene", "ONE_butene",
-"isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
-"ONE_hexene", "dimethylhexene".</p>
-<p><em>ALKYNES (g/km)</em>:"ONE_butine", "propine", "acetylene".</p>
+"isopentane", "hexane", "heptane", "octane", "2-methylhexane", "nonane",
+"2-methylheptane", "3-methylhexane", "decane", "3-methylheptane",
+"alkanes_C10_C12", "alkanes_C13".</p>
+<p><em>CYCLOALKANES (g/km)</em>: "cycloalkanes".</p>
+<p><em>ALKENES (g/km)</em>: "ethylene", "propylene", "propadiene", "1-butene",
+"isobutene", "2-butene", "1,3-butadiene", "1-pentene", "2-pentene",
+"1-hexene", "dimethylhexene".</p>
+<p><em>ALKYNES (g/km)</em>:"1-butine", "propine", "acetylene".</p>
 <p><em>ALDEHYDES (g/km)</em>: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
 "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
-"propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
-"o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".</p>
+"propionaldehyde", "hexanal", "i-valeraldehyde", "valeraldehyde",
+"o-tolualdehyde", "m-tolualdehyde", "p-tolualdehyde".</p>
 <p><em>KETONES (g/km)</em>: "acetone", "methylethlketone".</p>
-<p><em>AROMATICS (g/km)</em>: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
-"ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
-"ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".</p>
+<p><em>AROMATICS (g/km)</em>: "toluene", "ethylbenzene", "m,p-xylene", "o-xylene",
+"1,2,3-trimethylbenzene", "1,2,4-trimethylbenzene",
+"1,3,5-trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".</p>
 <p><em>Active Surface (cm2/km)</em>: "AS_urban", "AS_rural", "AS_highway"</p>
 <p><em>Total Number of particles (N/km)</em>: "N_urban", "N_rural", "N_highway",
 "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".</p>
@@ -250,7 +250,7 @@ has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.</p>
 <span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_speed</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>,
 <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
 <span class='no'>efs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'>ef1</span>(<span class='fl'>1</span>:<span class='fl'>150</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>150</span>), <span class='no'>efs</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"speed[km/h]"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
 
 <span class='co'># Quick view</span>
 <span class='no'>pol</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CO"</span>, <span class='st'>"NOx"</span>, <span class='st'>"HC"</span>, <span class='st'>"NMHC"</span>, <span class='st'>"CH4"</span>, <span class='st'>"FC"</span>, <span class='st'>"PM"</span>, <span class='st'>"CO2"</span>, <span class='st'>"SO2"</span>)
