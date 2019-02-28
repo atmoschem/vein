@@ -37,11 +37,11 @@ ef_ive(description = "Auto/Sml Truck", fuel = "Petrol",
 "4-Cycle"
 #' \tabular{cccc}{
   "VOC_gkm" \tab "CO_gkm" \tab "NOx_gkm" \tab "PM_gkm" \cr
-  "Pb_gkm" \tab "SO2_gkm" \tab "NH3_gkm" \tab "1,3_butadiene_gkm" \cr
+  "Pb_gkm" \tab "SO2_gkm" \tab "NH3_gkm" \tab "1,3-butadiene_gkm" \cr
   "formaldehyde_gkm" \tab "acetaldehyde_gkm" \tab "benzene_gkm" \tab "EVAP_gkm" \cr
   "CO2_gkm" \tab "N20_gkm" \tab "CH4_gkm" \tab "VOC_gstart" \cr
   "CO_gstart" \tab "NOx_gstart" \tab "PM_gstart" \tab "Pb_gstart" \cr
-  "SO2_gstart" \tab "NH3_gstart" \tab "1,3_butadiene_gstart" \tab "formaldehyde_gstart" \cr
+  "SO2_gstart" \tab "NH3_gstart" \tab "1,3-butadiene_gstart" \tab "formaldehyde_gstart" \cr
   "acetaldehyde_gstart" \tab "benzene_gstart" \tab "EVAP_gstart" \tab "CO2_gstart" \cr
   "N20_gstart" \tab "CH4_gstart" \tab   \tab  \cr
 }}
