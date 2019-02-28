@@ -68,14 +68,14 @@ is available, I will update these factors.
 \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb", "FC".
 
-\strong{Black CArbon and Organic Matter (g/km)}: "BC", "OM"
+\strong{Black Carbon and Organic Matter (g/km)}: "BC", "OM"
 
 \strong{PAH and POP (g/km)}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
 "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
 "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
-"benzo(a)anthracene", "acenaphthylene", "acenapthene", "fluorene",
+"benzo(a)anthracene", "acenaphthylene", "acenapthene",
 "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
 "dibenzo(ah)anthracene".
 
@@ -86,28 +86,28 @@ is available, I will update these factors.
 \strong{NMHC (g/km)}:
 
 \emph{ALKANES (g/km)}: "ethane", "propane", "butane", "isobutane", "pentane",
-"isopentane", "hexane", "heptane", "octane", "TWO_methylhexane", "nonane",
-"TWO_methylheptane", "THREE_methylhexane", "decane", "THREE_methylheptane",
-"alcanes_C10_C12", "alkanes_C13".
+"isopentane", "hexane", "heptane", "octane", "2-methylhexane", "nonane",
+"2-methylheptane", "3-methylhexane", "decane", "3-methylheptane",
+"alkanes_C10_C12", "alkanes_C13".
 
-\emph{CYCLOALKANES (g/km)}: "cycloalcanes".
+\emph{CYCLOALKANES (g/km)}: "cycloalkanes".
 
-\emph{ALKENES (g/km)}: "ethylene", "propylene", "propadiene", "ONE_butene",
-"isobutene", "TWO_butene", "ONE_3_butadiene", "ONE_pentene", "TWO_pentene",
-"ONE_hexene", "dimethylhexene".
+\emph{ALKENES (g/km)}: "ethylene", "propylene", "propadiene", "1-butene",
+"isobutene", "2-butene", "1,3-butadiene", "1-pentene", "2-pentene",
+"1-hexene", "dimethylhexene".
 
-\emph{ALKYNES (g/km)}:"ONE_butine", "propine", "acetylene".
+\emph{ALKYNES (g/km)}:"1-butine", "propine", "acetylene".
 
 \emph{ALDEHYDES (g/km)}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
 "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
-"propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
-"o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
+"propionaldehyde", "hexanal", "i-valeraldehyde", "valeraldehyde",
+"o-tolualdehyde", "m-tolualdehyde", "p-tolualdehyde".
 
 \emph{KETONES (g/km)}: "acetone", "methylethlketone".
 
-\emph{AROMATICS (g/km)}: "toluene", "ethylbenzene", "m_p_xylene", "o_xylene",
-"ONE_2_3_trimethylbenzene", "ONE_2_4_trimethylbenzene",
-"ONE_3_5_trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
+\emph{AROMATICS (g/km)}: "toluene", "ethylbenzene", "m,p-xylene", "o-xylene",
+"1,2,3-trimethylbenzene", "1,2,4-trimethylbenzene",
+"1,3,5-trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 
 \emph{Active Surface (cm2/km)}: "AS_urban", "AS_rural", "AS_highway"
 
@@ -127,7 +127,7 @@ V <- 0:150
 ef1 <- ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 p = "CO")
 efs <- EmissionFactors(ef1(1:150))
-plot(Speed(1:150), efs, xlab = "speed[km/h]")
+plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16, col = "blue")
 
 # Quick view
 pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2")
