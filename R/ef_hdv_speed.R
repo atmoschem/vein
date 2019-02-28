@@ -33,6 +33,8 @@
 #' \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 #' "Pb".
 #'
+#' \strong{Black CArbon and Organic Matter (g/km)}: "BC", "OM"
+#'
 #' \strong{PAH and POP (g/km)}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
 #' "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
 #' "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
