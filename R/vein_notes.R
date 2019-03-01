@@ -8,17 +8,42 @@
 #' @param title Character; Title of this file. For instance: "Vehicular Emissions
 #' Inventory of Region XX, Base year XX"
 #' @param yourname Character; Name of the inventor compiler.
+#' @param approach Character; vector of notes.
+#' @param traffic Character; vector of notes.
+#' @param composition Character; vector of notes.
+#' @param ef Character; vector of notes.
+#' @param cold_start Character; vector of notes.
+#' @param evaporative Character; vector of notes.
+#' @param standards Character; vector of notes.
+#' @param mileage Character; vector of notes.
 #' @param notes Character; vector of notes.
-#' @return A text file.
+#' @return Writes a text file.
 #' @importFrom utils menu object.size packageVersion
 #' @export
 #' @examples {
-#' a <- tempfile()
-#' vein_notes(a)
+#' (a <- tempfile())
+#' vein_notes(a,
+#' approach = "Top Down",
+#' traffic = "traffic",
+#' composition = "composition",
+#' ef = "ef",
+#' cold_start = "included",
+#' evaporative = "included",
+#' standards = "standards",
+#' mileage = "mileage")
+#' readLines(paste0(a, '.txt'))
 #' }
 vein_notes <- function (file = "README",
                         title,
                         yourname,
+                        approach = "Top Down",
+                        traffic,
+                        composition,
+                        ef,
+                        cold_start,
+                        evaporative,
+                        standards,
+                        mileage,
                         notes){
   if(!missing(file)){
     file <- paste0(file,".txt")
@@ -40,17 +65,15 @@ vein_notes <- function (file = "README",
   if(missing(yourname)){
     yourname <- Sys.info()[["user"]]
   }
-  if(missing(notes)){
-    notes <- c("This is a note about this inventory",
-               "This is another note about this inventory")
-  }
+
   sink(file)
+  cat("========================================\n") # 40
   cat(paste0(title, "\n"))
-  cat(rep("=", 40))
+  cat("========================================\n") # 40
   cat(paste0("\nDirectory: ", getwd(), "\n"))
   cat(paste0("\nLocal Time: ", Sys.time(), "\n"))
   cat(paste0("Inventory compiler: ", yourname, "\n"))
-  cat(rep("=", 40))
+  cat("========================================\n") # 40
   cat(paste0("\nsysname = ", Sys.info()["sysname"], "\n"))
   cat(paste0("release = ", Sys.info()["release"], "\n"))
   cat(paste0("version = ", Sys.info()["version"], "\n"))
@@ -62,11 +85,65 @@ vein_notes <- function (file = "README",
   cat(paste0("Memory used = ",
              format(sum(sapply(environment(), object.size)),
                     units = " Mb"), "Mb \n"))
-  cat(rep("=", 40))
+  cat("========================================\n") # 40
   cat("\n")
   cat(paste0("VEIN version = ", packageVersion("vein"), "\n"))
-  for(i in 1:length(notes)){
-    cat(paste0(notes[i], "\n"))
+  cat("========================================\n") # 40
+  cat("\n")
+  cat("Traffic:\n")
+  for(i in 1:length(traffic)){
+    cat(paste0(traffic[i], "\n"))
+  }
+  cat("\n")
+
+  cat("Approach:\n")
+  for(i in 1:length(approach)){
+    cat(paste0(approach[i], "\n"))
+  }
+  cat("\n")
+
+
+  cat("Vehicular composition:\n")
+  for(i in 1:length(composition)){
+    cat(paste0(composition[i], "\n"))
+  }
+  cat("\n")
+
+  cat("Emission Factors:\n")
+  for(i in 1:length(ef)){
+    cat(paste0(ef[i], "\n"))
+  }
+  cat("\n")
+
+  cat("Cold starts:\n")
+  for(i in 1:length(cold_start)){
+    cat(paste0(cold_start[i], "\n"))
+  }
+  cat("\n")
+
+  cat("Evaporative:\n")
+  for(i in 1:length(evaporative)){
+    cat(paste0(evaporative[i], "\n"))
+  }
+  cat("\n")
+
+    cat("Traffic standards:\n")
+  for(i in 1:length(standards)){
+    cat(paste0(standards[i], "\n"))
+  }
+  cat("\n")
+  cat("Traffic mileage:\n")
+
+  for(i in 1:length(mileage)){
+    cat(paste0(mileage[i], "\n"))
+  }
+  if(!missing(notes)){
+    cat("\n")
+    cat("Notes:\n")
+
+    for(i in 1:length(notes)){
+      cat(paste0(notes[i], "\n"))
+    }
   }
   cat("\n\n\nThanks for using VEIN\n")
   sink()

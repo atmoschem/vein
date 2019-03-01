@@ -4,7 +4,9 @@
 \alias{vein_notes}
 \title{vein_notes for writting technical notes about the inventory}
 \usage{
-vein_notes(file = "README", title, yourname, notes)
+vein_notes(file = "README", title, yourname, approach = "Top Down",
+  traffic, composition, ef, cold_start, evaporative, standards, mileage,
+  notes)
 }
 \arguments{
 \item{file}{Character; Name of the file. The function will generate a file
@@ -15,10 +17,26 @@ Inventory of Region XX, Base year XX"}
 
 \item{yourname}{Character; Name of the inventor compiler.}
 
+\item{approach}{Character; vector of notes.}
+
+\item{traffic}{Character; vector of notes.}
+
+\item{composition}{Character; vector of notes.}
+
+\item{ef}{Character; vector of notes.}
+
+\item{cold_start}{Character; vector of notes.}
+
+\item{evaporative}{Character; vector of notes.}
+
+\item{standards}{Character; vector of notes.}
+
+\item{mileage}{Character; vector of notes.}
+
 \item{notes}{Character; vector of notes.}
 }
 \value{
-A text file.
+Writes a text file.
 }
 \description{
 \code{\link{vein_notes}} creates aa text file '.txt' for
@@ -26,7 +44,16 @@ writting technical notes about this emissions inventory
 }
 \examples{
 {
-a <- tempfile()
-vein_notes(a)
+(a <- tempfile())
+vein_notes(a,
+approach = "Top Down",
+traffic = "traffic",
+composition = "composition",
+ef = "ef",
+cold_start = "included",
+evaporative = "included",
+standards = "standards",
+mileage = "mileage")
+readLines(paste0(a, '.txt'))
 }
 }
