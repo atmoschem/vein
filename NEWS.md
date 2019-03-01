@@ -2,7 +2,11 @@ NEWS
 ===========
 
 
-# vein 0.6.9 (Release date: 2019-02-25)
+# vein 0.6.10 (Release date: 2019-03-01)
+
+- Enhances vein_notes.
+
+## vein 0.6.9 (Release date: 2019-02-25)
 
 - Fix #157. age_ldv(1, agemax = 1) now returns 1 [veh]
 - Fix #158, new argument namerows to change row.names oin age* functions.

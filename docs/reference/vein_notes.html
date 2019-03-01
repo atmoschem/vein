@@ -66,7 +66,7 @@ writting technical notes about this emissions inventory" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.10</span>
       </span>
     </div>
 
@@ -112,7 +112,9 @@ writting technical notes about this emissions inventory</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>vein_notes</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"README"</span>, <span class='no'>title</span>, <span class='no'>yourname</span>, <span class='no'>notes</span>)</pre>
+    <pre class="usage"><span class='fu'>vein_notes</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"README"</span>, <span class='no'>title</span>, <span class='no'>yourname</span>, <span class='kw'>approach</span> <span class='kw'>=</span> <span class='st'>"Top Down"</span>,
+  <span class='no'>traffic</span>, <span class='no'>composition</span>, <span class='no'>ef</span>, <span class='no'>cold_start</span>, <span class='no'>evaporative</span>, <span class='no'>standards</span>, <span class='no'>mileage</span>,
+  <span class='no'>notes</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,6 +134,38 @@ Inventory of Region XX, Base year XX"</p></td>
       <td><p>Character; Name of the inventor compiler.</p></td>
     </tr>
     <tr>
+      <th>approach</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
+      <th>traffic</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
+      <th>composition</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
+      <th>ef</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
+      <th>cold_start</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
+      <th>evaporative</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
+      <th>standards</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
+      <th>mileage</th>
+      <td><p>Character; vector of notes.</p></td>
+    </tr>
+    <tr>
       <th>notes</th>
       <td><p>Character; vector of notes.</p></td>
     </tr>
@@ -139,14 +173,73 @@ Inventory of Region XX, Base year XX"</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A text file.</p>
+    <p>Writes a text file.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>()
-<span class='fu'>vein_notes</span>(<span class='no'>a</span>)
-}</div></pre>
+(<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>())
+<span class='fu'>vein_notes</span>(<span class='no'>a</span>,
+<span class='kw'>approach</span> <span class='kw'>=</span> <span class='st'>"Top Down"</span>,
+<span class='kw'>traffic</span> <span class='kw'>=</span> <span class='st'>"traffic"</span>,
+<span class='kw'>composition</span> <span class='kw'>=</span> <span class='st'>"composition"</span>,
+<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"ef"</span>,
+<span class='kw'>cold_start</span> <span class='kw'>=</span> <span class='st'>"included"</span>,
+<span class='kw'>evaporative</span> <span class='kw'>=</span> <span class='st'>"included"</span>,
+<span class='kw'>standards</span> <span class='kw'>=</span> <span class='st'>"standards"</span>,
+<span class='kw'>mileage</span> <span class='kw'>=</span> <span class='st'>"mileage"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/readLines'>readLines</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>a</span>, <span class='st'>'.txt'</span>))
+}</div><div class='output co'>#&gt;  [1] "========================================"                
+#&gt;  [2] "Vehicular Emissions Inventory on REGIONXX BASE YEAR XXXX"
+#&gt;  [3] "========================================"                
+#&gt;  [4] ""                                                        
+#&gt;  [5] "Directory: /home/sergio/Documents/vein/docs/reference"   
+#&gt;  [6] ""                                                        
+#&gt;  [7] "Local Time: 2019-03-01 14:39:34"                         
+#&gt;  [8] "Inventory compiler: sergio"                              
+#&gt;  [9] "========================================"                
+#&gt; [10] ""                                                        
+#&gt; [11] "sysname = Linux"                                         
+#&gt; [12] "release = 4.15.0-45-generic"                             
+#&gt; [13] "version = #48-Ubuntu SMP Tue Jan 29 16:28:13 UTC 2019"   
+#&gt; [14] "nodename = sergio-Inspiron-5548"                         
+#&gt; [15] "machine = x86_64"                                        
+#&gt; [16] "user = sergio"                                           
+#&gt; [17] "R version = 3.5.2"                                       
+#&gt; [18] "nickname = Eggshell Igloo"                               
+#&gt; [19] "Memory used = 1424Mb "                                   
+#&gt; [20] "========================================"                
+#&gt; [21] ""                                                        
+#&gt; [22] "VEIN version = 0.6.10"                                   
+#&gt; [23] "========================================"                
+#&gt; [24] ""                                                        
+#&gt; [25] "Traffic:"                                                
+#&gt; [26] "traffic"                                                 
+#&gt; [27] ""                                                        
+#&gt; [28] "Approach:"                                               
+#&gt; [29] "Top Down"                                                
+#&gt; [30] ""                                                        
+#&gt; [31] "Vehicular composition:"                                  
+#&gt; [32] "composition"                                             
+#&gt; [33] ""                                                        
+#&gt; [34] "Emission Factors:"                                       
+#&gt; [35] "ef"                                                      
+#&gt; [36] ""                                                        
+#&gt; [37] "Cold starts:"                                            
+#&gt; [38] "included"                                                
+#&gt; [39] ""                                                        
+#&gt; [40] "Evaporative:"                                            
+#&gt; [41] "included"                                                
+#&gt; [42] ""                                                        
+#&gt; [43] "Traffic standards:"                                      
+#&gt; [44] "standards"                                               
+#&gt; [45] ""                                                        
+#&gt; [46] "Traffic mileage:"                                        
+#&gt; [47] "mileage"                                                 
+#&gt; [48] ""                                                        
+#&gt; [49] ""                                                        
+#&gt; [50] ""                                                        
+#&gt; [51] "Thanks for using VEIN"                                   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
