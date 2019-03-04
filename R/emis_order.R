@@ -44,10 +44,8 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
                         utc, verbose = TRUE){
   if(verbose){
     cat("Class :", class(EMISSION), '\n')
-    cat(paste0("Dimensions :\n"))
+    cat("Dimensions :\n")
     cat(dim(EMISSION))
-    cat("\n\n")
-
   }
 
   seg <- 1:24
@@ -57,6 +55,9 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
   sex <- 97:120
   sab <- 121:144
   dom <- 145:168
+
+  index <- vector(mode = "numeric",length = hours)
+
   if(class(start)[1] == "Date"){
     if(verbose)
       cat("\nusing date:", paste(start),"\n")
@@ -115,7 +116,7 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
     return(NEW)
   } else if(class(EMISSION)[1] %in% c("GriddedEmissionsArray", "array")){
     # this lines rearange the GriddedEmissionsArray output to be used in wrf_put
-    NEW   <- array(NA, dim = c(dim(EMISSION)[1],dim(EMISSION)[2], hours))
+    NEW   <- array(NA, dim = c(dim(EMISSION)[1],dim(EMISSION)[2],hours))
     NEW   <- EMISSION[, , c(index)]
     class(NEW) <- "GriddedEmissionsArray"
     return(NEW)
