@@ -274,12 +274,12 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                      ef_ldv$FUEL == f &
                      ef_ldv$EURO == eu &
                      ef_ldv$POLLUTANT == p, ]
-      k <- lala(eu)
+      k2 <- lala(eu)
 
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
                    ", e = ", df$e, ", f = ", df$f, "\n"))
-        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "\n"))
+        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "*", k2, "\n"))
       }
       if(p %in% c("SO2","Pb")){
         f1 <- function(V){
@@ -311,24 +311,24 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                          ef_ldv$FUEL == f &
                          ef_ldv$EURO == eu[i] &
                          ef_ldv$POLLUTANT == p, ]
-          k <- lala(eu[i])
+          k2 <- lala(eu[i])
 
           if(p %in% c("SO2","Pb")){
             f1 <- function(V){
               a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
               V <- ifelse(V < df$MINV, df$MINV,
                           ifelse(V > df$MAXV, df$MAXV, V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                      0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) )
             }
           } else {
             f1 <- function(V){
               a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
               V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                      0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
             }
           }
           f1(speed)
@@ -345,24 +345,24 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                          ef_ldv$FUEL == f &
                          ef_ldv$EURO == eu[i] &
                          ef_ldv$POLLUTANT == p, ]
-          k <- lala(eu[i])
+          k2 <- lala(eu[i])
 
           if(p %in% c("SO2","Pb")){
             f1 <- function(V){
               a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
               V <- ifelse(V < df$MINV, df$MINV,
                           ifelse(V > df$MAXV, df$MAXV, V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                      0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) )
             }
           } else {
             f1 <- function(V){
               a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
               V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                      0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
             }
           }
           f1
@@ -382,24 +382,24 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                        ef_ldv$FUEL == f &
                        ef_ldv$EURO == eu[j,i][[1]] &
                        ef_ldv$POLLUTANT == p, ]
-        k <- lala(eu[j,i][[1]])
+        k2 <- lala(eu[j,i][[1]])
 
         if(p %in% c("SO2","Pb")){
           f1 <- function(V){
             a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
             V <- ifelse(V < df$MINV, df$MINV,
                         ifelse(V > df$MAXV, df$MAXV, V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                    0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) )
+                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) )
           }
         } else {
           f1 <- function(V){
             a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
             V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                    0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
           }
         }
         f1(speed)
