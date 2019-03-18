@@ -2,7 +2,12 @@ NEWS
 ===========
 
 
-# vein 0.6.10 (Release date: 2019-03-01)
+# vein 0.6.11 (Release date: 2019-03-18)
+
+- Fix ef_*_scale. 
+- The problem was solved adding k2 to ef*speed
+
+## vein 0.6.10 (Release date: 2019-03-01)
 
 - Enhances vein_notes.
 
