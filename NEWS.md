@@ -2,7 +2,12 @@ NEWS
 ===========
 
 
-# vein 0.6.11 (Release date: 2019-03-18)
+# vein 0.6.12 (Release date: 2019-03-25)
+
+- Fix #168 update ef cetesb 2017
+
+
+## vein 0.6.11 (Release date: 2019-03-18)
 
 - Fix ef_*_scale. 
 - The problem was solved adding k2 to ef*speed

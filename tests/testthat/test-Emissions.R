@@ -13,10 +13,10 @@ pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 lef <- EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G")))
 
 test_that("Emissions works", {
-  expect_equal(Emissions(emis(veh = pc1[1:5, ],
+  expect_equal(emis(veh = pc1[1:5, ],
                                lkm = net$lkm[1:5],
                                ef = lef,
                                profile = pc_profile[1, ],
-                               array = T)[,,1,1])[1,1],
-               1.039899 + 2.63e-07)
+                               array = T)[1,1,1,1],
+               0.4850966 + 3.63e-08)
 })

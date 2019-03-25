@@ -18,5 +18,5 @@ test_that("EmissionsArray works", {
                                ef = lef,
                                profile = pc_profile[1, ],
                                array = T)[1,1,1,1]),
-               1.039899 + 2.63e-07)
+               0.4850966 + 3.63e-08)
 })
