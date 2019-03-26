@@ -157,7 +157,7 @@ a factor by euro standard.
 - Fix minor bugs.
 - Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
-future steps:
+Future steps:
 
 - Enhance [inventory](https://atmoschem.github.io/vein/reference/inventory.html). The idea is to 
 configurate a whole emissions inventory for emission factors of CETESB, COPERT.
