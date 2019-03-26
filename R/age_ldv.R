@@ -8,7 +8,7 @@
 #' @param b Numeric; parameter of survival equation
 #' @param agemin Integer; age of newest vehicles for that category
 #' @param agemax Integer; age of oldest vehicles for that category
-#' @param k Integer; multiplication factor. If its length is > 1, it must match the length of x
+#' @param k Numeric; multiplication factor. If its length is > 1, it must match the length of x
 #' @param bystreet Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param verbose Logical;  message with average age and total numer of vehicles
@@ -17,6 +17,8 @@
 #' @return dataframe of age distrubution of vehicles
 #' @importFrom sf st_sf st_as_sf
 #' @export
+#' @note It consists in a Gompertz equation with default parameters from
+#' 1 national emissions inventory for green housegases in Brazil, MCT 2006
 #' @examples {
 #' data(net)
 #' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")

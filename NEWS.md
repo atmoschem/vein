@@ -4,7 +4,11 @@ NEWS
 
 # vein 0.6.12 (Release date: 2019-03-25)
 
-- Fix #168 update ef cetesb 2017
+- Fix #168 update ef cetesb 2017.
+- fix #169. Adds function age, which incorporated survival functions:
+Gompertz, Weibull, logistic, including literature references. This function aims
+to replace age_ldv, age_moto and age_hdv.
+- Improves documentation age*
 
 
 ## vein 0.6.11 (Release date: 2019-03-18)
