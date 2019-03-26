@@ -49,10 +49,12 @@ Huo, H., & Wang, M. (2012). Modeling future vehicle sales and stock in China.
 Energy Policy, 43, 17–29. doi:10.1016/j.enpol.2011.09.063
 Huo, Hong, et al. "Vehicular air pollutant emissions in China: evaluation of past control
 policies and future perspectives." Mitigation and Adaptation Strategies for Global Change 20.5 (2015): 719-733.
+
 \strong{double_logistic: 1/(1 + exp(a*(time + b))) + 1/(1 + exp(a*(time - b)))},
 defaults PC: b = 21, a = 0.19, LCV: b = 15.3, a = 0.17, HGV: b = 17, a = 0.1, BUS: b = 19.1, a = 0.16
 MCT (2006). de Gases de Efeito Estufa-Emissoes de Gases de
 Efeito Estufa por Fontes Moveis, no Setor Energético. Ministerio da Ciencia e Tecnologia.
+
 \strong{weibull: exp(-(time/a)^b)},
 defaults PC: b = 4.79, a = 14.46, Taxi: b = +inf, a = 5,
 Government and business: b = 5.33, a = 13.11
@@ -61,6 +63,7 @@ Bus: b = +inf, a = 9, non-transit bus: b = +inf, a = 5.5
 Heavy HGV: b = 5.58, a = 12.8, Medium HGV: b = 5.58, a = 10.09, Light HGV: b = 5.58, a = 8.02
 Hao, H., Wang, H., Ouyang, M., & Cheng, F. (2011). Vehicle survival patterns in China.
 Science China Technological Sciences, 54(3), 625-629.
+
 \strong{weibull2: exp(-((time + a)/b)^b )},
 defaults b = 11, a = 26
 Zachariadis, T., Samaras, Z., Zierock, K. H. (1995). Dynamic modeling of vehicle

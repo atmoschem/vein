@@ -73,9 +73,21 @@ Emissions <- function(x, ...) {
 #' @method print Emissions
 #' @export
 print.Emissions <- function(x, ...) {
-  cat("Result for Emissions \n")
-  NextMethod("print", x)
+  if(nrow(x) < 10 & ncol(x) < 10){
+    NextMethod("print", x, right = TRUE)
+  } else if (nrow(x) > 10 & ncol(x) < 10){
+    print.data.frame(x[1:5, ], right = TRUE)
+    cat(paste0("... and more ", nrow(x) - 5, " rows\n"))
+  } else if(nrow(x) < 10 & ncol(x) > 10){
+    print.data.frame(x[, 1:5], right = TRUE)
+    cat(paste0("... and more ", ncol(x) - 5, " columns\n"))
+  } else {
+    print.data.frame(x[1:5, 1:5], right = TRUE)
+    cat(paste0("... and more ", nrow(x) - 5, " rows\n"))
+    cat(paste0("... and more ", ncol(x) - 5, " columns\n"))
+  }
 }
+
 
 #' @rdname Emissions
 #' @method summary Emissions

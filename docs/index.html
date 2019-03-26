@@ -14,7 +14,7 @@
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
     in maps and databases. More details in Ibarra-Espinosa et al (2018) &lt;doi:10.5194/gmd-11-2209-2018&gt;.
-    Before ussing VEIN you need to know the vehicular composition of your study area, in other words,
+    Before using VEIN you need to know the vehicular composition of your study area, in other words,
     the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
     start with the function inventory to create a structure of directories and template scripts.">
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png">
@@ -163,8 +163,8 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(remotes) 
-<span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(devtools) 
+<span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vein)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/demo">demo</a></span>(VEIN)</code></pre></div>
 <p>or</p>
@@ -173,24 +173,40 @@
 <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/demo">demo</a></span>(VEIN)</code></pre></div>
 </div>
 </div>
-<div id="what-is-new-0-6-0" class="section level2">
+<div id="what-is-new-0-7-0" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-is-new-0-6-0" class="anchor"></a>What is new? 0.6.0</h2>
+<a href="#what-is-new-0-7-0" class="anchor"></a>What is new? 0.7.0</h2>
 <ul>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/grid_emis.html">grid_emis</a> To allocate gridded emissions to streets by grid cell.</li>
-<li>
-<a href="https://atmoschem.github.io/vein/reference/matvect.html">matvect</a> To multiply matrices with vectors.</li>
+<li>Re-design of ef_ldv_speed and ef_hdv_speed. Adds argument speed into ef_ldv_speed in order to return data.frames insted of list of functions. For instance, speed = Speed(0:120). Also, it euro can be with length bigger than one, and also can be data.frames. This is useful, when you have regions with different emission standards.</li>
 <li>Add Active Surface (cm2/km): “AS_urban”, “AS_rural”, “AS_highway”.</li>
 <li>Add number of particles (N/km): “N_urban”, “N_rural”, “N_highway”, “N_50nm_urban”, “N_50_100nm_rural”, “N_100_1000nm_highway”.</li>
+<li>
+<a href="https://atmoschem.github.io/vein/reference/split_emis.html">split_emis</a> Split street emissions based on a grid or polygon. For instance, let’s say that you need street emissiosn at 10 m. You could split your street emissions with this.</li>
+<li>Fix some EF metals in ef_ldv_speed.</li>
+<li>Fix milage equation of fkm$KM_LDV_GNV. Fix #137.</li>
+<li>Adds <a href="https://atmoschem.github.io/vein/reference/cold_mileage.html">cold_mileage</a>
+</li>
+<li>Adds <a href="https://atmoschem.github.io/vein/reference/emis_cold_td.html">emis_cold_td</a>
+</li>
+<li>Adds <a href="https://atmoschem.github.io/vein/reference/emis_hot_td.html">emis_hot_td</a>
+</li>
+<li>Adds <a href="https://atmoschem.github.io/vein/reference/emis_evap.html">emis_evap</a>
+</li>
+<li>Adds pro_month in emis_hot_td and emis_cold_td, to account for monthly variation.</li>
+<li>Add argumnent namerows in age*functions to change row.names.</li>
+<li>Add argument fcorr to account for the effect of fuel composition by euro standard. This result in a factor by euro standard.</li>
+<li>Adds <a href="https://atmoschem.github.io/vein/reference/age.html">age</a> with survival function of Gompertz, Weibull, logistic. This function aims to replace age_ldv, age_moto and age_hdv.</li>
+<li>Update <a href="https://atmoschem.github.io/vein/reference/ef_cetesb.html">ef_cetesb</a> for emission factors 2017. CETESB updated (and possibly recalcualted) most of PC with gasoline emission factors.</li>
 <li>Fix minor bugs.</li>
 <li>Check the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.md">NEWS</a>
 </li>
 </ul>
 <p>future steps:</p>
 <ul>
-<li>Enhance <a href="https://atmoschem.github.io/vein/reference/inventory.html">inventory</a>.</li>
-<li>Add a standard fleet categorization.</li>
+<li>Enhance <a href="https://atmoschem.github.io/vein/reference/inventory.html">inventory</a>. The idea is to configurate a whole emissions inventory for emission factors of CETESB, COPERT.</li>
+<li>Improve plots.</li>
+<li>Adds ef_china, to include chinese emission factors.</li>
+<li>Adds or connect traffic from gtfs services.</li>
 <li>Add HBEFA EF.</li>
 <li>Fortran.</li>
 <li>Estimation of evaporative emissions with Copert Tier 3.</li>
