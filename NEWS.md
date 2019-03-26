@@ -3,7 +3,8 @@ NEWS
 
 # vein 0.7.0  (Release date: 2019-03-25)
 
-- Consolditation fo all minor release.
+- Consolidation fo all minor release.
+- Improves print methods for classes.
 
 ## vein 0.6.12 (Release date: 2019-03-25)
 

@@ -161,6 +161,7 @@ future steps:
 
 - Enhance [inventory](https://atmoschem.github.io/vein/reference/inventory.html). The idea is to 
 configurate a whole emissions inventory for emission factors of CETESB, COPERT.
+- Improve plots.
 - Adds ef_china, to include chinese emission factors.
 - Adds or connect traffic from gtfs services.
 - Add HBEFA EF.
