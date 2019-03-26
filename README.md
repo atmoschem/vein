@@ -134,6 +134,10 @@ demo(VEIN)
 
 ## What is new? 0.7.0
 
+- Re-design of ef_ldv_speed and ef_hdv_speed. Adds argument speed into ef_ldv_speed in order to return
+data.frames insted of list of functions. For instance, speed = Speed(0:120). Also,
+it euro can be with length bigger than one, and also can be data.frames. This is useful, when
+you have regions with different emission standards.
 - Add Active Surface (cm2/km): "AS_urban", "AS_rural", "AS_highway".
 - Add number of particles (N/km): "N_urban", "N_rural", "N_highway", "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
 - [split_emis](https://atmoschem.github.io/vein/reference/split_emis.html) Split street emissions based on a grid or polygon. For instance, let's say that you need street emissiosn at
