@@ -1,4 +1,4 @@
-#' Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2016
+#' Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2017
 #'
 #' \code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
 #' @param p Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
@@ -36,7 +36,7 @@
 #' a <- ef_cetesb("CO", "PC_G")
 #' b <- ef_cetesb("R_10_25", "PC_G")
 #' }
-ef_cetesb <- function(p, veh, year = 2016, full = FALSE){
+ef_cetesb <- function(p, veh, year = 2017, full = FALSE){
   ef <- sysdata$cetesb
   ef <-  ef[ef$Age <= 50, ]
   ef <- ef[ef$Year <= year, ]
