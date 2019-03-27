@@ -2,9 +2,9 @@
 % Please edit documentation in R/ef_cetesb.R
 \name{ef_cetesb}
 \alias{ef_cetesb}
-\title{Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2016}
+\title{Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2017}
 \usage{
-ef_cetesb(p, veh, year = 2016, full = FALSE)
+ef_cetesb(p, veh, year = 2017, full = FALSE)
 }
 \arguments{
 \item{p}{Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
