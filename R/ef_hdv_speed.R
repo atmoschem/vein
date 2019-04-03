@@ -243,7 +243,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
         return(f1)
       }
 
-    } else if(length(eu) > 1){
+    } else if(length(eu) > 1) {
       if(missing(speed)) stop("if length(eu) > 1, 'speed' is needed")
       dff <- do.call("cbind", lapply(1:length(eu), function(i){
         df <- ef_hdv[ef_hdv$VEH == v &
@@ -282,7 +282,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
     }
 
   } else if (is.data.frame(eu)){
-    if(missing(speed)) stop("Add 'speed' please")
+    if(missing(speed)) stop("Add 'speed' please for each row")
     dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
       do.call("cbind", lapply(1:ncol(eu), function(i){
 

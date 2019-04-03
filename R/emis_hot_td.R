@@ -169,7 +169,7 @@ emis_hot_td <- function (veh,
     } else{
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
-      # when pro_month variy each month
+      # when pro_month vary each month
       if(is.data.frame(pro_month)){
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- unlist(lapply(1:ncol(veh), function(i){

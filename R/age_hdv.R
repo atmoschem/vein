@@ -116,7 +116,6 @@ age_hdv <- function (x,
         df <- df*k
       }
 
-    print(names(df))
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
