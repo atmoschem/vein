@@ -42,7 +42,9 @@ age_ldv <- function (x,
 
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
-  } else if (bystreet == T){
+  }
+  #bystreet = TRUE
+  if (bystreet == T){
     if(length(x) != length(a)){
       stop((print("Lengths of veh and age must be the same")))
     }
@@ -96,6 +98,7 @@ age_ldv <- function (x,
       return(Vehicles(df*k))
     }
 
+    #bystreet = FALSE
   } else {
     suca <- function (t) {1 - exp(-exp(a + b*t))}
     anos <- seq(agemin,agemax)
@@ -122,8 +125,7 @@ age_ldv <- function (x,
                   sep=" "))
     message(paste("Number of",name, "is",
                   round(sum(df, na.rm = T)/1000, 2),
-                  "* 10^3 veh",
-                  sep=" ")
+                  "* 10^3 veh", sep=" ")
     )
     cat("\n")
     }
