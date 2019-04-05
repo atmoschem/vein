@@ -14,5 +14,5 @@ EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G")))
 
 test_that("EmissionFactorsList works", {
   expect_equal(EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G")))[[1]](),
-               0.114)
+               0.141)
 })
