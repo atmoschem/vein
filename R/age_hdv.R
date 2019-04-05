@@ -40,7 +40,9 @@ age_hdv <- function (x,
 
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
-  } else if (bystreet == T){
+  }
+  # bystreet = TRUE
+  if (bystreet == TRUE){
     if(length(x) != length(a)){
       stop((print("Lengths of veh and age must be the same")))
     }
@@ -59,8 +61,7 @@ age_hdv <- function (x,
     }
 
     df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
-                                                   nrow=length(x))),
-                              df))
+                                                   nrow=length(x))), df))
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
@@ -94,7 +95,8 @@ age_hdv <- function (x,
       return(Vehicles(df*k))
     }
 
-  } else {
+    #bystreet = FALSE
+   } else {
     suca <- function (t) {1/(1 + exp(a*(t+b)))+1/(1 + exp(a*(t-b)))}
     anos <- seq(agemin,agemax)
     d <- (-1)*diff(suca(anos))
@@ -103,29 +105,27 @@ age_hdv <- function (x,
     df <- as.data.frame(as.matrix(x) %*%matrix(d,ncol=length(anos), nrow=1))
 
     df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
-                                                   nrow=length(x))),
-                              df))
+                                                   nrow=length(x))), df))
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
-        if(verbose){
+    if(length(k) > 1){
+      df <- vein::matvect(df = df, x = k)
+    } else {
+      df <- df*k
+    }
 
-      if(length(k) > 1){
-        df <- vein::matvect(df = df, x = k)
-      } else {
-        df <- df*k
-      }
-
+    if(verbose){
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
     message(paste("Number of",name, "is",
                   round(sum(df, na.rm = T)/1000, 2),
-                  "* 10^3 veh",
-                  sep=" ")
+                  "* 10^3 veh", sep=" ")
     )
     cat("\n")
     }
+
     if(!missing(namerows)) {
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
       row.names(df) <- namerows
