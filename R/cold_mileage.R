@@ -30,7 +30,7 @@ cold_mileage <- function(ltrip, ta){
   }
 
   if(is.data.frame(ta) | is.matrix(ta)){
-    if(class(ta[, 1]) != "units") stop("ta must be untis in celsius, use units::set_units(ta, degC)")
+    if(class(ta[, 1]) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
     ta <- as.data.frame(ta)
     for(i in 1:ncol(ta)) {
       ta[, i] <- as.numeric(ta[, i])
@@ -48,7 +48,7 @@ cold_mileage <- function(ltrip, ta){
       )
     )
   } else {
-    if(class(ta) != "units") stop("ta must be untis in celsius, use units::set_units(ta, degC)")
+    if(class(ta) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
     ta <- as.numeric(ta)
 
     clkm <- ifelse(

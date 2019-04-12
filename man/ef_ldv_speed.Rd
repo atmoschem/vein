@@ -120,7 +120,6 @@ has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.
 }
 \examples{
 {
-# Do not run
 # Passenger Cars PC
 # Emission factor function
 V <- 0:150
