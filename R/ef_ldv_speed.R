@@ -98,7 +98,6 @@
 #' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 #' @export
 #' @examples {
-#' # Do not run
 #' # Passenger Cars PC
 #' # Emission factor function
 #' V <- 0:150
