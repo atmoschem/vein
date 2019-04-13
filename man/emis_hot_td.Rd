@@ -13,9 +13,15 @@ The number of rows is equal to the number of streets link}
 
 \item{lkm}{Numeric; mileage by the age of use of each vehicle.}
 
-\item{ef}{Numeric; emission factor with}
+\item{ef}{Numeric or data.frame; emission factors. When it is a data.frame
+number of rows can be for each region, or also, each region repeated
+along 12 months. For instance, if you have 10 regions the number
+of rows of ef can also be 120 (10 * 120).
+when you have emission factors that varies with month, see \code{\link{ef_china}}.}
 
-\item{pro_month}{Numeric; montly profile to distribuite annual mileage in each month.}
+\item{pro_month}{Numeric or data.frame; montly profile to distribuite annual mileage
+in each month. When it is a data.frame, each region (row) can have a different
+monthly profile.}
 
 \item{params}{List of parameters; Add columns with information to returning data.frame}
 
@@ -58,5 +64,5 @@ params = list(paste0("data_", 1:10), "moredata"))
 }
 }
 \seealso{
-\code{\link{ef_ldv_speed}}
+\code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 }

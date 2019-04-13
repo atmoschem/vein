@@ -14,12 +14,18 @@
 #'  age distribution of that vehicle. and rows each simple feature or region.
 #' The number of rows is equal to the number of streets link
 #' @param lkm Numeric; mileage by the age of use of each vehicle.
-#' @param ef Numeric; emission factor with
-#' @param pro_month Numeric; montly profile to distribuite annual mileage in each month.
+#' @param ef Numeric or data.frame; emission factors. When it is a data.frame
+#' number of rows can be for each region, or also, each region repeated
+#' along 12 months. For instance, if you have 10 regions the number
+#' of rows of ef can also be 120 (10 * 120).
+#' when you have emission factors that varies with month, see \code{\link{ef_china}}.
+#' @param pro_month Numeric or data.frame; montly profile to distribuite annual mileage
+#' in each month. When it is a data.frame, each region (row) can have a different
+#' monthly profile.
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
 #' @return Emissions data.frame
-#' @seealso \code{\link{ef_ldv_speed}}
+#' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 #' @export
 #' @examples {
 #' # Do not run
@@ -125,7 +131,7 @@ emis_hot_td <- function (veh,
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
       #when pro_month varies in each simple feature
-      if(is.data.frame(pro_month)){
+      if(is.data.frame(pro_month) & nrow(ef) == nrow(veh)){
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[,k] *ef[,i]
@@ -139,7 +145,7 @@ emis_hot_td <- function (veh,
           dfi
         }))
 
-      } else if(is.numeric(pro_month)){
+      } else if(is.numeric(pro_month) & nrow(ef) == nrow(veh)){
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[k] *ef[,i]
@@ -153,7 +159,42 @@ emis_hot_td <- function (veh,
           dfi
         }))
 
-      }
+      } else if(is.data.frame(pro_month) & nrow(ef) == 12*nrow(veh)){
+        ef$month <- rep(1:12, each = nrow(veh))
+        ef <- split(ef, ef$month)
+
+        e <- do.call("rbind",lapply(1:12, function(k){
+          dfi <- unlist(lapply(1:ncol(veh), function(i){
+            lkm[i]*veh[, i] * pro_month[,k] *ef[[k]][,i]
+          }))
+          dfi <- as.data.frame(dfi)
+          names(dfi) <- "emissions"
+          dfi <- Emissions(dfi)
+          dfi$rows <- row.names(veh)
+          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+          dfi$month <- (1:length(pro_month))[k]
+          dfi
+        }))
+      } else if(is.numeric(pro_month) & nrow(ef) == 12*nrow(veh)){
+        ef$month <- rep(1:12, each = nrow(veh))
+        ef <- split(ef, ef$month)
+
+        e <- do.call("rbind",lapply(1:12, function(k){
+          dfi <- unlist(lapply(1:ncol(veh), function(i){
+            lkm[i]*veh[, i] * pro_month[k] *ef[[k]][,i]
+          }))
+          dfi <- as.data.frame(dfi)
+          names(dfi) <- "emissions"
+          dfi <- Emissions(dfi)
+          dfi$rows <- row.names(veh)
+          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+          dfi$month <- (1:length(pro_month))[k]
+          dfi
+        }))
+      } else if(nrow(ef) !=  nrow(veh) & nrow(ef) != 12)(
+        stop("The number of rows can be equal to number of rows of veh, or number of rows of veh times 12")
+      )
+
       if(!missing(params)){
         if(!is.list(params)) stop("'params' must be a list")
         if(is.null(names(params))) {
@@ -167,7 +208,7 @@ emis_hot_td <- function (veh,
 
       if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
     } else{
-      if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
+      if(verbose) message("Assuming you have the same emission factors in each simple feature")
 
       # when pro_month vary each month
       if(is.data.frame(pro_month)){

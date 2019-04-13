@@ -141,11 +141,17 @@ The number of rows is equal to the number of streets link</p></td>
     </tr>
     <tr>
       <th>ef</th>
-      <td><p>Numeric; emission factor with</p></td>
+      <td><p>Numeric or data.frame; emission factors. When it is a data.frame
+number of rows can be for each region, or also, each region repeated
+along 12 months. For instance, if you have 10 regions the number
+of rows of ef can also be 120 (10 * 120).
+when you have emission factors that varies with month, see <code><a href='ef_china.html'>ef_china</a></code>.</p></td>
     </tr>
     <tr>
       <th>pro_month</th>
-      <td><p>Numeric; montly profile to distribuite annual mileage in each month.</p></td>
+      <td><p>Numeric or data.frame; montly profile to distribuite annual mileage
+in each month. When it is a data.frame, each region (row) can have a different
+monthly profile.</p></td>
     </tr>
     <tr>
       <th>params</th>
@@ -163,7 +169,7 @@ The number of rows is equal to the number of streets link</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code></p></div>
+    <div class='dont-index'><p><code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> <code><a href='ef_china.html'>ef_china</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -186,7 +192,7 @@ The number of rows is equal to the number of streets link</p></td>
 <span class='no'>aa</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_hot_td</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>efh</span>,
 <span class='kw'>pro_month</span> <span class='kw'>=</span> <span class='no'>veh_month</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
 <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"data_"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>), <span class='st'>"moredata"</span>))
-}</div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; <span class='message'>Adding names to params</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation with monthly profile</span></div><div class='output co'>#&gt; <span class='message'>Assuming you have emission factors for each simple feature and then for each month</span></div><div class='img'><img src='emis_hot_td-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; <span class='message'>Adding names to params</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation with monthly profile</span></div><div class='output co'>#&gt; <span class='message'>Assuming you have the same emission factors in each simple feature</span></div><div class='img'><img src='emis_hot_td-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
