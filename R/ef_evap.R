@@ -53,6 +53,7 @@
 #' ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = temps, ca = "no",
 #' show = TRUE)
 #' dt <- matrix(rep(1:24,5), ncol = 12) # 12 months
+#' dt <- celsius(dt)
 #' ef_evap(ef ="erhotc", v = "PC", cc = "<=1400",
 #' dt = dt, ca = "no")
 #' lkm <- units::set_units(10, km)
@@ -191,6 +192,8 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
 
   } else if (is.data.frame(dt)){
     if(is.numeric(dt[, 1])){
+      if(class(dt[, 1]) != "units"){
+        stop("if dt is not character, it must be units in celsius, use celsius(ta)")      }
       dt <- remove_units(dt)
       for(i in 1:ncol(dt)){
         dt[, i] = ifelse(dt[, i] < a, ta,

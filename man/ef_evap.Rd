@@ -72,6 +72,7 @@ temps <- 10:20
 ef_evap(ef = "erhotc", v = "PC", cc = "<=1400", dt = temps, ca = "no",
 show = TRUE)
 dt <- matrix(rep(1:24,5), ncol = 12) # 12 months
+dt <- celsius(dt)
 ef_evap(ef ="erhotc", v = "PC", cc = "<=1400",
 dt = dt, ca = "no")
 lkm <- units::set_units(10, km)
