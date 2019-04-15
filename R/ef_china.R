@@ -38,18 +38,22 @@
 #' @export
 #' @examples {
 #' # when standard is 'character'
-#' ef_china(standard = c("PRE", "I"), p = "CO")
+#' ef_china(standard = c("I"), p = "CO", details = TRUE)
 #' ef_china(standard = c("PRE", "I"), p = "CO", correction_only = TRUE)
 #' # when standard is 'data.frame'
-#' df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 10, ncol = 7, byrow = TRUE)
+#' df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 2, ncol = 7, byrow = TRUE)
 #' df_st <- as.data.frame(df_st)
-#' a <- ef_china(standard = df_st, p = "CO", ta = rep(celsius(20), 10),
-#' altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
+#' a <- ef_china(standard = df_st, p = "PM10", ta = rep(celsius(20), 2),
+#' altitude = rep(1501, 2), speed = rep(Speed(29), 2), sulphur = rep(50, 2))
 #' dim(a)
 #' dim(df_st)
+#' ef_china(standard = df_st, p = "PM2.5", ta = rep(celsius(20), 2),
+#' altitude = rep(1501, 2), speed = rep(Speed(29), 2), sulphur = rep(50, 2))
 #' a
 #' # when standard, temperature and humidity are data.frames
 #' # assuming 10 regions
+#' df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 10, ncol = 7, byrow = TRUE)
+#' df_st <- as.data.frame(df_st)
 #' df_t <- matrix(21:30, nrow = 10, ncol = 12, byrow = TRUE)
 #' df_t <- as.data.frame(df_t)
 #' for(i in 1:12) df_t[, i] <- celsius(df_t[, i])
@@ -57,6 +61,12 @@
 #' df_h <- matrix(seq(0.4, 0.5, 0.05), nrow = 10, ncol = 12, byrow = TRUE)
 #' df_h <- as.data.frame(df_h)
 #' a <- ef_china(standard = df_st, p = "CO", ta = df_t, humidity = df_h,
+#' altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
+#' a
+#' a <- ef_china(standard = df_st, p = "PM2.5", ta = df_t, humidity = df_h,
+#' altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
+#' a
+#' a <- ef_china(standard = df_st, p = "PM10", ta = df_t, humidity = df_h,
 #' altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
 #' a
 #' dim(a)
@@ -142,9 +152,9 @@ ef_china <- function(v = "PV",
                        ef_china$POLLUTANT == p, ]
       # details
       if(details){
-        cat(df$Description)
-        cat("\n")
-        cat(df$CHN)
+        cat("English: ", df$Description)
+        cat("\n\n")
+        cat("Chinese: ", df$CHN)
         cat("\n")
       }
 
@@ -238,22 +248,22 @@ ef_china <- function(v = "PV",
                       "Moped")){
             df$EF <- ifelse(p == "CO", df$EF*1.58,
                             ifelse(p == "HC", df$EF*2.46,
-                                   ifelse(p == "HC", df$EF*3.15, df$EF*2.46)))
+                                   ifelse(p == "NOx", df$EF*3.15, df$EF)))
           } else if(!t %in% c("Mini", "Small", "Light", "Taxi", "Motorcycles",
                               "Moped")){
             df$EF <- ifelse(p == "CO", df$EF*3.95,
                             ifelse(p == "HC", df$EF*2.26,
-                                   ifelse(p == "HC", df$EF*3.15, df$EF*0.88)))
+                                   ifelse(p == "NOx", df$EF*0.88, df$EF)))
           }
         } else if(f == "D"){
           if(t %in% c("Small", "Light")){
             df$EF <- ifelse(p == "CO", df$EF*1.2,
                             ifelse(p == "HC", df$EF*1.32,
-                                   ifelse(p == "HC", df$EF*3.15, df$EF*1.35)))
+                                   ifelse(p == "NOx", df$EF*1.35, df$EF*1.35)))
           } else if(!t %in% c("Small", "Light")){
             df$EF <- ifelse(p == "CO", df$EF*2.46,
                             ifelse(p == "HC", df$EF*2.05,
-                                   ifelse(p == "HC", df$EF*3.15, df$EF*1.02)))
+                                   ifelse(p == "NOx", df$EF*1.02, df$EF)))
           }}
       }
       # Check speed
@@ -269,7 +279,7 @@ ef_china <- function(v = "PV",
             ifelse(
               speed >= 40 & speed < 80, df$EF*efspeed$S40_80, df$EF*efspeed$S80))))
       # Check deterioration
-      if(f == "G"){
+      if(f == "G" & p %in% c("CO", "HC", "NOx")){
         ts <- ifelse(t %in% c("Mini", "Small"),"group1",
                      ifelse(t == "Taxi", "group2"))
         detfac <- det_china[det_china$TYPE == ts &
@@ -308,7 +318,9 @@ ef_china <- function(v = "PV",
     }
 
     # standard is data.frames ####
-  } else if(is.data.frame(standard) & !is.data.frame(ta)) {
+  } else if(is.matrix(standard) | is.data.frame(standard) & !is.data.frame(ta)) {
+    standard <- as.data.frame(standard)
+
     dff <- do.call("rbind", lapply(1:nrow(standard), function(j){
       do.call("cbind", lapply(1:ncol(standard), function(i){
         df <- ef_china[ef_china$VEH == v &
@@ -334,7 +346,10 @@ ef_china <- function(v = "PV",
             } else if(p == "NOx"){
               df$EF <- ifelse(ta[j] < 10, df$EF*1.15,
                               ifelse(ta[j] > 25, df$EF*1.31, df$EF))
-            }}}
+            } else {
+              df$EF <- df$EF
+            }
+          }}
         # Check correction diesel - ta
         if(f == "D"){
           if(p == "CO"){
@@ -362,7 +377,7 @@ ef_china <- function(v = "PV",
             }
           } else if(p %in% c("PM2.5", "PM10")){
             if(t %in% c("Small", "Bus")){
-              df$EF <- ifelse(ta[j] > 25, df$EF*068,
+              df$EF <- ifelse(ta[j] > 25, df$EF*0.68,
                               ifelse(ta[j] < 10, df$EF*1.87, df$EF))
             } else if(t == c("Light")){
               df$EF <- ifelse(ta[j] > 25, df$EF*0.9,
@@ -405,22 +420,22 @@ ef_china <- function(v = "PV",
                         "Moped")){
               df$EF <- ifelse(p == "CO", df$EF*1.58,
                               ifelse(p == "HC", df$EF*2.46,
-                                     ifelse(p == "HC", df$EF*3.15, df$EF*2.46)))
+                                     ifelse(p == "NOx", df$EF*3.15, df$EF)))
             } else if(!t %in% c("Mini", "Small", "Light", "Taxi", "Motorcycles",
                                 "Moped")){
               df$EF <- ifelse(p == "CO", df$EF*3.95,
                               ifelse(p == "HC", df$EF*2.26,
-                                     ifelse(p == "HC", df$EF*3.15, df$EF*0.88)))
+                                     ifelse(p == "NOx", df$EF*0.88, df$EF)))
             }
           } else if(f == "D"){
             if(t %in% c("Small", "Light")){
               df$EF <- ifelse(p == "CO", df$EF*1.2,
                               ifelse(p == "HC", df$EF*1.32,
-                                     ifelse(p == "HC", df$EF*3.15, df$EF*1.35)))
+                                     ifelse(p == "NOx", df$EF*3.15, df$EF)))
             } else if(!t %in% c("Small", "Light")){
               df$EF <- ifelse(p == "CO", df$EF*2.46,
                               ifelse(p == "HC", df$EF*2.05,
-                                     ifelse(p == "HC", df$EF*3.15, df$EF*1.02)))
+                                     ifelse(p == "NOx", df$EF*1.02, df$EF)))
             }}
         } else {
           df$EF <- df$EF
@@ -440,7 +455,7 @@ ef_china <- function(v = "PV",
                 speed[j] >= 40 & speed[j] < 80, df$EF*efspeed$S40_80, df$EF*efspeed$S80))))
 
         # Check deterioration
-        if(f == "G"){
+        if(f == "G" & p %in% c("CO", "HC", "NOx")){
           ts <- ifelse(t %in% c("Mini", "Small"),"group1",
                        ifelse(t == "Taxi", "group2"))
           detfac <- det_china[det_china$TYPE == ts &
@@ -474,6 +489,7 @@ ef_china <- function(v = "PV",
                 load_factor > 0.6 & sulphur <= 0.75, df$EF*dfl$L75,
                 df$EF*dfl$L100))))
 
+        df$EF
       }))
     }))
     if(correction_only){
@@ -488,7 +504,9 @@ ef_china <- function(v = "PV",
       return(dff)
     }
     # standard and ta are data.frames ####
-  } else if (is.data.frame(standard) & is.data.frame(ta)){
+  } else if (is.matrix(standard) | is.data.frame(standard) & is.data.frame(ta)){
+    standard <- as.data.frame(standard)
+
     if(ncol(ta) != 12) warning("This function was designed so that number of columns of ta is 12, one year")
     if(nrow(ta) != nrow(standard)) {
       stop("number of rows of 'ta' must be the same as the number of rows of 'standard'")
@@ -519,7 +537,10 @@ ef_china <- function(v = "PV",
               } else if(p == "NOx"){
                 df$EF <- ifelse(ta < 10, df$EF*1.15,
                                 ifelse(ta > 25, df$EF*1.31, df$EF))
-              }}}
+              } else {
+                df$EF <- df$EF
+              }
+            }}
           # Check correction diesel - ta
           if(f == "D"){
             if(p == "CO"){
@@ -590,22 +611,22 @@ ef_china <- function(v = "PV",
                           "Moped")){
                 df$EF <- ifelse(p == "CO", df$EF*1.58,
                                 ifelse(p == "HC", df$EF*2.46,
-                                       ifelse(p == "HC", df$EF*3.15, df$EF*2.46)))
+                                       ifelse(p == "NOx", df$EF*3.15, df$EF)))
               } else if(!t %in% c("Mini", "Small", "Light", "Taxi", "Motorcycles",
                                   "Moped")){
                 df$EF <- ifelse(p == "CO", df$EF*3.95,
                                 ifelse(p == "HC", df$EF*2.26,
-                                       ifelse(p == "HC", df$EF*3.15, df$EF*0.88)))
+                                       ifelse(p == "NOx", df$EF*0.88, df$EF)))
               }
             } else if(f == "D"){
               if(t %in% c("Small", "Light")){
                 df$EF <- ifelse(p == "CO", df$EF*1.2,
                                 ifelse(p == "HC", df$EF*1.32,
-                                       ifelse(p == "HC", df$EF*3.15, df$EF*1.35)))
+                                       ifelse(p == "NOx", df$EF*3.15, df$EF)))
               } else if(!t %in% c("Small", "Light")){
                 df$EF <- ifelse(p == "CO", df$EF*2.46,
                                 ifelse(p == "HC", df$EF*2.05,
-                                       ifelse(p == "HC", df$EF*3.15, df$EF*1.02)))
+                                       ifelse(p == "NOx", df$EF*1.02, df$EF)))
               }}
           } else {
             df$EF <- df$EF
@@ -625,7 +646,7 @@ ef_china <- function(v = "PV",
                   speed[j] >= 40 & speed[j] < 80, df$EF*efspeed$S40_80, df$EF*efspeed$S80))))
 
           # Check deterioration
-          if(f == "G"){
+          if(f == "G" & p %in% c("CO", "HC", "NOx")){
             ts <- ifelse(t %in% c("Mini", "Small"),"group1",
                          ifelse(t == "Taxi", "group2"))
             detfac <- det_china[det_china$TYPE == ts &
@@ -658,6 +679,7 @@ ef_china <- function(v = "PV",
                 ifelse(
                   load_factor > 0.6 & sulphur <= 0.75, df$EF*dfl$L75,
                   df$EF*dfl$L100))))
+          df$EF
         }))
       }))
     }))
