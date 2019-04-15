@@ -90,6 +90,11 @@ It currently covers the following pollutants in speed functions:
 "benzene_gstart", "EVAP_gstart", "CO2_gstart", "N20_gstart", 
 "CH4_gstart"
 
+### Emission factors from Chinese emission guidelines
+
+- "CO", "NOx", "HC", "PM10", "PM2.5".
+- They depend on humidity, temperature, altitude and  other parameters.
+
 
 ### System requirements
 
