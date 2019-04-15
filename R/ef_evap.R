@@ -79,6 +79,7 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
     cat("\n")
     stop()
   }
+  # Check ltrip
   if(!missing(ltrip) & !missing(kmday)){
     stop("You can convert to g/km runing losses and soak with ltrip OR diurnal with kmday. Not both at the same time")
   }
@@ -98,6 +99,7 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
     }
 
   }
+  # Check kmday
   if(!missing(kmday)){
     if(length(kmday) > 1) stop("Please, enter one value of 'kmday'")
     # Check units
@@ -188,8 +190,8 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
     }
 
   } else if (is.data.frame(dt)){
-
     if(is.numeric(dt[, 1])){
+      dt <- remove_units(dt)
       for(i in 1:ncol(dt)){
         dt[, i] = ifelse(dt[, i] < a, ta,
                          ifelse(dt[, i] >=a & dt[, i] < b, tb,
