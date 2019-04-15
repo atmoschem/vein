@@ -48,6 +48,7 @@ of US.EPA-AP42 emission factor: Section 1.4 Natural Gas Combustion.
 {
 a <- ef_cetesb("CO", "PC_G")
 b <- ef_cetesb("R_10_25", "PC_G")
+c <- ef_cetesb("CO", c("PC_G", "PC_FE"))
 }
 }
 \references{

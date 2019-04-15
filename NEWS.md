@@ -5,6 +5,7 @@ NEWS
 
 - adds ef_china.
 - fix k in age_hdv.
+- ADd remove_units
 
 
 ## vein 0.7.0  (Release date: 2019-03-25)
