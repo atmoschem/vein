@@ -35,6 +35,7 @@
 #' @examples {
 #' a <- ef_cetesb("CO", "PC_G")
 #' b <- ef_cetesb("R_10_25", "PC_G")
+#' c <- ef_cetesb("CO", c("PC_G", "PC_FE"))
 #' }
 ef_cetesb <- function(p, veh, year = 2017, full = FALSE){
   ef <- sysdata$cetesb
@@ -53,7 +54,7 @@ ef_cetesb <- function(p, veh, year = 2017, full = FALSE){
     cat("Units: [g/trip]\n")
   }
   nveh <- names(ef)[12:ncol(ef)]
-  if(!veh %in% nveh){
+  if(any(!veh %in% nveh)){
     stop(paste("Please, choose on of the following categories:", nveh))
   }
   if(full) {
