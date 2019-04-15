@@ -163,7 +163,7 @@ ef_china <- function(v = "PV",
 
       # Check correction gasoline - ta
       if(f == "G"){
-        if(class(ta) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
+        if(class(ta) != "units") stop("ta must be units in celsius, use celsius(ta)")
         ta <- as.numeric(ta)
         if(t != "Motorcycles"){
           if(p == "CO"){
@@ -179,7 +179,7 @@ ef_china <- function(v = "PV",
       }
       # Check correction diesel - ta
       if(f == "D"){
-        if(class(ta) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
+        if(class(ta) != "units") stop("ta must be units in celsius, use celsius(ta)")
         ta <- as.numeric(ta)
         if(p == "CO"){
           if(t %in% c("Small", "Light")){
@@ -333,7 +333,7 @@ ef_china <- function(v = "PV",
 
         # Check correction gasoline - ta
         if(f == "G"){
-          if(class(ta) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
+          if(class(ta) != "units") stop("ta must be units in celsius, use celsius(ta)")
           ta <- as.numeric(ta)
           if(length(ta) != nrow(standard)) stop("length of 'ta' must be the same as the number of rows of 'standard'")
           if(t != "Motorcycles"){
@@ -525,7 +525,7 @@ ef_china <- function(v = "PV",
           ta <- ta[j, k]
           humidity <- humidity[j, k]
           if(f == "G"){
-            if(class(ta) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
+            if(class(ta) != "units") stop("ta must be units in celsius, use celsius(ta)")
             ta <- as.numeric(ta)
             if(t != "Motorcycles"){
               if(p == "CO"){
