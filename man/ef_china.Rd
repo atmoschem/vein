@@ -64,18 +64,22 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf
 \examples{
 {
 # when standard is 'character'
-ef_china(standard = c("PRE", "I"), p = "CO")
+ef_china(standard = c("I"), p = "CO", details = TRUE)
 ef_china(standard = c("PRE", "I"), p = "CO", correction_only = TRUE)
 # when standard is 'data.frame'
-df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 10, ncol = 7, byrow = TRUE)
+df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 2, ncol = 7, byrow = TRUE)
 df_st <- as.data.frame(df_st)
-a <- ef_china(standard = df_st, p = "CO", ta = rep(celsius(20), 10),
-altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
+a <- ef_china(standard = df_st, p = "PM10", ta = rep(celsius(20), 2),
+altitude = rep(1501, 2), speed = rep(Speed(29), 2), sulphur = rep(50, 2))
 dim(a)
 dim(df_st)
+ef_china(standard = df_st, p = "PM2.5", ta = rep(celsius(20), 2),
+altitude = rep(1501, 2), speed = rep(Speed(29), 2), sulphur = rep(50, 2))
 a
 # when standard, temperature and humidity are data.frames
 # assuming 10 regions
+df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 10, ncol = 7, byrow = TRUE)
+df_st <- as.data.frame(df_st)
 df_t <- matrix(21:30, nrow = 10, ncol = 12, byrow = TRUE)
 df_t <- as.data.frame(df_t)
 for(i in 1:12) df_t[, i] <- celsius(df_t[, i])
@@ -83,6 +87,12 @@ for(i in 1:12) df_t[, i] <- celsius(df_t[, i])
 df_h <- matrix(seq(0.4, 0.5, 0.05), nrow = 10, ncol = 12, byrow = TRUE)
 df_h <- as.data.frame(df_h)
 a <- ef_china(standard = df_st, p = "CO", ta = df_t, humidity = df_h,
+altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
+a
+a <- ef_china(standard = df_st, p = "PM2.5", ta = df_t, humidity = df_h,
+altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
+a
+a <- ef_china(standard = df_st, p = "PM10", ta = df_t, humidity = df_h,
 altitude = rep(1501, 10), speed = rep(Speed(29), 10), sulphur = rep(50, 10))
 a
 dim(a)
