@@ -280,7 +280,7 @@ ef_china <- function(v = "PV",
       # Check deterioration
       if(f == "G" & p %in% c("CO", "HC", "NOx")){
         ts <- ifelse(t %in% c("Mini", "Small"),"group1",
-                     ifelse(t == "Taxi", "group2"))
+                     ifelse(t == "Taxi", "Taxi","group2"))
         detfac <- det_china[det_china$TYPE == ts &
                               det_china$FUEL == f &
                               det_china$STANDARD == standard[i] &
@@ -458,7 +458,7 @@ ef_china <- function(v = "PV",
         # Check deterioration
         if(f == "G" & p %in% c("CO", "HC", "NOx")){
           ts <- ifelse(t %in% c("Mini", "Small"),"group1",
-                       ifelse(t == "Taxi", "group2"))
+                       ifelse(t == "Taxi", "Taxi","group2"))
           detfac <- det_china[det_china$TYPE == ts &
                                 det_china$FUEL == f &
                                 det_china$STANDARD == standard[j,i][[1]] &
@@ -651,7 +651,7 @@ ef_china <- function(v = "PV",
           # Check deterioration
           if(f == "G" & p %in% c("CO", "HC", "NOx")){
             ts <- ifelse(t %in% c("Mini", "Small"),"group1",
-                         ifelse(t == "Taxi", "group2"))
+                         ifelse(t == "Taxi", "Taxi","group2"))
             detfac <- det_china[det_china$TYPE == ts &
                                   det_china$FUEL == f &
                                   det_china$STANDARD == standard[j,i][[1]] &
