@@ -47,20 +47,33 @@ providing flexibility to the user.
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euros, p = "CO", speed = Speed(34))
-lkm <- units::as_units(18:10, "km")*1000
+lkm <- units::as_units(18:11, "km")*1000
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 veh <- age_ldv(1:10, agemax = 8)
-a <- emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE)
+a <- emis_hot_td(veh = veh,
+                lkm = lkm,
+                ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                verbose = TRUE)
 head(a)
 plot(aggregate(a$emissions, by = list(a$age), sum)$x,type ="b")
-emis_hot_td(veh = veh, lkm = lkm, ef = efh, verbose = TRUE,
-params = list(paste0("data_", 1:10), "moredata"))
-aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
-pro_month = veh_month, verbose = TRUE)
+emis_hot_td(veh = veh,
+            lkm = lkm,
+            ef = EmissionFactors(as.numeric(efh[, 1:8])),
+            verbose = TRUE,
+            params = list(paste0("data_", 1:10), "moredata"))
+aa <- emis_hot_td(veh = veh,
+                  lkm = lkm,
+                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                  pro_month = veh_month,
+                  verbose = TRUE)
 head(aa)
-aa <- emis_hot_td(veh = veh, lkm = lkm, ef = efh,
-pro_month = veh_month, verbose = FALSE,
-params = list(paste0("data_", 1:10), "moredata"))
+aa <- emis_hot_td(veh = veh,
+                  lkm = lkm,
+                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                  pro_month = veh_month,
+                  verbose = FALSE,
+                  params = list(paste0("data_", 1:10), "moredata"))
+print(aa)
 }
 }
 \seealso{
