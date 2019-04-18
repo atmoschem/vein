@@ -120,18 +120,16 @@ emis_hot_td <- function (veh,
 
   # Checking pro_month
   if(!missing(pro_month)){
-
     if(verbose) message("Estimation with monthly profile")
-
     if(length(pro_month) != 12) stop("Length of pro_month must be 12")
-
     mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
-
     if(is.data.frame(ef)){
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
       #when pro_month varies in each simple feature
       if(is.data.frame(pro_month) & nrow(ef) == nrow(veh)){
+        if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' and 'veh' are equal")
+        if(nrow(ef) != nrow(veh)) stop("Number of rows of 'veh' and 'ef' must be equal")
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[,k] *ef[,i]
@@ -146,6 +144,8 @@ emis_hot_td <- function (veh,
         }))
 
       } else if(is.numeric(pro_month) & nrow(ef) == nrow(veh)){
+        if(verbose) message("'pro_month' is numeric and number of rows of 'ef' and 'veh' are equal")
+        if(nrow(ef) != nrow(veh)) stop("Number of rows of 'veh' and 'ef' must be equal")
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[k] *ef[,i]
@@ -160,6 +160,7 @@ emis_hot_td <- function (veh,
         }))
 
       } else if(is.data.frame(pro_month) & nrow(ef) == 12*nrow(veh)){
+        if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' is 12*number of rows 'veh'")
         ef$month <- rep(1:12, each = nrow(veh))
         ef <- split(ef, ef$month)
 
@@ -176,6 +177,7 @@ emis_hot_td <- function (veh,
           dfi
         }))
       } else if(is.numeric(pro_month) & nrow(ef) == 12*nrow(veh)){
+        if(verbose) message("'pro_month' is numeric and number of rows of 'ef' is 12*number of rows 'veh'")
         ef$month <- rep(1:12, each = nrow(veh))
         ef <- split(ef, ef$month)
 
@@ -207,11 +209,13 @@ emis_hot_td <- function (veh,
       }
 
       if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
-    } else{
+    } else if(!is.data.frame(ef)){
       if(verbose) message("Assuming you have the same emission factors in each simple feature")
 
       # when pro_month vary each month
       if(is.data.frame(pro_month)){
+        if(verbose) message("'pro_month' is data.frame and 'ef' is numeric")
+        if(length(ef) != nrow(veh)) stop("Number of rows of 'veh' and length of 'ef' must be equal")
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[, k] *ef[i]
@@ -226,6 +230,8 @@ emis_hot_td <- function (veh,
         }))
 
       } else if(is.numeric(pro_month)){
+        if(verbose) message("'pro_month' is numeric and 'ef' is numeric")
+        if(length(ef) != nrow(veh)) stop("Number of rows of 'veh' and length of 'ef' must be equal")
         e <- do.call("rbind",lapply(1:12, function(k){
           dfi <- unlist(lapply(1:ncol(veh), function(i){
             lkm[i]*veh[, i] * pro_month[k] *ef[i]
@@ -258,14 +264,30 @@ emis_hot_td <- function (veh,
   } else {
     if(verbose) message("Estimation without monthly profile")
 
-    e <-  unlist(lapply(1:ncol(veh), function(i){
-      lkm[i]*veh[, i] *ef[i]
-    }))
-    e <- as.data.frame(e)
-    names(e) <- "emissions"
-    e <- Emissions(e)
-    e$rows <- row.names(e)
-    e$age <- rep(1:ncol(veh), each = nrow(veh))
+    if(!is.data.frame(ef)) {
+      if(verbose) message("'ef' is numeric")
+      if(length(ef) != nrow(veh)) stop("Number of rows of 'veh' and length of 'ef' must be equal")
+      e <-  unlist(lapply(1:ncol(veh), function(i){
+        lkm[i]*veh[, i] *ef[i]
+      }))
+      e <- as.data.frame(e)
+      names(e) <- "emissions"
+      e <- Emissions(e)
+      e$rows <- row.names(e)
+      e$age <- rep(1:ncol(veh), each = nrow(veh))
+    } else {
+      if(verbose) message("'ef' is data.frame")
+      if(nrow(ef) != nrow(veh)) stop("Number of rows of 'ef' and 'veh' must be equal")
+      e <-  unlist(lapply(1:ncol(veh), function(i){
+        lkm[i]*veh[, i] *ef[, i]
+      }))
+      e <- as.data.frame(e)
+      names(e) <- "emissions"
+      e <- Emissions(e)
+      e$rows <- row.names(e)
+      e$age <- rep(1:ncol(veh), each = nrow(veh))
+
+    }
 
     if(!missing(params)){
       if(!is.list(params)) stop("'params' must be a list")
