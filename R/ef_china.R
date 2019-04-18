@@ -205,7 +205,7 @@ ef_china <- function(v = "PV",
           }
         } else if(p %in% c("PM2.5", "PM10")){
           if(t %in% c("Small", "Bus")){
-            df$EF <- ifelse(ta > 25, df$EF*068,
+            df$EF <- ifelse(ta > 25, df$EF*0.68,
                             ifelse(ta < 10, df$EF*1.87, df$EF))
           } else if(t == c("Light")){
             df$EF <- ifelse(ta > 25, df$EF*0.9,
@@ -571,7 +571,7 @@ ef_china <- function(v = "PV",
               }
             } else if(p %in% c("PM2.5", "PM10")){
               if(t %in% c("Small", "Bus")){
-                df$EF <- ifelse(ta > 25, df$EF*068,
+                df$EF <- ifelse(ta > 25, df$EF*0.68,
                                 ifelse(ta < 10, df$EF*1.87, df$EF))
               } else if(t == c("Light")){
                 df$EF <- ifelse(ta > 25, df$EF*0.9,
