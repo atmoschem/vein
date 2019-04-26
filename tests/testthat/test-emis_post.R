@@ -20,5 +20,5 @@ test_that("multiplication works", {
   expect_equal(as.numeric(emis_post(arra = E_CO,
                          pollutant = "CO",
                          by = "streets_wide")[1,1]),
-               3418.637-0.000463)
+               3418.185 + 6.17e-05)
 })

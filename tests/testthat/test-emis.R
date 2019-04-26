@@ -11,5 +11,5 @@ test_that("emis works", {
   expect_equal(emis(veh = age_ldv(net$ldv[1]),
                     lkm = net$lkm[1], ef = lef, speed = df,
                     profile = pc_profile[1])[1],
-               0.5930209 + 4.83e-08)
+               0.5375336)
 })

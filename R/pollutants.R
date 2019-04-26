@@ -1,0 +1,24 @@
+#' Data.frame with pollutants names and molar mass used in VEIN
+#'
+#' This dataset also includes MIR, MOIR and EBIR is Carter SAPRC07.xls
+#' https://www.engr.ucr.edu/~carter/SAPRC/
+#'
+#' @format A data frame with 132 rows and 10 variables:
+#' \describe{
+#'   \item{n}{Number for each pollutant, from 1 to 132}
+#'   \item{group1}{classification for pollutants including "NMHC",
+#'   "PAH", "METALS", "PM", "criteria" and "PCDD" }
+#'   \item{group2}{A sub classification for pollutants including "alkenes",
+#'   "alkynes", "aromatics", "alkanes",  "PAH",, "aldehydes", "ketones", "METALS",
+#'   "PM_char", "criteria", "cycloalkanes", "NMHC",  "PCDD", "PM10", "PM2.5"}
+#'   \item{pollutant}{1 of the 132 pollutants covered}
+#'   \item{CAS}{CAS Registry Number}
+#'   \item{g_mol}{molar mass}
+#'   \item{MIR}{Maximum incremental Reactivity (gm O3 / gm VOC)}
+#'   \item{MOIR}{Reactivity (gm O3 / gm VOC)}
+#'   \item{EBIR}{Reactivity (gm O3 / gm VOC)}
+#'   \item{notes}{Inform some assumption for molar mass}
+#' }
+#' @usage data(pollutants)
+#' @docType data
+"pollutants"

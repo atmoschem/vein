@@ -19,9 +19,6 @@
 #'   "P3", "P4", "P5", "P7"}
 #'   \item{Euro_HDV}{Euro emission standard equivalence: "PRE", "I",
 #'   "II", "III", "V"}
-#'   \item{Promot}{Promot emission standard: "PP", "M1", "M2", "M3"}
-#'   \item{Euro_moto}{Euro emission standard equivalence: "PRE", "I",
-#'   "II", "III"}
 #'   \item{PC_G}{CETESB emission standard for Passenger Cars with Gasoline (g/km)}
 #'   \item{LT}{CETESB emission standard for Light Trucks with Diesel (g/km)}
 #' }

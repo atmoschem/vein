@@ -29,7 +29,7 @@ dataframe of age distrubution of vehicles at each street.
 \examples{
 {
 data(fe2015)
-CO <- vein::EmissionFactors(fe2015[fe2015$Pollutant == "CO", 11])
+CO <- vein::EmissionFactors(fe2015[fe2015$Pollutant == "CO", "PC_G"])
 ef_logit <- ef_fun(ef = CO, x0 = 27, k = 0.4, L = 33)
 plot(ef_logit, type = "b", pch = 16)
 lines(ef_logit, pch = 16, col = "blue")
