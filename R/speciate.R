@@ -272,9 +272,9 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     # x <- x*(1/1000)^2 # km^2 to m^2
     x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
     # I think it is wrong to divide by dx^2. Need to reconfirm
-    if(!missing(pmar)) {
-      if(length(pmar) != 11) stop("length 'pmpar' must be 11")
-      df <- as.data.frame(matrix(pmar, ncol = length(pmar)))
+    if(!missing(pmpar)) {
+      if(length(pmpar) != 11) stop("length 'pmpar' must be 11")
+      df <- as.data.frame(matrix(pmpar, ncol = length(pmpar)))
       names(df) <- names(pmpar)
     } else {
       df <- data.frame(e_so4i = 0.0077,
@@ -334,9 +334,9 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     # x <- x*1000000 # g to micro grams
     # x <- x*(1/1000)^2 # km^2 to m^2
     x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
-    if(!missing(pmar)) {
-      if(length(pmar) != 11) stop("length 'pmpar' must be 11")
-      df <- as.data.frame(matrix(pmar, ncol = length(pmar)))
+    if(!missing(pmpar)) {
+      if(length(pmpar) != 11) stop("length 'pmpar' must be 11")
+      df <- as.data.frame(matrix(pmpar, ncol = length(pmpar)))
       names(df) <- names(pmpar)
     } else {
       df <- data.frame(e_so4i = 0.0077,

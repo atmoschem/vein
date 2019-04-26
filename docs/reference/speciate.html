@@ -67,7 +67,7 @@ will be added more speciations" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@ will be added more speciations</p>
     </div>
 
     <pre class="usage"><span class='fu'>speciate</span>(<span class='no'>x</span>, <span class='kw'>spec</span> <span class='kw'>=</span> <span class='st'>"bcom"</span>, <span class='no'>veh</span>, <span class='no'>fuel</span>, <span class='no'>eu</span>, <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>dx</span>)</pre>
+  <span class='no'>pmpar</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,8 +177,13 @@ Not required for "tyre", "brake" or "road"</p></td>
 the number species of pollutants</p></td>
     </tr>
     <tr>
-      <th>dx</th>
-      <td><p>Integer, used when spec = "pmiag". It is the spatial disntace</p></td>
+      <th>pmpar</th>
+      <td><p>Numeric vector for PM speciation eg:
+c(e_so4i = 0.0077,  e_so4j = 0.0623,  e_no3i = 0.00247,
+e_no3j = 0.01053,  e_pm2.5i = 0.1,  e_pm2.5j = 0.3,
+e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
+e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
+argument is preseent, new values are used.</p></td>
     </tr>
     </table>
     

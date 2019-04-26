@@ -2,43 +2,46 @@
 % Please edit documentation in R/emis_chem.R
 \name{emis_chem}
 \alias{emis_chem}
-\title{Average daily traffic (ADT) from hourly traffic data.}
+\title{Aggregate emissions}
 \usage{
-emis_chem(pc, lcv, hgv, bus, mc, p_pc, p_lcv, p_hgv, p_bus, p_mc,
-  expanded = FALSE)
+emis_chem(dfe, mechanism, colby)
 }
 \arguments{
-\item{pc}{numeric vector for passenger cars}
+\item{dfe}{data.frame with column `emissions` in grams and `pollutant`.}
 
-\item{lcv}{numeric vector for light commercial vehicles}
+\item{mechanism}{Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
+"MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
+"SAPRC07CMAQ" or "SAPRC07A".}
 
-\item{hgv}{numeric vector for heavy good vehicles or trucks}
-
-\item{bus}{numeric vector for bus}
-
-\item{mc}{numeric vector for motorcycles}
-
-\item{p_pc}{data-frame profile for passenger cars, 24 hours only.}
-
-\item{p_lcv}{data-frame profile for light commercial vehicles, 24 hours only.}
-
-\item{p_hgv}{data-frame profile for heavy good vehicles or trucks, 24 hours only.}
-
-\item{p_bus}{data-frame profile for bus, 24 hours only.}
-
-\item{p_mc}{data-frame profile for motorcycles, 24 hours only.}
-
-\item{expanded}{boolean argument for returning numeric vector or "Vehicles"}
+\item{colby}{Vector for aggregating extra column. For instance, region or
+province}
 }
 \value{
-numeric vector of total volume of traffic per link, or data-frames
-of expanded traffic
+data.frame with lumped groups by chemical mechanism. It transform
+emissions in grams to mol.
 }
 \description{
-\code{\link{adt}} calculates ADT based on hourly traffic data. The
-input traffic data is usually for morning rush hours.
+\code{\link{emis_chem}} aggregates emissions by chemical mechanism
+and convert grams to mol. This function reads all hydrocarbos and respective
+criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
 }
 \examples{
 {
+# CO
+df <- data.frame(emission = 1:10)
+df$pollutant = "CO"
+df$emission <- units::set_units(df$emission, "g")
+emis_chem(df, "CBMZ")
+# hexanal
+df$pollutant = "hexanal"
+emis_chem(df, "CBMZ")
+# propadiene and NO2
+df2 <- df1 <- df
+df1$pollutant = "propadiene"
+df2$pollutant = "NO2"
+emis_chem(rbind(df1, df2), "RADM2")
 }
+}
+\seealso{
+\code{\link{ef_ldv_speed}} \code{\link{ef_hdv_speed}} \code{\link{speciate}}
 }
