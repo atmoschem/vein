@@ -1,7 +1,12 @@
 NEWS
 ===========
 
-# vein 0.7.1  (Release date: 2019-04-13)
+# vein 0.7.2  (Release date: 2019-04-26)
+
+- adds data pollutants including CAS ID and molar mass.
+- replace data fe2015 from ef_cetesb updated and remove columns related to Motorcycles.
+
+## vein 0.7.1  (Release date: 2019-04-13)
 
 - adds ef_china.
 - fix k in age_hdv.

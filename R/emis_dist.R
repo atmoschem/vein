@@ -5,7 +5,7 @@
 #' 'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
 #' in each street.
 #'
-#' @param gy Numeric; a unique total (top-down) emissions (grams)
+#' @param gy Numeric; a unique total (top-down)
 #' @param spobj A spatial dataframe of class "sp" or "sf". When class is "sp"
 #' it is transformed to "sf".
 #' @param pro Matrix or data-frame profiles, for instance, pc_profile.
@@ -42,10 +42,11 @@ emis_dist <- function(gy,
       sf::st_geometry_type(net))) %in% c("LINESTRING", "MULTILINESTRING"))){
     stop("Currently, geometries supported are 'LINESTRING' or 'MULTILINESTRING'")
   }
+
   net$lkm1 <- as.numeric(sf::st_length(net))
   geo <- sf::st_geometry(net)
   lkm <- net$lkm1/sum(net$lkm1)
-  e_street <- lkm*gy * units::as_units("g")
+  e_street <- lkm*as.numeric(gy)
 
   # PROFILE SECTION
   if(missing(pro) & missing(osm)){

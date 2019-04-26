@@ -7,7 +7,7 @@
 emis_dist(gy, spobj, pro, osm, verbose = TRUE)
 }
 \arguments{
-\item{gy}{Numeric; a unique total (top-down) emissions (grams)}
+\item{gy}{Numeric; a unique total (top-down)}
 
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
 it is transformed to "sf".}
