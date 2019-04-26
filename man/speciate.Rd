@@ -5,7 +5,7 @@
 \title{Speciation of emissions}
 \usage{
 speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE,
-  dx)
+  pmpar)
 }
 \arguments{
 \item{x}{Emissions estimation}
@@ -50,7 +50,12 @@ Not required for "tyre", "brake" or "road"}
 \item{list}{when TRUE returns a list with number of elements of the list as
 the number species of pollutants}
 
-\item{dx}{Integer, used when spec = "pmiag". It is the spatial disntace}
+\item{pmpar}{Numeric vector for PM speciation eg:
+c(e_so4i = 0.0077,  e_so4j = 0.0623,  e_no3i = 0.00247,
+e_no3j = 0.01053,  e_pm2.5i = 0.1,  e_pm2.5j = 0.3,
+e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
+e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
+argument is preseent, new values are used.}
 }
 \value{
 dataframe of speciation in grams or mols
