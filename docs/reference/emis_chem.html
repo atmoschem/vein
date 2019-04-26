@@ -131,8 +131,8 @@ criteria polluants specified in <code><a href='ef_ldv_speed.html'>ef_ldv_speed</
     </tr>
     <tr>
       <th>colby</th>
-      <td><p>Vector for aggregating extra column. For instance, region or
-province</p></td>
+      <td><p>Character indicating column name for aggregating extra column.
+For instance, region or province</p></td>
     </tr>
     </table>
     
@@ -140,6 +140,12 @@ province</p></td>
 
     <p>data.frame with lumped groups by chemical mechanism. It transform
 emissions in grams to mol.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This feature is experimental and the mapping of pollutants and lumped
+species may change in future.
+This function is converting the intial data.frame input into data.table</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -160,25 +166,31 @@ emissions in grams to mol.</p>
 <span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='no'>df1</span> <span class='kw'>&lt;-</span> <span class='no'>df</span>
 <span class='no'>df1</span>$<span class='no'>pollutant</span> <span class='kw'>=</span> <span class='st'>"propadiene"</span>
 <span class='no'>df2</span>$<span class='no'>pollutant</span> <span class='kw'>=</span> <span class='st'>"NO2"</span>
-<span class='fu'>emis_chem</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='no'>df1</span>, <span class='no'>df2</span>), <span class='st'>"RADM2"</span>)
-}</div><div class='output co'>#&gt;    df_mech            mol
-#&gt; 1      ALD 0.000000 [mol]
-#&gt; 2       CO 0.000000 [mol]
-#&gt; 3      ETH 0.000000 [mol]
-#&gt; 4      HC3 1.372808 [mol]
-#&gt; 5      HC5 0.000000 [mol]
-#&gt; 6      HC8 0.000000 [mol]
-#&gt; 7     HCHO 0.000000 [mol]
-#&gt; 8      KET 0.000000 [mol]
-#&gt; 9      NH3 0.000000 [mol]
-#&gt; 10      NO 0.000000 [mol]
-#&gt; 11     NO2 1.195496 [mol]
-#&gt; 12     OL2 0.000000 [mol]
-#&gt; 13     OLI 0.000000 [mol]
-#&gt; 14     OLT 0.000000 [mol]
-#&gt; 15     SO2 0.000000 [mol]
-#&gt; 16     TOL 0.000000 [mol]
-#&gt; 17     XYL 0.000000 [mol]</div></pre>
+<span class='no'>dfe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='no'>df1</span>, <span class='no'>df2</span>)
+<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"RADM2"</span>)
+<span class='no'>dfe</span>$<span class='no'>region</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='fl'>10</span>)
+<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"RADM2"</span>, <span class='st'>"region"</span>)
+}</div><div class='output co'>#&gt;    df_mech df_mech.1             mol
+#&gt; 1      ALD      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 2       CO      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 3      ETH      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 4      HC3      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 5      HC3         a 0.6240038 [mol]
+#&gt; 6      HC3         b 0.7488045 [mol]
+#&gt; 7      HC5      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 8      HC8      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 9     HCHO      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 10     KET      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 11     NH3      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 12      NO      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 13     NO2         a 0.5434074 [mol]
+#&gt; 14     NO2         b 0.6520889 [mol]
+#&gt; 15     OL2      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 16     OLI      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 17     OLT      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 18     SO2      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 19     TOL      &lt;NA&gt; 0.0000000 [mol]
+#&gt; 20     XYL      &lt;NA&gt; 0.0000000 [mol]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -186,6 +198,8 @@ emissions in grams to mol.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

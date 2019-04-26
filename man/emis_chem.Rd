@@ -13,8 +13,8 @@ emis_chem(dfe, mechanism, colby)
 "MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
 "SAPRC07CMAQ" or "SAPRC07A".}
 
-\item{colby}{Vector for aggregating extra column. For instance, region or
-province}
+\item{colby}{Character indicating column name for aggregating extra column.
+For instance, region or province}
 }
 \value{
 data.frame with lumped groups by chemical mechanism. It transform
@@ -24,6 +24,11 @@ emissions in grams to mol.
 \code{\link{emis_chem}} aggregates emissions by chemical mechanism
 and convert grams to mol. This function reads all hydrocarbos and respective
 criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
+}
+\note{
+This feature is experimental and the mapping of pollutants and lumped
+species may change in future.
+This function is converting the intial data.frame input into data.table
 }
 \examples{
 {
@@ -39,7 +44,10 @@ emis_chem(df, "CBMZ")
 df2 <- df1 <- df
 df1$pollutant = "propadiene"
 df2$pollutant = "NO2"
-emis_chem(rbind(df1, df2), "RADM2")
+dfe <- rbind(df1, df2)
+emis_chem(dfe, "RADM2")
+dfe$region <- rep(letters[1:2], 10)
+emis_chem(dfe, "RADM2", "region")
 }
 }
 \seealso{

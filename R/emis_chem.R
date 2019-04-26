@@ -8,14 +8,17 @@
 #' @param mechanism Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
 #' "MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
 #' "SAPRC07CMAQ" or "SAPRC07A".
-#' @param colby Vector for aggregating extra column. For instance, region or
-#' province
+#' @param colby Character indicating column name for aggregating extra column.
+#' For instance, region or province
 #' @return data.frame with lumped groups by chemical mechanism. It transform
 #' emissions in grams to mol.
 #' @importFrom data.table setDT setDF :=
 #' @importFrom utils data
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_hdv_speed}} \code{\link{speciate}}
 #' @export
+#' @note This feature is experimental and the mapping of pollutants and lumped
+#' species may change in future.
+#' This function is converting the intial data.frame input into data.table
 #' @examples {
 #' # CO
 #' df <- data.frame(emission = 1:10)
@@ -29,12 +32,15 @@
 #' df2 <- df1 <- df
 #' df1$pollutant = "propadiene"
 #' df2$pollutant = "NO2"
-#' emis_chem(rbind(df1, df2), "RADM2")
+#' dfe <- rbind(df1, df2)
+#' emis_chem(dfe, "RADM2")
+#' dfe$region <- rep(letters[1:2], 10)
+#' emis_chem(dfe, "RADM2", "region")
 #' }
 emis_chem <- function(dfe, mechanism, colby) {
   #Check column pollutant
   if(!any(grepl(pattern = "pollutant", x = names(dfe)))){
-    stop("The column 'pollutant' is not present in 'dfe'")
+    stop("The column 'pollutant' is rm(list = ls(not present in 'dfe'")
   }
   #Check column emissions
   if(!any(grepl(pattern = "emission", x = names(dfe)))){
@@ -68,7 +74,8 @@ emis_chem <- function(dfe, mechanism, colby) {
   df_mech$mol <- df_mech$mol*df_mech$k
   if(!missing(colby)){
     ss <- df_mech[, lapply(.SD, sum, na.rm=TRUE),
-                  keyby = list(df_mech$LUMPED, df_mech$colby) ,
+                  keyby =  list(df_mech$LUMPED,
+                                df_mech[[colby]]),
                   .SDcols = "mol" ]
   } else {
     ss <- df_mech[, lapply(.SD, sum, na.rm=TRUE),
@@ -76,6 +83,8 @@ emis_chem <- function(dfe, mechanism, colby) {
                   .SDcols = "mol" ]
   }
   data.table::setDF(ss)
+  dfe <- as.data.frame(dfe)
+  pollutants <- as.data.frame(pollutants)
   return(ss)
 
 }
