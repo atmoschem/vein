@@ -39,7 +39,12 @@
 #' @param show when TRUE shows row of table with respective speciation
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
-#' @param dx Integer, used when spec = "pmiag". It is the spatial disntace
+#' @param pmpar Numeric vector for PM speciation eg:
+#' c(e_so4i = 0.0077,  e_so4j = 0.0623,  e_no3i = 0.00247,
+#' e_no3j = 0.01053,  e_pm2.5i = 0.1,  e_pm2.5j = 0.3,
+#' e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
+#' e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
+#' argument is preseent, new values are used.
 #' @importFrom units as_units
 #' @importFrom sf st_as_sf st_set_geometry
 #' @return dataframe of speciation in grams or mols
@@ -91,7 +96,7 @@
 #' dfc <- speciate(pm, spec = "e_so4i")
 #' }
 speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE,
-                      list = FALSE, dx) {
+                      list = FALSE, pmpar) {
 nvoc <- c('e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
             'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket')
 pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
@@ -253,7 +258,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     }
     # PM2.5 IAG ####
   } else if(spec == "pmiag"){
-    message("For emissions grid only, emissions must be in g/(Xkm^2)/h\n")
+    message("For emissions grid only, emissions must be in g/(km^2)/h\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
     if(class(x)[1] == "sf"){
       x <- sf::st_set_geometry(x, NULL)
@@ -265,18 +270,26 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     # x (g / Xkm^2 / h)
     # x <- x*1000000 # g to micro grams
     # x <- x*(1/1000)^2 # km^2 to m^2
-    x <- x/3600*(dx)^-2  # h to seconds. Consider the DX
-    df <- data.frame(e_so4i = 0.0077,
-                     e_so4j = 0.0623,
-                     e_no3i = 0.00247,
-                     e_no3j = 0.01053,
-                     e_pm2.5i = 0.1,
-                     e_pm2.5j = 0.3,
-                     e_orgi = 0.0304,
-                     e_orgj = 0.1296,
-                     e_eci = 0.056,
-                     e_ecj = 0.024,
-                     h2o = 0.277)
+    x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
+    # I think it is wrong to divide by dx^2. Need to reconfirm
+    if(!missing(pmar)) {
+      if(length(pmar) != 11) stop("length 'pmpar' must be 11")
+      df <- as.data.frame(matrix(pmar, ncol = length(pmar)))
+      names(df) <- names(pmpar)
+    } else {
+      df <- data.frame(e_so4i = 0.0077,
+                       e_so4j = 0.0623,
+                       e_no3i = 0.00247,
+                       e_no3j = 0.01053,
+                       e_pm2.5i = 0.1,
+                       e_pm2.5j = 0.3,
+                       e_orgi = 0.0304,
+                       e_orgj = 0.1296,
+                       e_eci = 0.056,
+                       e_ecj = 0.024,
+                       h2o = 0.277)
+
+    }
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
         x[ , i] <- as.numeric(x[ , i])
@@ -320,18 +333,25 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     # x (g / Xkm^2 / h)
     # x <- x*1000000 # g to micro grams
     # x <- x*(1/1000)^2 # km^2 to m^2
-    x <- x/3600*(dx)^-2  # h to seconds. Consider the DX
-    df <- data.frame(e_so4i = 0.0077,
-                     e_so4j = 0.0623,
-                     e_no3i = 0.00247,
-                     e_no3j = 0.01053,
-                     e_pm2.5i = 0.1,
-                     e_pm2.5j = 0.3,
-                     e_orgi = 0.0304,
-                     e_orgGj = 0.1296,
-                     e_eci = 0.056,
-                     e_ecj = 0.024,
-                     h2o = 0.277)
+    x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
+    if(!missing(pmar)) {
+      if(length(pmar) != 11) stop("length 'pmpar' must be 11")
+      df <- as.data.frame(matrix(pmar, ncol = length(pmar)))
+      names(df) <- names(pmpar)
+    } else {
+      df <- data.frame(e_so4i = 0.0077,
+                       e_so4j = 0.0623,
+                       e_no3i = 0.00247,
+                       e_no3j = 0.01053,
+                       e_pm2.5i = 0.1,
+                       e_pm2.5j = 0.3,
+                       e_orgi = 0.0304,
+                       e_orgj = 0.1296,
+                       e_eci = 0.056,
+                       e_ecj = 0.024,
+                       h2o = 0.277)
+
+    }
 
     names(df) <- spec
     if (is.data.frame(x)) {
