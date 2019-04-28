@@ -12,11 +12,12 @@
 #' "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"
 #' @param colby Character indicating column name for aggregating extra column.
 #' For instance, region or province
+#' @param long Logical. Do you want data in long format?
 #' @return data.frame with lumped groups by chemical mechanism. It transform
 #' emissions in grams to mol.
 #' @importFrom data.table setDF as.data.table
 #' @importFrom utils data
-#' @importFrom units units_options
+#' @importFrom units as_units
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_hdv_speed}} \code{\link{speciate}}
 #' @export
 #' @note This feature is experimental and the mapping of pollutants and lumped
@@ -25,6 +26,11 @@
 #' To have a comprehensive speciation is necessary enter with a data.frame
 #' with colum 'emission' in long format including another column named 'pollutant' with
 #' species of NMHC, CO, NO, NO2, NH3, SO2, PM2.5 and coarse PM10.
+#'
+#' Groups derived from gases has units 'mol' and from aersols 'g'. The aersol
+#' units for WRF-Chem are ug/m^2/s while for CMAQ and CAMx are g/s. So,
+#' leaving the units just in g, allow to make further change while
+#' providing flexibility for several models.
 #' @examples {
 #' # CO
 #' df <- data.frame(emission = Emissions(1:10))
@@ -41,8 +47,9 @@
 #' emis_chem(dfe, "CBMZ")
 #' dfe$region <- rep(letters[1:2], 10)
 #' emis_chem(dfe, "CBMZ", "region")
+#' emis_chem(dfe, "CBMZ", "region", TRUE)
 #' }
-emis_chem <- function(dfe, mechanism, colby) {
+emis_chem <- function(dfe, mechanism, colby, long = FALSE) {
   dfe <- as.data.frame(dfe)
   #Check column pollutant
   if(!any(grepl(pattern = "pollutant", x = names(dfe)))){
@@ -97,5 +104,19 @@ emis_chem <- function(dfe, mechanism, colby) {
   ss <- ss[!is.na(ss$group), ]
   pollutants <- as.data.frame(pollutants)
 
-  return(ss)
+  if(long){
+    return(ss)
+  } else {
+    ss <- long_to_wide(df = ss,
+                       column_with_new_names = "group",
+                       column_with_data = "emission")
+    for(i in 1:ncol(ss)){
+      if(names(ss)[i] %in% gases) {
+        ss[, i] <-  units::as_units(ss[, i], "mol")
+      } else {
+        ss[, i] <-  units::as_units(ss[, i], "g")
+      }
+    }
+    return(ss)
+  }
 }

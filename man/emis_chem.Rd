@@ -4,7 +4,7 @@
 \alias{emis_chem}
 \title{Aggregate emissions by lumped groups in chemical mechanism}
 \usage{
-emis_chem(dfe, mechanism, colby)
+emis_chem(dfe, mechanism, colby, long = FALSE)
 }
 \arguments{
 \item{dfe}{data.frame with column `emissions` in grams and `pollutant` in long format.}
@@ -17,6 +17,8 @@ WRF: "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 
 \item{colby}{Character indicating column name for aggregating extra column.
 For instance, region or province}
+
+\item{long}{Logical. Do you want data in long format?}
 }
 \value{
 data.frame with lumped groups by chemical mechanism. It transform
@@ -34,6 +36,11 @@ This function is converting the intial data.frame input into data.table.
 To have a comprehensive speciation is necessary enter with a data.frame
 with colum 'emission' in long format including another column named 'pollutant' with
 species of NMHC, CO, NO, NO2, NH3, SO2, PM2.5 and coarse PM10.
+
+Groups derived from gases has units 'mol' and from aersols 'g'. The aersol
+units for WRF-Chem are ug/m^2/s while for CMAQ and CAMx are g/s. So,
+leaving the units just in g, allow to make further change while
+providing flexibility for several models.
 }
 \examples{
 {
@@ -52,6 +59,7 @@ df2$pollutant = "NO2"
 emis_chem(dfe, "CBMZ")
 dfe$region <- rep(letters[1:2], 10)
 emis_chem(dfe, "CBMZ", "region")
+emis_chem(dfe, "CBMZ", "region", TRUE)
 }
 }
 \seealso{
