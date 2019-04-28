@@ -46,9 +46,9 @@ df2 <- df1 <- df
 df1$pollutant = "propadiene"
 df2$pollutant = "NO2"
 (dfe <- rbind(df1, df2))
-emis_chem(dfe, "RADM2")
+emis_chem(dfe, "CBMZ")
 dfe$region <- rep(letters[1:2], 10)
-emis_chem(dfe, "RADM2", "region")
+emis_chem(dfe, "CBMZ", "region")
 }
 }
 \seealso{
