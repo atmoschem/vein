@@ -4,7 +4,7 @@
 #' and convert grams to mol. This function reads all hydrocarbos and respective
 #' criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
 #'
-#' @param dfe data.frame with column `emissions` in grams and `pollutant`.
+#' @param dfe data.frame with column `emissions` in grams and `pollutant` in long format.
 #' @param mechanism Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
 #' "MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
 #' "SAPRC07CMAQ",  "SAPRC07A","CRIMECH"
@@ -21,7 +21,10 @@
 #' @export
 #' @note This feature is experimental and the mapping of pollutants and lumped
 #' species may change in future.
-#' This function is converting the intial data.frame input into data.table
+#' This function is converting the intial data.frame input into data.table.
+#' To have a comprehensive speciation is necessary enter with a data.frame
+#' with colum 'emission' in long format including another column named 'pollutant' with
+#' species of NMHC, CO, NO, NO2, NH3, SO2, PM2.5 and coarse PM10.
 #' @examples {
 #' # CO
 #' df <- data.frame(emission = Emissions(1:10))
@@ -81,16 +84,18 @@ emis_chem <- function(dfe, mechanism, colby) {
                   keyby =  list(df_mech$LUMPED,
                                 df_mech[[colby]]),
                   .SDcols = "mol" ]
+    names(ss) <- c("group", colby,"emission")
   } else {
     ss <- df_mech[, lapply(.SD, sum, na.rm=TRUE),
                   keyby =  list(df_mech$LUMPED),
                   .SDcols = "mol" ]
+    names(ss) <- c("group", "emission")
   }
   data.table::setDF(ss)
   gases <- unique(df[df$type == "gas", "LUMPED"])
-  names(ss) <- c("group", "emission")
   ss$units <- ifelse(ss$group %in% gases, "mol", "g")
   ss <- ss[!is.na(ss$group), ]
   pollutants <- as.data.frame(pollutants)
+
   return(ss)
 }

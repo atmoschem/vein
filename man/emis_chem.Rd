@@ -7,7 +7,7 @@
 emis_chem(dfe, mechanism, colby)
 }
 \arguments{
-\item{dfe}{data.frame with column `emissions` in grams and `pollutant`.}
+\item{dfe}{data.frame with column `emissions` in grams and `pollutant` in long format.}
 
 \item{mechanism}{Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
 "MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
@@ -30,7 +30,10 @@ criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hd
 \note{
 This feature is experimental and the mapping of pollutants and lumped
 species may change in future.
-This function is converting the intial data.frame input into data.table
+This function is converting the intial data.frame input into data.table.
+To have a comprehensive speciation is necessary enter with a data.frame
+with colum 'emission' in long format including another column named 'pollutant' with
+species of NMHC, CO, NO, NO2, NH3, SO2, PM2.5 and coarse PM10.
 }
 \examples{
 {

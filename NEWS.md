@@ -7,7 +7,8 @@ NEWS
 - replace data fe2015 from ef_cetesb updated and remove columns related to Motorcycles.
 - Adds emis_chem to aggregate emissions by chemical mechanisms  "SAPRC", "RACM", 
 "RADM2", "CBMZ", "MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
-"SAPRC07CMAQ" or "SAPRC07A".
+"SAPRC07CMAQ" or "SAPRC07A" and more.
+- Add long_to_wide
 
 ## vein 0.7.1  (Release date: 2019-04-13)
 
