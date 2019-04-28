@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis_chem.R
 \name{emis_chem}
 \alias{emis_chem}
-\title{Aggregate emissions}
+\title{Aggregate emissions by lumped groups in chemical mechanism}
 \usage{
 emis_chem(dfe, mechanism, colby)
 }
@@ -11,7 +11,9 @@ emis_chem(dfe, mechanism, colby)
 
 \item{mechanism}{Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
 "MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
-"SAPRC07CMAQ" or "SAPRC07A".}
+"SAPRC07CMAQ",  "SAPRC07A","CRIMECH"
+WRF: "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
+"MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"}
 
 \item{colby}{Character indicating column name for aggregating extra column.
 For instance, region or province}
@@ -33,9 +35,8 @@ This function is converting the intial data.frame input into data.table
 \examples{
 {
 # CO
-df <- data.frame(emission = 1:10)
+df <- data.frame(emission = Emissions(1:10))
 df$pollutant = "CO"
-df$emission <- units::set_units(df$emission, "g")
 emis_chem(df, "CBMZ")
 # hexanal
 df$pollutant = "hexanal"
@@ -44,7 +45,7 @@ emis_chem(df, "CBMZ")
 df2 <- df1 <- df
 df1$pollutant = "propadiene"
 df2$pollutant = "NO2"
-dfe <- rbind(df1, df2)
+(dfe <- rbind(df1, df2))
 emis_chem(dfe, "RADM2")
 dfe$region <- rep(letters[1:2], 10)
 emis_chem(dfe, "RADM2", "region")

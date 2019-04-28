@@ -4,6 +4,6 @@ df$pollutant = "CO"
 df$emission <- units::set_units(df$emission, "g")
 
 test_that("adt works", {
-  expect_equal(emis_chem(df, "CBMZ")[2, "mol"],
-               (1.963584434130667411)*units::as_units("mol"))
+  expect_equal(emis_chem(df, "CBMZ")[4, "emission"],
+               (1.963584434130667411))
 })
