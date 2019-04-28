@@ -35,11 +35,12 @@
 #' df1$pollutant = "propadiene"
 #' df2$pollutant = "NO2"
 #' (dfe <- rbind(df1, df2))
-#' emis_chem(dfe, "RADM2")
+#' emis_chem(dfe, "CBMZ")
 #' dfe$region <- rep(letters[1:2], 10)
-#' emis_chem(dfe, "RADM2", "region")
+#' emis_chem(dfe, "CBMZ", "region")
 #' }
 emis_chem <- function(dfe, mechanism, colby) {
+  dfe <- as.data.frame(dfe)
   #Check column pollutant
   if(!any(grepl(pattern = "pollutant", x = names(dfe)))){
     stop("The column 'pollutant' is present in 'dfe'")
@@ -61,7 +62,7 @@ emis_chem <- function(dfe, mechanism, colby) {
   pollutants <- pollutants[, c("pollutant", "g_mol")]
 
   # merging and filtering g_mol
-  dfe <- merge(dfe, pollutants, by = "pollutant", all.x = TRUE)
+  dfe <- merge(dfe, pollutants, by = "pollutant", all = TRUE)
 
   # converting to mol
   dfe$mol <- ifelse(!is.na(dfe$g_mol),
@@ -89,7 +90,7 @@ emis_chem <- function(dfe, mechanism, colby) {
   gases <- unique(df[df$type == "gas", "LUMPED"])
   names(ss) <- c("group", "emission")
   ss$units <- ifelse(ss$group %in% gases, "mol", "g")
-  dfe <- as.data.frame(dfe)
+  ss <- ss[!is.na(ss$group), ]
   pollutants <- as.data.frame(pollutants)
   return(ss)
 }
