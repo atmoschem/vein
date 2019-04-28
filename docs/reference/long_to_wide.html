@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Experimental: Returns a function of Emission Factor by age of use — ef_fun • vein</title>
+<title>Transform data.frame from long to wide format — long_to_wide • vein</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Experimental: Returns a function of Emission Factor by age of use — ef_fun" />
+<meta property="og:title" content="Transform data.frame from long to wide format — long_to_wide" />
 
-<meta property="og:description" content="ef_fun returns amount of vehicles at each age" />
+<meta property="og:description" content="long_to_wide aggregates emissions by chemical mechanism
+and convert grams to mol. This function reads all hydrocarbos and respective
+criteria polluants specified in ef_ldv_speed and ef_hdv_speed." />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -99,66 +101,75 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Experimental: Returns a function of Emission Factor by age of use</h1>
+    <h1>Transform data.frame from long to wide format</h1>
     
-    <div class="hidden name"><code>ef_fun.Rd</code></div>
+    <div class="hidden name"><code>long_to_wide.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>ef_fun</code> returns amount of vehicles at each age</p>
+    <p><code>long_to_wide</code> aggregates emissions by chemical mechanism
+and convert grams to mol. This function reads all hydrocarbos and respective
+criteria polluants specified in <code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> and <code><a href='ef_hdv_speed.html'>ef_hdv_speed</a></code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_fun</span>(<span class='no'>ef</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"logistic"</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>ef</span>), <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>(<span class='no'>ef</span>),
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>4</span>, <span class='kw'>L</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>ef</span>))</pre>
+    <pre class="usage"><span class='fu'>long_to_wide</span>(<span class='no'>df</span>, <span class='kw'>column_with_new_names</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>df</span>)[<span class='fl'>1</span>],
+  <span class='kw'>column_with_data</span> <span class='kw'>=</span> <span class='st'>"emission"</span>, <span class='no'>column_fixed</span>, <span class='no'>geometry</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ef</th>
-      <td><p>Numeric; numeric vector of emission factors.</p></td>
+      <th>df</th>
+      <td><p>data.frame with three column. Forst has the new names, secon</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>Character; "logistic"  by default so far.</p></td>
+      <th>column_with_new_names</th>
+      <td><p>Character, column that has new column names</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>Numeric; vector for ages of use.</p></td>
+      <th>column_with_data</th>
+      <td><p>Character column with data</p></td>
     </tr>
     <tr>
-      <th>x0</th>
-      <td><p>Numeric;  the x-value of the sigmoid's midpoint,</p></td>
+      <th>column_fixed</th>
+      <td><p>Character, optional, column that will remain fixed</p></td>
     </tr>
     <tr>
-      <th>k</th>
-      <td><p>Numeric; the steepness of the curve.</p></td>
-    </tr>
-    <tr>
-      <th>L</th>
-      <td><p>Integer; the curve's maximum value.</p></td>
+      <th>geometry</th>
+      <td><p>To return a sf</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe of age distrubution of vehicles at each street.</p>
+    <p>wide data.frame.</p>
     
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>https://en.wikipedia.org/wiki/Logistic_function</p>
+    <div class='dont-index'><p><code><a href='emis_hot_td.html'>emis_hot_td</a></code>  <code><a href='emis_cold_td.html'>emis_cold_td</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>fe2015</span>)
-<span class='no'>CO</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>vein</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/vein/topics/EmissionFactors'>EmissionFactors</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span> <span class='kw'>==</span> <span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>])
-<span class='no'>ef_logit</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_fun</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>CO</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fl'>27</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>33</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>ef_logit</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>ef_logit</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
-}</div><div class='img'><img src='ef_fun-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"CO"</span>, <span class='st'>"propadiene"</span>, <span class='st'>"NO2"</span>), <span class='fl'>10</span>),
+<span class='kw'>emission</span> <span class='kw'>=</span> <span class='kw pkg'>vein</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/vein/topics/Emissions'>Emissions</a></span>(<span class='fl'>1</span>:<span class='fl'>30</span>),
+<span class='kw'>region</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='fl'>15</span>))
+<span class='no'>df</span>
+<span class='fu'>long_to_wide</span>(<span class='no'>df</span>)
+<span class='fu'>long_to_wide</span>(<span class='no'>df</span>, <span class='kw'>column_fixed</span> <span class='kw'>=</span> <span class='st'>"region"</span>)
+}</div><div class='output co'>#&gt;    CO NO2 propadiene region
+#&gt; 1   1   3          2      a
+#&gt; 2   4   6          5      b
+#&gt; 3   7   9          8      a
+#&gt; 4  10  12         11      b
+#&gt; 5  13  15         14      a
+#&gt; 6  16  18         17      b
+#&gt; 7  19  21         20      a
+#&gt; 8  22  24         23      b
+#&gt; 9  25  27         26      a
+#&gt; 10 28  30         29      b</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -167,7 +178,7 @@
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#references">References</a></li>
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

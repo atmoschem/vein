@@ -15,12 +15,14 @@ long_to_wide(df, column_with_new_names = names(df)[1],
 \item{column_with_data}{Character column with data}
 
 \item{column_fixed}{Character, optional, column that will remain fixed}
+
+\item{geometry}{To return a sf}
 }
 \value{
 wide data.frame.
 }
 \description{
-\code{\link{lon}} aggregates emissions by chemical mechanism
+\code{\link{long_to_wide}} aggregates emissions by chemical mechanism
 and convert grams to mol. This function reads all hydrocarbos and respective
 criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
 }
