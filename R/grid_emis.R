@@ -199,4 +199,3 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
     return(df)
   }
 }
-

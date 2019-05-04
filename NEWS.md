@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.7.2  (Release date: 2019-04-26)
+# vein 0.7.3  (Release date: 2019-05-04)
+
+- add speciation in evaporative emission factors.
+
+## vein 0.7.2  (Release date: 2019-04-26)
 
 - adds data pollutants including CAS ID and molar mass.
 - replace data fe2015 from ef_cetesb updated and remove columns related to Motorcycles.

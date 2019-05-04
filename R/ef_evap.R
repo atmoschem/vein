@@ -18,6 +18,13 @@
 #' varies in each row and each column.
 #' @param ca Size of canister: "no" meaning no canister, "small", "medium" and
 #' "large".
+#' @param pollutant Character indicating any of the covered pollutants: "NMHC",
+#' "ethane", "propane", "i-butane", "n-butane", "i-pentane", "n-pentane",
+#' "2-methylpentane", "3-methylpentane", "n-hexane", "n-heptane", "propene",
+#' "trans-2-butene", "isobutene", "cis-2-butene", "1,3-butadiene",
+#' "trans-2-pentene", "cis-2-pentene", "isoprene", "propyne", "acetylene",
+#' "benzene", "toluene", "ethylbenzene", "m-xylene", "o-xylene",
+#' "1,2,4-trimethylbenzene" and "1,3,5-trimethylbenzene". Default is "NMHC"
 #' @param ltrip Numeric; Length of trip. Experimental feature to conter g/trip
 #' and g/proced (assuming proced similar to trip) in g/km.
 #' @param kmday Numeric; average daily mileage. Experimental option
@@ -37,6 +44,8 @@
 #' @export
 #' @examples {
 #' # Do not run
+#' ef_evap(ef = "eshotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+#' pollutant = "cis-2-pentene")
 #' ef_evap(ef = "ed", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 #' show = TRUE)
 #' ef_evap(ef = c("erhotc", "erhotc"), v = "PC", cc = "<=1400",
@@ -59,10 +68,9 @@
 #' lkm <- units::set_units(10, km)
 #' ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = lkm,
 #' dt = dt, ca = "no")
-#' ef_evap(ef = rep("erhotc", 8), v = "PC", cc = "<=1400", ltrip = lkm,
-#' dt = dt, ca = "no")
 #' }
-ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
+ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
+                     k = 1, ltrip,  kmday, show = FALSE,
                      verbose = FALSE){
   a <- (-5+10)/2
   b <-   (0+15)/2
@@ -131,20 +139,34 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
     }
 
     if(length(dt) == 1 & length(ef) == 1){
-      df <- ef_ev[ef_ev$ef == ef & ef_ev$veh %in% v & ef_ev$cc %in% cc &
-                    ef_ev$dt == dt & ef_ev$canister %in% ca, ]
+      df <- ef_ev[ef_ev$ef == ef &
+                    ef_ev$veh %in% v &
+                    ef_ev$cc %in% cc &
+                    ef_ev$dt == dt &
+                    ef_ev$canister %in% ca &
+                    ef_ev$pollutant == pollutant, ]
 
     } else if (length(dt) > 1 & length(ef) == 1){
       df <- do.call("rbind",
                     lapply(1:length(dt), function(i){
-                      ef_ev[ef_ev$ef == ef & ef_ev$veh %in% v & ef_ev$cc %in% cc &
-                              ef_ev$dt == dt[i] & ef_ev$canister %in% ca, ]
+                      ef_ev[ef_ev$ef == ef &
+                              ef_ev$veh %in% v &
+                              ef_ev$cc %in% cc &
+                              ef_ev$dt == dt[i] &
+                              ef_ev$canister %in% ca &
+                              ef_ev$pollutant == pollutant, ]
+
                     }))
     } else if(length(dt) == 1 & length(ef) > 1){
       df <- do.call("rbind",
                     lapply(1:length(ef), function(i){
-                      ef_ev[ef_ev$ef == ef[i] & ef_ev$veh %in% v & ef_ev$cc %in% cc &
-                              ef_ev$dt == dt & ef_ev$canister %in% ca, ]
+                      ef_ev[ef_ev$ef == ef[i] &
+                              ef_ev$veh %in% v &
+                              ef_ev$cc %in% cc &
+                              ef_ev$dt == dt &
+                              ef_ev$canister %in% ca &
+                              ef_ev$pollutant == pollutant, ]
+
                     }))
 
 
@@ -152,8 +174,12 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
       df <- do.call("rbind", lapply(1:length(dt), function(j){
         do.call("rbind",
                 lapply(1:length(ef), function(i){
-                  ef_ev[ef_ev$ef == ef[i] & ef_ev$veh %in% v & ef_ev$cc %in% cc &
-                          ef_ev$dt == dt[j] & ef_ev$canister %in% ca, ]
+                  ef_ev[ef_ev$ef == ef[i] &
+                          ef_ev$veh %in% v &
+                          ef_ev$cc %in% cc &
+                          ef_ev$dt == dt[j] &
+                          ef_ev$canister %in% ca &
+                          ef_ev$pollutant == pollutant, ]
                 }))
       }))
     }
@@ -208,8 +234,11 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
     if(ncol(dt) == 1 & length(ef) == 1){
       df <- do.call("rbind",
                     lapply(1:nrow(dt), function(i){
-                      ef_ev[ef_ev$ef == ef & ef_ev$veh == v & ef_ev$cc == cc &
-                              ef_ev$dt == unlist(dt)[i] & ef_ev$canister == ca, ]$g
+                      ef_ev[ef_ev$ef == ef &
+                              ef_ev$veh == v &
+                              ef_ev$cc == cc &
+                              ef_ev$dt == unlist(dt)[i] &
+                              ef_ev$canister == ca, ]$g
                     }))
       if(!missing(ltrip)){
         return(EmissionFactors(df*k/ltrip))
@@ -222,8 +251,12 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
       df <- do.call("rbind", lapply(1:ncol(dt), function(j){
         df <- do.call("rbind",
                       lapply(1:nrow(dt), function(i){
-                        ef_ev[ef_ev$ef == ef & ef_ev$veh == v & ef_ev$cc == cc &
-                                ef_ev$dt == dt[i, j] & ef_ev$canister == ca, ]$g
+                        ef_ev[ef_ev$ef == ef &
+                                ef_ev$veh == v &
+                                ef_ev$cc == cc &
+                                ef_ev$dt == dt[i, j] &
+                                ef_ev$canister == ca &
+                                ef_ev$pollutant == pollutant, ]$g
                       }))
         df <- as.data.frame(df)
         names(df) <- "ef"
@@ -244,8 +277,12 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
       df <- do.call("cbind", lapply(1:length(ef), function(j){
         do.call("rbind",
                 lapply(1:nrow(dt), function(i){
-                  ef_ev[ef_ev$ef == ef[j] & ef_ev$veh == v & ef_ev$cc == cc &
-                          ef_ev$dt == unlist(dt)[i] & ef_ev$canister == ca, ]$g
+                  ef_ev[ef_ev$ef == ef[j] &
+                          ef_ev$veh == v &
+                          ef_ev$cc == cc &
+                          ef_ev$dt == unlist(dt)[i] &
+                          ef_ev$canister == ca &
+                          ef_ev$pollutant == pollutant, ]$g
                 }))
       }))
       if(!missing(ltrip)){
@@ -260,8 +297,12 @@ ef_evap <- function (ef, v, cc, dt, ca, k = 1, ltrip,  kmday, show = FALSE,
         df <- do.call("cbind", lapply(1:length(ef), function(j){
           do.call("rbind",
                   lapply(1:nrow(dt), function(i){
-                    ef_ev[ef_ev$ef == ef[j] & ef_ev$veh == v & ef_ev$cc == cc &
-                            ef_ev$dt == dt[i, k] & ef_ev$canister == ca, ]$g
+                    ef_ev[ef_ev$ef == ef[j] &
+                            ef_ev$veh == v &
+                            ef_ev$cc == cc &
+                            ef_ev$dt == dt[i, k] &
+                            ef_ev$canister == ca &
+                            ef_ev$pollutant == pollutant, ]$g
                   }))
         }))
       }))
