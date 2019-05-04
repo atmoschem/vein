@@ -4,8 +4,8 @@
 \alias{ef_evap}
 \title{Evaporative emission factor}
 \usage{
-ef_evap(ef, v, cc, dt, ca, k = 1, ltrip, kmday, show = FALSE,
-  verbose = FALSE)
+ef_evap(ef, v, cc, dt, ca, pollutant = "NMHC", k = 1, ltrip, kmday,
+  show = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{ef}{Name of  evaporative emission factor as *eshotc*: mean hot-soak with
@@ -27,6 +27,14 @@ varies in each row and each column.}
 
 \item{ca}{Size of canister: "no" meaning no canister, "small", "medium" and
 "large".}
+
+\item{pollutant}{Character indicating any of the covered pollutants: "NMHC",
+"ethane", "propane", "i-butane", "n-butane", "i-pentane", "n-pentane",
+"2-methylpentane", "3-methylpentane", "n-hexane", "n-heptane", "propene",
+"trans-2-butene", "isobutene", "cis-2-butene", "1,3-butadiene",
+"trans-2-pentene", "cis-2-pentene", "isoprene", "propyne", "acetylene",
+"benzene", "toluene", "ethylbenzene", "m-xylene", "o-xylene",
+"1,2,4-trimethylbenzene" and "1,3,5-trimethylbenzene". Default is "NMHC"}
 
 \item{k}{multiplication factor}
 
@@ -56,6 +64,8 @@ occur during vehicles use. Hot soak emission occur following vehicles use.
 \examples{
 {
 # Do not run
+ef_evap(ef = "eshotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
+pollutant = "cis-2-pentene")
 ef_evap(ef = "ed", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 show = TRUE)
 ef_evap(ef = c("erhotc", "erhotc"), v = "PC", cc = "<=1400",
@@ -77,8 +87,6 @@ ef_evap(ef ="erhotc", v = "PC", cc = "<=1400",
 dt = dt, ca = "no")
 lkm <- units::set_units(10, km)
 ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = lkm,
-dt = dt, ca = "no")
-ef_evap(ef = rep("erhotc", 8), v = "PC", cc = "<=1400", ltrip = lkm,
 dt = dt, ca = "no")
 }
 }

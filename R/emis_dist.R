@@ -139,7 +139,7 @@ emis_dist <- function(gy,
       cat("Columns: ")
       cat(names(net_all))
       cat("\n")
-      }
+    }
     return(net_all)
   }
 }

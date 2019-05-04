@@ -29,7 +29,7 @@ You can learn more about VEIN reading the documentation in [PDF](https://cran.r-
 Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
 It currently covers the following pollutants in speed functions:
 
-### European emission factors for all available vehicle categories:
+### European emission factors for all available vehicle categories exhaust:
 
 - **Criteria (g/km)**: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb", "FC" (Fuel Consumption),"NO", "NO2".
@@ -65,6 +65,18 @@ It currently covers the following pollutants in speed functions:
 - "AS_urban", "AS_rural", "AS_highway".
 - **Total Number of particles (N/km)**
 - "N_urban", "N_rural", "N_highway", "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
+
+### European emission factors speciation for evapoative emissions:
+
+- **Criteria (g/km)**: "NMHC".
+- **NMHC (g/km)**:
+- _ALKANES_: "ethane", "propane", "n-butane", "i-pentane", "n-pentane",
+"2-methylheptane", "3-methylheptane", "n-hexane", "n-heptane"
+- _ALKENES_: "ethene", "propene", "1-butene", "trans-2-butene", "isobutene", 
+"cis-2-butene",  "1,3-butadiene", "trans-2-pentene", "cis-2-pentene", "isoprene"
+- _ALKYNES_:"propyne", "acetylene".
+- _AROMATICS_: "benzene", "toluene", "ethylbenzene", "m-xylene", "o-xylene",
+"1,2,3-trimethylbenzene" and "1,3,5-trimethylbenzene", 
 
 ### Brazilian emission factors for all available vehicle categories:
 
