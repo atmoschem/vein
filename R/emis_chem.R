@@ -6,7 +6,7 @@
 #'
 #' @param dfe data.frame with column `emissions` in grams and `pollutant` in long format.
 #' @param mechanism Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
-#' "MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
+#' "MOZART", "SAPRC99", "CB05", "CB05CMAQ", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
 #' "SAPRC07CMAQ",  "SAPRC07A","CRIMECH"
 #' WRF: "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 #' "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"
@@ -18,7 +18,7 @@
 #' @importFrom data.table setDF as.data.table
 #' @importFrom utils data
 #' @importFrom units as_units
-#' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_hdv_speed}} \code{\link{speciate}}
+#' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_hdv_speed}} \code{\link{speciate}} \code{\link{ef_evap}}
 #' @export
 #' @note This feature is experimental and the mapping of pollutants and lumped
 #' species may change in future.

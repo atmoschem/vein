@@ -96,7 +96,7 @@ is available, I will update these factors.
 "isobutene", "2-butene", "1,3-butadiene", "1-pentene", "2-pentene",
 "1-hexene", "dimethylhexene".
 
-\emph{ALKYNES (g/km)}:"1-butine", "propine", "acetylene".
+\emph{ALKYNES (g/km)}:"1-butyne", "propyne", "acetylene".
 
 \emph{ALDEHYDES (g/km)}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
 "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
@@ -129,7 +129,8 @@ efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16, col = "blue")
 
 # Quick view
-pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2")
+pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2",
+"1-butyne", "propyne")
 f <- sapply(1:length(pol), function(i){
 ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)
 })

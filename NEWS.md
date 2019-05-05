@@ -4,6 +4,7 @@ NEWS
 # vein 0.7.3  (Release date: 2019-05-04)
 
 - add speciation in evaporative emission factors.
+- improve emis_chem
 
 ## vein 0.7.2  (Release date: 2019-04-26)
 
