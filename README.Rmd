@@ -53,7 +53,7 @@ It currently covers the following pollutants in speed functions:
 - _ALKENES_: "ethylene", "propylene", "propadiene", "1-butene",
 "isobutene", "2-butene", "1,3-butadiene", "1-pentene", "2-pentene",
 "1-hexene", "dimethylhexene".
-- _ALKYNES_:"ONE_butine", "propine", "acetylene".
+- _ALKYNES_:"1-butyne", "propyne", "acetylene".
 - _ALDEHYDES_: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
 "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
 "propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",

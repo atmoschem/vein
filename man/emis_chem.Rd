@@ -10,7 +10,7 @@ emis_chem(dfe, mechanism, colby, long = FALSE)
 \item{dfe}{data.frame with column `emissions` in grams and `pollutant` in long format.}
 
 \item{mechanism}{Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
-"MOZART", "SAPRC99", "CB05", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
+"MOZART", "SAPRC99", "CB05", "CB05CMAQ", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
 "SAPRC07CMAQ",  "SAPRC07A","CRIMECH"
 WRF: "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"}
@@ -63,5 +63,5 @@ emis_chem(dfe, "CBMZ", "region", TRUE)
 }
 }
 \seealso{
-\code{\link{ef_ldv_speed}} \code{\link{ef_hdv_speed}} \code{\link{speciate}}
+\code{\link{ef_ldv_speed}} \code{\link{ef_hdv_speed}} \code{\link{speciate}} \code{\link{ef_evap}}
 }
