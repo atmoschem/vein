@@ -230,7 +230,7 @@ spplot(E_CO_g, "V138", scales=list(Draw=T),cuts=8,
 # 12 ####
 E_CO_g$id <- NULL
 ldf <- list("co" = E_CO_g)
-df_wrf <- emis_wrf(ldf,nr=1,dmyhm = "04-08-2014 00:00",
+df_wrf <- eixport::to_as4wrf(ldf,nr=1,dmyhm = "04-08-2014 00:00",
                    tz = "America/Sao_Paulo", islist=T)
 
 
