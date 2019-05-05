@@ -5,6 +5,8 @@ NEWS
 
 - add speciation in evaporative emission factors.
 - improve emis_chem
+- Splits m,p-xylene in m-xylene and p-xylene fix #176
+- Deprecated emis_wrf in favou of eixport::to_as4wrf #fix #174
 
 ## vein 0.7.2  (Release date: 2019-04-26)
 

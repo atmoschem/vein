@@ -58,7 +58,8 @@ It currently covers the following pollutants in speed functions:
 "propionaldehyde", "hexanal", "i_valeraldehyde", "valeraldehyde",
 "o_tolualdehyde", "m_tolualdehyde", "p_tolualdehyde".
 - _KETONES_: "acetone", "methylethlketone".
-- _AROMATICS_: "toluene", "ethylbenzene", "m,p-xylene", "o-xylene",
+- _AROMATICS_: "toluene", "ethylbenzene", 
+"m-xylene",  "p-xylene", "o-xylene",
 "1,2,3-trimethylbenzene", "1,2,4-trimethylbenzene",
 "1,3,5-trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
 - **Active Surface (cm2/km)**
