@@ -50,11 +50,10 @@ netdata[, i] <- as.numeric(netdata[, i])
   if (type == "lines" ) {
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
-
     cat(paste0("Sum of street emissions ", round(snetdf, 2), "\n"))
-
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
-    # Filtrando solo columnas numericas
+
+        # Filtrando solo columnas numericas
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(sf::st_set_geometry(net, NULL))
     net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) == 1,]))
@@ -82,13 +81,21 @@ netdata[, i] <- as.numeric(netdata[, i])
       return(gx)
     # }
   } else if ( type == "points" ){
+    netdf <- sf::st_set_geometry(net, NULL)
+    snetdf <- sum(netdf, na.rm = TRUE)
+    cat(paste0("Sum of point emissions ", round(snetdf, 2), "\n"))
+    ncolnet <- ncol(sf::st_set_geometry(net, NULL))
+
+    namesnet <- names(sf::st_set_geometry(net, NULL))
     xgg <- data.table::data.table(
-      sf::st_set_geometry(sf::st_intersection(net, g), NULL)
+      sf::st_set_geometry(suppressMessages(suppressWarnings(sf::st_intersection(net, g))), NULL)
       )
     xgg[is.na(xgg)] <- 0
     dfm <- xgg[, lapply(.SD, sum, na.rm=TRUE),
                by = "id",
                .SDcols = namesnet ]
+    cat(paste0("Sum of gridded emissions ",
+               round(sum(dfm, na.rm = T), 2), "\n"))
     names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by = "id", all.x = TRUE)
