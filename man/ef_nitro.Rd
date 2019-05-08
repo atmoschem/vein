@@ -4,32 +4,37 @@
 \alias{ef_nitro}
 \title{Emissions factors of N2O and NH3}
 \usage{
-ef_nitro(v, t, cc, f, eu, p, S, k = 1, show.equation = TRUE)
+ef_nitro(v, t = "Hot", cc = "Urban", f, eu, p = "NH3", S = 10,
+  cumileage, k = 1, show.equation = TRUE, fcorr = rep(1, 8))
 }
 \arguments{
-\item{v}{Category vehicle: "PC", "LCV", "LDV", "Motorcycle", "Trucks",
-"HDV", "HDV-A", "BUS" or "Coach".}
+\item{v}{Category vehicle: "PC", "LCV", "Motorcycles_2S", "Motorcycles",
+"Trucks", "Trucks-A", "Coach" and "BUS"}
 
-\item{t}{Type: "Cold", "Hot", "<50", ">=50", ">3.5", "7.5_12", "12_18", "28_34",
-">34" and "ALL".}
+\item{t}{Type: "Cold" or "Hot"}
 
-\item{cc}{"Urban", "Rural", "Highway" and "ALL".}
+\item{cc}{"Urban", "Rural", "Highway"}
 
 \item{f}{Type of fuel: "G", "D" or "LPG"}
 
 \item{eu}{Euro standard: "PRE", "I", "II", "III", "IV", "V", "VI",
-"VIc", "2S",  4S" and "ALL"}
+"VIc"}
 
 \item{p}{Pollutant: "N2O", "NH3"}
 
 \item{S}{Sulphur (ppm). Number.}
 
+\item{cumileage}{Numeric; Accumulated mileage to return number of emission factor and not a function.}
+
 \item{k}{Multiplication factor}
 
 \item{show.equation}{Option to see or not the equation parameters}
+
+\item{fcorr}{Numeric; Correction by by euro technology.}
 }
 \value{
-an emission factor function which depends on the accumulated mileage
+an emission factor function which depends on the accumulated mileage,
+or an EmissionFactor
 }
 \description{
 \code{\link{ef_nitro}} returns emission factors as a functions of accumulated mileage.
@@ -39,7 +44,6 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 }
 \examples{
 {
-# Do not run
 efe10 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
 eu = "III", p = "NH3", S = 10,
 show.equation = FALSE)
@@ -50,6 +54,6 @@ efe10(10)
 efe50(10)
 }
 }
+\keyword{cumileage}
 \keyword{emission}
 \keyword{factors}
-\keyword{speed}

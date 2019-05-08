@@ -19,7 +19,7 @@ output: html_document
 # **V**ehicular **E**missions **IN**ventory **(VEIN)** model. ![](https://i.imgur.com/dp8spyp.png)
 
 
-![](https://i.imgur.com/RKftr2z.gif)
+![](all_comp.gif)
 
 ## What is VEIN?
 

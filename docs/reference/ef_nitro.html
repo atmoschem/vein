@@ -68,7 +68,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.4</span>
       </span>
     </div>
 
@@ -116,24 +116,24 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_nitro</span>(<span class='no'>v</span>, <span class='no'>t</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='no'>p</span>, <span class='no'>S</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_nitro</span>(<span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='no'>cumileage</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>v</th>
-      <td><p>Category vehicle: "PC", "LCV", "LDV", "Motorcycle", "Trucks",
-"HDV", "HDV-A", "BUS" or "Coach".</p></td>
+      <td><p>Category vehicle: "PC", "LCV", "Motorcycles_2S", "Motorcycles",
+"Trucks", "Trucks-A", "Coach" and "BUS"</p></td>
     </tr>
     <tr>
       <th>t</th>
-      <td><p>Type: "Cold", "Hot", "&lt;50", "&gt;=50", "&gt;3.5", "7.5_12", "12_18", "28_34",
-"&gt;34" and "ALL".</p></td>
+      <td><p>Type: "Cold" or "Hot"</p></td>
     </tr>
     <tr>
       <th>cc</th>
-      <td><p>"Urban", "Rural", "Highway" and "ALL".</p></td>
+      <td><p>"Urban", "Rural", "Highway"</p></td>
     </tr>
     <tr>
       <th>f</th>
@@ -142,7 +142,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     <tr>
       <th>eu</th>
       <td><p>Euro standard: "PRE", "I", "II", "III", "IV", "V", "VI",
-"VIc", "2S",  4S" and "ALL"</p></td>
+"VIc"</p></td>
     </tr>
     <tr>
       <th>p</th>
@@ -153,6 +153,10 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       <td><p>Sulphur (ppm). Number.</p></td>
     </tr>
     <tr>
+      <th>cumileage</th>
+      <td><p>Numeric; Accumulated mileage to return number of emission factor and not a function.</p></td>
+    </tr>
+    <tr>
       <th>k</th>
       <td><p>Multiplication factor</p></td>
     </tr>
@@ -160,16 +164,20 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       <th>show.equation</th>
       <td><p>Option to see or not the equation parameters</p></td>
     </tr>
+    <tr>
+      <th>fcorr</th>
+      <td><p>Numeric; Correction by by euro technology.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an emission factor function which depends on the accumulated mileage</p>
+    <p>an emission factor function which depends on the accumulated mileage,
+or an EmissionFactor</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='co'># Do not run</span>
 <span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
 <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>,
 <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -178,36 +186,12 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>efe10</span>(<span class='fl'>10</span>)
 <span class='fu'>efe50</span>(<span class='fl'>10</span>)
-}</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 1.31e-06
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] 0.862
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] 0.0019
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] 4.18e-06
-#&gt; 
-#&gt; [[5]]
-#&gt; [1] 0.526
-#&gt; 
-#&gt; [[6]]
-#&gt; [1] 0.0016
-#&gt; 
-#&gt; [[7]]
-#&gt; [1] 0
-#&gt; 
-#&gt; [[8]]
-#&gt; [1] 0
-#&gt; 
-#&gt; [[9]]
-#&gt; [1] 0
-#&gt; 
-#&gt; [[10]]
-#&gt; [1] "(ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1"
-#&gt; </div><div class='output co'>#&gt; [1] 0.0008416669</div></pre>
+}</div><div class='output co'>#&gt; a = 1.31e-06, b = 0.862, c = 4.18e-06, d = 0.526, e = 0, f = 0, ef = 
+#&gt;  a = 1.31e-06, b = 0.862, c = 4.18e-06, d = 0.526, e = 0, f = 0, ef = 
+#&gt;  a = 1.31e-06, b = 0.862, c = 4.18e-06, d = 0.526, e = 0, f = 0, ef = 
+#&gt; Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1
+#&gt;  Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1
+#&gt;  Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1</div><div class='output co'>#&gt; [1] 0.0008416669</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
