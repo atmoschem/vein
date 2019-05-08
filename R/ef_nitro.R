@@ -24,6 +24,8 @@
 #' @return an emission factor function which depends on the acondumulated mileage,
 #' or an EmissionFactor
 #' @keywords cumileage emission factors
+#' @note if length of eu is bigger than 1, cumileage can have values  of length 1
+#' or length equal to length of eu
 #' @export
 #' @examples {
 #' efe10 <- ef_nitro(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
@@ -138,7 +140,9 @@ ef_nitro <- function(v,
             cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
             eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
           }
-          f1(cumileage)
+          ifelse(length(cumileage) == 1,
+                 f1(cumileage),
+                 f1(cumileage[i]))
         }))
         dff <- EmissionFactors(dff)
         names(dff) <- paste0(eu, 1:length(eu))
@@ -186,7 +190,9 @@ ef_nitro <- function(v,
           cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
           eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
         }
-        f1(cumileage)
+        ifelse(length(cumileage) == 1,
+               f1(cumileage),
+               f1(cumileage[i]))
       }))
     }))
     dff <- EmissionFactors(dff)
