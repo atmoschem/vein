@@ -254,8 +254,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
                      x == "V", fcorr[6],
                      ifelse(
                        x == "VI", fcorr[7],
-                       fcorr[8])))))))
-  }
+                       fcorr[8])))))))}
 
 # Message for units
   if(!missing(speed)){
@@ -297,7 +296,7 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
         }
       }
       if(!missing(speed)){
-          f1 <- f1(speed)
+          f1 <- EmissionFactors(f1(speed))
           return(f1)
         } else {
         return(f1)
