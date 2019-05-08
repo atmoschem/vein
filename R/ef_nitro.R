@@ -196,8 +196,6 @@ ef_nitro <- function(v,
       }))
     }))
     dff <- EmissionFactors(dff)
-    dff$cumileage <- cumileage
-    dff$row_eu <- rep(1:nrow(eu), each = length(cumileage))
     return(dff)
   }
 }

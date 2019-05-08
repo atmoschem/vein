@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Emissions factors of N2O and NH3 — ef_nitro" />
 
-<meta property="og:description" content="ef_nitro returns emission factors as a functions of accumulated mileage.
+<meta property="og:description" content="ef_nitro returns emission factors as a functions of acondumulated mileage.
 The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook" />
@@ -109,15 +109,16 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 
     <div class="ref-description">
     
-    <p><code>ef_nitro</code> returns emission factors as a functions of accumulated mileage.
+    <p><code>ef_nitro</code> returns emission factors as a functions of acondumulated mileage.
 The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_nitro</span>(<span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='no'>cumileage</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>))</pre>
+    <pre class="usage"><span class='fu'>ef_nitro</span>(<span class='no'>v</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='no'>cc</span>, <span class='no'>f</span>, <span class='no'>eu</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>,
+  <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>cumileage</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>,
+  <span class='fl'>8</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,8 +133,14 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       <td><p>Type: "Cold" or "Hot"</p></td>
     </tr>
     <tr>
-      <th>cc</th>
+      <th>cond</th>
       <td><p>"Urban", "Rural", "Highway"</p></td>
+    </tr>
+    <tr>
+      <th>cc</th>
+      <td><p>PC: "&lt;=1400", "1400_2000", "&gt;2000". LCV: "&lt;3.5". Motorcycles: "&gt;=50",
+Motorcycles_2S, "&lt;50", "&gt;=50". Trucks: "&gt;3.5", "7.5_12", "12_28", "28_34".
+Trucks_A: "&gt;34". BUS: "&lt;=15", "&gt;15 &amp; &lt;= 18". Coach:  "&lt;=18", "&gt;18"</p></td>
     </tr>
     <tr>
       <th>f</th>
@@ -154,7 +161,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     </tr>
     <tr>
       <th>cumileage</th>
-      <td><p>Numeric; Accumulated mileage to return number of emission factor and not a function.</p></td>
+      <td><p>Numeric; Acondumulated mileage to return number of emission factor and not a function.</p></td>
     </tr>
     <tr>
       <th>k</th>
@@ -172,26 +179,29 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an emission factor function which depends on the accumulated mileage,
+    <p>an emission factor function which depends on the acondumulated mileage,
 or an EmissionFactor</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>if length of eu is bigger than 1, cumileage can have values  of length 1
+or length equal to length of eu</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
+<span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
 <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>,
 <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>efe50</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
+<span class='no'>efe50</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
 <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>50</span>,
 <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>efe10</span>(<span class='fl'>10</span>)
 <span class='fu'>efe50</span>(<span class='fl'>10</span>)
+<span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
+<span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>cumileage</span> <span class='kw'>=</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/units/topics/set_units'>set_units</a></span>(<span class='fl'>25000</span>, <span class='st'>"km"</span>))
 }</div><div class='output co'>#&gt; a = 1.31e-06, b = 0.862, c = 4.18e-06, d = 0.526, e = 0, f = 0, ef = 
-#&gt;  a = 1.31e-06, b = 0.862, c = 4.18e-06, d = 0.526, e = 0, f = 0, ef = 
-#&gt;  a = 1.31e-06, b = 0.862, c = 4.18e-06, d = 0.526, e = 0, f = 0, ef = 
-#&gt; Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1
-#&gt;  Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1
-#&gt;  Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1</div><div class='output co'>#&gt; [1] 0.0008416669</div></pre>
+#&gt; Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -199,6 +209,8 @@ or an EmissionFactor</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
