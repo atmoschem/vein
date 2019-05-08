@@ -3,7 +3,7 @@
 #' This dataset also includes MIR, MOIR and EBIR is Carter SAPRC07.xls
 #' https://www.engr.ucr.edu/~carter/SAPRC/
 #'
-#' @format A data frame with 132 rows and 10 variables:
+#' @format A data frame with 148 rows and 10 variables:
 #' \describe{
 #'   \item{n}{Number for each pollutant, from 1 to 132}
 #'   \item{group1}{classification for pollutants including "NMHC",
