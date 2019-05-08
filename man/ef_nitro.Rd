@@ -4,8 +4,9 @@
 \alias{ef_nitro}
 \title{Emissions factors of N2O and NH3}
 \usage{
-ef_nitro(v, t = "Hot", cc = "Urban", f, eu, p = "NH3", S = 10,
-  cumileage, k = 1, show.equation = TRUE, fcorr = rep(1, 8))
+ef_nitro(v, t = "Hot", cond = "Urban", cc, f, eu, p = "NH3",
+  S = 10, cumileage, k = 1, show.equation = FALSE, fcorr = rep(1,
+  8))
 }
 \arguments{
 \item{v}{Category vehicle: "PC", "LCV", "Motorcycles_2S", "Motorcycles",
@@ -13,7 +14,11 @@ ef_nitro(v, t = "Hot", cc = "Urban", f, eu, p = "NH3", S = 10,
 
 \item{t}{Type: "Cold" or "Hot"}
 
-\item{cc}{"Urban", "Rural", "Highway"}
+\item{cond}{"Urban", "Rural", "Highway"}
+
+\item{cc}{PC: "<=1400", "1400_2000", ">2000". LCV: "<3.5". Motorcycles: ">=50",
+Motorcycles_2S, "<50", ">=50". Trucks: ">3.5", "7.5_12", "12_28", "28_34".
+Trucks_A: ">34". BUS: "<=15", ">15 & <= 18". Coach:  "<=18", ">18"}
 
 \item{f}{Type of fuel: "G", "D" or "LPG"}
 
@@ -24,7 +29,7 @@ ef_nitro(v, t = "Hot", cc = "Urban", f, eu, p = "NH3", S = 10,
 
 \item{S}{Sulphur (ppm). Number.}
 
-\item{cumileage}{Numeric; Accumulated mileage to return number of emission factor and not a function.}
+\item{cumileage}{Numeric; Acondumulated mileage to return number of emission factor and not a function.}
 
 \item{k}{Multiplication factor}
 
@@ -33,25 +38,27 @@ ef_nitro(v, t = "Hot", cc = "Urban", f, eu, p = "NH3", S = 10,
 \item{fcorr}{Numeric; Correction by by euro technology.}
 }
 \value{
-an emission factor function which depends on the accumulated mileage,
+an emission factor function which depends on the acondumulated mileage,
 or an EmissionFactor
 }
 \description{
-\code{\link{ef_nitro}} returns emission factors as a functions of accumulated mileage.
+\code{\link{ef_nitro}} returns emission factors as a functions of acondumulated mileage.
 The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 }
 \examples{
 {
-efe10 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
+efe10 <- ef_nitro(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
 eu = "III", p = "NH3", S = 10,
 show.equation = FALSE)
-efe50 <- ef_nitro(v = "PC", t = "Hot", cc = "Urban", f = "G",
+efe50 <- ef_nitro(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
 eu = "III", p = "NH3", S = 50,
 show.equation = TRUE)
 efe10(10)
 efe50(10)
+efe10 <- ef_nitro(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
+eu = "III", p = "NH3", S = 10, cumileage = units::set_units(25000, "km"))
 }
 }
 \keyword{cumileage}
