@@ -25,6 +25,9 @@
     <loc>http://ibarraespinosa.github.io/vein//reference/Vehicles.html</loc>
   </url>
   <url>
+    <loc>http://ibarraespinosa.github.io/vein//reference/add_polid.html</loc>
+  </url>
+  <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/adt.html</loc>
   </url>
   <url>
@@ -134,6 +137,9 @@
   </url>
   <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/emis_source.html</loc>
+  </url>
+  <url>
+    <loc>http://ibarraespinosa.github.io/vein//reference/emis_to_streets.html</loc>
   </url>
   <url>
     <loc>http://ibarraespinosa.github.io/vein//reference/emis_wear.html</loc>
