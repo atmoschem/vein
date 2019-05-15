@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data.frame with pollutants names and molar mass used in VEIN — pollutants • vein</title>
+<title>Emis to streets distribute top-down emissions into streets — emis_to_streets • vein</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,12 @@
 
 
 
-<meta property="og:title" content="Data.frame with pollutants names and molar mass used in VEIN — pollutants" />
+<meta property="og:title" content="Emis to streets distribute top-down emissions into streets — emis_to_streets" />
 
-<meta property="og:description" content="This dataset also includes MIR, MOIR and EBIR is Carter SAPRC07.xls
-https://www.engr.ucr.edu/~carter/SAPRC/" />
+<meta property="og:description" content="emis_to_streets allocates emissions proportionally to
+each feature. &quot;Spatial&quot; objects are converter to &quot;sf&quot; objects. Currently,
+'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
+in each street." />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -100,46 +102,72 @@ https://www.engr.ucr.edu/~carter/SAPRC/" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data.frame with pollutants names and molar mass used in VEIN</h1>
+    <h1>Emis to streets distribute top-down emissions into streets</h1>
     
-    <div class="hidden name"><code>pollutants.Rd</code></div>
+    <div class="hidden name"><code>emis_to_streets.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This dataset also includes MIR, MOIR and EBIR is Carter SAPRC07.xls
-https://www.engr.ucr.edu/~carter/SAPRC/</p>
+    <p><code>emis_to_streets</code> allocates emissions proportionally to
+each feature. "Spatial" objects are converter to "sf" objects. Currently,
+'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
+in each street.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>pollutants</span>)</pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>emis_to_streets</span>(<span class='no'>streets</span>, <span class='no'>dfemis</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>streets</th>
+      <td><p>sf object with geometry 'LINESTRING' or 'MULTILINESTRING'. Or
+SpatialLinesDataFrame</p></td>
+    </tr>
+    <tr>
+      <th>dfemis</th>
+      <td><p>data.frame with emissions</p></td>
+    </tr>
+    <tr>
+      <th>by</th>
+      <td><p>Character indicating the columns that must be present in both
+'street' and 'dfemis'</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; to show more info.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>A data frame with 148 rows and 10 variables:</p><dl class='dl-horizontal'>
-  <dt>n</dt><dd><p>Number for each pollutant, from 1 to 132</p></dd>
-  <dt>group1</dt><dd><p>classification for pollutants including "NMHC",
-  "PAH", "METALS", "PM", "criteria" and "PCDD"</p></dd>
-  <dt>group2</dt><dd><p>A sub classification for pollutants including "alkenes",
-  "alkynes", "aromatics", "alkanes",  "PAH",, "aldehydes", "ketones", "METALS",
-  "PM_char", "criteria", "cycloalkanes", "NMHC",  "PCDD", "PM10", "PM2.5"</p></dd>
-  <dt>pollutant</dt><dd><p>1 of the 132 pollutants covered</p></dd>
-  <dt>CAS</dt><dd><p>CAS Registry Number</p></dd>
-  <dt>g_mol</dt><dd><p>molar mass</p></dd>
-  <dt>MIR</dt><dd><p>Maximum incremental Reactivity (gm O3 / gm VOC)</p></dd>
-  <dt>MOIR</dt><dd><p>Reactivity (gm O3 / gm VOC)</p></dd>
-  <dt>EBIR</dt><dd><p>Reactivity (gm O3 / gm VOC)</p></dd>
-  <dt>notes</dt><dd><p>Inform some assumption for molar mass</p></dd>
-</dl>
+    <p>When spobj is a 'Spatial' object (class of sp), they are converted
+ into 'sf'.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='add_polid.html'>add_polid</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"># NOT RUN {
+# TO DO
+# }
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-          </ul>
+      <li><a href="#note">Note</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
