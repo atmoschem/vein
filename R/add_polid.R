@@ -17,7 +17,7 @@
 add_polid <- function(polyg, street, by){
   do.call("rbind",
           lapply(1:nrow(polyg), function(i){
-            b <- sf::st_crop(x = street, polyg[i, ])
+            b <- suppressWarnings(sf::st_crop(x = street, polyg[i, ]))
             b <- sf::st_cast(b, "MULTILINESTRING")
             b[[by]] <- polyg[[by]][i]
             b
