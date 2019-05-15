@@ -18,7 +18,9 @@ ef_ldv_speed(v, t = "4S", cc, f, eu, p, x, k = 1, speed,
 "<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
 Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
-\item{f}{Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)}
+\item{f}{Character; type of fuel: "G", "D", "LPG" or "FH" (Gasoline Full Hybrid).
+Full hybrid vehicles cannot be charged from the grid and recharge; only its own engine
+may recharge tis batteries.}
 
 \item{eu}{Character or data.frame of characters; euro standard:
  "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".

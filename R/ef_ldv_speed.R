@@ -18,7 +18,9 @@
 #' @param cc Character; size of engine in cc:  PC: "<=1400", ">1400", "1400_2000", ">2000",
 #' "<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
 #' Moped: "<=50". LCV :  "<3.5" for gross weight.
-#' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)
+#' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Gasoline Full Hybrid).
+#' Full hybrid vehicles cannot be charged from the grid and recharge; only its own engine
+#' may recharge tis batteries.
 #' @param eu Character or data.frame of characters; euro standard:
 #'  "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
 #' When the pollutan is active surface or number of particles, eu can also be "III+DISI"

@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -197,7 +197,7 @@
 <span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_grid.html'>emis_grid</a></span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>E_CO_g</span>) <span class='co'>#class sf</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>mapview</span>)
-<span class='fu'>mapview</span>(<span class='no'>E_CO_g</span>, <span class='kw'>zcol</span><span class='kw'>=</span> <span class='st'>"V1"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>col.regions</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/cptcity'>cptcity</a></span>(<span class='fl'>1</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>E_CO_g</span>, <span class='kw'>zcol</span><span class='kw'>=</span> <span class='st'>"V1"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>col.regions</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/cptcity/topics/cptcity'>cptcity</a></span>(<span class='fl'>1</span>))
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>T</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>gr</span>)
 
