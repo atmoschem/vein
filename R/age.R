@@ -2,7 +2,7 @@
 #'
 #' @description \code{\link{age_ldv}} returns amount of vehicles at each age
 #'
-#' @param x Numeric; numerical vector of vehicles with length equal to lines features of raod network
+#' @param x Numeric; numerical vector of vehicles with length equal to lines features of road network
 #' @param type Character; any of "gompertz", "double_logistic", "weibull" and "weibull2"
 #' @param a Numeric; parameter of survival equation
 #' @param b Numeric; parameter of survival equation

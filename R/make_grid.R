@@ -1,6 +1,6 @@
 #' Creates rectangular grid for emission allocation
 #'
-#' @description \code{make_grid} creates a SpatialGridDataFrame. The spatial
+#' @description \code{make_grid} creates a sf grid of polygons. The spatial
 #' reference is taken from the spatial object.
 #'
 #' @param spobj A spatial object of class sp or sf or a Character. When it is
@@ -12,7 +12,8 @@
 #' polygons.
 #' @param  ... ignored
 #' @param crs coordinate reference system in numeric format from
-#' http://spatialreference.org/ to transform/project spatial data using sf::st_transform
+#' http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
+#' The default value is 4326
 #' @return A grid of polygons class 'sf'
 #' @importFrom sf st_as_sf st_sf st_crs st_bbox st_sfc
 #' @importFrom eixport wrf_grid

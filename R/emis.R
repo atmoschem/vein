@@ -7,23 +7,22 @@
 #' @param veh "Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 #' as number of columns matching the age distribution of that ype of vehicle.
 #' The number of rows is equal to the number of streets link
-#' @param lkm Length of each link
+#' @param lkm Length of each link in km
 #' @param ef List of functions of emission factors
-#' @param speed Speed data-frame with number of columns as hours
+#' @param speed Speed data-frame with number of columns as hours. The default value is 34km/h
 #' @param agemax Age of oldest vehicles for that category
 #' @param profile Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
 #' the week
-#' @param hour Number of considered hours in estimation. Default value us number
-#' of rows of profile
+#' @param hour Number of considered hours in estimation. Default value is number
+#' of rows of argument profile
 #' @param day Number of considered days in estimation
 #' @param array When FALSE produces a dataframe of the estimation. When TRUE expects a
 #' profile as a dataframe producing an array with dimensions (streets x columns x hours x days)
 #' @param verbose Logical; To show more information
-#' @return emission estimation  g/h
-#' @note If the user apply a top-down approach, the resulting units will be
+#' @return If the user applies a top-down approach, the resulting units will be
 #' according its own data. For instance, if the vehicles are veh/day, the units
 #' of the emissions implicitly will be g/day.
-#' Hour and day will be deprecate because they can be infered from the profile
+#' @note Hour and day will be deprecated because they can be infered from the profile
 #' matrix.
 #' @export
 #' @importFrom sf st_set_geometry
