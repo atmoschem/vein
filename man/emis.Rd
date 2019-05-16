@@ -13,19 +13,19 @@ emis(veh, lkm, ef, speed = 34, agemax = ifelse(is.data.frame(veh),
 as number of columns matching the age distribution of that ype of vehicle.
 The number of rows is equal to the number of streets link}
 
-\item{lkm}{Length of each link}
+\item{lkm}{Length of each link in km}
 
 \item{ef}{List of functions of emission factors}
 
-\item{speed}{Speed data-frame with number of columns as hours}
+\item{speed}{Speed data-frame with number of columns as hours. The default value is 34km/h}
 
 \item{agemax}{Age of oldest vehicles for that category}
 
 \item{profile}{Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
 the week}
 
-\item{hour}{Number of considered hours in estimation. Default value us number
-of rows of profile}
+\item{hour}{Number of considered hours in estimation. Default value is number
+of rows of argument profile}
 
 \item{day}{Number of considered days in estimation}
 
@@ -35,7 +35,9 @@ profile as a dataframe producing an array with dimensions (streets x columns x h
 \item{verbose}{Logical; To show more information}
 }
 \value{
-emission estimation  g/h
+If the user applies a top-down approach, the resulting units will be
+according its own data. For instance, if the vehicles are veh/day, the units
+of the emissions implicitly will be g/day.
 }
 \description{
 \code{\link{emis}} estimates vehicular emissions as the product of the
@@ -43,10 +45,7 @@ vehicles on a road, length of the road, emission factor avaliated at the
 respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
 }
 \note{
-If the user apply a top-down approach, the resulting units will be
-according its own data. For instance, if the vehicles are veh/day, the units
-of the emissions implicitly will be g/day.
-Hour and day will be deprecate because they can be infered from the profile
+Hour and day will be deprecated because they can be infered from the profile
 matrix.
 }
 \examples{

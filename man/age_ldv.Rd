@@ -8,7 +8,7 @@ age_ldv(x, name = "age", a = 1.698, b = -0.2, agemin = 1,
   agemax = 50, k = 1, bystreet = F, net, verbose = FALSE, namerows)
 }
 \arguments{
-\item{x}{Numeric; numerical vector of vehicles with length equal to lines features of raod network}
+\item{x}{Numeric; numerical vector of vehicles with length equal to lines features of road network}
 
 \item{name}{Character; of vehicle assigned to columns of dataframe}
 

@@ -16,7 +16,7 @@ output: html_document
 [![Package Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Github Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
 
-# **V**ehicular **E**missions **IN**ventory **(VEIN)** model. ![](https://i.imgur.com/dp8spyp.png)
+# **V**ehicular **E**missions **IN**ventory **(VEIN)** model. ![](https://camo.githubusercontent.com/e40e5564993bae6edb29498decf1ef9663359edb/68747470733a2f2f692e696d6775722e636f6d2f647038737079702e706e67)
 
 ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif)
 

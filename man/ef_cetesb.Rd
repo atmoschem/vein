@@ -7,18 +7,18 @@
 ef_cetesb(p, veh, year = 2017, full = FALSE)
 }
 \arguments{
-\item{p}{Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
+\item{p}{Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2",
 "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd",
 "CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO" (g/km). The letter 'd' means deteriorated
 factor. Also, evaporative emissions at average temperature ranges:
-"D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15"
+"D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15",
 "S_0_15" and "R_0_15" where D means diurnal (g/day), S hot/warm soak (g/trip)
 and R hot/warm running losses (g/trip).}
 
-\item{veh}{Character; Vehicle categories: "PC_G", "PC_FG", "PC_FE", "PC_E"
-"LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT"
-"HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150", "M_G_150_500", "M_G_500"
-"M_FG_150", "M_FG_150_500", "M_FG_500". "M_FE_150", "M_FE_150_500",
+\item{veh}{Character; Vehicle categories: "PC_G", "PC_FG", "PC_FE", "PC_E",
+"LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT",
+"HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150", "M_G_150_500", "M_G_500",
+"M_FG_150", "M_FG_150_500", "M_FG_500", "M_FE_150", "M_FE_150_500",
 "M_FE_500", "CICLOMOTOR", "GNV"}
 
 \item{year}{Numeric; Filter the emission factor to start from a specific base year.}

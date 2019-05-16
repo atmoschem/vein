@@ -19,7 +19,8 @@ a grid class 'sf' based on this file. This is done by running eixport::wrf_grid.
 polygons.}
 
 \item{crs}{coordinate reference system in numeric format from
-http://spatialreference.org/ to transform/project spatial data using sf::st_transform}
+http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
+The default value is 4326}
 
 \item{...}{ignored}
 }
@@ -27,7 +28,7 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
 A grid of polygons class 'sf'
 }
 \description{
-\code{make_grid} creates a SpatialGridDataFrame. The spatial
+\code{make_grid} creates a sf grid of polygons. The spatial
 reference is taken from the spatial object.
 }
 \examples{

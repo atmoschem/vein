@@ -1,7 +1,15 @@
 NEWS
 ===========
 
-# vein 0.7.4  (Release date: 2019-05-08)
+# vein 0.7.6  (Release date: 2019-05-08)
+
+- Fix erro in some aldehyes LCV
+
+## vein 0.7.5  (Release date: 2019-05-08)
+
+- Add long_to_wide
+
+## vein 0.7.4  (Release date: 2019-05-08)
 
 - Improves ef_nitro and documentation. HOw it is easier.
 
