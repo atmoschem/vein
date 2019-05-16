@@ -8,7 +8,7 @@ age(x, type = "weibull", a = 14.46, b = 4.79, name = "veh",
   agemin = 1, agemax = 50, k = 1, net, verbose = FALSE, namerows)
 }
 \arguments{
-\item{x}{Numeric; numerical vector of vehicles with length equal to lines features of raod network}
+\item{x}{Numeric; numerical vector of vehicles with length equal to lines features of road network}
 
 \item{type}{Character; any of "gompertz", "double_logistic", "weibull" and "weibull2"}
 
