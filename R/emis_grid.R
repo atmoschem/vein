@@ -3,8 +3,8 @@
 #' @description \code{\link{emis_grid}} allocates emissions proportionally to each grid
 #'  cell. The process is performed by intersection between geometries and the grid.
 #' It means that requires "sr" according with your location for the projection.
-#' It is assumed that spobj is a spatial*DataFrame or an "sf" with the pollutants
-#' in data. This function return an object class "sf".
+#' It is assumed that spobj is a Spatial*DataFrame or an "sf" with the pollutants
+#' in data. This function returns an object of class "sf".
 #'
 #' @param spobj A spatial dataframe of class "sp" or "sf". When class is "sp"
 #' it is transformed to "sf".
@@ -17,7 +17,7 @@
 #' @importFrom sp CRS
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
-#'  into 'sf'. Also, The aggregation of data ise done with data.table functions.
+#'  into 'sf'. Also, The aggregation of data is done with data.table functions.
 #' @examples {
 #' data(net)
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
