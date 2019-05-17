@@ -4,6 +4,8 @@ NEWS
 # vein 0.7.6  (Release date: 2019-05-08)
 
 - Fix erro in some aldehyes LCV
+- improves long_to_wide.
+- Adds to_latex.
 
 ## vein 0.7.5  (Release date: 2019-05-08)
 

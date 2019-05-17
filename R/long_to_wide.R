@@ -4,10 +4,10 @@
 #' and convert grams to mol. This function reads all hydrocarbos and respective
 #' criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
 #'
-#' @param df data.frame with three column. Forst has the new names, secon
+#' @param df data.frame with three column.
 #' @param column_with_new_names Character, column that has new column names
-#' @param column_fixed Character, optional, column that will remain fixed
 #' @param column_with_data Character column with data
+#' @param column_fixed Character,  column that will remain fixed
 #' @param geometry To return a sf
 #' @return wide data.frame.
 #' @importFrom sf st_sf
@@ -28,15 +28,26 @@ long_to_wide <- function(df,
                          geometry) {
   a <- as.data.frame(df)
   la <- split(a, a[[column_with_new_names]])
-  aa <- do.call("cbind", lapply(1:length(la), function(i){
-    la[[i]][[column_with_data]]
-  }))
-  aa <- as.data.frame(aa)
-  names(aa) <- names(la)
-  if(!missing(column_fixed)){
-    aa[[column_fixed]] <- df[[column_fixed]][1:nrow(aa)]
-  }
+  if(missing(column_fixed)) {
+    aa <- do.call("cbind", lapply(1:length(la), function(i){
+      la[[i]][[column_with_data]]
+    }))
+    aa <- as.data.frame(aa)
+    names(aa) <- names(la)
 
+  } else {
+  xa <- as.data.frame(df)
+  xa$id <- xa[[column_fixed]]
+  la <- split(xa, xa[[column_with_new_names]])
+  aa <- do.call("cbind", lapply(1:length(la), function(i){
+    dfid <- data.frame(id = unique(xa[[column_fixed]]))
+    merge(dfid, la[[i]][, c("id", column_with_data)], by = "id", all.x = T)
+  }))
+  aa[is.na(aa)] <- 0
+  aa[[column_fixed]] <- aa$id
+  aa[, grepl("id", names(aa))] <- NULL
+  names(aa) <- c(names(la), column_fixed)
+  }
   if(missing(geometry)) {
     return(aa)
   } else {
