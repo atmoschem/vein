@@ -48,7 +48,7 @@ to_latex <- function (df,
     for(i in 1:(ncol(df) - 1)){
       df[, i] <- paste0(df[, i], " & ")
     }
-    df[, ncol(df)] <- paste0(df[, ncol(df)], " \\\ ")
+    df[, ncol(df)] <- paste0(df[, ncol(df)], " \\\\ ")
     df[nrow(df), ncol(df)] <- paste0(df[nrow(df), ncol(df)], " \\bottomrule")
     names(df) <- NULL
     for(i in 1:nrow(df)) cat(unlist(df[i, ]), "\n")
@@ -78,7 +78,7 @@ to_latex <- function (df,
     for(i in 1:(ncol(df) - 1)){
       df[, i] <- paste0(df[, i], " & ")
     }
-    df[, ncol(df)] <- paste0(df[, ncol(df)], " \\\ ")
+    df[, ncol(df)] <- paste0(df[, ncol(df)], " \\\\ ")
     df[nrow(df), ncol(df)] <- paste0(df[nrow(df), ncol(df)], " \\bottomrule")
     names(df) <- NULL
     for(i in 1:nrow(df)) cat(unlist(df[i, ]), "\n")
