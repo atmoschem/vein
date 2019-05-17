@@ -67,7 +67,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.6</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@ The number of rows is equal to the number of streets link</p></td>
     </tr>
     <tr>
       <th>lkm</th>
-      <td><p>Length of each link</p></td>
+      <td><p>Length of each link in km</p></td>
     </tr>
     <tr>
       <th>ef</th>
@@ -137,7 +137,7 @@ The number of rows is equal to the number of streets link</p></td>
     </tr>
     <tr>
       <th>speed</th>
-      <td><p>Speed data-frame with number of columns as hours</p></td>
+      <td><p>Speed data-frame with number of columns as hours. The default value is 34km/h</p></td>
     </tr>
     <tr>
       <th>agemax</th>
@@ -150,8 +150,8 @@ the week</p></td>
     </tr>
     <tr>
       <th>hour</th>
-      <td><p>Number of considered hours in estimation. Default value us number
-of rows of profile</p></td>
+      <td><p>Number of considered hours in estimation. Default value is number
+of rows of argument profile</p></td>
     </tr>
     <tr>
       <th>day</th>
@@ -170,14 +170,13 @@ profile as a dataframe producing an array with dimensions (streets x columns x h
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>emission estimation  g/h</p>
+    <p>If the user applies a top-down approach, the resulting units will be
+according its own data. For instance, if the vehicles are veh/day, the units
+of the emissions implicitly will be g/day.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>If the user apply a top-down approach, the resulting units will be
-according its own data. For instance, if the vehicles are veh/day, the units
-of the emissions implicitly will be g/day.
-Hour and day will be deprecate because they can be infered from the profile
+    <p>Hour and day will be deprecated because they can be infered from the profile
 matrix.</p>
     
 

@@ -8,13 +8,13 @@ long_to_wide(df, column_with_new_names = names(df)[1],
   column_with_data = "emission", column_fixed, geometry)
 }
 \arguments{
-\item{df}{data.frame with three column. Forst has the new names, secon}
+\item{df}{data.frame with three column.}
 
 \item{column_with_new_names}{Character, column that has new column names}
 
 \item{column_with_data}{Character column with data}
 
-\item{column_fixed}{Character, optional, column that will remain fixed}
+\item{column_fixed}{Character,  column that will remain fixed}
 
 \item{geometry}{To return a sf}
 }

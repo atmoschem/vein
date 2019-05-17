@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Creates rectangular grid for emission allocation — make_grid" />
 
-<meta property="og:description" content="make_grid creates a SpatialGridDataFrame. The spatial
+<meta property="og:description" content="make_grid creates a sf grid of polygons. The spatial
 reference is taken from the spatial object." />
 
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
@@ -66,7 +66,7 @@ reference is taken from the spatial object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.6</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ reference is taken from the spatial object." />
 
     <div class="ref-description">
     
-    <p><code>make_grid</code> creates a SpatialGridDataFrame. The spatial
+    <p><code>make_grid</code> creates a sf grid of polygons. The spatial
 reference is taken from the spatial object.</p>
     
     </div>
@@ -139,7 +139,8 @@ polygons.</p></td>
     <tr>
       <th>crs</th>
       <td><p>coordinate reference system in numeric format from
-http://spatialreference.org/ to transform/project spatial data using sf::st_transform</p></td>
+http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
+The default value is 4326</p></td>
     </tr>
     <tr>
       <th>...</th>

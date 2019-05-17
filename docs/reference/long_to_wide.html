@@ -67,7 +67,7 @@ criteria polluants specified in ef_ldv_speed and ef_hdv_speed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.6</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@ criteria polluants specified in <code><a href='ef_ldv_speed.html'>ef_ldv_speed</
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>data.frame with three column. Forst has the new names, secon</p></td>
+      <td><p>data.frame with three column.</p></td>
     </tr>
     <tr>
       <th>column_with_new_names</th>
@@ -134,7 +134,7 @@ criteria polluants specified in <code><a href='ef_ldv_speed.html'>ef_ldv_speed</
     </tr>
     <tr>
       <th>column_fixed</th>
-      <td><p>Character, optional, column that will remain fixed</p></td>
+      <td><p>Character,  column that will remain fixed</p></td>
     </tr>
     <tr>
       <th>geometry</th>
@@ -159,17 +159,17 @@ criteria polluants specified in <code><a href='ef_ldv_speed.html'>ef_ldv_speed</
 <span class='no'>df</span>
 <span class='fu'>long_to_wide</span>(<span class='no'>df</span>)
 <span class='fu'>long_to_wide</span>(<span class='no'>df</span>, <span class='kw'>column_fixed</span> <span class='kw'>=</span> <span class='st'>"region"</span>)
-}</div><div class='output co'>#&gt;    CO NO2 propadiene region
-#&gt; 1   1   3          2      a
-#&gt; 2   4   6          5      b
-#&gt; 3   7   9          8      a
-#&gt; 4  10  12         11      b
-#&gt; 5  13  15         14      a
-#&gt; 6  16  18         17      b
-#&gt; 7  19  21         20      a
-#&gt; 8  22  24         23      b
-#&gt; 9  25  27         26      a
-#&gt; 10 28  30         29      b</div></pre>
+}</div><div class='output co'>#&gt;        CO    NO2 propadiene region
+#&gt; 1   1 [g]  3 [g]      5 [g]      a
+#&gt; 2   7 [g]  9 [g]     11 [g]      a
+#&gt; 3  13 [g] 15 [g]     17 [g]      a
+#&gt; 4  19 [g] 21 [g]     23 [g]      a
+#&gt; 5  25 [g] 27 [g]     29 [g]      a
+#&gt; 6   4 [g]  6 [g]      2 [g]      b
+#&gt; 7  10 [g] 12 [g]      8 [g]      b
+#&gt; 8  16 [g] 18 [g]     14 [g]      b
+#&gt; 9  22 [g] 24 [g]     20 [g]      b
+#&gt; 10 28 [g] 30 [g]     26 [g]      b</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
