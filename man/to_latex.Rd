@@ -4,8 +4,7 @@
 \alias{to_latex}
 \title{creates a .tex a table from a data.frame}
 \usage{
-to_latex(df, file = "dataframe.tex", caption = "My table",
-  label = "tab:df", order = paste0("l", rep("r", ncol(df) - 1)))
+to_latex(df, file, caption = "My table", label = "tab:df")
 }
 \arguments{
 \item{df}{data.frame with three column.}
@@ -15,8 +14,6 @@ to_latex(df, file = "dataframe.tex", caption = "My table",
 \item{caption}{Character caption of table}
 
 \item{label}{Character,  label of table}
-
-\item{order}{Character,  alignment of columns of table, e.g.: "lrr"}
 }
 \value{
 a text file with extension .tex.
@@ -28,12 +25,14 @@ table, aiming to replicate the method of tablegenerator.com
 \examples{
 {
 df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
-emission = vein::Emissions(1:30),
-region = rep(letters[1:2], 15))
+                 emission = vein::Emissions(1:30),
+                 region = rep(letters[1:2], 15))
 df
 long_to_wide(df)
-long_to_wide(df, column_fixed = "region")
-to_latex(long_to_wide(df, column_fixed = "region"))
+(df2 <- long_to_wide(df, column_fixed = "region"))
+to_latex(df2)
+to_latex(long_to_wide(df, column_fixed = "region"),
+file = paste0(tempfile(), ".tex"))
 }
 }
 \seealso{
