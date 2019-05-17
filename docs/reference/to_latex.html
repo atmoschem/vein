@@ -152,7 +152,6 @@ table, aiming to replicate the method of tablegenerator.com</p>
 <span class='no'>df</span>
 <span class='fu'><a href='long_to_wide.html'>long_to_wide</a></span>(<span class='no'>df</span>)
 (<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='long_to_wide.html'>long_to_wide</a></span>(<span class='no'>df</span>, <span class='kw'>column_fixed</span> <span class='kw'>=</span> <span class='st'>"region"</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>df2</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>ncol</a></span>(<span class='no'>df2</span>)], <span class='st'>" \\  "</span>)
 <span class='fu'>to_latex</span>(<span class='no'>df2</span>)
 <span class='fu'>to_latex</span>(<span class='fu'><a href='long_to_wide.html'>long_to_wide</a></span>(<span class='no'>df</span>, <span class='kw'>column_fixed</span> <span class='kw'>=</span> <span class='st'>"region"</span>),
 <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(), <span class='st'>".tex"</span>))
@@ -166,7 +165,7 @@ table, aiming to replicate the method of tablegenerator.com</p>
 #&gt; \resizebox{\textwidth}{!}{%
 #&gt; \begin{tabular}{@{} l r r r @{}}
 #&gt; \toprule
-#&gt; region &amp;  emission &amp;  emission &amp;  emission \\ \midrule
+#&gt; region &amp;  CO &amp;  NO2 &amp;  propadiene \\ \midrule
 #&gt; a &amp;  1 &amp;  3 &amp;  5 \\  
 #&gt; a &amp;  7 &amp;  9 &amp;  11 \\  
 #&gt; a &amp;  13 &amp;  15 &amp;  17 \\  
@@ -180,7 +179,7 @@ table, aiming to replicate the method of tablegenerator.com</p>
 #&gt; \end{tabular}%
 #&gt; }
 #&gt; \end{table}
-#&gt; /tmp/Rtmpiu9Z0d/file3d9a33f831ac.tex </div></pre>
+#&gt; /tmp/Rtmpnnnu64/file47b72c26ac02.tex </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

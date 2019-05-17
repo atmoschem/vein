@@ -44,9 +44,9 @@ long_to_wide <- function(df,
     merge(dfid, la[[i]][, c("id", column_with_data)], by = "id", all.x = T)
   }))
   aa[is.na(aa)] <- 0
-  aa <- cbind(aa$id, aa)
   names(aa)[1] <- column_fixed
   aa[, grepl("id", names(aa))] <- NULL
+  names(aa) <- c(column_fixed, names(la))
   }
   if(missing(geometry)) {
     return(aa)
