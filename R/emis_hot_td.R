@@ -81,7 +81,7 @@ emis_hot_td <- function (veh,
   if(is.matrix(ef) | is.data.frame(ef)){
     ef <- as.data.frame(ef)
     if(class(ef[, 1]) != "units"){
-      stop("columns of ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
+      stop("columns of ef must has class 'units' in 'g/km'. Please, check ?EmissionFactors")
     }
     if(units(ef[, 1])$numerator != "g" | units(ef[, 1])$denominator != "km"){
       stop("Units of ef must be 'g/km' ")
@@ -98,7 +98,7 @@ emis_hot_td <- function (veh,
 
   } else {
     if(class(ef) != "units"){
-      stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
+      stop("ef must has class 'units' in 'g/km'. Please, check ?EmissionFactors")
     }
     if(units(ef)$numerator != "g" | units(ef)$denominator != "km"){
       stop("Units of ef must be 'g/km' ")
@@ -279,7 +279,8 @@ emis_hot_td <- function (veh,
 
     if(!is.data.frame(ef)) {
       if(verbose) message("'ef' is numeric")
-      if(length(ef) != ncol(veh)) stop("Number of columns of 'veh' and length of 'ef' must be equal")
+#      if(length(ef) != ncol(veh)) stop("Number of columns of 'veh' and length of 'ef' must be equal")
+# Last check not necessary, Assuming ef goes from 1 column to ncol(veh)
       e <-  unlist(lapply(1:ncol(veh), function(i){
         lkm[i]*veh[, i] *ef[i]
       }))
