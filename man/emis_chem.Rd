@@ -9,10 +9,7 @@ emis_chem(dfe, mechanism, colby, long = FALSE)
 \arguments{
 \item{dfe}{data.frame with column `emissions` in grams and `pollutant` in long format.}
 
-\item{mechanism}{Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
-"MOZART", "SAPRC99", "CB05", "CB05CMAQ", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
-"SAPRC07CMAQ",  "SAPRC07A","CRIMECH"
-WRF: "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
+\item{mechanism}{Character, "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"}
 
 \item{colby}{Character indicating column name for aggregating extra column.
@@ -47,19 +44,19 @@ providing flexibility for several models.
 # CO
 df <- data.frame(emission = Emissions(1:10))
 df$pollutant = "CO"
-emis_chem(df, "CBMZ")
+emis_chem(df, "CBMZ_MOSAIC")
 # hexanal
 df$pollutant = "hexanal"
-emis_chem(df, "CBMZ")
+emis_chem(df, "CBMZ_MOSAIC")
 # propadiene and NO2
 df2 <- df1 <- df
 df1$pollutant = "propadiene"
 df2$pollutant = "NO2"
 (dfe <- rbind(df1, df2))
-emis_chem(dfe, "CBMZ")
+emis_chem(dfe, "CBMZ_MOSAIC")
 dfe$region <- rep(letters[1:2], 10)
-emis_chem(dfe, "CBMZ", "region")
-emis_chem(dfe, "CBMZ", "region", TRUE)
+emis_chem(dfe, "CBMZ_MOSAIC", "region")
+emis_chem(dfe, "CBMZ_MOSAIC", "region", TRUE)
 }
 }
 \seealso{
