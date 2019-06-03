@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+# vein 0.7.7  (Release date: 2019-05-08)
+
+- Adjustment in emis_chem
+
 # vein 0.7.6  (Release date: 2019-05-08)
 
 - Fix erro in some aldehyes LCV
