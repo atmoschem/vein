@@ -20,8 +20,9 @@
 #' x <- split_emis(netsf, g)
 #' dim(x)
 #' g$A <- rep(letters, length = 20)[1:nrow(g)]
+#' g$B <- rev(g$A)
 #' netsf <- sf::st_as_sf(net)[, c("ldv", "hdv")]
-#' xx <- split_emis(netsf, g, add_column = "A")
+#' xx <- split_emis(netsf, g, add_column = c("A", "B"))
 #' }
 split_emis <- function(net, distance, add_column, verbose = TRUE){
   net <- sf::st_as_sf(net)
@@ -43,8 +44,11 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
 
   # check add_column and store it
   if(!missing(add_column)){
-    nc <- gnet[[add_column]]
-    gnet[[add_column]] <- NULL
+    nc <- list()
+      for(i in 1:length(add_column)){
+      nc[[i]] <- gnet[[add_column[i]]]
+      gnet[[add_column[i]]] <- NULL
+    }
   }
 
   gnet$LKM2 <- sf::st_length(gnet)
@@ -58,7 +62,9 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   }
   if(!missing(add_column)){
     if(verbose) cat("Adding Column\n")
-    gnet[[add_column]] <- nc
+    for(i in 1:length(add_column)){
+      gnet[[add_column[i]]] <- nc[[i]]
+    }
   }
   gnet$id <- 1:nrow(gnet)
   gnet <- sf::st_sf(gnet, geometry = geo)
