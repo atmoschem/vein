@@ -4,13 +4,17 @@
 \alias{split_emis}
 \title{Split street emissions based on a grid}
 \usage{
-split_emis(net, distance, verbose = TRUE)
+split_emis(net, distance, add_column, verbose = TRUE)
 }
 \arguments{
 \item{net}{A spatial dataframe of class "sp" or "sf". When class is "sp"
 it is transformed to "sf" with emissions.}
 
 \item{distance}{Numeric distance or a grid with class "sf".}
+
+\item{add_column}{Character indicating name of column of distance. For instance,
+if distance is an sf object, and you wand to add one extra column to the
+resulting object.}
 
 \item{verbose}{Logical, to show more information.}
 }

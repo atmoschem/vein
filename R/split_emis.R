@@ -5,6 +5,9 @@
 #' @param net A spatial dataframe of class "sp" or "sf". When class is "sp"
 #' it is transformed to "sf" with emissions.
 #' @param distance Numeric distance or a grid with class "sf".
+#' @param add_column Character indicating name of column of distance. For instance,
+#' if distance is an sf object, and you wand to add one extra column to the
+#' resulting object.
 #' @param verbose Logical, to show more information.
 #' @importFrom sf st_sf st_as_sf st_length  st_intersection st_set_geometry
 #' @export
@@ -17,7 +20,7 @@
 #' x <- split_emis(netsf, g)
 #' dim(x)
 #' }
-split_emis <- function(net, distance, verbose = TRUE){
+split_emis <- function(net, distance, add_column, verbose = TRUE){
   net <- sf::st_as_sf(net)
   if(is.numeric(distance)){
     if(verbose) cat("Creating grid\n")
@@ -42,6 +45,10 @@ split_emis <- function(net, distance, verbose = TRUE){
   if(verbose){
     sumemis <- sum(gnet, na.rm = T)/1000
     cat("Total Emissions", sumemis, " kg \n")
+  }
+  if(!missing(add_column)){
+    if(verbose) cat("Adding Column\n")
+    gnet[[add_column]] <- sf::st_intersection(net, g[, add_column])[[add_column]]
   }
   gnet$id <- 1:nrow(gnet)
   gnet <- sf::st_sf(gnet, geometry = geo)
