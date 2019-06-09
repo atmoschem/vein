@@ -30,5 +30,8 @@ dim(net)
 netsf <- sf::st_as_sf(net)[, "ldv"]
 x <- split_emis(netsf, g)
 dim(x)
+g$A <- rep(letters, length = 20)[1:nrow(g)]
+netsf <- sf::st_as_sf(net)[, c("ldv", "hdv")]
+xx <- split_emis(netsf, g, add_column = "A")
 }
 }

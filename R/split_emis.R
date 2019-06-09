@@ -19,6 +19,9 @@
 #' netsf <- sf::st_as_sf(net)[, "ldv"]
 #' x <- split_emis(netsf, g)
 #' dim(x)
+#' g$A <- rep(letters, length = 20)[1:nrow(g)]
+#' netsf <- sf::st_as_sf(net)[, c("ldv", "hdv")]
+#' xx <- split_emis(netsf, g, add_column = "A")
 #' }
 split_emis <- function(net, distance, add_column, verbose = TRUE){
   net <- sf::st_as_sf(net)
@@ -37,6 +40,13 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   net$LKM <- sf::st_length(net)
   if(verbose) cat("Intersecting\n")
   gnet <- st_intersection(net, g)
+
+  # check add_column and store it
+  if(!missing(add_column)){
+    nc <- gnet[[add_column]]
+    gnet[[add_column]] <- NULL
+  }
+
   gnet$LKM2 <- sf::st_length(gnet)
   geo <- gnet$geometry
   gnet <- as.data.frame(sf::st_set_geometry(gnet, NULL))
@@ -48,11 +58,10 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   }
   if(!missing(add_column)){
     if(verbose) cat("Adding Column\n")
-    gnet[[add_column]] <- sf::st_intersection(net, g[, add_column])[[add_column]]
+    gnet[[add_column]] <- nc
   }
   gnet$id <- 1:nrow(gnet)
   gnet <- sf::st_sf(gnet, geometry = geo)
   return(gnet)
 }
-
 
