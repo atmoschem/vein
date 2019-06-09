@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.7.7  (Release date: 2019-05-08)
+# vein 0.7.8  (Release date: 2019-06-09)
+
+- Adjustment in emis_chem
+
+## vein 0.7.7  (Release date: 2019-06-03)
 
 - Adjustment in emis_chem
 
