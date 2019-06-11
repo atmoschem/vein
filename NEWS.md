@@ -4,6 +4,9 @@ NEWS
 # vein 0.7.8  (Release date: 2019-06-09)
 
 - Adjustment in emis_chem
+- Adds long_to_wide
+- Improves documentation
+- Enhances split_emis
 
 ## vein 0.7.7  (Release date: 2019-06-03)
 

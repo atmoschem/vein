@@ -1,8 +1,7 @@
 #' Transform data.frame from long to wide format
 #'
-#' @description \code{\link{long_to_wide}} aggregates emissions by chemical mechanism
-#' and convert grams to mol. This function reads all hydrocarbos and respective
-#' criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
+#' @description \code{\link{long_to_wide}} transform data.frame from long to
+#' wide format
 #'
 #' @param df data.frame with three column.
 #' @param column_with_new_names Character, column that has new column names
@@ -11,7 +10,7 @@
 #' @param geometry To return a sf
 #' @return wide data.frame.
 #' @importFrom sf st_sf
-#' @seealso \code{\link{emis_hot_td}}  \code{\link{emis_cold_td}}
+#' @seealso \code{\link{emis_hot_td}} \code{\link{emis_cold_td}} \code{\link{wide_to_long}}
 #' @export
 #' @examples {
 #' df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),

@@ -22,9 +22,8 @@ long_to_wide(df, column_with_new_names = names(df)[1],
 wide data.frame.
 }
 \description{
-\code{\link{long_to_wide}} aggregates emissions by chemical mechanism
-and convert grams to mol. This function reads all hydrocarbos and respective
-criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
+\code{\link{long_to_wide}} transform data.frame from long to
+wide format
 }
 \examples{
 {
@@ -37,5 +36,5 @@ long_to_wide(df, column_fixed = "region")
 }
 }
 \seealso{
-\code{\link{emis_hot_td}}  \code{\link{emis_cold_td}}
+\code{\link{emis_hot_td}} \code{\link{emis_cold_td}} \code{\link{wide_to_long}}
 }
