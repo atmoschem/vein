@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>split_emis</span>(<span class='no'>net</span>, <span class='no'>distance</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>split_emis</span>(<span class='no'>net</span>, <span class='no'>distance</span>, <span class='no'>add_column</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,6 +123,12 @@ it is transformed to "sf" with emissions.</p></td>
     <tr>
       <th>distance</th>
       <td><p>Numeric distance or a grid with class "sf".</p></td>
+    </tr>
+    <tr>
+      <th>add_column</th>
+      <td><p>Character indicating name of column of distance. For instance,
+if distance is an sf object, and you wand to add one extra column to the
+resulting object.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -140,11 +146,18 @@ it is transformed to "sf" with emissions.</p></td>
 <span class='no'>netsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>net</span>)[, <span class='st'>"ldv"</span>]
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>split_emis</span>(<span class='no'>netsf</span>, <span class='no'>g</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>x</span>)
+<span class='no'>g</span>$<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>letters</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>20</span>)[<span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>g</span>)]
+<span class='no'>g</span>$<span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rev'>rev</a></span>(<span class='no'>g</span>$<span class='no'>A</span>)
+<span class='no'>netsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>net</span>)[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)]
+<span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'>split_emis</span>(<span class='no'>netsf</span>, <span class='no'>g</span>, <span class='kw'>add_column</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>))
 }</div><div class='output co'>#&gt; Number of lon points: 23
 #&gt; Number of lat points: 19
 #&gt; 
 #&gt; Total Emissions 1946.955  kg 
-#&gt; Intersecting</div><div class='output co'>#&gt; <span class='message'>although coordinates are longitude/latitude, st_intersection assumes that they are planar</span></div><div class='output co'>#&gt; <span class='warning'>Warning: attribute variables are assumed to be spatially constant throughout all geometries</span></div><div class='output co'>#&gt; Total Emissions 1946.955  kg </div><div class='output co'>#&gt; [1] 2936    3</div></pre>
+#&gt; Intersecting</div><div class='output co'>#&gt; <span class='message'>although coordinates are longitude/latitude, st_intersection assumes that they are planar</span></div><div class='output co'>#&gt; <span class='warning'>Warning: attribute variables are assumed to be spatially constant throughout all geometries</span></div><div class='output co'>#&gt; Total Emissions 1946.955  kg 
+#&gt; Total Emissions 2095.073  kg 
+#&gt; Intersecting</div><div class='output co'>#&gt; <span class='message'>although coordinates are longitude/latitude, st_intersection assumes that they are planar</span></div><div class='output co'>#&gt; <span class='warning'>Warning: attribute variables are assumed to be spatially constant throughout all geometries</span></div><div class='output co'>#&gt; Total Emissions 2095.073  kg 
+#&gt; Adding Column</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
