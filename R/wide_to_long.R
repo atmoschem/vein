@@ -23,8 +23,8 @@ wide_to_long <- function(df,
                          geometry) {
   a <- as.data.frame(df)
   if(!missing(column_fixed)){
-    df2 <- data.frame(V1 = unlist(a[, column_fixed]))
-    df2$V2 <- unlist(a[, column_with_data])
+    df2 <- data.frame(V1 = unlist(a[, column_with_data]))
+    df2$V2 <- unlist(a[, column_fixed])
     df2$V3 <- rep(column_with_data, each = nrow(a))
   } else {
     df2 <- data.frame(V1 = unlist(a[, column_with_data]))
