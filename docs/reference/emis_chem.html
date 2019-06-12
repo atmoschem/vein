@@ -67,7 +67,7 @@ criteria polluants specified in ef_ldv_speed and ef_hdv_speed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
       </span>
     </div>
 
@@ -125,10 +125,7 @@ criteria polluants specified in <code><a href='ef_ldv_speed.html'>ef_ldv_speed</
     </tr>
     <tr>
       <th>mechanism</th>
-      <td><p>Character, any of "SAPRC", "RACM", "RADM2", "CBMZ",
-"MOZART", "SAPRC99", "CB05", "CB05CMAQ", "CB06CMAQ", "RACM2CMAQ", "SAPRC99CMAQ",
-"SAPRC07CMAQ",  "SAPRC07A","CRIMECH"
-WRF: "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
+      <td><p>Character, "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"</p></td>
     </tr>
     <tr>
@@ -170,59 +167,62 @@ providing flexibility for several models.</p>
 <span class='co'># CO</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>emission</span> <span class='kw'>=</span> <span class='fu'><a href='Emissions.html'>Emissions</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 <span class='no'>df</span>$<span class='no'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>
-<span class='fu'>emis_chem</span>(<span class='no'>df</span>, <span class='st'>"CBMZ"</span>)
+<span class='fu'>emis_chem</span>(<span class='no'>df</span>, <span class='st'>"CBMZ_MOSAIC"</span>)
 <span class='co'># hexanal</span>
 <span class='no'>df</span>$<span class='no'>pollutant</span> <span class='kw'>=</span> <span class='st'>"hexanal"</span>
-<span class='fu'>emis_chem</span>(<span class='no'>df</span>, <span class='st'>"CBMZ"</span>)
+<span class='fu'>emis_chem</span>(<span class='no'>df</span>, <span class='st'>"CBMZ_MOSAIC"</span>)
 <span class='co'># propadiene and NO2</span>
 <span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='no'>df1</span> <span class='kw'>&lt;-</span> <span class='no'>df</span>
 <span class='no'>df1</span>$<span class='no'>pollutant</span> <span class='kw'>=</span> <span class='st'>"propadiene"</span>
 <span class='no'>df2</span>$<span class='no'>pollutant</span> <span class='kw'>=</span> <span class='st'>"NO2"</span>
 (<span class='no'>dfe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='no'>df1</span>, <span class='no'>df2</span>))
-<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ"</span>)
+<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ_MOSAIC"</span>)
 <span class='no'>dfe</span>$<span class='no'>region</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='fl'>10</span>)
-<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ"</span>, <span class='st'>"region"</span>)
-<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ"</span>, <span class='st'>"region"</span>, <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; <span class='warning'>Warning: number of rows of result is not a multiple of vector length (arg 18)</span></div><div class='output co'>#&gt;     group region  emission units
+<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ_MOSAIC"</span>, <span class='st'>"region"</span>)
+<span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ_MOSAIC"</span>, <span class='st'>"region"</span>, <span class='fl'>TRUE</span>)
+}</div><div class='output co'>#&gt; <span class='warning'>Warning: number of rows of result is not a multiple of vector length (arg 21)</span></div><div class='output co'>#&gt;     group region  emission units
 #&gt; 2     ALD   &lt;NA&gt; 0.0000000   mol
-#&gt; 3  C2H5OH   &lt;NA&gt; 0.0000000   mol
-#&gt; 4   CH3OH   &lt;NA&gt; 0.0000000   mol
-#&gt; 5      CO   &lt;NA&gt; 0.0000000   mol
-#&gt; 6     CSL   &lt;NA&gt; 0.0000000   mol
-#&gt; 7     ECC   &lt;NA&gt; 0.0000000     g
-#&gt; 8     ECI   &lt;NA&gt; 0.0000000     g
-#&gt; 9     ECJ   &lt;NA&gt; 0.0000000     g
-#&gt; 10    ETH   &lt;NA&gt; 0.0000000   mol
-#&gt; 11    HC3   &lt;NA&gt; 0.0000000   mol
-#&gt; 12    HC3      a 0.6240038   mol
-#&gt; 13    HC3      b 0.7488045   mol
-#&gt; 14    HC5   &lt;NA&gt; 0.0000000   mol
-#&gt; 15    HC8   &lt;NA&gt; 0.0000000   mol
-#&gt; 16   HCHO   &lt;NA&gt; 0.0000000   mol
-#&gt; 17    ISO   &lt;NA&gt; 0.0000000   mol
-#&gt; 18    KET   &lt;NA&gt; 0.0000000   mol
-#&gt; 19    NH3   &lt;NA&gt; 0.0000000   mol
-#&gt; 20     NO   &lt;NA&gt; 0.0000000   mol
-#&gt; 21    NO2      a 1.0868148   mol
-#&gt; 22    NO2      b 1.3041777   mol
-#&gt; 23   NO3C   &lt;NA&gt; 0.0000000     g
-#&gt; 24    OL2   &lt;NA&gt; 0.0000000   mol
-#&gt; 25   OLE2   &lt;NA&gt; 0.0000000   mol
-#&gt; 26    OLI   &lt;NA&gt; 0.0000000   mol
-#&gt; 27    OLT   &lt;NA&gt; 0.0000000   mol
-#&gt; 28   ORA2   &lt;NA&gt; 0.0000000   mol
-#&gt; 29   ORGC   &lt;NA&gt; 0.0000000     g
-#&gt; 30   ORGI   &lt;NA&gt; 0.0000000     g
-#&gt; 31   ORGJ   &lt;NA&gt; 0.0000000     g
-#&gt; 32   PM10   &lt;NA&gt; 0.0000000     g
-#&gt; 33  PM25I   &lt;NA&gt; 0.0000000     g
-#&gt; 34  PM25J   &lt;NA&gt; 0.0000000     g
-#&gt; 35    SO2   &lt;NA&gt; 0.0000000   mol
-#&gt; 36   SO4C   &lt;NA&gt; 0.0000000     g
-#&gt; 37   SO4I   &lt;NA&gt; 0.0000000     g
-#&gt; 38   SO4J   &lt;NA&gt; 0.0000000     g
-#&gt; 39    TOL   &lt;NA&gt; 0.0000000   mol
-#&gt; 40    XYL   &lt;NA&gt; 0.0000000   mol</div></pre>
+#&gt; 3    ARO1   &lt;NA&gt; 0.0000000   mol
+#&gt; 4    ARO2   &lt;NA&gt; 0.0000000   mol
+#&gt; 5  C2H5OH   &lt;NA&gt; 0.0000000   mol
+#&gt; 6    C3H6   &lt;NA&gt; 0.0000000   mol
+#&gt; 7   CH3OH   &lt;NA&gt; 0.0000000   mol
+#&gt; 8      CO   &lt;NA&gt; 0.0000000   mol
+#&gt; 9     CSL   &lt;NA&gt; 0.0000000   mol
+#&gt; 10    ECC   &lt;NA&gt; 0.0000000     g
+#&gt; 11    ECI   &lt;NA&gt; 0.0000000     g
+#&gt; 12    ECJ   &lt;NA&gt; 0.0000000     g
+#&gt; 13    ETH   &lt;NA&gt; 0.0000000   mol
+#&gt; 14    HC3   &lt;NA&gt; 0.0000000   mol
+#&gt; 15    HC3      a 0.6240038   mol
+#&gt; 16    HC3      b 0.7488045   mol
+#&gt; 17    HC5   &lt;NA&gt; 0.0000000   mol
+#&gt; 18    HC8   &lt;NA&gt; 0.0000000   mol
+#&gt; 19   HCHO   &lt;NA&gt; 0.0000000   mol
+#&gt; 20    ISO   &lt;NA&gt; 0.0000000   mol
+#&gt; 21    KET   &lt;NA&gt; 0.0000000   mol
+#&gt; 22    NH3   &lt;NA&gt; 0.0000000   mol
+#&gt; 23     NO   &lt;NA&gt; 0.0000000   mol
+#&gt; 24    NO2      a 0.5434074   mol
+#&gt; 25    NO2      b 0.6520889   mol
+#&gt; 26   NO3C   &lt;NA&gt; 0.0000000     g
+#&gt; 27   NO3I   &lt;NA&gt; 0.0000000     g
+#&gt; 28   NO3J   &lt;NA&gt; 0.0000000     g
+#&gt; 29    OL2   &lt;NA&gt; 0.0000000   mol
+#&gt; 30    OLI   &lt;NA&gt; 0.0000000   mol
+#&gt; 31    OLT   &lt;NA&gt; 0.0000000   mol
+#&gt; 32   ORA2   &lt;NA&gt; 0.0000000   mol
+#&gt; 33   ORGC   &lt;NA&gt; 0.0000000     g
+#&gt; 34   ORGI   &lt;NA&gt; 0.0000000     g
+#&gt; 35   ORGJ   &lt;NA&gt; 0.0000000     g
+#&gt; 36  PM25I   &lt;NA&gt; 0.0000000     g
+#&gt; 37  PM25J   &lt;NA&gt; 0.0000000     g
+#&gt; 38    SO2   &lt;NA&gt; 0.0000000   mol
+#&gt; 39   SO4C   &lt;NA&gt; 0.0000000     g
+#&gt; 40   SO4I   &lt;NA&gt; 0.0000000     g
+#&gt; 41   SO4J   &lt;NA&gt; 0.0000000     g
+#&gt; 42    TOL   &lt;NA&gt; 0.0000000   mol
+#&gt; 43    XYL   &lt;NA&gt; 0.0000000   mol</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
