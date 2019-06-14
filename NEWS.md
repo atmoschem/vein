@@ -1,12 +1,20 @@
 NEWS
 ===========
 
-# vein 0.7.8  (Release date: 2019-06-09)
+# vein 0.7.9  (Release date: 2019-06-14)
+
+- Found error on ef_china. Specifically on sulfur correction. fix #182
+- Adding more tests on ef_china.
+- Improve documentation of ef_china
+
+
+## vein 0.7.8  (Release date: 2019-06-09)
 
 - Adjustment in emis_chem
 - Adds long_to_wide
 - Improves documentation
 - Enhances split_emis
+- Upload to CRAN
 
 ## vein 0.7.7  (Release date: 2019-06-03)
 

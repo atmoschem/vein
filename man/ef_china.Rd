@@ -5,16 +5,16 @@
 \title{Emissions factors from Chinese emissions guidelines}
 \usage{
 ef_china(v = "PV", t = "Small", f = "G", standard, p, k = 1,
-  ta = celsius(25), humidity = 0.5, altitude = 1000,
-  speed = Speed(29), baseyear_det = 2016, sulphur = 50,
+  ta = celsius(15), humidity = 0.5, altitude = 1000,
+  speed = Speed(30), baseyear_det = 2016, sulphur = 50,
   load_factor = 0.5, details = FALSE, correction_only = FALSE)
 }
 \arguments{
 \item{v}{Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"}
 
-\item{t}{Character; sub-category of of vehicle: PV:  "Mini", "Small","Medium",
-"Large", "Taxi", "Motorcycles", "Moped", "Mediumbus", "Largebus", "3-Wheel" Trucks:
-"Mini", "Light" , "Medium", "Heavy"}
+\item{t}{Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
+"Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
+ "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"}
 
 \item{f}{Character;fuel: "G", "D"}
 
@@ -23,7 +23,8 @@ it is a data.frame, it each row is a different region and ta, humidity,
 altitud, speed, sulphur and load_factor lengths have the same as the number of
 rows.}
 
-\item{p}{Character; pollutant: "CO", "NOx","HC", "PM"}
+\item{p}{Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
+or "Evaporative_parking"}
 
 \item{k}{Numeric; multiplication factor}
 
@@ -61,21 +62,87 @@ The emission factors  comes from the chinese emission guidelines (v3) from the
 Chinese Ministry of Ecology and Environment
 http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf
 }
+\note{
+Combination of vehicles:
+\tabular{ccc}{
+  v    \tab t      \tab    f  \cr
+  PV   \tab Mini   \tab   G   \cr
+  PV   \tab Small   \tab   G   \cr
+  PV   \tab Medium   \tab   G   \cr
+  PV   \tab Large   \tab   G   \cr
+  PV   \tab Taxi   \tab   G   \cr
+  PV   \tab Bus   \tab   G   \cr
+  PV   \tab Motorcycles   \tab   G   \cr
+  PV   \tab Moped   \tab   G   \cr
+  PV   \tab Mini   \tab   D   \cr
+  PV   \tab Small   \tab   D   \cr
+  PV   \tab Mediumbus   \tab   D   \cr
+  PV   \tab Largebus   \tab   D   \cr
+  PV   \tab Bus   \tab   D   \cr
+  PV   \tab 3-Wheel   \tab   D   \cr
+  PV   \tab Small   \tab   ALL   \cr
+  PV   \tab Mediumbus   \tab   ALL   \cr
+  PV   \tab Largebus   \tab   ALL   \cr
+  PV   \tab Taxi   \tab   ALL   \cr
+  PV   \tab Bus   \tab   ALL   \cr
+  Trucks   \tab Bus   \tab   G   \cr
+  Trucks   \tab Light   \tab   G   \cr
+  Trucks   \tab Medium   \tab   G   \cr
+  Trucks   \tab Heavy   \tab   G   \cr
+  Trucks   \tab Light   \tab   D   \cr
+  Trucks   \tab Medium   \tab   D   \cr
+  Trucks   \tab Heavy   \tab   D   \cr
+  Trucks   \tab Low Speed   \tab   D   \cr
+  Trucks   \tab Mini   \tab   D   \cr
+}
+}
 \examples{
 {
 # when standard is 'character'
-ef_china(standard = c("I"), p = "CO", details = TRUE)
+# Checking
+df_st <- rev(c(as.character(as.roman(5:1)), "PRE"))
+ef_china(t = "Mini", f = "G", standard = df_st, p = "CO")
+ef_china(t = "Mini", f = "G", standard = df_st, p = "HC")
+ef_china(t = "Mini", f = "G", standard = df_st, p = "NOx")
+ef_china(t = "Mini", f = "G", standard = df_st, p = "PM2.5")
+ef_china(t = "Mini", f = "G", standard = df_st, p = "PM10")
+
+ef_china(t = "Small", f = "G", standard = df_st, p = "CO")
+ef_china(t = "Small", f = "G", standard = df_st, p = "HC")
+ef_china(t = "Small", f = "G", standard = df_st, p = "NOx")
+ef_china(t = "Small", f = "G", standard = df_st, p = "PM2.5")
+ef_china(t = "Small", f = "G", standard = df_st, p = "PM10")
+
+
+ef_china(t = "Mini",
+        standard = c("PRE"),
+        p = "CO",
+        k = 1,
+        ta = celsius(15),
+        humidity = 0.5,
+        altitude = 1000,
+        speed = Speed(30),
+        baseyear_det = 2014,
+        sulphur = 50,
+        load_factor = 0.5,
+        details = FALSE)
 ef_china(standard = c("PRE", "I"), p = "CO", correction_only = TRUE)
+
 # when standard is 'data.frame'
 df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 2, ncol = 7, byrow = TRUE)
 df_st <- as.data.frame(df_st)
-a <- ef_china(standard = df_st, p = "PM10", ta = rep(celsius(20), 2),
-altitude = rep(1501, 2), speed = rep(Speed(29), 2), sulphur = rep(50, 2))
+a <- ef_china(standard = df_st,
+              p = "PM10",
+              ta = rep(celsius(15), 2),
+              altitude = rep(1000, 2),
+              speed = rep(Speed(30), 2),
+              sulphur = rep(50, 2))
 dim(a)
 dim(df_st)
 ef_china(standard = df_st, p = "PM2.5", ta = rep(celsius(20), 2),
 altitude = rep(1501, 2), speed = rep(Speed(29), 2), sulphur = rep(50, 2))
 a
+
 # when standard, temperature and humidity are data.frames
 # assuming 10 regions
 df_st <- matrix(c("V", "IV", "III", "III", "II", "I", "PRE"), nrow = 10, ncol = 7, byrow = TRUE)
@@ -83,6 +150,7 @@ df_st <- as.data.frame(df_st)
 df_t <- matrix(21:30, nrow = 10, ncol = 12, byrow = TRUE)
 df_t <- as.data.frame(df_t)
 for(i in 1:12) df_t[, i] <- celsius(df_t[, i])
+
 # assuming 10 regions
 df_h <- matrix(seq(0.4, 0.5, 0.05), nrow = 10, ncol = 12, byrow = TRUE)
 df_h <- as.data.frame(df_h)
