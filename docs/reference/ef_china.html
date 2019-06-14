@@ -68,7 +68,7 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
       </span>
     </div>
 
@@ -117,8 +117,8 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf</p>
     </div>
 
     <pre class="usage"><span class='fu'>ef_china</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PV"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Small"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='no'>standard</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fl'>25</span>), <span class='kw'>humidity</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>29</span>), <span class='kw'>baseyear_det</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fl'>15</span>), <span class='kw'>humidity</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>30</span>), <span class='kw'>baseyear_det</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fl'>50</span>,
   <span class='kw'>load_factor</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>correction_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -130,9 +130,9 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf</p>
     </tr>
     <tr>
       <th>t</th>
-      <td><p>Character; sub-category of of vehicle: PV:  "Mini", "Small","Medium",
-"Large", "Taxi", "Motorcycles", "Moped", "Mediumbus", "Largebus", "3-Wheel" Trucks:
-"Mini", "Light" , "Medium", "Heavy"</p></td>
+      <td><p>Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
+"Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
+ "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"</p></td>
     </tr>
     <tr>
       <th>f</th>
@@ -147,7 +147,8 @@ rows.</p></td>
     </tr>
     <tr>
       <th>p</th>
-      <td><p>Character; pollutant: "CO", "NOx","HC", "PM"</p></td>
+      <td><p>Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
+or "Evaporative_parking"</p></td>
     </tr>
     <tr>
       <th>k</th>
@@ -202,6 +203,50 @@ and english. Only when length standard is 1.</p></td>
 
     <p>An emission factor</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Combination of vehicles:</p><table class='table'>
+<tr><td></td><td>v</td><td>t</td></tr>
+<tr><td>f</td><td></td><td>PV</td></tr>
+<tr><td>Mini</td><td>G</td><td></td></tr>
+<tr><td>PV</td><td>Small</td><td>G</td></tr>
+<tr><td></td><td>PV</td><td>Medium</td></tr>
+<tr><td>G</td><td></td><td>PV</td></tr>
+<tr><td>Large</td><td>G</td><td></td></tr>
+<tr><td>PV</td><td>Taxi</td><td>G</td></tr>
+<tr><td></td><td>PV</td><td>Bus</td></tr>
+<tr><td>G</td><td></td><td>PV</td></tr>
+<tr><td>Motorcycles</td><td>G</td><td></td></tr>
+<tr><td>PV</td><td>Moped</td><td>G</td></tr>
+<tr><td></td><td>PV</td><td>Mini</td></tr>
+<tr><td>D</td><td></td><td>PV</td></tr>
+<tr><td>Small</td><td>D</td><td></td></tr>
+<tr><td>PV</td><td>Mediumbus</td><td>D</td></tr>
+<tr><td></td><td>PV</td><td>Largebus</td></tr>
+<tr><td>D</td><td></td><td>PV</td></tr>
+<tr><td>Bus</td><td>D</td><td></td></tr>
+<tr><td>PV</td><td>3-Wheel</td><td>D</td></tr>
+<tr><td></td><td>PV</td><td>Small</td></tr>
+<tr><td>ALL</td><td></td><td>PV</td></tr>
+<tr><td>Mediumbus</td><td>ALL</td><td></td></tr>
+<tr><td>PV</td><td>Largebus</td><td>ALL</td></tr>
+<tr><td></td><td>PV</td><td>Taxi</td></tr>
+<tr><td>ALL</td><td></td><td>PV</td></tr>
+<tr><td>Bus</td><td>ALL</td><td></td></tr>
+<tr><td>Trucks</td><td>Bus</td><td>G</td></tr>
+<tr><td></td><td>Trucks</td><td>Light</td></tr>
+<tr><td>G</td><td></td><td>Trucks</td></tr>
+<tr><td>Medium</td><td>G</td><td></td></tr>
+<tr><td>Trucks</td><td>Heavy</td><td>G</td></tr>
+<tr><td></td><td>Trucks</td><td>Light</td></tr>
+<tr><td>D</td><td></td><td>Trucks</td></tr>
+<tr><td>Medium</td><td>D</td><td></td></tr>
+<tr><td>Trucks</td><td>Heavy</td><td>D</td></tr>
+<tr><td></td><td>Trucks</td><td>Low Speed</td></tr>
+<tr><td>D</td><td></td><td>Trucks</td></tr>
+<tr><td>Mini</td><td>D</td><td></td></tr>
+</table>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> <code><a href='emis_hot_td.html'>emis_hot_td</a></code></p></div>
@@ -210,18 +255,50 @@ and english. Only when length standard is 1.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='co'># when standard is 'character'</span>
-<span class='fu'>ef_china</span>(<span class='kw'>standard</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"I"</span>), <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># Checking</span>
+<span class='no'>df_st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rev'>rev</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/roman'>as.roman</a></span>(<span class='fl'>5</span>:<span class='fl'>1</span>)), <span class='st'>"PRE"</span>))
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Mini"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Mini"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"HC"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Mini"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NOx"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Mini"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PM2.5"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Mini"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PM10"</span>)
+
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Small"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Small"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"HC"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Small"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NOx"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Small"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PM2.5"</span>)
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Small"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PM10"</span>)
+
+
+<span class='fu'>ef_china</span>(<span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Mini"</span>,
+        <span class='kw'>standard</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PRE"</span>),
+        <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
+        <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+        <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fl'>15</span>),
+        <span class='kw'>humidity</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+        <span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+        <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>30</span>),
+        <span class='kw'>baseyear_det</span> <span class='kw'>=</span> <span class='fl'>2014</span>,
+        <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+        <span class='kw'>load_factor</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+        <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'>ef_china</span>(<span class='kw'>standard</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PRE"</span>, <span class='st'>"I"</span>), <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>correction_only</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
 <span class='co'># when standard is 'data.frame'</span>
 <span class='no'>df_st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"V"</span>, <span class='st'>"IV"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"II"</span>, <span class='st'>"I"</span>, <span class='st'>"PRE"</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>df_st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>df_st</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_china</span>(<span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PM10"</span>, <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fl'>20</span>), <span class='fl'>2</span>),
-<span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1501</span>, <span class='fl'>2</span>), <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>29</span>), <span class='fl'>2</span>), <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>50</span>, <span class='fl'>2</span>))
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_china</span>(<span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>,
+              <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PM10"</span>,
+              <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fl'>15</span>), <span class='fl'>2</span>),
+              <span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1000</span>, <span class='fl'>2</span>),
+              <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>30</span>), <span class='fl'>2</span>),
+              <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>50</span>, <span class='fl'>2</span>))
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>a</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>df_st</span>)
 <span class='fu'>ef_china</span>(<span class='kw'>standard</span> <span class='kw'>=</span> <span class='no'>df_st</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"PM2.5"</span>, <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fl'>20</span>), <span class='fl'>2</span>),
 <span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1501</span>, <span class='fl'>2</span>), <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>29</span>), <span class='fl'>2</span>), <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>50</span>, <span class='fl'>2</span>))
 <span class='no'>a</span>
+
 <span class='co'># when standard, temperature and humidity are data.frames</span>
 <span class='co'># assuming 10 regions</span>
 <span class='no'>df_st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"V"</span>, <span class='st'>"IV"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"II"</span>, <span class='st'>"I"</span>, <span class='st'>"PRE"</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -229,6 +306,7 @@ and english. Only when length standard is 1.</p></td>
 <span class='no'>df_t</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fl'>21</span>:<span class='fl'>30</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>df_t</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>df_t</span>)
 <span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>12</span>) <span class='no'>df_t</span>[, <span class='no'>i</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='no'>df_t</span>[, <span class='no'>i</span>])
+
 <span class='co'># assuming 10 regions</span>
 <span class='no'>df_h</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>0.4</span>, <span class='fl'>0.5</span>, <span class='fl'>0.05</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>df_h</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/as.data.frame'>as.data.frame</a></span>(<span class='no'>df_h</span>)
@@ -242,9 +320,7 @@ and english. Only when length standard is 1.</p></td>
 <span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1501</span>, <span class='fl'>10</span>), <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>29</span>), <span class='fl'>10</span>), <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>50</span>, <span class='fl'>10</span>))
 <span class='no'>a</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span>(<span class='no'>a</span>)
-}</div><div class='output co'>#&gt; English:  Passenger cars (including cars) with a length of less than 6000mm and a ride of less than or equal to 9 passengers; excluding minibuses and taxis
-#&gt; 
-#&gt; Chinese:  车长小于 6000mm 且乘坐人数小于等于 9 人的载客汽车(含轿车); 不包括微型客车和出租车</div><div class='output co'>#&gt; [1] 120  12</div></pre>
+}</div><div class='output co'>#&gt; [1] 120  12</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -252,6 +328,8 @@ and english. Only when length standard is 1.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
