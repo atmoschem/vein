@@ -130,3 +130,26 @@ expect_equal(
     vect[50:62])
 )
 
+#PC
+df_st <- rev(c("VIc", as.character(as.roman(6:1)), "PRE"))
+# "PCDD", "PCDF", "PCB"
+pol <- c("PCDD", "PCDF", "PCB")
+EF <- sapply(1:3, function(j){
+  sapply(1:8, function(i){
+    ef_ldv_speed("PC", "4S", "<=1400", "G", df_st[i], pol[j])(100) })
+})
+
+ef <- units::set_units(c(10.3, rep(13, 2), rep(2.7, 5)), pg)
+ef <- units::set_units(ef, g)
+ef1 <- as.numeric(ef)
+ef <- units::set_units(c(21.12, rep(19, 2), rep(4.1, 5)), pg)
+ef <- units::set_units(ef, g)
+ef2 <- as.numeric(ef)
+ef <- units::set_units(c(rep(6.4, 2), rep(1.36, 5)), pg)
+ef <- units::set_units(ef, g)
+ef3 <- as.numeric(ef)
+
+test_that("ef_ldv_speed works", {
+  expect_equal(EF,
+    matrix(c(ef1, ef2, ef3), ncol =3))
+})
