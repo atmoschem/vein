@@ -25,8 +25,7 @@ the distribution by age of use varies the streets.}
 
 \item{pro_street}{Character; each category of profile for each street.
 The length of this character vector must be equal to the length of 'x'. The
-characters of this vector must be the same of the 'data.frame' 'y'. When
-pro_street is not used, 'y' must be a numeric vector.}
+names of the data.frame 'y' must be have the same content of 'pro_street'}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
