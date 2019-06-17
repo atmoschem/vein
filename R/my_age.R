@@ -94,7 +94,7 @@ my_age <- function (x,
       if(!missing(pro_street)){
 
         if(length(k) > 1){
-          df <- vein::Vehicles(vein::matvect(df = df, x = k))
+          df <- matvect(df = df, x = k)
         } else {
           df <- df*k
         }
@@ -115,7 +115,7 @@ my_age <- function (x,
 
       } else {
         if(length(k) > 1){
-          df <- vein::Vehicles(vein::matvect(df = df, x = k))
+          df <- matvect(df = df, x = k)
         } else {
           df <- df*k
         }
@@ -136,12 +136,7 @@ my_age <- function (x,
       }
     }
   }
-  if(length(k) > 1){
-    df <- vein::Vehicles(vein::matvect(df = df, x = k))
-  } else {
-    df <- vein::Vehicles(df*k)
-  }
-
+df <- Vehicles(df)
   if(!missing(namerows)) {
     if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
     row.names(df) <- namerows
