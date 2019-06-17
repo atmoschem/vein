@@ -248,12 +248,17 @@ Please, read the examples in the documentation of each function and run the demo
 
 ### 1) Examples with traffic data:
 
-age functions:
+1. If you know the distribution of the vehicles by age of use , use:  [my_age](https://atmoschem.github.io/vein/reference/my_age.html)
+2. If you know the sales of vehicles, or the registry of new vehicles,
+use [age](https://atmoschem.github.io/vein/reference/age.html) to apply a survival function.
+3. If you know the theoretical shape of the circulating fleet and you can use
+[age_ldv](https://atmoschem.github.io/vein/reference/age_ldv.html),
+[age_hdv](https://atmoschem.github.io/vein/reference/age_hdv.html) or 
+[age_moto](https://atmoschem.github.io/vein/reference/age_moto.html). 
+For instance, you dont know the sales or registry of vehicles, but somehow you know
+the shape of this curve.
+4. You can use/merge/transform/adapt any of these functions.
 
-- [age_ldv](https://atmoschem.github.io/vein/reference/age_ldv.html)
-- [age_hdv](https://atmoschem.github.io/vein/reference/age_hdv.html)
-- [age_moto](https://atmoschem.github.io/vein/reference/age_moto.html)
-- [my_age](https://atmoschem.github.io/vein/reference/my_age.html)
 
 ```r
 data("net")

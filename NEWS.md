@@ -6,6 +6,7 @@ NEWS
 - Found error on ef_china. Specifically on sulfur correction. fix #182
 - Adding more tests on ef_china.
 - Improve documentation of ef_china
+- Update in age. Now it returns number of survived fleet by year. Really cool!
 
 
 ## vein 0.7.8  (Release date: 2019-06-09)

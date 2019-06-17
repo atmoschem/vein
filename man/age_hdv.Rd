@@ -37,6 +37,19 @@ dataframe of age distrubution of vehicles at each street
 \description{
 \code{\link{age_hdv}} returns amount of vehicles at each age
 }
+\note{
+The functions age* produce distribution of the circulating fleet by age of use.
+The order of using these functions is:
+
+1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
+2. If you know the sales of vehicles, or the registry of new vehicles,
+use \code{\link{age}} to apply a survival function.
+3. If you know the theoretical shape of the circulating fleet and you can use
+\code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
+you dont know the sales or registry of vehicles, but somehow you know
+the shape of this curve.
+4. You can use/merge/transform/adapt any of these functions.
+}
 \examples{
 {
 data(net)

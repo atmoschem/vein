@@ -169,7 +169,17 @@ regions or streets.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>It consists in a Gompertz equation with default parameters from
+    <p>The functions age* produce distribution of the circulating fleet by age of use.
+The order of using these functions is:</p>
+<p>1. If you know the distribution of the vehicles by age of use , use:  <code><a href='my_age.html'>my_age</a></code>
+2. If you know the sales of vehicles, or the registry of new vehicles,
+use <code><a href='age.html'>age</a></code> to apply a survival function.
+3. If you know the theoretical shape of the circulating fleet and you can use
+<code>age_ldv</code>, <code><a href='age_hdv.html'>age_hdv</a></code> or <code><a href='age_moto.html'>age_moto</a></code>. For instance,
+you dont know the sales or registry of vehicles, but somehow you know
+the shape of this curve.
+4. You can use/merge/transform/adapt any of these functions.</p>
+<p>It consists in a Gompertz equation with default parameters from
 1 national emissions inventory for green housegases in Brazil, MCT 2006</p>
     
 
