@@ -1,23 +1,32 @@
-#' Returns amount of vehicles at each age applying survival functions
+#' Applies a survival rate to numeric new vehicles
 #'
-#' @description \code{\link{age_ldv}} returns amount of vehicles at each age
+#' @description \code{\link{age}} returns survived vehicles
 #'
-#' @param x Numeric; numerical vector of vehicles with length equal to lines features of road network
+#' @param x Numeric; numerical vector of sales or registrations for each year
 #' @param type Character; any of "gompertz", "double_logistic", "weibull" and "weibull2"
 #' @param a Numeric; parameter of survival equation
 #' @param b Numeric; parameter of survival equation
-#' @param name Character; of vehicle assigned to columns of dataframe
-#' @param agemin Integer; age of newest vehicles for that category
-#' @param agemax Integer; age of oldest vehicles for that category
-#' @param k Numeric; multiplication factor. If its length is > 1, it must match the length of x
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param verbose Logical;  message with average age and total numer of vehicles
-#' @param namerows Any vector to be change row.names. For instance, name of
 #' regions or streets.
 #' @return dataframe of age distrubution of vehicles
 #' @importFrom sf st_sf st_as_sf
 #' @export
 #' @note
+#'
+#' The functions age* produce distribution of the circulating fleet by age of use.
+#' The order of using these functions is:
+#'
+#' 1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
+#' 2. If you know the sales of vehicles, or the registry of new vehicles,
+#' use \code{\link{age}} to apply a survival function.
+#' 3. If you know the theoretical shape of the circulating fleet and you can use
+#' \code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
+#' you dont know the sales or registry of vehicles, but somehow you know
+#' the shape of this curve.
+#' 4. You can use/merge/transform/dapt any of these functions.
+#'
+#'
 #' \strong{gompertz: 1 - exp(-exp(a + b*time))},
 #' defaults PC: b = -0.137, a = 1.798, LCV: b = -0.141, a = 1.618
 #' MCT (2006). de Gases de Efeito Estufa-Emissoes de Gases de
@@ -44,140 +53,95 @@
 #' Hao, H., Wang, H., Ouyang, M., & Cheng, F. (2011). Vehicle survival patterns in China.
 #' Science China Technological Sciences, 54(3), 625-629.
 #'
-#' \strong{weibull2: exp(-((time + a)/b)^b )},
+#' \strong{weibull2: exp(-((time + b)/a)^b )},
 #' defaults b = 11, a = 26
 #' Zachariadis, T., Samaras, Z., Zierock, K. H. (1995). Dynamic modeling of vehicle
 #' populations: an engineering approach for emissions calculations. Technological
 #' Forecasting and Social Change, 50(2), 135-149. Cited by Huo and Wang (2012)
 #'
 #' @examples {
-#' data(net)
-#' PC_E25_1400 <- age(x = net$ldv)
-#' plot(PC_E25_1400)
-#' PC_E25_1400 <- age(x = net$ldv,  net = net)
-#' plot(PC_E25_1400)
+#' vehLIA <- rep(1, 25)
+#' PV_Minia <- age(x = vehLIA)
+#' PV_Minib <- age(x = vehLIA, type = "weibull2", b = 11, a = 26)
+#' PV_Minic <- age(x = vehLIA, type = "double_logistic", b = 21, a = 0.19)
+#' PV_Minid <- age(x = vehLIA, type = "gompertz", b = -0.137, a = 1.798)
+#' plot(PV_Minia, type = "b", pch = 16)
+#' lines(PV_Minib, type = "b", pch = 16, col = "red")
+#' lines(PV_Minic, type = "b", pch = 16, col = "blue")
+#' lines(PV_Minid, type = "b", pch = 16, col = "green")
+#' legend(x = 20, y = 0.85,
+#'       legend = c("weibull", "weibull2", "double_logistic", "gompertz"),
+#'       col = c("black", "red", "blue", "green"),
+#'       lty=c(1,1),
+#'       lwd=c(2.5, 2.5, 2.5, 2.5))
+#'       #lets put some numbers
+#' vehLIA <- c(65400, 79100, 80700, 85300, 86700, 82000, 74500, 67700, 60600, 62500,
+#' 84700, 62600, 47900, 63900, 41800, 37492, 34243, 30995, 27747, 24499, 21250,
+#' 18002, 14754, 11506, 8257)
+#' PV_Minia <- age(x = vehLIA)
+#' PV_Minib <- age(x = vehLIA, type = "weibull2", b = 11, a = 26)
+#' PV_Minic <- age(x = vehLIA, type = "double_logistic",  b = 21, a = 0.19)
+#' PV_Minid <- age(x = vehLIA, type = "gompertz", b = -0.137, a = 1.798)
+#' plot(PV_Minia, type = "b", pch = 16)
+#' lines(PV_Minib, type = "b", pch = 16, col = "red")
+#' lines(PV_Minic, type = "b", pch = 16, col = "blue")
+#' lines(PV_Minid, type = "b", pch = 16, col = "green")
+#' legend(x = 20, y = 80000,
+#'       legend = c("weibull", "weibull2", "double_logistic", "gompertz"),
+#'       col = c("black", "red", "blue", "green"),
+#'       lty=c(1,1),
+#'       lwd=c(2.5, 2.5, 2.5, 2.5))
 #' }
 age <- function (x,
                  type = "weibull",
                  a = 14.46,
                  b = 4.79,
-                 name = "veh",
-                 agemin = 1,
-                 agemax = 50,
-                 k = 1,
                  net,
-                 verbose = FALSE,
-                 namerows){
+                 verbose = TRUE){
   #check agemax
-  if(agemax < 1) stop("Agemax should be bigger than 1")
-
-  if (missing(x) | is.null(x)) {
+    if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
   }
 
   # gompertz ####
   if(type == "gompertz") {
     surv <- function (time, a, b) {1 - exp(-exp(a + b*time))}
-    anos <- seq(agemin, agemax)
-    if(length(a) > 1 | length(b) > 1) {
-      if(length(a) != length(x) | length(b) != length(x)) {
-        stop("When length of a or b > 1, length must be length of x")
-      }
-      d <- do.call("rbind", lapply(1:length(a), function(i){
-        surv(time = anos, a = a[i], b = b[i])
-      }))
-      df <- as.data.frame(as.matrix(x) %*% d)
-    } else {
-      d <- surv(time = anos, a = a, b = b)
-      df <- as.data.frame(as.matrix(x) %*% matrix(d,
-                                                  ncol = length(anos),
-                                                  nrow = 1))
-    }
+    anos <- 1:length(x)
+    d <- surv(time = anos, a = a, b = b)
+    df <- x*d
     # double logistic ####
   } else if(type == "double_logistic"){
     surv <- function (time, a, b) {
       1/(1 + exp(a*(time + b))) + 1/(1 + exp(a*(time - b)))
     }
-    anos <- seq(agemin, agemax)
-    if(length(a) > 1 | length(b) > 1) {
-      if(length(a) != length(x) | length(b) != length(x)) {
-        stop("When length of a or b > 1, length must be length of x")
-      }
-      d <- do.call("rbind", lapply(1:length(a), function(i){
-        surv(time = anos, a = a[i], b = b[i])
-      }))
-      df <- as.data.frame(as.matrix(x) %*% d)
-    } else {
-      d <- surv(time = anos, a = a, b = b)
-      df <- as.data.frame(as.matrix(x) %*% matrix(d,
-                                                  ncol = length(anos),
-                                                  nrow = 1))
-    }
+    anos <- 1:length(x)
+    d <- surv(time = anos, a = a, b = b)
+    df <- x*d
     # weibull ####
   } else if(type == "weibull"){
     surv <- function (time, a, b) {
       exp(-(time/a)^b)
     }
-    anos <- seq(agemin, agemax)
-    if(length(a) > 1 | length(b) > 1) {
-      if(length(a) != length(x) | length(b) != length(x)) {
-        stop("When length of a or b > 1, length must be length of x")
-      }
-      d <- do.call("rbind", lapply(1:length(a), function(i){
-        surv(time = anos, a = a[i], b = b[i])
-      }))
-      df <- as.data.frame(as.matrix(x) %*% d)
-    } else {
-      d <- surv(time = anos, a = a, b = b)
-      df <- as.data.frame(as.matrix(x) %*% matrix(d,
-                                                  ncol = length(anos),
-                                                  nrow = 1))
-    }
+    anos <- 1:length(x)
+    d <- surv(time = anos, a = a, b = b)
+    df <- x*d
   } else if(type == "weibull2"){
     surv <- function (time, a, b) {
-      exp(-((time + a)/b)^b )
+      exp(-((time + b)/a)^b )
     }
-    anos <- seq(agemin, agemax)
-    if(length(a) > 1 | length(b) > 1) {
-      if(length(a) != length(x) | length(b) != length(x)) {
-        stop("When length of a or b > 1, length must be length of x")
-      }
-      d <- do.call("rbind", lapply(1:length(a), function(i){
-        surv(time = anos, a = a[i], b = b[i])
-      }))
-      df <- as.data.frame(as.matrix(x) %*% d)
-    } else {
-      d <- surv(time = anos, a = a, b = b)
-      df <- as.data.frame(as.matrix(x) %*% matrix(d,
-                                                  ncol = length(anos),
-                                                  nrow = 1))
-    }
+    anos <- 1:length(x)
+    d <- surv(time = anos, a = a, b = b)
+    df <- x*d
   }
   # data.frame ####
-  if(agemin > 1){
-    df <- cbind(matrix(0, ncol = agemin - 1, nrow = length(x)), df)
-    df <- as.data.frame(df)
-  }
-  names(df) <- paste(name, seq(1, agemax), sep = "_")
-
-  if(length(k) > 1){
-    df <- vein::matvect(df = df, x = k)
-  } else {
-    df <- df*k
-  }
-
   if(verbose){
-    message(paste("Average age of",name, "is",
-                  round(sum(seq(1, agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
+    message(paste("Average age of is",
+                  round(sum(anos*sum(df, na.rm = T)/sum(df, na.rm = T)), 2),
                   sep=" "))
-    message(paste("Number of",name, "is", round(sum(df, na.rm = T)/1000, 2),
+    message(paste("Number of vehicles is", round(sum(df, na.rm = T)/1000, 2),
                   "* 10^3 veh", sep=" ")
     )
     cat("\n")
-  }
-  if(!missing(namerows)) {
-    if(length(namerows) != nrow(x)) stop("length of namerows must be the length of number of rows of veh")
-    row.names(df) <- namerows
   }
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)

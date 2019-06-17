@@ -289,13 +289,13 @@ Scripts:
 <div id="examples-with-traffic-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#examples-with-traffic-data" class="anchor"></a>1) Examples with traffic data:</h3>
-<p>age functions:</p>
-<ul>
-<li><a href="https://atmoschem.github.io/vein/reference/age_ldv.html">age_ldv</a></li>
-<li><a href="https://atmoschem.github.io/vein/reference/age_hdv.html">age_hdv</a></li>
-<li><a href="https://atmoschem.github.io/vein/reference/age_moto.html">age_moto</a></li>
-<li><a href="https://atmoschem.github.io/vein/reference/my_age.html">my_age</a></li>
-</ul>
+<ol style="list-style-type: decimal">
+<li>If you know the distribution of the vehicles by age of use , use: <a href="https://atmoschem.github.io/vein/reference/my_age.html">my_age</a>
+</li>
+<li>If you know the sales of vehicles or better the registry of new vehicles, use <a href="https://atmoschem.github.io/vein/reference/age.html">age</a> to apply a survival function.</li>
+<li>If you know the theoretical shape of the circulating fleet and you can use <a href="https://atmoschem.github.io/vein/reference/age_ldv.html">age_ldv</a>, <a href="https://atmoschem.github.io/vein/reference/age_hdv.html">age_hdv</a> or <a href="https://atmoschem.github.io/vein/reference/age_moto.html">age_moto</a>. For instance, you dont know the sales or registry of vehicles, but somehow you know the shape of this curve.</li>
+<li>You can use/merge/transform/adapt any of these functions.</li>
+</ol>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"net"</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">PC_E25_<span class="dv">1400</span> &lt;-<span class="st"> </span><span class="kw"><a href="reference/age_ldv.html">age_ldv</a></span>(<span class="dt">x =</span> net<span class="op">$</span>ldv, <span class="dt">name =</span> <span class="st">"PC_E25_1400"</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(PC_E25_<span class="dv">1400</span>, <span class="dt">xlab =</span> <span class="st">"age of use"</span>)</a></code></pre></div>

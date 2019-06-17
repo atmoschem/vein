@@ -2,13 +2,12 @@
 % Please edit documentation in R/age.R
 \name{age}
 \alias{age}
-\title{Returns amount of vehicles at each age applying survival functions}
+\title{Applies a survival rate to numeric new vehicles}
 \usage{
-age(x, type = "weibull", a = 14.46, b = 4.79, name = "veh",
-  agemin = 1, agemax = 50, k = 1, net, verbose = FALSE, namerows)
+age(x, type = "weibull", a = 14.46, b = 4.79, net, verbose = TRUE)
 }
 \arguments{
-\item{x}{Numeric; numerical vector of vehicles with length equal to lines features of road network}
+\item{x}{Numeric; numerical vector of sales or registrations for each year}
 
 \item{type}{Character; any of "gompertz", "double_logistic", "weibull" and "weibull2"}
 
@@ -16,28 +15,31 @@ age(x, type = "weibull", a = 14.46, b = 4.79, name = "veh",
 
 \item{b}{Numeric; parameter of survival equation}
 
-\item{name}{Character; of vehicle assigned to columns of dataframe}
-
-\item{agemin}{Integer; age of newest vehicles for that category}
-
-\item{agemax}{Integer; age of oldest vehicles for that category}
-
-\item{k}{Numeric; multiplication factor. If its length is > 1, it must match the length of x}
-
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
-\item{verbose}{Logical;  message with average age and total numer of vehicles}
-
-\item{namerows}{Any vector to be change row.names. For instance, name of
+\item{verbose}{Logical;  message with average age and total numer of vehicles
 regions or streets.}
 }
 \value{
 dataframe of age distrubution of vehicles
 }
 \description{
-\code{\link{age_ldv}} returns amount of vehicles at each age
+\code{\link{age}} returns survived vehicles
 }
 \note{
+The functions age* produce distribution of the circulating fleet by age of use.
+The order of using these functions is:
+
+1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
+2. If you know the sales of vehicles, or the registry of new vehicles,
+use \code{\link{age}} to apply a survival function.
+3. If you know the theoretical shape of the circulating fleet and you can use
+\code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
+you dont know the sales or registry of vehicles, but somehow you know
+the shape of this curve.
+4. You can use/merge/transform/dapt any of these functions.
+
+
 \strong{gompertz: 1 - exp(-exp(a + b*time))},
 defaults PC: b = -0.137, a = 1.798, LCV: b = -0.141, a = 1.618
 MCT (2006). de Gases de Efeito Estufa-Emissoes de Gases de
@@ -64,7 +66,7 @@ Heavy HGV: b = 5.58, a = 12.8, Medium HGV: b = 5.58, a = 10.09, Light HGV: b = 5
 Hao, H., Wang, H., Ouyang, M., & Cheng, F. (2011). Vehicle survival patterns in China.
 Science China Technological Sciences, 54(3), 625-629.
 
-\strong{weibull2: exp(-((time + a)/b)^b )},
+\strong{weibull2: exp(-((time + b)/a)^b )},
 defaults b = 11, a = 26
 Zachariadis, T., Samaras, Z., Zierock, K. H. (1995). Dynamic modeling of vehicle
 populations: an engineering approach for emissions calculations. Technological
@@ -72,10 +74,36 @@ Forecasting and Social Change, 50(2), 135-149. Cited by Huo and Wang (2012)
 }
 \examples{
 {
-data(net)
-PC_E25_1400 <- age(x = net$ldv)
-plot(PC_E25_1400)
-PC_E25_1400 <- age(x = net$ldv,  net = net)
-plot(PC_E25_1400)
+vehLIA <- rep(1, 25)
+PV_Minia <- age(x = vehLIA)
+PV_Minib <- age(x = vehLIA, type = "weibull2", b = 11, a = 26)
+PV_Minic <- age(x = vehLIA, type = "double_logistic", b = 21, a = 0.19)
+PV_Minid <- age(x = vehLIA, type = "gompertz", b = -0.137, a = 1.798)
+plot(PV_Minia, type = "b", pch = 16)
+lines(PV_Minib, type = "b", pch = 16, col = "red")
+lines(PV_Minic, type = "b", pch = 16, col = "blue")
+lines(PV_Minid, type = "b", pch = 16, col = "green")
+legend(x = 20, y = 0.85,
+      legend = c("weibull", "weibull2", "double_logistic", "gompertz"),
+      col = c("black", "red", "blue", "green"),
+      lty=c(1,1),
+      lwd=c(2.5, 2.5, 2.5, 2.5))
+      #lets put some numbers
+vehLIA <- c(65400, 79100, 80700, 85300, 86700, 82000, 74500, 67700, 60600, 62500,
+84700, 62600, 47900, 63900, 41800, 37492, 34243, 30995, 27747, 24499, 21250,
+18002, 14754, 11506, 8257)
+PV_Minia <- age(x = vehLIA)
+PV_Minib <- age(x = vehLIA, type = "weibull2", b = 11, a = 26)
+PV_Minic <- age(x = vehLIA, type = "double_logistic",  b = 21, a = 0.19)
+PV_Minid <- age(x = vehLIA, type = "gompertz", b = -0.137, a = 1.798)
+plot(PV_Minia, type = "b", pch = 16)
+lines(PV_Minib, type = "b", pch = 16, col = "red")
+lines(PV_Minic, type = "b", pch = 16, col = "blue")
+lines(PV_Minid, type = "b", pch = 16, col = "green")
+legend(x = 20, y = 80000,
+      legend = c("weibull", "weibull2", "double_logistic", "gompertz"),
+      col = c("black", "red", "blue", "green"),
+      lty=c(1,1),
+      lwd=c(2.5, 2.5, 2.5, 2.5))
 }
 }
