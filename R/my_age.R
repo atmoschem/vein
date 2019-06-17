@@ -10,6 +10,7 @@
 #' profile of age of use of vehicle. When 'y' is 'numeric' the vehicles
 #' has the same age distribution to all street. When 'y' is a data.frame,
 #' the distribution by age of use varies the streets.
+#' @param agemax Integer; age of oldest vehicles for that category
 #' @param name Character; of vehicle assigned to columns of dataframe.
 #' @param k Integer; multiplication factor. If its length is > 1, it must match the length of x
 #' @param pro_street Character; each category of profile for each street.
@@ -53,6 +54,7 @@
 #' }
 my_age <- function (x,
                     y,
+                    agemax,
                     name = "age",
                     k = 1,
                     pro_street,
@@ -143,5 +145,6 @@ my_age <- function (x,
     netsf <- sf::st_as_sf(net)
     df <- sf::st_sf(df, geometry = netsf$geometry)
   }
+  if(!missing(agemax)) df <- df[, 1:agemax]
     return(df)
 }

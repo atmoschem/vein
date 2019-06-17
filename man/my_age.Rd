@@ -4,8 +4,8 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, name = "age", k = 1, pro_street, net, verbose = TRUE,
-  namerows)
+my_age(x, y, agemax, name = "age", k = 1, pro_street, net,
+  verbose = TRUE, namerows)
 }
 \arguments{
 \item{x}{Numeric; vehicles by street (or spatial feature).}
@@ -16,6 +16,8 @@ must be the same of the elements of pro_street and each column must have a
 profile of age of use of vehicle. When 'y' is 'numeric' the vehicles
 has the same age distribution to all street. When 'y' is a data.frame,
 the distribution by age of use varies the streets.}
+
+\item{agemax}{Integer; age of oldest vehicles for that category}
 
 \item{name}{Character; of vehicle assigned to columns of dataframe.}
 
