@@ -4,7 +4,8 @@
 \alias{age}
 \title{Applies a survival rate to numeric new vehicles}
 \usage{
-age(x, type = "weibull", a = 14.46, b = 4.79, net, verbose = TRUE)
+age(x, type = "weibull", a = 14.46, b = 4.79, agemax, net,
+  verbose = TRUE)
 }
 \arguments{
 \item{x}{Numeric; numerical vector of sales or registrations for each year}
@@ -14,6 +15,8 @@ age(x, type = "weibull", a = 14.46, b = 4.79, net, verbose = TRUE)
 \item{a}{Numeric; parameter of survival equation}
 
 \item{b}{Numeric; parameter of survival equation}
+
+\item{agemax}{Integer; age of oldest vehicles for that category}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
