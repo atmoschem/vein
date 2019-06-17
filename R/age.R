@@ -6,6 +6,7 @@
 #' @param type Character; any of "gompertz", "double_logistic", "weibull" and "weibull2"
 #' @param a Numeric; parameter of survival equation
 #' @param b Numeric; parameter of survival equation
+#' @param agemax Integer; age of oldest vehicles for that category
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param verbose Logical;  message with average age and total numer of vehicles
 #' regions or streets.
@@ -96,12 +97,15 @@ age <- function (x,
                  type = "weibull",
                  a = 14.46,
                  b = 4.79,
+                 agemax,
                  net,
                  verbose = TRUE){
   #check agemax
     if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
-  }
+    }
+# check agemax
+if(!missing(agemax)) x <- x[1:agemax]
 
   # gompertz ####
   if(type == "gompertz") {
