@@ -77,6 +77,8 @@ my_age <- function (x,
       if(class(y) != "data.frame"){
         stop("'y' must be 'data.frame'")
       }
+      for(i in 1:ncol(y)) y[, i] <-  y[, i]/sum( y[, i])
+
       d <- as.data.frame(t(y / sum(y)))
       d$cat <- names(y)
       dfnet <- data.frame(cat = pro_street,
@@ -92,7 +94,7 @@ my_age <- function (x,
       df <- as.data.frame(do.call("rbind", dl))
       names(df) <- paste(name, seq(1, length(df)), sep="_")
     } else {
-      if(mode(y) != "numeric") stop("'y' must be 'numeric'")
+      if(mode(y) != "numeric") stop("When there is no 'pro_street', 'y' must be 'numeric'")
       d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
       df <- as.data.frame(as.matrix(x) %*%d)
       names(df) <- paste(name, seq(1, length(df)), sep="_")
