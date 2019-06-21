@@ -64,9 +64,13 @@ my_age <- function (x,
                     namerows){
   if(!is.data.frame(y)){
     y <- as.numeric(y)
+    y[is.na(y)] <- 0
   } else {
     for(i in 1:ncol(y)) y[, i] <- as.numeric( y[, i])
+    y[is.na(y)] <- 0
+
   }
+  #
   # start
   if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))

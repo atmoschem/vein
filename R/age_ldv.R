@@ -49,6 +49,8 @@ age_ldv <- function (x,
                      net,
                      verbose = FALSE,
                      namerows){
+  # check na
+  x[is.na(x)] <- 0
   #check agemax
   if(agemax < 1) stop("Agemax should be bigger than 1")
 
