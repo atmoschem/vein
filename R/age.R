@@ -99,7 +99,7 @@ age <- function (x,
                  b = 4.79,
                  agemax,
                  net,
-                 verbose = TRUE){
+                 verbose = FALSE){
   #check agemax
     if (missing(x) | is.null(x)) {
     stop (print("Missing vehicles"))
@@ -139,9 +139,9 @@ if(!missing(agemax)) x <- x[1:agemax]
   }
   # data.frame ####
   if(verbose){
-    message(paste("Average age of is",
-                  round(sum(anos*sum(df, na.rm = T)/sum(df, na.rm = T)), 2),
-                  sep=" "))
+    # message(paste("Average age of is",
+    #               round(sum(anos*sum(df, na.rm = T)/sum(df, na.rm = T)), 2),
+    #               sep=" "))
     message(paste("Number of vehicles is", round(sum(df, na.rm = T)/1000, 2),
                   "* 10^3 veh", sep=" ")
     )
