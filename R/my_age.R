@@ -60,7 +60,7 @@ my_age <- function (x,
                     k = 1,
                     pro_street,
                     net,
-                    verbose = TRUE,
+                    verbose = FALSE,
                     namerows){
   if(!is.data.frame(y)){
     y <- as.numeric(y)
