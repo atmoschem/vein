@@ -14,8 +14,12 @@
 #' "M_FG_150", "M_FG_150_500", "M_FG_500", "M_FE_150", "M_FE_150_500",
 #' "M_FE_500", "CICLOMOTOR", "GNV"
 #' @param year Numeric; Filter the emission factor to start from a specific base year.
+#' If project is 'constant' values above 2017 and below 1980 will be repeated
+#' @param agemax Integer; age of oldest vehicles for that category
 #' @param full Logical; To return a data.frame instead or a vector adding
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
+#' @param project haracter showing the method for projecting emission factors in
+#' future. Currently the only value is "constant"
 #' @return A vector of Emission Factor or a data.frame
 #' @keywords  emission factors
 #' @note This emission factors are not exactly the same as the report of CETESB.
@@ -34,13 +38,18 @@
 #' @export
 #' @examples {
 #' a <- ef_cetesb("CO", "PC_G")
-#' b <- ef_cetesb("R_10_25", "PC_G")
-#' c <- ef_cetesb("CO", c("PC_G", "PC_FE"))
+#' a <- ef_cetesb("R_10_25", "PC_G")
+#' a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
+#' ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40)
+#' ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
 #' }
-ef_cetesb <- function(p, veh, year = 2017, full = FALSE){
+ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
-  ef <-  ef[ef$Age <= 40, ]
+  year1 <- ef$Year[1]
+  # return(ef)
+  # ef <-  ef[1:agemax, ]
   ef <- ef[ef$Year <= year, ]
+
   evapd <- c("D_20_35","D_10_25","D_0_15")
   evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
   pols <- as.character(unique(ef$Pollutant))
@@ -74,6 +83,47 @@ ef_cetesb <- function(p, veh, year = 2017, full = FALSE){
       df <- ef[ef$Pollutant == p, veh]
     } else {
       df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh])
+    }
+
+  }
+  if(is.data.frame(df)){
+    # project future EF
+    if(project == "constant"){
+      if(year > year1){
+        dif <- year - year1
+        efyear1 <- df[1, ]
+        efyear1[1:dif, ] <- df[1, ]
+        ef <- rbind(efyear1[1:dif, ], df)
+      }
+    }
+
+    #Filling older ef
+    if(!missing(agemax)){
+      if(nrow(df) < agemax){
+        dif <- agemax - nrow(df)
+        df[nrow(df):(nrow(df)+dif), ] <- df[nrow(df), ]
+      }
+      df <-  df[1:agemax, ]
+    }
+
+  } else {
+    # project future EF
+    if(project == "constant"){
+      if(year > year1){
+        dif <- year - year1
+        efyear1 <- df[1]
+        efyear1[1:dif] <- df[1]
+        ef <- c(efyear1[1:dif], df)
+      }
+    }
+
+    #Filling older ef
+    if(!missing(agemax)){
+      if(length(df) < agemax){
+        dif <- agemax - length(df)
+        df[length(df):(length(df)+dif)] <- df[length(df)]
+      }
+      df <-  df[1:agemax]
     }
 
   }
