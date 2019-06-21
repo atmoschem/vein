@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.7.9  (Release date: 2019-06-14)
+# vein 0.7.10  (Release date: 2019-06-21)
+
+- Add projection forward and backward in ef_cetesb
+
+## vein 0.7.9  (Release date: 2019-06-14)
 
 - Found error on ef_china. Specifically on sulfur correction. fix #182
 - Adding more tests on ef_china.

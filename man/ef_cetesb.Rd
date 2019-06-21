@@ -4,7 +4,8 @@
 \alias{ef_cetesb}
 \title{Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2017}
 \usage{
-ef_cetesb(p, veh, year = 2017, full = FALSE)
+ef_cetesb(p, veh, year = 2017, agemax = 40, full = FALSE,
+  project = "constant")
 }
 \arguments{
 \item{p}{Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2",
@@ -21,10 +22,16 @@ and R hot/warm running losses (g/trip).}
 "M_FG_150", "M_FG_150_500", "M_FG_500", "M_FE_150", "M_FE_150_500",
 "M_FE_500", "CICLOMOTOR", "GNV"}
 
-\item{year}{Numeric; Filter the emission factor to start from a specific base year.}
+\item{year}{Numeric; Filter the emission factor to start from a specific base year.
+If project is 'constant' values above 2017 and below 1980 will be repeated}
+
+\item{agemax}{Integer; age of oldest vehicles for that category}
 
 \item{full}{Logical; To return a data.frame instead or a vector adding
 Age, Year, Brazilian emissions standards and its euro equivalents.}
+
+\item{project}{haracter showing the method for projecting emission factors in
+future. Currently the only value is "constant"}
 }
 \value{
 A vector of Emission Factor or a data.frame
@@ -47,8 +54,10 @@ of US.EPA-AP42 emission factor: Section 1.4 Natural Gas Combustion.
 \examples{
 {
 a <- ef_cetesb("CO", "PC_G")
-b <- ef_cetesb("R_10_25", "PC_G")
-c <- ef_cetesb("CO", c("PC_G", "PC_FE"))
+a <- ef_cetesb("R_10_25", "PC_G")
+a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
+ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40)
+ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
 }
 }
 \references{

@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
       </span>
     </div>
 
@@ -110,7 +110,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>ef_cetesb</span>(<span class='no'>p</span>, <span class='no'>veh</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2017</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_cetesb</span>(<span class='no'>p</span>, <span class='no'>veh</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2017</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>project</span> <span class='kw'>=</span> <span class='st'>"constant"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,12 +136,22 @@ and R hot/warm running losses (g/trip).</p></td>
     </tr>
     <tr>
       <th>year</th>
-      <td><p>Numeric; Filter the emission factor to start from a specific base year.</p></td>
+      <td><p>Numeric; Filter the emission factor to start from a specific base year.
+If project is 'constant' values above 2017 and below 1980 will be repeated</p></td>
+    </tr>
+    <tr>
+      <th>agemax</th>
+      <td><p>Integer; age of oldest vehicles for that category</p></td>
     </tr>
     <tr>
       <th>full</th>
       <td><p>Logical; To return a data.frame instead or a vector adding
 Age, Year, Brazilian emissions standards and its euro equivalents.</p></td>
+    </tr>
+    <tr>
+      <th>project</th>
+      <td><p>haracter showing the method for projecting emission factors in
+future. Currently the only value is "constant"</p></td>
     </tr>
     </table>
     
@@ -167,9 +178,13 @@ url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>)
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"R_10_25"</span>, <span class='st'>"PC_G"</span>)
-<span class='no'>c</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"CO"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PC_G"</span>, <span class='st'>"PC_FE"</span>))
-}</div><div class='output co'>#&gt; Units: [g/trip]</div></pre>
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"R_10_25"</span>, <span class='st'>"PC_G"</span>)
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"CO"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PC_G"</span>, <span class='st'>"PC_FE"</span>))
+<span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
+<span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>1970</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
+}</div><div class='output co'>#&gt; Units: [g/trip]</div><div class='output co'>#&gt; Units: [g/km]
+#&gt;  [1] 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33
+#&gt; [26] 33 33 33 33 33 33 33 33 33 33 33 33 33 33 33</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

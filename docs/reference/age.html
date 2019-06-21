@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
       </span>
     </div>
 
@@ -110,7 +110,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>age</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"weibull"</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>14.46</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>4.79</span>, <span class='no'>net</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>age</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"weibull"</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>14.46</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>4.79</span>, <span class='no'>agemax</span>, <span class='no'>net</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,6 +131,10 @@
     <tr>
       <th>b</th>
       <td><p>Numeric; parameter of survival equation</p></td>
+    </tr>
+    <tr>
+      <th>agemax</th>
+      <td><p>Integer; age of oldest vehicles for that category</p></td>
     </tr>
     <tr>
       <th>net</th>
@@ -221,7 +226,7 @@ Forecasting and Social Change, 50(2), 135-149. Cited by Huo and Wang (2012)</p>
       <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"black"</span>, <span class='st'>"red"</span>, <span class='st'>"blue"</span>, <span class='st'>"green"</span>),
       <span class='kw'>lty</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>1</span>),
       <span class='kw'>lwd</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2.5</span>, <span class='fl'>2.5</span>, <span class='fl'>2.5</span>, <span class='fl'>2.5</span>))
-}</div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 0.01 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 0.01 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 0.02 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 0.02 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 907.03 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 944.69 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 1090.18 * 10^3 veh</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>Average age of is 325</span></div><div class='output co'>#&gt; <span class='message'>Number of vehicles is 967.2 * 10^3 veh</span></div><div class='img'><img src='age-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div><div class='img'><img src='age-2.png' alt='' width='700' height='433' /></div></pre>
+}</div><div class='img'><img src='age-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='age-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
