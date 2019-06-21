@@ -4,7 +4,7 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, agemax, name = "age", k = 1, pro_street, net,
+my_age(x, y, agemax, name = "vehicle", k = 1, pro_street, net,
   verbose = TRUE, namerows)
 }
 \arguments{

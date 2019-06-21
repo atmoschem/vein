@@ -56,7 +56,7 @@
 my_age <- function (x,
                     y,
                     agemax,
-                    name = "age",
+                    name = "vehicle",
                     k = 1,
                     pro_street,
                     net,
