@@ -46,9 +46,11 @@
 ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
   year1 <- ef$Year[1]
-  # return(ef)
-  # ef <-  ef[1:agemax, ]
-  ef <- ef[ef$Year <= year, ]
+
+  if(year < 1956) stop("Choose a newer year")
+
+    # Selecting
+    ef <- ef[ef$Year <= year, ]
 
   evapd <- c("D_20_35","D_10_25","D_0_15")
   evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
