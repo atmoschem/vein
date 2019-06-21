@@ -101,6 +101,10 @@ age_hdv <- function (x,
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
       row.names(df) <- namerows
     }
+
+    # replace NA and NaN
+    df[is.na(df)] <- 0
+
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
@@ -144,6 +148,10 @@ age_hdv <- function (x,
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
       row.names(df) <- namerows
     }
+
+    # replace NA and NaN
+    df[is.na(df)] <- 0
+
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)

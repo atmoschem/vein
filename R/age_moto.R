@@ -156,6 +156,9 @@ age_moto <- function (x,
       row.names(df) <- namerows
     }
 
+    # replace NA and NaN
+    df[is.na(df)] <- 0
+
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)

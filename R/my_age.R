@@ -135,5 +135,7 @@ my_age <- function (x,
     df <- sf::st_sf(df, geometry = netsf$geometry)
   }
   if(!missing(agemax)) df <- df[, 1:agemax]
+  # replace NA and NaN
+  df[is.na(df)] <- 0
   return(df)
 }
