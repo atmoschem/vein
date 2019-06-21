@@ -114,8 +114,8 @@ my_age <- function (x,
                     round(sum(secu*colus/sumdf, na.rm = T), 2),
                     sep=" "))
       message(paste("Number of",name, "is",
-                    round(sum(df, na.rm = T)/1000, 3),
-                    "* 10^3 veh",
+                    round(sum(df, na.rm = T), 3),
+                    " [veh]",
                     sep=" "))
       cat("\n")
     }

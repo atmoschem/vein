@@ -93,10 +93,9 @@ age_moto <- function (x,
                     round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
                     sep=" "))
       message(paste("Number of",name, "is",
-                    round(sum(df, na.rm = T)/1000, 2),
-                    "* 10^3 veh",
-                    sep=" ")
-      )
+                    round(sum(df, na.rm = T), 3),
+                    " [veh]",
+                    sep=" "))
       cat("\n")
     }
 
