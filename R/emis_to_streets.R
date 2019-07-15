@@ -52,7 +52,6 @@ emis_to_streets <- function(streets,
   rn <- row.names(streets)
   streets <- sf::st_as_sf(streets)
   nstreets <- names(sf::st_set_geometry(streets, NULL))
-  print(nstreets)
   geo <- sf::st_geometry(streets)
   streets$length <- sf::st_length(streets)
   streets <- sf::st_set_geometry(streets, NULL)
@@ -66,7 +65,7 @@ emis_to_streets <- function(streets,
     dfa <- do.call("rbind",lapply(1:nrow(dfemis), function(i){
       if(verbose)   message(paste0("filtering ", dfemis[[by]][i]))
       dfstreets <- streets[streets[[by]] == dfemis[[by]][i], ]
-      dfstreets$length <- dfstreets$length*streets$VAL
+      dfstreets$length <- dfstreets$length*dfstreets$VAL
       dfstreets$p_length <- as.numeric(dfstreets$length)/sum(as.numeric(dfstreets$length))
       dfs <- unlist(dfemis[dfemis[[by]] == dfemis[[by]][i], 1:(ncol(dfemis) - 1)])
       dft <- as.matrix(dfstreets$p_length)  %*%  matrix(as.numeric(dfs), nrow = 1)
