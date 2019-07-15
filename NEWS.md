@@ -1,6 +1,11 @@
 NEWS
 ===========
 
+# vein 0.7.11  (Release date: 2019-07-15)
+
+- Found ugly bug in emis_grid!
+- Added test for emis_grid
+
 # vein 0.7.10  (Release date: 2019-06-21)
 
 - Add projection forward and backward in ef_cetesb

@@ -101,7 +101,6 @@ It currently covers the following pollutants in speed functions:
 
 ### Emission factors from Chinese emission guidelines
 
-- **I found an error on this factors, which now it is fixed. Please, install the GitHub version.** https://github.com/atmoschem/vein/issues/182
 - "CO", "NOx", "HC", "PM10", "PM2.5".
 - They depend on humidity, temperature, altitude and  other parameters.
 

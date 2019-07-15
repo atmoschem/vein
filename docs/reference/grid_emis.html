@@ -68,7 +68,7 @@ lapply. This function is in development and pull request are welcome." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.11</span>
       </span>
     </div>
 
@@ -192,9 +192,9 @@ gCO$emission <- gCO$V1
 <span class='co'>#do not run</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>osmdata</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sf</span>)
-<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/osmdata/topics/osmdata_sf'>osmdata_sf</a></span>(
-<span class='fu'><a href='https://www.rdocumentation.org/packages/osmdata/topics/add_osm_feature'>add_osm_feature</a></span>(
-<span class='fu'><a href='https://www.rdocumentation.org/packages/osmdata/topics/opq'>opq</a></span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>gCO</span>)),
+<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'>osmdata_sf</span>(
+<span class='fu'>add_osm_feature</span>(
+<span class='fu'>opq</span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>gCO</span>)),
 <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>'highway'</span>))$<span class='no'>osm_lines</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"highway"</span>)]
 <span class='no'>st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"motorway"</span>, <span class='st'>"motorway_link"</span>, <span class='st'>"trunk"</span>, <span class='st'>"trunk_link"</span>,
 <span class='st'>"primary"</span>, <span class='st'>"primary_link"</span>, <span class='st'>"secondary"</span>, <span class='st'>"secondary_link"</span>,
@@ -204,7 +204,7 @@ gCO$emission <- gCO$V1
 <span class='no'>xnet</span> <span class='kw'>&lt;-</span> <span class='fu'>grid_emis</span>(<span class='no'>osm</span>, <span class='no'>gCO</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/plot'>plot</a></span>(<span class='no'>xnet</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='no'>T</span>)
 <span class='co'># }</span><div class='input'>}
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:1:1: unexpected '}'</span>
+</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:1:1: 意外的'}'</span>
 #&gt; <span class='error'>1: }</span>
 #&gt; <span class='error'>    ^</span></div></pre>
   </div>
