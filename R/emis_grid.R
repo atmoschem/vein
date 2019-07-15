@@ -24,10 +24,15 @@
 #' names(net)
 #' netsf <- sf::st_as_sf(net)
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
+#' round(sum(netg$ldv)) == round(as.numeric(sum(net$ldv)))
+#' round(sum(netg$hdv)) == round(as.numeric(sum(net$hdv)))
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
 #' }
-emis_grid <- function(spobj, g, sr, type = "lines"){
+emis_grid <- function(spobj = net,
+                      g,
+                      sr,
+                      type = "lines"){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   netdata <- sf::st_set_geometry(net, NULL)
@@ -53,7 +58,7 @@ netdata[, i] <- as.numeric(netdata[, i])
     cat(paste0("Sum of street emissions ", round(snetdf, 2), "\n"))
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
 
-        # Filtrando solo columnas numericas
+    # Filtrando solo columnas numericas
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(sf::st_set_geometry(net, NULL))
     net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) == 1,]))
@@ -66,20 +71,20 @@ netdata[, i] <- as.numeric(netdata[, i])
                by = "id",
                .SDcols = namesnet]
     id <- dfm$id
+    #####################################
+    # Importante, apaga id antes de cuadrar la suma
+    #####################################
+    dfm$id <- NULL
     dfm <- dfm*snetdf/sum(dfm, na.rm = TRUE)
     cat(paste0("Sum of gridded emissions ",
                round(sum(dfm, na.rm = T), 2), "\n"))
+    # salva id
     dfm$id <- id
-    names(dfm) <- c("id", namesnet)
     gx <- data.frame(id = g$id)
-    gx <- merge(gx, dfm, by="id", all.x = TRUE)
+    gx <- merge(gx, dfm, by="id", all = TRUE)
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
-  # if(array){
-  #     return(GriddedEmissionsArray(gx, rows = , cols, times = ))
-  #   } else{
       return(gx)
-    # }
   } else if ( type == "points" ){
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
@@ -96,7 +101,7 @@ netdata[, i] <- as.numeric(netdata[, i])
                .SDcols = namesnet ]
     cat(paste0("Sum of gridded emissions ",
                round(sum(dfm, na.rm = T), 2), "\n"))
-    names(dfm) <- c("id", namesnet)
+
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by = "id", all.x = TRUE)
     gx[is.na(gx)] <- 0

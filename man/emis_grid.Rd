@@ -4,7 +4,7 @@
 \alias{emis_grid}
 \title{Allocate emissions into a grid}
 \usage{
-emis_grid(spobj, g, sr, type = "lines")
+emis_grid(spobj = net, g, sr, type = "lines")
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
@@ -35,6 +35,8 @@ g <- make_grid(net, 1/102.47/2) #500m in degrees
 names(net)
 netsf <- sf::st_as_sf(net)
 netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
+round(sum(netg$ldv)) == round(as.numeric(sum(net$ldv)))
+round(sum(netg$hdv)) == round(as.numeric(sum(net$hdv)))
 plot(netg["ldv"], axes = TRUE)
 plot(netg["hdv"], axes = TRUE)
 }
