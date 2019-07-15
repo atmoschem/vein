@@ -4,7 +4,7 @@
 \alias{emis_to_streets}
 \title{Emis to streets distribute top-down emissions into streets}
 \usage{
-emis_to_streets(streets, dfemis, by = "ID", verbose = TRUE)
+emis_to_streets(streets, dfemis, by = "ID", stpro, verbose = TRUE)
 }
 \arguments{
 \item{streets}{sf object with geometry 'LINESTRING' or 'MULTILINESTRING'. Or
@@ -14,6 +14,12 @@ SpatialLinesDataFrame}
 
 \item{by}{Character indicating the columns that must be present in both
 'street' and 'dfemis'}
+
+\item{stpro}{data.frame with two columns, category of streets and value.
+The name of the first column must be "stpro" and the sf streets must also
+have a column with the nam "stpro" indicating the category of streets.
+The second column must have the name "VAL" indicating the associated values
+to each category of street}
 
 \item{verbose}{Logical; to show more info.}
 }
@@ -28,8 +34,24 @@ When spobj is a 'Spatial' object (class of sp), they are converted
  into 'sf'.
 }
 \examples{
-\dontrun{
-# TO DO
+{
+data(net)
+stpro = data.frame(stpro = as.character(unique(net$tstreet)),
+                   VAL = 1:9)
+dnet <- net["ldv"]
+dnet$stpro <- as.character(net$tstreet)
+dnet$ID <- "A"
+df2 <- data.frame(BC = 10, CO = 20, ID = "A")
+ste <- emis_to_streets(streets = dnet, dfemis = df2)
+sum(ste$ldv)
+sum(net$ldv)
+sum(ste$BC)
+sum(df2$BC)
+ste2 <- emis_to_streets(streets = dnet, dfemis = df2, stpro = stpro)
+sum(ste2$ldv)
+sum(net$ldv)
+sum(ste2$BC)
+sum(df2$BC)
 }
 }
 \seealso{
