@@ -1,9 +1,14 @@
 NEWS
 ===========
 
+# vein 0.7.12  (Release date: 2019-07-21)
+
+- Updated inventory for Windows
+- Fix projection of cetesb EF
+
 # vein 0.7.11  (Release date: 2019-07-15)
 
-- Found ugly bug in emis_grid!
+- Fixed ugly bug in emis_grid!
 - Added test for emis_grid
 - Add streets profile in emis_to_streets
 

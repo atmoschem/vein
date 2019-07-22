@@ -4,8 +4,8 @@
 #' in order to run vein. It is required to know the vehicular composition of the
 #' fleet.
 #'
-#' @param name Character, one word indicating the name of the main directory for running
-#' vein. It is better to write the pull path to the new directory.
+#' @param name Character, path to new main directory for running vein.
+#' NO BLANK SPACES
 #' @param vehcomp Vehicular composition of the fleet. It is required a named
 #' numerical vector with the names "PC", "LCV", "HGV", "BUS" and "MC". In the
 #' case that tthere are no vehiles for one category of the composition, the name
@@ -72,6 +72,9 @@ inventory <- function(name,
                       show.scripts = FALSE,
                       clear = TRUE,
                       rush.hour = FALSE){
+  if(Sys.info()[['sysname']] == "Windows") {
+    name <- gsub("\\\\", "/", name)
+  }
   # directorys
   dovein <- function(){
     dir.create(path = name)
@@ -169,7 +172,7 @@ inventory <- function(name,
       cat("data(fe2015)\n")
       cat("efe <- fe2015\n")
       cat("# efe <- read.csv('ef/fe2015.csv')\n")
-      cat("efeco <- 11 # Number of column of the respective EF\n")
+      cat("efeco <- 'PC_G' # Character to identify the column of the respective EF\n")
       cat("efero <- ifelse(is.data.frame(veh), ncol(veh), ncol(veh[[1]]))\n")
       cat("# efero reads the number of the vehicle distribution\n")
       cat("trips_per_day <- 5\n\n")
@@ -188,7 +191,8 @@ inventory <- function(name,
       cat("# CO \n")
       cat("pol <- 'CO' \n")
       cat("print(pol)\n")
-      cat("x <- efe[efe$Pollutant == pol, efeco]\n")
+      cat("message('This is just an example!\n You need to update this to your project!')\n")
+      cat("x <- efe[efe$Pollutant == pol, 'PC_G']\n")
       cat("lefe <- EmissionFactorsList(x)\n")
       cat("array_x <- emis(veh = veh, lkm = lkm, ef = lefe, profile = pc)\n")
       cat("x_DF <- emis_post(arra = array_x, veh = vname, size = vsize,\n")
