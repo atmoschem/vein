@@ -42,6 +42,7 @@
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40)
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
+#' ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
 #' }
 ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
@@ -93,9 +94,11 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
     if(project == "constant"){
       if(year > year1){
         dif <- year - year1
-        efyear1 <- df[1, ]
-        efyear1[1:dif, ] <- df[1, ]
-        ef <- rbind(efyear1[1:dif, ], df)
+
+        eff <- do.call("rbind",(lapply(1:dif, function(i){
+          df[1, ]
+        })))
+        edff <- rbind(eff, df[1:(agemax - dif), ])
       }
     }
 
@@ -113,9 +116,8 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
     if(project == "constant"){
       if(year > year1){
         dif <- year - year1
-        efyear1 <- df[1]
-        efyear1[1:dif] <- df[1]
-        ef <- c(efyear1[1:dif], df)
+        eff <- rep(df[1], dif)
+        df <- c(eff, df[1:(agemax - dif)])
       }
     }
 
