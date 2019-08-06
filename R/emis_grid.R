@@ -29,79 +29,70 @@
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
 #' }
-emis_grid <- function(spobj = net,
-                      g,
-                      sr,
-                      type = "lines"){
+emis_grid <- function (spobj = net, g, sr, type = "lines")
+{
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
-  netdata <- sf::st_set_geometry(net, NULL)
-  for(i in 1:length(netdata)){
-netdata[, i] <- as.numeric(netdata[, i])
+  # add as.data.frame qhen net comes from data.table
+  netdata <- as.data.frame(sf::st_set_geometry(net, NULL))
+  for (i in 1:length(netdata)) {
+    netdata[, i] <- as.numeric(netdata[, i])
   }
   net <- sf::st_sf(netdata, geometry = net$geometry)
   g <- sf::st_as_sf(g)
   g$id <- 1:nrow(g)
-
-  if(!missing(sr)){
-    if(class(sr)[1] == "character"){
+  if (!missing(sr)) {
+    if (class(sr)[1] == "character") {
       sr <- as.numeric(substr(sp::CRS(sr), 12, nchar(sr)))
     }
     message("Transforming spatial objects to 'sr' ")
-  net <- sf::st_transform(net, sr)
-  g <- sf::st_transform(g, sr)
+    net <- sf::st_transform(net, sr)
+    g <- sf::st_transform(g, sr)
   }
-
-  if (type == "lines" ) {
+  if (type == "lines") {
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
-    cat(paste0("Sum of street emissions ", round(snetdf, 2), "\n"))
+    cat(paste0("Sum of street emissions ", round(snetdf,
+                                                 2), "\n"))
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
-
-    # Filtrando solo columnas numericas
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(sf::st_set_geometry(net, NULL))
-    net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) == 1,]))
-    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
+    net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) ==
+                                               1, ]))
+    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net,
+                                                                  g)))
     netg$LKM2 <- sf::st_length(netg)
     xgg <- data.table::data.table(netg)
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$LKM2/xgg$LKM)
-    xgg[is.na(xgg)] <- 0 # prevent 1+ NA = NA
-    dfm <- xgg[, lapply(.SD, sum, na.rm=TRUE),
-               by = "id",
+    xgg[is.na(xgg)] <- 0
+    dfm <- xgg[, lapply(.SD, sum, na.rm = TRUE), by = "id",
                .SDcols = namesnet]
     id <- dfm$id
-    #####################################
-    # Importante, apaga id antes de cuadrar la suma
-    #####################################
     dfm$id <- NULL
-    dfm <- dfm*snetdf/sum(dfm, na.rm = TRUE)
-    cat(paste0("Sum of gridded emissions ",
-               round(sum(dfm, na.rm = T), 2), "\n"))
-    # salva id
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+    cat(paste0("Sum of gridded emissions ", round(sum(dfm,
+                                                      na.rm = T), 2), "\n"))
     dfm$id <- id
     gx <- data.frame(id = g$id)
-    gx <- merge(gx, dfm, by="id", all = TRUE)
+    gx <- merge(gx, dfm, by = "id", all = TRUE)
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
-      return(gx)
-  } else if ( type == "points" ){
+    return(gx)
+  }
+  else if (type == "points") {
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
-    cat(paste0("Sum of point emissions ", round(snetdf, 2), "\n"))
+    cat(paste0("Sum of point emissions ", round(snetdf, 2),
+               "\n"))
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
-
     namesnet <- names(sf::st_set_geometry(net, NULL))
-    xgg <- data.table::data.table(
-      sf::st_set_geometry(suppressMessages(suppressWarnings(sf::st_intersection(net, g))), NULL)
-      )
+    xgg <- data.table::data.table(sf::st_set_geometry(suppressMessages(suppressWarnings(sf::st_intersection(net,
+                                                                                                            g))), NULL))
     xgg[is.na(xgg)] <- 0
-    dfm <- xgg[, lapply(.SD, sum, na.rm=TRUE),
-               by = "id",
-               .SDcols = namesnet ]
-    cat(paste0("Sum of gridded emissions ",
-               round(sum(dfm, na.rm = T), 2), "\n"))
-
+    dfm <- xgg[, lapply(.SD, sum, na.rm = TRUE), by = "id",
+               .SDcols = namesnet]
+    cat(paste0("Sum of gridded emissions ", round(sum(dfm[, -"id"],
+                                                      na.rm = T), 2), "\n"))
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by = "id", all.x = TRUE)
     gx[is.na(gx)] <- 0
@@ -109,4 +100,3 @@ netdata[, i] <- as.numeric(netdata[, i])
     return(gx)
   }
 }
-

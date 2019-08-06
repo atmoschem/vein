@@ -9,8 +9,8 @@ inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
   show.scripts = FALSE, clear = TRUE, rush.hour = FALSE)
 }
 \arguments{
-\item{name}{Character, one word indicating the name of the main directory for running
-vein. It is better to write the pull path to the new directory.}
+\item{name}{Character, path to new main directory for running vein.
+NO BLANK SPACES}
 
 \item{vehcomp}{Vehicular composition of the fleet. It is required a named
 numerical vector with the names "PC", "LCV", "HGV", "BUS" and "MC". In the
