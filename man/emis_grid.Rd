@@ -4,7 +4,7 @@
 \alias{emis_grid}
 \title{Allocate emissions into a grid}
 \usage{
-emis_grid(spobj = net, g, sr, type = "lines")
+emis_grid(spobj = net, g, sr, type = "lines", FN = "sum")
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
@@ -16,6 +16,8 @@ it is transformed to "sf".}
 not projected. Please, see http://spatialreference.org/.}
 
 \item{type}{type of geometry: "lines" or "points".}
+
+\item{FN}{Character indicating the function. Default is "sum"}
 }
 \description{
 \code{\link{emis_grid}} allocates emissions proportionally to each grid
@@ -37,6 +39,9 @@ netsf <- sf::st_as_sf(net)
 netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
 round(sum(netg$ldv)) == round(as.numeric(sum(net$ldv)))
 round(sum(netg$hdv)) == round(as.numeric(sum(net$hdv)))
+plot(netg["ldv"], axes = TRUE)
+plot(netg["hdv"], axes = TRUE)
+netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")
 plot(netg["ldv"], axes = TRUE)
 plot(netg["hdv"], axes = TRUE)
 }
