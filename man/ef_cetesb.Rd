@@ -58,6 +58,7 @@ a <- ef_cetesb("R_10_25", "PC_G")
 a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
 ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40)
 ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
+ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
 }
 }
 \references{
