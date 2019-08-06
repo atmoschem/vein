@@ -69,7 +69,7 @@ in data. This function returns an object of class &quot;sf&quot;." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.13</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@ in data. This function returns an object of class "sf".</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"sum"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,6 +141,10 @@ not projected. Please, see http://spatialreference.org/.</p></td>
       <th>type</th>
       <td><p>type of geometry: "lines" or "points".</p></td>
     </tr>
+    <tr>
+      <th>FN</th>
+      <td><p>Character indicating the function. Default is "sum"</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -160,10 +164,14 @@ not projected. Please, see http://spatialreference.org/.</p></td>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>netg</span>$<span class='no'>hdv</span>)) <span class='kw'>==</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Round'>round</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>as.numeric</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sum'>sum</a></span>(<span class='no'>net</span>$<span class='no'>hdv</span>)))
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 }</div><div class='output co'>#&gt; Number of lon points: 23
 #&gt; Number of lat points: 19
 #&gt; </div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 2095073
-#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div></pre>
+#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of street emissions 2095073
+#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_grid-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

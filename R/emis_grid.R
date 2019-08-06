@@ -12,6 +12,7 @@
 #' @param sr Spatial reference e.g: 31983. It is required if spobj and g are
 #' not projected. Please, see http://spatialreference.org/.
 #' @param type type of geometry: "lines" or "points".
+#' @param FN Character indicating the function. Default is "sum"
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection
 #' @importFrom data.table data.table .SD
 #' @importFrom sp CRS
@@ -28,8 +29,11 @@
 #' round(sum(netg$hdv)) == round(as.numeric(sum(net$hdv)))
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
+#' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")
+#' plot(netg["ldv"], axes = TRUE)
+#' plot(netg["hdv"], axes = TRUE)
 #' }
-emis_grid <- function (spobj = net, g, sr, type = "lines")
+emis_grid <- function (spobj = net, g, sr, type = "lines", FN = "sum")
 {
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
@@ -65,7 +69,7 @@ emis_grid <- function (spobj = net, g, sr, type = "lines")
     xgg <- data.table::data.table(netg)
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$LKM2/xgg$LKM)
     xgg[is.na(xgg)] <- 0
-    dfm <- xgg[, lapply(.SD, sum, na.rm = TRUE), by = "id",
+    dfm <- xgg[, lapply(.SD, eval(parse(text = FN)), na.rm = TRUE), by = "id",
                .SDcols = namesnet]
     id <- dfm$id
     dfm$id <- NULL
@@ -89,7 +93,7 @@ emis_grid <- function (spobj = net, g, sr, type = "lines")
     xgg <- data.table::data.table(sf::st_set_geometry(suppressMessages(suppressWarnings(sf::st_intersection(net,
                                                                                                             g))), NULL))
     xgg[is.na(xgg)] <- 0
-    dfm <- xgg[, lapply(.SD, sum, na.rm = TRUE), by = "id",
+    dfm <- xgg[, lapply(.SD, eval(parse(text = FN)), na.rm = TRUE), by = "id",
                .SDcols = namesnet]
     cat(paste0("Sum of gridded emissions ", round(sum(dfm[, -"id"],
                                                       na.rm = T), 2), "\n"))

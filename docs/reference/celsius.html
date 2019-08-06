@@ -66,7 +66,7 @@ R objects" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.13</span>
       </span>
     </div>
 
@@ -134,41 +134,27 @@ R objects</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>a</span>)
 <span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'>celsius</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)*<span class='fl'>10</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>10</span>))
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>b</span>))
-}</div><div class='img'><img src='celsius-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;                            V1                          V2
-#&gt; 1  -3.872136 [degree_Celsius]  -2.088827 [degree_Celsius]
-#&gt; 2  -7.854327 [degree_Celsius] -13.994105 [degree_Celsius]
-#&gt; 3 -10.567369 [degree_Celsius]   2.585373 [degree_Celsius]
-#&gt; 4  -7.955414 [degree_Celsius]  -4.417995 [degree_Celsius]
-#&gt; 5 -17.562754 [degree_Celsius]   5.685999 [degree_Celsius]
-#&gt; 6  -6.905379 [degree_Celsius]  21.268505 [degree_Celsius]
-#&gt;                            V3                           V4
-#&gt; 1 20.3936926 [degree_Celsius] -11.4619967 [degree_Celsius]
-#&gt; 2  4.4945378 [degree_Celsius]   8.4618466 [degree_Celsius]
-#&gt; 3 13.9181405 [degree_Celsius]   0.8171963 [degree_Celsius]
-#&gt; 4  4.2656655 [degree_Celsius] -13.0511701 [degree_Celsius]
-#&gt; 5  1.0758399 [degree_Celsius]  -9.4491206 [degree_Celsius]
-#&gt; 6  0.2229473 [degree_Celsius]   4.5434159 [degree_Celsius]
-#&gt;                           V5                          V6
-#&gt; 1 -1.626763 [degree_Celsius]   4.291474 [degree_Celsius]
-#&gt; 2 -8.273102 [degree_Celsius]   1.221034 [degree_Celsius]
-#&gt; 3 18.765056 [degree_Celsius] -11.380124 [degree_Celsius]
-#&gt; 4  7.664402 [degree_Celsius]  -5.580151 [degree_Celsius]
-#&gt; 5  9.799567 [degree_Celsius]  10.525385 [degree_Celsius]
-#&gt; 6 13.217810 [degree_Celsius]   6.776836 [degree_Celsius]
-#&gt;                            V7                         V8
-#&gt; 1 -19.000608 [degree_Celsius] -1.029087 [degree_Celsius]
-#&gt; 2   9.357843 [degree_Celsius] -9.740696 [degree_Celsius]
-#&gt; 3  -3.090515 [degree_Celsius] 12.706723 [degree_Celsius]
-#&gt; 4   2.630667 [degree_Celsius]  9.608648 [degree_Celsius]
-#&gt; 5 -17.905919 [degree_Celsius]  7.687214 [degree_Celsius]
-#&gt; 6  -7.882588 [degree_Celsius] 10.359308 [degree_Celsius]
-#&gt;                            V9                        V10
-#&gt; 1 -10.416684 [degree_Celsius] 11.238388 [degree_Celsius]
-#&gt; 2 -11.465239 [degree_Celsius] -3.970015 [degree_Celsius]
-#&gt; 3 -16.753273 [degree_Celsius] -8.232612 [degree_Celsius]
-#&gt; 4  15.259387 [degree_Celsius] -5.788846 [degree_Celsius]
-#&gt; 5   5.541855 [degree_Celsius] 17.637894 [degree_Celsius]
-#&gt; 6  19.931103 [degree_Celsius]  1.329921 [degree_Celsius]</div></pre>
+}</div><div class='img'><img src='celsius-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;                 V1              V2              V3               V4
+#&gt; 1  -4.2938009 [°C] -11.533984 [°C] -3.3893587 [°C]   2.3742535 [°C]
+#&gt; 2  13.6046133 [°C]  -3.406379 [°C] -0.7557425 [°C] -13.1281425 [°C]
+#&gt; 3  -0.7085743 [°C]   7.863626 [°C]  0.4020439 [°C]   7.4702859 [°C]
+#&gt; 4  -2.7215368 [°C] -12.705131 [°C]  1.2430107 [°C] -15.6251843 [°C]
+#&gt; 5 -24.4668003 [°C]   5.421415 [°C] -9.9843255 [°C]   0.7105336 [°C]
+#&gt; 6   0.6548664 [°C]   0.751059 [°C] 12.3339006 [°C]  -6.3953477 [°C]
+#&gt;                V5              V6               V7                V8
+#&gt; 1  -9.028149 [°C]  -8.302143 [°C]   1.4967935 [°C]   0.60898893 [°C]
+#&gt; 2  13.176337 [°C]  -5.035929 [°C] -14.3332110 [°C] -21.77576028 [°C]
+#&gt; 3  11.001897 [°C] -11.936412 [°C]  -0.1030332 [°C]  -1.17860143 [°C]
+#&gt; 4  12.037678 [°C]  -7.517233 [°C]  -2.1223603 [°C]   1.12294787 [°C]
+#&gt; 5 -14.312708 [°C]  14.558414 [°C]  -9.0634018 [°C]   0.07886198 [°C]
+#&gt; 6  13.829109 [°C]  -8.286035 [°C] -21.0215248 [°C]  18.77743872 [°C]
+#&gt;               V9             V10
+#&gt; 1 10.120018 [°C]  -1.740864 [°C]
+#&gt; 2 -9.190516 [°C]  -2.217445 [°C]
+#&gt; 3  5.633801 [°C] -10.095287 [°C]
+#&gt; 4  3.224827 [°C]   4.807253 [°C]
+#&gt; 5  3.666744 [°C]  16.044073 [°C]
+#&gt; 6 11.298352 [°C] -15.150245 [°C]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
