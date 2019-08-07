@@ -116,5 +116,21 @@ veh <- age_ldv(x = net$ldv[1:2], name = "PC_E25_1400", agemax = 4)
 mil <- fkm$KM_PC_E25(1:4)
 ef <- ef_cetesb("COd", "PC_G")[1:4]
 emis(veh, lkm, ef)
+# group online
+bus1 <- age_hdv(30, agemax = 4)
+veh = bus1
+lkm = units::set_units(400, "km")
+speed = 40
+efco <- ef_cetesb("COd", "UB", agemax = 4)
+lef <- ef_hdv_scaled(dfcol = as.numeric(efco),
+                     v = "Ubus",
+                     t = "Std",
+                     g = ">15 & <=18",
+                     eu = rep("IV", 4),
+                     gr = 0,
+                     l = 0.5,
+                     p = "CO")
+for(i in 1:length(lef)) print(lef[[i]](10))
+emis(veh = bus1, lkm = lkm, speed = 40, ef = lef, verbose = T)
 }
 }
