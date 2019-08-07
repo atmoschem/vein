@@ -123,7 +123,7 @@ emis <- function (veh,
     veh <- sf::st_set_geometry(veh, NULL)
   }
   if(!missing(hour) | !missing(day)){
-    warning("Arguments  hour and day will be deprecated, they will derived from profile")
+    warning("Arguments hour and day will be deprecated, they will derived from profile")
   }
 
   lkm <- as.numeric(lkm)
@@ -138,19 +138,25 @@ emis <- function (veh,
       veh[,i] <- as.numeric(veh[,i])
     }
     # top down
-    if(missing(profile)){
-   if(verbose)  message("top down approach")
+    if(missing(profile) & missing(speed)){
+   if(verbose) message("top down approach. Please, use emis_hot_td")
+      if(nrow(veh) != length(lkm)) stop("number of rows of `veh` must be the same as the length of `lkm`` ")
       a <- lapply(1:ncol(veh), function(i){
-        veh[, i] * as.numeric(lkm)[i] * as.numeric(ef)[i]
+        veh[, i] * as.numeric(lkm) * as.numeric(ef)[i]
       })
-      a <- as.data.frame(matrix(unlist(a),
-                                ncol = ncol(veh),
-                                nrow = nrow(veh)))
-
-      for (i  in 1:ncol(a) ) {
-        a[, i] <- as.numeric(a[, i]) * units::as_units("g")
-      }
+      a <- Emissions(do.call("cbind", a))
       return(a)
+    } else if(missing(profile) & !missing(speed)){
+      if(verbose) message("top down approach with speed functions and `ef` EmissionFactorsList")
+      if(nrow(veh) != length(lkm)) stop("number of rows of `veh` must be the same as the length of `lkm`")
+      if(nrow(veh) != length(speed)) stop("number of rows of `veh` must be the same as the length of `speed`")
+      if(~!is.list(ef)) stop("`ef` must be EmissionFactorsList, or a list of speed functions")
+      a <- lapply(1:ncol(veh), function(i){
+        veh[, i] * as.numeric(lkm) * ef[[i]](speed)
+      })
+      a <- Emissions(do.call("cbind", a))
+      return(a)
+
     }
 
     if(!missing(profile) & is.data.frame(profile)){
