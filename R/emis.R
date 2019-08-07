@@ -109,6 +109,7 @@
 #'                      p = "CO")
 #' for(i in 1:length(lef)) print(lef[[i]](10))
 #' emis(veh = bus1, lkm = lkm, speed = 40, ef = lef, verbose = T)
+#' emis(veh = bus1, lkm = lkm, ef = efco, verbose = T)
 #' }
 emis <- function (veh,
                   lkm,
@@ -154,8 +155,8 @@ emis <- function (veh,
       veh[,i] <- as.numeric(veh[,i])
     }
     # top down
-    if(missing(profile) & missing(speed)){
-   if(verbose) message("If this is a top down approach try emis_hot_td ")
+    if(missing(profile) & is.numeric(ef)){
+   if(verbose) message("If this is a top down approach, you may try emis_hot_td ")
       if(nrow(veh) != length(lkm)) stop("number of rows of `veh` must be the same as the length of `lkm`` ")
       a <- lapply(1:ncol(veh), function(i){
         veh[, i] * as.numeric(lkm) * as.numeric(ef)[i]
