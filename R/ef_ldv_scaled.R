@@ -45,12 +45,13 @@
 ef_ldv_scaled <- function(dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
   if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
-  lapply(1:length(dfcol), function(i)  {
+  la <- lapply(1:length(dfcol), function(i)  {
     funIN <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,
                          eu = as.character(eu[i]), p = p, k = 1, show.equation = FALSE)
     k <- dfcol[i]/ funIN(SDC)
-    funOUT <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,
+    ef_ldv_speed(v = v, t = t, cc = cc, f = f,
                          eu = as.character(eu[i]), p = p, k = k,show.equation = FALSE)
-    return(funOUT)
    })
+  class(la) <- c("EmissionFactorsList",class(la))
+  return(la)
 }

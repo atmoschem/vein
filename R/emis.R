@@ -93,6 +93,22 @@
 #' mil <- fkm$KM_PC_E25(1:4)
 #' ef <- ef_cetesb("COd", "PC_G")[1:4]
 #' emis(veh, lkm, ef)
+#' # group online
+#' bus1 <- age_hdv(30, agemax = 4)
+#' veh = bus1
+#' lkm = units::set_units(400, "km")
+#' speed = 40
+#' efco <- ef_cetesb("COd", "UB", agemax = 4)
+#' lef <- ef_hdv_scaled(dfcol = as.numeric(efco),
+#'                      v = "Ubus",
+#'                      t = "Std",
+#'                      g = ">15 & <=18",
+#'                      eu = rep("IV", 4),
+#'                      gr = 0,
+#'                      l = 0.5,
+#'                      p = "CO")
+#' for(i in 1:length(lef)) print(lef[[i]](10))
+#' emis(veh = bus1, lkm = lkm, speed = 40, ef = lef, verbose = T)
 #' }
 emis <- function (veh,
                   lkm,
@@ -151,8 +167,9 @@ emis <- function (veh,
       if(nrow(veh) != length(lkm)) stop("number of rows of `veh` must be the same as the length of `lkm`")
       if(nrow(veh) != length(speed)) stop("number of rows of `veh` must be the same as the length of `speed`")
       if(!is.list(ef)) stop("`ef` must be EmissionFactorsList, or a list of speed functions")
+      if(length(unlist(speed)) != nrow(veh)) stop("length of speed must be the same as number of rows of `veh`")
       a <- lapply(1:ncol(veh), function(i){
-        veh[, i] * as.numeric(lkm) * ef[[i]](speed)
+        veh[, i] * as.numeric(lkm) * ef[[i]](unlist(speed)) # L:146 transforms speed into data.frame
       })
       a <- Emissions(do.call("cbind", a))
       return(a)
