@@ -150,7 +150,7 @@ emis <- function (veh,
       if(verbose) message("top down approach with speed functions and `ef` EmissionFactorsList")
       if(nrow(veh) != length(lkm)) stop("number of rows of `veh` must be the same as the length of `lkm`")
       if(nrow(veh) != length(speed)) stop("number of rows of `veh` must be the same as the length of `speed`")
-      if(~!is.list(ef)) stop("`ef` must be EmissionFactorsList, or a list of speed functions")
+      if(!is.list(ef)) stop("`ef` must be EmissionFactorsList, or a list of speed functions")
       a <- lapply(1:ncol(veh), function(i){
         veh[, i] * as.numeric(lkm) * ef[[i]](speed)
       })
