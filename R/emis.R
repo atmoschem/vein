@@ -139,7 +139,7 @@ emis <- function (veh,
     }
     # top down
     if(missing(profile) & missing(speed)){
-   if(verbose) message("top down approach. Please, use emis_hot_td")
+   if(verbose) message("If this is a top down approach try emis_hot_td ")
       if(nrow(veh) != length(lkm)) stop("number of rows of `veh` must be the same as the length of `lkm`` ")
       a <- lapply(1:ncol(veh), function(i){
         veh[, i] * as.numeric(lkm) * as.numeric(ef)[i]
@@ -147,7 +147,7 @@ emis <- function (veh,
       a <- Emissions(do.call("cbind", a))
       return(a)
     } else if(missing(profile) & !missing(speed)){
-      if(verbose) message("top down approach with speed functions and `ef` EmissionFactorsList")
+      if(verbose) message("Speed functions with `ef` EmissionFactorsList")
       if(nrow(veh) != length(lkm)) stop("number of rows of `veh` must be the same as the length of `lkm`")
       if(nrow(veh) != length(speed)) stop("number of rows of `veh` must be the same as the length of `speed`")
       if(!is.list(ef)) stop("`ef` must be EmissionFactorsList, or a list of speed functions")
