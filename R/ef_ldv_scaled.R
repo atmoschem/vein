@@ -8,7 +8,6 @@
 #' of the local emission factor, e.g. If the local emission factors were tested with the
 #' FTP-75 test procedure, SDC = 34.12 km/h.
 #'
-#' @param df Deprecated
 #' @param dfcol Column of the dataframe with the local emission factors eg df$dfcol
 #' @param SDC Speed of the driving cycle
 #' @param v Category vehicle: "PC", "LCV", "Motorcycle" or "Moped
@@ -43,11 +42,8 @@
 #' pch = 16, xlab = "[km/h]",
 #' main = "Variation of emissions with speed of newest vehicle")
 #' }
-ef_ldv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
-  if(!missing(df)){
-    message("argument 'df' will be deprecated")
-  }
-
+ef_ldv_scaled <- function(dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
+  if(length(dfcol != length(eu))) stop("Length of dfcol must be the same as length of eu")
   lapply(1:length(dfcol), function(i)  {
     funIN <- ef_ldv_speed(v = v, t = t, cc = cc, f = f,
                          eu = as.character(eu[i]), p = p, k = 1, show.equation = FALSE)

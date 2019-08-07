@@ -6,7 +6,6 @@
 #' the name "Euro_HDV" indicating the Euro equivalence standard, assuming that there are
 #' available local emission factors for several consecutive years.
 #'
-#' @param df Deprecated
 #' @param dfcol Column of the dataframe with the local emission factors eg df$dfcol
 #' @param SDC Speed of the driving cycle
 #' @param v Category vehicle: "Coach", "Trucks" or "Ubus"
@@ -37,10 +36,8 @@
 #' pch = 16, xlab = "[km/h]",
 #' main = "Variation of emissions with speed of newest vehicle")
 #' }
-ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
-  if(!missing(df)){
-    message("argument 'df' will be deprecated")
-  }
+ef_hdv_scaled <- function(dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
+  if(length(dfcol != length(eu))) stop("Length of dfcol must be the same as length of eu")
    lapply(1:length(dfcol), function(i)  {
     funIN <- ef_hdv_speed(v = v, t = t, g = g, eu = as.character(eu[i]),
                           gr = gr, l = l, p = p, k=1, show.equation = FALSE)

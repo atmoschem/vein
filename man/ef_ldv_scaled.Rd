@@ -4,11 +4,9 @@
 \alias{ef_ldv_scaled}
 \title{Scaling constant with speed emission factors of Light Duty Vehicles}
 \usage{
-ef_ldv_scaled(df, dfcol, SDC = 34.12, v, t = "4S", cc, f, eu, p)
+ef_ldv_scaled(dfcol, SDC = 34.12, v, t = "4S", cc, f, eu, p)
 }
 \arguments{
-\item{df}{Deprecated}
-
 \item{dfcol}{Column of the dataframe with the local emission factors eg df$dfcol}
 
 \item{SDC}{Speed of the driving cycle}
