@@ -37,7 +37,8 @@
 #' main = "Variation of emissions with speed of newest vehicle")
 #' }
 ef_hdv_scaled <- function(dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
-  if(length(dfcol != length(eu))) stop("Length of dfcol must be the same as length of eu")
+  if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
+  dfcol <- as.numeric(dfcol)
    lapply(1:length(dfcol), function(i)  {
     funIN <- ef_hdv_speed(v = v, t = t, g = g, eu = as.character(eu[i]),
                           gr = gr, l = l, p = p, k=1, show.equation = FALSE)
