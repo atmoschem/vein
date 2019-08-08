@@ -141,7 +141,9 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
         }))
       }))
       m <- matrix(x, nrow=dim(arra)[1], ncol=dim(arra)[3]*dim(arra)[4])
-      df <- as.data.frame(m)
+
+      df <- as.data.frame(cbind(data.frame(id = 1:nrow(m)), m))
+
       nombres <- lapply(1:dim(m)[2], function(i){paste0("h",i)})
       if(!missing(net)){
         netsf <- sf::st_as_sf(net)
@@ -180,7 +182,10 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
     } else if (by == "streets_wide") {
       df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
       names(df) <- paste0("h",1:length(df))
-      if(!missing(net)){
+
+      df <- as.data.frame(cbind(data.frame(id = 1:nrow(df)), df))
+
+        if(!missing(net)){
         netsf <- sf::st_as_sf(net)
         dfsf <- sf::st_sf(Emissions(df), geometry = netsf$geometry)
         return(dfsf)
