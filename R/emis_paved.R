@@ -52,6 +52,7 @@ emis_paved <- function(veh,
   emi <- veh * lkm * k * sL^0.91 * W^1.02
   emi[is.na(emi)] <- 0
   if(length(dim(emi)) == 2){
+    names(emi) <- paste0("V",1:ncol(emi))
     return(Emissions(emi))
   } else {
     return(EmissionsArray(emi))
