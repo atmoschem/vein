@@ -62,7 +62,7 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
 summary(E_CO_STREETS)
 E_CO_STREETSsf <- emis_post(arra = E_CO, pollutant = "CO",
-                           by = "streets_wide", net = net)
+                           by = "streets", net = net)
 summary(E_CO_STREETSsf)
 plot(E_CO_STREETSsf, main = "CO emissions (g/h)")
 # arguments required: arra, veh, size, fuel, pollutant ad by
