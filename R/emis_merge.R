@@ -73,7 +73,7 @@ nx <- kk
   if(as_list) return(x_rds)
 
   nombres <- names(x_rds[[1]])
-
+  if(any(is.numeric(as.numeric(nombres)))) paste0("h", nombres)
   if(streets){
     for (i in 1:length(x_rds)){
       x_rds[[i]]$id <- 1:nrow(x_rds[[i]])
