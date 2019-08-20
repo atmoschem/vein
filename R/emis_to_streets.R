@@ -16,7 +16,7 @@
 #' The second column must have the name "VAL" indicating the associated values
 #' to each category of street
 #' @param verbose Logical; to show more info.
-#' @importFrom sf st_geometry st_as_sf st_length
+#' @importFrom sf st_geometry st_as_sf st_length st_set_geometry
 #' @export
 #' @seealso \code{\link{add_polid}}
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
@@ -45,6 +45,9 @@ emis_to_streets <- function(streets,
                              by = "ID",
                              stpro,
                              verbose = TRUE){
+  if(class(dfemis) %in% c("sf")) {
+    sf::st_set_geometry(dfemis, NULL)
+  }
   outersect <- function(x, y) {
     sort(c(setdiff(x, y),
            setdiff(y, x)))
