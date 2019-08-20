@@ -15,7 +15,7 @@
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
 #' The default value is 4326
 #' @return A grid of polygons class 'sf'
-#' @importFrom sf st_as_sf st_sf st_crs st_bbox st_sfc
+#' @importFrom sf st_as_sf st_sf st_crs st_bbox st_sfc st_as_sfc
 #' @importFrom eixport wrf_grid
 #' @export
 #' @examples {
@@ -34,6 +34,7 @@ make_grid <- function(spobj, width, height = width,  polygon, crs = 4326, ...){
   }
 
 if(class(spobj)[1] != "character"){
+  if(class(spobj) == "bbox") spobj <- sf::st_as_sfc(spobj)
 net <- sf::st_as_sf(spobj)
     # g <- sf::st_make_grid(x = net, cellsize = width, ...)
 makinggrid <- function (x,
