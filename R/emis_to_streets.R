@@ -45,8 +45,8 @@ emis_to_streets <- function(streets,
                              by = "ID",
                              stpro,
                              verbose = TRUE){
-  if(class(dfemis) %in% c("sf")) {
-    sf::st_set_geometry(dfemis, NULL)
+  if(any(class(dfemis) %in% c("sf"))) {
+    dfemis <- sf::st_set_geometry(dfemis, NULL)
   }
   outersect <- function(x, y) {
     sort(c(setdiff(x, y),
