@@ -4,6 +4,7 @@ NEWS
 # vein 0.7.14  (Release date: 2019-08-06)
 
 - update emis_to_streets. Now it check class of dfemis and transform to data.frame if is sf
+- Ceate grids from bbox (sf)
 
 ## vein 0.7.13  (Release date: 2019-08-06)
 
