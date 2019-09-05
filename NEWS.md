@@ -1,7 +1,7 @@
 NEWS
 ===========
 
-# vein 0.7.15  (Release date: 2019-09-05)
+# vein 0.8.0  (Release date: 2019-09-05)
 
 - Update vein_notes
 
