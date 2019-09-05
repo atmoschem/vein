@@ -1,10 +1,15 @@
 NEWS
 ===========
 
-# vein 0.7.14  (Release date: 2019-08-06)
+# vein 0.7.15  (Release date: 2019-09-05)
+
+- Update vein_notes
+
+## vein 0.7.14  (Release date: 2019-08-20)
 
 - update emis_to_streets. Now it check class of dfemis and transform to data.frame if is sf
-- Ceate grids from bbox (sf)
+- Create grids from bbox (sf)
+- adding df argument at ef*scaled (again!)
 
 ## vein 0.7.13  (Release date: 2019-08-06)
 

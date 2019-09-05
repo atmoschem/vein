@@ -17,6 +17,7 @@
 #' @param gr Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06
 #' @param l Load of the vehicle: 0.0, 0.5 or 1.0
 #' @param p Pollutant: "CO", "FC", "NOx" or "HC"
+#' @param df deprecated
 #' @return A list of scaled emission factors g/km
 #' @keywords speed emission factors
 #' @note The length of the list should be equal to the name of the age categories of
@@ -36,7 +37,7 @@
 #' pch = 16, xlab = "[km/h]",
 #' main = "Variation of emissions with speed of newest vehicle")
 #' }
-ef_hdv_scaled <- function(dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
+ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
   if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
   la <-  lapply(1:length(dfcol), function(i)  {
