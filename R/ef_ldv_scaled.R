@@ -21,6 +21,7 @@
 #' @param eu Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"
 #' @param p Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
 #' is based on fuel, use "FC", if it is based on "HC", use "HC".
+#' @param df deprecated
 #' @return A list of scaled emission factors  g/km
 #' @keywords speed emission factors
 #' @note The length of the list should be equal to the name of the age categories of
@@ -42,7 +43,7 @@
 #' pch = 16, xlab = "[km/h]",
 #' main = "Variation of emissions with speed of newest vehicle")
 #' }
-ef_ldv_scaled <- function(dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
+ef_ldv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t = "4S", cc, f, eu, p) {
   if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
   la <- lapply(1:length(dfcol), function(i)  {
