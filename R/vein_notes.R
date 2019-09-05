@@ -22,29 +22,22 @@
 #' @export
 #' @examples {
 #' (a <- tempfile())
-#' vein_notes(a,
-#' approach = "Top Down",
-#' traffic = "traffic",
-#' composition = "composition",
-#' ef = "ef",
-#' cold_start = "included",
-#' evaporative = "included",
-#' standards = "standards",
-#' mileage = "mileage")
+#' vein_notes("notes",
+#'            file = a)
 #' readLines(paste0(a, '.txt'))
 #' }
-vein_notes <- function (file = "README",
-                        title,
+vein_notes <- function (notes,
                         yourname,
+                        file = "README",
+                        title = "Notes for this VEIN run",
                         approach = "Top Down",
-                        traffic,
-                        composition,
-                        ef,
-                        cold_start,
-                        evaporative,
-                        standards,
-                        mileage,
-                        notes){
+                        traffic = "Your traffic information",
+                        composition = "Your traffic information",
+                        ef = "Your information about emission factors",
+                        cold_start = "Your information about cold starts",
+                        evaporative = "Your information about evaporative emission factors",
+                        standards = "Your information about standards",
+                        mileage = "Your information about mileage"){
   if(!missing(file)){
     file <- paste0(file,".txt")
   }
