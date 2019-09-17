@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,15 +39,15 @@
 
 
 
-
 <meta property="og:title" content="Allocate emissions into spatial objects (street emis to grid) — emis_dist" />
+
 <meta property="og:description" content="emis_dist allocates emissions proportionally to
 each feature. &quot;Spatial&quot; objects are converter to &quot;sf&quot; objects. Currently,
 'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
 in each street." />
+
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -99,6 +97,7 @@ in each street." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -120,14 +119,16 @@ in each street." />
     </div>
 
     <div class="ref-description">
+    
     <p><code>emis_dist</code> allocates emissions proportionally to
 each feature. "Spatial" objects are converter to "sf" objects. Currently,
 'LINESTRING' or 'MULTILINESTRING' supported. The emissions are distributed
 in each street.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>emis_dist</span>(<span class='no'>gy</span>, <span class='no'>spobj</span>, <span class='no'>pro</span>, <span class='no'>osm</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -158,11 +159,12 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
       <td><p>Logical; to show more info.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When spobj is a 'Spatial' object (class of sp), they are converted
  into 'sf'.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
@@ -181,7 +183,9 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#note">Note</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -195,7 +199,7 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
