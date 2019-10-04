@@ -60,15 +60,15 @@
 #' @importFrom utils file.edit
 #' @examples \dontrun{
 #' name = file.path(tempdir(), "YourCity")
-#' inventory(name = name, show.dir = TRUE, show.scripts = TRUE)
+#' inventory(name = name)
 #' source(paste0(name, "/main.R"))
 #' }
 #'
 inventory <- function(name,
                       vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-                      show.main = TRUE,
+                      show.main = FALSE,
                       scripts = TRUE,
-                      show.dir = TRUE,
+                      show.dir = FALSE,
                       show.scripts = FALSE,
                       clear = TRUE,
                       rush.hour = FALSE){
@@ -210,7 +210,9 @@ inventory <- function(name,
       sink()
     }
     dirs <- list.dirs(path = name, full.names = TRUE, recursive = TRUE)
-    message(paste0("files at ", dirs[1]))
+
+    message(paste0("Project directory at ", dirs[1]))
+    # message(paste0("main file ", name, "/main.R"))
     sink(paste0(name, "/main.R"))
     cat(paste0("setwd('", dirs[1], "')\n"))
     cat("library(vein)\n")

@@ -22,7 +22,7 @@
 #'   \item{PC_G}{CETESB emission standard for Passenger Cars with Gasoline (g/km)}
 #'   \item{LT}{CETESB emission standard for Light Trucks with Diesel (g/km)}
 #' }
-#' @source \url{https://cetesb.sp.gov.br/}
+#' @source CETESB
 #' @usage data(fe2015)
 #' @docType data
 "fe2015"

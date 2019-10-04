@@ -1,7 +1,11 @@
 NEWS
 ===========
 
-# vein 0.8.0  (Release date: 2019-09-05)
+# vein 0.8.1  (Release date: 2019-10-04)
+
+- show.main = FALSE in inventory
+
+## vein 0.8.0  (Release date: 2019-09-05)
 
 - Update vein_notes
 
