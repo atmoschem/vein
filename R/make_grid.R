@@ -34,7 +34,7 @@ make_grid <- function(spobj, width, height = width,  polygon, crs = 4326, ...){
   }
 
 if(class(spobj)[1] != "character"){
-  if(class(spobj) == "bbox") {
+  if(class(spobj)[1] == "bbox") {
     spobj <- sf::st_as_sfc(spobj)
     spobj <- sf::st_sf(geometry = spobj)
 

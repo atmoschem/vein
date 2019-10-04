@@ -5,7 +5,7 @@
 \title{Inventory function.}
 \usage{
 inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-  show.main = TRUE, scripts = TRUE, show.dir = TRUE,
+  show.main = FALSE, scripts = TRUE, show.dir = FALSE,
   show.scripts = FALSE, clear = TRUE, rush.hour = FALSE)
 }
 \arguments{
@@ -79,7 +79,7 @@ fleet.
 \examples{
 \dontrun{
 name = file.path(tempdir(), "YourCity")
-inventory(name = name, show.dir = TRUE, show.scripts = TRUE)
+inventory(name = name)
 source(paste0(name, "/main.R"))
 }
 
