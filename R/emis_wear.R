@@ -51,77 +51,71 @@ emis_wear <- function (veh,
   for (i  in 1:ncol(speed) ) {
     speed[,i] <- as.numeric(speed[, i])
   }
-
-  if(is.data.frame(profile)){
-    profile <- profile
-  } else if(is.matrix(ef)){
-    profile <- profile
-  } else if(is.vector(profile)){
+  #profile
+  if(is.vector(profile)){
     profile <- matrix(as.numeric(profile), ncol = 1)
-  }
+  } # if it is data.frame or matrix, OK
+  # if(!missing(profile) & is.vector(profile)){
+  #   profile <- matrix(profile, ncol = 1)
+  # }
+
+  # ncol ef
   if(ncol(ef)/24 != day){
-   stop("Number of days of ef and profile must be the same")
-  }
-  if(!missing(profile) & is.data.frame(profile)){
-    profile <- profile
-  } else if(!missing(profile) & is.matrix(profile)){
-    profile <- profile
-  } else if(!missing(profile) & is.vector(profile)){
-    profile <- matrix(profile, ncol = 1)
+    stop("Number of days of ef and profile must be the same")
   }
 
-lef <- lapply(1:day, function(i){
+  lef <- lapply(1:day, function(i){
     as.list(ef[, (24*(i-1) + 1):(24*i)])
   })
 
-    # lapply(ef, as.list)
-    if (what == "tyre"){
-      d <-  simplify2array(
-        lapply(1:day,function(j){
-          simplify2array(
-            lapply(1:hour,function(i){
-              simplify2array(
-                lapply(1:agemax, function(k){
+  # lapply(ef, as.list)
+  if (what == "tyre"){
+    d <-  simplify2array(
+      lapply(1:day,function(j){
+        simplify2array(
+          lapply(1:hour,function(i){
+            simplify2array(
+              lapply(1:agemax, function(k){
+                ifelse(
+                  speed[,i] < 40,
+                  veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*1.67,
                   ifelse(
-                    speed[,i] < 40,
-                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*1.67,
-                    ifelse(
-                      speed[,i] >= 40 & speed[,i] <= 95,
-                      veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.0270*speed[, i] + 2.75),
-                      veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*0.185
-    )) })) })) }))
-    } else if(what == "break"){
-      d <-  simplify2array(
-        lapply(1:day,function(j){
-          simplify2array(
-            lapply(1:hour,function(i){
-              simplify2array(
-                lapply(1:agemax, function(k){
+                    speed[,i] >= 40 & speed[,i] <= 95,
+                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.0270*speed[, i] + 2.75),
+                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*0.185
+                  )) })) })) }))
+  } else if(what == "break"){
+    d <-  simplify2array(
+      lapply(1:day,function(j){
+        simplify2array(
+          lapply(1:hour,function(i){
+            simplify2array(
+              lapply(1:agemax, function(k){
+                ifelse(
+                  speed[,i] < 40,
+                  veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*1.39,
                   ifelse(
-                    speed[,i] < 40,
-                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*1.39,
+                    speed[,i] >= 40 & speed[,i] < 80,
+                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.00974*speed[, i] + 1.78),
                     ifelse(
-                      speed[,i] >= 40 & speed[,i] < 80,
-                      veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.00974*speed[, i] + 1.78),
+                      speed[,i] == 80,
+                      veh[, k]*profile[i,j]*lkm*lef[[j]][[i]],
                       ifelse(
-                        speed[,i] == 80,
-                        veh[, k]*profile[i,j]*lkm*lef[[j]][[i]],
-                        ifelse(
-                          speed[,i] > 80 & speed[,i] <= 90,
-                          veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.00974*speed[, i] + 1.78),
-                          veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*0.902
-                        )))) })) })) }))
+                        speed[,i] > 80 & speed[,i] <= 90,
+                        veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.00974*speed[, i] + 1.78),
+                        veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*0.902
+                      )))) })) })) }))
 
-    } else if (what == "road"){
-      d <-  simplify2array(
-        lapply(1:day,function(j){
-          simplify2array(
-            lapply(1:hour,function(i){
-              simplify2array(
-                lapply(1:agemax, function(k){
-                          veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]
-                  })) })) }))
+  } else if (what == "road"){
+    d <-  simplify2array(
+      lapply(1:day,function(j){
+        simplify2array(
+          lapply(1:hour,function(i){
+            simplify2array(
+              lapply(1:agemax, function(k){
+                veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]
+              })) })) }))
 
-    }
+  }
   return(EmissionsArray(d))
 }

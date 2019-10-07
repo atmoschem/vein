@@ -104,9 +104,18 @@ emis_chem <- function(dfe, mechanism, colby, long = FALSE) {
   if(long){
     return(ss)
   } else {
-    ss <- long_to_wide(df = ss,
-                       column_with_new_names = "group",
-                       column_with_data = "emission")
+    if(missing(colby)){
+      ss <- long_to_wide(df = ss,
+                         column_with_new_names = "group",
+                         column_with_data = "emission")
+    } else {
+      stop("emis_chem with colby and long = FALSE not supported yet")
+      # ss <- long_to_wide(df = ss,
+      #                    column_with_new_names = "group",
+      #                    column_with_data = "emission",
+      #                    column_fixed = colby)
+
+    }
     for(i in 1:ncol(ss)){
       if(names(ss)[i] %in% gases) {
         ss[, i] <-  units::as_units(ss[, i], "mol")

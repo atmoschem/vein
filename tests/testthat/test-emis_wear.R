@@ -27,3 +27,21 @@ test_that("emis_wear works", {
                          profile = pc_profile[, 1])[1],
                0.03094737)
 })
+
+test_that("emis_wear error", {
+  expect_error(emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
+                         lkm = units::set_units(net$lkm, "m"), ef = ef, speed = df,
+                         what = "road",
+                         profile = pc_profile[, 1])[1],
+               "Units.?\\(?")
+})
+
+ef2 <- ef
+ef2$V25 <- ef$V24
+test_that("emis_wear error", {
+  expect_error(emis_wear(veh = age_ldv(net$ldv, name = "VEH"),
+                         lkm = net$lkm, ef = ef2, speed = df,
+                         what = "road",
+                         profile = pc_profile[, 1])[1],
+               "Number.?\\(?")
+})
