@@ -21,3 +21,33 @@ test_that("adt works", {
                                  809.7791,
                                  42285.1921)*units::as_units("d-1"))
 })
+
+
+test_that("adt works", {
+  expect_equal(round(adt(pc = net$ldv*0.75,
+                   lcv = net$ldv*0.1,
+                   hgv = net$hdv,
+                   bus = net$hdv,
+                   mc = net$ldv*0.15,
+                   p_pc = p1,
+                   p_lcv = p1,
+                   p_hgv = p1,
+                   p_bus = p1*0, # when zero, must be the same size
+                   p_mc = p1,
+                   TRUE)[1,1], 2), Vehicles(689.14))
+})
+
+test_that("adt stops", {
+  expect_error(adt(pc = net$ldv*0.75,
+                         lcv = net$ldv*0.1,
+                         hgv = net$hdv,
+                         bus = net$hdv,
+                         mc = net$ldv*0.15,
+                         p_pc = c(p1, 2),
+                         p_lcv = p1,
+                         p_hgv = p1,
+                         p_bus = p1*0, # when zero, must be the same size
+                         p_mc = p1,
+                         TRUE),
+               "Profiles.?")
+})

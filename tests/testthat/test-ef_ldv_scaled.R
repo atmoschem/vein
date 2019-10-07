@@ -8,3 +8,11 @@ test_that("ef_ldv_scaled works", {
                              eu = co1$Euro_LDV[1], p = "CO")[[1]](34.12),
                co1$PC_G[1])
 })
+
+
+test_that("ef_ldv_scaled error", {
+  expect_error(ef_ldv_scaled(dfcol = c(co1$PC_G[1], 1), v = "PC", t = "4S",
+                             cc = "<=1400", f = "G",
+                             eu = co1$Euro_LDV[1], p = "CO")[[1]](34.12),
+               "Length.?\\(?")
+})

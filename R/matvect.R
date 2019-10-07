@@ -21,14 +21,14 @@
 #' }
 matvect <- function(df, x, by = "row"){
   if(by == "row") {
-    if(nrow(df) != length(x)) stop(" rows of df must be the same as length of ef")
+    if(nrow(df) != length(x)) stop("Rows of df must be the same as length of ef")
     a <- do.call("rbind",lapply(1:nrow(df), function(i) {
       df[i, ] * as.numeric(x)[i]
     }))
     a <- as.data.frame(a)
     return(a)
   } else  if (by == "col"){
-    if(ncol(df) != length(x)) stop(" cols of df must be the same as length of ef")
+    if(ncol(df) != length(x)) stop("Cols of df must be the same as length of ef")
     a <- t(do.call("rbind",lapply(1:ncol(df), function(i) {
       df[, i] * as.numeric(x)[i]
     })))

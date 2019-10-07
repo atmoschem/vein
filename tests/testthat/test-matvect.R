@@ -14,3 +14,14 @@ test_that("matvect works", {
                                   by = "col")),
                1029.404 + 0.000148)
 })
+
+
+test_that("matvect error", {
+  expect_error(matvect(df = veh, x = c(1,1)),
+               "Rows.?\\(?")
+})
+
+test_that("matvect error", {
+  expect_error(matvect(df = veh, x = 1, by = "col"),
+               "Cols.?\\(?")
+})
