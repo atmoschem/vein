@@ -22,11 +22,7 @@
 #' ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
 #' }
 ef_wear <- function (wear, type, pol = "TSP", speed, load = 0.5, axle=2) {
-  if(is.data.frame(speed)){
-    speed <- speed
-  } else if(is.matrix(speed)){
-    speed <- speed
-  } else if(is.vector(speed)){
+  if(is.vector(speed)){
     speed <- matrix(as.numeric(speed), ncol = 1)
   }
   for (i  in 1:ncol(speed) ) {
