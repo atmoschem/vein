@@ -5,7 +5,7 @@
 \title{Transform data.frame from long to wide format}
 \usage{
 long_to_wide(df, column_with_new_names = names(df)[1],
-  column_with_data = "emission", column_fixed, geometry)
+  column_with_data = "emission", column_fixed, net)
 }
 \arguments{
 \item{df}{data.frame with three column.}
@@ -16,7 +16,7 @@ long_to_wide(df, column_with_new_names = names(df)[1],
 
 \item{column_fixed}{Character,  column that will remain fixed}
 
-\item{geometry}{To return a sf}
+\item{net}{To return a sf}
 }
 \value{
 wide data.frame.
