@@ -41,11 +41,10 @@
 #' }
 #'
 emis_order <- function(EMISSION, start = "mon", hours = 168,
-                        utc, verbose = TRUE){
+                       utc, verbose = TRUE){
   if(verbose){
-    cat("Class :", class(EMISSION), '\n')
-    cat("Dimensions :\n")
-    cat(dim(EMISSION))
+    message(paste0("Class :",
+                   class(EMISSION), '\n'))
   }
 
   seg <- 1:24
@@ -111,17 +110,16 @@ emis_order <- function(EMISSION, start = "mon", hours = 168,
   else{
     stop("invalid start argument!\n") # nocov
   }
+
   if(class(EMISSION)[1] %in% c("EmissionsArray")){
-    stop("Plese, convert to an object with length of dimensions of 2 or 3, such as 'GriddedEmissionsArray'")
-    return(NEW)
+    stop("Please, convert to an object with length of dimensions of 2 or 3, such as 'GriddedEmissionsArray'")
   } else if(class(EMISSION)[1] %in% c("GriddedEmissionsArray", "array")){
     # this lines rearange the GriddedEmissionsArray output to be used in wrf_put
     NEW   <- array(NA, dim = c(dim(EMISSION)[1],dim(EMISSION)[2],hours))
     NEW   <- EMISSION[, , c(index)]
-    class(NEW) <- "GriddedEmissionsArray"
     return(NEW)
-  } else if(class(EMISSION)[1] == c("Spatial")){
-    sr <- as.numeric(substr(sp::CRS(EMISSION), 12, nchar(sr)))
+  } else if(class(EMISSION)[1] %in% c("SpatialPolygonsDataFrame")){
+    sr <- sf::st_crs(sf::st_as_sf(EMISSION))
     id <- 1:nrow(EMISSION)
     EMISSION$id <- NULL
     df <-  sf::st_as_sf(EMISSION)
