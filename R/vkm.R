@@ -32,11 +32,7 @@ vkm <- function (veh,
                  day = ncol(profile),
                  array = TRUE,
                  as_df = TRUE) {
-  if(!missing(profile) & is.data.frame(profile)){
-    profile <- profile
-  } else if(!missing(profile) & is.matrix(profile)){
-    profile <- profile
-  } else if(!missing(profile) & is.vector(profile)){
+  if(!missing(profile) & is.vector(profile)){
     profile <- matrix(profile, ncol = 1)
   }
   veh <- as.numeric(veh)
