@@ -36,7 +36,7 @@ ef_whe <- function(efhe,
                   ef){
   if(missing(efhe)) stop("No high emitter emission factor 'he'")
   if(missing(phe)) stop("No percentage of high emitter vehicles 'phe'")
-  if(missing(ef)) stop("No emission factors with normal deterioratio 'ef'")
+  if(missing(ef)) stop("No emission factors with normal deterioration 'ef'")
   eff <- as.numeric(efhe) * as.numeric(phe) + as.numeric(ef) * (1 - phe)
 return(EmissionFactors(eff))
 }
