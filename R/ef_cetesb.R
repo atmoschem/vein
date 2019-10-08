@@ -60,10 +60,10 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
     stop(paste("Please, choose one of the following pollutants:", pols))
   }
   if(p %in% evapd){
-    cat("Units: [g/day]\n")
+    message("Units: [g/day]\n")
   }
   if(p %in% evap){
-    cat("Units: [g/trip]\n")
+    message("Units: [g/trip]\n")
   }
   nveh <- names(ef)[12:ncol(ef)]
   if(any(!veh %in% nveh)){
