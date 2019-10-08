@@ -5,7 +5,7 @@
 \title{Calculate speeds of traffic network}
 \usage{
 netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, net,
-  scheme = FALSE, distance = "km", time = "h", isList)
+  scheme = FALSE)
 }
 \arguments{
 \item{q}{Data-frame of traffic flow to each hour (veh/h)}
@@ -35,13 +35,6 @@ default  profile. It needs ffs and ps:
   20:00-22:00 \tab average between ffs and ps\cr
   22:00-00:00 \tab ffs\cr
 }}
-
-\item{distance}{Deprecated. Character specifying the units for distance.
-Default is "km"}
-
-\item{time}{Deprecated. Character specifying the units for time Default is "h".}
-
-\item{isList}{Deprecated}
 }
 \value{
 dataframe speeds with units or sf.
