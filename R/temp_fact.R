@@ -22,10 +22,11 @@
 temp_fact <- function(q, pro, net) {
   if (missing(q) | is.null(q)) {
     stop("No traffic data")
-  } else {
-   df <- Vehicles(as.data.frame(as.matrix(q) %*% matrix(unlist(pro), nrow=1)))
   }
-  if(!missing(net)){
+
+   df <- Vehicles(as.data.frame(as.matrix(q) %*% matrix(unlist(pro), nrow=1)))
+
+   if(!missing(net)){
   netsf <- sf::st_as_sf(net)
   speed <- sf::st_sf(df, geometry = netsf$geometry)
   return(speed)

@@ -105,24 +105,30 @@ emis_chem <- function(dfe, mechanism, colby, long = FALSE) {
     return(ss)
   } else {
     if(missing(colby)){
-      ss <- long_to_wide(df = ss,
-                         column_with_new_names = "group",
-                         column_with_data = "emission")
+      ss <- suppressWarnings(long_to_wide(df = ss,
+                                          column_with_new_names = "group",
+                                          column_with_data = "emission"))
     } else {
-      stop("emis_chem with colby and long = FALSE not supported yet")
-      # ss <- long_to_wide(df = ss,
-      #                    column_with_new_names = "group",
-      #                    column_with_data = "emission",
-      #                    column_fixed = colby)
-
+      ss <- suppressWarnings(long_to_wide(df = ss,
+                                          column_with_new_names = "group",
+                                          column_with_data = "emission",
+                                          column_fixed = colby))
+      sscolby <- ss[, colby]
+      ss[, colby] <- NULL
     }
-    for(i in 1:ncol(ss)){
-      if(names(ss)[i] %in% gases) {
-        ss[, i] <-  units::as_units(ss[, i], "mol")
-      } else {
-        ss[, i] <-  units::as_units(ss[, i], "g")
-      }
-    }
-    return(ss)
   }
+  # putting units
+  for(i in 1:(ncol(ss))){
+    if(names(ss)[i] %in% gases) {
+      ss[, names(ss)[i]] <-  units::as_units(ss[, names(ss)[i]], "mol")
+    } else {
+      ss[, names(ss)[i]] <-  units::as_units(ss[, names(ss)[i]], "g")
+    }
+  }
+  if(!missing(colby)) {
+    ss[, colby] <- sscolby
+   ss <-  ss[!is.na(ss[colby]), ]
+  }
+
+  return(ss)
 }

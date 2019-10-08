@@ -40,18 +40,34 @@ test_that("emis_chem works", {
                0)
 })
 
-
+# emis_chem with colby and long = TRUE
 test_that("emis_chem works", {
   expect_equal(round(as.numeric(emis_chem(dfe = dfe,
                                           mechanism = "CBMZ_MOSAIC",
                                           long = FALSE)$NO2), 3),
                1.195)
 })
+dt <- emis_chem(dfe = dfe,
+                mechanism = "CBMZ_MOSAIC",
+                colby = "region",
+                long = TRUE)
+
+
 
 test_that("emis_chem works", {
-  expect_error(emis_chem(dfe = dfe,
+  expect_equal(round(as.numeric(emis_chem(dfe = df,
+                                          mechanism = "CBMZ_MOSAIC",
+                                          long = FALSE)$HC3)[1], 2),
+               0)
+})
+
+
+
+test_that("emis_chem works", {
+  expect_equal(round(as.numeric(emis_chem(dfe = dfe,
                          mechanism = "CBMZ_MOSAIC",
                          colby = "region",
-                         long = FALSE),
-               "emis.?\\(?")
+                         long = FALSE)$HC3)[1], 2),
+               0.62)
 })
+

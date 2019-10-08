@@ -7,9 +7,9 @@
 #' @param column_with_new_names Character, column that has new column names
 #' @param column_with_data Character column with data
 #' @param column_fixed Character,  column that will remain fixed
-#' @param geometry To return a sf
+#' @param net To return a sf
 #' @return wide data.frame.
-#' @importFrom sf st_sf
+#' @importFrom sf st_sf st_as_sf
 #' @seealso \code{\link{emis_hot_td}} \code{\link{emis_cold_td}} \code{\link{wide_to_long}}
 #' @export
 #' @examples {
@@ -24,7 +24,7 @@ long_to_wide <- function(df,
                          column_with_new_names = names(df)[1],
                          column_with_data = "emission",
                          column_fixed,
-                         geometry) {
+                         net) {
   a <- as.data.frame(df)
   la <- split(a, a[[column_with_new_names]])
   if(missing(column_fixed)) {
@@ -47,10 +47,11 @@ long_to_wide <- function(df,
   aa[, grepl("id", names(aa))] <- NULL
   names(aa) <- c(column_fixed, names(la))
   }
-  if(missing(geometry)) {
+  if(missing(net)) {
     return(aa)
   } else {
-    aa <- sf::st_sf(aa, geometry = geometry)
+    net <- sf::st_as_sf(net)
+    aa <- sf::st_sf(aa, geometry = net$geometry)
     return(aa)
   }
 }
