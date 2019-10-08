@@ -13,8 +13,7 @@ celsius(x)
 Objects of class "data.frame" or "units"
 }
 \description{
-\code{celsius} jsut convert add unit celsius to different
-R objects
+\code{celsius} just  add unit celsius to different R objects
 }
 \examples{
 {

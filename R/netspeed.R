@@ -22,10 +22,6 @@
 #'   20:00-22:00 \tab average between ffs and ps\cr
 #'   22:00-00:00 \tab ffs\cr
 #' }
-#' @param distance Deprecated. Character specifying the units for distance.
-#' Default is "km"
-#' @param time Deprecated. Character specifying the units for time Default is "h".
-#' @param isList Deprecated
 #' @return dataframe speeds with units or sf.
 #' @importFrom sf st_sf st_as_sf
 #' @export
@@ -45,19 +41,10 @@
 #' plot(dfsf) #plot of the average speed at each hour, +- sd
 #' }
 netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
-                      net, scheme = FALSE,
-                      distance = "km", time="h", isList){
-  if(!missing(isList)){
-    .Deprecated(msg = "'isList' argument is deprecated")
-  } else if(!missing(distance)){
-    .Deprecated(msg = "'distance' argument is deprecated")
-  } else if(!missing(time)){
-    .Deprecated(msg = "'time' argument is deprecated")
-  }
-
+                      net, scheme = FALSE){
   if (scheme == FALSE & missing(q)){
     stop("No vehicles on 'q'")
-  } else if (scheme == FALSE & !missing(q)){
+  } else if (scheme == FALSE){
     qq <- as.data.frame(q)
     for (i  in 1:ncol(qq) ) {
       qq[,i] <- as.numeric(qq[,i])

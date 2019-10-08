@@ -1,7 +1,6 @@
 #' Construction function for Celsius temperature
 #'
-#' @description \code{celsius} jsut convert add unit celsius to different
-#' R objects
+#' @description \code{celsius} just  add unit celsius to different R objects
 #'
 #' @return Objects of class "data.frame" or "units"
 #'
