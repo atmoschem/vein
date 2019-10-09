@@ -66,7 +66,6 @@ test_that("my_age message", {
 test_that("my_age works", {
   expect_error(my_age(x = net$ldv,
                             y = dpc,
-                            name = "PC_E25_1400",
                             namerows = "s"),
                "l.?")
 })
@@ -80,3 +79,18 @@ test_that("my_age works", {
                19)
 })
 
+
+test_that("my_age stops", {
+  expect_error(round(my_age(x = net$ldv,
+                            y = dpc,
+                            name = "PC_E25_1400",
+                            k = 1:2)),
+               "Ro.?")
+})
+
+test_that("my_age works", {
+  expect_equal(round(my_age(x = net$ldv,
+                      y = dpc,
+                      namerows = 1:nrow(net))[1,1]),
+               Vehicles(19))
+})
