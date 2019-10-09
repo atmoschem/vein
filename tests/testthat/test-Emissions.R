@@ -10,14 +10,40 @@ PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
 veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
-lef <- EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G", year = 2016)))
 
 test_that("Emissions works", {
-  expect_equal(emis(veh = pc1[1:5, ],
-                    lkm = net$lkm[1:5],
-                    ef = lef,
-                    profile = pc_profile[1, ],
-                    speed = Speed(34),
-                    array = T)[1,1,1,1],
-               0.4850966 + 3.63e-08)
+  expect_equal(Emissions(data.frame(a = 1))[1,1],
+               Emissions(1))
+})
+
+test_that("Emissions stops", {
+  expect_error(Emissions(units::set_units(1, "km")),
+               "units.?")
+})
+
+test_that("Emissions prints", {
+  expect_output(print(Emissions(data.frame(a = 1:5, b = 1:5))),
+                "...?")
+  expect_output(print(Emissions(data.frame(a = 1:11, b = 1:11))),
+                "...?")
+  expect_output(print(Emissions(matrix(0, ncol = 11))),
+                "...?")
+  expect_output(print(Emissions(matrix(1:110, ncol = 11))),
+                "...?")
+})
+
+
+test_that("Emissions prints", {
+  expect_output(summary(Emissions(data.frame(a = 1:11, b = 1:11))),
+                "Total?")
+  expect_output(summary(Emissions(data.frame(a = 1:11, b = 1:11)))[1],
+                "Min.?")
+})
+
+
+test_that("Emissions works", {
+  expect_equal(plot(Emissions(data.frame(a = 1:5)))$mfrow[1],
+               NULL)
+  expect_output(plot(Emissions(data.frame(a = 1:5)))$mfrow[1],
+                "Av.?")
 })
