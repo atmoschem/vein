@@ -14,9 +14,10 @@ lef <- EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G", year = 2016)))
 
 test_that("Emissions works", {
   expect_equal(emis(veh = pc1[1:5, ],
-                               lkm = net$lkm[1:5],
-                               ef = lef,
-                               profile = pc_profile[1, ],
-                               array = T)[1,1,1,1],
+                    lkm = net$lkm[1:5],
+                    ef = lef,
+                    profile = pc_profile[1, ],
+                    speed = Speed(34),
+                    array = T)[1,1,1,1],
                0.4850966 + 3.63e-08)
 })

@@ -17,6 +17,7 @@ test_that("EmissionsArray works", {
                                lkm = net$lkm[1:5],
                                ef = lef,
                                profile = pc_profile[1, ],
-                               array = T)[1,1,1,1]),
+                               array = T,
+                               speed = Speed(34))[1,1,1,1]),
                0.4850966 + 3.63e-08)
 })

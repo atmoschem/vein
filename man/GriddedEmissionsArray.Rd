@@ -53,7 +53,8 @@ veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
+pckm <- units::set_units(fkm[[1]](1:24), "km")
+pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #vehicles newer than pre-euro
@@ -62,11 +63,9 @@ cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
 lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
                      f = "G",p = "CO", eu=co1$Euro_LDV)
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
-             profile = pc_profile, hour = 24, day = 7, array = T)
+              profile = pc_profile, simplify = TRUE)
 class(E_CO)
-E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
-net@data <- cbind(net@data, E_CO_STREETS)
-head(net@data)
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 net@data <- net@data[,- c(1:9)]
 names(net)
