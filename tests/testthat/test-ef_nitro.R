@@ -105,10 +105,9 @@ test_that("ef_nitro works", {
                         cond = "Urban",
                         f = "G",
                         cc = "<=1400",
-                        eu = data.frame(euro = c("III", "III"),
-                                        euro2 = c("III", "III")),
+                        eu = c("III", "III"),
                         p = "NH3",
                         S = 10,
-                        cumileage = units::set_units(25000, "km"))[,1],
-               EmissionFactors(rep(0.001700025, 2)))
+                        cumileage = units::set_units(25000, "km"))[1,1],
+               EmissionFactors(0.001700025))
 })
