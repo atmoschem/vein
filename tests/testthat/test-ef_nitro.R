@@ -7,8 +7,6 @@ test_that("ef_nitro works", {
                 0.001637825)
 })
 
-efe10 <- ef_nitro(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
-                  eu = "III", p = "NH3", S = 10, cumileage = units::set_units(25000, "km"))
 
 test_that("ef_nitro works", {
   expect_equal(ef_nitro(v = "PC",
@@ -36,6 +34,33 @@ test_that("ef_nitro stops", {
 })
 
 test_that("ef_nitro works", {
+  expect_error(ef_nitro(v = "PC",
+                        t = "Hot",
+                        cond = "Urban",
+                        f = "G",
+                        cc = "<=1400",
+                        eu = "III",
+                        p = "NH3",
+                        S = 10,
+                        cumileage = units::set_units(25000, "m")),
+               "Un?")
+})
+
+test_that("ef_nitro works", {
+  expect_error(ef_nitro(v = "PC",
+                        t = "Hot",
+                        cond = "Urban",
+                        f = "G",
+                        cc = "<=1400",
+                        eu = "III",
+                        p = "NH3",
+                        S = 10,
+                        cumileage = 25000),
+               "cu?")
+})
+
+
+test_that("ef_nitro works", {
   expect_equal(ef_nitro(v = "PC",
                         t = "Hot",
                         cond = "Urban",
@@ -46,4 +71,44 @@ test_that("ef_nitro works", {
                         S = 10,
                         cumileage = units::set_units(25000, "km")),
                EmissionFactors(data.frame(V1 = rep(0.001700025, 2))))
+})
+
+
+
+
+test_that("ef_nitro works", {
+  expect_output(ef_nitro(v = "PC", t = "Hot", cond = "Urban", cc = "<=1400", f = "G",
+                         eu = "III", p = "NH3", S = 10,
+                         show.equation = TRUE)(10),
+                "a.?")
+})
+
+
+test_that("ef_nitro works", {
+  expect_equal(ef_nitro(v = "PC",
+                        t = "Hot",
+                        cond = "Urban",
+                        f = "G",
+                        cc = "<=1400",
+                        eu = data.frame(euro = c("III", "III"),
+                                        euro2 = c("III", "III")),
+                        p = "NH3",
+                        S = 10,
+                        cumileage = units::set_units(25000, "km"))[,1],
+               EmissionFactors(rep(0.001700025, 2)))
+})
+
+
+test_that("ef_nitro works", {
+  expect_equal(ef_nitro(v = "PC",
+                        t = "Hot",
+                        cond = "Urban",
+                        f = "G",
+                        cc = "<=1400",
+                        eu = data.frame(euro = c("III", "III"),
+                                        euro2 = c("III", "III")),
+                        p = "NH3",
+                        S = 10,
+                        cumileage = units::set_units(25000, "km"))[,1],
+               EmissionFactors(rep(0.001700025, 2)))
 })
