@@ -20,7 +20,6 @@ remove_units <- function(x){
     for(i in 1:ncol(ef)){
       ef[,i] <- as.numeric(ef[,i])
     }
-    class(ef) <- "matrix"
   } else if ( is.data.frame(x) ) {
     ef <- x
     for(i in 1:ncol(ef)){
@@ -31,7 +30,6 @@ remove_units <- function(x){
     ef <- x
     #nada
   } else {
-    ef <- x
     ef <- as.numeric(x)
   }
   return(ef)
