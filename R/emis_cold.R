@@ -17,6 +17,11 @@
 #' @param agemax Age of oldest vehicles for that category
 #' @param profile Numerical or dataframe with nrows equal to 24 and ncol 7 day
 #' of the week
+#' @param simplify Logical; to determine if EmissionsArray should les dimensions,
+#' being streets, vehicle categories and hours or default (streets, vehicle
+#' categories, hours and days). Default is FALSE to avoid break old code, but
+#' the recommendation is that new estimations use this parameter as TRUE
+#' @param hour Number of considered hours in estimation. Default value is number
 #' @param hour Number of considered hours in estimation
 #' @param day Number of considered days in estimation
 #' @param array Deprecated! \code{\link{emis_cold}} returns only arrays.
@@ -77,6 +82,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
                          ncol(veh[[1]])
                        },
                        profile,
+                       simplify = FALSE,
                        hour = nrow(profile),
                        day = ncol(profile),
                        array = TRUE,
@@ -158,16 +164,27 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
     for(i in 1:ncol(veh)){
       veh[,i] <- as.numeric(veh[,i])
     }
-    d <-  simplify2array(
-      lapply(1:day,function(j){
-        simplify2array(
-          lapply(1:hour,function(i){
-            simplify2array(
-              lapply(1:agemax, function(k){
-                beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])*
-                  ifelse((efcold[[k]](speed[, i]) - 1) < 0, 0,
-                         (efcold[[k]](speed[, i]) - 1))
-              }) ) }) ) }) )
+    if(simplify) {
+      d <-  simplify2array(
+        lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
+          simplify2array(
+            lapply(1:agemax, function(k){ # categorias
+              unlist(beta)[j]*veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])*
+                    ifelse((efcold[[k]](speed[, j])- 1) < 0, 0,
+                           (efcold[[k]](speed[, j]) - 1))
+        }) ) }) )
+  } else {
+      d <-  simplify2array(
+        lapply(1:day,function(j){
+          simplify2array(
+            lapply(1:hour,function(i){
+              simplify2array(
+                lapply(1:agemax, function(k){
+                  beta[i,j]*veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])*
+                    ifelse((efcold[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)]) - 1) < 0, 0,
+                           (efcold[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)]) - 1))
+                }) ) }) ) }) )
+    }
     if(verbose) message(round(sum(d, na.rm = TRUE)/1000,2),
                         " kg emissions in ", hour, " hours and ", day, " days")
     return(EmissionsArray(d))
