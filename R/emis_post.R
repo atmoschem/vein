@@ -175,15 +175,14 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
       df$hour <- hour
       df$g <- Emissions(df$g)
       return(df)
-    } else if (by == "streets_narrow") {
+    } else if (by %in% c("streets_narrow")) {
       df <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
-      warning("TODO: Improve")
       return(df)
-    } else if (by == "streets_wide") {
-      df <- Emissions(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
+    } else if (by %in% c("streets_wide", "streets")) {
+      df <- apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE)
       names(df) <- paste0("h",1:length(df))
 
-      df <- as.data.frame(m)
+      df <- as.data.frame(df)
 
         if(!missing(net)){
         netsf <- sf::st_as_sf(net)

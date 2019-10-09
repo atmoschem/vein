@@ -60,11 +60,16 @@ EmissionsArray <- function(x, ...) {
 #' @export
 print.EmissionsArray <- function(x,  ...) {
   e <- x
-if (is.array(e)) {
+  if (length(dim(e)) == 3) {
+    cat("This EmissionsArray has\n", dim(e)[1], "streets\n",
+        dim(e)[2], "vehicle categories\n", dim(e)[3], "hours\n")
+    print(utils::head(e))
+  } else {
     cat("This EmissionsArray has\n", dim(e)[1], "streets\n",
         dim(e)[2], "vehicle categories\n", dim(e)[3], "hours\n",
         dim(e)[4], "days\n")
     print(utils::head(e))
+
   }
 }
 
@@ -73,45 +78,48 @@ if (is.array(e)) {
 #' @export
 summary.EmissionsArray <- function(object, ...) {
   e <- object
+  mine <- round(min(e, na.rm = T), 3)
+  q1 <- round(quantile(e, .25, na.rm = T), 3)
+  mede <- round(median(e, na.rm = T), 3)
+  avge <- round(mean(e, na.rm = T), 3)
+  q3 <- round(quantile(e, .75, na.rm = T), 3)
+  maxe <- round(max(e, na.rm = T), 3)
+  sde <- round(sd(e, na.rm = T), 3)
+  a <- data.frame(Min = mine,
+                  `Qu.1` = q1,
+                  Median = mede,
+                  Mean = avge,
+                  `Qu.3` = q3,
+                  Max = maxe,
+                  sd = sde)
+  row.names(a) <- NULL
+  print(a)
+}
+  #' @rdname EmissionsArray
+  #' @method plot EmissionsArray
+  #' @export
+  plot.EmissionsArray <- function(x, ...) {
+    e <- x
     if (length(dim(e)) == 4 ) {
       df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
-      names(df) <- unlist(lapply(1:ncol(df), function(i) paste0("h",i)))
-      # Total <- rowSums(df)
       Mean <- colMeans(df)
-      SD <- unlist(lapply(df, stats::sd, na.rm = T))
+      SD <- unlist(lapply(df, stats::sd))
       Min <- unlist(lapply(df, min))
       Max <- unlist(lapply(df, max))
       dfx <- data.frame(Mean, SD, Min, Max)
-      cat("Emissions\n")
-      return(dfx)
-    } else if (length(dim(e)) == 3 ){
-      #TODO: improve
-      apply(e, c(1, 3), sum, na.rm=T)
+      graphics::plot(y = dfx$Mean, x = 1:nrow(dfx),
+                     ylim = c(min(dfx$Min), max(dfx$Max)),
+                     col = "red", type = "l",
+                     main = "average emissions",
+                     ...)
+      graphics::lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
+      graphics::lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
+      graphics::points(dfx$Max, ylim = c(min(dfx$Min), max(dfx$Max)))
+      graphics::points(dfx$Min, ylim = c(min(dfx$Min), max(dfx$Max)))
+    } else {
+      df <- Emissions(apply(e, c(1, 3), mean, na.rm=T))
+      graphics::plot(df,
+                     main = "average emissions",
+                     ...)
     }
-}
-
-#' @rdname EmissionsArray
-#' @method plot EmissionsArray
-#' @export
-plot.EmissionsArray <- function(x, ...) {
-  e <- x
-  if (length(dim(e)) == 4 ) {
-    df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
-  Mean <- colMeans(df)
-  SD <- unlist(lapply(df, stats::sd))
-  Min <- unlist(lapply(df, min))
-  Max <- unlist(lapply(df, max))
-  dfx <- data.frame(Mean, SD, Min, Max)
-  graphics::plot(y = dfx$Mean, x = 1:nrow(dfx),
-                 ylim = c(min(dfx$Min), max(dfx$Max)),
-                 col = "red", type = "l",
-                 ...)
-  graphics::lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
-  graphics::lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
-  graphics::points(dfx$Max, ylim = c(min(dfx$Min), max(dfx$Max)))
-  graphics::points(dfx$Min, ylim = c(min(dfx$Min), max(dfx$Max)))
-  } else {
-  df <- Emissions(apply(e, c(1, 3), sum, na.rm=T))
-  graphics::plot(df)
-}
-}
+  }

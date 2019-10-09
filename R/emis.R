@@ -6,13 +6,18 @@
 #'
 #' @param veh "Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 #' as number of columns matching the age distribution of that ype of vehicle.
-#' The number of rows is equal to the number of streets link
+#' The number of rows is equal to the number of streets link. If this is a list,
+#' the length of the list is the vehicles for each hour.
 #' @param lkm Length of each link in km
 #' @param ef List of functions of emission factors
 #' @param speed Speed data-frame with number of columns as hours. The default value is 34km/h
 #' @param agemax Age of oldest vehicles for that category
 #' @param profile Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
 #' the week
+#' @param simplify Logical; to determine if EmissionsArray should les dimensions,
+#' being streets, vehicle categories and hours or default (streets, vehicle
+#' categories, hours and days). Default is FALSE to avoid break old code, but
+#' the recommendation is that new estimations use this parameter as TRUE
 #' @param hour Number of considered hours in estimation. Default value is number
 #' of rows of argument profile
 #' @param day Number of considered days in estimation
@@ -89,6 +94,7 @@ emis <- function (veh,
                   agemax = ifelse(is.data.frame(veh), ncol(veh),
                                   ncol(veh[[1]])),
                   profile,
+                  simplify = FALSE,
                   hour = nrow(profile),
                   day = ncol(profile),
                   array = TRUE,
@@ -121,9 +127,10 @@ emis <- function (veh,
     for (i  in 1:ncol(veh) ) {
       veh[,i] <- as.numeric(veh[,i])
     }
+
+
     # top down sin perfil, FE numerico
     if(missing(profile) & is.numeric(ef)){
-
       if(verbose) message(
         paste0("If this is a top down approach, you may try emis_hot_td\n",
                "With this approach speed is not necessary\n"))
@@ -133,38 +140,39 @@ emis <- function (veh,
       })
       a <- Emissions(do.call("cbind", a))
       return(a)
+
+
       # top down sin perfil, FE lista y con velocidad
     } else if(missing(profile) & class(ef)[1] == "EmissionFactorsList"){
-
       #Check speed
       if(missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
       speed <- as.data.frame(speed)
       for (i  in 1:ncol(speed) ) {
         speed[, i] <- as.numeric(speed[, i])
       }
-
       if(nrow(veh) != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`")
       if(nrow(veh) != length(unlist(speed))) stop("Number of rows of `veh` must be the same rows of `speed`")
+
       a <- lapply(1:ncol(veh), function(i){
-        veh[, i] * as.numeric(lkm) * ef[[i]](unlist(speed)) # L:146 transforms speed into data.frame
+        veh[, i] * as.numeric(lkm) * ef[[i]](speed)
       })
       a <- Emissions(do.call("cbind", a))
       return(a)
 
     }
 
+
     #bottom up
     if(!missing(profile) & is.vector(profile)){
       profile <- matrix(profile, ncol = 1)
     }
+    # Check length
     if(ncol(veh) != length(ef)){
       if(verbose) message(
         paste0("Number of columns of 'veh' is different than length of 'ef'\n",
                "adjusting length of ef to the number of colums of 'veh'\n"))
       if(ncol(veh) > length(ef)){
         for(i in (length(ef) + 1):ncol(veh) ){
-
-          # for(i in (ncol(veh) - length(ef)):ncol(veh) ){
           ef[[i]] <- ef[[length(ef)]]
         }
       } else if (ncol(veh) < length(ef)){
@@ -175,6 +183,12 @@ emis <- function (veh,
         ef <- ff
       }
     }
+    #Check speed
+    if(missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
+    speed <- as.data.frame(speed)
+    for (i  in 1:ncol(speed) ) {
+      speed[, i] <- as.numeric(speed[, i])
+    }
     # if(array == F){
     #   lista <- lapply(1:ncol(profile),function(j){
     #     lapply(1:nrow(profile),function(i){
@@ -184,18 +198,35 @@ emis <- function (veh,
     #   return(EmissionsList(lista))
     # } else {
     #
-    d <-  simplify2array(
-      lapply(1:ncol(profile),function(j){
-        simplify2array(
-          lapply(1:nrow(profile),function(i){
-            simplify2array(
-              lapply(1:agemax, function(k){
-                veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i*j])
-              }) ) }) ) }) )
+
+     # simplify?
+    if(simplify) {
+      d <-  simplify2array(
+        lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
+          simplify2array(
+                lapply(1:agemax, function(k){ # categorias
+                  veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])
+                }) ) }) )
+
+    } else {
+      d <-  simplify2array(
+        lapply(1:ncol(profile),function(j){ # 7 dias
+          simplify2array(
+            lapply(1:nrow(profile),function(i){ # 24 horas
+              simplify2array(
+                lapply(1:agemax, function(k){ # categorias
+                  veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])
+                }) ) }) ) }) )
+      # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+    }
+
     if(verbose) message(round(sum(d, na.rm = T)/1000,2), " kg emissions")
     return(EmissionsArray(d))
     # }
+
+
     # veh is a list of "Vehicles" data-frames
+    # each member of the list is an hour
   } else {
     if(ncol(veh[[1]]) != length(ef)){
       #check speed
