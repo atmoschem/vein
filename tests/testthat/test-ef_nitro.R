@@ -18,7 +18,7 @@ test_that("ef_nitro works", {
                         p = "NH3",
                         S = 10,
                         cumileage = units::set_units(25000, "km")),
-                EmissionFactors(0.001700025))
+               EmissionFactors(0.001700025))
 })
 
 test_that("ef_nitro stops", {
@@ -110,4 +110,16 @@ test_that("ef_nitro works", {
                         S = 10,
                         cumileage = units::set_units(25000, "km"))[1,1],
                EmissionFactors(0.001700025))
+})
+
+test_that("ef_nitro works", {
+  expect_equal(ef_nitro(v = "PC",
+                        t = "Hot",
+                        cond = "Urban",
+                        f = "G",
+                        cc = "<=1400",
+                        eu = c("III", "III"),
+                        p = "NH3",
+                        S = 10)[[1]](10),
+               0.001637825)
 })

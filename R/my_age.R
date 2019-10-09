@@ -73,9 +73,7 @@ my_age <- function (x,
   #
   # start
   if (missing(x) | is.null(x)) {
-    stop (print("Missing vehicles"))
-  } else if (missing(y) | is.null(y)) {
-    stop (print("Missing distributed vehicles"))
+    stop("Missing vehicles")
   } else {
     if(!missing(pro_street)){
       if(class(y) != "data.frame"){
