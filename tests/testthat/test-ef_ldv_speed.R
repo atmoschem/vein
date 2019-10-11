@@ -153,3 +153,86 @@ test_that("ef_ldv_speed works", {
   expect_equal(EF,
     matrix(c(ef1, ef2, ef3), ncol =3))
 })
+
+
+test_that("ef_ldv_speed works", {
+  expect_equal(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                            eu = data.frame("PRE"),
+                            p = "CO", show.equation = FALSE,
+                            speed = Speed(10))$V1, EmissionFactors(65.87283))
+})
+
+test_that("ef_ldv_speed works", {
+  expect_error(ef_ldv_speed(v = "PC",
+                            t = "4S",
+                            cc = "<=1400",
+                            f = "G",
+                            eu = data.frame("PRE"),
+                            p = "CO"),
+               "A.?")
+})
+
+test_that("ef_ldv_speed works", {
+  expect_error(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                            eu = data.frame("PRE"),
+                            p = "CO", show.equation = FALSE,
+                            speed = 10),
+               "s.?")
+})
+
+
+test_that("ef_ldv_speed works", {
+  expect_error(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                            eu = data.frame("PRE"),
+                            p = "CO", show.equation = FALSE,
+                            speed = units::set_units(10, "m/m")),
+               "U.?")
+})
+
+
+test_that("ef_ldv_speed works", {
+  expect_output(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "D",
+                            eu = data.frame("PRE"),
+                            p = "AS_urban", show.equation = FALSE,
+                            speed = Speed(10)),
+                "A.?")
+  expect_output(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "D",
+                             eu = data.frame("PRE"),
+                             p = "N_urban", show.equation = FALSE,
+                             speed = Speed(10))$V1,
+                "U.?")
+  expect_output(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "D",
+                             eu = "PRE",
+                             p = "CO", show.equation = TRUE),
+                "a.?")
+  expect_output(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "D",
+                             eu = "PRE",
+                             p = "CO", show.equation = TRUE),
+                "E.?")
+})
+
+
+test_that("ef_ldv_speed works", {
+  expect_equal(round(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                             eu = "PRE",
+                             p = "CO",
+                             speed = Speed(10))),
+                EmissionFactors(66))
+})
+
+test_that("ef_ldv_speed works", {
+  expect_equal(round(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                                  eu = c("PRE", "I"),
+                                  p = "CO",
+                                  speed = Speed(10))$PRE1[1]),
+               EmissionFactors(66))
+})
+
+test_that("ef_ldv_speed works", {
+  expect_equal(round(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                                  eu = c("PRE", "I"),
+                                  p = "SO2",
+                                  speed = Speed(10),
+                                  x = 10)$PRE1[1]),
+               EmissionFactors(0))
+})
