@@ -368,3 +368,46 @@ test_that("ef_china works", {# PM10
   expect_equal(ef_china(v = "Trucks", t = "Mini", f = "D", standard = df_st, p = "PM10", sulphur = 350),
                EmissionFactors(c(1.781, 0.516, 0.174, 0.164, 0.118, 0.059)))})
 # Fuel ALL not included because correction factors depends on fuel
+df <- as.data.frame(rbind(df_st, df_st))
+names(df) <- letters[1:6]
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df, p = "CO"),
+               "l.?")
+  })
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df, p = "CO",
+                        ta = 1:2),
+               "t.?")
+})
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df, p = "CO",
+                        ta = celsius(1:2)),
+               "t.?")
+})
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df, p = "CO",
+                        ta = celsius(1:2),
+                        altitude = c(1000, 1000)),
+               "s.?")
+})
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df, p = "CO",
+                        ta = celsius(1:2),
+                        altitude = c(1000, 1000),
+                        speed = Speed(55:56)),
+               "s.?")
+})
+
+
+test_that("ef_china works", {# CO
+  expect_equal(round(ef_china(t = "Mini", f = "G", standard = df, p = "CO",
+                        ta = celsius(1:2),
+                        altitude = c(1000, 1000),
+                        speed = Speed(55:56),
+                        sulphur = 400:401)$V1[1]),
+               EmissionFactors(20))
+})
