@@ -83,3 +83,41 @@ test_that("ef_hdv_speed works", {
                                   l = 0.5, p = "SO2", x = 10, speed = Speed(30))), 0)
 })
 
+test_that("ef_hdv_speed stops", {
+  expect_error(round(ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+                                  l = 0.5, p = "SO2", x = 10, speed = 30)),
+               "sp?")
+})
+
+
+test_that("ef_hdv_speed prints", {
+  expect_output(ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
+                             l = 0.5, p = "N_50nm_urban", speed = Speed(0)),
+                "U.?")
+})
+
+test_that("ef_hdv_speed works", {
+  expect_equal(round(ef_hdv_speed(v = "Trucks",
+                                  t = "RT",
+                                  g = "<=7.5",
+                                  e = c("II", "III"),
+                                  gr = 0,
+                                  l = 0.5,
+                                  p = "SO2",
+                                  x = 10,
+                                  speed = Speed(30)))$II_1[1],
+               EmissionFactors(0))
+})
+
+
+test_that("ef_hdv_speed stops", {
+  expect_error(ef_hdv_speed(v = "Trucks",
+                            t = "RT",
+                            g = "<=7.5",
+                            e = data.frame("II"),
+                            gr = 0,
+                            l = 0.5,
+                            p = "SO2",
+                            x = 10),
+               "Add.?")
+})
