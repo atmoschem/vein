@@ -236,3 +236,27 @@ test_that("ef_ldv_speed works", {
                                   x = 10)$PRE1[1]),
                EmissionFactors(0))
 })
+
+test_that("ef_ldv_speed works", {
+  expect_equal(round(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                                  eu = c("PRE", "I"),
+                                  p = "SO2",
+                                  x = 10)[[1]](0)),
+               0)
+})
+
+test_that("ef_ldv_speed works", {
+  expect_equal(round(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                                  eu = data.frame("PRE"),
+                                  p = "SO2",
+                                  speed = Speed(0),
+                                  x = 10)$V1),
+               EmissionFactors(0))
+})
+
+test_that("ef_ldv_speed works", {
+  expect_equal(round(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
+                                  eu = c("PRE", "I"),
+                                  p = "HC")[[1]](0)),
+               6)
+})
