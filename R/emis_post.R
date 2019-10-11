@@ -126,13 +126,13 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
         }))
       }))
       df <- cbind(deparse(substitute(arra)),as.data.frame(x))
-      names(df) <- c(as.character(df[1,1]), pollutant)
       hour <- rep(seq(0: (dim(arra)[3]-1) ),
                   times = dim(arra)[4],
                   each=dim(arra)[1])
       df$hour <- hour
+      names(df) <- c("street", "g", "hour")
       df[,1] <- seq(1,dim(arra)[1])
-      df[,2] <- df[,2] * units::as_units("g h-1")
+      df[,2] <- Emissions(df[,2])
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
@@ -176,7 +176,10 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
       df$g <- Emissions(df$g)
       return(df)
     } else if (by %in% c("streets_narrow")) {
-      df <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
+      df <- as.vector(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
+      df <- data.frame(street = length(df) / dim(arra)[3],
+                       g = Emissions(df),
+                       hour = rep(1:dim(arra)[3], each = dim(arra)[1]))
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
       df <- apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE)
