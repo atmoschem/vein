@@ -13,12 +13,67 @@ pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 speed <- data.frame(S8 = net$ps)
 p1h <- matrix(1)
 lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
+# 4d
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-             profile = p1h)
+             profile = pc_profile)
 
-test_that("multiplication works", {
-  expect_equal(as.numeric(emis_post(arra = E_CO,
+test_that("emis_post works", {
+  expect_equal(round(emis_post(arra = E_CO,
                          pollutant = "CO",
                          by = "streets_wide")[1,1]),
-               3418.185 + 6.17e-05)
+               Emissions(542))
+})
+
+test_that("emis_post stops", {
+  expect_error(emis_post(arra = 1,
+                         pollutant = "CO",
+                         by = "streets"),
+               "N.?")
+})
+
+test_that("emis_post works", {
+  expect_equal(round(emis_post(arra = E_CO,
+                                    pollutant = "CO", veh = "a", size = "s",
+                                    fuel = "d",
+                                    by = "veh")$g[1]),
+               Emissions(416))
+})
+
+test_that("emis_post works", {
+  expect_equal(round(emis_post(arra = E_CO,
+                                    pollutant = "CO",
+                                    by = "streets_narrow")$g[1]),
+               Emissions(542))
+})
+
+# 3d
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
+             profile = pc_profile, simplify = TRUE)
+test_that("emis_post works", {
+  expect_equal(round(emis_post(arra = E_CO,
+                               pollutant = "CO",
+                               by = "streets_wide")[1,1]),
+               Emissions(542))
+})
+
+test_that("emis_post stops", {
+  expect_error(emis_post(arra = 1,
+                         pollutant = "CO",
+                         by = "streets"),
+               "N.?")
+})
+
+test_that("emis_post works", {
+  expect_equal(round(emis_post(arra = E_CO,
+                               pollutant = "CO", veh = "a", size = "s",
+                               fuel = "d",
+                               by = "veh")$g[1]),
+               Emissions(416))
+})
+
+test_that("emis_post works", {
+  expect_equal(round(emis_post(arra = E_CO,
+                               pollutant = "CO",
+                               by = "streets_narrow")$g[1]),
+               Emissions(542))
 })
