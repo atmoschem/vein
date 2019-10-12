@@ -175,6 +175,9 @@ test_that("ef_china works", {# PM2.5
 test_that("ef_china works", {# PM10
   expect_equal(ef_china(v = "PV", t = "Motorcycles", f = "G", standard = df_st[1:4], p = "PM10"),
                EmissionFactors(c(0.033, 0.02, 0.009, 0.003)))})
+
+
+
 # Moped G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "PV", t = "Moped", f = "G", standard = df_st[1:4], p = "CO"),
@@ -368,6 +371,87 @@ test_that("ef_china works", {# PM10
   expect_equal(ef_china(v = "Trucks", t = "Mini", f = "D", standard = df_st, p = "PM10", sulphur = 350),
                EmissionFactors(c(1.781, 0.516, 0.174, 0.164, 0.118, 0.059)))})
 # Fuel ALL not included because correction factors depends on fuel
+
+
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                        speed = 0),
+               "s.?")
+})
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                        speed = units::set_units(0, "m/m")),
+               "U.?")
+})
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                        speed = Speed(0), k = 1:2),
+               "L.?")
+})
+
+test_that("ef_china stops", {# CO
+  expect_error(ef_china(v = "caca", f = "G", standard = df_st, p = "CO",
+                        speed = Speed(0)),
+               ".?")
+  expect_error(ef_china(t = "caca", f = "G", standard = df_st, p = "CO",
+                         speed = Speed(0)),
+                ".?")
+  expect_error(ef_china(f = "caca", standard = df_st, p = "CO",
+                        speed = Speed(0)),
+               ".?")
+  expect_error(ef_china(p = "caca", standard = df_st,
+                        speed = Speed(0)),
+               ".?")
+  expect_error(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                        speed = Speed(0),
+                        ta = 0),
+               "ta.?")
+})
+
+test_that("ef_china cat", {# CO
+  expect_output(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                         details = TRUE),
+               "E.?")
+})
+
+test_that("ef_china works", {# CO
+  expect_equal(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                         correction_only = TRUE)[1],
+                1)
+})
+
+test_that("ef_china works", {# CO
+  expect_equal(round(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                        ta = celsius(25))[1]),
+               EmissionFactors(26))
+})
+test_that("ef_china works", {# CO
+  expect_equal(round(ef_china(t = "Mini", f = "D", standard = df_st, p = "CO",
+                              ta = celsius(25))[1]),
+               EmissionFactors(1))
+})
+
+test_that("ef_china works", {# CO
+  expect_equal(round(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
+                              ta = celsius(25),
+                              altitude = 1600)[1]),
+               EmissionFactors(41))
+})
+
+test_that("ef_china works", {# CO
+  expect_equal(round(ef_china(t = "Mini", f = "D", standard = df_st, p = "CO",
+                              ta = celsius(25),
+                              altitude = 1600)[1]),
+               EmissionFactors(3))
+})
+
+
+
+
+
 df <- as.data.frame(rbind(df_st, df_st))
 names(df) <- letters[1:6]
 test_that("ef_china stops", {# CO
@@ -410,4 +494,55 @@ test_that("ef_china works", {# CO
                         speed = Speed(55:56),
                         sulphur = 400:401)$V1[1]),
                EmissionFactors(20))
+})
+
+
+test_that("ef_china works", {# CO
+    expect_equal(round(ef_china(t = "Mini", f = "G", standard = df, p = "CO",
+                                ta = celsius(1:2),
+                                altitude = c(1000, 1000),
+                                speed = Speed(55:56),
+                                sulphur = 400:401,
+                                correction_only = TRUE)[1]),
+               1)
+})
+
+
+#
+# test_that("ef_china works", {# CO
+#   expect_equal(ef_china(v = "PV",
+#                         t = "Motorcycles",
+#                         f = "G",
+#                         standard = df_st[1:4], p = "HC")[1],
+#                EmissionFactors(2.01))
+# })
+# test_that("ef_china works", {# CO
+#   expect_equal(ef_china(v = "PV", t = "Motorcycles", f = "G", standard = df_st[1:4], p = "NOx")[1],
+#                EmissionFactors(0.13))
+# })
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Motorcycles",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "CO",
+                              ta = celsius(1:2),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(8))
+})
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Motorcycles",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "HC",
+                              ta = celsius(1:2),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(1))
 })
