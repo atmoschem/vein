@@ -433,8 +433,6 @@ ef_china <- function(v = "PV",
             } else if(p == "NOx"){
               df$EF <- ifelse(ta[j] < 10, df$EF*1.15,
                               ifelse(ta[j] > 25, df$EF*1.31, df$EF))
-            } else {
-              df$EF <- df$EF
             }
           }}
 
