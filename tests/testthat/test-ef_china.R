@@ -534,15 +534,229 @@ test_that("ef_china works", {
                EmissionFactors(8))
 })
 
+
+
 test_that("ef_china works", {
   expect_equal(round(ef_china(v = "PV",
                               t = "Motorcycles",
                               f = "G",
                               standard = df[ ,1:4],
                               p = "HC",
-                              ta = celsius(1:2),
+                              humidity = c(0.6, 0.7),
+                              ta = celsius(30:31),
                               altitude = c(1000, 1000),
                               speed = Speed(55:56),
                               sulphur = 400:401)$V1)[1],
                EmissionFactors(1))
+})
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Motorcycles",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "HC",
+                              humidity = c(0.3, 0.4),
+                              ta = celsius(30:31),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(1))
+})
+
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Motorcycles",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "CO",
+                              humidity = c(0.3, 0.4),
+                              ta = celsius(30:31),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(8))
+})
+
+
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "NOx",
+                              humidity = c(0.8, 0.9),
+                              ta = celsius(30:31),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(3))
+})
+
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "D",
+                              standard = df[ ,1:4],
+                              p = "NOx",
+                              humidity = c(0.8, 0.9),
+                              ta = celsius(30:31),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(4))
+})
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "NOx",
+                              humidity = c(0.8, 0.9),
+                              ta = celsius(30:31),
+                              altitude = c(1500, 1501),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(3))
+})
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "D",
+                              standard = df[ ,1:4],
+                              p = "NOx",
+                              humidity = c(0.8, 0.9),
+                              ta = celsius(30:31),
+                              altitude = c(1500, 1501),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(4))
+})
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = c("PRE", "I"),
+                              p = "HC",
+                              ta = celsius(2),
+                              altitude = c(1000),
+                              speed = Speed(55),
+                              sulphur = 400))[1],
+               EmissionFactors(2))
+})
+
+
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Motorcycles",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "HC",
+                              humidity = c(0.3, 0.4),
+                              ta = celsius(0:1),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(1))
+})
+
+test_that("ef_china works", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Motorcycles",
+                              f = "G",
+                              standard = df[ ,1:4],
+                              p = "NOx",
+                              humidity = c(0.3, 0.4),
+                              ta = celsius(0:1),
+                              altitude = c(1000, 1000),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               EmissionFactors(0))
+})
+
+
+# all data.frame
+test_that("ef_china works", {
+  expect_warning(round(ef_china(v = "PV",
+                                t = "Small",
+                                f = "G",
+                                standard = df[ ,1:4],
+                                p = "NOx",
+                                humidity = data.frame(c(0.3, 0.4)),
+                                ta = data.frame(celsius(0:1)),
+                                altitude = c(1000, 1000),
+                                speed = Speed(55:56),
+                                sulphur = 400:401)$V1)[1],
+                 "T.?")
+})
+
+
+test_that("ef_china stop", {
+  expect_error(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "NOx",
+                              humidity = data.frame(c(0.3, 0.4)),
+                              ta = data.frame(celsius(matrix(1:12,
+                                                             ncol = 12))),
+                              altitude = rep(1000, 12),
+                              speed = Speed(55:56),
+                              sulphur = 400:401)$V1)[1],
+               "l.?")
+})
+
+
+test_that("ef_china stop", {
+  expect_error(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "NOx",
+                              humidity = data.frame(c(0.3, 0.4)),
+                              ta = data.frame(celsius(matrix(1:12,
+                                                             ncol = 12))),
+                              altitude = 1000,
+                              speed = 55,
+                              sulphur = 400)$V1)[1],
+               "s.?")
+})
+
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "NOx",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix(1:12,
+                                                             ncol = 12))),
+                              altitude = 1000,
+                              speed = Speed(55),
+                              sulphur = 400)$V1)[1],
+               EmissionFactors(2))
+})
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "NOx",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix(1:12,
+                                                             ncol = 12))),
+                              altitude = 1000,
+                              speed = Speed(55),
+                              sulphur = 400,
+                              correction_only = TRUE))[1],
+               1)
 })
