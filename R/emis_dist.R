@@ -35,7 +35,7 @@ emis_dist <- function(gy,
                       spobj,
                       pro,
                       osm,
-                      verbose = TRUE){
+                      verbose = FALSE){
   net <- sf::st_as_sf(spobj)
   if(any(
     !unique(as.character(
@@ -50,6 +50,7 @@ emis_dist <- function(gy,
 
   # PROFILE SECTION
   if(missing(pro) & missing(osm)){
+    if(verbose) message("Selecting column geometry")
     net <- net[, "geometry"]
     net$emission <- e_street
     if(verbose) cat("Columns:", names(net), "\n")
@@ -60,14 +61,14 @@ emis_dist <- function(gy,
     df <- as.data.frame(as.matrix(e_street) %*% matrix(unlist(pro), nrow = 1))
     net <- sf::st_sf(df, geometry = geo)
     if(verbose) {
-      cat("Columns: ")
-      cat(names(net))
-      cat("\n")
+      cat(paste0("Columns: ",names(net),"\n"))
     }
 
     return(net)
   }
   if(missing(pro) & !missing(osm)){
+    if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
+    if(verbose) message("Selecting column highway")
     net <- net[,c("highway", "lkm1")]
     st <-  c("motorway", "motorway_link",
              "trunk", "trunk_link",
@@ -77,7 +78,6 @@ emis_dist <- function(gy,
     if(verbose) cat("Selecting:", st, "\n")
     net <- net[net$highway %in% st, ]
     if(length(osm) != 5) stop("length of osm must be 5")
-    if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
     osm <- osm/sum(osm)
     #motorway
     net_m <- net[net$highway %in% st[1:2], ]
@@ -101,6 +101,8 @@ emis_dist <- function(gy,
     return(net_all)
   }
   if(!missing(pro) & !missing(osm)){
+    if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
+    if(verbose) message("Selecting column highway")
     net <- net[,c("highway", "lkm1")]
     st <-  c("motorway", "motorway_link",
              "trunk", "trunk_link",
@@ -113,14 +115,16 @@ emis_dist <- function(gy,
     pro <- pro/sum(pro)
 
     if(length(osm) != 5) stop("length of osm must be 5")
-    if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
     osm <- osm/sum(osm)
     #motorway
     net_m <- net[net$highway %in% st[1:2], ]
+
     net_m$gy <- net_m$lkm1 / sum(net_m$lkm1) * gy * osm[1]
+
     #trunk
     net_t <- net[net$highway %in% st[3:4], ]
     net_t$gy <- net_t$lkm1 / sum(net_t$lkm1) * gy * osm[2]
+
     #primary
     net_p <- net[net$highway %in% st[5:6], ]
     net_p$gy <- net_p$lkm1 / sum(net_p$lkm1) * gy * osm[3]
@@ -131,14 +135,14 @@ emis_dist <- function(gy,
     net_te <- net[net$highway %in% st[9:10], ]
     net_te$gy <- net_te$lkm1 / sum(net_te$lkm1) * gy * osm[5]
     net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
+
     df <- as.data.frame(as.matrix(net_all$gy) %*% matrix(unlist(pro), nrow = 1))
+    df$highway <- net_all$highway
+
     net_all <- sf::st_sf(df, geometry = sf::st_geometry(net_all))
-    net_all <- net_all[, c("gy", "highway")]
-    names(net_all) <- c("emission", "highway", "geometry")
+
     if(verbose) {
-      cat("Columns: ")
-      cat(names(net_all))
-      cat("\n")
+      cat("Columns: ", names(net_all), "\n")
     }
     return(net_all)
   }

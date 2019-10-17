@@ -760,3 +760,99 @@ test_that("ef_china stop", {
                               correction_only = TRUE))[1],
                1)
 })
+
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "CO",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix(1:12,
+                                                             ncol = 12))),
+                              altitude = 2000,
+                              speed = Speed(55),
+                              sulphur = 400))$V1[1],
+               EmissionFactors(30))
+})
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "D",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "NOx",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix(1:12,
+                                                             ncol = 12))),
+                              altitude = 2000,
+                              speed = Speed(55),
+                              sulphur = 400))$V1[1],
+               EmissionFactors(13))
+})
+
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "G",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "CO",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix((1:12)*30,
+                                                             ncol = 12))),
+                              altitude = 2000,
+                              speed = Speed(55),
+                              sulphur = 400))$V1[1],
+               EmissionFactors(27))
+})
+
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "D",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "CO",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix((1:12)*30,
+                                                             ncol = 12))),
+                              altitude = 2000,
+                              speed = Speed(55),
+                              sulphur = 400))$V1[1],
+               EmissionFactors(3))
+})
+
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "D",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "NOx",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix((1:12)*30,
+                                                             ncol = 12))),
+                              altitude = 2000,
+                              speed = Speed(55),
+                              sulphur = 400))$V1[1],
+               EmissionFactors(16))
+})
+
+
+test_that("ef_china stop", {
+  expect_equal(round(ef_china(v = "PV",
+                              t = "Small",
+                              f = "D",
+                              standard = data.frame(matrix("I", ncol = 12)),
+                              p = "HC",
+                              humidity = data.frame(matrix(0.5, ncol = 12)),
+                              ta = data.frame(celsius(matrix((1:12)*30,
+                                                             ncol = 12))),
+                              altitude = 2000,
+                              speed = Speed(55),
+                              sulphur = 400))$V1[1],
+               EmissionFactors(1))
+})
+
