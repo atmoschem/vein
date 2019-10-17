@@ -128,8 +128,8 @@ mileage driven</p>
 
     <pre class="usage"><span class='fu'>emis_cold</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>efcold</span>, <span class='no'>beta</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fl'>34</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='kw'>if</span>
   (!<span class='fu'><a href='https://rdrr.io/r/base/class.html'>inherits</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"list"</span>)) {     <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span>) } <span class='kw'>else</span> {
-  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]]) }, <span class='no'>profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>profile</span>), <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>profile</span>),
-  <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]]) }, <span class='no'>profile</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>profile</span>),
+  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>profile</span>), <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,6 +171,13 @@ of the period. Number of rows are hours and columns are days</p></td>
 of the week</p></td>
     </tr>
     <tr>
+      <th>simplify</th>
+      <td><p>Logical; to determine if EmissionsArray should les dimensions,
+being streets, vehicle categories and hours or default (streets, vehicle
+categories, hours and days). Default is FALSE to avoid break old code, but
+the recommendation is that new estimations use this parameter as TRUE</p></td>
+    </tr>
+    <tr>
       <th>hour</th>
       <td><p>Number of considered hours in estimation</p></td>
     </tr>
@@ -180,9 +187,9 @@ of the week</p></td>
     </tr>
     <tr>
       <th>array</th>
-      <td><p>When FALSE produces a dataframe of the estimation. When TRUE
-expects a profile as a dataframe producing an array with dimensions
-(streets x columns x hours x days)</p></td>
+      <td><p>Deprecated! <code>emis_cold</code> returns only arrays.
+When TRUE and veh is not a list, expects a profile as a dataframe producing
+an array with dimensions (streets x columns x hours x days)</p></td>
     </tr>
     <tr>
       <th>verbose</th>
