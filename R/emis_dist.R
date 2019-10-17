@@ -56,6 +56,7 @@ emis_dist <- function(gy,
     if(verbose) cat("Columns:", names(net), "\n")
     return(net)
   }
+
   if(!missing(pro) & missing(osm)){
     pro <- pro/sum(pro)
     df <- as.data.frame(as.matrix(e_street) %*% matrix(unlist(pro), nrow = 1))
