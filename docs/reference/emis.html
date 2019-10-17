@@ -124,9 +124,9 @@ vehicles on a road, length of the road, emission factor avaliated at the
 respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fl'>34</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>is.data.frame</a></span>(<span class='no'>veh</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span>), <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]])), <span class='no'>profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>profile</span>),
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>profile</span>), <span class='kw'>array</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>is.data.frame</a></span>(<span class='no'>veh</span>), <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span>),
+  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]])), <span class='no'>profile</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>profile</span>),
+  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>profile</span>), <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,7 +135,8 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
       <th>veh</th>
       <td><p>"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 as number of columns matching the age distribution of that ype of vehicle.
-The number of rows is equal to the number of streets link</p></td>
+The number of rows is equal to the number of streets link. If this is a list,
+the length of the list is the vehicles for each hour.</p></td>
     </tr>
     <tr>
       <th>lkm</th>
@@ -159,6 +160,13 @@ The number of rows is equal to the number of streets link</p></td>
 the week</p></td>
     </tr>
     <tr>
+      <th>simplify</th>
+      <td><p>Logical; to determine if EmissionsArray should les dimensions,
+being streets, vehicle categories and hours or default (streets, vehicle
+categories, hours and days). Default is FALSE to avoid break old code, but
+the recommendation is that new estimations use this parameter as TRUE</p></td>
+    </tr>
+    <tr>
       <th>hour</th>
       <td><p>Number of considered hours in estimation. Default value is number
 of rows of argument profile</p></td>
@@ -169,8 +177,9 @@ of rows of argument profile</p></td>
     </tr>
     <tr>
       <th>array</th>
-      <td><p>When FALSE produces a dataframe of the estimation. When TRUE expects a
-profile as a dataframe producing an array with dimensions (streets x columns x hours x days)</p></td>
+      <td><p>Deprecated! <code><a href='emis_cold.html'>emis_cold</a></code> returns only arrays.
+When TRUE and veh is not a list, expects a profile as a dataframe producing
+an array with dimensions (streets x columns x hours x days)</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -207,55 +216,25 @@ matrix.</p>
 <span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactorsList.html'>EmissionFactorsList</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>])
 <span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
 <span class='co'># Estimation for 168 hour and local factors</span>
 <span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
 <span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='EmissionFactorsList.html'>EmissionFactorsList</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>])
-<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
+
+<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,
+             <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>,
+             <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>,
+             <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>E_CO</span>)
-<span class='co'># Estimation for 168 hour and COPERT factors</span>
-<span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>euro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, <span class='st'>"Euro_LDV"</span>])
-<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>euro</span>), <span class='kw'>function</span>(<span class='no'>i</span>) {
-<span class='fu'><a href='ef_ldv_speed.html'>ef_ldv_speed</a></span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
-             <span class='kw'>eu</span><span class='kw'>=</span> <span class='no'>euro</span>[<span class='no'>i</span>], <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-})
-<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
-             <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>)
-<span class='co'># Estimation for 168 hour and scaled factors</span>
-<span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>pckm</span>)
-<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>])
-<span class='no'>cod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"I"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>12</span>:<span class='fl'>24</span>])
-<span class='co'>#vehicles newer than pre-euro</span>
-<span class='no'>co1</span> <span class='kw'>&lt;-</span> <span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, ] <span class='co'>#24 obs!!!</span>
-<span class='no'>cod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>1</span>:<span class='fl'>24</span>]*<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>cod1</span>,<span class='no'>cod2</span>),<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>25</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>co1</span>)])
-<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></span>(<span class='no'>co1</span>, <span class='no'>cod</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
-                     <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>eu</span><span class='kw'>=</span><span class='no'>co1</span>$<span class='no'>Euro_LDV</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>lef</span>) <span class='kw'>!=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>pc1</span>)
-<span class='co'>#emis change length of 'ef' to match ncol of 'veh'</span>
-<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
-             <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>E_CO</span>)
 <span class='no'>lpc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>pc1</span>, <span class='no'>pc1</span>)
-<span class='no'>E_COv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>lpc</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
-               <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='co'># Entering wrong results</span>
-<span class='no'>pc1</span>[ , <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>pc1</span>) + <span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='no'>pc1</span>$<span class='no'>PC_1</span>
-<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>pc1</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>lef</span>)
-<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
-             <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>)
-<span class='no'>E_COv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>lpc</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
-               <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>E_COv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>lpc</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>)
 <span class='co'># top down</span>
-<span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>[<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+<span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 <span class='no'>mil</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span>$<span class='fu'>KM_PC_E25</span>(<span class='fl'>1</span>:<span class='fl'>4</span>)
 <span class='no'>ef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span>(<span class='st'>"COd"</span>, <span class='st'>"PC_G"</span>)[<span class='fl'>1</span>:<span class='fl'>4</span>]
-<span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>)
+<span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='no'>mil</span>, <span class='st'>"km"</span>), <span class='no'>ef</span>)
 <span class='co'># group online</span>
 <span class='no'>bus1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='age_hdv.html'>age_hdv</a></span>(<span class='fl'>30</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 <span class='no'>veh</span> <span class='kw'>=</span> <span class='no'>bus1</span>
