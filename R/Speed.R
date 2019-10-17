@@ -33,19 +33,15 @@ Speed <- function(x, ...) {
     for(i in 1:ncol(spd)){
       spd[,i] <- spd[,i]*units::as_units("km h-1")
     }
-    class(spd) <- c("Speed",class(x))
+    class(spd) <- c("Speed", "data.frame")
   } else if ( is.data.frame(x) ) {
     spd <- x
     for(i in 1:ncol(spd)){
       spd[,i] <- spd[,i]*units::as_units("km h-1")
     }
     class(spd) <- c("Speed",class(x))
-  } else if ( is.list(x) && is.list(x[[1]]) ) {
-    for (i in 1:length(x) ) {
-      for (j in 1:length(x[[1]]) ) {
-        x[[i]][[j]] <- x[[i]][[j]]*units::as_units("km h-1")
-      }
-    }
+  } else if ( is.list(x) ) {
+    stop("List not supported")
     #SpeedList?
   } else if ( class(x) == "units" ) {
     spd <- x

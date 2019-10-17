@@ -62,20 +62,54 @@ net$highway <- c("motorway",
 test_that("emis_dist works", {
   net$highway <- NULL
   expect_error(emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1),pro = pc_profile),
-                "N.?")
+               "N.?")
   net$highway <- c("motorway",
                    "trunk",
                    "primary",
                    "secondary")[round(runif(n = nrow(net), min = 1,max = 4))]
   expect_output(emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1), pro = pc_profile,
-                           verbose = TRUE),
-               "S.?")
+                          verbose = TRUE),
+                "S.?")
   expect_error(emis_dist(gy = po, spobj = net, verbose = TRUE, osm = c(3, 2, 1, 1), pro = pc_profile),
-                  "l.?")
+               "l.?")
   expect_equal(round(emis_dist(gy = po,
                                spobj = net,
-                         osm = c(5, 3, 2, 1, 1),
-                         pro = pc_profile)$V1[1]),
+                               osm = c(5, 3, 2, 1, 1),
+                               pro = pc_profile)$V1[1]),
                0)
 })
+
+
+net$highway <- c("motorway",
+                 "trunk",
+                 "primary",
+                 "secondary",
+                 "tertiary")[round(runif(n = nrow(net), min = 1,max = 5))]
+
+test_that("emis_dist works", {
+  expect_equal(round(mean(emis_dist(gy = po,
+                               spobj = net,
+                               osm = c(5, 3, 2, 1, 1))$emission, 1)),
+               0)
+  expect_message(emis_dist(gy = po,
+                           spobj = net,
+                           osm = c(5, 3, 2, 1, 1),
+                           verbose = TRUE),
+                 "S.?")
+})
+
+net$highway <- c("motorway",
+                 "trunk",
+                 "primary",
+                 "secondary",
+                 "tertiary")[round(runif(n = nrow(net), min = 1,max = 5))]
+# names(net)[length(names(net))] <- "lala"
+net$highway <- NULL
+test_that("emis_dist works", {
+  expect_error(emis_dist(gy = po,
+                         spobj = net,
+                         osm = c(5, 3, 2, 1, 1)),
+               "N.?")
+})
+
 

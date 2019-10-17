@@ -2,7 +2,7 @@ context("age_hdv")
 data(net)
 
 test_that("age_hdv works 2", {
-  expect_equal(age_hdv(x = 10, name = "MC", agemax = 2),
+  expect_equal(age_hdv(x = 10, name = "MC", agemax = 2, k = 1),
                Vehicles(data.frame(MC_1 = 5,
                                    MC_2 = 5)))
 })
