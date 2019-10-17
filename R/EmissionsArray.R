@@ -8,6 +8,7 @@
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object object with class "EmissionsArray'
 #' @param ... ignored
+#' @importFrom  stats median quantile sd
 #' @rdname EmissionsArray
 #' @aliases EmissionsArray print.EmissionsArray summary.EmissionsArray
 #' plot.EmissionsArray
@@ -79,12 +80,12 @@ print.EmissionsArray <- function(x,  ...) {
 summary.EmissionsArray <- function(object, ...) {
   e <- object
   mine <- round(min(e, na.rm = T), 3)
-  q1 <- round(quantile(e, .25, na.rm = T), 3)
-  mede <- round(median(e, na.rm = T), 3)
+  q1 <- round(stats::quantile(e, .25, na.rm = T), 3)
+  mede <- round(stats::median(e, na.rm = T), 3)
   avge <- round(mean(e, na.rm = T), 3)
-  q3 <- round(quantile(e, .75, na.rm = T), 3)
+  q3 <- round(stats::quantile(e, .75, na.rm = T), 3)
   maxe <- round(max(e, na.rm = T), 3)
-  sde <- round(sd(e, na.rm = T), 3)
+  sde <- round(stats::sd(e, na.rm = T), 3)
   a <- data.frame(Min = mine,
                   `Qu.1` = q1,
                   Median = mede,

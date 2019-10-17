@@ -21,7 +21,6 @@
 #' being streets, vehicle categories and hours or default (streets, vehicle
 #' categories, hours and days). Default is FALSE to avoid break old code, but
 #' the recommendation is that new estimations use this parameter as TRUE
-#' @param hour Number of considered hours in estimation. Default value is number
 #' @param hour Number of considered hours in estimation
 #' @param day Number of considered days in estimation
 #' @param array Deprecated! \code{\link{emis_cold}} returns only arrays.

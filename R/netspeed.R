@@ -57,7 +57,7 @@ netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
       lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
     }))))
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
-    df_scheme <- Speed(dfv, distance = distance, time = time)
+    df_scheme <- Speed(dfv)
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       df_schemesf <- sf::st_sf(df_scheme, geometry = netsf$geometry)
@@ -74,7 +74,7 @@ netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
                  replicate(3, ffs))
     names(dfv) <- c(rep("FSS",5), "AS", rep("PS", 3), rep("AS", 7),
                     rep("PS", 3), rep("AS", 2),rep("FSS",3))
-    df_speed <- Speed(as.data.frame(dfv), distance = distance, time = time)
+    df_speed <- Speed(as.data.frame(dfv))
 
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)

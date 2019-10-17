@@ -35,7 +35,7 @@ being streets, vehicle categories and hours or default (streets, vehicle
 categories, hours and days). Default is FALSE to avoid break old code, but
 the recommendation is that new estimations use this parameter as TRUE}
 
-\item{hour}{Number of considered hours in estimation. Default value is number}
+\item{hour}{Number of considered hours in estimation}
 
 \item{day}{Number of considered days in estimation}
 
@@ -44,8 +44,6 @@ When TRUE and veh is not a list, expects a profile as a dataframe producing
 an array with dimensions (streets x columns x hours x days)}
 
 \item{verbose}{Logical; To show more information}
-
-\item{hour}{Number of considered hours in estimation}
 }
 \value{
 EmissionsArray  g/h
