@@ -4,7 +4,7 @@
 \alias{grid_emis}
 \title{Allocate emissions gridded emissions into streets (grid to emis street)}
 \usage{
-grid_emis(spobj, g, sr, pro, osm, verbose = TRUE)
+grid_emis(spobj, g, sr, pro, osm, verbose = FALSE)
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"

@@ -63,7 +63,7 @@
 #' plot(xnet, axes = T)
 #' }
 #' }
-grid_emis <- function(spobj, g, sr, pro, osm, verbose = TRUE){
+grid_emis <- function(spobj, g, sr, pro, osm, verbose = FALSE){
   if(!any(grepl(pattern = "emission", x = names(g)))){
     stop("The column 'emission' is not present in grid 'g'")
   }
