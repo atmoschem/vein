@@ -6,7 +6,7 @@
 \usage{
 invcop(in_name = getwd(), out_name, all = FALSE, main = TRUE,
   ef = TRUE, est = TRUE, network = TRUE, veh_rds = FALSE,
-  veh_csv = TRUE, zip = TRUE)
+  veh_csv = TRUE, zip = TRUE, test = FALSE)
 }
 \arguments{
 \item{in_name}{Character; Name of current project.}
@@ -28,6 +28,8 @@ invcop(in_name = getwd(), out_name, all = FALSE, main = TRUE,
 \item{veh_csv}{Logical; copy or not.}
 
 \item{zip}{Logical; zip or not.}
+
+\item{test}{Logical; is this a test.}
 }
 \value{
 emission estimation  g/h

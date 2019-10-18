@@ -19,7 +19,7 @@ to_latex(df, file, caption = "My table", label = "tab:df")
 a text file with extension .tex.
 }
 \description{
-\\code{\\link{to_latex}} reads a data.frme an dgenerates a .tex
+\code{\link{to_latex}} reads a data.frme an dgenerates a .tex
 table, aiming to replicate the method of tablegenerator.com
 }
 \examples{
@@ -36,5 +36,5 @@ file = paste0(tempfile(), ".tex"))
 }
 }
 \seealso{
-\\code{\\link{vein_notes}}  \\code{\\link{long_to_wide}}
+\code{\link{vein_notes}}  \code{\link{long_to_wide}}
 }

@@ -1,6 +1,6 @@
 #' creates a .tex a table from a data.frame
 #'
-#' @description \\code{\\link{to_latex}} reads a data.frme an dgenerates a .tex
+#' @description \code{\link{to_latex}} reads a data.frme an dgenerates a .tex
 #' table, aiming to replicate the method of tablegenerator.com
 #'
 #' @param df data.frame with three column.
@@ -9,7 +9,7 @@
 #' @param label Character,  label of table
 #' @return a text file with extension .tex.
 #' @importFrom sf st_sf
-#' @seealso \\code{\\link{vein_notes}}  \\code{\\link{long_to_wide}}
+#' @seealso \code{\link{vein_notes}}  \code{\link{long_to_wide}}
 #' @export
 #' @examples {
 #' df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),

@@ -27,8 +27,8 @@ NULL
 #' # DEPRECATED
 #' }
 Evaporative <- function(x, ...) {
-  .Deprecated("EmissionsList")
-  "EmissionsList"
+  .Deprecated("Evaporative")
+  "Evaporative"
 
 }
 

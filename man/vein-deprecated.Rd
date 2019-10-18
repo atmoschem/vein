@@ -18,12 +18,6 @@
 \usage{
 EmissionsList(x, ...)
 
-\method{print}{EmissionsList}(x, ...)
-
-\method{summary}{EmissionsList}(object, ...)
-
-\method{plot}{EmissionsList}(x, ...)
-
 Evaporative(x, ...)
 
 \method{print}{Evaporative}(x, ...)
