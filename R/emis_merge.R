@@ -21,6 +21,7 @@
 #' "before" when '_X' and "none" for merging directly the files.
 #' @param ignore "Logical"; Would you liek your selection?
 #' @param as_list "Logical"; for returning the results as list or not.
+#' @param test "Logical"; test or not
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
 #' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
@@ -37,7 +38,8 @@ emis_merge <- function (pol = "CO",
                         crs,
                         under = "after",
                         ignore = FALSE,
-                        as_list = FALSE){
+                        as_list = FALSE,
+                        test = FALSE){
 
   x <- list.files(path = path,
                   pattern = what,
@@ -61,7 +63,7 @@ kk <- substr(x = nx, start = 11, stop = 50)
 kk <- gsub(pattern = "/", replacement = "", kk)
 kk <- gsub(pattern = ".rds", replacement = "", kk)
 nx <- kk
-
+if(test) return(nx)
   cat("\nReading emissions from:\n")
   print(x)
   if(ignore) {

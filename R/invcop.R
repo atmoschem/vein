@@ -12,6 +12,7 @@
 #' @param veh_rds  Logical; copy or not.
 #' @param veh_csv  Logical; copy or not.
 #' @param zip Logical; zip or not.
+#' @param test Logical; is this a test.
 #' @return emission estimation  g/h
 #' @note  This function was created to copy and zip project without the emis.
 #' @export
@@ -27,12 +28,14 @@ invcop <- function (in_name = getwd(),
                     network = TRUE,
                     veh_rds = FALSE,
                     veh_csv = TRUE,
-                    zip = TRUE) {
+                    zip = TRUE,
+                    test = FALSE) {
   # lista carpetas
   dirs <- list.dirs(path = in_name, full.names = TRUE, recursive = TRUE)
 
   #reemplaza in)_name con out_name
   dirs2 <- gsub(pattern = in_name, replacement = out_name, x = dirs)
+ if(test) return(dirs2)
 
   # crea out_name
   for(i in 1:length(dirs2)){
