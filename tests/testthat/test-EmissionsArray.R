@@ -20,4 +20,49 @@ test_that("EmissionsArray works", {
                                array = T,
                                speed = Speed(34))[1,1,1,1]),
                0.4850966 + 3.63e-08)
+
+  expect_error(EmissionsArray(1),
+               "C.?")
+
+  expect_output(print(emis(veh = pc1[1:5, ],
+                           lkm = net$lkm[1:5],
+                           ef = lef,
+                           profile = pc_profile[1, ],
+                           array = T,
+                           speed = Speed(34))),
+                "T.?")
+
+  expect_equal(round(emis(veh = pc1[1:5, ],
+                          lkm = net$lkm[1:5],
+                          ef = lef,
+                          profile = pc_profile[1, ],
+                          array = T,
+                          speed = Speed(34))[1]),
+               0)
+
+  expect_equal(summary(emis(veh = pc1[1:5, ],
+                            lkm = net$lkm[1:5],
+                            ef = lef,
+                            profile = pc_profile[1, ],
+                            array = T,
+                            speed = Speed(34)))[[1]],
+               0.002)
+
+  expect_output(print(summary(emis(veh = pc1[1:5, ],
+                                   lkm = net$lkm[1:5],
+                                   ef = lef,
+                                   profile = pc_profile[1, ],
+                                   array = T,
+                                   speed = Speed(34)))),
+                ".?")
+
+  expect_equal(plot(emis(veh = pc1[1:5, ],
+                         lkm = net$lkm[1:5],
+                         ef = lef,
+                         profile = pc_profile[1, ],
+                         array = T,
+                         speed = Speed(34))),
+               NULL)
 })
+
+
