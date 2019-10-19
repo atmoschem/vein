@@ -82,9 +82,7 @@ print.Emissions <- function(x, ...) {
     print.data.frame(x[, 1:5], right = TRUE)
     cat(paste0("... and more ", ncol(x) - 5, " columns\n"))
   } else {
-    print.data.frame(x[1:5, 1:5], right = TRUE)
-    cat(paste0("... and more ", nrow(x) - 5, " rows\n"))
-    cat(paste0("... and more ", ncol(x) - 5, " columns\n"))
+    print.data.frame(x, right = TRUE)
   }
 }
 
