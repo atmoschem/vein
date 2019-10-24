@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,13 +39,13 @@
 
 
 
-
 <meta property="og:title" content="Construction function for class "EmissionFactors" — EmissionFactors" />
+
 <meta property="og:description" content="EmissionFactors returns a tranformed object with class
 &quot;EmissionFactors&quot; and units g/km." />
+
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -97,6 +95,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -118,8 +117,10 @@
     </div>
 
     <div class="ref-description">
+    
     <p><code>EmissionFactors</code> returns a tranformed object with class
 "EmissionFactors" and units g/km.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>EmissionFactors</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -132,7 +133,7 @@
 
 <span class='co'># S3 method for EmissionFactors</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -149,10 +150,11 @@
       <td><p>Object with class "EmissionFactors"</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Objects of class "EmissionFactors" or "units"</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
@@ -172,19 +174,51 @@
 #&gt;  Median : 0.9950   Median :1.2490  
 #&gt;  Mean   : 9.0414   Mean   :0.9465  
 #&gt;  3rd Qu.:16.0250   3rd Qu.:1.2490  
-#&gt;  Max.   :33.0000   Max.   :1.2490  </div><div class='img'><img src='EmissionFactors-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           PC_G               LT
-#&gt; 1 0.155 [g/km] 0.2003120 [g/km]
-#&gt; 2 0.211 [g/km] 0.1157784 [g/km]
-#&gt; 3 0.241 [g/km] 0.1157784 [g/km]
-#&gt; 4 0.274 [g/km] 0.1283708 [g/km]
-#&gt; 5 0.274 [g/km] 0.4992219 [g/km]
-#&gt; ... and more 31 rows</div></pre>
+#&gt;  Max.   :33.0000   Max.   :1.2490  </div><div class='img'><img src='EmissionFactors-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;             PC_G               LT
+#&gt; 1   0.155 [g/km] 0.2003120 [g/km]
+#&gt; 2   0.211 [g/km] 0.1157784 [g/km]
+#&gt; 3   0.241 [g/km] 0.1157784 [g/km]
+#&gt; 4   0.274 [g/km] 0.1283708 [g/km]
+#&gt; 5   0.274 [g/km] 0.4992219 [g/km]
+#&gt; 6   0.204 [g/km] 0.4891805 [g/km]
+#&gt; 7   0.199 [g/km] 0.6465463 [g/km]
+#&gt; 8   0.369 [g/km] 0.6851614 [g/km]
+#&gt; 9   0.302 [g/km] 0.7934717 [g/km]
+#&gt; 10  0.302 [g/km] 0.7934717 [g/km]
+#&gt; 11  0.340 [g/km] 0.5800000 [g/km]
+#&gt; 12  0.350 [g/km] 0.5800000 [g/km]
+#&gt; 13  0.400 [g/km] 0.6115108 [g/km]
+#&gt; 14  0.430 [g/km] 0.6115108 [g/km]
+#&gt; 15  0.480 [g/km] 1.1226982 [g/km]
+#&gt; 16  0.730 [g/km] 1.1226982 [g/km]
+#&gt; 17  0.740 [g/km] 1.2489209 [g/km]
+#&gt; 18  0.790 [g/km] 1.2490000 [g/km]
+#&gt; 19  1.200 [g/km] 1.2490000 [g/km]
+#&gt; 20  3.800 [g/km] 1.2490000 [g/km]
+#&gt; 21  4.700 [g/km] 1.2490000 [g/km]
+#&gt; 22  6.000 [g/km] 1.2490000 [g/km]
+#&gt; 23  6.300 [g/km] 1.2490000 [g/km]
+#&gt; 24  6.200 [g/km] 1.2490000 [g/km]
+#&gt; 25 11.500 [g/km] 1.2490000 [g/km]
+#&gt; 26 13.300 [g/km] 1.2490000 [g/km]
+#&gt; 27 15.200 [g/km] 1.2490000 [g/km]
+#&gt; 28 18.500 [g/km] 1.2490000 [g/km]
+#&gt; 29 22.000 [g/km] 1.2490000 [g/km]
+#&gt; 30 22.000 [g/km] 1.2490000 [g/km]
+#&gt; 31 28.000 [g/km] 1.2490000 [g/km]
+#&gt; 32 28.000 [g/km] 1.2490000 [g/km]
+#&gt; 33 33.000 [g/km] 1.2490000 [g/km]
+#&gt; 34 33.000 [g/km] 1.2490000 [g/km]
+#&gt; 35 33.000 [g/km] 1.2490000 [g/km]
+#&gt; 36 33.000 [g/km] 1.2490000 [g/km]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -198,7 +232,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
