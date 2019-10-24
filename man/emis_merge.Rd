@@ -6,7 +6,7 @@
 \usage{
 emis_merge(pol = "CO", what = "STREETS.rds", streets = T, net,
   path = "emi", crs, under = "after", ignore = FALSE,
-  as_list = FALSE, test = FALSE)
+  as_list = FALSE)
 }
 \arguments{
 \item{pol}{Character. Pollutant.}
@@ -35,8 +35,6 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
 \item{ignore}{"Logical"; Would you liek your selection?}
 
 \item{as_list}{"Logical"; for returning the results as list or not.}
-
-\item{test}{"Logical"; test or not}
 }
 \value{
 'Spatial feature' of lines or a dataframe of emissions
