@@ -84,7 +84,8 @@ plot.EmissionFactorsList <- function(x, ...) {
   if ( is.function( ef[[1]] ) ){
     cat("This EmissionFactorsList has", length(ef),
         "functions")
-    graphics::plot(unlist(lapply(1:length(ef), function(i) ef[[i]](34) )))
+    graphics::plot(unlist(lapply(1:length(ef), function(i) ef[[i]](34) )),
+                   ylab = "Emission factors at 34 [km/h]")
   } else  {
     cat("Try other methods")
   }
