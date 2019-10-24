@@ -186,7 +186,7 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
       return(mc)
 
     } else {
-      print("aqui")
+      # print("aqui")
       f1 <- function(V, km){
         a <- df$a; b <- df$b; c <- df$c; d <- df$d;
         e <- df$e; f <- df$f; g <- df$g; h <- df$h

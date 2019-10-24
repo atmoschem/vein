@@ -13,49 +13,41 @@ lef <- EmissionFactorsList(ef_cetesb("CO", "PC_G"))
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef,
              profile = 1, speed = Speed(1))
 E_CO_STREETS <- emis_post(arra = E_CO, by = "streets", net = net)
-
 g <- make_grid(net, 1/102.47/2) #500m in degrees
-
 gCO <- emis_grid(spobj = E_CO_STREETS, g = g)
-
-
 gCO$emission <- gCO$V1
 
 
 test_that("emis_cold works", {
-  expect_equal(round(grid_emis(net, gCO)$emission[1]),
+  expect_equal(round(grid_emis(net, gCO, verbose = TRUE)$emission[1]),
   4379)
+  expect_output(grid_emis(net, gCO, verbose = TRUE),
+               ".?")
 })
 
 
 test_that("emis_cold works", {
+  expect_error(grid_emis(net, gCO, osm = 1:5, verbose = TRUE),
+               ".?")
+  expect_error(grid_emis(net, gCO, osm = 1:5, verbose = TRUE,
+                         pro = 1),
+               ".?")
+  gCO$emission <- NULL
   expect_error(grid_emis(net, gCO, osm = 1:5),
-               "O.?")
+               ".?")
+
 })
 
 test_that("emis_cold works", {
   expect_equal(round(grid_emis(net, gCO, sr = 31983, verbose = TRUE)$emission[1]),
                4379)
-})
-
-
-test_that("emis_cold works", {
   expect_message(grid_emis(net, gCO, sr = 31983, verbose = TRUE),
                "T.?")
-})
-
-test_that("emis_cold works", {
   expect_output(grid_emis(net, gCO, verbose = TRUE),
                "S.?")
 })
 
-test_that("emis_cold works", {
-  expect_output(grid_emis(net, gCO, verbose = TRUE),
-                "S.?")
-})
-
 data("pc_profile")
-
 test_that("emis_cold works", {
   expect_equal(round(grid_emis(net, gCO, pro = pc_profile)$V1[1]),
                7)

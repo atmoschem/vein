@@ -20,12 +20,6 @@ EmissionsList(x, ...)
 
 Evaporative(x, ...)
 
-\method{print}{Evaporative}(x, ...)
-
-\method{summary}{Evaporative}(object, ...)
-
-\method{plot}{Evaporative}(x, ...)
-
 emis_wrf(sdf, nr = 1, dmyhm, tz, crs = 4326, islist, utc)
 
 hot_soak(x, carb, p, eshotc, eswarmc, eshotfi)
