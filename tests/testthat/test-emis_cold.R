@@ -1,4 +1,5 @@
 context("emis_cold")
+
 data(net)
 net <- sf::st_as_sf(net)
 net <- as(net[1,], "Spatial")
@@ -45,9 +46,7 @@ test_that("emis_cold works", {
               speed = speed,
               profile = pc_profile[, 1])[10],
     0.1012673 + 4.51e-08)
-})
 
-test_that("emis_cold works", {
   expect_equal(
     round(emis_cold(veh = list(pc1, pc1),
                     lkm = net$lkm,
@@ -58,10 +57,7 @@ test_that("emis_cold works", {
                     hour = 2,
                     day = 1)[10],2),
     0.64)
-})
 
-
-test_that("emis_cold stops", {
   expect_error(
     emis_cold(veh = pc1,
               lkm = as.numeric(net$lkm),
@@ -71,10 +67,7 @@ test_that("emis_cold stops", {
               speed = speed,
               profile = pc_profile[, 1])[10],
     "lkm.?\\(?")
-})
 
-
-test_that("emis_cold stops", {
   expect_error(
     emis_cold(veh = pc1,
               lkm = units::set_units(net$lkm, "m"),
@@ -84,9 +77,7 @@ test_that("emis_cold stops", {
               speed = speed,
               profile = pc_profile[, 1])[10],
     "Units.?\\(?")
-})
 
-test_that("emis_cold stops", {
   expect_error(
     emis_cold(veh = pc1,
               lkm = net$lkm,
@@ -96,7 +87,31 @@ test_that("emis_cold stops", {
               speed = speed,
               profile = pc_profile[, 1])[10],
     "ef.?\\(?")
+
+  expect_error(
+    emis_cold(veh = pc1,
+              lkm = as.numeric(net$lkm),
+              ef = "a",
+              efcold = lefec,
+              beta = pcf,
+              speed = speed,
+              profile = pc_profile[, 1])[10],
+    ".?")
+
+  expect_error(
+    emis_cold(veh = pc1,
+              lkm = units::set_units(as.numeric(net$lkm), "m"),
+              ef = "a",
+              efcold = lefec,
+              beta = pcf,
+              speed = speed,
+              profile = pc_profile[, 1])[10],
+    ".?")
 })
+
+
+
+
 netsf <- sf::st_as_sf(net)
 pc1sf <- sf::st_sf(pc1, geometry = netsf$geometry)
 test_that("emis_cold stops", {
@@ -109,11 +124,8 @@ test_that("emis_cold stops", {
               speed = speed,
               profile = pc_profile[, 1])[10],
     0.1012673 + 4.51e-08)
-})
 
-
-test_that("emis_cold stop", {
-  expect_error(
+    expect_error(
     emis_cold(veh = pc1,
               lkm = net$lkm,
               ef = lef,
@@ -121,9 +133,7 @@ test_that("emis_cold stop", {
               beta = pcf,
               speed = speed),
     "For.?\\(?")
-})
 
-test_that("emis_cold message", {
   expect_message(
     emis_cold(veh = pc1sf,
               lkm = net$lkm,
@@ -135,6 +145,8 @@ test_that("emis_cold message", {
               verbose = TRUE)[10],
     "Transforming.?\\(?")
 })
+
+
 ncol(pc1)
 length(lef)
 test_that("emis_cold message", {

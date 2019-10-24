@@ -210,7 +210,8 @@ emis_evap <- function(veh,
         }
 
       } else {
-        e <- veh*x*(carb*(p*hotc+(1-p)*warmc)+(1-carb)*hotfi)
+        e <- veh*as.numeric(x)*(carb*(p*hotc+(1-p)*warmc)+(1-carb)*hotfi)
+        e <- Emissions(e)
       }
     } else if (carb < 0){
       stop("carb is a positive fraction or 0")

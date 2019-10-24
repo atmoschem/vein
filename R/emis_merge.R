@@ -61,7 +61,7 @@ kk <- substr(x = nx, start = 11, stop = 50)
 kk <- gsub(pattern = "/", replacement = "", kk)
 kk <- gsub(pattern = ".rds", replacement = "", kk)
 nx <- kk
-if(test) return(nx)
+
   cat("\nReading emissions from:\n")
   print(x)
   if(ignore) {

@@ -4,5 +4,7 @@ data(net)
 test_that("emis_merge works", {
   expect_error(emis_source(ask = FALSE),
                 ".?")
+  expect_error(emis_source(ask = FALSE, first = "CO"),
+               ".?")
 })
 

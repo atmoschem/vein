@@ -34,7 +34,7 @@ Vehicles <- function(x, ...) {
     for(i in 1:ncol(veh)){
       veh[,i] <- veh[,i]*units::as_units("veh")
     }
-    class(veh) <- c("Vehicles",class(x))
+    class(veh) <- c("Vehicles",class(veh))
   } else if ( is.data.frame(x) ) {
     veh <- x
     for(i in 1:ncol(veh)){
@@ -54,7 +54,7 @@ Vehicles <- function(x, ...) {
 #' @method print Vehicles
 #' @export
 print.Vehicles <- function(x, ...) {
-  if(nrow(x) < 10 & ncol(x) < 10){
+  if(nrow(x) <= 10 | ncol(x) <= 10){
     NextMethod("print", x, right = TRUE)
   } else if (nrow(x) > 10 & ncol(x) < 10){
     print.data.frame(x[1:5, ], right = TRUE)
