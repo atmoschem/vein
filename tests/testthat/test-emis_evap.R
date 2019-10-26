@@ -7,7 +7,8 @@ ef <- EmissionFactors(1:10)
 netsf <- sf::st_as_sf(net)[1:10, "ldv"]
 
 test_that("emis_evap works", {
-  expect_equal(emis_evap(veh = a, x = lkm, hotfi = ef)[1],
+  expect_equal(emis_evap(veh = a, x = lkm, hotfi = ef,
+                         verbose = TRUE)[1],
                Emissions(1))
   expect_message(emis_evap(veh = a, x = lkm, hotfi = ef, verbose = TRUE),
                  "E.?")
@@ -132,6 +133,46 @@ test_that("emis_evap works", {
                  Emissions(5.05))
 
 
+  expect_equal(emis_evap(veh = dfa,
+                         x = lkm,
+                         p = 0.1,
+                         hotc = dfa,
+                         warmc = dfa,
+                         hotfi = dfa,
+                         carb = 2,
+                         verbose = TRUE)$emissions[1],
+               Emissions(1))
+
+  expect_message(emis_evap(veh = dfa,
+                         x = lkm,
+                         p = 0.1,
+                         hotc = dfa,
+                         warmc = dfa,
+                         hotfi = dfa,
+                         carb = 2,
+                         verbose = TRUE),
+               ".?")
+
+  expect_output(emis_evap(veh = dfa,
+                           x = lkm,
+                           p = 0.1,
+                           hotc = dfa,
+                           warmc = dfa,
+                           hotfi = dfa,
+                           carb = 2,
+                           verbose = TRUE),
+                 ".?")
+
+  # expect_equal(emis_evap(veh = dfa,
+  #                        x = lkm,
+  #                        p = 0.1,
+  #                        hotc = matrix(rep(1:120, 2), ncol = 2),
+  #                        warmc = matrix(rep(1:120, 2), ncol = 2),
+  #                        hotfi = matrix(rep(1:120, 2), ncol = 2),
+  #                        carb = 2,
+  #                        verbose = TRUE,
+  #                        pro_month = 1:12)$emissions[1],
+  #              Emissions(1))
 })
 
 test_that("emis_evap works", {

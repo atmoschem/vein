@@ -97,3 +97,17 @@ test_that("speciate works", {
                                          list = TRUE)[[1]][1,1])),
                0)
 })
+
+
+test_that("speciate works", {
+  expect_equal(round(speciate(pm, spec = "nmhc",
+                              veh = "LDV", fuel = "G", eu = "I")$m_p_xylene[1]),
+               0)
+  expect_output(speciate(pm, spec = "nmhc",
+                         veh = "LDV", fuel = "G", eu = "I", show = TRUE),
+                ".?")
+  expect_equal(as.numeric(round(speciate(data.frame(pm), spec = "nmhc",
+                                         veh = "LDV", fuel = "G", eu = "I",
+                                         list = TRUE)[[1]][1,1])),
+               0)
+})

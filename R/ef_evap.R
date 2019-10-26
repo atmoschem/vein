@@ -128,9 +128,9 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
 
 
   if(!is.data.frame(dt)){
-    if(class(dt) == "factor"){
-      stop("Please, enter numeric or character")
-    }
+    # if(class(dt) == "factor"){
+    #   stop("Please, enter numeric or character")
+    # }
     if(is.numeric(dt)){
       dt = ifelse(dt < a, ta,
                   ifelse(dt >=a & dt < b, tb,
