@@ -229,13 +229,18 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
       })
       names(dfb) <- names(dfx)
 
-      for (j in 1:length(dfb)) {
-        for (i in 1:ncol(x)) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("g h-1")
+      if(is.data.frame(x)) {
+        for (j in 1:length(dfb)) {
+          for (i in 1:ncol(x)) {
+            dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("g h-1")
+          }
         }
+      } else {
+        dfb <- lapply(dfb, Emissions)
       }
 
       if (show == TRUE) { print(df) }
+
     } else {
       dfx <- df[, 4:ncol(df)]
       dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
