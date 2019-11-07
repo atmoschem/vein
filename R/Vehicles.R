@@ -72,6 +72,7 @@ print.Vehicles <- function(x, ...) {
 #' @method summary Vehicles
 #' @export
 summary.Vehicles <- function(object, ...) {
+  units::install_symbolic_unit("veh", warn = F)
   veh <- object
   avage <- sum(seq(1,ncol(veh))*colSums(veh)/sum(veh))
   cat("\nVehicles by columns in study area = \n")
@@ -88,6 +89,7 @@ summary.Vehicles <- function(object, ...) {
 #' @method plot Vehicles
 #' @export
 plot.Vehicles <- function(x,  ..., message = TRUE) {
+  units::install_symbolic_unit("veh", warn = F)
   veh <- x
   if ( inherits(veh, "data.frame") ) {
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))
