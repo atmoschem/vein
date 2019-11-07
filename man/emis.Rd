@@ -108,7 +108,6 @@ lef <- ef_hdv_scaled(dfcol = as.numeric(efco),
                      l = 0.5,
                      p = "CO")
 for(i in 1:length(lef)) print(lef[[i]](10))
-emis(veh = bus1, lkm = lkm, speed = 40, ef = lef, verbose = T)
 emis(veh = bus1, lkm = lkm, ef = efco, verbose = T)
 }
 }

@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -39,15 +41,15 @@
 
 
 
-<meta property="og:title" content="Emissions factors from Chinese emissions guidelines — ef_china" />
 
+<meta property="og:title" content="Emissions factors from Chinese emissions guidelines — ef_china" />
 <meta property="og:description" content="ef_china returns emission factors as vector or data.frames.
 The emission factors  comes from the chinese emission guidelines (v3) from the
 Chinese Ministry of Ecology and Environment
 http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf" />
-
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -78,7 +80,7 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
       </span>
     </div>
 
@@ -97,7 +99,6 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -119,19 +120,17 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf" />
     </div>
 
     <div class="ref-description">
-    
     <p><code>ef_china</code> returns emission factors as vector or data.frames.
 The emission factors  comes from the chinese emission guidelines (v3) from the
 Chinese Ministry of Ecology and Environment
 http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ef_china</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PV"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Small"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='no'>standard</span>, <span class='no'>p</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>ta</span> <span class='kw'>=</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fl'>15</span>), <span class='kw'>humidity</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>altitude</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>30</span>), <span class='kw'>baseyear_det</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>sulphur</span> <span class='kw'>=</span> <span class='fl'>50</span>,
   <span class='kw'>load_factor</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>correction_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -209,11 +208,10 @@ and english. Only when length standard is 1.</p></td>
       <td><p>Logical; When TRUE, return only correction factors.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An emission factor</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Combination of vehicles:</p><table class='table'>
@@ -249,11 +247,9 @@ and english. Only when length standard is 1.</p></td>
 </table>
 
 
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> <code><a href='emis_hot_td.html'>emis_hot_td</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
@@ -329,13 +325,9 @@ and english. Only when length standard is 1.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -349,7 +341,7 @@ and english. Only when length standard is 1.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>
