@@ -3,6 +3,6 @@ pkgdown: 1.4.0
 pkgdown_sha: ~
 articles: []
 urls:
-  reference: http://ibarraespinosa.github.io/vein//reference
-  article: http://ibarraespinosa.github.io/vein//articles
+  reference: http://atmoschem.github.io/vein//reference
+  article: http://atmoschem.github.io/vein//articles
 
