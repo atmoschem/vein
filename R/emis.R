@@ -165,63 +165,110 @@ emis <- function (veh,
     if(!missing(profile) & is.vector(profile)){
       profile <- matrix(profile, ncol = 1)
     }
-    # Check length
-    if(ncol(veh) != length(ef)){
-      if(verbose) message(
-        paste0("Number of columns of 'veh' is different than length of 'ef'\n",
-               "adjusting length of ef to the number of colums of 'veh'\n"))
-      if(ncol(veh) > length(ef)){
-        for(i in (length(ef) + 1):ncol(veh) ){
-          ef[[i]] <- ef[[length(ef)]]
-        }
-      } else if (ncol(veh) < length(ef)){
-        ff <- list()
-        for(i in 1:ncol(veh)){
-          ff[[i]] <- ef[[i]]
-        }
-        ef <- ff
-      }
-    }
-    #Check speed
-    if(missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
-    speed <- as.data.frame(speed)
-    for (i  in 1:ncol(speed) ) {
-      speed[, i] <- as.numeric(speed[, i])
-    }
-    # if(array == F){
-    #   lista <- lapply(1:ncol(profile),function(j){
-    #     lapply(1:nrow(profile),function(i){
-    #       lapply(1:agemax, function(k){
-    #         veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, i])
-    #       }) }) })
-    #   return(EmissionsList(lista))
-    # } else {
-    #
 
-     # simplify?
-    if(simplify) {
-      d <-  simplify2array(
-        lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
-          simplify2array(
-                lapply(1:agemax, function(k){ # categorias
-                  veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])
-                }) ) }) )
+
+
+    if(inherits(x = ef, what = "list")) {
+      if(verbose) message("Emission factors inherits from list")
+
+      # Check length
+      if(ncol(veh) != length(ef)){
+        if(verbose) message(
+          paste0("Number of columns of 'veh' is different than length of 'ef'\n",
+                 "adjusting length of ef to the number of colums of 'veh'\n"))
+        if(ncol(veh) > length(ef)){
+          for(i in (length(ef) + 1):ncol(veh) ){
+            ef[[i]] <- ef[[length(ef)]]
+          }
+        } else if (ncol(veh) < length(ef)){
+          ff <- list()
+          for(i in 1:ncol(veh)){
+            ff[[i]] <- ef[[i]]
+          }
+          ef <- ff
+        }
+      }
+      #Check speed
+      if(missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
+      speed <- as.data.frame(speed)
+      for (i  in 1:ncol(speed) ) {
+        speed[, i] <- as.numeric(speed[, i])
+      }
+
+      # simplify?
+      if(simplify) {
+        d <-  simplify2array(
+          lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
+            simplify2array(
+              lapply(1:agemax, function(k){ # categorias
+                veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])
+              }) ) }) )
+
+      } else {
+        d <-  simplify2array(
+          lapply(1:ncol(profile),function(j){ # 7 dias
+            simplify2array(
+              lapply(1:nrow(profile),function(i){ # 24 horas
+                simplify2array(
+                  lapply(1:agemax, function(k){ # categorias
+                    veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])
+                  }) ) }) ) }) )
+        # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+      }
 
     } else {
-      d <-  simplify2array(
-        lapply(1:ncol(profile),function(j){ # 7 dias
-          simplify2array(
-            lapply(1:nrow(profile),function(i){ # 24 horas
-              simplify2array(
-                lapply(1:agemax, function(k){ # categorias
-                  veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])
-                }) ) }) ) }) )
-      # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+      if(verbose) message("Emission factors does not inherits from list")
+
+      # Check length
+      if(ncol(veh) != length(ef)){
+        if(verbose) message(
+          paste0("Number of columns of 'veh' is different than length of 'ef'\n",
+                 "adjusting length of ef to the number of colums of 'veh'\n"))
+        if(ncol(veh) > length(ef)){
+          for(i in (length(ef) + 1):ncol(veh) ){
+            ef[[i]] <- ef[[length(ef)]]
+          }
+        } else if (ncol(veh) < length(ef)){
+          ff <- list()
+          for(i in 1:ncol(veh)){
+            ff[[i]] <- ef[i]
+          }
+          ef <- unlist(ff)
+        }
+      }
+      #Check speed
+      if(!missing(speed)) warning("When ef is not EmissionFactorsList, speed is not needed")
+
+      # simplify?
+      if(simplify) {
+        d <-  simplify2array(
+          lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
+            simplify2array(
+              lapply(1:agemax, function(k){ # categorias
+                veh[, k]*unlist(profile)[j]*lkm*ef[k]
+              }) ) }) )
+
+      } else {
+        d <-  simplify2array(
+          lapply(1:ncol(profile),function(j){ # 7 dias
+            simplify2array(
+              lapply(1:nrow(profile),function(i){ # 24 horas
+                simplify2array(
+                  lapply(1:agemax, function(k){ # categorias
+                    veh[, k]*profile[i,j]*lkm*ef[k]
+                  }) ) }) ) }) )
+        # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+      }
     }
 
     if(verbose) message(round(sum(d, na.rm = T)/1000,2), " kg emissions")
     return(EmissionsArray(d))
-    # }
+
+
+
+
+
+
 
 
     # veh is a list of "Vehicles" data-frames

@@ -7,13 +7,15 @@
 emis_chem(dfe, mechanism, colby, long = FALSE)
 }
 \arguments{
-\item{dfe}{data.frame with column `emissions` in grams and `pollutant` in long format.}
+\item{dfe}{data.frame with column `emissions` in grams and `pollutant` in long format. It is supposed
+that each line is the pollution of some region. Then the `coldby` argument is for include the
+name of the region.}
 
 \item{mechanism}{Character, "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"}
 
 \item{colby}{Character indicating column name for aggregating extra column.
-For instance, region or province}
+For instance, region or province.}
 
 \item{long}{Logical. Do you want data in long format?}
 }
@@ -38,6 +40,7 @@ Groups derived from gases has units 'mol' and from aersols 'g'. The aersol
 units for WRF-Chem are ug/m^2/s while for CMAQ and CAMx are g/s. So,
 leaving the units just in g, allow to make further change while
 providing flexibility for several models.
+TODO: Enter with wide data.frame, with each line as a each street, each column for pollutant
 }
 \examples{
 {

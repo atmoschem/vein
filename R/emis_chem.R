@@ -4,11 +4,13 @@
 #' and convert grams to mol. This function reads all hydrocarbos and respective
 #' criteria polluants specified in \code{\link{ef_ldv_speed}} and \code{\link{ef_hdv_speed}}.
 #'
-#' @param dfe data.frame with column `emissions` in grams and `pollutant` in long format.
+#' @param dfe data.frame with column `emissions` in grams and `pollutant` in long format. It is supposed
+#' that each line is the pollution of some region. Then the `coldby` argument is for include the
+#' name of the region.
 #' @param mechanism Character, "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 #' "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"
 #' @param colby Character indicating column name for aggregating extra column.
-#' For instance, region or province
+#' For instance, region or province.
 #' @param long Logical. Do you want data in long format?
 #' @return data.frame with lumped groups by chemical mechanism. It transform
 #' emissions in grams to mol.
@@ -28,6 +30,7 @@
 #' units for WRF-Chem are ug/m^2/s while for CMAQ and CAMx are g/s. So,
 #' leaving the units just in g, allow to make further change while
 #' providing flexibility for several models.
+#' TODO: Enter with wide data.frame, with each line as a each street, each column for pollutant
 #' @examples {
 #' # CO
 #' df <- data.frame(emission = Emissions(1:10))

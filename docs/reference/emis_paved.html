@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -39,16 +41,16 @@
 
 
 
-<meta property="og:title" content="Estimation of resuspension emissions from paved roads — emis_paved" />
 
+<meta property="og:title" content="Estimation of resuspension emissions from paved roads — emis_paved" />
 <meta property="og:description" content="emis_paved estimates vehicular emissions from paved roads.
 The vehicular emissions are estimated as the product of the vehicles on a
 road, length of the road, emission factor from AP42 13.2.1 Paved roads.
 It is assumed dry hours and anual aggregation should consider moisture factor.
 It depends on Average Daily Traffic (ADT)" />
-
 <meta property="og:image" content="http://ibarraespinosa.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -79,7 +81,7 @@ It depends on Average Daily Traffic (ADT)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
       </span>
     </div>
 
@@ -98,7 +100,6 @@ It depends on Average Daily Traffic (ADT)" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -120,18 +121,16 @@ It depends on Average Daily Traffic (ADT)" />
     </div>
 
     <div class="ref-description">
-    
     <p><code>emis_paved</code> estimates vehicular emissions from paved roads.
 The vehicular emissions are estimated as the product of the vehicles on a
 road, length of the road, emission factor from AP42 13.2.1 Paved roads.
 It is assumed dry hours and anual aggregation should consider moisture factor.
 It depends on Average Daily Traffic (ADT)</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>emis_paved</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.62</span>, <span class='kw'>sL1</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>sL2</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>sL3</span> <span class='kw'>=</span> <span class='fl'>0.06</span>,
   <span class='kw'>sL4</span> <span class='kw'>=</span> <span class='fl'>0.03</span>, <span class='no'>W</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -171,16 +170,14 @@ and K_PM2.5 = 0.15  (g/vkm).</p></td>
 weight of traffic fleet in each road</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>emission estimation  g/h</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>EPA, 2016. Emission factor documentation for AP-42. Section
 13.2.1, Paved Roads. https://www3.epa.gov/ttn/chief/ap42/ch13/final/c13s0201.pdf</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
@@ -202,11 +199,8 @@ weight of traffic fleet in each road</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -220,7 +214,7 @@ weight of traffic fleet in each road</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
 
       </footer>

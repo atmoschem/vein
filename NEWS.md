@@ -1,7 +1,12 @@
 NEWS
 ===========
 
-# vein 0.8.1  (Release date: 2019-10-04)
+# vein 0.8.2  (Release date: 2019-10-04)
+
+- emis now accepts ef as units or EmissionFactorsList. When it is units,
+speed is not needed and if present shows a warning
+
+## vein 0.8.1  (Release date: 2019-10-04)
 
 - show.main = FALSE in inventory
 - remove warning in make_grid when checking class for bbox
