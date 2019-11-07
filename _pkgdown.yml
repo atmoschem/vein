@@ -1,7 +1,10 @@
-url: http://ibarraespinosa.github.io/vein/
+url: http://atmoschem.github.io/vein/
 
 template:
   params:
-    bootswatch: flatly
+    bootswatch: slate
 
 
+authors:
+  Sergio Ibarra-Espinosa:
+    href: https://ibarraespinosa.github.io/superblog/
