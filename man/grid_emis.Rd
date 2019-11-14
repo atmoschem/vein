@@ -4,7 +4,7 @@
 \alias{grid_emis}
 \title{Allocate emissions gridded emissions into streets (grid to emis street)}
 \usage{
-grid_emis(spobj, g, sr, pro, osm, verbose = FALSE)
+grid_emis(spobj, g, top_down = FALSE, sr, pro, verbose = FALSE)
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
@@ -16,17 +16,17 @@ to be used, the column 'emission' must include the sum of the emissions
 for each profile. For instance, if profile covers the hourly emissions,
 the column 'emission' bust be the sum of the hourly emissions.}
 
+\item{top_down}{Logical; requires emissions named `emissions` and allows
+to apply profile factors. If your data is hourly emissions or a a spatial
+grid with several emissions at different hours, being each hour a column,
+it is better to use top_down = FALSE. In this way all the hourly emissions
+are considered, however, eah hourly emissions has to have the name "V" and the
+number of the hour like "V1"}
+
 \item{sr}{Spatial reference e.g: 31983. It is required if spobj and g are
 not projected. Please, see http://spatialreference.org/.}
 
 \item{pro}{Numeric, Matrix or data-frame profiles, for instance, pc_profile.}
-
-\item{osm}{Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
-The first element covers 'motorway' and 'motorway_link.
-The second element covers 'trunk' and 'trunk_link'.
-The third element covers 'primary' and 'primary_link'.
-The fourth element covers 'secondary' and 'secondary_link'.
-The fifth element covers 'tertiary' and 'tertiary_link'.}
 
 \item{verbose}{Logical; to show more info.}
 }
@@ -74,8 +74,12 @@ st <- c("motorway", "motorway_link", "trunk", "trunk_link",
 "tertiary", "tertiary_link")
 osm <- osm[osm$highway \%in\% st, ]
 plot(osm, axes = T)
-xnet <- grid_emis(osm, gCO)
+# top_down requires name `emissions` into gCO`
+xnet <- grid_emis(osm, gCO, top_down = TRUE)
 plot(xnet, axes = T)
+# bottom_up requires that emissions are named `V` plus the hour like `V1`
+xnet <- grid_emis(osm, gCO,top_down= FALSE)
+plot(xnet["V1"], axes = T)
 }
 }
 }

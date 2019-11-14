@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/slate/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -80,7 +80,7 @@ lapply. This function is in development and pull request are welcome." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@ This function applies <code><a href='emis_dist.html'>emis_dist</a></code> into e
 lapply. This function is in development and pull request are welcome.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>grid_emis</span>(<span class='no'>spobj</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='no'>pro</span>, <span class='no'>osm</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>grid_emis</span>(<span class='no'>spobj</span>, <span class='no'>g</span>, <span class='kw'>top_down</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>sr</span>, <span class='no'>pro</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,6 +145,15 @@ for each profile. For instance, if profile covers the hourly emissions,
 the column 'emission' bust be the sum of the hourly emissions.</p></td>
     </tr>
     <tr>
+      <th>top_down</th>
+      <td><p>Logical; requires emissions named `emissions` and allows
+to apply profile factors. If your data is hourly emissions or a a spatial
+grid with several emissions at different hours, being each hour a column,
+it is better to use top_down = FALSE. In this way all the hourly emissions
+are considered, however, eah hourly emissions has to have the name "V" and the
+number of the hour like "V1"</p></td>
+    </tr>
+    <tr>
       <th>sr</th>
       <td><p>Spatial reference e.g: 31983. It is required if spobj and g are
 not projected. Please, see http://spatialreference.org/.</p></td>
@@ -152,15 +161,6 @@ not projected. Please, see http://spatialreference.org/.</p></td>
     <tr>
       <th>pro</th>
       <td><p>Numeric, Matrix or data-frame profiles, for instance, pc_profile.</p></td>
-    </tr>
-    <tr>
-      <th>osm</th>
-      <td><p>Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
-The first element covers 'motorway' and 'motorway_link.
-The second element covers 'trunk' and 'trunk_link'.
-The third element covers 'primary' and 'primary_link'.
-The fourth element covers 'secondary' and 'secondary_link'.
-The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -198,17 +198,21 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></td>
 <span class='co'>#do not run</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>osmdata</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
-<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'>osmdata_sf</span>(
-<span class='fu'>add_osm_feature</span>(
-<span class='fu'>opq</span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_bbox.html'>st_bbox</a></span>(<span class='no'>gCO</span>)),
+<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://docs.ropensci.org/osmdata/reference/osmdata_sf.html'>osmdata_sf</a></span>(
+<span class='fu'><a href='https://docs.ropensci.org/osmdata/reference/add_osm_feature.html'>add_osm_feature</a></span>(
+<span class='fu'><a href='https://docs.ropensci.org/osmdata/reference/opq.html'>opq</a></span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_bbox.html'>st_bbox</a></span>(<span class='no'>gCO</span>)),
 <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>'highway'</span>))$<span class='no'>osm_lines</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"highway"</span>)]
 <span class='no'>st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"motorway"</span>, <span class='st'>"motorway_link"</span>, <span class='st'>"trunk"</span>, <span class='st'>"trunk_link"</span>,
 <span class='st'>"primary"</span>, <span class='st'>"primary_link"</span>, <span class='st'>"secondary"</span>, <span class='st'>"secondary_link"</span>,
 <span class='st'>"tertiary"</span>, <span class='st'>"tertiary_link"</span>)
 <span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='no'>osm</span>[<span class='no'>osm</span>$<span class='no'>highway</span> <span class='kw'>%in%</span> <span class='no'>st</span>, ]
 <span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>osm</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='no'>xnet</span> <span class='kw'>&lt;-</span> <span class='fu'>grid_emis</span>(<span class='no'>osm</span>, <span class='no'>gCO</span>)
+<span class='co'># top_down requires name `emissions` into gCO`</span>
+<span class='no'>xnet</span> <span class='kw'>&lt;-</span> <span class='fu'>grid_emis</span>(<span class='no'>osm</span>, <span class='no'>gCO</span>, <span class='kw'>top_down</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>xnet</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='co'># bottom_up requires that emissions are named `V` plus the hour like `V1`</span>
+<span class='no'>xnet</span> <span class='kw'>&lt;-</span> <span class='fu'>grid_emis</span>(<span class='no'>osm</span>, <span class='no'>gCO</span>,<span class='kw'>top_down</span><span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>xnet</span>[<span class='st'>"V1"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='no'>T</span>)
 }
 }</div><div class='output co'>#&gt; Number of lon points: 23
 #&gt; Number of lat points: 19

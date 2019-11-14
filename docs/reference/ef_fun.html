@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/slate/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.3</span>
       </span>
     </div>
 
@@ -162,7 +162,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fe2015</span>)
-<span class='no'>CO</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>vein</span><span class='kw ns'>::</span><span class='fu'><a href='http://ibarraespinosa.github.io/vein//reference/EmissionFactors.html'>EmissionFactors</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span> <span class='kw'>==</span> <span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>])
+<span class='no'>CO</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>vein</span><span class='kw ns'>::</span><span class='fu'><a href='http://atmoschem.github.io/vein//reference/EmissionFactors.html'>EmissionFactors</a></span>(<span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span> <span class='kw'>==</span> <span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>])
 <span class='no'>ef_logit</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_fun</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>CO</span>, <span class='kw'>x0</span> <span class='kw'>=</span> <span class='fl'>27</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.4</span>, <span class='kw'>L</span> <span class='kw'>=</span> <span class='fl'>33</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>ef_logit</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>ef_logit</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
