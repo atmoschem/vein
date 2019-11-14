@@ -1,10 +1,11 @@
 NEWS
 ===========
 
-# vein 0.8.3  (Release date: 2019-11-13)
+# vein 0.8.3  (Release date: 2019-11-14)
 
 - grid_emis now it is like a proper opposite of emis_grid, becuase it reads spatial 
 grid and transform it Lines, considering all the emissionsColumns) 
+- adds st_explode, to split lines by each vertex
 
 ## vein 0.8.2  (Release date: 2019-11-06)
 
