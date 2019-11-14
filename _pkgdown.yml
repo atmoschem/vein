@@ -2,7 +2,7 @@ url: http://atmoschem.github.io/vein/
 
 template:
   params:
-    bootswatch: slate
+    bootswatch: cerulean
 
 
 authors:

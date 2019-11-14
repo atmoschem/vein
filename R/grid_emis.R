@@ -12,17 +12,18 @@
 #' to be used, the column 'emission' must include the sum of the emissions
 #' for each profile. For instance, if profile covers the hourly emissions,
 #' the column 'emission' bust be the sum of the hourly emissions.
+#' @param top_down Logical; requires emissions named `emissions` and allows
+#' to apply profile factors. If your data is hourly emissions or a a spatial
+#' grid with several emissions at different hours, being each hour a column,
+#' it is better to use top_down = FALSE. In this way all the hourly emissions
+#' are considered, however, eah hourly emissions has to have the name "V" and the
+#'number of the hour like "V1"
 #' @param sr Spatial reference e.g: 31983. It is required if spobj and g are
 #' not projected. Please, see http://spatialreference.org/.
 #' @param pro Numeric, Matrix or data-frame profiles, for instance, pc_profile.
-#' @param osm Numeric; vector of length 5, for instance, c(5, 3, 2, 1, 1).
-#' The first element covers 'motorway' and 'motorway_link.
-#' The second element covers 'trunk' and 'trunk_link'.
-#' The third element covers 'primary' and 'primary_link'.
-#' The fourth element covers 'secondary' and 'secondary_link'.
-#' The fifth element covers 'tertiary' and 'tertiary_link'.
 #' @param verbose Logical; to show more info.
 #' @importFrom sf st_sf st_as_sf st_transform st_set_geometry st_length  st_intersection
+#' @importFrom data.table as.data.table ':='
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'.
@@ -59,21 +60,21 @@
 #' "tertiary", "tertiary_link")
 #' osm <- osm[osm$highway %in% st, ]
 #' plot(osm, axes = T)
-#' xnet <- grid_emis(osm, gCO)
+#' # top_down requires name `emissions` into gCO`
+#' xnet <- grid_emis(osm, gCO, top_down = TRUE)
 #' plot(xnet, axes = T)
+#' # bottom_up requires that emissions are named `V` plus the hour like `V1`
+#' xnet <- grid_emis(osm, gCO,top_down= FALSE)
+#' plot(xnet["V1"], axes = T)
 #' }
 #' }
-grid_emis <- function(spobj, g, sr, pro, osm, verbose = FALSE){
-  if(!any(grepl(pattern = "emission", x = names(g)))){
-    stop("The column 'emission' is not present in grid 'g'")
-  }
-  if(!missing(osm)) stop("OSM not implemented yet")
+grid_emis <- function(spobj, g,  top_down = FALSE,
+                      sr, pro, verbose = FALSE){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   netdata <- sf::st_set_geometry(net, NULL)
   g <- sf::st_as_sf(g)
   g$id <- NULL
-  sumg <- sum(g$emission)
   g$id <- 1:nrow(g)
   net$lkm1 <- as.numeric(sf::st_length(net))
 
@@ -98,104 +99,74 @@ grid_emis <- function(spobj, g, sr, pro, osm, verbose = FALSE){
     g <- sf::st_transform(g, sr)
   }
 
-  if(missing(pro) & missing(osm)){
-    lxxy <- do.call("rbind",
-                    lapply(1:length(g$id),
-                           function(i) {
-                             emis_dist(gy = g[g$id == i,]$emission,
-                                       spobj = xg[xg$id == i, ],
-                                       verbose = FALSE)
-                           }))
-    df <- st_set_geometry(lxxy, NULL)
-    fx <- sumg/sum(df, na.rm = TRUE)
-    df <- df*fx
-    if(verbose) {
-      cat(paste0("Sum of gridded emissions ",
-                 round(sumg, 2), "\n"))
-    }
-    if(verbose) {
-      cat(paste0("Sum of street emissions ",
-                 round(sum(df), 2), "\n"))
-    }
-    df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
-    if(verbose) cat("Columns:", names(df), "\n")
-    return(df)
-  }
+  if(!top_down) {
+    net$id <- NULL
+    a <- sf::st_intersection(net, g)
+    a$lm <- st_length(a)
+    df <- data.table::as.data.table(a)
+    total_lkm <- lm <- id <- NULL
+    df[, total_lkm := sum(lm), by = id]
 
-  if(!missing(pro) & missing(osm)){
-    lxxy <- do.call("rbind",
-                    lapply(1:length(g$id),
-                           function(i) {
-                             emis_dist(gy = g[g$id == i,]$emission,
-                                       spobj = xg[xg$id == i, ],
-                                       pro = pro,
-                                       verbose = FALSE)
-                           }))
-    df <- st_set_geometry(lxxy, NULL)
-    fx <- sum(sumg)/sum(df, na.rm = TRUE)
-    df <- df*fx
-    if(verbose) {
-      cat(paste0("Sum of gridded emissions ",
-                 round(sum(df), 2), "\n"))
+    vars <- names(g)[grep(pattern = "V", x = names(g))]
+    cdf <- colSums(sf::st_set_geometry(g, NULL)[vars], na.rm = T)
+    for(i in 1:length(cdf)) {
+      df[[vars[i]]] <- df[[vars[i]]]*df$lm/df$total_lkm
+      df[[vars[i]]] <- df[[vars[i]]]*cdf[i]/sum(df[[vars[i]]], na.rm = TRUE)
     }
-    if(verbose) {
-      cat(paste0("Sum of street emissions ",
-                 round(sum(df), 2), "\n"))
-    }
-    df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
-    if(verbose) cat("Columns:", names(df), "\n")
+    data.table::setDF(df)
+    df <- sf::st_as_sf(df, geometry = df$geometry)
     return(df)
-  }
-  if(missing(pro) & !missing(osm)){
-    stop("OSM not implemented yet")
-    # lxxy <- do.call("rbind",
-    #                 lapply(1:length(g$id),
-    #                        function(i) {
-    #                          emis_dist(gy = g[g$id == i,]$emission,
-    #                                    spobj = xg[xg$id == i, ],
-    #                                    osm = osm,
-    #                                    verbose = FALSE)
-    #                        }))
-    # df <- st_set_geometry(lxxy, NULL)
-    # fx <- sum(sumg)/sum(df, na.rm = TRUE)
-    # df <- df*fx
-    # if(verbose) {
-    #   cat(paste0("Sum of gridded emissions ",
-    #              round(sumg, 2), "\n"))
-    # }
-    # if(verbose) {
-    #   cat(paste0("Sum of street emissions ",
-    #              round(sum(df), 2), "\n"))
-    # }
-    # print(df <- sf::st_sf(df, geometry = lxxy$geometry))
-    # if(verbose) cat("Columns:", names(df), "\n")
-    # return(df)
-  }
-  if(!missing(pro) & !missing(osm)){
-    stop("OSM not implemented yet")
-#
-#     lxxy <- do.call("rbind",
-#                     lapply(1:length(g$id),
-#                            function(i) {
-#                              emis_dist(gy = g[g$id == i,]$emission,
-#                                        spobj = xg[xg$id == i, ],
-#                                        osm = osm,
-#                                        pro = pro,
-#                                        verbose = FALSE)
-#                            }))
-#     df <- st_set_geometry(lxxy, NULL)
-#     fx <- sum(sumg)/sum(df, na.rm = TRUE)
-#     df <- df*fx
-#     if(verbose) {
-#       cat(paste0("Sum of gridded emissions ",
-#                  round(sumg, 2), "\n"))
-#     }
-#     if(verbose) {
-#       cat(paste0("Sum of street emissions ",
-#                  round(sum(df), 2), "\n"))
-#     }
-#     df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
-#     if(verbose) cat("Columns:", names(df), "\n")
-#     return(df)
+
+  } else {
+    sumg <- sum(g$emission)
+
+
+    if(missing(pro)){
+      lxxy <- do.call("rbind",
+                      lapply(1:length(g$id),
+                             function(i) {
+                               emis_dist(gy = g[g$id == i,]$emission,
+                                         spobj = xg[xg$id == i, ],
+                                         verbose = FALSE)
+                             }))
+      df <- st_set_geometry(lxxy, NULL)
+      fx <- sumg/sum(df, na.rm = TRUE)
+      df <- df*fx
+      if(verbose) {
+        cat(paste0("Sum of gridded emissions ",
+                   round(sumg, 2), "\n"))
+      }
+      if(verbose) {
+        cat(paste0("Sum of street emissions ",
+                   round(sum(df), 2), "\n"))
+      }
+      df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
+      if(verbose) cat("Columns:", names(df), "\n")
+      return(df)
+    }
+    if(!missing(pro) ){
+      lxxy <- do.call("rbind",
+                      lapply(1:length(g$id),
+                             function(i) {
+                               emis_dist(gy = g[g$id == i,]$emission,
+                                         spobj = xg[xg$id == i, ],
+                                         pro = pro,
+                                         verbose = FALSE)
+                             }))
+      df <- st_set_geometry(lxxy, NULL)
+      fx <- sum(sumg)/sum(df, na.rm = TRUE)
+      df <- df*fx
+      if(verbose) {
+        cat(paste0("Sum of gridded emissions ",
+                   round(sum(df), 2), "\n"))
+      }
+      if(verbose) {
+        cat(paste0("Sum of street emissions ",
+                   round(sum(df), 2), "\n"))
+      }
+      df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
+      if(verbose) cat("Columns:", names(df), "\n")
+      return(df)
+    }
   }
 }

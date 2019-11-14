@@ -1,7 +1,12 @@
 NEWS
 ===========
 
-# vein 0.8.2  (Release date: 2019-10-04)
+# vein 0.8.3  (Release date: 2019-11-13)
+
+- grid_emis now it is like a proper opposite of emis_grid, becuase it reads spatial 
+grid and transform it Lines, considering all the emissionsColumns) 
+
+## vein 0.8.2  (Release date: 2019-11-06)
 
 - emis now accepts ef as units or EmissionFactorsList. When it is units,
 speed is not needed and if present shows a warning
