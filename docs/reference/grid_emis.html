@@ -198,9 +198,9 @@ not projected. Please, see http://spatialreference.org/.</p></td>
 <span class='co'>#do not run</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>osmdata</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
-<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://docs.ropensci.org/osmdata/reference/osmdata_sf.html'>osmdata_sf</a></span>(
-<span class='fu'><a href='https://docs.ropensci.org/osmdata/reference/add_osm_feature.html'>add_osm_feature</a></span>(
-<span class='fu'><a href='https://docs.ropensci.org/osmdata/reference/opq.html'>opq</a></span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_bbox.html'>st_bbox</a></span>(<span class='no'>gCO</span>)),
+<span class='no'>osm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/osmdata/man/osmdata_sf.html'>osmdata_sf</a></span>(
+<span class='fu'><a href='https://rdrr.io/pkg/osmdata/man/add_osm_feature.html'>add_osm_feature</a></span>(
+<span class='fu'><a href='https://rdrr.io/pkg/osmdata/man/opq.html'>opq</a></span>(<span class='kw'>bbox</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_bbox.html'>st_bbox</a></span>(<span class='no'>gCO</span>)),
 <span class='kw'>key</span> <span class='kw'>=</span> <span class='st'>'highway'</span>))$<span class='no'>osm_lines</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"highway"</span>)]
 <span class='no'>st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"motorway"</span>, <span class='st'>"motorway_link"</span>, <span class='st'>"trunk"</span>, <span class='st'>"trunk_link"</span>,
 <span class='st'>"primary"</span>, <span class='st'>"primary_link"</span>, <span class='st'>"secondary"</span>, <span class='st'>"secondary_link"</span>,
