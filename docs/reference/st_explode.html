@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Split line by vertex — st_explode • vein</title>
+<title>Split line by vertex (experimental) — st_explode • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,7 +42,7 @@
 
 
 
-<meta property="og:title" content="Split line by vertex — st_explode" />
+<meta property="og:title" content="Split line by vertex (experimental) — st_explode" />
 <meta property="og:description" content="st_explode split a lines data.frame into
 each vertex. It to mimic the function explode from qgis, that the reason for the name
 st_explode" />
@@ -113,7 +113,7 @@ st_explode" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Split line by vertex</h1>
+    <h1>Split line by vertex (experimental)</h1>
     
     <div class="hidden name"><code>st_explode.Rd</code></div>
     </div>
@@ -143,10 +143,11 @@ it is transformed to "sf".</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
+<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>, ]
 <span class='no'>net2</span> <span class='kw'>&lt;-</span> <span class='fu'>st_explode</span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>net2</span>)
-}</div><div class='output co'>#&gt; Sum: 5490058.41</div><div class='output co'>#&gt; [1] 7205   12</div></pre>
+}</div><div class='output co'>#&gt; Sum: 34007.72</div><div class='output co'>#&gt; [1] 17 12</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
