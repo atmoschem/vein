@@ -38,7 +38,7 @@ st_explode <- function(net){
       c(i, i+1)
     })
 
-    sf::st_sf(as.data.frame(data.table::rbindlist(lapply(1:length(la), function(i){dfa[1, ]}))),
+    sf::st_sf(as.data.frame(data.table::rbindlist(lapply(1:length(la), function(i){as.data.frame(dfa[1, ])}))),
               geometry = sf::st_sfc(lapply(1:length(la), function(i){
                 sf::st_linestring(m1[la[[i]], ])})),
               crs = sf::st_crs(net))
