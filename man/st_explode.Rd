@@ -17,11 +17,14 @@ each vertex. It to mimic the function explode from qgis, that the reason for the
 }
 \note{
 All variables are transformed into numeric.
+
+Thanks Michael Summer ([at]mdsummer)  for the function sfx_explode!
 }
 \examples{
 {
 data(net)
-net <- sf::st_as_sf(net)[1:10, ]
+net <- sf::st_as_sf(net)
+# transformign factor in numeric
 net2 <- st_explode(net)
 dim(net)
 dim(net2)
