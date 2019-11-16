@@ -6,11 +6,15 @@
 #' @param net A spatial dataframe of class "sp" or "sf". When class is "sp"
 #' it is transformed to "sf".
 #' @importFrom sf st_sf st_as_sf st_set_geometry st_length  st_intersection
+#' @importFrom eixport sfx_explode
 #' @export
 #' @note All variables are transformed into numeric.
+#'
+#' Thanks Michael Summer ([at]mdsummer)  for the function sfx_explode!
 #' @examples {
 #' data(net)
-#' net <- sf::st_as_sf(net)[1:10, ]
+#' net <- sf::st_as_sf(net)
+#' # transformign factor in numeric
 #' net2 <- st_explode(net)
 #' dim(net)
 #' dim(net2)
@@ -20,37 +24,18 @@ st_explode <- function(net){
   net$id <- NULL
   netdf <- sf::st_set_geometry(net, NULL)
   namesnet <- names(netdf)
+
   for(i in 1:length(namesnet)) {
-    netdf[[i]] <- as.numeric(netdf[[i]])
+    netdf[[namesnet[i]]] <- as.numeric(as.character(netdf[[namesnet[i]]]))
   }
+
   snetdf <- sum(netdf, na.rm = TRUE)
   net$LKM <- sf::st_length(net)
-  lg <- lapply(net$geometry, matrix, ncol = 2)
 
-
-  dfl <- lapply(1:nrow(net), function(j){
-
-    dfa <- sf::st_set_geometry(net[j, ], NULL)
-
-    m1 <- lg[[j]]
-
-    la <- lapply(1:(nrow(m1) - 1), function(i){
-      c(i, i+1)
-    })
-
-    sf::st_sf(as.data.frame(data.table::rbindlist(lapply(1:length(la), function(i){as.data.frame(dfa[1, ])}))),
-              geometry = sf::st_sfc(lapply(1:length(la), function(i){
-                sf::st_linestring(m1[la[[i]], ])})),
-              crs = sf::st_crs(net))
-  })
-  # df <- data.table::rbindlist( dfl) # rbindlist changes geometries!
-  df <- do.call("rbind", dfl)
-  for(i in 1:length(namesnet)) {
-    df[[i]] <- as.numeric(df[[i]])
+  df <- eixport::sfx_explode(net)# Thanks @mdsummer
+    for(i in 1:length(namesnet)) {
+    df[[namesnet[i]]] <- as.numeric(as.character(df[[namesnet[i]]]))
   }
-
-  df <- sf::st_sf(as.data.frame(df), geometry = df$geometry)
-
 
   df$LKM2 <- sf::st_length(df)
   df <- as.data.frame(df)

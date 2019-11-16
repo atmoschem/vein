@@ -139,15 +139,17 @@ it is transformed to "sf".</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>All variables are transformed into numeric.</p>
+<p>Thanks Michael Summer ([at]mdsummer)  for the function sfx_explode!</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>)[<span class='fl'>1</span>:<span class='fl'>10</span>, ]
+<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>)
+<span class='co'># transformign factor in numeric</span>
 <span class='no'>net2</span> <span class='kw'>&lt;-</span> <span class='fu'>st_explode</span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>net2</span>)
-}</div><div class='output co'>#&gt; Sum: 34007.72</div><div class='output co'>#&gt; [1] 17 12</div></pre>
+}</div><div class='output co'>#&gt; Sum: 5488935.41</div><div class='output co'>#&gt; [1] 7205   12</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
