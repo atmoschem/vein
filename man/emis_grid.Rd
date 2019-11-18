@@ -15,7 +15,7 @@ it is transformed to "sf".}
 \item{sr}{Spatial reference e.g: 31983. It is required if spobj and g are
 not projected. Please, see http://spatialreference.org/.}
 
-\item{type}{type of geometry: "lines" or "points".}
+\item{type}{type of geometry: "lines", "points" or "polygons".}
 
 \item{FN}{Character indicating the function. Default is "sum"}
 }
@@ -44,5 +44,20 @@ plot(netg["hdv"], axes = TRUE)
 netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")
 plot(netg["ldv"], axes = TRUE)
 plot(netg["hdv"], axes = TRUE)
+\dontrun{
+library(sf)
+library(data.table)
+library(raster)
+library(stars)
+g <- readRDS("/media/sergio/ext5/gd03.rds")
+net <- fread("/media/sergio/ext5/edgar_ecb05_opt1/2012/extracted/ALD.csvy")
+net$layer <- net$layer*1e12
+net <- rasterFromXYZ(net)
+net <- crop(net, as_Spatial(g))
+net <- st_as_stars(net)
+net <- st_as_sf(net, crs = 4326)
+st_crs(net) <- 4326
+netg <- emis_grid(net, g, type = "polygons")
+}
 }
 }

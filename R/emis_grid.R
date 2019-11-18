@@ -11,9 +11,9 @@
 #' @param g A grid with class "SpatialPolygonsDataFrame" or "sf".
 #' @param sr Spatial reference e.g: 31983. It is required if spobj and g are
 #' not projected. Please, see http://spatialreference.org/.
-#' @param type type of geometry: "lines" or "points".
+#' @param type type of geometry: "lines", "points" or "polygons".
 #' @param FN Character indicating the function. Default is "sum"
-#' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection
+#' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area
 #' @importFrom data.table data.table .SD
 #' @importFrom sp CRS
 #' @export
@@ -32,9 +32,27 @@
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
+#' \dontrun{
+#' library(sf)
+#' library(data.table)
+#' library(raster)
+#' library(stars)
+#' g <- readRDS("/media/sergio/ext5/gd03.rds")
+#' net <- fread("/media/sergio/ext5/edgar_ecb05_opt1/2012/extracted/ALD.csvy")
+#' net$layer <- net$layer*1e12
+#' net <- rasterFromXYZ(net)
+#' net <- crop(net, as_Spatial(g))
+#' net <- st_as_stars(net)
+#' net <- st_as_sf(net, crs = 4326)
+#' st_crs(net) <- 4326
+#' netg <- emis_grid(net, g, type = "polygons")
 #' }
-emis_grid <- function (spobj = net, g, sr, type = "lines", FN = "sum")
-{
+#' }
+emis_grid <- function (spobj = net,
+                       g,
+                       sr,
+                       type = "lines",
+                       FN = "sum"){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   # add as.data.frame qhen net comes from data.table
@@ -53,7 +71,7 @@ emis_grid <- function (spobj = net, g, sr, type = "lines", FN = "sum")
     net <- sf::st_transform(net, sr)
     g <- sf::st_transform(g, sr)
   }
-  if (type == "lines") {
+  if (type %in% c("lines", "line")) {
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
     cat(paste0("Sum of street emissions ", round(snetdf,
@@ -82,8 +100,7 @@ emis_grid <- function (spobj = net, g, sr, type = "lines", FN = "sum")
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
-  }
-  else if (type == "points") {
+  } else if (type %in% c("points", "point")) {
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
     cat(paste0("Sum of point emissions ", round(snetdf, 2),
@@ -102,5 +119,29 @@ emis_grid <- function (spobj = net, g, sr, type = "lines", FN = "sum")
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
+  } else if(type %in% c("polygons", "polygon", "area")){
+    ncolnet <- ncol(sf::st_set_geometry(net, NULL))
+    net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
+    namesnet <- names(sf::st_set_geometry(net, NULL))
+    net$area1 <- sf::st_area(net)
+    netg <- sf::st_intersection(net,g )
+    netg$area2 <- sf::st_area(netg)
+
+
+    xgg <- data.table::data.table(netg)
+    xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$area2/xgg$area1)
+    xgg[is.na(xgg)] <- 0
+    dfm <- xgg[, lapply(.SD, eval(parse(text = FN)), na.rm = TRUE), by = "id",
+               .SDcols = namesnet]
+    id <- dfm$id
+    dfm$id <- NULL
+    cat(paste0("Sum of gridded emissions ", round(sum(dfm,
+                                                      na.rm = T), 2), "\n"))
+    dfm$id <- id
+    gx <- data.frame(id = g$id)
+    gx <- merge(gx, dfm, by = "id", all = TRUE)
+    gx[is.na(gx)] <- 0
+    gx <- sf::st_sf(gx, geometry = g$geometry)
+   return(gx)
   }
 }
