@@ -4,7 +4,7 @@
 \alias{grid_emis}
 \title{Allocate emissions gridded emissions into streets (grid to emis street)}
 \usage{
-grid_emis(spobj, g, top_down = FALSE, sr, pro, verbose = FALSE)
+grid_emis(spobj, g, top_down = FALSE, sr, pro, char, verbose = FALSE)
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
@@ -27,6 +27,10 @@ number of the hour like "V1"}
 not projected. Please, see http://spatialreference.org/.}
 
 \item{pro}{Numeric, Matrix or data-frame profiles, for instance, pc_profile.}
+
+\item{char}{Character, name of the first letter of hourly emissions. New variables in R
+start with letter "V", for your hourly emissions might start with letter "h". This option
+applies when top_down is FALSE}
 
 \item{verbose}{Logical; to show more info.}
 }

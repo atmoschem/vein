@@ -21,6 +21,9 @@
 #' @param sr Spatial reference e.g: 31983. It is required if spobj and g are
 #' not projected. Please, see http://spatialreference.org/.
 #' @param pro Numeric, Matrix or data-frame profiles, for instance, pc_profile.
+#' @param char Character, name of the first letter of hourly emissions. New variables in R
+#' start with letter "V", for your hourly emissions might start with letter "h". This option
+#' applies when top_down is FALSE
 #' @param verbose Logical; to show more info.
 #' @importFrom sf st_sf st_as_sf st_transform st_set_geometry st_length  st_intersection
 #' @importFrom data.table as.data.table ':='
@@ -69,7 +72,7 @@
 #' }
 #' }
 grid_emis <- function(spobj, g,  top_down = FALSE,
-                      sr, pro, verbose = FALSE){
+                      sr, pro, char, verbose = FALSE){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   netdata <- sf::st_set_geometry(net, NULL)
@@ -107,7 +110,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
     total_lkm <- lm <- id <- NULL
     df[, total_lkm := sum(lm), by = id]
 
-    vars <- names(g)[grep(pattern = "V", x = names(g))]
+    vars <- names(g)[grep(pattern = char, x = names(g))]
     cdf <- colSums(sf::st_set_geometry(g, NULL)[vars], na.rm = T)
     for(i in 1:length(cdf)) {
       df[[vars[i]]] <- df[[vars[i]]]*df$lm/df$total_lkm

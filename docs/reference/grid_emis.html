@@ -126,7 +126,7 @@ This function applies <code><a href='emis_dist.html'>emis_dist</a></code> into e
 lapply. This function is in development and pull request are welcome.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>grid_emis</span>(<span class='no'>spobj</span>, <span class='no'>g</span>, <span class='kw'>top_down</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>sr</span>, <span class='no'>pro</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>grid_emis</span>(<span class='no'>spobj</span>, <span class='no'>g</span>, <span class='kw'>top_down</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>sr</span>, <span class='no'>pro</span>, <span class='no'>char</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,6 +161,12 @@ not projected. Please, see http://spatialreference.org/.</p></td>
     <tr>
       <th>pro</th>
       <td><p>Numeric, Matrix or data-frame profiles, for instance, pc_profile.</p></td>
+    </tr>
+    <tr>
+      <th>char</th>
+      <td><p>Character, name of the first letter of hourly emissions. New variables in R
+start with letter "V", for your hourly emissions might start with letter "h". This option
+applies when top_down is FALSE</p></td>
     </tr>
     <tr>
       <th>verbose</th>
