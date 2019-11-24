@@ -23,7 +23,9 @@
 #' @param pro Numeric, Matrix or data-frame profiles, for instance, pc_profile.
 #' @param char Character, name of the first letter of hourly emissions. New variables in R
 #' start with letter "V", for your hourly emissions might start with letter "h". This option
-#' applies when top_down is FALSE
+#' applies when top_down is FALSE. For instance, if your hourly emissions are: "h1", "h2",
+#' "h3"... `char`` can be "h"
+#'
 #' @param verbose Logical; to show more info.
 #' @importFrom sf st_sf st_as_sf st_transform st_set_geometry st_length  st_intersection
 #' @importFrom data.table as.data.table ':='
@@ -144,7 +146,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
                    round(sum(df), 2), "\n"))
       }
       df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
-      if(verbose) cat("Columns:", names(df), "\n")
+      # if(verbose) cat("Columns:", names(df), "\n")
       return(df)
     }
     if(!missing(pro) ){
@@ -168,7 +170,6 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
                    round(sum(df), 2), "\n"))
       }
       df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
-      if(verbose) cat("Columns:", names(df), "\n")
       return(df)
     }
   }

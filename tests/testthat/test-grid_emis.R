@@ -1,4 +1,4 @@
-context("emis_cold_td")
+context("grid_emis")
 
 data(net)
 data(pc_profile)
@@ -63,7 +63,7 @@ test_that("grid_emis works", {
 
 
 test_that("grid_emis works", {
-  expect_equal(round(grid_emis(net, gCO, verbose = TRUE)$ldv[1]),
+  expect_equal(round(grid_emis(net, gCO, verbose = TRUE, char = "V")$ldv[1]),
                3760)
 })
 
