@@ -30,7 +30,8 @@ not projected. Please, see http://spatialreference.org/.}
 
 \item{char}{Character, name of the first letter of hourly emissions. New variables in R
 start with letter "V", for your hourly emissions might start with letter "h". This option
-applies when top_down is FALSE}
+applies when top_down is FALSE. For instance, if your hourly emissions are: "h1", "h2",
+"h3"... `char`` can be "h"}
 
 \item{verbose}{Logical; to show more info.}
 }
