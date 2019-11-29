@@ -17,7 +17,7 @@
 #' 168 columns as the hours of a whole week and "streets repeats the
 #' row number of streets by hour and day of the week
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING". Only
-#' when by = 'streets_wide'
+#' when by = 'streets'
 #' @importFrom sf st_sf st_as_sf
 #' @export
 #' @note This function depends on EmissionsArray objests which currently has
