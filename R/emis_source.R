@@ -35,7 +35,6 @@ emis_source <- function(path = "est",
       if(choice == 1){
         for(i in 1:length(inputsa)){
           source(inputsa[i])
-          # print(inputsa[i])
         }
       } else {
         stop("Change inputs")
@@ -43,7 +42,6 @@ emis_source <- function(path = "est",
     } else {
       for(i in 1:length(inputsa)){
         source(inputsa[i])
-        # print(inputsa[i])
       }
     }
   } else {
@@ -53,7 +51,6 @@ emis_source <- function(path = "est",
       if(choice == 1){
         for(i in 1:length(inputs)){
           source(inputs[i])
-          # print(inputs[i])
         }
       } else {
         stop("Change inputs")
@@ -61,7 +58,6 @@ emis_source <- function(path = "est",
     } else {
       for(i in 1:length(inputs)){
         source(inputs[i])
-        # print(inputs[i])
       }
     }
 

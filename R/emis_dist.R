@@ -44,7 +44,7 @@ emis_dist <- function(gy,
   }
 
   net$lkm1 <- as.numeric(sf::st_length(net))
-  geo <- sf::st_geometry(net)
+  geo <- suppressMessages(suppressWarnings(sf::st_geometry(net)))
   lkm <- net$lkm1/sum(net$lkm1)
   e_street <- lkm*as.numeric(gy)
 
