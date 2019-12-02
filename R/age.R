@@ -102,7 +102,7 @@ age <- function (x,
                  verbose = FALSE){
   #check agemax
     if (missing(x) | is.null(x)) {
-    stop (print("Missing vehicles"))
+    stop ("Missing vehicles")
     }
 # check agemax
 if(!missing(agemax)) x <- x[1:agemax]

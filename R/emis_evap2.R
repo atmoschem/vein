@@ -105,7 +105,7 @@ emis_evap2 <- function(veh,
                       rl_nd4, rl_nd3, rl_nd2, rl_nd1,
                       d_nd4, d_nd3, d_nd2, d_nd1) {
   if (missing(veh) | is.null(veh)) {
-    stop (print("Missing vehicles"))
+    stop ("Missing vehicles")
   } else {
     veh <- if (inherits(veh, "list")){colSums(veh[[8]])
     } else { colSums(veh) }

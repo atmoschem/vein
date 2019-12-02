@@ -57,7 +57,7 @@ age_hdv <- function (x,
   # bystreet = TRUE
   if (bystreet == TRUE){
     if(length(x) != length(a)){
-      stop((print("Lengths of veh and age must be the same")))
+      stop("Lengths of veh and age must be the same")
     }
     d <- suca <- list()
     for (i in seq_along(x)) {

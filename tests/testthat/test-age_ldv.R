@@ -93,8 +93,8 @@ test_that("age_ldv works", {
                              name = "MC",
                              agemax = 2,
                              a = rep(1, nrow(net)),
-                             b = rep(0, nrow(net)))$MC_1[1]),
-               Vehicles(3))
+                             b = rep(0, nrow(net)), bystreet = T)$MC_1[1]),
+               Vehicles(2175))
 })
 
 test_that("age_ldv mes 1", {
@@ -102,7 +102,7 @@ test_that("age_ldv mes 1", {
                          name = "MC",
                          agemax = 2,
                          a = rep(1, nrow(net)),
-                         b = rep(0, nrow(net)),
+                         b = rep(0, nrow(net)), bystreet = T,
                          verbose = TRUE),
                  "A.?")
 })
@@ -113,8 +113,8 @@ test_that("age_ldv works", {
                              name = "MC",
                              agemax = 2,
                              a = rep(1, nrow(net)),
-                             b = rep(0, nrow(net)), net = net)$MC_1[1]),
-               Vehicles(3))
+                             b = rep(0, nrow(net)), net = net, bystreet = T)$MC_1[1]),
+               Vehicles(2175))
 })
 
 

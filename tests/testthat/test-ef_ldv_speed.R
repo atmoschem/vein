@@ -142,12 +142,15 @@ EF <- sapply(1:3, function(j){
 ef <- units::set_units(c(10.3, rep(13, 2), rep(2.7, 5)), pg)
 ef <- units::set_units(ef, g)
 ef1 <- as.numeric(ef)
+round(EF[, 1] -  ef1, 2)
 ef <- units::set_units(c(21.12, rep(19, 2), rep(4.1, 5)), pg)
 ef <- units::set_units(ef, g)
 ef2 <- as.numeric(ef)
-ef <- units::set_units(c(rep(6.4, 2), rep(1.36, 5)), pg)
+round(EF[, 2] -  ef2, 2)
+ef <- units::set_units(c(rep(6.4, 2), rep(1.36, 6)), pg)
 ef <- units::set_units(ef, g)
 ef3 <- as.numeric(ef)
+round(EF[, 3] -  ef3, 2)
 
 test_that("ef_ldv_speed works", {
   expect_equal(EF,
