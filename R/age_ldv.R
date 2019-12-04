@@ -55,12 +55,12 @@ age_ldv <- function (x,
   if(agemax < 1) stop("Agemax should be bigger than 1")
 
   if (missing(x) | is.null(x)) {
-    stop (print("Missing vehicles"))
+    stop ("Missing vehicles")
   }
   #bystreet = TRUE
   if (bystreet == T){
     if(length(x) != length(a)){
-      stop((print("Lengths of veh and age must be the same")))
+      stop("Lengths of veh and age must be the same")
     }
     d <- suca <- list()
     for (i in seq_along(x)) {

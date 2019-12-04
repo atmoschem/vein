@@ -106,7 +106,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
 
   if(!top_down) {
     net$id <- NULL
-    a <- sf::st_intersection(net, g)
+    a <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
     a$lm <- st_length(a)
     df <- data.table::as.data.table(a)
     total_lkm <- lm <- id <- NULL

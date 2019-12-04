@@ -241,14 +241,13 @@ emis <- function (veh,
 
       # simplify?
       if(simplify) {
-        d <-  simplify2array(
-          lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
-            simplify2array(
-              lapply(1:agemax, function(k){ # categorias
-                veh[, k]*unlist(profile)[j]*lkm*ef[k]
-              }) ) }) )
+        vkm <- veh*lkm
+        vkmef <- t(t(vkm) * ef)
+        d <- simplify2array(lapply(unlist(profile), "*", vkmef))
 
       } else {
+
+
         d <-  simplify2array(
           lapply(1:ncol(profile),function(j){ # 7 dias
             simplify2array(
