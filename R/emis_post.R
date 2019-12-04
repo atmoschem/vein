@@ -57,8 +57,8 @@
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
-#' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
-#' cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
+#' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = units::set_units(pckma[1:11],"km"))
+#' cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = units::set_units(pckma[12:24],"km"))
 #' #vehicles newer than pre-euro
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
 #' cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
