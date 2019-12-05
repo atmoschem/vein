@@ -241,6 +241,7 @@ emis <- function (veh,
 
       # simplify?
       if(simplify) {
+        print("aqui")
         vkm <- veh*lkm
         vkmef <- t(t(vkm) * ef)
         d <- simplify2array(lapply(unlist(profile), "*", vkmef))
