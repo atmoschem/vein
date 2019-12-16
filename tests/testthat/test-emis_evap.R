@@ -30,10 +30,10 @@ test_that("emis_evap works", {
                          x = lkm,
                          ed = 1)[1],
                "u.?")
-  expect_warning(emis_evap(veh = a,
-                           x = lkm,
-                           ed = Emissions(1))[1],
-                 "u.?")
+  # expect_warning(emis_evap(veh = a,
+  #                          x = lkm,
+  #                          ed = Emissions(1))[1],
+  #                "u.?")
   expect_equal(emis_evap(veh = netsf,
                            x = lkm,
                            ed = data.frame(Emissions(1)))$emissions[1],
@@ -60,10 +60,10 @@ test_that("emis_evap works", {
                          x = lkm,
                          ed = 1)[1],
                "as.?")
-  expect_warning(emis_evap(veh = a,
-                           x = lkm,
-                           ed = Emissions(1))[1],
-                 "u.?")
+  # expect_warning(emis_evap(veh = a,
+  #                          x = lkm,
+  #                          ed = Emissions(1))[1],
+  #                "u.?")
   expect_equal(emis_evap(veh = dfa,
                          x = lkm,
                          ed = dfef)$emissions[1],
@@ -199,3 +199,4 @@ test_that("emis_evap works", {
 
 
 })
+

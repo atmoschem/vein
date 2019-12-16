@@ -93,6 +93,7 @@ emis_evap <- function(veh,
 
   # ed
   if(!missing(ed)){
+    ed <- remove_units(ed)
     if(is.data.frame(veh)){
 
       if(!is.data.frame(ed)) stop("as veh is a data.frame ed needs to be a data.frame")
