@@ -17,7 +17,6 @@ test_that("EmissionsArray works", {
                                lkm = net$lkm[1:5],
                                ef = lef,
                                profile = pc_profile[1, ],
-                               array = T,
                                speed = Speed(34))[1,1,1,1]),
                0.4850966 + 3.63e-08)
 
@@ -28,7 +27,6 @@ test_that("EmissionsArray works", {
                            lkm = net$lkm[1:5],
                            ef = lef,
                            profile = pc_profile[1, ],
-                           array = T,
                            speed = Speed(34))),
                 "T.?")
 
@@ -36,7 +34,6 @@ test_that("EmissionsArray works", {
                           lkm = net$lkm[1:5],
                           ef = lef,
                           profile = pc_profile[1, ],
-                          array = T,
                           speed = Speed(34))[1]),
                0)
 
@@ -44,7 +41,6 @@ test_that("EmissionsArray works", {
                             lkm = net$lkm[1:5],
                             ef = lef,
                             profile = pc_profile[1, ],
-                            array = T,
                             speed = Speed(34)))[[1]],
                0.002)
 
@@ -52,7 +48,6 @@ test_that("EmissionsArray works", {
                                    lkm = net$lkm[1:5],
                                    ef = lef,
                                    profile = pc_profile[1, ],
-                                   array = T,
                                    speed = Speed(34)))),
                 ".?")
 
@@ -60,14 +55,12 @@ test_that("EmissionsArray works", {
                          lkm = net$lkm[1:5],
                          ef = lef,
                          profile = pc_profile[1, ],
-                         array = T,
                          speed = Speed(34))),
                NULL)
   expect_equal(plot(emis(veh = pc1[1:5, ],
                          lkm = net$lkm[1:5],
                          ef = lef,
                          profile = pc_profile[1, ],
-                         array = T,
                          speed = Speed(34),
                          simplify = T)),
                NULL)
