@@ -6,8 +6,6 @@
 \alias{vein-package}
 \title{vein: Vehicular Emissions Inventories}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
-
 Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 

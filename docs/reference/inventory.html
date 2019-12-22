@@ -46,7 +46,6 @@
 <meta property="og:description" content="inventory produces an structure of directories and scripts
 in order to run vein. It is required to know the vehicular composition of the
 fleet." />
-<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -126,7 +125,8 @@ fleet.</p>
 
     <pre class="usage"><span class='fu'>inventory</span>(<span class='no'>name</span>, <span class='kw'>vehcomp</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>PC</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>LCV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>HGV</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>BUS</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>MC</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='kw'>show.main</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scripts</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>show.dir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rush.hour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>show.scripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>clear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rush.hour</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>showWarnings</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,6 +168,10 @@ another one.</p></td>
     <tr>
       <th>rush.hour</th>
       <td><p>Logical, to create a template for morning rush hour.</p></td>
+    </tr>
+    <tr>
+      <th>showWarnings</th>
+      <td><p>Logical, showWarnings?</p></td>
     </tr>
     </table>
 
