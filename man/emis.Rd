@@ -70,8 +70,7 @@ pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 # Estimation for morning rush hour and local emission factors
 speed <- data.frame(S8 = net$ps)
 lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
-E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-             profile = 1)
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, profile = 1)
 
 # Estimation for 168 hour and local factors
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -83,6 +82,12 @@ E_CO <- emis(veh = pc1,
              ef = lef,
              speed = speed,
              profile = profiles$PC_JUNE_2014)
+E_CO <- emis(veh = pc1,
+             lkm = net$lkm,
+             ef = lef,
+             speed = speed,
+             profile = profiles$PC_JUNE_2014, simplify = T,
+             fortran = T) #no funciona !!!!
 summary(E_CO)
 lpc <- list(pc1, pc1)
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed)
@@ -106,6 +111,7 @@ lef <- ef_hdv_scaled(dfcol = as.numeric(efco),
                      l = 0.5,
                      p = "CO")
 for(i in 1:length(lef)) print(lef[[i]](10))
-emis(veh = bus1, lkm = lkm, ef = efco, verbose = T)
+(a <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = T))
+(b <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = T, fortran = T))
 }
 }
