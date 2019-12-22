@@ -78,7 +78,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.5</span>
       </span>
     </div>
 
@@ -124,8 +124,8 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
     </div>
 
     <pre class="usage"><span class='fu'>emis</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>is.data.frame</a></span>(<span class='no'>veh</span>), <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]])), <span class='no'>profile</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>profile</span>),
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>profile</span>), <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>veh</span><span class='kw'>[[</span><span class='fl'>1</span>]])), <span class='no'>profile</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>profile</span>), <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>profile</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +166,10 @@ categories, hours and days). Default is FALSE to avoid break old code, but
 the recommendation is that new estimations use this parameter as TRUE</p></td>
     </tr>
     <tr>
+      <th>fortran</th>
+      <td><p>Logical; to try the fortran calculation</p></td>
+    </tr>
+    <tr>
       <th>hour</th>
       <td><p>Number of considered hours in estimation. Default value is number
 of rows of argument profile</p></td>
@@ -173,12 +177,6 @@ of rows of argument profile</p></td>
     <tr>
       <th>day</th>
       <td><p>Number of considered days in estimation</p></td>
-    </tr>
-    <tr>
-      <th>array</th>
-      <td><p>Deprecated! <code><a href='emis_cold.html'>emis_cold</a></code> returns only arrays.
-When TRUE and veh is not a list, expects a profile as a dataframe producing
-an array with dimensions (streets x columns x hours x days)</p></td>
     </tr>
     <tr>
       <th>verbose</th>

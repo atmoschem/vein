@@ -18,13 +18,12 @@
 #' being streets, vehicle categories and hours or default (streets, vehicle
 #' categories, hours and days). Default is FALSE to avoid break old code, but
 #' the recommendation is that new estimations use this parameter as TRUE
+#' @param fortran Logical; to try the fortran calculation
 #' @param hour Number of considered hours in estimation. Default value is number
 #' of rows of argument profile
 #' @param day Number of considered days in estimation
-#' @param array Deprecated! \code{\link{emis_cold}} returns only arrays.
-#' When TRUE and veh is not a list, expects a profile as a dataframe producing
-#' an array with dimensions (streets x columns x hours x days)
 #' @param verbose Logical; To show more information
+#' @useDynLib  vein, .registration = TRUE
 #' @return If the user applies a top-down approach, the resulting units will be
 #' according its own data. For instance, if the vehicles are veh/day, the units
 #' of the emissions implicitly will be g/day.
@@ -94,9 +93,9 @@ emis <- function (veh,
                                   ncol(veh[[1]])),
                   profile,
                   simplify = FALSE,
+                  fortran = FALSE,
                   hour = nrow(profile),
                   day = ncol(profile),
-                  array = TRUE,
                   verbose = FALSE) {
   # Check units
   if(class(lkm) != "units"){
@@ -120,44 +119,75 @@ emis <- function (veh,
   }
 
   lkm <- as.numeric(lkm)
-  # veh is "Vehicles" data-frame
+  # veh is "Vehicles" data-frame ####
   if (!inherits(x = veh, what = "list")) {
-    veh <- as.data.frame(veh)
-    for (i  in 1:ncol(veh) ) {
-      veh[,i] <- as.numeric(veh[,i])
-    }
-
+    veh <- remove_units(veh)
 
     # top down sin perfil, FE numerico
     if(missing(profile) & is.numeric(ef)){
       if(verbose) message(
         paste0("If this is a top down approach, you may try emis_hot_td\n",
                "With this approach speed is not necessary\n"))
-      if(nrow(veh) != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`` ")
-      a <- lapply(1:ncol(veh), function(i){
-        veh[, i] * as.numeric(lkm) * as.numeric(ef)[i]
-      })
-      a <- Emissions(do.call("cbind", a))
-      return(a)
 
+      if(nrow(veh) != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`` ")
+
+      if(fortran){
+        veh <- as.matrix(veh)
+        lkm <- as.numeric(lkm)
+        ef <- as.numeric(ef)
+        nrowv = as.integer(nrow(veh))
+        ncolv = as.integer(ncol(veh))
+        a <-   .Fortran("emis2df",
+                        nrowv = nrowv,
+                        ncolv = ncolv,
+                        veh = veh,
+                        lkm = lkm,
+                        ef = ef,
+                        emis = numeric(nrowv*ncolv))$emis
+        e <- matrix(a, nrow = nrowv, ncol =  ncolv)
+        return(Emissions(e))
+      } else {
+        a <- lapply(1:ncol(veh), function(i){
+          veh[, i] * as.numeric(lkm) * as.numeric(ef)[i]
+        })
+        a <- Emissions(do.call("cbind", a))
+        return(a)
+      }
 
       # top down sin perfil, FE lista y con velocidad
     } else if(missing(profile) & class(ef)[1] == "EmissionFactorsList"){
       #Check speed
       if(missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
-      speed <- as.data.frame(speed)
-      for (i  in 1:ncol(speed) ) {
-        speed[, i] <- as.numeric(speed[, i])
-      }
+      speed <- remove_units(speed)
+
       if(nrow(veh) != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`")
       if(nrow(veh) != length(unlist(speed))) stop("Number of rows of `veh` must be the same rows of `speed`")
 
-      a <- lapply(1:ncol(veh), function(i){
-        veh[, i] * as.numeric(lkm) * ef[[i]](speed)
-      })
-      a <- Emissions(do.call("cbind", a))
-      return(a)
-
+      if(fortran){
+        ef <- as.numeric(unlist(lapply(seq_along(ef),
+                                       function(i) {
+                                         ef[[i]](speed)
+                                         })))
+        veh <- as.matrix(veh)
+        lkm <- as.numeric(lkm)
+        nrowv = as.integer(nrow(veh))
+        ncolv = as.integer(ncol(veh))
+        a <-   .Fortran("emis2df",
+                        nrowv = nrowv,
+                        ncolv = ncolv,
+                        veh = veh,
+                        lkm = lkm,
+                        ef = ef,
+                        emis = numeric(nrowv*ncolv))$emis
+        e <- matrix(a, nrow = nrowv, ncol =  ncolv)
+        return(Emissions(e))
+      } else{
+        a <- lapply(1:ncol(veh), function(i){
+          veh[, i] * as.numeric(lkm) * ef[[i]](speed)
+        })
+        a <- Emissions(do.call("cbind", a))
+        return(a)
+      }
     }
 
 
@@ -165,8 +195,6 @@ emis <- function (veh,
     if(!missing(profile) & is.vector(profile)){
       profile <- matrix(profile, ncol = 1)
     }
-
-
 
     if(inherits(x = ef, what = "list")) {
       if(verbose) message("Emission factors inherits from list")
@@ -190,30 +218,75 @@ emis <- function (veh,
       }
       #Check speed
       if(missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
-      speed <- as.data.frame(speed)
-      for (i  in 1:ncol(speed) ) {
-        speed[, i] <- as.numeric(speed[, i])
-      }
+      speed <- remove_units(speed)
 
       # simplify?
       if(simplify) {
-        d <-  simplify2array(
-          lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
-            simplify2array(
-              lapply(1:agemax, function(k){ # categorias
-                veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])
-              }) ) }) )
+        if(fortran){
+          veh <- as.matrix(veh)
+          lkm <- as.numeric(lkm)
+          ef <- as.numeric(ef)
+          profile = as.numeric(unlist(profile))
+          nrowv = as.integer(nrow(veh))
+          ncolv = as.integer(ncol(veh))
+          prok = as.integer(length(unlist(profile)))
+
+          a <-   .Fortran("emis3df",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          prok = prok,
+                          veh = veh,
+                          lkm = lkm,
+                          ef = ef,
+                          pro = profile,
+                          emis = numeric(nrowv*ncolv*prok))$emis
+          e <- array(a, dim = c(nrowv, ncolv,prok))
+          return(EmissionsArray(e))
+
+        } else {
+          d <-  simplify2array(
+            lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
+              simplify2array(
+                lapply(1:agemax, function(k){ # categorias
+                  veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])
+                }) ) }) )
+
+        }
 
       } else {
-        d <-  simplify2array(
-          lapply(1:ncol(profile),function(j){ # 7 dias
-            simplify2array(
-              lapply(1:nrow(profile),function(i){ # 24 horas
-                simplify2array(
-                  lapply(1:agemax, function(k){ # categorias
-                    veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])
-                  }) ) }) ) }) )
-        # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+        if(fortran){
+          veh <- as.matrix(veh)
+          profile <- as.matrix(profile)
+          lkm <- as.numeric(lkm)
+          ef <- as.numeric(ef)
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          proh <- as.integer(nrow(profile))
+          prod <- as.integer(ncol(profile))
+
+          a <-   .Fortran("emis4df",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          proh = proh,
+                          prod = prod,
+                          veh = veh,
+                          lkm = lkm,
+                          ef = ef,
+                          pro = profile,
+                          emis = numeric(nrowv*ncolv*proh*prod))$emis
+          e <- array(a, dim = c(nrowv, ncolv,proh, prod))
+          return(EmissionsArray(e))
+
+        } else {
+          d <-  simplify2array(
+            lapply(1:ncol(profile),function(j){ # 7 dias
+              simplify2array(
+                lapply(1:nrow(profile),function(i){ # 24 horas
+                  simplify2array(
+                    lapply(1:agemax, function(k){ # categorias
+                      veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])
+                    }) ) }) ) }) )
+        }
       }
 
     } else {
@@ -241,23 +314,63 @@ emis <- function (veh,
 
       # simplify?
       if(simplify) {
-        print("aqui")
-        vkm <- veh*lkm
-        vkmef <- t(t(vkm) * ef)
-        d <- simplify2array(lapply(unlist(profile), "*", vkmef))
+        if(fortran) {
+          veh <- as.matrix(veh)
+          lkm <- as.numeric(lkm)
+          ef <- as.numeric(ef)
+          nrowv = as.integer(nrow(veh))
+          ncolv = as.integer(ncol(veh))
+
+          a <-   .Fortran("emis2df",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          veh = veh,
+                          lkm = lkm,
+                          ef = ef,
+                          emis = numeric(nrowv*ncolv))$emis
+          e <- matrix(a, nrow = nrowv, ncol =  ncolv)
+          return(EmissionsArray(e))
+        } else {
+          vkm <- veh*lkm
+          vkmef <- t(t(vkm) * ef)
+          d <- simplify2array(lapply(unlist(profile), "*", vkmef))
+        }
 
       } else {
+        if(fortran){
+          veh <- as.matrix(veh)
+          profile <- as.matrix(profile)
+          lkm <- as.numeric(lkm)
+          ef <- as.numeric(ef)
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          proh <- as.integer(nrow(profile))
+          prod <- as.integer(ncol(profile))
 
+          a <-   .Fortran("emis4df",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          proh = proh,
+                          prod = prod,
+                          veh = veh,
+                          lkm = lkm,
+                          ef = ef,
+                          pro = profile,
+                          emis = numeric(nrowv*ncolv*proh*prod))$emis
+          e <- array(a, dim = c(nrowv, ncolv,proh, prod))
+          return(EmissionsArray(e))
 
-        d <-  simplify2array(
-          lapply(1:ncol(profile),function(j){ # 7 dias
-            simplify2array(
-              lapply(1:nrow(profile),function(i){ # 24 horas
-                simplify2array(
-                  lapply(1:agemax, function(k){ # categorias
-                    veh[, k]*profile[i,j]*lkm*ef[k]
-                  }) ) }) ) }) )
-        # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+        } else {
+          d <-  simplify2array(
+            lapply(1:ncol(profile),function(j){ # 7 dias
+              simplify2array(
+                lapply(1:nrow(profile),function(i){ # 24 horas
+                  simplify2array(
+                    lapply(1:agemax, function(k){ # categorias
+                      veh[, k]*profile[i,j]*lkm*ef[k]
+                    }) ) }) ) }) )
+          # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+        }
       }
     }
 

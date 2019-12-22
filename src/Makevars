@@ -1,0 +1,10 @@
+C_OBJS = init.o
+FT_OBJS = emis3d.o
+
+all:
+	@$(MAKE) $(SHLIB)
+	@rm -f *.mod *.o
+
+$(SHLIB): $(FT_OBJS) $(C_OBJS)
+
+init.o: emis3d.o
