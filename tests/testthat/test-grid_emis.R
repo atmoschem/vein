@@ -20,9 +20,9 @@ gCO$emission <- gCO$V1
 
 test_that("grid_emis works", {
   expect_equal(round(grid_emis(net, gCO, verbose = TRUE, top_down = T)$emission[1]),
-  4379)
+               4379)
   expect_output(grid_emis(net, gCO, verbose = TRUE, top_down = T),
-               ".?")
+                ".?")
 })
 
 
@@ -37,34 +37,4 @@ test_that("emis_cold works", {
                ".?")
 
 })
-
-test_that("grid_emis works", {
-  expect_equal(round(grid_emis(net, gCO, sr = 31983, verbose = TRUE, top_down = T)$emission[1]),
-               4379)
-  expect_message(grid_emis(net, gCO, sr = 31983, verbose = TRUE, top_down = T),
-               "T.?")
-  expect_output(grid_emis(net, gCO, verbose = TRUE, top_down = T),
-               "S.?")
-})
-
-data("pc_profile")
-test_that("grid_emis works", {
-  expect_equal(round(grid_emis(net, gCO, pro = pc_profile, top_down = T)$V1[1]),
-               7)
-  expect_equal(round(grid_emis(net, gCO, sr = 31983, pro = pc_profile, top_down = T)$V1[1]),
-               7)
-  expect_message(grid_emis(net, gCO, sr = 31983, pro = pc_profile, verbose = TRUE, top_down = T),
-                 "T.?")
-  expect_output(grid_emis(net, gCO, pro = pc_profile, verbose = TRUE, top_down = T),
-                "S.?")
-  expect_output(grid_emis(net, gCO, pro = pc_profile, verbose = TRUE, top_down = T),
-                "S.?")
-})
-
-
-test_that("grid_emis works", {
-  expect_equal(round(grid_emis(net, gCO, verbose = TRUE, char = "V")$ldv[1]),
-               3760)
-})
-
 

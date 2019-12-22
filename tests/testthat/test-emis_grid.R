@@ -23,10 +23,18 @@ test_that("emis_grid works", {
 })
 
 sff2 <- suppressMessages(suppressWarnings(sf::st_centroid(netsf[, c("ldv")])))
-plot(sff2, axes = TRUE)
 test_that("emis_grid works", {
   expect_equal(round(sum(emis_grid(spobj = sff2,
                                    g = g,
                                    type = "points")$ldv, na.rm = T)),
                round(as.numeric(sum(net$ldv))))
 })
+
+test_that("emis_grid works", {
+  netp <- sf::st_sf(a = 1, geometry = sf::st_as_sfc(sf::st_bbox(sf::st_as_sf(net))))
+  expect_equal(round(sum(emis_grid(spobj = netp,
+                                   g = g,
+                                   type = "polygon")$ldv, na.rm = T)),
+               0)
+})
+

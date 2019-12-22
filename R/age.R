@@ -7,7 +7,6 @@
 #' @param a Numeric; parameter of survival equation
 #' @param b Numeric; parameter of survival equation
 #' @param agemax Integer; age of oldest vehicles for that category
-#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param verbose Logical;  message with average age and total numer of vehicles
 #' regions or streets.
 #' @return dataframe of age distrubution of vehicles
@@ -98,14 +97,10 @@ age <- function (x,
                  a = 14.46,
                  b = 4.79,
                  agemax,
-                 net,
                  verbose = FALSE){
-  #check agemax
-    if (missing(x) | is.null(x)) {
-    stop ("Missing vehicles")
-    }
-# check agemax
-if(!missing(agemax)) x <- x[1:agemax]
+
+  # check agemax
+  if(!missing(agemax)) x <- x[1:agemax]
 
   # gompertz ####
   if(type == "gompertz") {
@@ -147,15 +142,9 @@ if(!missing(agemax)) x <- x[1:agemax]
     )
     cat("\n")
   }
-# replace NA and NaN
-df[is.na(df)] <- 0
+  # replace NA and NaN
+  df[is.na(df)] <- 0
 
-  if(!missing(net)){
-    netsf <- sf::st_as_sf(net)
-    dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)
-    return(dfsf)
-  } else {
-    return(Vehicles(df))
-  }
+  return(Vehicles(df))
 
 }

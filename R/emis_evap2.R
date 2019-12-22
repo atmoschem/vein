@@ -99,16 +99,17 @@
 #'                  rl_nd1 = ef1*1:ncol(pc1))
 #' }
 emis_evap2 <- function(veh,
-                      name, size, fuel, aged,
-                      nd4, nd3, nd2, nd1,
-                      hs_nd4, hs_nd3, hs_nd2, hs_nd1,
-                      rl_nd4, rl_nd3, rl_nd2, rl_nd1,
-                      d_nd4, d_nd3, d_nd2, d_nd1) {
-  if (missing(veh) | is.null(veh)) {
-    stop ("Missing vehicles")
+                       name, size, fuel, aged,
+                       nd4, nd3, nd2, nd1,
+                       hs_nd4, hs_nd3, hs_nd2, hs_nd1,
+                       rl_nd4, rl_nd3, rl_nd2, rl_nd1,
+                       d_nd4, d_nd3, d_nd2, d_nd1) {
+  if (inherits(veh, "list")){
+    veh <- colSums(veh[[8]])
   } else {
-    veh <- if (inherits(veh, "list")){colSums(veh[[8]])
-    } else { colSums(veh) }
+    veh <- colSums(veh)
+  }
+
   df <- data.frame(name = rep(name, max(aged)*4*3),
                    size = rep(size, max(aged)*4*3),
                    age = rep(aged, 4*3),
@@ -116,21 +117,21 @@ emis_evap2 <- function(veh,
                                    rep("Running Losses", 4*max(aged)),
                                    rep("Diurnal", 4*max(aged))),
                    g = c(hs_nd4, hs_nd3, hs_nd2, hs_nd1,
-                       rl_nd4, rl_nd3, rl_nd2, rl_nd1,
-                       d_nd4, d_nd3, d_nd2, d_nd1)*veh,
+                         rl_nd4, rl_nd3, rl_nd2, rl_nd1,
+                         d_nd4, d_nd3, d_nd2, d_nd1)*veh,
                    days = rep(c(rep(nd4,max(aged)),
                                 rep(nd3,max(aged)),
                                 rep(nd2,max(aged)),
                                 rep(nd1,max(aged))),3),
                    Temperature = rep(c(rep("20_35",max(aged)),
-                                rep("10_25",max(aged)),
-                                rep("0_10",max(aged)),
-                                rep("-5_10",max(aged))),3))
+                                       rep("10_25",max(aged)),
+                                       rep("0_10",max(aged)),
+                                       rep("-5_10",max(aged))),3))
   message(paste0("Evaporative NMHC emissions of ",
                  name, "_", size, " are ",
                  round(sum(df$g*df$days, na.rm = T)/1000000,2),
                  " t/(time-lapse)"))
-  }
+
   return(df)
 }
 

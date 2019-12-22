@@ -23,5 +23,5 @@ test_that("Vehicles works", {
                NULL)
   expect_equal(plot(Vehicles(matrix(1, ncol = 8))),
                NULL)
- })
+})
 

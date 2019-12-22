@@ -7,6 +7,12 @@ test_that("ef_ldv_cold eu is not data.frame", {
                            eu = "I",
                            p = "CO")(10),
                2.754)
+  expect_equal(ef_ldv_cold(ta = 15,
+                           cc = "<=1400",
+                           f = "G",
+                           eu = "I",
+                           p = "CO", speed = Speed(0)),
+               EmissionFactors(1.974))
   expect_error(ef_ldv_cold(ta = data.frame(15),
                            cc = "<=1400",
                            f = "G",
@@ -129,5 +135,17 @@ test_that("ef_ldv_cold is.numeric(ta) & length(ta) == 1 & length(eu) > 1", {
                            p = "CO",
                            speed = Speed(10))$I_1,
                EmissionFactors(2.754))
+  expect_error(ef_ldv_cold(ta = data.frame(15),
+                           cc = "<=1400",
+                           f = "G",
+                           eu = c("I", "II"),
+                           p = "CO"),
+               ".?")
+  expect_error(ef_ldv_cold(ta = data.frame(a = celsius(1:10)),
+                           cc = "<=1400",
+                           f = "G",
+                           eu = data.frame(a = "I", c = "II"),
+                           p = "CO"),
+               ".?")
 })
 

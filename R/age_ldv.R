@@ -54,9 +54,6 @@ age_ldv <- function (x,
   #check agemax
   if(agemax < 1) stop("Agemax should be bigger than 1")
 
-  if (missing(x) | is.null(x)) {
-    stop ("Missing vehicles")
-  }
   #bystreet = TRUE
   if (bystreet == T){
     if(length(x) != length(a)){
