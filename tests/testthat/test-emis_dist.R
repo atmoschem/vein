@@ -37,8 +37,6 @@ test_that("emis_dist works", {
   expect_output(emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1), pro = pc_profile,
                           verbose = TRUE),
                 "S.?")
-  expect_error(emis_dist(gy = po, spobj = net, verbose = TRUE, osm = c(3, 2, 1, 1), pro = pc_profile),
-               "l.?")
   expect_equal(round(emis_dist(gy = po,
                                spobj = net,
                                osm = c(5, 3, 2, 1, 1),

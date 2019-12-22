@@ -1,9 +1,10 @@
 context("age")
 
 vehLIA <- rep(1, 25)
-
+data(net)
+net <- sf::st_as_sf(net)
 test_that("age works", {
-  expect_equal(round(age(x = vehLIA, type = "gompertz")[1]),
+  expect_equal(round(age(x = vehLIA, type = "gompertz", agemax = 10)[1]),
                Vehicles(1))
   expect_message(age(x = vehLIA, type = "gompertz", verbose = TRUE),
                 "N.?")

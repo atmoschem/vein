@@ -17,6 +17,7 @@
 #' @param show.scripts Logical value for printing the created scripts.
 #' @param clear Logical value for removing recursively the directory and create
 #' another one.
+#' @param showWarnings Logical, showWarnings?
 #' @param rush.hour Logical, to create a template for morning rush hour.
 #' @return Structure of directories and scripts for automating compilation of
 #' vehicular emissions inventory. The structure can be used with other type of
@@ -71,67 +72,68 @@ inventory <- function(name,
                       show.dir = FALSE,
                       show.scripts = FALSE,
                       clear = TRUE,
-                      rush.hour = FALSE){
+                      rush.hour = FALSE,
+                      showWarnings = FALSE){
   if(Sys.info()[['sysname']] == "Windows") {
     name <- gsub("\\\\", "/", name)
   }
   # directorys
   dovein <- function(){
-    dir.create(path = name)
-    dir.create(path = paste0(name, "/profiles"))
-    dir.create(path = paste0(name, "/ef"))
-    dir.create(path = paste0(name, "/emi"))
-    dir.create(path = paste0(name, "/post"))
-    dir.create(path = paste0(name, "/post/grids"))
-    dir.create(path = paste0(name, "/post/streets"))
-    dir.create(path = paste0(name, "/post/df"))
-    dir.create(path = paste0(name, "/est"))
-    dir.create(path = paste0(name, "/images"))
-    dir.create(path = paste0(name, "/network"))
-    dir.create(path = paste0(name, "/veh"))
+    dir.create(path = name, showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/profiles"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/ef"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/emi"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/post"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/post/grids"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/post/streets"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/post/df"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/est"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/images"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/network"), showWarnings = showWarnings)
+    dir.create(path = paste0(name, "/veh"), showWarnings = showWarnings)
 
     if(vehcomp["PC"] > 0){
       for(i in 1:vehcomp[1]){
         if(i < 10) {
-          dir.create(path = paste0(name, "/emi/PC_0", i))
+          dir.create(path = paste0(name, "/emi/PC_0", i), showWarnings = showWarnings)
         } else {
-          dir.create(path = paste0(name, "/emi/PC_", i))
+          dir.create(path = paste0(name, "/emi/PC_", i), showWarnings = showWarnings)
         }}
     } else {message("no PC")}
 
     if(vehcomp["LCV"] > 0){
       for(i in 1:vehcomp[2]){
         if(i < 10) {
-          dir.create(path = paste0(name, "/emi/LCV_0", i))
+          dir.create(path = paste0(name, "/emi/LCV_0", i), showWarnings = showWarnings)
         } else {
-          dir.create(path = paste0(name, "/emi/LCV_", i))
+          dir.create(path = paste0(name, "/emi/LCV_", i), showWarnings = showWarnings)
         }}
     } else {message("no LCV")}
 
     if(vehcomp["HGV"] > 0){
       for(i in 1:vehcomp[3]){
         if(i < 10) {
-          dir.create(path = paste0(name, "/emi/HGV_0", i))
+          dir.create(path = paste0(name, "/emi/HGV_0", i), showWarnings = showWarnings)
         } else {
-          dir.create(path = paste0(name, "/emi/HGV_", i))
+          dir.create(path = paste0(name, "/emi/HGV_", i), showWarnings = showWarnings)
         }}
     } else {message("no HGV")}
 
     if(vehcomp["BUS"] > 0){
       for(i in 1:vehcomp[4]){
         if(i < 10) {
-          dir.create(path = paste0(name, "/emi/BUS_0", i))
+          dir.create(path = paste0(name, "/emi/BUS_0", i), showWarnings = showWarnings)
         } else {
-          dir.create(path = paste0(name, "/emi/BUS_", i))
+          dir.create(path = paste0(name, "/emi/BUS_", i), showWarnings = showWarnings)
         }}
     } else {message("no BUS")}
 
     if(vehcomp["MC"] > 0){
       for(i in 1:vehcomp[5]){
         if(i < 10) {
-          dir.create(path = paste0(name, "/emi/MC_0", i))
+          dir.create(path = paste0(name, "/emi/MC_0", i), showWarnings = showWarnings)
         } else {
-          dir.create(path = paste0(name, "/emi/MC_", i))
+          dir.create(path = paste0(name, "/emi/MC_", i), showWarnings = showWarnings)
         }}
     } else {message("no MC")}
   }

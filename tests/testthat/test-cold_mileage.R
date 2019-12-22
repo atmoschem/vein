@@ -26,6 +26,15 @@ test_that("cold_mileage works", {
                1)
   expect_error(cold_mileage(lkm, as.numeric(ta$V1)),
                ".?")
+  expect_error(round(cold_mileage(lkm, remove_units(ta)[1])$V1[1]),
+               ".?")
+  expect_equal(round(cold_mileage(lkm, ta)$V1[1]),
+               1)
+})
 
+
+test_that("cold_mileage works", {
+  expect_equal(round(cold_mileage(lkm, celsius(10))[1]),
+               1)
 })
 

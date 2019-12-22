@@ -78,7 +78,7 @@ emis_dist <- function(gy,
              "tertiary", "tertiary_link")
     if(verbose) cat("Selecting:", st, "\n")
     net <- net[net$highway %in% st, ]
-    if(length(osm) != 5) stop("length of osm must be 5")
+    # if(length(osm) != 5) stop("length of osm must be 5")
     osm <- osm/sum(osm)
     #motorway
     net_m <- net[net$highway %in% st[1:2], ]
@@ -115,7 +115,7 @@ emis_dist <- function(gy,
 
     pro <- pro/sum(pro)
 
-    if(length(osm) != 5) stop("length of osm must be 5")
+    # if(length(osm) != 5) stop("length of osm must be 5")
     osm <- osm/sum(osm)
     #motorway
     net_m <- net[net$highway %in% st[1:2], ]

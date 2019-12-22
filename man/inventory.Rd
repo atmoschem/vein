@@ -6,7 +6,8 @@
 \usage{
 inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
   show.main = FALSE, scripts = TRUE, show.dir = FALSE,
-  show.scripts = FALSE, clear = TRUE, rush.hour = FALSE)
+  show.scripts = FALSE, clear = TRUE, rush.hour = FALSE,
+  showWarnings = FALSE)
 }
 \arguments{
 \item{name}{Character, path to new main directory for running vein.
@@ -30,6 +31,8 @@ number allowed is 99 per category.}
 another one.}
 
 \item{rush.hour}{Logical, to create a template for morning rush hour.}
+
+\item{showWarnings}{Logical, showWarnings?}
 }
 \value{
 Structure of directories and scripts for automating compilation of
