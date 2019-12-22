@@ -5,6 +5,7 @@ NEWS
 # vein 0.8.4  (Release date: 2019-12-02)
 
 - improves emis, now faster
+- just add more tests (2019-12-22)
 
 ## vein 0.8.3  (Release date: 2019-11-14)
 
