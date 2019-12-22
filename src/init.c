@@ -2,8 +2,8 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-/* FIXME:
- Check these declarations against the C/Fortran source code.
+/*
+s quiere decir que tiene speed y factores de emissioens cambian horariamente
  */
 
 /* .Fortran calls */

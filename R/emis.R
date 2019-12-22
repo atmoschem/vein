@@ -47,8 +47,7 @@
 #' # Estimation for morning rush hour and local emission factors
 #' speed <- data.frame(S8 = net$ps)
 #' lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
-#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-#'              profile = 1)
+#' E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, profile = 1)
 #'
 #' # Estimation for 168 hour and local factors
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -60,6 +59,12 @@
 #'              ef = lef,
 #'              speed = speed,
 #'              profile = profiles$PC_JUNE_2014)
+#' E_CO <- emis(veh = pc1,
+#'              lkm = net$lkm,
+#'              ef = lef,
+#'              speed = speed,
+#'              profile = profiles$PC_JUNE_2014, simplify = T,
+#'              fortran = T) #no funciona !!!!
 #' summary(E_CO)
 #' lpc <- list(pc1, pc1)
 #' E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed)
@@ -83,7 +88,8 @@
 #'                      l = 0.5,
 #'                      p = "CO")
 #' for(i in 1:length(lef)) print(lef[[i]](10))
-#' emis(veh = bus1, lkm = lkm, ef = efco, verbose = T)
+#' (a <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = T))
+#' (b <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = T, fortran = T))
 #' }
 emis <- function (veh,
                   lkm,
@@ -163,31 +169,12 @@ emis <- function (veh,
       if(nrow(veh) != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`")
       if(nrow(veh) != length(unlist(speed))) stop("Number of rows of `veh` must be the same rows of `speed`")
 
-      if(fortran){
-        ef <- as.numeric(unlist(lapply(seq_along(ef),
-                                       function(i) {
-                                         ef[[i]](speed)
-                                         })))
-        veh <- as.matrix(veh)
-        lkm <- as.numeric(lkm)
-        nrowv = as.integer(nrow(veh))
-        ncolv = as.integer(ncol(veh))
-        a <-   .Fortran("emis2df",
-                        nrowv = nrowv,
-                        ncolv = ncolv,
-                        veh = veh,
-                        lkm = lkm,
-                        ef = ef,
-                        emis = numeric(nrowv*ncolv))$emis
-        e <- matrix(a, nrow = nrowv, ncol =  ncolv)
-        return(Emissions(e))
-      } else{
-        a <- lapply(1:ncol(veh), function(i){
-          veh[, i] * as.numeric(lkm) * ef[[i]](speed)
-        })
-        a <- Emissions(do.call("cbind", a))
-        return(a)
-      }
+      if(fortran) message("Not implemented yet when ef is 'EmissionsFactorsList`, changing to default")
+      a <- lapply(1:ncol(veh), function(i){
+        veh[, i] * as.numeric(lkm) * ef[[i]](speed)
+      })
+      a <- Emissions(do.call("cbind", a))
+      return(a)
     }
 
 
@@ -222,72 +209,27 @@ emis <- function (veh,
 
       # simplify?
       if(simplify) {
-        if(fortran){
-          veh <- as.matrix(veh)
-          lkm <- as.numeric(lkm)
-          ef <- as.numeric(ef)
-          profile = as.numeric(unlist(profile))
-          nrowv = as.integer(nrow(veh))
-          ncolv = as.integer(ncol(veh))
-          prok = as.integer(length(unlist(profile)))
+        if(fortran) message("Not implemented yet when ef is 'EmissionsFactorsList`, changing to default")
+        d <-  simplify2array(
+          lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
+            simplify2array(
+              lapply(1:agemax, function(k){ # categorias
+                veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])
+              }) ) }) )
 
-          a <-   .Fortran("emis3df",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          prok = prok,
-                          veh = veh,
-                          lkm = lkm,
-                          ef = ef,
-                          pro = profile,
-                          emis = numeric(nrowv*ncolv*prok))$emis
-          e <- array(a, dim = c(nrowv, ncolv,prok))
-          return(EmissionsArray(e))
-
-        } else {
-          d <-  simplify2array(
-            lapply(1:length(unlist(profile)) ,function(j){ # 7 dias
-              simplify2array(
-                lapply(1:agemax, function(k){ # categorias
-                  veh[, k]*unlist(profile)[j]*lkm*ef[[k]](speed[, j])
-                }) ) }) )
-
-        }
 
       } else {
-        if(fortran){
-          veh <- as.matrix(veh)
-          profile <- as.matrix(profile)
-          lkm <- as.numeric(lkm)
-          ef <- as.numeric(ef)
-          nrowv <- as.integer(nrow(veh))
-          ncolv <- as.integer(ncol(veh))
-          proh <- as.integer(nrow(profile))
-          prod <- as.integer(ncol(profile))
-
-          a <-   .Fortran("emis4df",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          proh = proh,
-                          prod = prod,
-                          veh = veh,
-                          lkm = lkm,
-                          ef = ef,
-                          pro = profile,
-                          emis = numeric(nrowv*ncolv*proh*prod))$emis
-          e <- array(a, dim = c(nrowv, ncolv,proh, prod))
-          return(EmissionsArray(e))
-
-        } else {
-          d <-  simplify2array(
-            lapply(1:ncol(profile),function(j){ # 7 dias
-              simplify2array(
-                lapply(1:nrow(profile),function(i){ # 24 horas
-                  simplify2array(
-                    lapply(1:agemax, function(k){ # categorias
-                      veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])
-                    }) ) }) ) }) )
-        }
+        if(fortran) message("Not implemented yet when ef is 'EmissionsFactorsList`, changing to default")
+        d <-  simplify2array(
+          lapply(1:ncol(profile),function(j){ # 7 dias
+            simplify2array(
+              lapply(1:nrow(profile),function(i){ # 24 horas
+                simplify2array(
+                  lapply(1:agemax, function(k){ # categorias
+                    veh[, k]*profile[i,j]*lkm*ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile)*(j - 1)])
+                  }) ) }) ) }) )
       }
+
 
     } else {
       if(verbose) message("Emission factors does not inherits from list")
@@ -318,17 +260,21 @@ emis <- function (veh,
           veh <- as.matrix(veh)
           lkm <- as.numeric(lkm)
           ef <- as.numeric(ef)
+          profile = as.numeric(unlist(profile))
           nrowv = as.integer(nrow(veh))
           ncolv = as.integer(ncol(veh))
+          prok = as.integer(length(unlist(profile)))
 
-          a <-   .Fortran("emis2df",
+          a <-   .Fortran("emis3df",
                           nrowv = nrowv,
                           ncolv = ncolv,
+                          prok = prok,
                           veh = veh,
                           lkm = lkm,
                           ef = ef,
-                          emis = numeric(nrowv*ncolv))$emis
-          e <- matrix(a, nrow = nrowv, ncol =  ncolv)
+                          pro = profile,
+                          emis = numeric(nrowv*ncolv*prok))$emis
+          e <- array(a, dim = c(nrowv, ncolv,prok))
           return(EmissionsArray(e))
         } else {
           vkm <- veh*lkm
