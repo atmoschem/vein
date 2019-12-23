@@ -30,7 +30,8 @@ being streets, vehicle categories and hours or default (streets, vehicle
 categories, hours and days). Default is FALSE to avoid break old code, but
 the recommendation is that new estimations use this parameter as TRUE}
 
-\item{fortran}{Logical; to try the fortran calculation}
+\item{fortran}{Logical; to try the fortran calculation when speed is not used.
+I will add fortran for EmissionFactorsList soon.}
 
 \item{hour}{Number of considered hours in estimation. Default value is number
 of rows of argument profile}
@@ -65,37 +66,74 @@ PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
           133833,138441,142682,171029,151048,115228,98664,126444,101027,
           84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
           1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
-veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
-# Estimation for morning rush hour and local emission factors
-speed <- data.frame(S8 = net$ps)
-lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
-E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, profile = 1)
 
-# Estimation for 168 hour and local factors
+# Estimation for morning rush hour and local emission factors and speed
+speed <- data.frame(S8 = net$ps)
+lef <- EmissionFactorsList(ef_cetesb("CO", "PC_G", agemax = ncol(pc1)))
+system.time(E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed))
+system.time(E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, simplify = T))
+
+# Estimation for morning rush hour and local emission factors without speed
+lef <- ef_cetesb("CO", "PC_G", agemax = ncol(pc1))
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef)
+
+# Estimation for 168 hour and local factors and speed
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-lef <- EmissionFactorsList(fe2015[fe2015$Pollutant=="CO", "PC_G"])
+lef <- EmissionFactorsList(ef_cetesb("CO", "PC_G", agemax = ncol(pc1)))
+system.time(
+E_CO <- emis(veh = pc1,
+             lkm = net$lkm,
+             ef = lef,
+             speed = speed,
+             profile = profiles$PC_JUNE_2014))
+system.time(
+E_CO <- emis(veh = pc1,
+             lkm = net$lkm,
+             ef = lef,
+             speed = speed,
+             profile = profiles$PC_JUNE_2014,
+             simplify = T))
 
+# Estimation for 168 hour and local factors and without speed
+lef <- ef_cetesb("CO", "PC_G", agemax = ncol(pc1))
+system.time(
 E_CO <- emis(veh = pc1,
              lkm = net$lkm,
              ef = lef,
-             speed = speed,
-             profile = profiles$PC_JUNE_2014)
+             profile = profiles$PC_JUNE_2014)) ; sum(E_CO)
+system.time(
 E_CO <- emis(veh = pc1,
              lkm = net$lkm,
              ef = lef,
-             speed = speed,
-             profile = profiles$PC_JUNE_2014, simplify = T,
-             fortran = T) #no funciona !!!!
-summary(E_CO)
+             profile = profiles$PC_JUNE_2014,
+             simplify = T)) ; sum(E_CO)
+system.time(
+E_CO <- emis(veh = pc1,
+             lkm = net$lkm,
+             ef = lef,
+             profile = profiles$PC_JUNE_2014,
+             fortran = TRUE)) ; sum(E_CO)
+system.time(
+E_CO <- emis(veh = pc1,
+             lkm = net$lkm,
+             ef = lef,
+             profile = profiles$PC_JUNE_2014,
+             simplify = T,
+             fortran = TRUE)) ; sum(E_CO)
+
+#Estimation with list of vehicles
 lpc <- list(pc1, pc1)
+lef <- EmissionFactorsList(ef_cetesb("CO", "PC_G", agemax = ncol(pc1)))
 E_COv2 <- emis(veh = lpc,lkm = net$lkm, ef = lef, speed = speed)
+
 # top down
 veh <- age_ldv(x = net$ldv[1:4], name = "PC_E25_1400", agemax = 4)
 mil <- fkm$KM_PC_E25(1:4)
 ef <- ef_cetesb("COd", "PC_G")[1:4]
 emis(veh, units::set_units(mil, "km"), ef)
+
 # group online
 bus1 <- age_hdv(30, agemax = 4)
 veh = bus1
