@@ -201,18 +201,24 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"vein"</span>)</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(vein)</a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://rdrr.io/r/utils/demo.html">demo</a></span>(VEIN)</a></code></pre></div>
+</div>
+</div>
+<div id="what-is-new" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-is-new" class="anchor"></a>What is new?</h2>
+<ul>
+<li>Added Fortran function to speedup calculations (currently, without speed)</li>
+</ul>
 <p>Check the <a href="https://atmoschem.github.io/vein/reference">functions</a> and the <a href="https://github.com/atmoschem/vein/blob/master/NEWS.md">NEWS</a></p>
 <p>Future steps:</p>
 <ul>
 <li>Enhance <a href="https://atmoschem.github.io/vein/reference/inventory.html">inventory</a>. The idea is to configurate a whole emissions inventory for emission factors of CETESB, COPERT.</li>
-<li>Adds ef_china, to include chinese emission factors.</li>
 <li>Adds or connect traffic from gtfs services.</li>
 <li>Add HBEFA EF.</li>
-<li>Fortran.</li>
+<li>More Fortran.</li>
 <li>Estimation of evaporative emissions with Copert Tier 3.</li>
 <li>Group species by chemical mechanism in bottom up, currently available for top-down approach.</li>
 </ul>
-</div>
 </div>
 <div id="how-does-it-work" class="section level2">
 <h2 class="hasAnchor">
