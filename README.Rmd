@@ -147,40 +147,17 @@ demo(VEIN)
 ```
 
 
-## What is new? 0.7.0
+## What is new?
 
-- Re-design of ef_ldv_speed and ef_hdv_speed. Adds argument speed into ef_ldv_speed in order to return
-data.frames insted of list of functions. For instance, speed = Speed(0:120). Also,
-it euro can be with length bigger than one, and also can be data.frames. This is useful, when
-you have regions with different emission standards.
-- Add Active Surface (cm2/km): "AS_urban", "AS_rural", "AS_highway".
-- Add number of particles (N/km): "N_urban", "N_rural", "N_highway", "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
-- [split_emis](https://atmoschem.github.io/vein/reference/split_emis.html) Split street emissions based on a grid or polygon. For instance, let's say that you need street emissiosn at
-10 m. You could split your street emissions with this.
-- Fix some EF metals in ef_ldv_speed.
-- Fix milage equation of  fkm$KM_LDV_GNV. Fix #137.
-- Adds [cold_mileage](https://atmoschem.github.io/vein/reference/cold_mileage.html) 
-- Adds [emis_cold_td](https://atmoschem.github.io/vein/reference/emis_cold_td.html) 
-- Adds [emis_hot_td](https://atmoschem.github.io/vein/reference/emis_hot_td.html) 
-- Adds [emis_evap](https://atmoschem.github.io/vein/reference/emis_evap.html) 
-- Adds pro_month in emis_hot_td and emis_cold_td, to account for monthly variation.
-- Add argumnent namerows in age*functions to change row.names.
-- Add argument fcorr to account for the effect of fuel composition by euro standard. This result in
-a factor by euro standard.
-- Adds [age](https://atmoschem.github.io/vein/reference/age.html) with survival function of Gompertz, Weibull, logistic. This function aims to replace age_ldv, age_moto and age_hdv.
-- Update [ef_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html) for emission factors 2017. CETESB updated (and possibly recalcualted) most of PC with gasoline emission factors.
-- Fix minor bugs.
-- Check the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
+- Added Fortran function to speedup calculations (currently, without speed)
 
 future steps:
 
 - Enhance [inventory](https://atmoschem.github.io/vein/reference/inventory.html). The idea is to 
 configurate a whole emissions inventory for emission factors of CETESB, COPERT.
 - Improve plots.
-- Adds ef_china, to include chinese emission factors.
 - Adds or connect traffic from gtfs services.
 - Add HBEFA EF.
-- Fortran.
 - Estimation of evaporative emissions with Copert Tier 3.
 - Group species by chemical mechanism.
 

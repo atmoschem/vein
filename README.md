@@ -146,16 +146,20 @@ library(vein)
 demo(VEIN)
 ```
 
+
+## What is new?
+
+- Added Fortran function to speedup calculations (currently, without speed)
+
 Check the [functions](https://atmoschem.github.io/vein/reference) and the [NEWS](https://github.com/atmoschem/vein/blob/master/NEWS.md)
 
 Future steps:
 
 - Enhance [inventory](https://atmoschem.github.io/vein/reference/inventory.html). The idea is to 
 configurate a whole emissions inventory for emission factors of CETESB, COPERT.
-- Adds ef_china, to include chinese emission factors.
 - Adds or connect traffic from gtfs services.
 - Add HBEFA EF.
-- Fortran.
+- More Fortran.
 - Estimation of evaporative emissions with Copert Tier 3.
 - Group species by chemical mechanism in bottom up, currently available for top-down approach.
 
