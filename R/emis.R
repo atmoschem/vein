@@ -311,10 +311,10 @@ emis <- function (veh,
           veh <- as.matrix(veh)
           lkm <- as.numeric(lkm)
           ef <- as.numeric(ef)
-          profile = as.numeric(unlist(profile))
-          nrowv = as.integer(nrow(veh))
-          ncolv = as.integer(ncol(veh))
-          prok = as.integer(length(unlist(profile)))
+          profile <- as.numeric(unlist(profile))
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          prok <- as.integer(length(unlist(profile)))
 
           a <-   .Fortran("emis3df",
                           nrowv = nrowv,
