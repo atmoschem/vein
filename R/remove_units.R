@@ -9,10 +9,8 @@
 #' @examples {
 #' ef1 <- ef_cetesb(p = "CO", c("PC_G", "PC_FE"))
 #' class(ef1)
-#' ef1
 #' sapply(ef1, class)
 #' a <- remove_units(ef1)
-#' a
 #' }
 remove_units <- function(x){
   if ( is.matrix(x) ) {
