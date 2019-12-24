@@ -133,16 +133,16 @@ This funcion, as other in this package, adapts to the class of the input data.
 providing flexibility to the user.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_hot_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>pro_month</span>, <span class='no'>params</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_hot_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>pro_month</span>, <span class='no'>params</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>veh</th>
-      <td><p>"Vehicles" data-frame or spatial feature, wwhere columns are the
- age distribution of that vehicle. and rows each simple feature or region.
-The number of rows is equal to the number of streets link</p></td>
+      <td><p>"Vehicles" data-frame or spatial feature, where columns are the
+age distribution of that vehicle. and rows each simple feature or region.</p></td>
     </tr>
     <tr>
       <th>lkm</th>
@@ -169,6 +169,10 @@ monthly profile.</p></td>
     <tr>
       <th>verbose</th>
       <td><p>Logical; To show more information</p></td>
+    </tr>
+    <tr>
+      <th>fortran</th>
+      <td><p>Logical; to try the fortran calculation.</p></td>
     </tr>
     </table>
 
@@ -204,15 +208,22 @@ monthly profile.</p></td>
                   <span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>efh</span>[, <span class='fl'>1</span>:<span class='fl'>8</span>])),
                   <span class='kw'>pro_month</span> <span class='kw'>=</span> <span class='no'>veh_month</span>,
                   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>aa</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>aa</span>)
 <span class='no'>aa</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_hot_td</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>,
                   <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>,
                   <span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='EmissionFactors.html'>EmissionFactors</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>efh</span>[, <span class='fl'>1</span>:<span class='fl'>8</span>])),
                   <span class='kw'>pro_month</span> <span class='kw'>=</span> <span class='no'>veh_month</span>,
-                  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+                  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                   <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"data_"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>), <span class='st'>"moredata"</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>aa</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; <span class='message'>'ef' is numeric</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; <span class='message'>'ef' is numeric</span></div><div class='output co'>#&gt; <span class='message'>Adding names to params</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation with monthly profile</span></div><div class='output co'>#&gt; <span class='message'>Assuming you have the same emission factors in each simple feature</span></div><div class='output co'>#&gt; <span class='message'>'pro_month' is numeric and 'ef' is numeric</span></div><div class='img'><img src='emis_hot_td-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of emissions: 6090769 
+}</div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; <span class='message'>'ef' is numeric</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation without monthly profile</span></div><div class='output co'>#&gt; <span class='message'>'ef' is numeric</span></div><div class='output co'>#&gt; <span class='message'>Adding names to params</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 </div><div class='output co'>#&gt; <span class='message'>Estimation with monthly profile</span></div><div class='output co'>#&gt; <span class='message'>Assuming you have the same emission factors in each simple feature</span></div><div class='output co'>#&gt; <span class='message'>'pro_month' is numeric and 'ef' is numeric</span></div><div class='output co'>#&gt; Sum of emissions: 6090769 
+#&gt;       emissions rows age month
+#&gt; 1  27.03706 [g]    1   1     1
+#&gt; 2  54.07412 [g]    2   1     1
+#&gt; 3  81.11118 [g]    3   1     1
+#&gt; 4 108.14824 [g]    4   1     1
+#&gt; 5 135.18530 [g]    5   1     1
+#&gt; ... and more 955 rows</div><div class='output co'>#&gt; <span class='message'>Estimation with monthly profile</span></div><div class='output co'>#&gt; <span class='message'>Assuming you have the same emission factors in each simple feature</span></div><div class='output co'>#&gt; <span class='message'>'pro_month' is numeric and 'ef' is numeric</span></div><div class='output co'>#&gt; <span class='message'>Adding names to params</span></div><div class='img'><img src='emis_hot_td-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of emissions: 6090769 
 #&gt;       emissions rows age month    P_1      P_2
 #&gt; 1  27.03706 [g]    1   1     1 data_1 moredata
 #&gt; 2  54.07412 [g]    2   1     1 data_2 moredata

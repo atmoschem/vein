@@ -10,9 +10,8 @@
 #' This funcion, as other in this package, adapts to the class of the input data.
 #' providing flexibility to the user.
 #'
-#' @param veh "Vehicles" data-frame or spatial feature, wwhere columns are the
+#' @param veh "Vehicles" data-frame or spatial feature, where columns are the
 #'  age distribution of that vehicle. and rows each simple feature or region.
-#' The number of rows is equal to the number of streets link
 #' @param lkm Numeric; mileage by the age of use of each vehicle.
 #' @param ef Numeric or data.frame; emission factors. When it is a data.frame
 #' number of rows can be for each region, or also, each region repeated
@@ -24,6 +23,7 @@
 #' monthly profile.
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
+#' @param fortran Logical; to try the fortran calculation.
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 #' @export
@@ -51,21 +51,22 @@
 #'                   ef = EmissionFactors(as.numeric(efh[, 1:8])),
 #'                   pro_month = veh_month,
 #'                   verbose = TRUE)
-#' head(aa)
+#' print(aa)
 #' aa <- emis_hot_td(veh = veh,
 #'                   lkm = lkm,
 #'                   ef = EmissionFactors(as.numeric(efh[, 1:8])),
 #'                   pro_month = veh_month,
-#'                   verbose = FALSE,
+#'                   verbose = TRUE,
 #'                   params = list(paste0("data_", 1:10), "moredata"))
 #' print(aa)
 #' }
 emis_hot_td <- function (veh,
-                          lkm,
-                          ef,
-                          pro_month,
-                          params,
-                          verbose = FALSE) {
+                         lkm,
+                         ef,
+                         pro_month,
+                         params,
+                         verbose = FALSE,
+                         fortran = FALSE) {
   # Check units
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
@@ -143,18 +144,44 @@ emis_hot_td <- function (veh,
       if(is.data.frame(pro_month) & nrow(ef) == nrow(veh)){
         if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' and 'veh' are equal")
         if(nrow(ef) != nrow(veh)) stop("Number of rows of 'veh' and 'ef' must be equal")
-        e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- unlist(lapply(1:ncol(veh), function(i){
-            lkm[i]*veh[, i] * pro_month[,k] *ef[,i]
+        if(fortran){
+          veh <- as.matrix(veh)
+          lkm <- as.numeric(lkm)
+          ef <- as.numeric(ef)
+          month <- as.matrix(pro_month)
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          pmonth <- as.integer(ncol(month))
+
+          a <-   .Fortran("emistd1f",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          pmonth = pmonth,
+                          veh = veh,
+                          lkm = lkm,
+                          ef = ef,
+                          pro = month,
+                          emis = numeric(nrowv*ncolv*pmonth))$emis
+          e <- data.frame(emissions = Emissions(a))
+          # todo check
+          e$rows <- row.names(veh)
+          dfi$age <- seq(1, ncolv, each = pmonth)
+          dfi$month <- seq(1, pmonth, each = ncolv*nrowv)
+
+        } else {
+          e <- do.call("rbind",lapply(1:12, function(k){
+            dfi <- unlist(lapply(1:ncol(veh), function(i){
+              lkm[i]*veh[, i] * pro_month[,k] *ef[,i]
+            }))
+            dfi <- as.data.frame(dfi)
+            names(dfi) <- "emissions"
+            dfi <- Emissions(dfi)
+            dfi$rows <- row.names(veh)
+            dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+            dfi$month <- (1:length(pro_month))[k]
+            dfi
           }))
-          dfi <- as.data.frame(dfi)
-          names(dfi) <- "emissions"
-          dfi <- Emissions(dfi)
-          dfi$rows <- row.names(veh)
-          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
-          dfi$month <- (1:length(pro_month))[k]
-          dfi
-        }))
+        }
 
       } else if(is.numeric(pro_month) & nrow(ef) == nrow(veh)){
         if(verbose) message("'pro_month' is numeric and number of rows of 'ef' and 'veh' are equal")
@@ -279,8 +306,8 @@ emis_hot_td <- function (veh,
 
     if(!is.data.frame(ef)) {
       if(verbose) message("'ef' is numeric")
-#      if(length(ef) != ncol(veh)) stop("Number of columns of 'veh' and length of 'ef' must be equal")
-# Last check not necessary, Assuming ef goes from 1 column to ncol(veh)
+      #      if(length(ef) != ncol(veh)) stop("Number of columns of 'veh' and length of 'ef' must be equal")
+      # Last check not necessary, Assuming ef goes from 1 column to ncol(veh)
       e <-  unlist(lapply(1:ncol(veh), function(i){
         lkm[i]*veh[, i] *ef[i]
       }))

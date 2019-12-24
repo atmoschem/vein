@@ -4,12 +4,12 @@
 \alias{emis_hot_td}
 \title{Estimation of hot exhaust emissions with top-down approach}
 \usage{
-emis_hot_td(veh, lkm, ef, pro_month, params, verbose = FALSE)
+emis_hot_td(veh, lkm, ef, pro_month, params, verbose = FALSE,
+  fortran = FALSE)
 }
 \arguments{
-\item{veh}{"Vehicles" data-frame or spatial feature, wwhere columns are the
- age distribution of that vehicle. and rows each simple feature or region.
-The number of rows is equal to the number of streets link}
+\item{veh}{"Vehicles" data-frame or spatial feature, where columns are the
+age distribution of that vehicle. and rows each simple feature or region.}
 
 \item{lkm}{Numeric; mileage by the age of use of each vehicle.}
 
@@ -26,6 +26,8 @@ monthly profile.}
 \item{params}{List of parameters; Add columns with information to returning data.frame}
 
 \item{verbose}{Logical; To show more information}
+
+\item{fortran}{Logical; to try the fortran calculation.}
 }
 \value{
 Emissions data.frame
@@ -66,12 +68,12 @@ aa <- emis_hot_td(veh = veh,
                   ef = EmissionFactors(as.numeric(efh[, 1:8])),
                   pro_month = veh_month,
                   verbose = TRUE)
-head(aa)
+print(aa)
 aa <- emis_hot_td(veh = veh,
                   lkm = lkm,
                   ef = EmissionFactors(as.numeric(efh[, 1:8])),
                   pro_month = veh_month,
-                  verbose = FALSE,
+                  verbose = TRUE,
                   params = list(paste0("data_", 1:10), "moredata"))
 print(aa)
 }
