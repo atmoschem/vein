@@ -220,7 +220,7 @@ matrix.</p>
 <span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span>(<span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>pc1</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>E_CO_2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='no'>T</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='no'>E_CO</span>, <span class='no'>E_CO2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='no'>E_CO</span>, <span class='no'>E_CO_2</span>)
 
 <span class='co'># Estimation for 168 hour and local factors and speed</span>
 <span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
@@ -252,13 +252,13 @@ matrix.</p>
              <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>,
              <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>,
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>,
-             <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='no'>T</span>)) ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>E_CO</span>)
+             <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>E_CO</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(
 <span class='no'>E_CO_3</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,
              <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>,
              <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>,
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>,
-             <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>E_CO</span>)
+             <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='no'>T</span>)) ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>E_CO</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(
 <span class='no'>E_CO_4</span> <span class='kw'>&lt;-</span> <span class='fu'>emis</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,
              <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>,
@@ -266,14 +266,15 @@ matrix.</p>
              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>profiles</span>$<span class='no'>PC_JUNE_2014</span>,
              <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='no'>T</span>,
              <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)) ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>E_CO</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO</span>, <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_3</span>, <span class='fl'>2</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_2</span>, <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_4</span>, <span class='fl'>2</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>E_CO_2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO</span>, <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_2</span>, <span class='fl'>2</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_3</span>, <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_4</span>, <span class='fl'>2</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_3</span>[,,<span class='fl'>1</span>], <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>E_CO_4</span>[,,<span class='fl'>1</span>], <span class='fl'>2</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>E_CO_3</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>E_CO_4</span>)
 <span class='co'># but</span>
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fl'>1</span>:<span class='fl'>41</span>, <span class='kw'>function</span>(<span class='no'>i</span>){
            <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fl'>1</span>:<span class='fl'>168</span>, <span class='kw'>function</span>(<span class='no'>j</span>) {
-           <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='no'>E_CO_2</span>[, <span class='no'>i</span>, <span class='no'>j</span>], <span class='no'>E_CO_4</span>[, <span class='no'>i</span>, <span class='no'>j</span>])
+           <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(<span class='no'>E_CO_3</span>[, <span class='no'>i</span>, <span class='no'>j</span>], <span class='no'>E_CO_4</span>[, <span class='no'>i</span>, <span class='no'>j</span>])
            }))}))
 <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>a</span>)
 

@@ -1,19 +1,21 @@
-SUBROUTINE emis2df ( nrowv, ncolv, veh, lkm, ef,  emis )
+SUBROUTINE emis2df (nrowv, ncolv, veh, lkm, ef, emis)
+
 IMPLICIT none
 
 INTEGER nrowv
 INTEGER ncolv
-real(kind = 8) :: veh(nrowv,ncolv)
-real(kind = 8) :: lkm(nrowv)
-real(kind = 8) :: ef(ncolv)
-real(kind = 8) :: emis(nrowv,ncolv)
+DOUBLE PRECISION :: veh(nrowv, ncolv)
+DOUBLE PRECISION :: lkm(nrowv)
+DOUBLE PRECISION :: ef(ncolv)
+DOUBLE PRECISION :: emis(nrowv, ncolv)
 
-integer i, j
-do i = 1, nrowv
-   do j = 1, ncolv
+INTEGER i, j
+
+DO i = 1, nrowv
+   DO j = 1, ncolv
        emis(i, j) = veh(i,j) * lkm(i) * ef(j)
-   end do
-end do
+   ENDDO
+ENDDO
 
 RETURN
 END

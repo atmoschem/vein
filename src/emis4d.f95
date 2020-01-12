@@ -6,22 +6,23 @@ INTEGER nrowv
 INTEGER ncolv
 INTEGER proh
 INTEGER prod
-real(kind = 8) :: veh(nrowv,ncolv)
-real(kind = 8) :: lkm(nrowv)
-real(kind = 8) :: ef(ncolv)
-real(kind = 8) :: pro(proh,prod)
-real(kind = 8) :: emis(nrowv,ncolv,proh, prod)
+DOUBLE PRECISION :: veh(nrowv,ncolv)
+DOUBLE PRECISION :: lkm(nrowv)
+DOUBLE PRECISION :: ef(ncolv)
+DOUBLE PRECISION :: pro(proh,prod)
+DOUBLE PRECISION :: emis(nrowv,ncolv,proh, prod)
 
-integer i, j, k, l
-do i = 1, nrowv
-   do j = 1, ncolv
-      do k = 1, proh
-         do l = 1, prod
+INTEGER i, j, k, l
+
+DO i = 1, nrowv
+   DO j = 1, ncolv
+      DO k = 1, proh
+         DO l = 1, prod
            emis(i, j, k, l) = veh(i,j) * lkm(i) * ef(j)*pro(k,l)
-         end do
-      end do
-   end do
-end do
+         ENDDO
+      ENDDO
+   ENDDO
+ENDDO
 
 RETURN
 END
