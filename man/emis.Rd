@@ -79,7 +79,7 @@ identical(E_CO, E_CO_2)
 lef <- ef_cetesb("CO", "PC_G", agemax = ncol(pc1))
 system.time(E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef))
 system.time(E_CO_2 <- emis(veh = pc1,lkm = net$lkm, ef = lef, fortran = T))
-identical(E_CO, E_CO2)
+identical(E_CO, E_CO_2)
 
 # Estimation for 168 hour and local factors and speed
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -111,13 +111,13 @@ E_CO_2 <- emis(veh = pc1,
              lkm = net$lkm,
              ef = lef,
              profile = profiles$PC_JUNE_2014,
-             simplify = T)) ; sum(E_CO)
+             fortran = TRUE)) ; sum(E_CO)
 system.time(
 E_CO_3 <- emis(veh = pc1,
              lkm = net$lkm,
              ef = lef,
              profile = profiles$PC_JUNE_2014,
-             fortran = TRUE)) ; sum(E_CO)
+             simplify = T)) ; sum(E_CO)
 system.time(
 E_CO_4 <- emis(veh = pc1,
              lkm = net$lkm,
@@ -125,14 +125,15 @@ E_CO_4 <- emis(veh = pc1,
              profile = profiles$PC_JUNE_2014,
              simplify = T,
              fortran = TRUE)) ; sum(E_CO)
-identical(round(E_CO, 2), round(E_CO_3, 2))
-identical(round(E_CO_2, 2), round(E_CO_4, 2))
-dim(E_CO_2)
+identical(round(E_CO, 2), round(E_CO_2, 2))
+identical(round(E_CO_3, 2), round(E_CO_4, 2))
+identical(round(E_CO_3[,,1], 2), round(E_CO_4[,,1], 2))
+dim(E_CO_3)
 dim(E_CO_4)
 # but
 a <- unlist(lapply(1:41, function(i){
            unlist(lapply(1:168, function(j) {
-           identical(E_CO_2[, i, j], E_CO_4[, i, j])
+           identical(E_CO_3[, i, j], E_CO_4[, i, j])
            }))}))
 unique(a)
 

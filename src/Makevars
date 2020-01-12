@@ -1,5 +1,5 @@
 C_OBJS = init.o
-FT_OBJS = emis2d.o emis3d.o emis4d.o
+FT_OBJS = emis2d.o emis3d.o emis4d.o emistd1.o emistd2.o emistd3.o emistd4.o emistd5.o emistd6.o
 
 all:
 	@$(MAKE) $(SHLIB)
@@ -7,4 +7,4 @@ all:
 
 $(SHLIB): $(FT_OBJS) $(C_OBJS)
 
-init.o:  emis2d.o emis3d.o emis4d.o
+init.o:  emis2d.o emis3d.o emis4d.o emistd1.o emistd2.o emistd3.o emistd4.o emistd5.o emistd6.o
