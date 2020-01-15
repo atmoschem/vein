@@ -24,6 +24,7 @@
 #' @param pro_month Numeric; montly profile to distribuite annual mileage in each month.
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
+#' @param fortran Logical; to try the fortran calculation.
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_cold}}
 #' @export
@@ -34,22 +35,58 @@
 #' row.names(dt) <- paste0("Simple_Feature_", 1:10)
 #' efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 #' efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
-#'           eu = euros, p = "CO", speed = Speed(34))
-#' lkm <- units::as_units(18:10, "km")*1000
+#'                     eu = euros, p = "CO", speed = Speed(34))
+#' lkm <- units::as_units(18:11, "km")*1000
 #' cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 #' names(cold_lkm) <- paste0("Month_", 1:12)
 #' veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 #' veh <- age_ldv(1:10, agemax = 8)
-#' emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
-#' beta = cold_lkm[,1], verbose = TRUE,)
-#' emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
-#' beta = cold_lkm[,1], verbose = TRUE,
-#' params = list(paste0("data_", 1:10), "moredata"))
-#' aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-#' beta = cold_lkm, pro_month = veh_month, verbose = T)
-#' aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-#' beta = cold_lkm, pro_month = veh_month, verbose = FALSE,
-#' params = list(paste0("data_", 1:10), "moredata"))
+#' system.time(
+#' a <- emis_cold_td(veh = veh,
+#'                   lkm = lkm,
+#'                   ef = efh,
+#'                   efcold = efc[1:10, ],
+#'                   beta = cold_lkm[,1],
+#'                   verbose = TRUE))
+#' system.time(
+#' a2 <- emis_cold_td(veh = veh,
+#'                    lkm = lkm,
+#'                    ef = efh,
+#'                    efcold = efc[1:10, ],
+#'                    beta = cold_lkm[,1],
+#'                    verbose = TRUE,
+#'                    fortran = TRUE)) # emistd2coldf.f95
+#' a$emissions <- round(a$emissions, 8)
+#' a2$emissions <- round(a2$emissions, 8)
+#' identical(a, a2)
+#'
+#' # Adding parameters
+#' emis_cold_td(veh = veh,
+#'              lkm = lkm,
+#'              ef = efh,
+#'              efcold = efc[1:10, ],
+#'              beta = cold_lkm[,1],
+#'              verbose = TRUE,
+#'              params = list(paste0("data_", 1:10),
+#'                           "moredata"))
+#' system.time(
+#' aa <- emis_cold_td(veh = veh,
+#'                    lkm = lkm,
+#'                    ef = efh,
+#'                    efcold = efc,
+#'                    beta = cold_lkm,
+#'                    pro_month = veh_month,
+#'                    verbose = T))
+#' system.time(
+#' aa2 <- emis_cold_td(veh = veh,
+#'                     lkm = lkm,
+#'                     ef = efh,
+#'                     efcold = efc,
+#'                     beta = cold_lkm,
+#'                     pro_month = veh_month,
+#'                     verbose = TRUE,
+#'                     fortran = TRUE)) # emistd5coldf.f95
+#'
 #' }
 emis_cold_td <- function (veh,
                           lkm,
@@ -58,7 +95,8 @@ emis_cold_td <- function (veh,
                           beta,
                           pro_month,
                           params,
-                          verbose = FALSE) {
+                          verbose = FALSE,
+                          fortran = FALSE) {
   # Check units
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
@@ -69,7 +107,7 @@ emis_cold_td <- function (veh,
   if(units(lkm)$numerator == "km" ) {
     lkm <- as.numeric(lkm)
   }
-
+  if(length(lkm) != ncol(veh)) stop("Length of 'lkm' must be the as the number of columns of 'veh'")
   # Checking ef
   if(is.matrix(ef) | is.data.frame(ef)){
     ef <- as.data.frame(ef)
@@ -147,37 +185,105 @@ emis_cold_td <- function (veh,
     if(is.data.frame(ef)){
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
-      efcold$month <- rep(1:12, each = nrow(veh))
-      efcold <- split(efcold, efcold$month)
 
       #when pro_month varies in each simple feature
       if(is.data.frame(pro_month)){
-        e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- unlist(lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[,k] *ef[,i] * efcold[[k]][, i]
+        if(fortran){
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          pmonth <- as.integer(ncol(pro_month))
+          lkm <- as.numeric(lkm)
+          ef <- as.matrix(ef)
+          efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
+          efcold <- as.numeric(unlist(lapply(efcold, unlist)))
+          month <- as.matrix(pro_month)
+          beta <- as.matrix(beta)
+
+          if(verbose) message("Calling emistd4coldf.f95")
+
+          a <-   .Fortran("emistd4coldf",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          pmonth = pmonth,
+                          veh = as.matrix(veh),
+                          lkm = lkm,
+                          ef = ef,
+                          ef = efcold,
+                          beta = beta,
+                          month = month,
+                          emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
+          e$rows <- rep(row.names(veh), ncolv*pmonth)
+          e$age <- rep(rep(seq(1, ncolv), each = nrowv), pmonth)
+          e$month <- rep(seq(1, pmonth), each = ncolv*nrowv)
+        } else {
+          efcold$month <- rep(1:12, each = nrow(veh))
+          efcold <- split(efcold, efcold$month)
+          e <- do.call("rbind",lapply(1:12, function(k){
+            dfi <- unlist(lapply(1:ncol(veh), function(j){
+              beta[, k]*lkm[j]*veh[, j] * pro_month[, k] *ef[, j] * efcold[[k]][, j]
+            }))
+            dfi <- as.data.frame(dfi)
+            names(dfi) <- "emissions"
+            dfi <- Emissions(dfi)
+            dfi$rows <- row.names(veh)
+            dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+            dfi$month <- (1:length(pro_month))[k]
+            dfi
           }))
-          dfi <- as.data.frame(dfi)
-          names(dfi) <- "emissions"
-          dfi <- Emissions(dfi)
-          dfi$rows <- row.names(veh)
-          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
-          dfi$month <- (1:length(pro_month))[k]
-          dfi
-        }))
+          }
+
 
       } else if(is.numeric(pro_month)){
-        e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- unlist(lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[k] *ef[,i] * efcold[[k]][, i]
+        if(fortran){
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          pmonth <- as.integer(length(pro_month))
+          lkm <- as.numeric(lkm)
+          ef <- as.matrix(ef)
+          efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
+          efcold <- as.numeric(unlist(lapply(efcold, unlist)))
+          month <- as.numeric(pro_month)
+          beta <- as.matrix(beta)
+
+          if(verbose) message("Calling emistd5coldf.f95")
+
+          a <-   .Fortran("emistd5coldf",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          pmonth = pmonth,
+                          veh = as.matrix(veh),
+                          lkm = lkm,
+                          ef = ef,
+                          ef = efcold,
+                          beta = beta,
+                          month = month,
+                          emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
+          e$rows <- rep(row.names(veh), ncolv*pmonth)
+          e$age <- rep(rep(seq(1, ncolv), each = nrowv), pmonth)
+          e$month <- rep(seq(1, pmonth), each = ncolv*nrowv)
+        } else {
+          efcold$month <- rep(1:12, each = nrow(veh))
+          efcold <- split(efcold, efcold$month)
+          e <- do.call("rbind",lapply(1:12, function(k){
+            dfi <- unlist(lapply(1:ncol(veh), function(j){
+              beta[, k] * lkm[j] * veh[, j] * pro_month[k] *ef[, j] * efcold[[k]][, j]
+            }))
+            dfi <- as.data.frame(dfi)
+            names(dfi) <- "emissions"
+            dfi <- Emissions(dfi)
+            dfi$rows <- row.names(veh)
+            dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+            dfi$month <- (1:length(pro_month))[k]
+            dfi
           }))
-          dfi <- as.data.frame(dfi)
-          names(dfi) <- "emissions"
-          dfi <- Emissions(dfi)
-          dfi$rows <- row.names(veh)
-          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
-          dfi$month <- (1:length(pro_month))[k]
-          dfi
-        }))
+
+        }
 
       }
       if(!missing(params)){
@@ -192,41 +298,108 @@ emis_cold_td <- function (veh,
       }
 
       if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
+
     } else{
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
-      efcold$month <- rep(1:12, each = nrow(veh))
-      efcold <- split(efcold, efcold$month)
 
       # when pro_month variy each month
       if(is.data.frame(pro_month)){
-        e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- unlist(lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[, k] *ef[i] * efcold[[k]][, i]
+        if(fortran){
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          pmonth <- as.integer(ncol(pro_month))
+          lkm <- as.numeric(lkm)
+          ef <- as.numeric(ef)
+          efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
+          efcold <- as.numeric(unlist(lapply(efcold, unlist)))
+          month <- as.matrix(pro_month)
+          beta <- as.matrix(beta)
+
+          if(verbose) message("Calling emistd6coldf.f95")
+
+          a <-   .Fortran("emistd6coldf",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          pmonth = pmonth,
+                          veh = as.matrix(veh),
+                          lkm = lkm,
+                          ef = ef,
+                          ef = efcold,
+                          beta = beta,
+                          month = month,
+                          emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
+          e$rows <- rep(row.names(veh), ncolv*pmonth)
+          e$age <- rep(rep(seq(1, ncolv), each = nrowv), pmonth)
+          e$month <- rep(seq(1, pmonth), each = ncolv*nrowv)
+        } else {
+          efcold$month <- rep(1:12, each = nrow(veh))
+          efcold <- split(efcold, efcold$month)
+          e <- do.call("rbind",lapply(1:12, function(k){
+            dfi <- unlist(lapply(1:ncol(veh), function(j){
+              beta[, k] * lkm[j] * veh[, j] * pro_month[, k] * ef[j] * efcold[[k]][, j]
+            }))
+            dfi <- as.data.frame(dfi)
+            names(dfi) <- "emissions"
+            dfi <- Emissions(dfi)
+            dfi$rows <- row.names(veh)
+            dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+            dfi$month <- (1:length(pro_month))[k]
+            dfi
           }))
-          dfi <- as.data.frame(dfi)
-          names(dfi) <- "emissions"
-          dfi <- Emissions(dfi)
-          dfi$rows <- row.names(veh)
-          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
-          dfi$month <- (1:length(pro_month))[k]
-          dfi
-        }))
+
+        }
 
       } else if(is.numeric(pro_month)){
-        e <- do.call("rbind",lapply(1:12, function(k){
-          dfi <- unlist(lapply(1:ncol(veh), function(i){
-            beta[, k]*lkm[i]*veh[, i] * pro_month[k] *ef[i] * efcold[[k]][, i]
-   t       }))
-          dfi <- as.data.frame(dfi)
-          names(dfi) <- "emissions"
-          dfi <- Emissions(dfi)
-          dfi$rows <- row.names(veh)
-          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
-          dfi$month <- (1:length(pro_month))[k]
-          dfi
-        }))
+        if(fortran){
+          nrowv <- as.integer(nrow(veh))
+          ncolv <- as.integer(ncol(veh))
+          pmonth <- as.integer(length(pro_month))
+          lkm <- as.numeric(lkm)
+          ef <- as.numeric(ef)
+          efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
+          efcold <- as.numeric(unlist(lapply(efcold, unlist)))
+          month <- as.numeric(pro_month)
+          beta <- as.matrix(beta)
 
+          if(verbose) message("Calling emistd3coldf.f95")
+
+          a <-   .Fortran("emistd3coldf",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          pmonth = pmonth,
+                          veh = as.matrix(veh),
+                          lkm = lkm,
+                          ef = ef,
+                          ef = efcold,
+                          beta = beta,
+                          month = month,
+                          emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
+          e$rows <- rep(row.names(veh), ncolv*pmonth)
+          e$age <- rep(rep(seq(1, ncolv), each = nrowv), pmonth)
+          e$month <- rep(seq(1, pmonth), each = ncolv*nrowv)
+        } else {
+          efcold$month <- rep(1:12, each = nrow(veh))
+          efcold <- split(efcold, efcold$month)
+          e <- do.call("rbind",lapply(1:12, function(k){
+            dfi <- unlist(lapply(1:ncol(veh), function(j){
+              beta[, k] * lkm[j] * veh[, j] * pro_month[k] * ef[j] * efcold[[k]][, j]
+              t       }))
+            dfi <- as.data.frame(dfi)
+            names(dfi) <- "emissions"
+            dfi <- Emissions(dfi)
+            dfi$rows <- row.names(veh)
+            dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+            dfi$month <- (1:length(pro_month))[k]
+            dfi
+          }))
+        }
       }
       if(!missing(params)){
         if(!is.list(params)) stop("'params' must be a list")
@@ -245,15 +418,40 @@ emis_cold_td <- function (veh,
 
   } else {
     if(verbose) message("Estimation without monthly profile")
+    if(fortran){
+      nrowv <- as.integer(nrow(veh))
+      ncolv <- as.integer(ncol(veh))
+      lkm <- as.numeric(lkm)
+      ef <- as.numeric(unlist(ef[, 1:ncol(veh)]))
+      efcold <- as.matrix(efcold[, 1:ncol(veh)])
+      beta <- as.numeric(unlist(beta))
 
-    e <-  unlist(lapply(1:ncol(veh), function(i){
-      unlist(beta)[i]*as.numeric(lkm[i])*veh[, i] *as.numeric(ef[i]) * as.numeric(efcold[, i])
-    }))
-    e <- as.data.frame(e)
-    names(e) <- "emissions"
-    e <- Emissions(e)
-    e$rows <- row.names(veh)
-    e$age <- rep(1:ncol(veh), each = nrow(veh))
+      if(verbose) message("Calling emistd2coldf.f95")
+
+      a <-   .Fortran("emistd2coldf",
+                      nrowv = nrowv,
+                      ncolv = ncolv,
+                      veh = as.matrix(veh),
+                      lkm = lkm,
+                      ef = ef,
+                      ef = efcold,
+                      beta = beta,
+                      emis = numeric(nrowv*ncolv))$emis
+
+      e <- data.frame(emissions = a)
+      e <- Emissions(e)
+      e$rows <- rep(row.names(veh), ncolv)
+      e$age <- rep(seq(1, ncolv), each = nrowv)
+    } else {
+      e <-  unlist(lapply(1:ncol(veh), function(j){
+        unlist(beta)*as.numeric(lkm[j])*veh[, j] *as.numeric(ef[j]) * as.numeric(efcold[, j])
+      }))
+      e <- as.data.frame(e)
+      names(e) <- "emissions"
+      e <- Emissions(e)
+      e$rows <- row.names(veh)
+      e$age <- rep(1:ncol(veh), each = nrow(veh))
+    }
 
     if(!missing(params)){
       if(!is.list(params)) stop("'params' must be a list")
