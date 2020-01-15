@@ -10,16 +10,14 @@ DOUBLE PRECISION :: veh(nrowv, ncolv)
 DOUBLE PRECISION :: lkm(nrowv)
 DOUBLE PRECISION :: ef(nrowvp, ncolv)
 DOUBLE PRECISION :: month(pmonth)
-DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth, nrowvp)
+DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
-INTEGER i, j, k, l
+INTEGER i, j, k
 
 DO i = 1, nrowv
    DO j = 1, ncolv
       DO k = 1, pmonth
-        DO l = 1, nrowvp
-          emis(i, j, k, l) = veh(i, j) * lkm(i) * ef(l, j) * month(k)
-        ENDDO
+        emis(i, j, k) = veh(i, j) * lkm(i) * ef(i*k, j) * month(k)
       ENDDO
    ENDDO
 ENDDO

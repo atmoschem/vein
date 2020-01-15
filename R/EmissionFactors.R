@@ -51,7 +51,15 @@ EmissionFactors <- function(x, ...) {
 #' @method print EmissionFactors
 #' @export
 print.EmissionFactors <- function(x, ...) {
-    NextMethod("print", x, right = TRUE)
+  if(ncol(x) == 1) {
+    ndf <- names(x)
+    df <- data.frame(ndf = x[1:5, ])
+    names(df) <- ndf
+    print.data.frame(df)
+  } else {
+    print.data.frame(x[1:5, ])
+    cat(paste0("... and ", nrow(x) - 5, " more rows"))
+  }
 }
 
 

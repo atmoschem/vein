@@ -73,16 +73,14 @@ Emissions <- function(x, ...) {
 #' @method print Emissions
 #' @export
 print.Emissions <- function(x, ...) {
-  if(nrow(x) < 10 & ncol(x) < 10){
-    NextMethod("print", x, right = TRUE)
-  } else if (nrow(x) > 10 & ncol(x) < 10){
-    print.data.frame(x[1:5, ], right = TRUE)
-    cat(paste0("... and more ", nrow(x) - 5, " rows\n"))
-  } else if(nrow(x) < 10 & ncol(x) > 10){
-    print.data.frame(x[, 1:5], right = TRUE)
-    cat(paste0("... and more ", ncol(x) - 5, " columns\n"))
+  if(ncol(x) == 1) {
+    ndf <- names(x)
+    df <- data.frame(ndf = x[1:5, ])
+    names(df) <- ndf
+    print.data.frame(df)
   } else {
-    print.data.frame(x, right = TRUE)
+    print.data.frame(x[1:5, ])
+    cat(paste0("... and ", nrow(x) - 5, " more rows"))
   }
 }
 
@@ -92,16 +90,16 @@ print.Emissions <- function(x, ...) {
 #' @export
 summary.Emissions <- function(object, ...) {
   e <- object
-    avemi <- sum(seq(1,ncol(e))*colSums(e)/sum(e))
-    cat("Total emissions by column in study area = \n")
-    print(summary(colSums(e)))
-    cat("\nAverage = ", round(avemi,2))
-    cat(" \n\n")
-    cat("Emissions by street in study area = \n")
-    print(summary(rowSums(e)))
-    cat(" \n\n")
-    cat("Emissions by column and street in study area = \n")
-    print(summary(unlist(e)))
+  avemi <- sum(seq(1,ncol(e))*colSums(e)/sum(e))
+  cat("Total emissions by column in study area = \n")
+  print(summary(colSums(e)))
+  cat("\nAverage = ", round(avemi,2))
+  cat(" \n\n")
+  cat("Emissions by street in study area = \n")
+  print(summary(rowSums(e)))
+  cat(" \n\n")
+  cat("Emissions by column and street in study area = \n")
+  print(summary(unlist(e)))
 }
 
 
@@ -110,9 +108,9 @@ summary.Emissions <- function(object, ...) {
 #' @export
 plot.Emissions <- function(x,  ...) {
   e <- x
-    avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
-    Emission <- Emissions(colSums(e))
-    graphics::plot(Emission, type="l", ...)
-    graphics::abline(v = avage, col="red")
-    cat("\nAverage = ",round(avage,2))
+  avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
+  Emission <- Emissions(colSums(e))
+  graphics::plot(Emission, type="l", ...)
+  graphics::abline(v = avage, col="red")
+  cat("\nAverage = ",round(avage,2))
 }

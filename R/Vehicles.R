@@ -53,17 +53,15 @@ Vehicles <- function(x, ...) {
 #' @method print Vehicles
 #' @export
 print.Vehicles <- function(x, ...) {
-  # if(nrow(x) <= 10 | ncol(x) <= 10){
-    NextMethod("print", x, right = TRUE)
-  # } else if (nrow(x) > 10 & ncol(x) < 10){
-  #   print.data.frame(x[1:5, ], right = TRUE)
-  #   cat(paste0("... and more ", nrow(x) - 5, " rows\n"))
-  # } else if(nrow(x) < 10 & ncol(x) > 10){
-  #   print.data.frame(x[, 1:5], right = TRUE)
-  #   cat(paste0("... and more ", ncol(x) - 5, " columns\n"))
-  # } else {
-  #   print.data.frame(x, right = TRUE)
-  # }
+  if(ncol(x) == 1) {
+    ndf <- names(x)
+    df <- data.frame(ndf = x[1:5, ])
+    names(df) <- ndf
+    print.data.frame(df)
+  } else {
+    print.data.frame(x[1:5, ])
+    cat(paste0("... and ", nrow(x) - 5, " more rows"))
+  }
 }
 
 
