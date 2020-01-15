@@ -95,13 +95,8 @@
 #'                   ef = ef,
 #'                   pro_month = veh_month,
 #'                   verbose = TRUE)
+#' aa2 <- emis_hot_td(veh = veh, lkm = lkm, ef = ef, pro_month = veh_month, verbose = TRUE, fortran = TRUE)
 #' plot(aggregate(aa$emissions, by = list(aa$month), sum)$x)
-#' aa2 <- emis_hot_td(veh = veh,
-#'                   lkm = lkm,
-#'                   ef = ef,
-#'                   pro_month = veh_month,
-#'                   verbose = TRUE,
-#'                   fortran = TRUE)
 #' identical(aa, aa2)
 #' plot(aggregate(aa$emissions, by = list(aa$month), sum)$x)
 #' }
@@ -217,7 +212,8 @@ emis_hot_td <- function (veh,
                           month = month,
                           emis = numeric(nrowv*ncolv*pmonth))$emis
 
-          e <- data.frame(emissions = Emissions(a))
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
           e$rows <- rep(row.names(veh), each = ncolv*pmonth) # i
           e$age <- rep(seq(1, ncolv), nrowv*pmonth)          # j
           e$month <- rep(seq(1, pmonth), ncolv*nrowv)        # k
@@ -263,7 +259,8 @@ emis_hot_td <- function (veh,
                           month = month,
                           emis = numeric(nrowv*ncolv*pmonth))$emis
 
-          e <- data.frame(emissions = Emissions(a))
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
           e$rows <- rep(row.names(veh), each = ncolv*pmonth) # i
           e$age <- rep(seq(1, ncolv), nrowv*pmonth)          # j
           e$month <- rep(seq(1, pmonth), ncolv*nrowv)        # k
@@ -309,7 +306,8 @@ emis_hot_td <- function (veh,
                           month = month,
                           emis = numeric(nrowv*ncolv*pmonth*nrowvp))$emis
 
-          e <- data.frame(emissions = Emissions(a))
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
           e$rows <- rep(row.names(veh), each = ncolv*nrowvp)  # i
           e$age <- rep(seq(1, ncolv), nrowvp*pmonth)          # j
           e$month <- rep(seq(1, pmonth), ncolv*nrowvp)        # k
@@ -338,13 +336,12 @@ emis_hot_td <- function (veh,
         if(verbose) message("'pro_month' is numeric and number of rows of 'ef' is 12*number of rows 'veh'")
 
         if(fortran){
-          warning("must fix")
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
-          nrowvp <- as.integer(nrow(ef))
+          ef <- as.matrix(ef[, 1:ncolv])          # important first!
+          nrowvp <- as.integer(nrowv*pmonth)
           lkm <- as.numeric(lkm)
-          ef <- as.matrix(ef)
           month <- as.numeric(pro_month)
 
           if(verbose) message("Calling emistd3f.f95")
@@ -358,13 +355,12 @@ emis_hot_td <- function (veh,
                           lkm = lkm,
                           ef = ef,
                           month = month,
-                          emis = numeric(nrowv*ncolv*pmonth*nrowvp))$emis
-
+                          emis = numeric(nrowv*ncolv*pmonth))$emis
           e <- data.frame(emissions = a)
           e <- Emissions(e)
-          e$rows <- rep(row.names(veh), each = ncolv*nrowvp)  # i
-          e$age <- rep(seq(1, ncolv), nrowvp*pmonth)          # j
-          e$month <- rep(seq(1, pmonth), ncolv*nrowvp)        # k
+          e$rows <- rep(row.names(veh), each = ncolv*pmonth)  # i
+          e$age <- rep(seq(1, ncolv), nrowv*pmonth)          # j
+          e$month <- rep(seq(1, pmonth), ncolv*nrowv)        # k
 
         } else {
           ef$month <- rep(1:12, each = nrow(veh))
@@ -434,7 +430,8 @@ emis_hot_td <- function (veh,
                           month = month,
                           emis = numeric(nrowv*ncolv*pmonth))$emis
 
-          e <- data.frame(emissions = Emissions(a))
+          e <- data.frame(emissions = a)
+          e <- Emissions(e)
           e$rows <- rep(row.names(veh), each = ncolv*pmonth) # i
           e$age <- rep(seq(1, ncolv), nrowv*pmonth)          # j
           e$month <- rep(seq(1, pmonth), ncolv*nrowv)        # k

@@ -112,13 +112,8 @@ aa <- emis_hot_td(veh = veh,
                   ef = ef,
                   pro_month = veh_month,
                   verbose = TRUE)
+aa2 <- emis_hot_td(veh = veh, lkm = lkm, ef = ef, pro_month = veh_month, verbose = TRUE, fortran = TRUE)
 plot(aggregate(aa$emissions, by = list(aa$month), sum)$x)
-aa2 <- emis_hot_td(veh = veh,
-                  lkm = lkm,
-                  ef = ef,
-                  pro_month = veh_month,
-                  verbose = TRUE,
-                  fortran = TRUE)
 identical(aa, aa2)
 plot(aggregate(aa$emissions, by = list(aa$month), sum)$x)
 }
