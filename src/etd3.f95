@@ -1,13 +1,13 @@
-SUBROUTINE emistd5f (nrowv, ncolv, pmonth, veh, lkm, ef, month, emis)
+SUBROUTINE emistd3f (nrowv, ncolv, pmonth, veh, lkm, ef, month, emis)
 
-IMPLICIT none
+IMPLICIT NONE
 
 INTEGER nrowv
 INTEGER ncolv
 INTEGER pmonth
 DOUBLE PRECISION :: veh(nrowv, ncolv)
-DOUBLE PRECISION :: lkm(nrowv)
-DOUBLE PRECISION :: ef(ncolv)
+DOUBLE PRECISION :: lkm(ncolv)
+DOUBLE PRECISION :: ef(nrowv, ncolv, pmonth)
 DOUBLE PRECISION :: month(pmonth)
 DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
@@ -16,7 +16,7 @@ INTEGER i, j, k
 DO i = 1, nrowv
    DO j = 1, ncolv
       DO k = 1, pmonth
-        emis(i, j,k) = veh(i,j) * lkm(i) * ef(j) * month(k)
+        emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(k)
       ENDDO
    ENDDO
 ENDDO
