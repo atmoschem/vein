@@ -174,6 +174,8 @@ emis_cold_td <- function (veh,
 
     if(verbose) message("Estimation with monthly profile")
 
+
+
     if(length(pro_month) != 12) stop("Length of pro_month must be 12")
 
     mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
@@ -295,9 +297,7 @@ emis_cold_td <- function (veh,
           e[, names(params)[i]] <- params[[i]]
         }
       }
-
       if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
-
     } else{
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
@@ -411,11 +411,8 @@ emis_cold_td <- function (veh,
           e[, names(params)[i]] <- params[[i]]
         }
       }
-
       if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
     }
-
-
   } else {
     if(verbose) message("Estimation without monthly profile")
     if(fortran){
