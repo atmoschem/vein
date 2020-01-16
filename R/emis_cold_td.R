@@ -35,7 +35,7 @@
 #' row.names(dt) <- paste0("Simple_Feature_", 1:10)
 #' efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 #' efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
-#'                     eu = euros, p = "CO", speed = Speed(34))
+#'                     eu = euros, p = "CO", speed = Speed(runif(nrow(veh), 15, 40)))
 #' lkm <- units::as_units(18:11, "km")*1000
 #' cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 #' names(cold_lkm) <- paste0("Month_", 1:12)
@@ -44,14 +44,14 @@
 #' system.time(
 #' a <- emis_cold_td(veh = veh,
 #'                   lkm = lkm,
-#'                   ef = efh,
+#'                   ef = efh[1, ],
 #'                   efcold = efc[1:10, ],
 #'                   beta = cold_lkm[,1],
 #'                   verbose = TRUE))
 #' system.time(
 #' a2 <- emis_cold_td(veh = veh,
 #'                    lkm = lkm,
-#'                    ef = efh,
+#'                    ef = efh[1, ],
 #'                    efcold = efc[1:10, ],
 #'                    beta = cold_lkm[,1],
 #'                    verbose = TRUE,
@@ -78,14 +78,11 @@
 #'                    pro_month = veh_month,
 #'                    verbose = T))
 #' system.time(
-#' aa2 <- emis_cold_td(veh = veh,
-#'                     lkm = lkm,
-#'                     ef = efh,
-#'                     efcold = efc,
-#'                     beta = cold_lkm,
-#'                     pro_month = veh_month,
-#'                     verbose = TRUE,
-#'                     fortran = TRUE)) # emistd5coldf.f95
+#' aa2 <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc, beta = cold_lkm,
+#' pro_month = veh_month,verbose = TRUE,fortran = TRUE)) # emistd5coldf.f95
+#' aa$emissions <- round(aa$emissions, 8)
+#' aa2$emissions <- round(aa2$emissions, 8)
+#' identical(aa, aa2)
 #'
 #' }
 emis_cold_td <- function (veh,
@@ -121,9 +118,7 @@ emis_cold_td <- function (veh,
       for(i in 1:ncol(veh)){
         ef[, i] <- as.numeric(ef[, i])
       }
-
     }
-
   } else {
     if(class(ef) != "units"){
       stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
@@ -134,8 +129,9 @@ emis_cold_td <- function (veh,
     if(units(ef)$numerator == "g" | units(ef)$denominator == "km"){
       ef <- as.numeric(ef)
     }
-
   }
+  print(ef)
+
   # Checking ef cold
   if(class(efcold[, 1]) != "units"){
     stop("columns of efcold must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
@@ -194,6 +190,7 @@ emis_cold_td <- function (veh,
           pmonth <- as.integer(ncol(pro_month))
           lkm <- as.numeric(lkm)
           ef <- as.matrix(ef)
+          if(nrow(ef) != nrow(veh)) stop("rows of 'ef' and 'veh' must be equal")
           efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
           efcold <- as.numeric(unlist(lapply(efcold, unlist)))
           month <- as.matrix(pro_month)
@@ -242,8 +239,10 @@ emis_cold_td <- function (veh,
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
           lkm <- as.numeric(lkm)
-          ef <- as.matrix(ef)
-          efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
+          ef <- as.matrix(ef[, 1:ncol(veh)])
+          if(nrow(ef) != nrow(veh)) stop("rows of 'ef' and 'veh' must be equal")
+          efcold$month <- rep(1:12, each = nrow(veh))
+          efcold <- split(efcold[, 1:ncol(veh)], efcold$month)
           efcold <- as.numeric(unlist(lapply(efcold, unlist)))
           month <- as.numeric(pro_month)
           beta <- as.matrix(beta)
@@ -260,8 +259,8 @@ emis_cold_td <- function (veh,
                           ef = efcold,
                           beta = beta,
                           month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))$emis
-
+                          emis = numeric(nrowv*ncolv*pmonth))
+          return(a)
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)
@@ -311,7 +310,8 @@ emis_cold_td <- function (veh,
           pmonth <- as.integer(ncol(pro_month))
           lkm <- as.numeric(lkm)
           ef <- as.numeric(ef)
-          efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
+          efcold$month <- rep(1:12, each = nrow(veh))
+          efcold <- split(efcold[, 1:ncol(veh)], efcold$month)
           efcold <- as.numeric(unlist(lapply(efcold, unlist)))
           month <- as.matrix(pro_month)
           beta <- as.matrix(beta)
@@ -422,7 +422,7 @@ emis_cold_td <- function (veh,
       nrowv <- as.integer(nrow(veh))
       ncolv <- as.integer(ncol(veh))
       lkm <- as.numeric(lkm)
-      ef <- as.numeric(unlist(ef[, 1:ncol(veh)]))
+      ef <- as.numeric(ef)
       efcold <- as.matrix(efcold[, 1:ncol(veh)])
       beta <- as.numeric(unlist(beta))
 

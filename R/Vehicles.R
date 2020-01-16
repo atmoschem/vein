@@ -62,7 +62,7 @@ print.Vehicles <- function(x, ...) {
   } else {
     print.data.frame(x[1:nr, ])
   }
-  if(nrow(x) > 5)     cat(paste0("... and ", nrow(x) - 5, " more rows"))
+  if(nrow(x) > 5)     cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
 }
 
 #' @rdname Vehicles
