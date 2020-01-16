@@ -30,6 +30,7 @@
 #' @export
 #' @examples \dontrun{
 #' # Do not run
+#' veh <- age_ldv(1:10, agemax = 8)
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 #' dt <- matrix(rep(2:25,5), ncol = 12, nrow = 10) # 12 months, 10 rows
 #' row.names(dt) <- paste0("Simple_Feature_", 1:10)
@@ -40,7 +41,6 @@
 #' cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 #' names(cold_lkm) <- paste0("Month_", 1:12)
 #' veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
-#' veh <- age_ldv(1:10, agemax = 8)
 #' system.time(
 #' a <- emis_cold_td(veh = veh,
 #'                   lkm = lkm,
@@ -130,7 +130,6 @@ emis_cold_td <- function (veh,
       ef <- as.numeric(ef)
     }
   }
-  print(ef)
 
   # Checking ef cold
   if(class(efcold[, 1]) != "units"){
@@ -261,8 +260,7 @@ emis_cold_td <- function (veh,
                           ef = efcold,
                           beta = beta,
                           month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))
-          return(a)
+                          emis = numeric(nrowv*ncolv*pmonth))$emis
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)

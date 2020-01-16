@@ -49,7 +49,7 @@ providing flexibility to the user.
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euros, p = "CO", speed = Speed(34))
-lkm <- units::as_units(c(20:11), "km")*1000
+lkm <- units::as_units(c(20:13), "km")*1000
 veh <- age_ldv(1:10, agemax = 8)
 system.time(
 a <- emis_hot_td(veh = veh,
@@ -61,7 +61,7 @@ a2 <- emis_hot_td(veh = veh,
                   lkm = lkm,
                   ef = EmissionFactors(as.numeric(efh[, 1:8])),
                   verbose = TRUE,
-                  fortran = TRUE))
+                  fortran = TRUE)) #emistd7f.f95
 identical(a, a2)
 
 # adding columns
@@ -71,7 +71,7 @@ emis_hot_td(veh = veh,
             verbose = TRUE,
             params = list(paste0("data_", 1:10), "moredata"))
 
-# monthly profile (numeric)
+# monthly profile (numeric) with numeric ef
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 system.time(
 aa <- emis_hot_td(veh = veh,
@@ -85,7 +85,49 @@ aa2 <- emis_hot_td(veh = veh,
                   ef = EmissionFactors(as.numeric(efh[, 1:8])),
                   pro_month = veh_month,
                   verbose = TRUE,
-                  fortran = TRUE))
+                  fortran = TRUE)) #emistd5f.f95
+aa$emissions <- round(aa$emissions, 8)
+aa2$emissions <- round(aa2$emissions, 8)
+identical(aa, aa2)
+
+# monthly profile (numeric) with data.frame ef
+veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
+def <- matrix(EmissionFactors(as.numeric(efh[, 1:8])),
+nrow = nrow(veh), ncol = ncol(veh), byrow = TRUE)
+def <- EmissionFactors(def)
+system.time(
+aa <- emis_hot_td(veh = veh,
+                  lkm = lkm,
+                  ef = def,
+                  pro_month = veh_month,
+                  verbose = TRUE))
+system.time(
+aa2 <- emis_hot_td(veh = veh,
+                  lkm = lkm,
+                  ef = def,
+                  pro_month = veh_month,
+                  verbose = TRUE,
+                  fortran = TRUE)) #emistd1f.f95
+aa$emissions <- round(aa$emissions, 8)
+aa2$emissions <- round(aa2$emissions, 8)
+identical(aa, aa2)
+
+# monthly profile (data.frame)
+dfm <- matrix(c(rep(8, 1), rep(10, 5), 9, rep(10, 5)), nrow = 10, ncol = 12,
+byrow = TRUE)
+system.time(
+aa <- emis_hot_td(veh = veh,
+                  lkm = lkm,
+                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                  pro_month = dfm,
+                  verbose = TRUE))
+system.time(
+aa2 <- emis_hot_td(veh = veh,
+                  lkm = lkm,
+                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                  pro_month = dfm,
+                  verbose = TRUE,
+                  fortran = TRUE)) # emistd6f.f95
 aa$emissions <- round(aa$emissions, 2)
 aa2$emissions <- round(aa2$emissions, 2)
 identical(aa, aa2)
@@ -93,12 +135,11 @@ identical(aa, aa2)
 # Suppose that we have a EmissionsFactor data.frame with number of rows for each month
 # number of rows are 10 regions
 # number of columns are 12 months
-
 tem <- runif(n = 6*10, min = -10, max = 35)
 temp <- c(rev(tem[order(tem)]), tem[order(tem)])
 plot(temp)
 dftemp <- celsius(matrix(temp, ncol = 12))
-ef <- ef_evap(ef = c(rep("eshotfi", 8)),
+dfef <- ef_evap(ef = c(rep("eshotfi", 8)),
               v = "PC",
               cc = "<=1400",
               dt = dftemp,
@@ -106,14 +147,42 @@ ef <- ef_evap(ef = c(rep("eshotfi", 8)),
               ca = "small",
               ltrip = units::set_units(10, km),
               pollutant = "NMHC")
-dim(ef) # 120 rows and 9 columns, 8 ef (g/km) and 1 for month
+dim(dfef) # 120 rows and 9 columns, 8 ef (g/km) and 1 for month
+system.time(
 aa <- emis_hot_td(veh = veh,
                   lkm = lkm,
-                  ef = ef,
+                  ef = dfef,
                   pro_month = veh_month,
-                  verbose = TRUE)
-aa2 <- emis_hot_td(veh = veh, lkm = lkm, ef = ef, pro_month = veh_month, verbose = TRUE, fortran = TRUE)
+                  verbose = TRUE))
+system.time(
+aa2 <- emis_hot_td(veh = veh,
+                   lkm = lkm,
+                   ef = dfef,
+                   pro_month = veh_month,
+                   verbose = TRUE,
+                   fortran = TRUE)) #emistd3f.f95
+aa$emissions <- round(aa$emissions, 2)
+aa2$emissions <- round(aa2$emissions, 2)
+identical(aa, aa2)
 plot(aggregate(aa$emissions, by = list(aa$month), sum)$x)
+
+# Suppose that we have a EmissionsFactor data.frame with number of rows for each month
+# monthly profile (data.frame)
+system.time(
+aa <- emis_hot_td(veh = veh,
+                  lkm = lkm,
+                  ef = dfef,
+                  pro_month = dfm,
+                  verbose = TRUE))
+system.time(
+aa2 <- emis_hot_td(veh = veh,
+                   lkm = lkm,
+                   ef = dfef,
+                   pro_month = dfm,
+                   verbose = TRUE,
+                   fortran = TRUE)) #emistd4f.f95
+aa$emissions <- round(aa$emissions, 8)
+aa2$emissions <- round(aa2$emissions, 8)
 identical(aa, aa2)
 plot(aggregate(aa$emissions, by = list(aa$month), sum)$x)
 }

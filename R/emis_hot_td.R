@@ -76,7 +76,7 @@
 #' # monthly profile (numeric) with data.frame ef
 #' veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 #' def <- matrix(EmissionFactors(as.numeric(efh[, 1:8])),
-#' nrow = nrow(veh), ncol = ncol(veh), byrow = T)
+#' nrow = nrow(veh), ncol = ncol(veh), byrow = TRUE)
 #' def <- EmissionFactors(def)
 #' system.time(
 #' aa <- emis_hot_td(veh = veh,
@@ -97,7 +97,7 @@
 #'
 #' # monthly profile (data.frame)
 #' dfm <- matrix(c(rep(8, 1), rep(10, 5), 9, rep(10, 5)), nrow = 10, ncol = 12,
-#' byrow = T)
+#' byrow = TRUE)
 #' system.time(
 #' aa <- emis_hot_td(veh = veh,
 #'                   lkm = lkm,
@@ -130,7 +130,7 @@
 #'               ca = "small",
 #'               ltrip = units::set_units(10, km),
 #'               pollutant = "NMHC")
-#' dim(ef) # 120 rows and 9 columns, 8 ef (g/km) and 1 for month
+#' dim(dfef) # 120 rows and 9 columns, 8 ef (g/km) and 1 for month
 #' system.time(
 #' aa <- emis_hot_td(veh = veh,
 #'                   lkm = lkm,
@@ -634,8 +634,8 @@ emis_hot_td <- function (veh,
     } else {
       if(verbose) message("'ef' is data.frame")
       if(nrow(ef) != nrow(veh)) stop("Number of rows of 'ef' and 'veh' must be equal")
-      e <-  unlist(lapply(1:ncol(veh), function(i){
-        lkm[j] * veh[, i] *ef[, i]
+      e <-  unlist(lapply(1:ncol(veh), function(j){
+        lkm[j] * veh[, j] *ef[, j]
       }))
       e <- as.data.frame(e)
       names(e) <- "emissions"

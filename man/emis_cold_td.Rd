@@ -5,7 +5,7 @@
 \title{Estimation of cold start emissions with top-down approach}
 \usage{
 emis_cold_td(veh, lkm, ef, efcold, beta, pro_month, params,
-  verbose = FALSE)
+  verbose = FALSE, fortran = FALSE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or spatial feature, wwhere columns are the
@@ -29,6 +29,8 @@ for each spatial feature or subregion, the columns are the age of use of vehicle
 \item{params}{List of parameters; Add columns with information to returning data.frame}
 
 \item{verbose}{Logical; To show more information}
+
+\item{fortran}{Logical; to try the fortran calculation.}
 }
 \value{
 Emissions data.frame
@@ -47,27 +49,60 @@ providing flexibility to the user.
 \examples{
 \dontrun{
 # Do not run
+veh <- age_ldv(1:10, agemax = 8)
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 dt <- matrix(rep(2:25,5), ncol = 12, nrow = 10) # 12 months, 10 rows
 row.names(dt) <- paste0("Simple_Feature_", 1:10)
 efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
-          eu = euros, p = "CO", speed = Speed(34))
-lkm <- units::as_units(18:10, "km")*1000
+                    eu = euros, p = "CO", speed = Speed(runif(nrow(veh), 15, 40)))
+lkm <- units::as_units(18:11, "km")*1000
 cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 names(cold_lkm) <- paste0("Month_", 1:12)
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
-veh <- age_ldv(1:10, agemax = 8)
-emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
-beta = cold_lkm[,1], verbose = TRUE,)
-emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
-beta = cold_lkm[,1], verbose = TRUE,
-params = list(paste0("data_", 1:10), "moredata"))
-aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-beta = cold_lkm, pro_month = veh_month, verbose = T)
-aa <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-beta = cold_lkm, pro_month = veh_month, verbose = FALSE,
-params = list(paste0("data_", 1:10), "moredata"))
+system.time(
+a <- emis_cold_td(veh = veh,
+                  lkm = lkm,
+                  ef = efh[1, ],
+                  efcold = efc[1:10, ],
+                  beta = cold_lkm[,1],
+                  verbose = TRUE))
+system.time(
+a2 <- emis_cold_td(veh = veh,
+                   lkm = lkm,
+                   ef = efh[1, ],
+                   efcold = efc[1:10, ],
+                   beta = cold_lkm[,1],
+                   verbose = TRUE,
+                   fortran = TRUE)) # emistd2coldf.f95
+a$emissions <- round(a$emissions, 8)
+a2$emissions <- round(a2$emissions, 8)
+identical(a, a2)
+
+# Adding parameters
+emis_cold_td(veh = veh,
+             lkm = lkm,
+             ef = efh,
+             efcold = efc[1:10, ],
+             beta = cold_lkm[,1],
+             verbose = TRUE,
+             params = list(paste0("data_", 1:10),
+                          "moredata"))
+system.time(
+aa <- emis_cold_td(veh = veh,
+                   lkm = lkm,
+                   ef = efh,
+                   efcold = efc,
+                   beta = cold_lkm,
+                   pro_month = veh_month,
+                   verbose = T))
+system.time(
+aa2 <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc, beta = cold_lkm,
+pro_month = veh_month,verbose = TRUE,fortran = TRUE)) # emistd5coldf.f95
+aa$emissions <- round(aa$emissions, 8)
+aa2$emissions <- round(aa2$emissions, 8)
+identical(aa, aa2)
+
 }
 }
 \seealso{
