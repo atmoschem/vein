@@ -6,7 +6,7 @@ row.names(dt) <- paste0("Simple_Feature_", 1:10)
 efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f ="G", eu = euros, p = "CO", speed = Speed(34))
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
                     eu = euros, p = "CO", speed = Speed(34))
-lkm <- units::as_units(18:10, "km")*1000
+lkm <- units::as_units(18:11, "km")*1000
 cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
 names(cold_lkm) <- paste0("Month_", 1:12)
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
