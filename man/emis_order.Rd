@@ -35,7 +35,7 @@ returns the emission array matching with corresponding weekdays and with
 the desired number of hours, recycling or droping hours from the emission array. For
 instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
 want to reorder them to start saturday you with a total a new length of hours
-of 241, you must :emis_order(EMISSION, as.Date("2016-04-06"), 241)
+of 241, you must emis_order(EMISSION, as.Date("2016-04-06"), 241)
 }
 \note{
 This function assumes that the emissions have hours with length of
@@ -47,11 +47,40 @@ are going to start a air quality simulation for specific periods of time.
 }
 \examples{
 \dontrun{
-wCO <- emis_order(CO, start = "sat", hours = 24, verbose = TRUE)
-wCO <- emis_order(CO, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
+data(net)
+data(pc_profile)
+data(fe2015)
+data(fkm)
+PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
+          133833,138441,142682,171029,151048,115228,98664,126444,101027,
+          84771,55864,36306,21079,20138,17439, 7854,2215,656,1262,476,512,
+          1181, 4991, 3711, 5653, 7039, 5839, 4257,3824, 3068)
+veh <- data.frame(PC_G = PC_G)
+pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
+pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
+speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+pckm <- units::set_units(fkm[[1]](1:24), "km")
+pckma <- cumsum(pckm)
+cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
+cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
+#vehicles newer than pre-euro
+co1 <- fe2015[fe2015$Pollutant=="CO", ] #24 obs!!!
+cod <- c(co1$PC_G[1:24]*c(cod1,cod2),co1$PC_G[25:nrow(co1)])
+lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
+                     f = "G",p = "CO", eu=co1$Euro_LDV)
+E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
+              profile = pc_profile, simplify = TRUE)
+class(E_CO)
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
+g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
+E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
+head(E_CO_g) #class sf
+gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
+wCO <- emis_order(gr, start = "sat", hours = 24, verbose = TRUE)
+wCO <- emis_order(E_CO_STREETS, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
 }
 
 }
 \author{
-Daniel Schuch& Sergio Ibarra
+Daniel Schuch & Sergio Ibarra
 }

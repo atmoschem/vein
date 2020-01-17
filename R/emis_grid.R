@@ -124,7 +124,8 @@ emis_grid <- function (spobj = net,
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(sf::st_set_geometry(net, NULL))
     net$area1 <- sf::st_area(net)
-    netg <- sf::st_intersection(net,g )
+    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net,
+                                                                  g)))
     netg$area2 <- sf::st_area(netg)
 
 

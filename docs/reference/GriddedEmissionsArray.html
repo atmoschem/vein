@@ -172,7 +172,7 @@
     <p>Objects of class "GriddedEmissionsArray"</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fe2015</span>)
@@ -199,19 +199,15 @@
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>E_CO</span>)
 <span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_post.html'>emis_post</a></span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets"</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
-<span class='no'>net</span>@<span class='kw'>data</span> <span class='kw'>&lt;-</span> <span class='no'>net</span>@<span class='kw'>data</span>[,- <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>9</span>)]
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>net</span>)
-<span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_grid.html'>emis_grid</a></span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>E_CO_g</span>) <span class='co'>#class sf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mapview</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/mapview/man/mapView.html'>mapview</a></span>(<span class='no'>E_CO_g</span>, <span class='kw'>zcol</span><span class='kw'>=</span> <span class='st'>"V1"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>col.regions</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cptcity.html'>cptcity</a></span>(<span class='fl'>1</span>))
+<span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_grid.html'>emis_grid</a></span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>E_CO_STREETS</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>T</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>gr</span>)
-
 <span class='co'># For some cptcity color gradients:</span>
-<span class='kw pkg'>devtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/devtools/man/remote-reexports.html'>install_github</a></span>(<span class='st'>"ibarraespinosa/cptcity"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>gr</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cptcity.html'>cptcity</a></span>(<span class='fl'>1</span>))
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>gr</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cpt.html'>cpt</a></span>(<span class='fl'>1</span>))
+}</div><div class='output co'>#&gt; Number of lon points: 23
+#&gt; Number of lat points: 19
+#&gt; </div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 361822086.99
+#&gt; Sum of gridded emissions 361822086.99</div><div class='img'><img src='GriddedEmissionsArray-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='GriddedEmissionsArray-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

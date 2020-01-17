@@ -42,7 +42,7 @@ if the user count with an EmissionsArry with 4 dimension, it will be able
 to use this function.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 data(net)
 data(pc_profile)
@@ -72,7 +72,7 @@ pollutant = "CO", by = "veh")
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
+pckm <- units::set_units(fkm[[1]](1:24),"km"); pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #vehicles newer than pre-euro

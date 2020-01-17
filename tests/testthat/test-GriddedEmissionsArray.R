@@ -28,7 +28,10 @@ g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 names(net)
 E_CO_g <- emis_grid(spobj = E_CO_STREETS["V1"], g = g, sr= 31983)
 
-
+a <- capture_output_lines(GriddedEmissionsArray(E_CO_g,rows = 19,
+                                                cols = 23,
+                                                times = 168,
+                                                T))
 test_that("GriddedEmissionsArray works", {
   expect_equal(round(GriddedEmissionsArray(E_CO_g,
                                            rows = 19,
@@ -40,11 +43,6 @@ test_that("GriddedEmissionsArray works", {
 
 
 
-a <- capture_output_lines(GriddedEmissionsArray(E_CO_g,
-                                                rows = 19,
-                                                cols = 23,
-                                                times = 168,
-                                                T))
 test_that("GriddedEmissionsArray works", {
   expect_equal(capture_output_lines(GriddedEmissionsArray(E_CO_g,
                                                           rows = 19,
@@ -90,7 +88,7 @@ test_that("GriddedEmissionsArray works", {
                                                    rows = 19,
                                                    cols = 23,
                                                    times = 168,
-                                                   T))[1]),
+                                                   TRUE))[1]),
                summary(0)[1])
 })
 

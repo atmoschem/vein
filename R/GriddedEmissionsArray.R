@@ -18,7 +18,7 @@
 #' summary.GriddedEmissionsArray plot.GriddedEmissionsArray
 #' @importFrom sf st_set_geometry
 #' @importFrom utils head
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)
@@ -45,18 +45,11 @@
 #' class(E_CO)
 #' E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
 #' g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
-#' net@data <- net@data[,- c(1:9)]
-#' names(net)
-#' E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
-#' head(E_CO_g) #class sf
-#' library(mapview)
-#' mapview(E_CO_g, zcol= "V1", legend = T, col.regions = cptcity::cptcity(1))
+#' E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 #' gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
 #' plot(gr)
-#'
 #' # For some cptcity color gradients:
-#' devtools::install_github("ibarraespinosa/cptcity")
-#' plot(gr, col = cptcity::cptcity(1))
+#' plot(gr, col = cptcity::cpt(1))
 #' }
 #' @export
 GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x),
@@ -95,10 +88,10 @@ GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x),
 #' @export
 print.GriddedEmissionsArray <- function(x,  ...) {
   e <- x
-  print(paste0("This GriddedEmissionsArray has:\n",
-                 dim(e)[1], "lat points\n",
-                 dim(e)[2], "lon points\n",
-                 dim(e)[3],  "hours\n"))
+  cat(paste0("This GriddedEmissionsArray has:\n",
+                 dim(e)[1], " lat points\n",
+                 dim(e)[2], " lon points\n",
+                 dim(e)[3],  " hours\n"))
   print(utils::head(e))
 }
 
@@ -107,7 +100,7 @@ print.GriddedEmissionsArray <- function(x,  ...) {
 #' @export
 summary.GriddedEmissionsArray <- function(object, ...) {
   e <- object
-  summary(e[ , ,  ])
+  summary(e[, , ])
   }
 
 #' @rdname GriddedEmissionsArray

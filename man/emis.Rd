@@ -55,7 +55,7 @@ Hour and day will be deprecated because they can be infered from the profile
 matrix.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 data(net)
 data(pc_profile)
@@ -72,13 +72,13 @@ pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 speed <- data.frame(S8 = net$ps)
 lef <- EmissionFactorsList(ef_cetesb("CO", "PC_G", agemax = ncol(pc1)))
 system.time(E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed))
-system.time(E_CO_2 <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, simplify = T))
+system.time(E_CO_2 <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, simplify = TRUE))
 identical(E_CO, E_CO_2)
 
 # Estimation for morning rush hour and local emission factors without speed
 lef <- ef_cetesb("CO", "PC_G", agemax = ncol(pc1))
 system.time(E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef))
-system.time(E_CO_2 <- emis(veh = pc1,lkm = net$lkm, ef = lef, fortran = T))
+system.time(E_CO_2 <- emis(veh = pc1,lkm = net$lkm, ef = lef, fortran = TRUE))
 identical(E_CO, E_CO_2)
 
 # Estimation for 168 hour and local factors and speed
@@ -97,7 +97,7 @@ E_CO_2 <- emis(veh = pc1,
              ef = lef,
              speed = speed,
              profile = profiles$PC_JUNE_2014,
-             simplify = T))
+             simplify = TRUE))
 
 # Estimation for 168 hour and local factors and without speed
 lef <- ef_cetesb("CO", "PC_G", agemax = ncol(pc1))
@@ -117,13 +117,13 @@ E_CO_3 <- emis(veh = pc1,
              lkm = net$lkm,
              ef = lef,
              profile = profiles$PC_JUNE_2014,
-             simplify = T)) ; sum(E_CO)
+             simplify = TRUE)) ; sum(E_CO)
 system.time(
 E_CO_4 <- emis(veh = pc1,
              lkm = net$lkm,
              ef = lef,
              profile = profiles$PC_JUNE_2014,
-             simplify = T,
+             simplify = TRUE,
              fortran = TRUE)) ; sum(E_CO)
 identical(round(E_CO, 2), round(E_CO_2, 2))
 identical(round(E_CO_3, 2), round(E_CO_4, 2))
@@ -163,7 +163,7 @@ lef <- ef_hdv_scaled(dfcol = as.numeric(efco),
                      l = 0.5,
                      p = "CO")
 for(i in 1:length(lef)) print(lef[[i]](10))
-(a <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = T))
-(b <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = T, fortran = T))
+(a <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = TRUE))
+(b <- emis(veh = bus1, lkm = lkm, ef = efco, verbose = TRUE, fortran = TRUE))
 }
 }

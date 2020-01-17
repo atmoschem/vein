@@ -28,7 +28,7 @@
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_cold}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' veh <- age_ldv(1:10, agemax = 8)
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
@@ -63,7 +63,7 @@
 #' # Adding parameters
 #' emis_cold_td(veh = veh,
 #'              lkm = lkm,
-#'              ef = efh,
+#'              ef = efh[1, ],
 #'              efcold = efc[1:10, ],
 #'              beta = cold_lkm[,1],
 #'              verbose = TRUE,
@@ -76,10 +76,16 @@
 #'                    efcold = efc,
 #'                    beta = cold_lkm,
 #'                    pro_month = veh_month,
-#'                    verbose = T))
+#'                    verbose = TRUE))
 #' system.time(
-#' aa2 <- emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc, beta = cold_lkm,
-#' pro_month = veh_month,verbose = TRUE,fortran = TRUE)) # emistd5coldf.f95
+#' aa2 <- emis_cold_td(veh = veh,
+#'                     lkm = lkm,
+#'                     ef = efh,
+#'                     efcold = efc,
+#'                     beta = cold_lkm,
+#'                     pro_month = veh_month,
+#'                     verbose = TRUE,
+#'                     fortran = TRUE)) # emistd5coldf.f95
 #' aa$emissions <- round(aa$emissions, 8)
 #' aa2$emissions <- round(aa2$emissions, 8)
 #' identical(aa, aa2)
