@@ -29,7 +29,7 @@
 #' @param verbose Logical; To show more information
 #' @return EmissionsArray  g/h
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' data(net)
 #' data(pc_profile)
@@ -46,7 +46,7 @@
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-#' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
+#' pckm <- units::set_units(fkm[[1]](1:24), "km"); pckma <- cumsum(pckm)
 #' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 #' cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #' #vehicles newer than pre-euro
@@ -63,16 +63,25 @@
 #' length(lefec) == ncol(pc1)
 #' #emis change length of 'ef' to match ncol of 'veh'
 #' class(lefec)
-#' PC_CO_COLD <- emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
-#' beta = pcf, speed = speed, profile = pc_profile)
+#' PC_CO_COLD <- emis_cold(veh = pc1,
+#'                         lkm = net$lkm,
+#'                         ef = lef,
+#'                         efcold = lefec,
+#'                         beta = pcf,
+#'                         speed = speed,
+#'                         profile = pc_profile)
 #' class(PC_CO_COLD)
 #' plot(PC_CO_COLD)
 #' lpc <- list(pc1, pc1)
-#' PC_CO_COLDv2 <- emis_cold(veh = pc1, lkm = net$lkm, ef = lef, efcold = lefec,
-#' beta = pcf, speed = speed, profile = pc_profile, hour = 2,
-#' day = 1)
-#' class(PC_CO_COLDv2)
-#' plot(PC_CO_COLDv2)
+#' PC_CO_COLDv2 <- emis_cold(veh = pc1,
+#'                           lkm = net$lkm,
+#'                           ef = lef,
+#'                           efcold = lefec,
+#'                           beta = pcf,
+#'                           speed = speed,
+#'                           profile = pc_profile,
+#'                           hour = 2,
+#'                           day = 1)
 #' }
 emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
                        agemax = if (!inherits(x = veh, what = "list")) {

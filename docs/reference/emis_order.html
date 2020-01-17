@@ -47,7 +47,7 @@
 the desired number of hours, recycling or droping hours from the emission array. For
 instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
 want to reorder them to start saturday you with a total a new length of hours
-of 241, you must :emis_order(EMISSION, as.Date(&quot;2016-04-06&quot;), 241)" />
+of 241, you must emis_order(EMISSION, as.Date(&quot;2016-04-06&quot;), 241)" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,7 +124,7 @@ of 241, you must :emis_order(EMISSION, as.Date(&quot;2016-04-06&quot;), 241)" />
 the desired number of hours, recycling or droping hours from the emission array. For
 instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
 want to reorder them to start saturday you with a total a new length of hours
-of 241, you must :emis_order(EMISSION, as.Date("2016-04-06"), 241)</p>
+of 241, you must emis_order(EMISSION, as.Date("2016-04-06"), 241)</p>
     </div>
 
     <pre class="usage"><span class='fu'>emis_order</span>(<span class='no'>EMISSION</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"mon"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>utc</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -178,8 +178,37 @@ are going to start a air quality simulation for specific periods of time.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order</span>(<span class='no'>CO</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"sat"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order</span>(<span class='no'>CO</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2016-04-06"</span>), <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>241</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fe2015</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fkm</span>)
+<span class='no'>PC_G</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>33491</span>,<span class='fl'>22340</span>,<span class='fl'>24818</span>,<span class='fl'>31808</span>,<span class='fl'>46458</span>,<span class='fl'>28574</span>,<span class='fl'>24856</span>,<span class='fl'>28972</span>,<span class='fl'>37818</span>,<span class='fl'>49050</span>,<span class='fl'>87923</span>,
+          <span class='fl'>133833</span>,<span class='fl'>138441</span>,<span class='fl'>142682</span>,<span class='fl'>171029</span>,<span class='fl'>151048</span>,<span class='fl'>115228</span>,<span class='fl'>98664</span>,<span class='fl'>126444</span>,<span class='fl'>101027</span>,
+          <span class='fl'>84771</span>,<span class='fl'>55864</span>,<span class='fl'>36306</span>,<span class='fl'>21079</span>,<span class='fl'>20138</span>,<span class='fl'>17439</span>, <span class='fl'>7854</span>,<span class='fl'>2215</span>,<span class='fl'>656</span>,<span class='fl'>1262</span>,<span class='fl'>476</span>,<span class='fl'>512</span>,
+          <span class='fl'>1181</span>, <span class='fl'>4991</span>, <span class='fl'>3711</span>, <span class='fl'>5653</span>, <span class='fl'>7039</span>, <span class='fl'>5839</span>, <span class='fl'>4257</span>,<span class='fl'>3824</span>, <span class='fl'>3068</span>)
+<span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PC_G</span> <span class='kw'>=</span> <span class='no'>PC_G</span>)
+<span class='no'>pc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='my_age.html'>my_age</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>PC_G</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)
+<span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
+<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>), <span class='st'>"km"</span>)
+<span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>pckm</span>)
+<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>])
+<span class='no'>cod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"I"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>12</span>:<span class='fl'>24</span>])
+<span class='co'>#vehicles newer than pre-euro</span>
+<span class='no'>co1</span> <span class='kw'>&lt;-</span> <span class='no'>fe2015</span>[<span class='no'>fe2015</span>$<span class='no'>Pollutant</span><span class='kw'>==</span><span class='st'>"CO"</span>, ] <span class='co'>#24 obs!!!</span>
+<span class='no'>cod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>1</span>:<span class='fl'>24</span>]*<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>cod1</span>,<span class='no'>cod2</span>),<span class='no'>co1</span>$<span class='no'>PC_G</span>[<span class='fl'>25</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>co1</span>)])
+<span class='no'>lef</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_ldv_scaled.html'>ef_ldv_scaled</a></span>(<span class='no'>co1</span>, <span class='no'>cod</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"4S"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
+                     <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>,<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>eu</span><span class='kw'>=</span><span class='no'>co1</span>$<span class='no'>Euro_LDV</span>)
+<span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis.html'>emis</a></span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>41</span>,
+              <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>E_CO</span>)
+<span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_post.html'>emis_post</a></span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets"</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
+<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
+<span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_grid.html'>emis_grid</a></span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>E_CO_STREETS</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>E_CO_g</span>) <span class='co'>#class sf</span>
+<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GriddedEmissionsArray.html'>GriddedEmissionsArray</a></span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>T</span>)
+<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order</span>(<span class='no'>gr</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"sat"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order</span>(<span class='no'>E_CO_STREETS</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2016-04-06"</span>), <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>241</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -193,7 +222,7 @@ are going to start a air quality simulation for specific periods of time.</p>
     </ul>
 
     <h2>Author</h2>
-    <p>Daniel Schuch&amp; Sergio Ibarra</p>
+    <p>Daniel Schuch &amp; Sergio Ibarra</p>
   </div>
 </div>
 

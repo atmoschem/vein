@@ -201,7 +201,7 @@ an array with dimensions (streets x columns x hours x days)</p></td>
     <p>EmissionsArray  g/h</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>{
 <span class='co'># Do not run</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
@@ -218,7 +218,7 @@ an array with dimensions (streets x columns x hours x days)</p></td>
 <span class='no'>pc1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='my_age.html'>my_age</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>PC_G</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC"</span>)
 <span class='no'>pcw</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
 <span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pcw</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>pckm</span>)
+<span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>), <span class='st'>"km"</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>pckm</span>)
 <span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>])
 <span class='no'>cod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"I"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>pckma</span>[<span class='fl'>12</span>:<span class='fl'>24</span>])
 <span class='co'>#vehicles newer than pre-euro</span>
@@ -235,17 +235,26 @@ an array with dimensions (streets x columns x hours x days)</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>lefec</span>) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>pc1</span>)
 <span class='co'>#emis change length of 'ef' to match ncol of 'veh'</span>
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>lefec</span>)
-<span class='no'>PC_CO_COLD</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_cold</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>lefec</span>,
-<span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>pcf</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)
+<span class='no'>PC_CO_COLD</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_cold</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,
+                        <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>,
+                        <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>,
+                        <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>lefec</span>,
+                        <span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>pcf</span>,
+                        <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
+                        <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>PC_CO_COLD</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>PC_CO_COLD</span>)
 <span class='no'>lpc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>pc1</span>, <span class='no'>pc1</span>)
-<span class='no'>PC_CO_COLDv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_cold</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>lefec</span>,
-<span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>pcf</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-<span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>PC_CO_COLDv2</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>PC_CO_COLDv2</span>)
-}</div></pre>
+<span class='no'>PC_CO_COLDv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_cold</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,
+                          <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>,
+                          <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>,
+                          <span class='kw'>efcold</span> <span class='kw'>=</span> <span class='no'>lefec</span>,
+                          <span class='kw'>beta</span> <span class='kw'>=</span> <span class='no'>pcf</span>,
+                          <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>,
+                          <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>,
+                          <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+                          <span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+}</div><div class='img'><img src='emis_cold-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

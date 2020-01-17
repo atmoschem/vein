@@ -14,7 +14,7 @@
 #' and road abrasion. In: EEA, EMEP. EEA air pollutant emission inventory
 #' guidebook-2009. European Environment Agency, Copenhagen, 2016
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)

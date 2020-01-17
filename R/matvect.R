@@ -13,7 +13,7 @@
 #' If by = "col" all values of each column will be multiplied with each value
 #' of the vector x.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' data(net)
 #' veh <- age_ldv(net$ldv[1:4], agemax = 4)

@@ -40,7 +40,7 @@ Objects of class "GriddedEmissionsArray"
 "EmissionsArray" with 4 dimensios.
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 data(fe2015)
@@ -67,17 +67,10 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 class(E_CO)
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
-net@data <- net@data[,- c(1:9)]
-names(net)
-E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
-head(E_CO_g) #class sf
-library(mapview)
-mapview(E_CO_g, zcol= "V1", legend = T, col.regions = cptcity::cptcity(1))
+E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
 plot(gr)
-
 # For some cptcity color gradients:
-devtools::install_github("ibarraespinosa/cptcity")
-plot(gr, col = cptcity::cptcity(1))
+plot(gr, col = cptcity::cpt(1))
 }
 }

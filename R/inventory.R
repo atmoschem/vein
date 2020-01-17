@@ -59,10 +59,9 @@
 #' The user can rename these scripts.
 #' @export
 #' @importFrom utils file.edit
-#' @examples \dontrun{
+#' @examples {
 #' name = file.path(tempdir(), "YourCity")
 #' inventory(name = name)
-#' source(paste0(name, "/main.R"))
 #' }
 #'
 inventory <- function(name,

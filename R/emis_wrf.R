@@ -16,21 +16,12 @@
 #' transform the coordinates of the output
 #' @param utc ignored.
 #' @param islist logical value to indicate if sdf is a list or not
-#' @name emis_wrf-deprecated
 #' @seealso \code{\link{vein-deprecated}}
 #' @keywords internal
-NULL
-
-#' @rdname vein-deprecated
-#' @section \code{Evaporative}:
-#' For \code{emis_wrf}, use \strong{eixport::to_as4wrf}.
 #' @export
 #' @examples \dontrun{
 #' # Do not run
 #' }
-emis_wrf <- function(sdf, nr = 1, dmyhm, tz, crs = 4326, islist, utc){
-  message(paste0("You can create wrchem inputs directly with \neixport::create and eixport::wrf_put\n",
-                 "https://CRAN.R-project.org/package=eixport"))
-  .Deprecated("eixport::to_as4wrf or eixport::wrf_create")
-  "WRF Chem"
+emis_wrf <- function(sdf, nr = 1, dmyhm, tz, crs = 4326, islist){
+  eixport::to_as4wrf(sdf = sdf, nr = nr, dmyhm = dmyhm, tz = tz, crs = crs, islist = islist)
 }
