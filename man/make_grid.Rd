@@ -32,7 +32,7 @@ A grid of polygons class 'sf'
 reference is taken from the spatial object.
 }
 \examples{
-{
+\dontrun{
 data(net)
 grid <- make_grid(net, width = 0.5/102.47) #500 mts
 plot(grid, axes = TRUE) #class sf

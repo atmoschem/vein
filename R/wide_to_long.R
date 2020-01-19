@@ -11,7 +11,7 @@
 #' @importFrom sf st_sf
 #' @seealso \code{\link{emis_hot_td}} \code{\link{emis_cold_td}}  \code{\link{long_to_wide}}
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' net <- net@data
 #' df <- wide_to_long(df = net)

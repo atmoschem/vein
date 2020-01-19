@@ -11,7 +11,7 @@
 #' @importFrom sf st_sf
 #' @seealso \code{\link{vein_notes}}  \code{\link{long_to_wide}}
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
 #'                  emission = vein::Emissions(1:30),
 #'                  region = rep(letters[1:2], 15))

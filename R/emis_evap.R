@@ -40,7 +40,7 @@
 #' but the number of columns of veh is 10, the 10 first emission factors are used.
 #'
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' (a <- Vehicles(1:10))
 #' (lkm <- units::as_units(1:10, "km"))
 #' (ef <- EmissionFactors(1:10))

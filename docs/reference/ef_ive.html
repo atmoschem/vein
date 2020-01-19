@@ -78,7 +78,7 @@ enter with the mileage by age of use and the name of the pollutant." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6</span>
       </span>
     </div>
 
@@ -201,7 +201,7 @@ enter with the mileage by age of use and the name of the pollutant.</p>
  January 2005, Washington, D.C.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Do not run</span>
 <span class='co'># Passenger Cars PC</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fkm</span>)
@@ -209,12 +209,7 @@ enter with the mileage by age of use and the name of the pollutant.</p>
 <span class='no'>mil</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>fkm</span>$<span class='fu'>KM_PC_E25</span>(<span class='fl'>1</span>:<span class='fl'>50</span>))
 <span class='fu'>ef_ive</span>(<span class='st'>"Truck/Bus"</span>, <span class='kw'>mileage</span> <span class='kw'>=</span> <span class='no'>mil</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO_gkm"</span>)
 <span class='fu'>ef_ive</span>(<span class='kw'>mileage</span> <span class='kw'>=</span> <span class='no'>mil</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO_gkm"</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt; [1] "Smaller no control (US Pre-1972 style) light duty vehicle. Engine less than 1.5 liter and typically a sedan or smaller GVWR &lt;5000 lbs."</div><div class='output co'>#&gt; Units: [g/km]
-#&gt;  [1] 22.255 22.255 22.255 22.255 22.255 27.140 27.140 27.140 27.140 27.140
-#&gt; [11] 27.140 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221
-#&gt; [21] 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221
-#&gt; [31] 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221
-#&gt; [41] 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221 34.221</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -20,7 +20,7 @@ gCO$emission <- gCO$V1
 
 test_that("grid_emis works", {
   expect_equal(round(grid_emis(net, gCO, verbose = TRUE, top_down = T)$emission[1]),
-               4379)
+               7416)
   expect_output(grid_emis(net, gCO, verbose = TRUE, top_down = T),
                 ".?")
 })

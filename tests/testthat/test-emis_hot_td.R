@@ -25,6 +25,13 @@ test_that("emis_hot_td works", {
                                  lkm = lkm,
                                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
                                  verbose = TRUE,
+                                 fortran = TRUE)$emissions[1]),
+               Emissions(395))
+
+  expect_equal(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                                 verbose = TRUE,
                                  params = list(paste0("data_", 1:10),
                                                "moredata"))$emissions[1]),
                Emissions(395))
@@ -33,6 +40,12 @@ test_that("emis_hot_td works", {
                                    lkm = lkm,
                                    ef = EmissionFactors(as.numeric(efh[, 1:8])),
                                    verbose = TRUE)$emissions[1]),
+                 "E.?")
+  expect_message(round(emis_hot_td(veh = veh,
+                                   lkm = lkm,
+                                   ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                                   verbose = TRUE,
+                                   fortran = TRUE)$emissions[1]),
                  "E.?")
 
   expect_output(emis_hot_td(veh = veh,

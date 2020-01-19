@@ -78,7 +78,7 @@ criteria polluants specified in ef_ldv_speed and ef_hdv_speed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6</span>
       </span>
     </div>
 
@@ -172,7 +172,7 @@ TODO: Enter with wide data.frame, with each line as a each street, each column f
     <div class='dont-index'><p><code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> <code><a href='ef_hdv_speed.html'>ef_hdv_speed</a></code> <code><a href='speciate.html'>speciate</a></code> <code><a href='ef_evap.html'>ef_evap</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># CO</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>emission</span> <span class='kw'>=</span> <span class='fu'><a href='Emissions.html'>Emissions</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
 <span class='no'>df</span>$<span class='no'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>
@@ -189,49 +189,7 @@ TODO: Enter with wide data.frame, with each line as a each street, each column f
 <span class='no'>dfe</span>$<span class='no'>region</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='fl'>10</span>)
 <span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ_MOSAIC"</span>, <span class='st'>"region"</span>)
 <span class='fu'>emis_chem</span>(<span class='no'>dfe</span>, <span class='st'>"CBMZ_MOSAIC"</span>, <span class='st'>"region"</span>, <span class='fl'>TRUE</span>)
-}</div><div class='output co'>#&gt;     group region  emission units
-#&gt; 2     ALD   &lt;NA&gt; 0.0000000   mol
-#&gt; 3    ARO1   &lt;NA&gt; 0.0000000   mol
-#&gt; 4    ARO2   &lt;NA&gt; 0.0000000   mol
-#&gt; 5  C2H5OH   &lt;NA&gt; 0.0000000   mol
-#&gt; 6    C3H6   &lt;NA&gt; 0.0000000   mol
-#&gt; 7   CH3OH   &lt;NA&gt; 0.0000000   mol
-#&gt; 8      CO   &lt;NA&gt; 0.0000000   mol
-#&gt; 9     CSL   &lt;NA&gt; 0.0000000   mol
-#&gt; 10    ECC   &lt;NA&gt; 0.0000000     g
-#&gt; 11    ECI   &lt;NA&gt; 0.0000000     g
-#&gt; 12    ECJ   &lt;NA&gt; 0.0000000     g
-#&gt; 13    ETH   &lt;NA&gt; 0.0000000   mol
-#&gt; 14    HC3   &lt;NA&gt; 0.0000000   mol
-#&gt; 15    HC3      a 0.6240038   mol
-#&gt; 16    HC3      b 0.7488045   mol
-#&gt; 17    HC5   &lt;NA&gt; 0.0000000   mol
-#&gt; 18    HC8   &lt;NA&gt; 0.0000000   mol
-#&gt; 19   HCHO   &lt;NA&gt; 0.0000000   mol
-#&gt; 20    ISO   &lt;NA&gt; 0.0000000   mol
-#&gt; 21    KET   &lt;NA&gt; 0.0000000   mol
-#&gt; 22    NH3   &lt;NA&gt; 0.0000000   mol
-#&gt; 23     NO   &lt;NA&gt; 0.0000000   mol
-#&gt; 24    NO2      a 0.5434074   mol
-#&gt; 25    NO2      b 0.6520889   mol
-#&gt; 26   NO3C   &lt;NA&gt; 0.0000000     g
-#&gt; 27   NO3I   &lt;NA&gt; 0.0000000     g
-#&gt; 28   NO3J   &lt;NA&gt; 0.0000000     g
-#&gt; 29    OL2   &lt;NA&gt; 0.0000000   mol
-#&gt; 30    OLI   &lt;NA&gt; 0.0000000   mol
-#&gt; 31    OLT   &lt;NA&gt; 0.0000000   mol
-#&gt; 32   ORA2   &lt;NA&gt; 0.0000000   mol
-#&gt; 33   ORGC   &lt;NA&gt; 0.0000000     g
-#&gt; 34   ORGI   &lt;NA&gt; 0.0000000     g
-#&gt; 35   ORGJ   &lt;NA&gt; 0.0000000     g
-#&gt; 36  PM25I   &lt;NA&gt; 0.0000000     g
-#&gt; 37  PM25J   &lt;NA&gt; 0.0000000     g
-#&gt; 38    SO2   &lt;NA&gt; 0.0000000   mol
-#&gt; 39   SO4C   &lt;NA&gt; 0.0000000     g
-#&gt; 40   SO4I   &lt;NA&gt; 0.0000000     g
-#&gt; 41   SO4J   &lt;NA&gt; 0.0000000     g
-#&gt; 42    TOL   &lt;NA&gt; 0.0000000   mol
-#&gt; 43    XYL   &lt;NA&gt; 0.0000000   mol</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

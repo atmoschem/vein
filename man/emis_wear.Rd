@@ -36,7 +36,7 @@ emission estimation  g/h
 breaks and road surface.
 }
 \examples{
-{
+\dontrun{
 data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv[1:10] + net$hdv[1:10], pc_profile[, 1])

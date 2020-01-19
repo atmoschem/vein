@@ -31,7 +31,7 @@
 #' @export
 #' @note It consists in a Gompertz equation with default parameters from
 #' 1 national emissions inventory for green housegases in Brazil, MCT 2006
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 #' plot(PC_E25_1400)

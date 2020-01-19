@@ -38,7 +38,7 @@ It is assumed dry hours and anual aggregation should consider moisture factor.
 It depends on Average Daily Traffic (ADT)
 }
 \examples{
-{
+\dontrun{
 # Do not run
 veh <- array(pnorm(q=c(1:100), mean=500, sd = 100),
              c(100,24,7))

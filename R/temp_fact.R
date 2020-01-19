@@ -10,7 +10,7 @@
 #' @return data-frames of expanded traffic or sf.
 #' @importFrom sf st_sf st_as_sf
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' data(net)
 #' data(pc_profile)

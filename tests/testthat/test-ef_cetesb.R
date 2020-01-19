@@ -1,7 +1,7 @@
 context("ef_cetesb")
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO", "PC_G")[1]), 0.141)
+  expect_equal(as.numeric(ef_cetesb("CO", "PC_G")[1]), 0.21)
 })
 
 test_that("ef_cetesb stops", {
@@ -31,7 +31,7 @@ test_that("ef_cetesb stops", {
 
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO", "PC_G", full = TRUE)$CO[1]), 0.141)
+  expect_equal(as.numeric(ef_cetesb("CO", "PC_G", full = TRUE)$CO[1]), 0.21)
 })
 
 test_that("ef_cetesb works", {
@@ -45,21 +45,21 @@ test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO",
                                     "PC_G",
                                     full = TRUE)$CO[1]),
-               0.141)
+               0.21)
 })
 
 test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO",
                                     "PC_G",
                                     year = 2020)[1]),
-               0.141)
+               0.19)
 })
 
 test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO",
                                     "PC_G",
                                     year = 1980)[1]),
-               33)
+               33.6)
 })
 
 test_that("ef_cetesb works", {
@@ -67,7 +67,7 @@ test_that("ef_cetesb works", {
                                     c("PC_G", "LCV_G"),
                                     year = 2020,
                                     agemax = 10)[1,1]),
-               0.141)
+               0.19)
 })
 
 test_that("ef_cetesb works", {
@@ -75,7 +75,7 @@ test_that("ef_cetesb works", {
                                     c("PC_G", "LCV_G"),
                                     year = 1980,
                                     agemax = 10)[1,1]),
-               33)
+               33.6)
 })
 
 test_that("ef_cetesb works", {
@@ -83,7 +83,7 @@ test_that("ef_cetesb works", {
                                     c("PC_G", "LCV_G"),
                                     year = 2020,
                                     agemax = 100)[1,1]),
-               0.141)
+               0.19)
 })
 
 
@@ -92,7 +92,7 @@ test_that("ef_cetesb works", {
                                     c("PC_G", "LCV_G"),
                                     year = 1980,
                                     agemax = 100)[1,1]),
-               33)
+               33.6)
 })
 
 test_that("ef_cetesb works", {
@@ -100,7 +100,7 @@ test_that("ef_cetesb works", {
                                     c("PC_G"),
                                     year = 2020,
                                     agemax = 100)[1]),
-               0.141)
+               0.19)
 })
 
 
@@ -109,5 +109,6 @@ test_that("ef_cetesb works", {
                                     c("PC_G"),
                                     year = 1980,
                                     agemax = 100)[1]),
-               33)
+               33.6)
 })
+

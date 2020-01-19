@@ -87,7 +87,7 @@
 #' amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
 #' Parana, 2015.
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' pm <- rnorm(n = 100, mean = 400, sd = 2)
 #' df <- speciate(pm, veh = "PC", fuel = "G", eu = "I")

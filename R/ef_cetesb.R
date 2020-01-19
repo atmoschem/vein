@@ -1,10 +1,13 @@
 #' Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2017
 #'
 #' \code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
-#' @param p Character; Pollutants: "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2",
+#' @param p Character;
+#'
+#' Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
 #' "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd",
-#' "CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO" (g/km). The letter 'd' means deteriorated
-#' factor. Also, evaporative emissions at average temperature ranges:
+#' "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
+#' "RCHO_0km" and "ETOH_0km",
+#' (g/km).  Evaporative emissions at average temperature ranges:
 #' "D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15",
 #' "S_0_15" and "R_0_15" where D means diurnal (g/day), S hot/warm soak (g/trip)
 #' and R hot/warm running losses (g/trip).
@@ -33,10 +36,13 @@
 #' 3) CNG emission factors were expanded to other pollutants by comparison
 #' of US.EPA-AP42 emission factor: Section 1.4 Natural Gas Combustion.
 #'
+#' In the previous versions I used the letter 'd' for deteriorated. I removed the
+#' letter 'd' internally to not break older code.
+#'
 #' @references Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
 #' url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' a <- ef_cetesb("CO", "PC_G")
 #' a <- ef_cetesb("R_10_25", "PC_G")
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
@@ -47,6 +53,8 @@
 ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
   year1 <- ef$Year[1]
+
+  p <- gsub(pattern = "d", replacement = "", x = p) #not break old code
 
   if(year < 1956) stop("Choose a newer year")
 

@@ -79,7 +79,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6</span>
       </span>
     </div>
 
@@ -196,7 +196,7 @@ or an EmissionFactor</p>
 or length equal to length of eu</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
 <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>,
 <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -207,8 +207,7 @@ or length equal to length of eu</p>
 <span class='fu'>efe50</span>(<span class='fl'>10</span>)
 <span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
 <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>cumileage</span> <span class='kw'>=</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='fl'>25000</span>, <span class='st'>"km"</span>))
-}</div><div class='output co'>#&gt; a = 1.31e-06, b = 0.862, c = 4.18e-06, d = 0.526, e = 0, f = 0, ef = 
-#&gt; Equation = (ifelse(S&lt;=30,(a*km+b)*ab,(c*km+d)*cd))*1</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

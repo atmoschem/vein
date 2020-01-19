@@ -80,7 +80,7 @@ in data. This function returns an object of class &quot;sf&quot;." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6</span>
       </span>
     </div>
 
@@ -162,39 +162,7 @@ not projected. Please, see http://spatialreference.org/.</p></td>
  into 'sf'. Also, The aggregation of data is done with data.table functions.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span>(<span class='no'>net</span>)
-<span class='no'>netsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>)
-<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>netg</span>$<span class='no'>ldv</span>)) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>)))
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>netg</span>$<span class='no'>hdv</span>)) <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>net</span>$<span class='no'>hdv</span>)))
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>stars</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>"/media/sergio/ext5/gd03.rds"</span>)
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>fread</a></span>(<span class='st'>"/media/sergio/ext5/edgar_ecb05_opt1/2012/extracted/ALD.csvy"</span>)
-<span class='no'>net</span>$<span class='no'>layer</span> <span class='kw'>&lt;-</span> <span class='no'>net</span>$<span class='no'>layer</span>*<span class='fl'>1e12</span>
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterFromXYZ.html'>rasterFromXYZ</a></span>(<span class='no'>net</span>)
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/crop.html'>crop</a></span>(<span class='no'>net</span>, <span class='fu'><a href='https://rdrr.io/pkg/sf/man/coerce-methods.html'>as_Spatial</a></span>(<span class='no'>g</span>))
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/stars/man/st_as_stars.html'>st_as_stars</a></span>(<span class='no'>net</span>)
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_crs.html'>st_crs</a></span>(<span class='no'>net</span>) <span class='kw'>&lt;-</span> <span class='fl'>4326</span>
-<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='no'>net</span>, <span class='no'>g</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"polygons"</span>)
-}
-}</div><div class='output co'>#&gt; Number of lon points: 23
-#&gt; Number of lat points: 19
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 2095073
-#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of street emissions 2095073
-#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_grid-4.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

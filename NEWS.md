@@ -1,20 +1,25 @@
 NEWS
 ===========
 
+# vein 0.8.6  (Release date: 2020-01-19)
+
+- CRAN. Added Fortran in emis, emis_cold_td and emis_hot_td.
+
+# vein 0.8.5  (Release date: 2020-01-17)
+
+- CRAN. Added Fortran in emis, emis_cold_td and emis_hot_td.
+
 # vein 0.8.4  (Release date: 2019-12-22)
 
 - just add more tests
 - adds Fortran function to make emis faster
-
-# vein 0.8.4  (Release date: 2019-12-02)
-
 - improves emis, now faster
 
 ## vein 0.8.3  (Release date: 2019-11-14)
 
 - grid_emis now it is like a proper opposite of emis_grid, becuase it reads spatial 
 grid and transform it Lines, considering all the emissionsColumns) 
-- adds st_explode, to split lines by each vertex (CANCELLED - MUST IMPROVE)
+- adds st_explode.
 
 ## vein 0.8.2  (Release date: 2019-11-06)
 

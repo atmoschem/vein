@@ -109,6 +109,14 @@ test_that("emis works", {
                Emissions(81))
 })
 
+test_that("emis works", {
+  expect_equal(round(emis(veh = pc1,
+                          lkm = net$lkm,
+                          ef = EmissionFactors(3),
+                          fortran = TRUE)[1,1]),
+               Emissions(81))
+})
+
 
 test_that("emis stops", {
   expect_error(emis(veh = pc1[1:3, ],
@@ -145,6 +153,7 @@ test_that("emis works", {
 })
 
 
+
 test_that("emis works", {
   expect_equal(round(emis(veh = pc1,
                           lkm = net$lkm,
@@ -160,7 +169,8 @@ test_that("emis works", {
                           lkm = net$lkm,
                           ef = lef,
                           speed = speed,
-                          profile = profiles$PC_JUNE_2014$Monday)[1], 2),
+                          profile = profiles$PC_JUNE_2014$Monday,
+                          fortran = TRUE)[1], 2),
                1.2)
 })
 
