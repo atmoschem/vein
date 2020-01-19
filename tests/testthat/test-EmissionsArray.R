@@ -13,12 +13,12 @@ pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 lef <- EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G", year = 2016)))
 
 test_that("EmissionsArray works", {
-  expect_equal(as.numeric(emis(veh = pc1[1:5, ],
+  expect_equal(round(as.numeric(emis(veh = pc1[1:5, ],
                                lkm = net$lkm[1:5],
                                ef = lef,
                                profile = pc_profile[1, ],
-                               speed = Speed(34))[1,1,1,1]),
-               0.4850966 + 3.63e-08)
+                               speed = Speed(34))[1,1,1,1])),
+               1)
 
   expect_error(EmissionsArray(1),
                "C.?")
@@ -35,14 +35,14 @@ test_that("EmissionsArray works", {
                           ef = lef,
                           profile = pc_profile[1, ],
                           speed = Speed(34))[1]),
-               0)
+               1)
 
   expect_equal(summary(emis(veh = pc1[1:5, ],
                             lkm = net$lkm[1:5],
                             ef = lef,
                             profile = pc_profile[1, ],
                             speed = Speed(34)))[[1]],
-               0.002)
+               0.003)
 
   expect_output(print(summary(emis(veh = pc1[1:5, ],
                                    lkm = net$lkm[1:5],

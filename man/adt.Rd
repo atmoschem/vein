@@ -39,7 +39,7 @@ of expanded traffic
 input traffic data is usually for morning rush hours.
 }
 \examples{
-{
+\dontrun{
 data(net)
 data(pc_profile)
 p1 <- pc_profile[, 1]

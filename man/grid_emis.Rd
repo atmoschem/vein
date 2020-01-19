@@ -46,7 +46,7 @@ When spobj is a 'Spatial' object (class of sp), they are converted
  into 'sf'.
 }
 \examples{
-{
+\dontrun{
 data(net)
 data(pc_profile)
 data(fkm)

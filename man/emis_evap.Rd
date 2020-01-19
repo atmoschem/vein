@@ -58,7 +58,7 @@ number of columns of veh. For instance, if the length of the emision factor is 2
 but the number of columns of veh is 10, the 10 first emission factors are used.
 }
 \examples{
-{
+\dontrun{
 (a <- Vehicles(1:10))
 (lkm <- units::as_units(1:10, "km"))
 (ef <- EmissionFactors(1:10))

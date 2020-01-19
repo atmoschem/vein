@@ -59,7 +59,7 @@
 #' The user can rename these scripts.
 #' @export
 #' @importFrom utils file.edit
-#' @examples {
+#' @examples \dontrun{
 #' name = file.path(tempdir(), "YourCity")
 #' inventory(name = name)
 #' }

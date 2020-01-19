@@ -19,7 +19,7 @@
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'. Also, The aggregation of data is done with data.table functions.
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
 #' names(net)

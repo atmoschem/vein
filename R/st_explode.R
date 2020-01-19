@@ -11,7 +11,7 @@
 #' @note All variables are transformed into numeric.
 #'
 #' Thanks Michael Summer ([at]mdsummer)  for the function sfx_explode!
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' net <- sf::st_as_sf(net)
 #' # transformign factor in numeric

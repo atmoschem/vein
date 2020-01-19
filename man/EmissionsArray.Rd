@@ -33,7 +33,7 @@ Objects of class "EmissionsArray"
 Future version of this function will return an Array of 3 dimensions.
 }
 \examples{
-{
+\dontrun{
 data(net)
 data(pc_profile)
 data(fe2015)

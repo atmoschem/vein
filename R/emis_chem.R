@@ -31,7 +31,7 @@
 #' leaving the units just in g, allow to make further change while
 #' providing flexibility for several models.
 #' TODO: Enter with wide data.frame, with each line as a each street, each column for pollutant
-#' @examples {
+#' @examples \dontrun{
 #' # CO
 #' df <- data.frame(emission = Emissions(1:10))
 #' df$pollutant = "CO"
