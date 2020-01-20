@@ -4,8 +4,11 @@
 \alias{fuel_corr}
 \title{Correction due Fuel effects}
 \usage{
-fuel_corr(euro, g = c(e100 = 52, aro = 39, o2 = 0.4, e150 = 86, olefin =
-  10, s = 165), d = c(den = 840, pah = 9, cn = 51, t95 = 350, s = 400))
+fuel_corr(
+  euro,
+  g = c(e100 = 52, aro = 39, o2 = 0.4, e150 = 86, olefin = 10, s = 165),
+  d = c(den = 840, pah = 9, cn = 51, t95 = 350, s = 400)
+)
 }
 \arguments{
 \item{euro}{Character; Euro standards ("PRE", "I", "II", "III", "IV", "V",

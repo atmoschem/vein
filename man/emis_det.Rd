@@ -4,8 +4,15 @@
 \alias{emis_det}
 \title{Determine deterioration factors for urban conditions}
 \usage{
-emis_det(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE,
-  show.equation = FALSE)
+emis_det(
+  po,
+  cc,
+  eu,
+  speed = Speed(18.9),
+  km,
+  verbose = FALSE,
+  show.equation = FALSE
+)
 }
 \arguments{
 \item{po}{Character; Pollutant "CO", "NOx" or "HC"}

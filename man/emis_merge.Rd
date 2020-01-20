@@ -4,9 +4,17 @@
 \alias{emis_merge}
 \title{Merge several emissions files returning data-frames or 'sf' of lines}
 \usage{
-emis_merge(pol = "CO", what = "STREETS.rds", streets = T, net,
-  path = "emi", crs, under = "after", ignore = FALSE,
-  as_list = FALSE)
+emis_merge(
+  pol = "CO",
+  what = "STREETS.rds",
+  streets = T,
+  net,
+  path = "emi",
+  crs,
+  under = "after",
+  ignore = FALSE,
+  as_list = FALSE
+)
 }
 \arguments{
 \item{pol}{Character. Pollutant.}

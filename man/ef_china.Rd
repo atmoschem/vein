@@ -4,10 +4,23 @@
 \alias{ef_china}
 \title{Emissions factors from Chinese emissions guidelines}
 \usage{
-ef_china(v = "PV", t = "Small", f = "G", standard, p, k = 1,
-  ta = celsius(15), humidity = 0.5, altitude = 1000,
-  speed = Speed(30), baseyear_det = 2016, sulphur = 50,
-  load_factor = 0.5, details = FALSE, correction_only = FALSE)
+ef_china(
+  v = "PV",
+  t = "Small",
+  f = "G",
+  standard,
+  p,
+  k = 1,
+  ta = celsius(15),
+  humidity = 0.5,
+  altitude = 1000,
+  speed = Speed(30),
+  baseyear_det = 2016,
+  sulphur = 50,
+  load_factor = 0.5,
+  details = FALSE,
+  correction_only = FALSE
+)
 }
 \arguments{
 \item{v}{Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"}
