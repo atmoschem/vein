@@ -4,8 +4,20 @@
 \alias{ef_hdv_speed}
 \title{Emissions factors for Heavy Duty Vehicles based on average speed}
 \usage{
-ef_hdv_speed(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
-  show.equation = FALSE, speed, fcorr = rep(1, 8))
+ef_hdv_speed(
+  v,
+  t,
+  g,
+  eu,
+  x,
+  gr = 0,
+  l = 0.5,
+  p,
+  k = 1,
+  show.equation = FALSE,
+  speed,
+  fcorr = rep(1, 8)
+)
 }
 \arguments{
 \item{v}{Category vehicle: "Coach", "Trucks" or "Ubus"}

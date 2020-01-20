@@ -52,12 +52,13 @@
 #' }
 ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
+  ef[is.na(ef), ] <-
+
   year1 <- ef$Year[1]
 
   p <- gsub(pattern = "d", replacement = "", x = p) #not break old code
 
   if(year < 1956) stop("Choose a newer year")
-
     # Selecting
     ef <- ef[ef$Year <= year, ]
 

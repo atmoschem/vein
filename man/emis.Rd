@@ -4,9 +4,19 @@
 \alias{emis}
 \title{Estimation of emissions}
 \usage{
-emis(veh, lkm, ef, speed, agemax = ifelse(is.data.frame(veh), ncol(veh),
-  ncol(veh[[1]])), profile, simplify = FALSE, fortran = FALSE,
-  hour = nrow(profile), day = ncol(profile), verbose = FALSE)
+emis(
+  veh,
+  lkm,
+  ef,
+  speed,
+  agemax = ifelse(is.data.frame(veh), ncol(veh), ncol(veh[[1]])),
+  profile,
+  simplify = FALSE,
+  fortran = FALSE,
+  hour = nrow(profile),
+  day = ncol(profile),
+  verbose = FALSE
+)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
