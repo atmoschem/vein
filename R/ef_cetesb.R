@@ -52,7 +52,7 @@
 #' }
 ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
-  ef[is.na(ef), ] <-
+  ef[is.na(ef)] <- 0
 
   year1 <- ef$Year[1]
 
