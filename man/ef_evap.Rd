@@ -4,19 +4,8 @@
 \alias{ef_evap}
 \title{Evaporative emission factor}
 \usage{
-ef_evap(
-  ef,
-  v,
-  cc,
-  dt,
-  ca,
-  pollutant = "NMHC",
-  k = 1,
-  ltrip,
-  kmday,
-  show = FALSE,
-  verbose = FALSE
-)
+ef_evap(ef, v, cc, dt, ca, pollutant = "NMHC", k = 1, ltrip, kmday,
+  show = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{ef}{Name of  evaporative emission factor as *eshotc*: mean hot-soak with

@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,13 +39,14 @@
 
 
 
-
 <meta property="og:title" content="Split line by vertex (experimental) — st_explode" />
+
 <meta property="og:description" content="st_explode split a lines data.frame into
 each vertex. It to mimic the function explode from qgis, that the reason for the name
 st_explode" />
-<meta name="twitter:card" content="summary" />
 
+<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -97,6 +96,7 @@ st_explode" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -118,13 +118,15 @@ st_explode" />
     </div>
 
     <div class="ref-description">
+    
     <p><code>st_explode</code> split a lines data.frame into
 each vertex. It to mimic the function explode from qgis, that the reason for the name
 <code>st_explode</code></p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>st_explode</span>(<span class='no'>net</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -134,11 +136,12 @@ each vertex. It to mimic the function explode from qgis, that the reason for the
 it is transformed to "sf".</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>All variables are transformed into numeric.</p>
 <p>Thanks Michael Summer ([at]mdsummer)  for the function sfx_explode!</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -154,7 +157,9 @@ it is transformed to "sf".</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#note">Note</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -164,11 +169,11 @@ it is transformed to "sf".</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://ibarraespinosa.github.io/superblog/'>Sergio Ibarra-Espinosa</a>.</p>
+  <p>Developed by <a href='https://ibarraespinosa.github.io'>Sergio Ibarra-Espinosa</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

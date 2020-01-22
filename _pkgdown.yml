@@ -2,9 +2,9 @@ url: http://atmoschem.github.io/vein/
 
 template:
   params:
-    bootswatch: cerulean
+    bootswatch: flatly
 
 
 authors:
   Sergio Ibarra-Espinosa:
-    href: https://ibarraespinosa.github.io/superblog/
+    href: https://ibarraespinosa.github.io
