@@ -3,6 +3,7 @@ url: http://atmoschem.github.io/vein/
 template:
   params:
     bootswatch: flatly
+    ganalytics: UA-2642843-5
 
 
 authors:
