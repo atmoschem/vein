@@ -4,18 +4,9 @@
 \alias{invcop}
 \title{Helper function to copy and zip projects}
 \usage{
-invcop(
-  in_name = getwd(),
-  out_name,
-  all = FALSE,
-  main = TRUE,
-  ef = TRUE,
-  est = TRUE,
-  network = TRUE,
-  veh_rds = FALSE,
-  veh_csv = TRUE,
-  zip = TRUE
-)
+invcop(in_name = getwd(), out_name, all = FALSE, main = TRUE,
+  ef = TRUE, est = TRUE, network = TRUE, veh_rds = FALSE,
+  veh_csv = TRUE, zip = TRUE)
 }
 \arguments{
 \item{in_name}{Character; Name of current project.}

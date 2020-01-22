@@ -24,11 +24,17 @@ hot_soak(x, carb, p, eshotc, eswarmc, eshotfi)
 running_losses(x, erhotfi, lkm, carb, p, erhotc, erwarmc)
 }
 \arguments{
-\item{x}{Object with class "numeric"}
+\item{x}{object with class "EmissionList"}
 
 \item{...}{ignored}
 
+\item{object}{object with class "EmissionList"}
+
+\item{x}{Object with class "numeric"}
+
 \item{object}{Object with class "Evaporative"}
+
+\item{...}{ignored}
 }
 \value{
 Objects of class "EmissionsList" and numeric elements as "units"

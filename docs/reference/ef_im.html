@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,15 +39,16 @@
 
 
 
-
 <meta property="og:title" content="Emission factors deoending on accumulated mileage — ef_im" />
+
 <meta property="og:description" content="ef_im calculate the theoretical emission factors of vehicles.
 The approache is different from including deterioration factors
 (emis_det)  but similar, because they represent how much emits
 a vehicle with a normal deterioration, but that it will pass the
 Inspection and Manteinance program." />
-<meta name="twitter:card" content="summary" />
 
+<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -99,6 +98,7 @@ Inspection and Manteinance program." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -120,15 +120,17 @@ Inspection and Manteinance program." />
     </div>
 
     <div class="ref-description">
+    
     <p><code>ef_im</code> calculate the theoretical emission factors of vehicles.
 The approache is different from including deterioration factors
 (<code><a href='emis_det.html'>emis_det</a></code>)  but similar, because they represent how much emits
 a vehicle with a normal deterioration, but that it will pass the
 Inspection and Manteinance program.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>ef_im</span>(<span class='no'>ef</span>, <span class='no'>tc</span>, <span class='no'>amileage</span>, <span class='no'>max_amileage</span>, <span class='no'>max_ef</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -159,11 +161,12 @@ this value, mileage is constant.</p></td>
       <td><p>Logical; if you want detailed description.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An emission factor of a deteriorated vehicle under normal conditions
 which would be approved in a inspection and mantainence program.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -179,7 +182,9 @@ which would be approved in a inspection and mantainence program.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -189,11 +194,11 @@ which would be approved in a inspection and mantainence program.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://ibarraespinosa.github.io/superblog/'>Sergio Ibarra-Espinosa</a>.</p>
+  <p>Developed by <a href='https://ibarraespinosa.github.io'>Sergio Ibarra-Espinosa</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +39,13 @@
 
 
 
-
 <meta property="og:title" content="Matrix and vector multiplication — matvect" />
+
 <meta property="og:description" content="matvect it is a helper function to multiply matrices
 with vector by rows or columns" />
-<meta name="twitter:card" content="summary" />
 
+<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -96,6 +95,7 @@ with vector by rows or columns" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -117,12 +117,14 @@ with vector by rows or columns" />
     </div>
 
     <div class="ref-description">
+    
     <p><code>matvect</code> it is a helper function to multiply matrices
 with vector by rows or columns</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>matvect</span>(<span class='no'>df</span>, <span class='no'>x</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"row"</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -139,10 +141,11 @@ with vector by rows or columns</p>
       <td><p>Character, with two value "row" or "col"</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>data-frame</p>
+    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>This function multiplies matrices with vectors by rows or colums.
@@ -150,6 +153,7 @@ If by = "row" all values of each row will be multiplied with each value
 of the vector x.
 If by = "col" all values of each column will be multiplied with each value
 of the vector x.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -163,8 +167,11 @@ of the vector x.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#note">Note</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -174,11 +181,11 @@ of the vector x.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://ibarraespinosa.github.io/superblog/'>Sergio Ibarra-Espinosa</a>.</p>
+  <p>Developed by <a href='https://ibarraespinosa.github.io'>Sergio Ibarra-Espinosa</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

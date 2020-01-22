@@ -4,19 +4,9 @@
 \alias{age_moto}
 \title{Returns amount of vehicles at each age}
 \usage{
-age_moto(
-  x,
-  name = "age",
-  a = 0.2,
-  b = 17,
-  agemin = 1,
-  agemax = 50,
-  k = 1,
-  bystreet = FALSE,
-  net,
-  verbose = FALSE,
-  namerows
-)
+age_moto(x, name = "age", a = 0.2, b = 17, agemin = 1,
+  agemax = 50, k = 1, bystreet = FALSE, net, verbose = FALSE,
+  namerows)
 }
 \arguments{
 \item{x}{Numeric; numerical vector of vehicles with length equal to lines features of road network}

@@ -4,7 +4,8 @@
 \alias{ef_cetesb}
 \title{Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2017}
 \usage{
-ef_cetesb(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant")
+ef_cetesb(p, veh, year = 2017, agemax = 40, full = FALSE,
+  project = "constant")
 }
 \arguments{
 \item{p}{Character;

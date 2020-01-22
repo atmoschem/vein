@@ -1,9 +1,19 @@
 ---
-title: "VEIN model"
-author: "Sergio Ibarra-Espinosa"
 date: "19 de Octubre de 2016"
-output: html_document
+output: github_document
 ---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
+```
+
+# VEIN <img src="man/figures/logo.png" align="right" alt="" width="150" />
 
 
 [![Travis-CI Build Status](https://travis-ci.org/atmoschem/vein.svg?branch=master)](https://travis-ci.org/atmoschem/vein)
@@ -16,15 +26,12 @@ output: html_document
 [![Package Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Github Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
 
-
-# **V**ehicular **E**missions **IN**ventory **(VEIN)** model. ![](https://camo.githubusercontent.com/e40e5564993bae6edb29498decf1ef9663359edb/68747470733a2f2f692e696d6775722e636f6d2f647038737079702e706e67)
-
 ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif)
 
 
 ## What is VEIN?
 
-Vehicular Emissions Inventories. An R package to estimate vehicular emissions.
+**V**ehicular **E**missions **IN**ventories (VEIN). An R package to estimate vehicular emissions.
 It currently covers the following pollutants in speed functions:
 
 ### European emission factors for all available vehicle categories exhaust:
@@ -272,7 +279,7 @@ sp::spplot(as(dfspeednet, "Spatial"),
        c("S1", "S9"), scales = list(Draw = T),
        col.regions = rev(cptcity::cpt()))
 ```
-
+![](https://i.imgur.com/qJUdMea.png)
 ### 2) Emission Factors
 
 - [ef_ldv_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
@@ -303,7 +310,6 @@ ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
           eu = euro[i], p = "CO", show.equation = FALSE) })
 E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
              profile = pc_profile)
-#plot(E_CO, xlab = "Hours", ylab = "[g/h]")
 ```
 
 ### 4) Post Emissions
@@ -341,13 +347,11 @@ data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
-plot(g)
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
-#sp::spplot(as(E_CO_g, "Spatial"),
-#       c("V1", "V9"), scales = list(Draw = T),
-#       col.regions = rev(cptcity::cpt()))
+plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T),
+main = "CO [g/h] emissions road transportation in Sao Paulo, Brazil")
 ```
-![](https://atmoschem.github.io/vein/reference/make_grid-1.png)
+![](https://i.imgur.com/FuLSxq5.png)
 
 **At this step, you can feed you grid with emissions from other sources!**
 
@@ -361,21 +365,29 @@ E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
 into the wrf chem input file using [eixport::wrf_put](https://atmoschem.github.io/eixport/reference/wrf_put.html).
 
 ```r
-eixport::wrf_create(wrfinput_dir = "PathToWrfInput", wrfchemi_dir = "OutputPathWrfChemInput")
-gwrf <- eixport::wrf_grd("PathToWrfInput")
+library(eixport)
+dir.create(file.path(tempdir(), "EMISS"))
+wrf_create(wrfinput_dir         = system.file("extdata", package = "eixport"),
+           wrfchemi_dir         = file.path(tempdir(), "EMISS"),
+           domains              = 2,
+           frames_per_auxinput5 = 1, #hours
+           auxinput5_interval_m = 60,
+           verbose              = TRUE)
+path_to_wrfi <- paste0(system.file("extdata", package = "eixport"), "/wrfinput_d02")
+path_to_wrfc <- list.files(file.path(tempdir(), "EMISS"), full.names = TRUE)[1]
+gwrf <- eixport::wrf_grid(path_to_wrfi)
 E_CO_gwrf <- emis_grid(spobj = E_CO_STREETSnet, g = gwrf)
-gr <- GriddedEmissionsArray(E_CO_gwrf, rows = 19, cols = 23, times = 168, T)
-eixport::wrf_put(file = "Path/To/WRFChemInputFile, name = "E_CO", POL = gr)
+gr <- GriddedEmissionsArray(E_CO_gwrf, rows = 51, cols = 63, times = 1)
+eixport::wrf_put(file = path_to_wrfc, name = "E_CO", POL = gr)
 ```
 
 ### Creating a WRFChem Input file using AS4WRF
 
 1. Create a grid using [make_grid](https://atmoschem.github.io/vein/reference/make_grid.html) and your net.
 2. Run [emis_grid](https://atmoschem.github.io/vein/reference/emis_grid.html) to grid your emissions.
-3. Run [emis_wrf](https://atmoschem.github.io/vein/reference/emis_wrf.html) to create a 
+3. Run [eixport::to_as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html) to create a 
 data.frame the specifications for AS4WRF.ncl.
-4. Export the output of [emis_wrf](https://atmoschem.github.io/vein/reference/emis_wrf.html) to a text file
-without header. Recall that AS4WRF requires all the lumped species.
+4. Export data.frame to a text.file. Recall that AS4WRF requires all the lumped species.
 5. Contact the developer of AS4WRF Angel Vara alvv1986@gmail.com to get a copy and run AS4WRF.ncl.
 
 Thanks and enjoy VEIN!

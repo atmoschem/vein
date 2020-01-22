@@ -4,7 +4,8 @@
 \alias{netspeed}
 \title{Calculate speeds of traffic network}
 \usage{
-netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, net, scheme = FALSE)
+netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, net,
+  scheme = FALSE)
 }
 \arguments{
 \item{q}{Data-frame of traffic flow to each hour (veh/h)}

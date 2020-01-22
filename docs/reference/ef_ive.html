@@ -15,12 +15,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,13 +39,14 @@
 
 
 
-
 <meta property="og:title" content="Base emissions factors from International Vehicle Emissions (IVE) model — ef_ive" />
+
 <meta property="og:description" content="ef_ive returns the base emission factors from the the IVE
 model. This function depend on vectorized mileage, which means your can
 enter with the mileage by age of use and the name of the pollutant." />
-<meta name="twitter:card" content="summary" />
 
+<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -97,6 +96,7 @@ enter with the mileage by age of use and the name of the pollutant." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -118,16 +118,18 @@ enter with the mileage by age of use and the name of the pollutant." />
     </div>
 
     <div class="ref-description">
+    
     <p><code>ef_ive</code> returns the base emission factors from the the IVE
 model. This function depend on vectorized mileage, which means your can
 enter with the mileage by age of use and the name of the pollutant.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>ef_ive</span>(<span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Auto/Sml Truck"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"Petrol"</span>,
   <span class='kw'>weight</span> <span class='kw'>=</span> <span class='st'>"Light"</span>, <span class='kw'>air_fuel_control</span> <span class='kw'>=</span> <span class='st'>"Carburetor"</span>,
   <span class='kw'>exhaust</span> <span class='kw'>=</span> <span class='st'>"None"</span>, <span class='kw'>evaporative</span> <span class='kw'>=</span> <span class='st'>"PCV"</span>, <span class='no'>mileage</span>, <span class='no'>pol</span>,
   <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -189,16 +191,18 @@ enter with the mileage by age of use and the name of the pollutant.</p>
       <td><p>Logical; option to see or not more information about vehicle.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An emission factor by annual mileage.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Nicole Davis, James Lents, Mauricio Osses, Nick Nikkila,
  Matthew Barth. 2005. Development and Application of an International
  Vehicle Emissions Model. Transportation Research Board, 81st Annual Meeting,
  January 2005, Washington, D.C.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -215,8 +219,11 @@ enter with the mileage by age of use and the name of the pollutant.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -226,11 +233,11 @@ enter with the mileage by age of use and the name of the pollutant.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://ibarraespinosa.github.io/superblog/'>Sergio Ibarra-Espinosa</a>.</p>
+  <p>Developed by <a href='https://ibarraespinosa.github.io'>Sergio Ibarra-Espinosa</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
