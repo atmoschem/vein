@@ -1,9 +1,9 @@
 ---
-date: "19 de Octubre de 2016"
 output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- date: "19 de Octubre de 2016" -->
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(

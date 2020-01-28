@@ -4,8 +4,7 @@
 \alias{adt}
 \title{Average daily traffic (ADT) from hourly traffic data.}
 \usage{
-adt(pc, lcv, hgv, bus, mc, p_pc, p_lcv, p_hgv, p_bus, p_mc,
-  expanded = FALSE)
+adt(pc, lcv, hgv, bus, mc, p_pc, p_lcv, p_hgv, p_bus, p_mc, expanded = FALSE)
 }
 \arguments{
 \item{pc}{numeric vector for passenger cars}

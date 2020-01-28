@@ -4,8 +4,7 @@
 \alias{emis_paved}
 \title{Estimation of resuspension emissions from paved roads}
 \usage{
-emis_paved(veh, lkm, k = 0.62, sL1 = 0.6, sL2 = 0.2, sL3 = 0.06,
-  sL4 = 0.03, W)
+emis_paved(veh, lkm, k = 0.62, sL1 = 0.6, sL2 = 0.2, sL3 = 0.06, sL4 = 0.03, W)
 }
 \arguments{
 \item{veh}{Numeric vector with length of elements equals to number of streets
