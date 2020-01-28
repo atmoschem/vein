@@ -4,15 +4,20 @@
 \alias{vein_notes}
 \title{vein_notes for writting technical notes about the inventory}
 \usage{
-vein_notes(notes, yourname, file = "README",
-  title = "Notes for this VEIN run", approach = "Top Down",
+vein_notes(
+  notes,
+  yourname,
+  file = "README",
+  title = "Notes for this VEIN run",
+  approach = "Top Down",
   traffic = "Your traffic information",
   composition = "Your traffic information",
   ef = "Your information about emission factors",
   cold_start = "Your information about cold starts",
   evaporative = "Your information about evaporative emission factors",
   standards = "Your information about standards",
-  mileage = "Your information about mileage")
+  mileage = "Your information about mileage"
+)
 }
 \arguments{
 \item{notes}{Character; vector of notes.}

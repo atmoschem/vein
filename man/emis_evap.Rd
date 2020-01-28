@@ -4,8 +4,19 @@
 \alias{emis_evap}
 \title{Estimation of evaporative emissions}
 \usage{
-emis_evap(veh, x, ed, hotfi, hotc, warmc, carb = 0, p, params, pro_month,
-  verbose = FALSE)
+emis_evap(
+  veh,
+  x,
+  ed,
+  hotfi,
+  hotc,
+  warmc,
+  carb = 0,
+  p,
+  params,
+  pro_month,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{veh}{Numeric or data.frame of Vehicles with untis 'veh'.}

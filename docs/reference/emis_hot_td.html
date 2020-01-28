@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -39,8 +41,8 @@
 
 
 
-<meta property="og:title" content="Estimation of hot exhaust emissions with top-down approach — emis_hot_td" />
 
+<meta property="og:title" content="Estimation of hot exhaust emissions with top-down approach — emis_hot_td" />
 <meta property="og:description" content="emis_hot_td estimates cld start emissions with
 a top-down appraoch. This is, annual or monthly emissions or region.
 Especifically, the emissions are esitmated for row of the simple feature (row
@@ -49,9 +51,9 @@ In general was designed so that each simple feature is a region with
 different average monthly temperature.
 This funcion, as other in this package, adapts to the class of the input data.
 providing flexibility to the user." />
-
 <meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -111,7 +113,6 @@ providing flexibility to the user." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -133,7 +134,6 @@ providing flexibility to the user." />
     </div>
 
     <div class="ref-description">
-    
     <p><code>emis_hot_td</code> estimates cld start emissions with
 a top-down appraoch. This is, annual or monthly emissions or region.
 Especifically, the emissions are esitmated for row of the simple feature (row
@@ -142,12 +142,10 @@ of the spatial feature).</p>
 different average monthly temperature.
 This funcion, as other in this package, adapts to the class of the input data.
 providing flexibility to the user.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>emis_hot_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>pro_month</span>, <span class='no'>params</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>emis_hot_td</span>(<span class='no'>veh</span>, <span class='no'>lkm</span>, <span class='no'>ef</span>, <span class='no'>pro_month</span>, <span class='no'>params</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -187,15 +185,13 @@ monthly profile.</p></td>
       <td><p>Logical; to try the fortran calculation.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Emissions data.frame</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code> <code><a href='ef_china.html'>ef_china</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -345,11 +341,8 @@ monthly profile.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
