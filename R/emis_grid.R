@@ -115,10 +115,11 @@ emis_grid <- function (spobj = net,
     id <- dfm$id
     dfm$id <- NULL
     dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
-    cat(paste0("Sum of gridded emissions ", round(sum(dfm[, -"id"],
+    cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))
+    dfm$id <- id
     gx <- data.frame(id = g$id)
-    gx <- merge(gx, dfm, by = "id", all.x = TRUE)
+    gx <- merge(gx, dfm, by = "id", all = TRUE)
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
@@ -140,7 +141,6 @@ emis_grid <- function (spobj = net,
     id <- dfm$id
     dfm$id <- NULL
     dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
-
     cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))
     dfm$id <- id
@@ -148,6 +148,6 @@ emis_grid <- function (spobj = net,
     gx <- merge(gx, dfm, by = "id", all = TRUE)
     gx[is.na(gx)] <- 0
     gx <- sf::st_sf(gx, geometry = g$geometry)
-   return(gx)
+    return(gx)
   }
 }
