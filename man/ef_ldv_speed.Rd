@@ -4,19 +4,8 @@
 \alias{ef_ldv_speed}
 \title{Emissions factors for Light Duty Vehicles and Motorcycles}
 \usage{
-ef_ldv_speed(
-  v,
-  t = "4S",
-  cc,
-  f,
-  eu,
-  p,
-  x,
-  k = 1,
-  speed,
-  show.equation = FALSE,
-  fcorr = rep(1, 8)
-)
+ef_ldv_speed(v, t = "4S", cc, f, eu, p, x, k = 1, speed,
+  show.equation = FALSE, fcorr = rep(1, 8))
 }
 \arguments{
 \item{v}{Character; category vehicle: "PC", "LCV", "Motorcycle" or "Moped}

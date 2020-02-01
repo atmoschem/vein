@@ -6,7 +6,7 @@
 \alias{vein-package}
 \title{vein: Vehicular Emissions Inventories}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: align='right'}}
 
 Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
@@ -25,11 +25,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Sergio Ibarra-Espinosa \email{sergio.ibarra@usp.br} (\href{https://orcid.org/0000-0002-3162-1905}{ORCID})
+\strong{Maintainer}: Sergio Ibarra-Espinosa \email{sergio.ibarra@usp.br} (0000-0002-3162-1905)
 
 Other contributors:
 \itemize{
-  \item Daniel Schuch \email{schuch@usp.br} (\href{https://orcid.org/0000-0001-5977-4519}{ORCID}) [contributor]
+  \item Daniel Schuch \email{schuch@usp.br} (0000-0001-5977-4519) [contributor]
 }
 
 }

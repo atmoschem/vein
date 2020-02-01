@@ -4,17 +4,10 @@
 \alias{ef_ive}
 \title{Base emissions factors from International Vehicle Emissions (IVE) model}
 \usage{
-ef_ive(
-  description = "Auto/Sml Truck",
-  fuel = "Petrol",
-  weight = "Light",
-  air_fuel_control = "Carburetor",
-  exhaust = "None",
-  evaporative = "PCV",
-  mileage,
-  pol,
-  details = FALSE
-)
+ef_ive(description = "Auto/Sml Truck", fuel = "Petrol",
+  weight = "Light", air_fuel_control = "Carburetor",
+  exhaust = "None", evaporative = "PCV", mileage, pol,
+  details = FALSE)
 }
 \arguments{
 \item{description}{Character; "Auto/Sml Truck" "Truck/Bus" or"Sml Engine".}

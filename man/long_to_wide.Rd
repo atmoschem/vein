@@ -4,13 +4,8 @@
 \alias{long_to_wide}
 \title{Transform data.frame from long to wide format}
 \usage{
-long_to_wide(
-  df,
-  column_with_new_names = names(df)[1],
-  column_with_data = "emission",
-  column_fixed,
-  net
-)
+long_to_wide(df, column_with_new_names = names(df)[1],
+  column_with_data = "emission", column_fixed, net)
 }
 \arguments{
 \item{df}{data.frame with three column.}

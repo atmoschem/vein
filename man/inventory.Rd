@@ -4,17 +4,10 @@
 \alias{inventory}
 \title{Inventory function.}
 \usage{
-inventory(
-  name,
-  vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-  show.main = FALSE,
-  scripts = TRUE,
-  show.dir = FALSE,
-  show.scripts = FALSE,
-  clear = TRUE,
-  rush.hour = FALSE,
-  showWarnings = FALSE
-)
+inventory(name, vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
+  show.main = FALSE, scripts = TRUE, show.dir = FALSE,
+  show.scripts = FALSE, clear = TRUE, rush.hour = FALSE,
+  showWarnings = FALSE)
 }
 \arguments{
 \item{name}{Character, path to new main directory for running vein.
