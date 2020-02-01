@@ -91,7 +91,7 @@ emis_grid <- function (spobj = net,
                .SDcols = namesnet]
     id <- dfm$id
     dfm$id <- NULL
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
     cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))
     dfm$id <- id
@@ -112,6 +112,9 @@ emis_grid <- function (spobj = net,
     xgg[is.na(xgg)] <- 0
     dfm <- xgg[, lapply(.SD, eval(parse(text = FN)), na.rm = TRUE), by = "id",
                .SDcols = namesnet]
+    id <- dfm$id
+    dfm$id <- NULL
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
     cat(paste0("Sum of gridded emissions ", round(sum(dfm[, -"id"],
                                                       na.rm = T), 2), "\n"))
     gx <- data.frame(id = g$id)
@@ -136,6 +139,8 @@ emis_grid <- function (spobj = net,
                .SDcols = namesnet]
     id <- dfm$id
     dfm$id <- NULL
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
+
     cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))
     dfm$id <- id

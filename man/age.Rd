@@ -4,7 +4,8 @@
 \alias{age}
 \title{Applies a survival rate to numeric new vehicles}
 \usage{
-age(x, type = "weibull", a = 14.46, b = 4.79, agemax, verbose = FALSE)
+age(x, type = "weibull", a = 14.46, b = 4.79, agemax,
+  verbose = FALSE)
 }
 \arguments{
 \item{x}{Numeric; numerical vector of sales or registrations for each year}

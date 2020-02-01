@@ -4,17 +4,8 @@
 \alias{emis_cold_td}
 \title{Estimation of cold start emissions with top-down approach}
 \usage{
-emis_cold_td(
-  veh,
-  lkm,
-  ef,
-  efcold,
-  beta,
-  pro_month,
-  params,
-  verbose = FALSE,
-  fortran = FALSE
-)
+emis_cold_td(veh, lkm, ef, efcold, beta, pro_month, params,
+  verbose = FALSE, fortran = FALSE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or spatial feature, wwhere columns are the
