@@ -30,8 +30,8 @@
 #' @importFrom sf st_sf st_as_sf st_transform st_set_geometry st_length  st_intersection
 #' @importFrom data.table as.data.table ':='
 #' @export
-#' @note When spobj is a 'Spatial' object (class of sp), they are converted
-#'  into 'sf'.
+#' @note \strong{Your gridded emissions might have flux units (mass / area / time(implicit))}
+#' \strong{You must multiply your emissions with the area to return to the original units.}
 #' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
@@ -51,6 +51,9 @@
 #'
 #' gCO <- emis_grid(spobj = E_CO_STREETS, g = g)
 #' gCO$emission <- gCO$V1
+#' area <- sf::st_area(gCO)
+#' area <- units::set_units(area, "km^2") #Check units!
+#' gCO$emission <- gCO$emission*area
 #' #
 #' \dontrun{
 #' #do not run
@@ -135,7 +138,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
                                          verbose = FALSE)
                              }))
       df <- st_set_geometry(lxxy, NULL)
-      fx <- sumg/sum(df, na.rm = TRUE)
+      fx <- as.numeric(sumg/sum(df, na.rm = TRUE))
       df <- df*fx
       if(verbose) {
         cat(paste0("Sum of gridded emissions ",
@@ -159,7 +162,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
                                          verbose = FALSE)
                              }))
       df <- st_set_geometry(lxxy, NULL)
-      fx <- sum(sumg)/sum(df, na.rm = TRUE)
+      fx <- as.numeric(sumg/sum(df, na.rm = TRUE))
       df <- df*fx
       if(verbose) {
         cat(paste0("Sum of gridded emissions ",

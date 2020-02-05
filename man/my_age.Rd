@@ -4,8 +4,17 @@
 \alias{my_age}
 \title{Returns amount of vehicles at each age}
 \usage{
-my_age(x, y, agemax, name = "vehicle", k = 1, pro_street, net,
-  verbose = FALSE, namerows)
+my_age(
+  x,
+  y,
+  agemax,
+  name = "vehicle",
+  k = 1,
+  pro_street,
+  net,
+  verbose = FALSE,
+  namerows
+)
 }
 \arguments{
 \item{x}{Numeric; vehicles by street (or spatial feature).}

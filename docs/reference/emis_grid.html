@@ -91,7 +91,7 @@ in data. This function returns an object of class &quot;sf&quot;." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7</span>
       </span>
     </div>
 
@@ -169,8 +169,13 @@ not projected. Please, see http://spatialreference.org/.</p></td>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>When spobj is a 'Spatial' object (class of sp), they are converted
- into 'sf'. Also, The aggregation of data is done with data.table functions.</p>
+    <p><strong>1) Emissions are returned as flux = mass / area / time (implicit),</strong>
+<strong>time untis are not displayed because each use can have different time units</strong>
+<strong>for instance, year, month, hour second, etc.</strong></p>
+<p><strong>2) Therefore, it is good practice to have time units in 'spobj'. </strong>
+<strong>This implies that spobj MUST include units!. </strong></p>
+<p><strong>3) In order to check the sum of the emissions, you must calculate the grid-area</strong>
+<strong>in km^2 and multiply by each column of the resulting emissions grid, and then sum.</strong></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"></pre>

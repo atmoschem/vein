@@ -16,6 +16,9 @@ E_CO_STREETS <- emis_post(arra = E_CO, by = "streets", net = net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 gCO <- emis_grid(spobj = E_CO_STREETS, g = g)
 gCO$emission <- gCO$V1
+area <- sf::st_area(gCO)
+area <- units::set_units(area, "km^2") #Check units!
+gCO$emission <- gCO$emission*area
 
 
 test_that("grid_emis works", {

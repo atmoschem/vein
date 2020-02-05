@@ -4,8 +4,7 @@
 \alias{emis_hot_td}
 \title{Estimation of hot exhaust emissions with top-down approach}
 \usage{
-emis_hot_td(veh, lkm, ef, pro_month, params, verbose = FALSE,
-  fortran = FALSE)
+emis_hot_td(veh, lkm, ef, pro_month, params, verbose = FALSE, fortran = FALSE)
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or spatial feature, where columns are the

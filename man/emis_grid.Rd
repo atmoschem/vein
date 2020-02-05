@@ -27,8 +27,15 @@ It is assumed that spobj is a Spatial*DataFrame or an "sf" with the pollutants
 in data. This function returns an object of class "sf".
 }
 \note{
-When spobj is a 'Spatial' object (class of sp), they are converted
- into 'sf'. Also, The aggregation of data is done with data.table functions.
+\strong{1) Emissions are returned as flux = mass / area / time (implicit),}
+\strong{time untis are not displayed because each use can have different time units}
+\strong{for instance, year, month, hour second, etc.}
+
+\strong{2) Therefore, it is good practice to have time units in 'spobj'. }
+\strong{This implies that spobj MUST include units!. }
+
+\strong{3) In order to check the sum of the emissions, you must calculate the grid-area}
+\strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
 }
 \examples{
 \dontrun{

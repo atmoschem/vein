@@ -1,15 +1,19 @@
 NEWS
 ===========
 
-# vein 0.8.6  (Release date: 2020-01-19)
+# vein 0.8.6  (Release date: 2020-02-05)
+
+- emis_grid now returns emissions as flux: mass / area / time (implicit)
+
+## vein 0.8.6  (Release date: 2020-01-19)
 
 - CRAN. Added Fortran in emis, emis_cold_td and emis_hot_td.
 
-# vein 0.8.5  (Release date: 2020-01-17)
+## vein 0.8.5  (Release date: 2020-01-17)
 
 - CRAN. Added Fortran in emis, emis_cold_td and emis_hot_td.
 
-# vein 0.8.4  (Release date: 2019-12-22)
+# #vein 0.8.4  (Release date: 2019-12-22)
 
 - just add more tests
 - adds Fortran function to make emis faster

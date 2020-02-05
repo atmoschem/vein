@@ -90,7 +90,7 @@ lapply. This function is in development and pull request are welcome." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.7</span>
       </span>
     </div>
 
@@ -187,8 +187,8 @@ applies when top_down is FALSE. For instance, if your hourly emissions are: "h1"
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>When spobj is a 'Spatial' object (class of sp), they are converted
- into 'sf'.</p>
+    <p><strong>Your gridded emissions might have flux units (mass / area / time(implicit))</strong>
+<strong>You must multiply your emissions with the area to return to the original units.</strong></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"></pre>

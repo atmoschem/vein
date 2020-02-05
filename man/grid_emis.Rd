@@ -42,8 +42,8 @@ This function applies \code{\link{emis_dist}} into each grid cell using
 lapply. This function is in development and pull request are welcome.
 }
 \note{
-When spobj is a 'Spatial' object (class of sp), they are converted
- into 'sf'.
+\strong{Your gridded emissions might have flux units (mass / area / time(implicit))}
+\strong{You must multiply your emissions with the area to return to the original units.}
 }
 \examples{
 \dontrun{
@@ -65,6 +65,9 @@ g <- make_grid(net, 1/102.47/2) #500m in degrees
 
 gCO <- emis_grid(spobj = E_CO_STREETS, g = g)
 gCO$emission <- gCO$V1
+area <- sf::st_area(gCO)
+area <- units::set_units(area, "km^2") #Check units!
+gCO$emission <- gCO$emission*area
 #
 \dontrun{
 #do not run
