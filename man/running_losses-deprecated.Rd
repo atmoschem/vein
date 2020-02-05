@@ -4,12 +4,6 @@
 \alias{running_losses-deprecated}
 \title{Estimation of average daily  hot-soak evaporative emissions}
 \arguments{
-\item{x}{Mean number of trips per vehicle per day}
-
-\item{carb}{fraction of gasoline vehicles with carburator or fuel return system}
-
-\item{p}{Fraction of trips finished with hot engine}
-
 \item{eshotc}{average daily hot-soak evaporative factor for vehicles with
 carburator or fuel return system}
 

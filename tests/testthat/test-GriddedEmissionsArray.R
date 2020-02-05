@@ -38,7 +38,7 @@ test_that("GriddedEmissionsArray works", {
                                            cols = 23,
                                            times = 168,
                                            T)[1]),
-               2902)
+               10785)
 })
 
 
@@ -79,7 +79,7 @@ test_that("GriddedEmissionsArray works", {
                                                 cols = 23,
                                                 times = 168,
                                                 T))[1]),
-               2902)
+               10785)
 })
 
 
@@ -106,7 +106,7 @@ test_that("GriddedEmissionsArray works", {
                                            rows = 19,
                                            cols = 23,
                                            times = 168, rotate = TRUE)[1]),
-               91)
+               337)
 })
 
 test_that("GriddedEmissionsArray works", {
@@ -114,7 +114,7 @@ test_that("GriddedEmissionsArray works", {
                                              rows = 19,
                                              cols = 23,
                                              times = 168)[1])),
-                 2902)
+                 10785)
 })
 
 test_that("GriddedEmissionsArray prints", {
@@ -123,6 +123,6 @@ test_that("GriddedEmissionsArray prints", {
                         cols = 23,
                         times = 168)
   expect_output(print(a), "This GriddedEmissionsArray has:?")
-  expect_equal(print(round(a[1])), 2902)
+  expect_equal(print(round(a[1])), 10785)
 })
 

@@ -140,7 +140,7 @@ test_that("emis_order works", {
                                 start = as.Date("2016-04-13"),
                                 utc = 3,
                                 hours = 70)[1]),
-               1017)
+               3780)
 })
 
 test_that("emis_order works", {
@@ -148,7 +148,7 @@ test_that("emis_order works", {
                                 start = as.Date("2016-04-13"),
                                 utc = 3,
                                 hours = 70)$V70[1]),
-               8485)
+               31531)
 })
 
 test_that("emis_order works", {
@@ -156,7 +156,7 @@ test_that("emis_order works", {
                                 start = as.Date("2016-04-13"),
                                 utc = 3,
                                 hours = 70)$V70[1]),
-               8485)
+               31531)
 })
 
 test_that("emis_order works", {
@@ -164,7 +164,7 @@ test_that("emis_order works", {
                                 start = as.Date("2016-04-13"),
                                 utc = 3,
                                 hours = 70)$V70[1]),
-               8485)
+               31531)
 })
 
 test_that("emis_order works", {
@@ -172,5 +172,6 @@ test_that("emis_order works", {
                                 start = "fri",
                                 utc = 3,
                                 hours = 70)$V70[1]),
-               8485)
+               31531)
 })
+

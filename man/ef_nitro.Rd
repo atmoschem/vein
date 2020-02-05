@@ -4,9 +4,20 @@
 \alias{ef_nitro}
 \title{Emissions factors of N2O and NH3}
 \usage{
-ef_nitro(v, t = "Hot", cond = "Urban", cc, f, eu, p = "NH3",
-  S = 10, cumileage, k = 1, show.equation = FALSE, fcorr = rep(1,
-  8))
+ef_nitro(
+  v,
+  t = "Hot",
+  cond = "Urban",
+  cc,
+  f,
+  eu,
+  p = "NH3",
+  S = 10,
+  cumileage,
+  k = 1,
+  show.equation = FALSE,
+  fcorr = rep(1, 8)
+)
 }
 \arguments{
 \item{v}{Category vehicle: "PC", "LCV", "Motorcycles_2S", "Motorcycles",

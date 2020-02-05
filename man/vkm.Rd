@@ -4,8 +4,15 @@
 \alias{vkm}
 \title{Estimation of VKM}
 \usage{
-vkm(veh, lkm, profile, hour = nrow(profile), day = ncol(profile),
-  array = TRUE, as_df = TRUE)
+vkm(
+  veh,
+  lkm,
+  profile,
+  hour = nrow(profile),
+  day = ncol(profile),
+  array = TRUE,
+  as_df = TRUE
+)
 }
 \arguments{
 \item{veh}{Numeric vector with number of vehicles per street}

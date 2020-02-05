@@ -17,8 +17,15 @@
 #' @importFrom data.table data.table .SD
 #' @importFrom sp CRS
 #' @export
-#' @note When spobj is a 'Spatial' object (class of sp), they are converted
-#'  into 'sf'. Also, The aggregation of data is done with data.table functions.
+#' @note \strong{1) Emissions are returned as flux = mass / area / time (implicit),}
+#' \strong{time untis are not displayed because each use can have different time units}
+#' \strong{for instance, year, month, hour second, etc.}
+#'
+#' \strong{2) Therefore, it is good practice to have time units in 'spobj'. }
+#' \strong{This implies that spobj MUST include units!. }
+#'
+#' \strong{3) In order to check the sum of the emissions, you must calculate the grid-area}
+#' \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
 #' @examples \dontrun{
 #' data(net)
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
@@ -57,6 +64,9 @@ emis_grid <- function (spobj = net,
   net$id <- NULL
   # add as.data.frame qhen net comes from data.table
   netdata <- as.data.frame(sf::st_set_geometry(net, NULL))
+  message("Your units are: ")
+  uninet <- units(netdata[[1]])
+  message(uninet)
   for (i in 1:length(netdata)) {
     netdata[, i] <- as.numeric(netdata[, i])
   }
@@ -74,30 +84,40 @@ emis_grid <- function (spobj = net,
   if (type %in% c("lines", "line")) {
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
-    cat(paste0("Sum of street emissions ", round(snetdf,
-                                                 2), "\n"))
+    cat(paste0("Sum of street emissions ", round(snetdf, 2), "\n"))
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(sf::st_set_geometry(net, NULL))
-    net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) ==
-                                               1, ]))
-    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net,
-                                                                  g)))
+    net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) == 1, ]))
+    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
     netg$LKM2 <- sf::st_length(netg)
     xgg <- data.table::data.table(netg)
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$LKM2/xgg$LKM)
     xgg[is.na(xgg)] <- 0
-    dfm <- xgg[, lapply(.SD, eval(parse(text = FN)), na.rm = TRUE), by = "id",
+    dfm <- xgg[,
+               lapply(.SD, eval(parse(text = FN)), na.rm = TRUE),
+               by = "id",
                .SDcols = namesnet]
     id <- dfm$id
     dfm$id <- NULL
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
-    cat(paste0("Sum of gridded emissions ", round(sum(dfm,
-                                                      na.rm = T), 2), "\n"))
+
+    area <- sf::st_area(g)
+    area <- units::set_units(area, "km^2")
+
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
     dfm$id <- id
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by = "id", all = TRUE)
     gx[is.na(gx)] <- 0
+    for(i in seq_along(namesnet)) {
+      units(gx[[namesnet[i]]]) <- uninet
+      gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
+    }
+    cat(paste0("Sum of gridded emissions ",
+               round(sum(matvect(gx[namesnet],
+                                 x = remove_units(area),
+                                 by = "row")),
+                     2), "\n"))
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
   } else if (type %in% c("points", "point")) {
@@ -114,16 +134,28 @@ emis_grid <- function (spobj = net,
                .SDcols = namesnet]
     id <- dfm$id
     dfm$id <- NULL
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
-    cat(paste0("Sum of gridded emissions ", round(sum(dfm,
-                                                      na.rm = T), 2), "\n"))
+
+    area <- units::set_units(sf::st_area(g), "km^2")
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
     dfm$id <- id
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by = "id", all = TRUE)
     gx[is.na(gx)] <- 0
+    for(i in seq_along(namesnet)) {
+      units(gx[[namesnet[i]]]) <- uninet
+      gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
+    }
+    cat(paste0("Sum of gridded emissions ",
+               round(sum(matvect(gx[namesnet],
+                                 x = remove_units(area),
+                                 by = "row")),
+                     2), "\n"))
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
   } else if(type %in% c("polygons", "polygon", "area")){
+    netdf <- sf::st_set_geometry(net, NULL)
+    snetdf <- sum(netdf, na.rm = TRUE)
+    cat(paste0("Sum of point emissions ", round(snetdf, 2), "\n"))
     ncolnet <- ncol(sf::st_set_geometry(net, NULL))
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(sf::st_set_geometry(net, NULL))
