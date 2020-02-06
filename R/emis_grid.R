@@ -82,42 +82,57 @@ emis_grid <- function (spobj = net,
     g <- sf::st_transform(g, sr)
   }
   if (type %in% c("lines", "line")) {
+    net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
+
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
+    ncolnet <- ncol(netdf)
+    namesnet <- names(netdf)
+
     cat(paste0("Sum of street emissions ", round(snetdf, 2), "\n"))
-    ncolnet <- ncol(sf::st_set_geometry(net, NULL))
-    net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
-    namesnet <- names(sf::st_set_geometry(net, NULL))
-    net$LKM <- sf::st_length(sf::st_cast(net[sf::st_dimension(net) == 1, ]))
+
+    net$LKM <- sf::st_length(net)
+
     netg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
+
     netg$LKM2 <- sf::st_length(netg)
+
     xgg <- data.table::data.table(netg)
+
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$LKM2/xgg$LKM)
+
     xgg[is.na(xgg)] <- 0
+
     dfm <- xgg[,
                lapply(.SD, eval(parse(text = FN)), na.rm = TRUE),
                by = "id",
                .SDcols = namesnet]
+
     id <- dfm$id
+
     dfm$id <- NULL
 
     area <- sf::st_area(g)
+
     area <- units::set_units(area, "km^2")
 
     dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+
     dfm$id <- id
+
     gx <- data.frame(id = g$id)
+
     gx <- merge(gx, dfm, by = "id", all = TRUE)
+
     gx[is.na(gx)] <- 0
+
     for(i in seq_along(namesnet)) {
       units(gx[[namesnet[i]]]) <- uninet
       gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
     }
     cat(paste0("Sum of gridded emissions ",
-               round(sum(matvect(gx[namesnet],
-                                 x = remove_units(area),
-                                 by = "row")),
-                     2), "\n"))
+               round(sum(gx[namesnet]*remove_units(area)),2), "\n"))
+
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
   } else if (type %in% c("points", "point")) {
@@ -125,8 +140,8 @@ emis_grid <- function (spobj = net,
     snetdf <- sum(netdf, na.rm = TRUE)
     cat(paste0("Sum of point emissions ", round(snetdf, 2),
                "\n"))
-    ncolnet <- ncol(sf::st_set_geometry(net, NULL))
-    namesnet <- names(sf::st_set_geometry(net, NULL))
+    ncolnet <- ncol(netdf)
+    namesnet <- names(netdf)
     xgg <- data.table::data.table(sf::st_set_geometry(suppressMessages(suppressWarnings(sf::st_intersection(net,
                                                                                                             g))), NULL))
     xgg[is.na(xgg)] <- 0
@@ -156,9 +171,9 @@ emis_grid <- function (spobj = net,
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
     cat(paste0("Sum of point emissions ", round(snetdf, 2), "\n"))
-    ncolnet <- ncol(sf::st_set_geometry(net, NULL))
+    ncolnet <- ncol(netdf)
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
-    namesnet <- names(sf::st_set_geometry(net, NULL))
+    namesnet <- names(netdf)
     net$area1 <- sf::st_area(net)
     netg <- suppressMessages(suppressWarnings(sf::st_intersection(net,
                                                                   g)))
