@@ -133,7 +133,7 @@ II, III, III+DPF dor diesle and III+DISI for gasoline. Pre euro vehicles
 has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.
 }
 \examples{
-\dontrun{
+{
 # Passenger Cars PC
 # Emission factor function
 V <- 0:150

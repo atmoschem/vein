@@ -188,7 +188,7 @@ hours that start saturday, this function can do that. It is useful when you
 are going to start a air quality simulation for specific periods of time.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fe2015</span>)
@@ -220,7 +220,15 @@ are going to start a air quality simulation for specific periods of time.</p>
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GriddedEmissionsArray.html'>GriddedEmissionsArray</a></span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>T</span>)
 <span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order</span>(<span class='no'>gr</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"sat"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order</span>(<span class='no'>E_CO_STREETS</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2016-04-06"</span>), <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>241</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-}</div></pre>
+}</div><div class='output co'>#&gt; Number of lon points: 23
+#&gt; Number of lat points: 19
+#&gt; </div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>g</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 361822086.99
+#&gt; Sum of gridded emissions 361822086.99</div><div class='output co'>#&gt; <span class='message'>Class :GriddedEmissionsArray</span>
+#&gt; <span class='message'>Class :array</span></div><div class='output co'>#&gt; emissions starting at sat with 24 hours</div><div class='output co'>#&gt; <span class='message'>Class :sf</span>
+#&gt; <span class='message'>Class :data.frame</span></div><div class='output co'>#&gt; 
+#&gt; using date: 2016-04-06 
+#&gt; emissions starting at thu with 241 hours</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -85,7 +85,7 @@ test_that("my_age stops", {
                             y = dpc,
                             name = "PC_E25_1400",
                             k = 1:2)),
-               "Ro.?")
+               ".?")
 })
 
 test_that("my_age works", {

@@ -21,13 +21,14 @@ Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.t
 [![Github
 Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
 
-![](https://github.com/atmoschem/vein/raw/master/all_comp.gif)
+<!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
 ## What is VEIN?
 
 **V**ehicular **E**missions **IN**ventories (VEIN). An R package to
 estimate vehicular emissions. It currently covers the following
-pollutants in speed functions:
+pollutants in speed
+functions:
 
 ### European emission factors for all available vehicle categories exhaust:
 
@@ -97,7 +98,8 @@ pollutants in speed functions:
     “e\_oli”, “e\_iso”, “e\_tol”, “e\_xyl”, “e\_c2h5oh”, “e\_ald”,
     “e\_hcho”, “e\_ch3oh”, “e\_ket”, “E\_SO4i”, “E\_SO4j”, “E\_NO3i”,
     “E\_NO3j”, “E\_MP2.5i”, “E\_MP2.5j”, “E\_ORGi”, “E\_ORGj”,
-    “E\_ECi”, “E\_ECj”
+    “E\_ECi”,
+“E\_ECj”
 
 ### Base emission factors from International Emission Model (IVE) for all available vehicle categories:
 
@@ -297,7 +299,8 @@ sp::spplot(as(dfspeednet, "Spatial"),
        col.regions = rev(cptcity::cpt()))
 ```
 
-![](https://i.imgur.com/qJUdMea.png) \#\#\# 2) Emission Factors
+![](https://i.imgur.com/qJUdMea.png) \#\#\# 2) Emission
+    Factors
 
   - [ef\_ldv\_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
   - [ef\_hdv\_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
@@ -341,14 +344,15 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
     hour.
   - When the argument by = “streets\_wide”, aggregated the emissions by
     street. In this cae, if you add the argument net with the respective
-    streets, it returns an spatial net with the hourly emissions.
+    streets, it returns an spatial net with the hourly
+emissions.
 
 <!-- end list -->
 
 ``` r
 E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
 pollutant = "CO", by = "veh")
-E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets")
 ```
 
 #### Grids
@@ -373,13 +377,14 @@ eixport::wrf\_grid to create a grid based on a wrf\_input file.
 data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
-g <- make_grid(net, 1/102.47/2) #500m in degrees
+g <- make_grid(net, 1/102.47)
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
-plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T),
-main = "CO [g/h] emissions road transportation in Sao Paulo, Brazil")
+na <- paste0("V", 1:168)
+for(i in 1:168) E_CO_g[[na[i]]] <- E_CO_g[[na[i]]] * units::set_units(1, "1/h")
+plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T))
 ```
 
-![](https://i.imgur.com/FuLSxq5.png)
+![](https://i.imgur.com/Ydsvt8x.png)
 
 **At this step, you can feed you grid with emissions from other
 sources\!**

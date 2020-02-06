@@ -33,7 +33,7 @@ Constructor for class "Speed" or "units"
  is applied to numeric vectors it add class "units".
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 speed <- Speed(net$ps)

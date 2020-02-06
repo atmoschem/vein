@@ -26,14 +26,12 @@
 #'
 #' \strong{3) In order to check the sum of the emissions, you must calculate the grid-area}
 #' \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
 #' names(net)
 #' netsf <- sf::st_as_sf(net)
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
-#' round(sum(netg$ldv)) == round(as.numeric(sum(net$ldv)))
-#' round(sum(netg$hdv)) == round(as.numeric(sum(net$hdv)))
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")
@@ -136,35 +134,47 @@ emis_grid <- function (spobj = net,
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
   } else if (type %in% c("points", "point")) {
+
     netdf <- sf::st_set_geometry(net, NULL)
+
     snetdf <- sum(netdf, na.rm = TRUE)
-    cat(paste0("Sum of point emissions ", round(snetdf, 2),
-               "\n"))
+
+    cat(paste0("Sum of point emissions ", round(snetdf, 2), "\n"))
+
     ncolnet <- ncol(netdf)
+
     namesnet <- names(netdf)
+
     xgg <- data.table::data.table(sf::st_set_geometry(suppressMessages(suppressWarnings(sf::st_intersection(net,
                                                                                                             g))), NULL))
     xgg[is.na(xgg)] <- 0
-    dfm <- xgg[, lapply(.SD, eval(parse(text = FN)), na.rm = TRUE), by = "id",
+    dfm <- xgg[, lapply(.SD, eval(parse(text = FN)), na.rm = TRUE),
+               by = "id",
                .SDcols = namesnet]
+
     id <- dfm$id
+
     dfm$id <- NULL
 
     area <- units::set_units(sf::st_area(g), "km^2")
+
     dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+
     dfm$id <- id
+
     gx <- data.frame(id = g$id)
+
     gx <- merge(gx, dfm, by = "id", all = TRUE)
+
     gx[is.na(gx)] <- 0
     for(i in seq_along(namesnet)) {
       units(gx[[namesnet[i]]]) <- uninet
       gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
     }
-    cat(paste0("Sum of gridded emissions ",
-               round(sum(matvect(gx[namesnet],
-                                 x = remove_units(area),
-                                 by = "row")),
-                     2), "\n"))
+    cat(
+      paste0("Sum of gridded emissions ",
+               round(sum(gx[namesnet]*remove_units(area)),2), "\n"))
+
     gx <- sf::st_sf(gx, geometry = g$geometry)
     return(gx)
   } else if(type %in% c("polygons", "polygon", "area")){

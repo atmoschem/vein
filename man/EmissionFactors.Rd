@@ -30,7 +30,7 @@ Objects of class "EmissionFactors" or "units"
 "EmissionFactors" and units g/km.
 }
 \examples{
-\dontrun{
+{
 data(fe2015)
 names(fe2015)
 class(fe2015)

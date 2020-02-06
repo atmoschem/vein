@@ -212,7 +212,7 @@ and ambient temperature. g/km</p>
     <div class='dont-index'><p><code><a href='fuel_corr.html'>fuel_corr</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>{
 <span class='no'>ef1</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"PRE"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
 <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>ef1</span>(<span class='fl'>10</span>)
@@ -241,7 +241,14 @@ and ambient temperature. g/km</p>
 <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='no'>fcorr</span>)
 <span class='fu'>ef_ldv_cold</span>(<span class='kw'>ta</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>f</span> <span class='kw'>=</span><span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>dfe</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>0</span>),
 <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='no'>fcorr</span>)
-}</div></pre>
+}</div><div class='output co'>#&gt; a = 3.7, b = -0.09, c = NA, d = NA, e = NA, f = NA
+#&gt; Equation = (a + b*ta)*1</div><div class='output co'>#&gt; Colour gradient: ma_gray_grayscale04a, number: 4861 </div><div class='img'><img src='ef_ldv_cold-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; a = 3.7, b = -0.09, c = NA, d = NA, e = NA, f = NA
+#&gt; Equation = (a + b*ta)*0.5</div><div class='output co'>#&gt;                V1              V2              V3              V4
+#&gt; 1 0.445338 [g/km] 0.445338 [g/km] 0.445338 [g/km] 1.704380 [g/km]
+#&gt; 2 0.445338 [g/km] 0.445338 [g/km] 0.445338 [g/km] 0.445338 [g/km]
+#&gt;                V5              V6             V7             V8 speed ta
+#&gt; 1 1.979280 [g/km] 2.749000 [g/km] 1.40000 [g/km] 1.40000 [g/km]     0 10
+#&gt; 2 0.445338 [g/km] 0.445338 [g/km] 1.70438 [g/km] 1.70438 [g/km]     0 10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -19,7 +19,7 @@
 #' @seealso \code{\link{vein-deprecated}}
 #' @keywords internal
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' }
 emis_wrf <- function(sdf, nr = 1, dmyhm, tz, crs = 4326, islist){

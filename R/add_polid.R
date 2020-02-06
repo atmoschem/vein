@@ -14,7 +14,7 @@
 #' @importFrom sf st_crop st_cast st_as_sf
 #' @export
 #' @seealso \code{\link{emis_to_streets}}
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' nets <- sf::st_as_sf(net)
 #' bb <- sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(nets)))

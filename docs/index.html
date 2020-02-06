@@ -86,7 +86,7 @@
 <a href="#vein" class="anchor"></a>VEIN <img src="reference/figures/logo.png" align="right" alt="" width="150">
 </h1></div>
 
-<p><img src="https://github.com/atmoschem/vein/raw/master/all_comp.gif"></p>
+<!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 <div id="what-is-vein" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-is-vein" class="anchor"></a>What is VEIN?</h2>
@@ -344,7 +344,7 @@
 </ul>
 <!-- end list --><div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">E_CO_DF &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO,  <span class="dt">veh =</span> <span class="st">"PC"</span>, <span class="dt">size =</span> <span class="st">"&lt;1400"</span>, <span class="dt">fuel =</span> <span class="st">"G"</span>,</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"veh"</span>)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb11-3" data-line-number="3">E_CO_STREETS &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets"</span>)</a></code></pre></div>
 <div id="grids" class="section level4">
 <h4 class="hasAnchor">
 <a href="#grids" class="anchor"></a>Grids</h4>
@@ -359,11 +359,12 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(net)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">E_CO_STREETSnet &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_post.html">emis_post</a></span>(<span class="dt">arra =</span> E_CO, <span class="dt">pollutant =</span> <span class="st">"CO"</span>, <span class="dt">by =</span> <span class="st">"streets_wide"</span>,</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">                             <span class="dt">net =</span> net)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">/</span><span class="dv">2</span>) <span class="co">#500m in degrees</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">g &lt;-<span class="st"> </span><span class="kw"><a href="reference/make_grid.html">make_grid</a></span>(net, <span class="dv">1</span><span class="op">/</span><span class="fl">102.47</span>)</a>
 <a class="sourceLine" id="cb12-5" data-line-number="5">E_CO_g &lt;-<span class="st"> </span><span class="kw"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="dt">spobj =</span> E_CO_STREETSnet, <span class="dt">g =</span> g, <span class="dt">sr=</span> <span class="dv">31983</span>)</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(E_CO_g[<span class="st">"V9"</span>], <span class="dt">axes =</span> T, <span class="dt">pal =</span> cptcity<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span>(<span class="dt">colorRampPalette =</span> T, <span class="dt">rev =</span> T),</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="dt">main =</span> <span class="st">"CO [g/h] emissions road transportation in Sao Paulo, Brazil"</span>)</a></code></pre></div>
-<p><img src="https://i.imgur.com/FuLSxq5.png"></p>
+<a class="sourceLine" id="cb12-6" data-line-number="6">na &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"V"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">168</span>)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">168</span>) E_CO_g[[na[i]]] &lt;-<span class="st"> </span>E_CO_g[[na[i]]] <span class="op">*</span><span class="st"> </span>units<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/units/man/set_units.html">set_units</a></span>(<span class="dv">1</span>, <span class="st">"1/h"</span>)</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(E_CO_g[<span class="st">"V9"</span>], <span class="dt">axes =</span> T, <span class="dt">pal =</span> cptcity<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span>(<span class="dt">colorRampPalette =</span> T, <span class="dt">rev =</span> T))</a></code></pre></div>
+<p><img src="https://i.imgur.com/Ydsvt8x.png"></p>
 <p><strong>At this step, you can feed you grid with emissions from other sources!</strong></p>
 </div>
 </div>

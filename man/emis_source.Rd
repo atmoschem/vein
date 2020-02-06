@@ -36,7 +36,7 @@ stop inputs}
 \code{\link{emis_source}} source vein scripts
 }
 \examples{
-\dontrun{
+{
 # Do not run
 }
 }

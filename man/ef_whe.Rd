@@ -28,7 +28,7 @@ applicable in cities without a inspection and mantainence program and with
 Weighted emission factors considering that part of the fleet are high emitters.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 # Let's say high emitter is 5 times the normal ef.
 co_efhe <- ef_cetesb(p = "COd", "PC_G") * 5

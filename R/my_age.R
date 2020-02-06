@@ -37,7 +37,7 @@
 #' the shape of this curve.
 #' 4. You can use/merge/transform/adapt any of these functions.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' dpc <- c(seq(1,20,3), 20:10)
 #' PC_E25_1400 <- my_age(x = net$ldv, y = dpc, name = "PC_E25_1400")
@@ -62,6 +62,13 @@ my_age <- function (x,
                     net,
                     verbose = FALSE,
                     namerows){
+
+  # length k
+  if(length(k)  > 1 & length(k) < length(x)){
+    stop("length of 'k' must be 1 ore equal to length of 'x'")
+  }
+
+# check y
   if(!is.data.frame(y)){
     y <- as.numeric(y)
     y[is.na(y)] <- 0
@@ -102,11 +109,8 @@ my_age <- function (x,
       names(df) <- paste(name, seq(1, length(df)), sep="_")
     }
     # check k
-    if(length(k) > 1){
-      df <- matvect(df = df, x = k)
-    } else {
       df <- df*k
-    }
+
     # verbose
     if(verbose){
       secu <- seq(1, ncol(df))

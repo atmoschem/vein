@@ -29,7 +29,7 @@
 #' the shape of this curve.
 #' 4. You can use/merge/transform/adapt any of these functions.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' LT_B5 <- age_hdv(x = net$hdv,name = "LT_B5")
 #' plot(LT_B5)
@@ -49,6 +49,11 @@ age_hdv <- function (x,
                      namerows){
   # check na
   x[is.na(x)] <- 0
+
+  # length k
+  if(length(k)  > 1 & length(k) < length(x)){
+    stop("length of 'k' must be 1 ore equal to length of 'x'")
+  }
 
   # check agemax
   if(agemax < 1) stop("Agemax should be bigger than 1")
@@ -78,14 +83,9 @@ age_hdv <- function (x,
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
+    df <- df*k
+
     if(verbose){
-
-      if(length(k) > 1){
-        df <- vein::matvect(df = df, x = k)
-      } else {
-        df <- df*k
-      }
-
     message(paste("Average age of",name, "is",
                   round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                   sep=" "))
@@ -125,11 +125,7 @@ age_hdv <- function (x,
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
-    if(length(k) > 1){
-      df <- vein::matvect(df = df, x = k)
-    } else {
-      df <- df*k
-    }
+    df <- df*k
 
     if(verbose){
     message(paste("Average age of",name, "is",
@@ -137,8 +133,7 @@ age_hdv <- function (x,
                   sep=" "))
     message(paste("Number of",name, "is",
                   round(sum(df, na.rm = T)/1000, 2),
-                  "* 10^3 veh", sep=" ")
-    )
+                  "* 10^3 veh", sep=" "))
     cat("\n")
     }
 

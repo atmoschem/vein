@@ -35,7 +35,7 @@
 #' instance, if the input covers 168 hours and it is desired an object of 241
 #' hours that start saturday, this function can do that. It is useful when you
 #' are going to start a air quality simulation for specific periods of time.
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)

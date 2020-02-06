@@ -23,7 +23,7 @@ polygon of your regions. This function adds the id of your polygon
 as a new column in the streets network.
 }
 \examples{
-\dontrun{
+{
 data(net)
 nets <- sf::st_as_sf(net)
 bb <- sf::st_as_sf(sf::st_as_sfc(sf::st_bbox(nets)))

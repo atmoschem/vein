@@ -28,7 +28,7 @@
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_cold}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' veh <- age_ldv(1:10, agemax = 8)
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
