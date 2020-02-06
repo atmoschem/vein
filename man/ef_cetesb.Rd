@@ -57,7 +57,7 @@ In the previous versions I used the letter 'd' for deteriorated. I removed the
 letter 'd' internally to not break older code.
 }
 \examples{
-\dontrun{
+{
 a <- ef_cetesb("CO", "PC_G")
 a <- ef_cetesb("R_10_25", "PC_G")
 a <- ef_cetesb("CO", c("PC_G", "PC_FE"))

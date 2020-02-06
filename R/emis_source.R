@@ -14,7 +14,7 @@
 #' @param first Character; first script.
 #' @importFrom utils menu
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' }
 emis_source <- function(path = "est",

@@ -18,7 +18,7 @@
 #' of expanded traffic
 #' @importFrom units as_units
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' p1 <- pc_profile[, 1]

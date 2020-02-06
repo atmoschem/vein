@@ -23,7 +23,7 @@ long data.frame.
 long format
 }
 \examples{
-\dontrun{
+{
 data(net)
 net <- net@data
 df <- wide_to_long(df = net)

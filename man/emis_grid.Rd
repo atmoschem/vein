@@ -38,14 +38,12 @@ in data. This function returns an object of class "sf".
 \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
 }
 \examples{
-\dontrun{
+{
 data(net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 names(net)
 netsf <- sf::st_as_sf(net)
 netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
-round(sum(netg$ldv)) == round(as.numeric(sum(net$ldv)))
-round(sum(netg$hdv)) == round(as.numeric(sum(net$hdv)))
 plot(netg["ldv"], axes = TRUE)
 plot(netg["hdv"], axes = TRUE)
 netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")

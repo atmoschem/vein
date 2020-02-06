@@ -1,9 +1,10 @@
 NEWS
 ===========
 
-# vein 0.8.6  (Release date: 2020-02-05)
+# vein 0.8.7  (Release date: 2020-02-05)
 
 - emis_grid now returns emissions as flux: mass / area / time (implicit)
+- Deprecates matvect
 
 ## vein 0.8.6  (Release date: 2020-01-19)
 

@@ -29,7 +29,7 @@
 #' the shape of this curve.
 #' 4. You can use/merge/transform/adapt any of these functions.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' MOTO_E25_500 <- age_moto(x = net$ldv, name = "M_E25_500", k = 0.4)
 #' plot(MOTO_E25_500)
@@ -49,6 +49,11 @@ age_moto <- function (x,
                       namerows){
   # check na
   x[is.na(x)] <- 0
+
+  # length k
+  if(length(k)  > 1 & length(k) < length(x)){
+    stop("length of 'k' must be 1 ore equal to length of 'x'")
+  }
 
   #check agemax
   if(agemax < 1) stop("Agemax should be bigger than 1")
@@ -80,11 +85,7 @@ age_moto <- function (x,
     names(df) <- paste(name, seq(1, agemax), sep="_")
 
 
-    if(length(k) > 1){
-      df <- vein::matvect(df = df, x = k)
-    } else {
       df <- df*k
-    }
 
 
     if(verbose){
@@ -129,11 +130,7 @@ age_moto <- function (x,
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
-    if(length(k) > 1){
-      df <- vein::matvect(df = df, x = k)
-    } else {
-      df <- df*k
-    }
+    df <- df*k
 
 
 

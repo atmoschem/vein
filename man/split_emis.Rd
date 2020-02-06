@@ -22,7 +22,7 @@ resulting object.}
 \code{\link{split_emis}} split street emissions into a grid.
 }
 \examples{
-\dontrun{
+{
 data(net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 names(net)

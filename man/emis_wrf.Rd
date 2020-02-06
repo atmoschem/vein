@@ -32,7 +32,7 @@ and GMT time. This dataframe has the proper format to be used with WRF
 assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))
 }
 \examples{
-\dontrun{
+{
 # Do not run
 }
 }

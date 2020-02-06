@@ -60,7 +60,7 @@ CN = Cetane number
 T95 = Back-end distillation in o C.
 }
 \examples{
-\dontrun{
+{
 f <- fuel_corr(euro = "I")
 names(f)
 }

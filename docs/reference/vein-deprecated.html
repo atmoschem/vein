@@ -48,6 +48,8 @@ Evaporative returns a tranformed object with class &quot;Evaporative&quot; and
 units g. This class represents the daily emissions presented by
 Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 it will be incorporated the techniques of Tier 3.
+matvect it is a helper function to multiply matrices
+with vector by rows or columns
 The functions listed below are deprecated and will be defunct in
   the near future. When possible, alternative functions with similar
   functionality are also mentioned. Help pages for deprecated functions are
@@ -140,6 +142,8 @@ The functions listed below are deprecated and will be defunct in
 units g. This class represents the daily emissions presented by
 Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 it will be incorporated the techniques of Tier 3.</p>
+<p><code>matvect</code> it is a helper function to multiply matrices
+with vector by rows or columns</p>
 <p>The functions listed below are deprecated and will be defunct in
   the near future. When possible, alternative functions with similar
   functionality are also mentioned. Help pages for deprecated functions are
@@ -152,6 +156,8 @@ it will be incorporated the techniques of Tier 3.</p>
 
 <span class='fu'>hot_soak</span>(<span class='no'>x</span>, <span class='no'>carb</span>, <span class='no'>p</span>, <span class='no'>eshotc</span>, <span class='no'>eswarmc</span>, <span class='no'>eshotfi</span>)
 
+<span class='fu'>matvect</span>(<span class='no'>df</span>, <span class='no'>x</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"row"</span>)
+
 <span class='fu'>running_losses</span>(<span class='no'>x</span>, <span class='no'>erhotfi</span>, <span class='no'>lkm</span>, <span class='no'>carb</span>, <span class='no'>p</span>, <span class='no'>erhotc</span>, <span class='no'>erwarmc</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -159,11 +165,19 @@ it will be incorporated the techniques of Tier 3.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Object with class "numeric"</p></td>
+      <td><p>Numeric vector.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>ignored</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>Numeric Data-frame or matrix.</p></td>
+    </tr>
+    <tr>
+      <th>by</th>
+      <td><p>Character, with two value "row" or "col"</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -175,6 +189,7 @@ it will be incorporated the techniques of Tier 3.</p>
 
     <p>Objects of class "EmissionsList" and numeric elements as "units"</p>
 <p>Objects of class "Evaporative" or "units"</p>
+<p>data-frame</p>
     <h2 class="hasAnchor" id="evaporative"><a class="anchor" href="#evaporative"></a><code>Evaporative</code></h2>
 
     
@@ -195,23 +210,25 @@ Environment Agency, Copenhagen, 2009</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>vein-deprecated</code></p>
+<p><code>vein-deprecated</code></p>
 <p><code>vein-deprecated</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>{
 <span class='co'># do not run</span>
 <span class='co'># DEPRECATED</span>
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+}</div><div class='output co'>#&gt; NULL</div><div class='input'>{
 <span class='co'># do not run</span>
 <span class='co'># DEPRECATED</span>
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+}</div><div class='output co'>#&gt; NULL</div><div class='input'>{
 <span class='co'># Do not run</span>
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+}</div><div class='output co'>#&gt; NULL</div><div class='input'>{
+<span class='co'># do not run</span>
+<span class='co'># DEPRECATED</span>
+}</div><div class='output co'>#&gt; NULL</div><div class='input'>{
 <span class='co'># Do not run</span>
-}</div></pre>
+}</div><div class='output co'>#&gt; NULL</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -48,7 +48,7 @@ emission estimation  g/h
 This function was created to copy and zip project without the emis.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 }
 }

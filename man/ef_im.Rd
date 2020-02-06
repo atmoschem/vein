@@ -33,7 +33,7 @@ a vehicle with a normal deterioration, but that it will pass the
 Inspection and Manteinance program.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 # Passenger Cars PC
 data(fkm)

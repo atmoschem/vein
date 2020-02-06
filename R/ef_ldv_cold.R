@@ -29,7 +29,7 @@
 #' @keywords cold emission factors
 #' @seealso \code{\link{fuel_corr}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
 #' show.equation = TRUE)
 #' ef1(10)

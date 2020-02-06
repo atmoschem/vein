@@ -73,7 +73,7 @@ Diurnal loses occur with daily temperature variations. Running loses
 occur during vehicles use. Hot soak emission occur following vehicles use.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 a <- ef_evap(ef = "eshotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 pollutant = "cis-2-pentene")
