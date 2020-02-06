@@ -15,6 +15,8 @@ test_that("age_hdv stop 1", {
 test_that("age_hdv stop 2", {
   expect_error(age_hdv(x = 10:11, name = "MC", agemax = 1, bystreet = TRUE),
                "L.?")
+  expect_error(age_hdv(x = 1:11, name = "MC", agemax = 1, k = 1:3),
+               ".?")
 })
 
 test_that("age_hdv works 2", {

@@ -1,4 +1,4 @@
-SUBROUTINE emistd3f (nrowv, ncolv, pmonth, veh, lkm, ef, month, emis)
+SUBROUTINE emistd3f (nrowv, ncolv, pmonth, veh, lkm, ef, month, emis) ! # nocov start
 
 IMPLICIT NONE
 
@@ -22,4 +22,4 @@ DO i = 1, nrowv
 ENDDO
 
 RETURN
-END
+END ! # nocov end

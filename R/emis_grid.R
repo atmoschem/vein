@@ -1,10 +1,12 @@
-#' Allocate emissions into a grid
+#' Allocate emissions into a grid returning point emissions or flux
 #'
 #' @description \code{\link{emis_grid}} allocates emissions proportionally to each grid
 #'  cell. The process is performed by intersection between geometries and the grid.
 #' It means that requires "sr" according with your location for the projection.
 #' It is assumed that spobj is a Spatial*DataFrame or an "sf" with the pollutants
 #' in data. This function returns an object of class "sf".
+#'
+#' It is
 #'
 #' @param spobj A spatial dataframe of class "sp" or "sf". When class is "sp"
 #' it is transformed to "sf".
@@ -13,12 +15,16 @@
 #' not projected. Please, see http://spatialreference.org/.
 #' @param type type of geometry: "lines", "points" or "polygons".
 #' @param FN Character indicating the function. Default is "sum"
+#' @param flux Logical, if TRUE, it return flux (mass / area / time (implicit))
+#' in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
+#' as EDGAR provide data.
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area
 #' @importFrom data.table data.table .SD
 #' @importFrom sp CRS
 #' @export
-#' @note \strong{1) Emissions are returned as flux = mass / area / time (implicit),}
-#' \strong{time untis are not displayed because each use can have different time units}
+#' @note \strong{1) If flux = TRUE (default), emissions are flux = mass / area / time (implicit), as polygons.}
+#' \strong{If flux = FALSE, emissions are mass / time (implicit), as points.}
+#' \strong{Time untis are not displayed because each use can have different time units}
 #' \strong{for instance, year, month, hour second, etc.}
 #'
 #' \strong{2) Therefore, it is good practice to have time units in 'spobj'. }
@@ -37,27 +43,16 @@
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
-#' \dontrun{
-#' library(sf)
-#' library(data.table)
-#' library(raster)
-#' library(stars)
-#' g <- readRDS("/media/sergio/ext5/gd03.rds")
-#' net <- fread("/media/sergio/ext5/edgar_ecb05_opt1/2012/extracted/ALD.csvy")
-#' net$layer <- net$layer*1e12
-#' net <- rasterFromXYZ(net)
-#' net <- crop(net, as_Spatial(g))
-#' net <- st_as_stars(net)
-#' net <- st_as_sf(net, crs = 4326)
-#' st_crs(net) <- 4326
-#' netg <- emis_grid(net, g, type = "polygons")
-#' }
+#' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, flux = FALSE)
+#' plot(netg["ldv"], axes = TRUE, pch = 16,
+#' pal = cptcity::cpt(colorRampPalette= TRUE, rev = TRUE), cex = 3)
 #' }
 emis_grid <- function (spobj = net,
                        g,
                        sr,
                        type = "lines",
-                       FN = "sum"){
+                       FN = "sum",
+                       flux = TRUE){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   # add as.data.frame qhen net comes from data.table
@@ -124,15 +119,25 @@ emis_grid <- function (spobj = net,
 
     gx[is.na(gx)] <- 0
 
-    for(i in seq_along(namesnet)) {
-      units(gx[[namesnet[i]]]) <- uninet
-      gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
+    if(flux) {
+      for(i in seq_along(namesnet)) {
+        units(gx[[namesnet[i]]]) <- uninet
+        gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
+      }
+      cat(paste0("Sum of gridded emissions ",
+                 round(sum(gx[namesnet]*remove_units(area)),2), "\n"))
+      gx <- sf::st_sf(gx, geometry = g$geometry)
+      return(gx)
+    } else {
+      for(i in seq_along(namesnet)) {
+        units(gx[[namesnet[i]]]) <- uninet
+      }
+      cat(paste0("Sum of gridded emissions ",
+                 round(sum(gx[namesnet]),2), "\n"))
+      gx <- sf::st_sf(gx, geometry = g$geometry)
+      gx <- suppressMessages(suppressWarnings(sf::st_centroid(gx)))
+      return(gx)
     }
-    cat(paste0("Sum of gridded emissions ",
-               round(sum(gx[namesnet]*remove_units(area)),2), "\n"))
-
-    gx <- sf::st_sf(gx, geometry = g$geometry)
-    return(gx)
   } else if (type %in% c("points", "point")) {
 
     netdf <- sf::st_set_geometry(net, NULL)
@@ -167,16 +172,27 @@ emis_grid <- function (spobj = net,
     gx <- merge(gx, dfm, by = "id", all = TRUE)
 
     gx[is.na(gx)] <- 0
-    for(i in seq_along(namesnet)) {
-      units(gx[[namesnet[i]]]) <- uninet
-      gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
-    }
-    cat(
-      paste0("Sum of gridded emissions ",
-               round(sum(gx[namesnet]*remove_units(area)),2), "\n"))
 
-    gx <- sf::st_sf(gx, geometry = g$geometry)
-    return(gx)
+
+    if(flux) {
+      for(i in seq_along(namesnet)) {
+        units(gx[[namesnet[i]]]) <- uninet
+        gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
+      }
+      cat(paste0("Sum of gridded emissions ",
+                 round(sum(gx[namesnet]*remove_units(area)),2), "\n"))
+      gx <- sf::st_sf(gx, geometry = g$geometry)
+      return(gx)
+    } else {
+      for(i in seq_along(namesnet)) {
+        units(gx[[namesnet[i]]]) <- uninet
+      }
+      cat(paste0("Sum of gridded emissions ",
+                 round(sum(gx[namesnet]),2), "\n"))
+      gx <- sf::st_sf(gx, geometry = g$geometry)
+      gx <- suppressMessages(suppressWarnings(sf::st_centroid(gx)))
+      return(gx)
+    }
   } else if(type %in% c("polygons", "polygon", "area")){
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
@@ -185,10 +201,8 @@ emis_grid <- function (spobj = net,
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
     namesnet <- names(netdf)
     net$area1 <- sf::st_area(net)
-    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net,
-                                                                  g)))
+    netg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
     netg$area2 <- sf::st_area(netg)
-
 
     xgg <- data.table::data.table(netg)
     xgg[, 1:ncolnet] <- xgg[, 1:ncolnet] * as.numeric(xgg$area2/xgg$area1)
@@ -197,6 +211,7 @@ emis_grid <- function (spobj = net,
                .SDcols = namesnet]
     id <- dfm$id
     dfm$id <- NULL
+    area <- units::set_units(sf::st_area(g), "km^2")
     dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
     cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))
@@ -204,7 +219,26 @@ emis_grid <- function (spobj = net,
     gx <- data.frame(id = g$id)
     gx <- merge(gx, dfm, by = "id", all = TRUE)
     gx[is.na(gx)] <- 0
-    gx <- sf::st_sf(gx, geometry = g$geometry)
-    return(gx)
+
+    if(flux) {
+      for(i in seq_along(namesnet)) {
+        units(gx[[namesnet[i]]]) <- uninet
+        gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
+      }
+      cat(paste0("Sum of gridded emissions ",
+                 round(sum(gx[namesnet]*remove_units(area)),2), "\n"))
+      gx <- sf::st_sf(gx, geometry = g$geometry)
+      return(gx)
+    } else {
+      for(i in seq_along(namesnet)) {
+        units(gx[[namesnet[i]]]) <- uninet
+      }
+      cat(paste0("Sum of gridded emissions ",
+                 round(sum(gx[namesnet]),2), "\n"))
+      gx <- sf::st_sf(gx, geometry = g$geometry)
+      gx <- suppressMessages(suppressWarnings(sf::st_centroid(gx)))
+      return(gx)
+    }
+
   }
 }

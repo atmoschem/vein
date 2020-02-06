@@ -5,6 +5,8 @@ NEWS
 
 - emis_grid now returns emissions as flux: mass / area / time (implicit)
 - Deprecates matvect
+- Adds argument 'flux' in emis_grid to return polytgon flux or points, in a similar
+fashion with EDGAR
 
 ## vein 0.8.6  (Release date: 2020-01-19)
 

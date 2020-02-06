@@ -1,4 +1,4 @@
-SUBROUTINE emistd7f (nrowv, ncolv, veh, lkm, ef, emis)
+SUBROUTINE emistd7f (nrowv, ncolv, veh, lkm, ef, emis) ! # nocov start
 
 IMPLICIT none
 
@@ -18,4 +18,4 @@ DO i = 1, nrowv
 ENDDO
 
 RETURN
-END
+END ! # nocov end

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Allocate emissions into a grid — emis_grid • vein</title>
+<title>Allocate emissions into a grid returning point emissions or flux — emis_grid • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,12 +42,13 @@
 
 
 
-<meta property="og:title" content="Allocate emissions into a grid — emis_grid" />
+<meta property="og:title" content="Allocate emissions into a grid returning point emissions or flux — emis_grid" />
 <meta property="og:description" content="emis_grid allocates emissions proportionally to each grid
  cell. The process is performed by intersection between geometries and the grid.
 It means that requires &quot;sr&quot; according with your location for the projection.
 It is assumed that spobj is a Spatial*DataFrame or an &quot;sf&quot; with the pollutants
-in data. This function returns an object of class &quot;sf&quot;." />
+in data. This function returns an object of class &quot;sf&quot;.
+It is" />
 <meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -125,7 +126,7 @@ in data. This function returns an object of class &quot;sf&quot;." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Allocate emissions into a grid</h1>
+    <h1>Allocate emissions into a grid returning point emissions or flux</h1>
     
     <div class="hidden name"><code>emis_grid.Rd</code></div>
     </div>
@@ -136,9 +137,10 @@ in data. This function returns an object of class &quot;sf&quot;." />
 It means that requires "sr" according with your location for the projection.
 It is assumed that spobj is a Spatial*DataFrame or an "sf" with the pollutants
 in data. This function returns an object of class "sf".</p>
+<p>It is</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"sum"</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"sum"</span>, <span class='kw'>flux</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,12 +167,19 @@ not projected. Please, see http://spatialreference.org/.</p></td>
       <th>FN</th>
       <td><p>Character indicating the function. Default is "sum"</p></td>
     </tr>
+    <tr>
+      <th>flux</th>
+      <td><p>Logical, if TRUE, it return flux (mass / area / time (implicit))
+in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
+as EDGAR provide data.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><strong>1) Emissions are returned as flux = mass / area / time (implicit),</strong>
-<strong>time untis are not displayed because each use can have different time units</strong>
+    <p><strong>1) If flux = TRUE (default), emissions are flux = mass / area / time (implicit), as polygons.</strong>
+<strong>If flux = FALSE, emissions are mass / time (implicit), as points.</strong>
+<strong>Time untis are not displayed because each use can have different time units</strong>
 <strong>for instance, year, month, hour second, etc.</strong></p>
 <p><strong>2) Therefore, it is good practice to have time units in 'spobj'. </strong>
 <strong>This implies that spobj MUST include units!. </strong></p>
@@ -181,34 +190,23 @@ not projected. Please, see http://spatialreference.org/.</p></td>
     <pre class="examples"><div class='input'>{
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span>(<span class='no'>net</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>net</span>)
 <span class='no'>netsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>)
 <span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sf</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>stars</span>)
-<span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>"/media/sergio/ext5/gd03.rds"</span>)
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/fread.html'>fread</a></span>(<span class='st'>"/media/sergio/ext5/edgar_ecb05_opt1/2012/extracted/ALD.csvy"</span>)
-<span class='no'>net</span>$<span class='no'>layer</span> <span class='kw'>&lt;-</span> <span class='no'>net</span>$<span class='no'>layer</span>*<span class='fl'>1e12</span>
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterFromXYZ.html'>rasterFromXYZ</a></span>(<span class='no'>net</span>)
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/crop.html'>crop</a></span>(<span class='no'>net</span>, <span class='fu'><a href='https://rdrr.io/pkg/sf/man/coerce-methods.html'>as_Spatial</a></span>(<span class='no'>g</span>))
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/stars/man/st_as_stars.html'>st_as_stars</a></span>(<span class='no'>net</span>)
-<span class='no'>net</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_crs.html'>st_crs</a></span>(<span class='no'>net</span>) <span class='kw'>&lt;-</span> <span class='fl'>4326</span>
-<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='no'>net</span>, <span class='no'>g</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"polygons"</span>)
-}
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"hdv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>, <span class='kw'>flux</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>,
+<span class='kw'>pal</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cpt.html'>cpt</a></span>(<span class='kw'>colorRampPalette</span><span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rev</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 }</div><div class='output co'>#&gt; Number of lon points: 23
 #&gt; Number of lat points: 19
 #&gt; </div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>1/h</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 2095073
 #&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>1/h</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of street emissions 2095073
-#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_grid-4.png' alt='' width='700' height='433' /></div></pre>
+#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>1/h</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of street emissions 2095073
+#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
