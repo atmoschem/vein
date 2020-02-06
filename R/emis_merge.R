@@ -38,7 +38,7 @@ emis_merge <- function (pol = "CO",
                         under = "after",
                         ignore = FALSE,
                         as_list = FALSE){
-
+  # nocov start
   x <- list.files(path = path,
                   pattern = what,
                   all.files = T,
@@ -96,5 +96,6 @@ nx <- kk
     x_st <- as.data.frame(data.table::rbindlist(x_rds))
     return(x_st)
   }
+  # nocov end
 }
 

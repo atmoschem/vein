@@ -14,14 +14,11 @@
 #' @param tz Time zone as required in for function \code{\link{as.POSIXct}}
 #' @param crs Coordinate reference system, e.g: "+init=epsg:4326". Used to
 #' transform the coordinates of the output
-#' @param utc ignored.
 #' @param islist logical value to indicate if sdf is a list or not
-#' @seealso \code{\link{vein-deprecated}}
-#' @keywords internal
 #' @export
 #' @examples {
 #' # Do not run
 #' }
 emis_wrf <- function(sdf, nr = 1, dmyhm, tz, crs = 4326, islist){
-  eixport::to_as4wrf(sdf = sdf, nr = nr, dmyhm = dmyhm, tz = tz, crs = crs, islist = islist)
+  eixport::to_as4wrf(sdf = sdf, nr = nr, dmyhm = dmyhm, tz = tz, crs = crs, islist = islist) # nocov
 }

@@ -1,4 +1,4 @@
-SUBROUTINE emis3df ( nrowv, ncolv, prok, veh, lkm, ef, pro, emis )
+SUBROUTINE emis3df ( nrowv, ncolv, prok, veh, lkm, ef, pro, emis ) ! # nocov start
 
 IMPLICIT none
 
@@ -22,4 +22,4 @@ DO i = 1, nrowv
 ENDDO
 
 RETURN
-END
+END ! # nocov end

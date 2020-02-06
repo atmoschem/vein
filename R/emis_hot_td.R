@@ -176,6 +176,16 @@ emis_hot_td <- function (veh,
                          params,
                          verbose = FALSE,
                          fortran = FALSE) {
+  # Checking sf
+  if(any(class(veh) %in% "sf")){
+    if(verbose) message("converting sf to data.frame")
+    veh <- sf::st_set_geometry(veh, NULL)
+  }
+  # Checking veh
+  for(i in 1:ncol(veh)){
+    veh[, i] <- as.numeric(veh[, i])
+  }
+
   # Check units
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
@@ -194,9 +204,6 @@ emis_hot_td <- function (veh,
     if(class(ef[, 1]) != "units"){
       stop("columns of ef must has class 'units' in 'g/km'. Please, check ?EmissionFactors")
     }
-    if(units(ef[, 1])$numerator != "g" | units(ef[, 1])$denominator != "km"){
-      stop("Units of ef must be 'g/km' ")
-    }
     if(units(ef[, 1])$numerator == "g" | units(ef[, 1])$denominator == "km"){
       for(i in 1:ncol(veh)){
         ef[, i] <- as.numeric(ef[, i])
@@ -212,23 +219,10 @@ emis_hot_td <- function (veh,
     if(class(ef) != "units"){
       stop("ef must has class 'units' in 'g/km'. Please, check ?EmissionFactors")
     }
-    if(units(ef)$numerator != "g" | units(ef)$denominator != "km"){
-      stop("Units of ef must be 'g/km' ")
-    }
     if(units(ef)$numerator == "g" | units(ef)$denominator == "km"){
       ef <- as.numeric(ef)
     }
 
-  }
-  # Checking veh
-  for(i in 1:ncol(veh)){
-    veh[, i] <- as.numeric(veh[, i])
-  }
-
-  # Checking sf
-  if(any(class(veh) %in% "sf")){
-    if(verbose) message("converting sf to data.frame")
-    veh <- sf::st_set_geometry(veh, NULL)
   }
 
   # pro_month

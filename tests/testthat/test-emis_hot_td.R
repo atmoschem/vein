@@ -1,9 +1,13 @@
 context("emis_hot_td")
 
+data(net)
+netsf <- sf::st_as_sf(net)
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
                     eu = euros, p = "CO", speed = Speed(34))
 veh <- age_ldv(1:10, agemax = 8)
+veh2 <- age_ldv(1:10, agemax = 8, net = netsf[1:10, ])
+
 lkm <- units::as_units(18:11, "km")*1000
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 data(net)
@@ -12,6 +16,12 @@ a <- emis_hot_td(veh = veh,
                  lkm = lkm,
                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
                  verbose = TRUE)
+a <- emis_hot_td(veh = veh,
+                 lkm = lkm,
+                 ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                 verbose = TRUE,
+                 fortran = TRUE)
+
 
 # caso simple ####
 test_that("emis_hot_td works", {
@@ -53,6 +63,11 @@ test_that("emis_hot_td works", {
                             ef = EmissionFactors(as.numeric(efh[, 1:8])),
                             verbose = TRUE),
                 "S.?")
+  expect_output(emis_hot_td(veh = veh2,
+                            lkm = lkm,
+                            ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                            verbose = TRUE),
+                ".?")
   expect_message(round(emis_hot_td(veh = veh,
                                    lkm = lkm,
                                    ef = EmissionFactors(as.numeric(efh[, 1:8])),
@@ -73,6 +88,11 @@ test_that("emis_hot_td works", {
                            verbose = TRUE),
                ".?")
 
+  expect_error(emis_hot_td(veh = veh,
+                           lkm = units::set_units(2, "km"),
+                           ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                           verbose = TRUE),
+               ".?")
 })
 
 

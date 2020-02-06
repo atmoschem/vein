@@ -23,8 +23,6 @@ hour of emissions in Local Time}
 transform the coordinates of the output}
 
 \item{islist}{logical value to indicate if sdf is a list or not}
-
-\item{utc}{ignored.}
 }
 \description{
 \code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time
@@ -36,7 +34,3 @@ assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))
 # Do not run
 }
 }
-\seealso{
-\code{\link{vein-deprecated}}
-}
-\keyword{internal}

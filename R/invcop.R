@@ -28,6 +28,7 @@ invcop <- function (in_name = getwd(),
                     veh_rds = FALSE,
                     veh_csv = TRUE,
                     zip = TRUE) {
+  # nocov start
   # lista carpetas
   dirs <- list.dirs(path = in_name, full.names = TRUE, recursive = TRUE)
 
@@ -115,5 +116,6 @@ invcop <- function (in_name = getwd(),
     files2zip <- dir(out_name, full.names = TRUE)
     zip(zipfile = out_name, files = files2zip)
   }
+  # nocov end
 }
 

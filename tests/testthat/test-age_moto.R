@@ -10,6 +10,8 @@ test_that("age_moto works 2", {
 test_that("age_moto stop 1", {
   expect_error(age_moto(x = 10, name = "MC", agemax = 0),
                "A.?")
+  expect_error(age_moto(x = 1:11, name = "MC", agemax = 1, k = 1:3),
+               ".?")
 })
 
 test_that("age_moto stop 2", {
