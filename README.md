@@ -18,6 +18,7 @@ Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](http
 Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
 [![Package
 Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+![CRAN/METACRAN](https://img.shields.io/cran/l/vein?style=plastic)
 [![Github
 Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
 
