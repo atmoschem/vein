@@ -5,24 +5,32 @@
 
 # VEIN <img src="man/figures/logo.png" align="right" alt="" width="150" />
 
-[![Travis-CI Build
-Status](https://travis-ci.org/atmoschem/vein.svg?branch=master)](https://travis-ci.org/atmoschem/vein)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
-[![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
-[![DOI](https://zenodo.org/badge/88201850.svg)](https://zenodo.org/badge/latestdoi/88201850)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein)
-[![CRAN
-Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
-[![Package
-Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-![CRAN/METACRAN](https://img.shields.io/cran/l/vein?style=plastic)
-[![Github
-Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
-
-<!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
+  - build: [![Travis-CI Build
+    Status](https://travis-ci.org/atmoschem/vein.svg?branch=master)](https://travis-ci.org/atmoschem/vein)
+    [![AppVeyor Build
+    Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
+    [![Coverage
+    Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
+  - cran:
+    [![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
+    [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein)
+    [![CRAN
+    Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
+    [![Package
+    Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+    ![CRAN/METACRAN](https://img.shields.io/cran/l/vein?style=plastic)
+  - doi:
+    [![DOI](https://zenodo.org/badge/88201850.svg)](https://zenodo.org/badge/latestdoi/88201850)
+  - github: [![Github
+    Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
+    ![GitHub code size in
+    bytes](https://img.shields.io/github/languages/code-size/atmoschem/vein)
+    ![GitHub
+    issues](https://img.shields.io/github/issues/atmoschem/vein)
+    <!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) -->
+    ![GitHub commit
+    activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
+    <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
 ## What is VEIN?
 
