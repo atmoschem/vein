@@ -4,15 +4,7 @@
 \alias{emis_grid}
 \title{Allocate emissions into a grid returning point emissions or flux}
 \usage{
-emis_grid(
-  spobj = net,
-  g,
-  sr,
-  type = "lines",
-  FN = "sum",
-  flux = TRUE,
-  add_units
-)
+emis_grid(spobj = net, g, sr, type = "lines", FN = "sum", flux = TRUE)
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
@@ -30,8 +22,6 @@ not projected. Please, see http://spatialreference.org/.}
 \item{flux}{Logical, if TRUE, it return flux (mass / area / time (implicit))
 in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 as EDGAR provide data.}
-
-\item{add_units}{Character, convenience function to add missing units to input data, for instance "h^-1"}
 }
 \description{
 \code{\link{emis_grid}} allocates emissions proportionally to each grid
