@@ -18,6 +18,7 @@
 #' @param flux Logical, if TRUE, it return flux (mass / area / time (implicit))
 #' in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 #' as EDGAR provide data.
+#' @param add_units Character, convenience function to add missing units to input data, for instance "h^-1"
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area
 #' @importFrom data.table data.table .SD
 #' @importFrom sp CRS
@@ -52,12 +53,18 @@ emis_grid <- function (spobj = net,
                        sr,
                        type = "lines",
                        FN = "sum",
-                       flux = TRUE){
+                       flux = TRUE,
+                       add_units){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   # add as.data.frame qhen net comes from data.table
   netdata <- as.data.frame(sf::st_set_geometry(net, NULL))
   message("Your units are: ")
+  if(!missing(add_units)){
+    uninet <- units(netdata[[1]]*units::set_units(1, add_units))
+  } else {
+    uninet <- units(netdata[[1]])
+  }
   uninet <- units(netdata[[1]])
   message(uninet)
   for (i in 1:length(netdata)) {

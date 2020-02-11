@@ -263,7 +263,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     }
     # PM2.5 IAG ####
   } else if(spec == "pmiag"){
-    message("For emissions grid only, emissions must be in g/(km^2)/h\n")
+    message("Emissions must be in g/(km^2)/h\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
     if(class(x)[1] == "sf"){
       x <- sf::st_set_geometry(x, NULL)
@@ -275,8 +275,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     # x (g / Xkm^2 / h)
     # x <- x*1000000 # g to micro grams
     # x <- x*(1/1000)^2 # km^2 to m^2
-    x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
-    # I think it is wrong to divide by dx^2. Need to reconfirm
+    # x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
     if(!missing(pmpar)) {
       if(length(pmpar) != 11) stop("length 'pmpar' must be 11")
       df <- as.data.frame(matrix(pmpar, ncol = length(pmpar)))
@@ -297,7 +296,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     }
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
-        x[ , i] <- as.numeric(x[ , i])
+        x[ , i] <- units::set_units(x[ , i], "g/m^2/s")
       }
     }
     if (list == T) {
@@ -306,11 +305,11 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
         dfx[, i]*x
       })
       names(dfb) <- names(dfx)
-      for (j in 1:length(dfb)) {
-        for (i in 1:ncol(x)) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("g m-2 s-1")
-        }
-      }
+      # for (j in 1:length(dfb)) {
+      #   for (i in 1:ncol(x)) {
+      #     dfb[[j]][ , i] <-   units::set_units(dfb[[j]][ , i], "g/m^2/s")
+      #   }
+      # }
       if (show == TRUE) { print(df) }
     } else {
       dfx <- df
@@ -318,15 +317,15 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
         dfx[, i]*x
       }))
       names(dfb) <- names(dfx)
-      for (i in 1:ncol(x)) {
-        dfb[ , i] <- dfb[ , i] * units::as_units("g m-2 s-1")
-      }
+      # for (i in 1:ncol(x)) {
+      #   dfb[ , i] <- dfb[ , i] * units::as_units("g m-2 s-1")
+      # }
     }
     if (show == TRUE) {
       print(df)
     }
   } else if (spec %in% pmdf) {
-    message("To be used in emissions grid only, emissions must be in g/(Xkm^2)/h\n")
+    message("Emissions must be in g/(km^2)/h\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
     if(class(x)[1] == "sf"){
       x <- sf::st_set_geometry(x, NULL)
@@ -338,7 +337,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     # x (g / Xkm^2 / h)
     # x <- x*1000000 # g to micro grams
     # x <- x*(1/1000)^2 # km^2 to m^2
-    x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
+    # x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
     if(!missing(pmpar)) {
       if(length(pmpar) != 11) stop("length 'pmpar' must be 11")
       df <- as.data.frame(matrix(pmpar, ncol = length(pmpar)))
@@ -361,25 +360,25 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     names(df) <- spec
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
-        x[ , i] <- as.numeric(x[ , i])
+        x[ , i] <- units::set_units(x[ , i], "g/m^2/s")
       }
     }
     if (list == T) {
       dfx <- df
       dfb <- lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100
+        dfx[, i]*x
       })
       names(dfb) <- names(dfx)
-      for (j in 1:length(dfb)) {
-        for (i in 1:ncol(x)) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("mol h-1")
-        }
-      }
+      # for (j in 1:length(dfb)) {
+      #   for (i in 1:ncol(x)) {
+      #     dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("mol h-1")
+      #   }
+      # }
       if (show == TRUE) { print(df) }
     } else {
       dfx <- df
       dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100
+        dfx[, i]*x
       }))
       names(dfb) <- names(dfx)
       # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
