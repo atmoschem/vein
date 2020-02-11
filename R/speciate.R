@@ -263,7 +263,8 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     }
     # PM2.5 IAG ####
   } else if(spec == "pmiag"){
-    message("Emissions must be in g/(km^2)/h\n")
+    message("Input emissions must be in g/(km^2)/h\n")
+    message("Output flux will be  ug/(m^2)/s\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
     if(class(x)[1] == "sf"){
       x <- sf::st_set_geometry(x, NULL)
@@ -296,7 +297,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     }
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
-        x[ , i] <- units::set_units(x[ , i], "g/m^2/s")
+        x[ , i] <- units::set_units(x[ , i], "ug/m^2/s")
       }
     }
     if (list == T) {
@@ -325,7 +326,8 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
       print(df)
     }
   } else if (spec %in% pmdf) {
-    message("Emissions must be in g/(km^2)/h\n")
+    message("Input emissions must be in g/(km^2)/h\n")
+    message("Output flux will be  ug/(m^2)/s\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
     if(class(x)[1] == "sf"){
       x <- sf::st_set_geometry(x, NULL)
@@ -360,7 +362,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     names(df) <- spec
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
-        x[ , i] <- units::set_units(x[ , i], "g/m^2/s")
+        x[ , i] <- units::set_units(x[ , i], "ug/m^2/s")
       }
     }
     if (list == T) {
