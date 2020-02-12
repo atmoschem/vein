@@ -4,18 +4,22 @@
 #' @param p Character;
 #'
 #' Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
-#' "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd",
+#' "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHO",
 #' "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 #' "RCHO_0km" and "ETOH_0km",
 #' (g/km).  Evaporative emissions at average temperature ranges:
 #' "D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15",
 #' "S_0_15" and "R_0_15" where D means diurnal (g/day), S hot/warm soak (g/trip)
 #' and R hot/warm running losses (g/trip).
-#' @param veh Character; Vehicle categories: "PC_G", "PC_FG", "PC_FE", "PC_E",
-#' "LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT",
-#' "HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150", "M_G_150_500", "M_G_500",
-#' "M_FG_150", "M_FG_150_500", "M_FG_500", "M_FE_150", "M_FE_150_500",
-#' "M_FE_500", "CICLOMOTOR", "GNV"
+#' @param veh Character; Vehicle categories:
+#' "PC_G", "PC_FG", "PC_FE", "PC_E",
+#' "LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D",
+#' "TRUCKS_SL", "TRUCKS_L", "TRUCKS_M", "TRUCKS_SH", "TRUCKS_H",
+#' "BUS_URBAN", "BUS_MICRO", "BUS_COACH", "BUS_ARTIC",
+#' "MC_G_150", "MC_G_150_500", "MC_G_500",
+#' "MC_FG_150", "MC_FG_150_500", "MC_FG_500",
+#' "MC_FE_150", "MC_FE_150_500", "MC_FE_500"
+#' "CICLOMOTOR", "GNV"
 #' @param year Numeric; Filter the emission factor to start from a specific base year.
 #' If project is 'constant' values above 2017 and below 1980 will be repeated
 #' @param agemax Integer; age of oldest vehicles for that category
@@ -25,7 +29,41 @@
 #' future. Currently the only value is "constant"
 #' @return A vector of Emission Factor or a data.frame
 #' @keywords  emission factors
-#' @note This emission factors are not exactly the same as the report of CETESB.
+#' @note The new convention for vehicles names are translated from CETESB report:
+#' \tabular{ll}{
+#'   veh    \tab description \cr
+#'   PC_G   \tab Passenger Car Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   PC_E   \tab Passenger Car Ethanol (hydrous ethanol) \cr
+#'   PC_FG   \tab Passenger Car Flex Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   PC_FE  \tab Passenger Car Flex Ethanol (hydrous ethanol) \cr
+#'   LCV_G   \tab Light Commercial Vehicle Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   LCV_E   \tab Light Commercial Vehicle Ethanol (hydrous ethanol) \cr
+#'   LCV_FG   \tab Light Commercial Vehicle Flex Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   LCV_FE  \tab Light Commercial Vehicle Flex Ethanol (hydrous ethanol) \cr
+#'   LCV_D  \tab Light Commercial Vehicle Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_SL  \tab Trucks Semi Light Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_L  \tab Trucks Light Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_M  \tab Trucks Medium Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_SH  \tab Trucks Semi Heavy Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_H  \tab Trucks Heavy Diesel (5perc bio-diesel) \cr
+#'   BUS_URBAN  \tab Urban Bus Diesel (5perc bio-diesel) \cr
+#'   BUS_MICRO  \tab Micro Urban Bus Diesel (5perc bio-diesel) \cr
+#'   BUS_COACH  \tab Coach (inter-state) Bus Diesel (5perc bio-diesel) \cr
+#'   BUS_ARTIC  \tab Articulated Urban Bus Diesel (5perc bio-diesel) \cr
+#'   MC_G_150   \tab Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_G_150_500   \tab Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_G_500   \tab Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_FG_150   \tab Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_FG_150_500   \tab Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_FG_500   \tab Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_FE_150   \tab Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol) \cr
+#'   MC_FE_150_500   \tab Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol) \cr
+#'   MC_FE_500   \tab Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol) \cr
+#' }
+#'
+#' The percentage varies of bioduels varies by law.
+#'
+#' This emission factors are not exactly the same as the report of CETESB.
 #'
 #' 1) In this emission factors, there is also NO and NO2 based on split by
 #' published in the EMEP/EEA air pollutant emission inventory guidebook.
@@ -38,6 +76,12 @@
 #'
 #' In the previous versions I used the letter 'd' for deteriorated. I removed the
 #' letter 'd' internally to not break older code.
+#'
+#' If by mistake, the user inputs one of veh names from the old convention,
+#' they are internally changed to the new convention:
+#' "SLT", "LT", "MT", "SHT","HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150",
+#' "M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
+#' "M_FE_150", "M_FE_150_500","M_FE_500",
 #'
 #' @references Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
 #' url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
@@ -53,6 +97,25 @@
 ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
   ef[is.na(ef)] <- 0
+
+  oldt <- c("SLT", "LT", "MT", "SHT", "HT",
+               "UB", "SUB", "COACH", "ARTIC")
+if(any(veh %in% oldt)) {
+veh <- switch(veh,
+              "SLT" = "TRUCKS_SL",
+              "LT" = "TRUCKS_L",
+              "MT" = "TRUCKS_M",
+              "SHT" = "TRUCKS_SH",
+              "HT" = "TRUCKS_H",
+              "UB" = "BUS_URBAN",
+              "SUB" = "BUS_MICRO",
+              "COACH" = "BUS_COACH",
+              "ARTIC" = "BUS_ARTIC")
+}
+  oldtm <- c("M_G_150", "M_G_150_500", "M_G_500",
+             "M_FG_150", "M_FG_150_500", "M_FG_500",
+             "M_FE_150", "M_FE_150_500", "M_FE_500")
+  if(any(veh %in% oldtm)) veh <- gsub(pattern = "M_", replacement = "MC_", x = veh)
 
   year1 <- ef$Year[1]
 
