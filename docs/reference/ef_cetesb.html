@@ -139,7 +139,7 @@
       <th>p</th>
       <td><p>Character;</p>
 <p>Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
-"PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHOd",
+"PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHO",
 "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 "RCHO_0km" and "ETOH_0km",
 (g/km).  Evaporative emissions at average temperature ranges:
@@ -149,11 +149,15 @@ and R hot/warm running losses (g/trip).</p></td>
     </tr>
     <tr>
       <th>veh</th>
-      <td><p>Character; Vehicle categories: "PC_G", "PC_FG", "PC_FE", "PC_E",
-"LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D", "SLT", "LT", "MT", "SHT",
-"HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150", "M_G_150_500", "M_G_500",
-"M_FG_150", "M_FG_150_500", "M_FG_500", "M_FE_150", "M_FE_150_500",
-"M_FE_500", "CICLOMOTOR", "GNV"</p></td>
+      <td><p>Character; Vehicle categories:
+"PC_G", "PC_FG", "PC_FE", "PC_E",
+"LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D",
+"TRUCKS_SL", "TRUCKS_L", "TRUCKS_M", "TRUCKS_SH", "TRUCKS_H",
+"BUS_URBAN", "BUS_MICRO", "BUS_COACH", "BUS_ARTIC",
+"MC_G_150", "MC_G_150_500", "MC_G_500",
+"MC_FG_150", "MC_FG_150_500", "MC_FG_500",
+"MC_FE_150", "MC_FE_150_500", "MC_FE_500"
+"CICLOMOTOR", "GNV"</p></td>
     </tr>
     <tr>
       <th>year</th>
@@ -181,7 +185,40 @@ future. Currently the only value is "constant"</p></td>
     <p>A vector of Emission Factor or a data.frame</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>This emission factors are not exactly the same as the report of CETESB.</p>
+    <p>The new convention for vehicles names are translated from CETESB report:</p><table class='table'>
+<tr><td>veh</td><td>description</td></tr>
+<tr><td>PC_G</td><td>Passenger Car Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>PC_E</td><td>Passenger Car Ethanol (hydrous ethanol)</td></tr>
+<tr><td>PC_FG</td><td>Passenger Car Flex Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>PC_FE</td><td>Passenger Car Flex Ethanol (hydrous ethanol)</td></tr>
+<tr><td>LCV_G</td><td>Light Commercial Vehicle Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>LCV_E</td><td>Light Commercial Vehicle Ethanol (hydrous ethanol)</td></tr>
+<tr><td>LCV_FG</td><td>Light Commercial Vehicle Flex Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>LCV_FE</td><td>Light Commercial Vehicle Flex Ethanol (hydrous ethanol)</td></tr>
+<tr><td>LCV_D</td><td>Light Commercial Vehicle Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_SL</td><td>Trucks Semi Light Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_L</td><td>Trucks Light Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_M</td><td>Trucks Medium Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_SH</td><td>Trucks Semi Heavy Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_H</td><td>Trucks Heavy Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_URBAN</td><td>Urban Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_MICRO</td><td>Micro Urban Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_COACH</td><td>Coach (inter-state) Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_ARTIC</td><td>Articulated Urban Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>MC_G_150</td><td>Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_G_150_500</td><td>Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_G_500</td><td>Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_FG_150</td><td>Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_FG_150_500</td><td>Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_FG_500</td><td>Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_FE_150</td><td>Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol)</td></tr>
+<tr><td>MC_FE_150_500</td><td>Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol)</td></tr>
+<tr><td>MC_FE_500</td><td>Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol)</td></tr>
+</table>
+
+
+<p>The percentage varies of bioduels varies by law.</p>
+<p>This emission factors are not exactly the same as the report of CETESB.</p>
 <p>1) In this emission factors, there is also NO and NO2 based on split by
 published in the EMEP/EEA air pollutant emission inventory guidebook.</p>
 <p>2) Also, the emission factors were extended till 50 years of use, repeating
@@ -190,6 +227,11 @@ the oldest value.</p>
 of US.EPA-AP42 emission factor: Section 1.4 Natural Gas Combustion.</p>
 <p>In the previous versions I used the letter 'd' for deteriorated. I removed the
 letter 'd' internally to not break older code.</p>
+<p>If by mistake, the user inputs one of veh names from the old convention,
+they are internally changed to the new convention:
+"SLT", "LT", "MT", "SHT","HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150",
+"M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
+"M_FE_150", "M_FE_150_500","M_FE_500",</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.

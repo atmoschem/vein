@@ -67,7 +67,6 @@
 #'   Trucks   \tab Low Speed   \tab   D   \cr
 #'   Trucks   \tab Mini   \tab   D   \cr
 #' }
-
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{emis_hot_td}}
 #' @export
 #' @examples {
