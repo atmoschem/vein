@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimation of resuspension emissions from paved roads — emis_paved • vein</title>
+<title>Average Weight from hourly traffic data. — aw • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,12 +42,8 @@
 
 
 
-<meta property="og:title" content="Estimation of resuspension emissions from paved roads — emis_paved" />
-<meta property="og:description" content="emis_paved estimates vehicular emissions from paved roads.
-The vehicular emissions are estimated as the product of the vehicles on a
-road, length of the road, emission factor from AP42 13.2.1 Paved roads.
-It is assumed dry hours and anual aggregation should consider moisture factor.
-It depends on Average Daily Traffic (ADT)" />
+<meta property="og:title" content="Average Weight from hourly traffic data. — aw" />
+<meta property="og:description" content="aw average weight form traffic." />
 <meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -125,111 +121,145 @@ It depends on Average Daily Traffic (ADT)" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimation of resuspension emissions from paved roads</h1>
+    <h1>Average Weight from hourly traffic data.</h1>
     
-    <div class="hidden name"><code>emis_paved.Rd</code></div>
+    <div class="hidden name"><code>aw.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>emis_paved</code> estimates vehicular emissions from paved roads.
-The vehicular emissions are estimated as the product of the vehicles on a
-road, length of the road, emission factor from AP42 13.2.1 Paved roads.
-It is assumed dry hours and anual aggregation should consider moisture factor.
-It depends on Average Daily Traffic (ADT)</p>
+    <p><code>aw</code> average weight form traffic.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_paved</span>(
-  <span class='no'>veh</span>,
-  <span class='no'>adt</span>,
-  <span class='no'>lkm</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.62</span>,
-  <span class='kw'>sL1</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
-  <span class='kw'>sL2</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>sL3</span> <span class='kw'>=</span> <span class='fl'>0.06</span>,
-  <span class='kw'>sL4</span> <span class='kw'>=</span> <span class='fl'>0.03</span>,
-  <span class='no'>W</span>
+    <pre class="usage"><span class='fu'>aw</span>(
+  <span class='no'>pc</span>,
+  <span class='no'>lcv</span>,
+  <span class='no'>hgv</span>,
+  <span class='no'>bus</span>,
+  <span class='no'>mc</span>,
+  <span class='no'>p_pc</span>,
+  <span class='no'>p_lcv</span>,
+  <span class='no'>p_hgv</span>,
+  <span class='no'>p_bus</span>,
+  <span class='no'>p_mc</span>,
+  <span class='kw'>w_pc</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>w_lcv</span> <span class='kw'>=</span> <span class='fl'>3.5</span>,
+  <span class='kw'>w_hgv</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>w_bus</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>w_mc</span> <span class='kw'>=</span> <span class='fl'>0.5</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>veh</th>
-      <td><p>Numeric vector with length of elements equals to number of streets
-It is an array with dimenssions number of streets x hours of day x days of week</p></td>
+      <th>pc</th>
+      <td><p>numeric vector for passenger cars</p></td>
     </tr>
     <tr>
-      <th>lkm</th>
-      <td><p>Length of each link</p></td>
+      <th>lcv</th>
+      <td><p>numeric vector for light commercial vehicles</p></td>
     </tr>
     <tr>
-      <th>k</th>
-      <td><p>K_PM30 = 3.23 (g/vkm), K_PM15 = 0.77 (g/vkm), K_PM10 = 0.62 (g/vkm)
-and K_PM2.5 = 0.15  (g/vkm).</p></td>
+      <th>hgv</th>
+      <td><p>numeric vector for heavy good vehicles or trucks</p></td>
     </tr>
     <tr>
-      <th>sL1</th>
-      <td><p>Silt loading (g/m2) for roads with ADT &lt;= 500</p></td>
+      <th>bus</th>
+      <td><p>numeric vector for bus</p></td>
     </tr>
     <tr>
-      <th>sL2</th>
-      <td><p>Silt loading (g/m2) for roads with ADT &gt; 500 and &lt;= 5000</p></td>
+      <th>mc</th>
+      <td><p>numeric vector for motorcycles</p></td>
     </tr>
     <tr>
-      <th>sL3</th>
-      <td><p>Silt loading (g/m2) for roads with ADT &gt; 5000 and &lt;= 1000</p></td>
+      <th>p_pc</th>
+      <td><p>data-frame profile for passenger cars, 24 hours only.</p></td>
     </tr>
     <tr>
-      <th>sL4</th>
-      <td><p>Silt loading (g/m2) for roads with ADT &gt; 10000</p></td>
+      <th>p_lcv</th>
+      <td><p>data-frame profile for light commercial vehicles, 24 hours only.</p></td>
     </tr>
     <tr>
-      <th>W</th>
-      <td><p>array of dimensions of veh. It consists in the hourly averaged
-weight of traffic fleet in each road</p></td>
+      <th>p_hgv</th>
+      <td><p>data-frame profile for heavy good vehicles or trucks, 24 hours only.</p></td>
+    </tr>
+    <tr>
+      <th>p_bus</th>
+      <td><p>data-frame profile for bus, 24 hours only.</p></td>
+    </tr>
+    <tr>
+      <th>p_mc</th>
+      <td><p>data-frame profile for motorcycles, 24 hours only.</p></td>
+    </tr>
+    <tr>
+      <th>w_pc</th>
+      <td><p>Numeric, factor equivalence</p></td>
+    </tr>
+    <tr>
+      <th>w_lcv</th>
+      <td><p>Numeric, factor equivalence</p></td>
+    </tr>
+    <tr>
+      <th>w_hgv</th>
+      <td><p>Numeric, factor equivalence</p></td>
+    </tr>
+    <tr>
+      <th>w_bus</th>
+      <td><p>Numeric, factor equivalence</p></td>
+    </tr>
+    <tr>
+      <th>w_mc</th>
+      <td><p>Numeric, factor equivalence</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>emission estimation  g/h</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>silt values can vary a lot. For comparison:</p>
-<table class='table'>
-<tr><td>ADT</td><td>US-EPA g/m2</td><td>CENMA (Chile) g/m2</td></tr>
-<tr><td>&lt; 500</td><td>0.6</td><td>2.4</td></tr>
-<tr><td>500-5000</td><td>0.2</td><td>0.7</td></tr>
-<tr><td>5000-1000</td><td>0.06</td><td>0.6</td></tr>
-<tr><td>&gt;10000</td><td>0.03</td><td>0.3</td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>EPA, 2016. Emission factor documentation for AP-42. Section
-13.2.1, Paved Roads. https://www3.epa.gov/ttn/chief/ap42/ch13/final/c13s0201.pdf</p>
-<p>CENMA Chile: Actualizacion de inventario de emisiones de contaminntes atmosfericos RM 2020
-Universidad de Chile#'</p>
+    <p>data.frame with with average weight</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
-<span class='co'># Do not run</span>
-<span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1000</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>,<span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>veh</span>*<span class='fl'>1.5</span>
-<span class='no'>lkm</span> <span class='kw'>&lt;-</span>  <span class='fl'>1</span>:<span class='fl'>10</span>
-<span class='no'>emi</span>  <span class='kw'>&lt;-</span> <span class='fu'>emis_paved</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>emi</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>emi</span>)
-}</div><div class='output co'>#&gt; <span class='error'>Error in remove_units(adt): argument "adt" is missing, with no default</span></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
+<span class='no'>p1</span> <span class='kw'>&lt;-</span> <span class='no'>pc_profile</span>[, <span class='fl'>1</span>]
+<span class='no'>aw1</span> <span class='kw'>&lt;-</span> <span class='fu'>aw</span>(<span class='kw'>pc</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>*<span class='fl'>0.75</span>,
+            <span class='kw'>lcv</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>*<span class='fl'>0.1</span>,
+            <span class='kw'>hgv</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>hdv</span>,
+            <span class='kw'>bus</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>hdv</span>*<span class='fl'>0.1</span>,
+            <span class='kw'>mc</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>*<span class='fl'>0.15</span>,
+            <span class='kw'>p_pc</span> <span class='kw'>=</span> <span class='no'>p1</span>,
+            <span class='kw'>p_lcv</span> <span class='kw'>=</span> <span class='no'>p1</span>,
+            <span class='kw'>p_hgv</span> <span class='kw'>=</span> <span class='no'>p1</span>,
+            <span class='kw'>p_bus</span> <span class='kw'>=</span> <span class='no'>p1</span>,
+            <span class='kw'>p_mc</span> <span class='kw'>=</span> <span class='no'>p1</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>aw1</span>)
+}</div><div class='output co'>#&gt;         V1       V2       V3       V4       V5       V6       V7       V8
+#&gt; 1 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 2 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211
+#&gt; 3 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 4 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 5 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 6 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt;         V9      V10      V11      V12      V13      V14      V15      V16
+#&gt; 1 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 2 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211
+#&gt; 3 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 4 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 5 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 6 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt;        V17      V18      V19      V20      V21      V22      V23      V24
+#&gt; 1 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 2 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211 2.219211
+#&gt; 3 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 4 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 5 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000
+#&gt; 6 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000 1.175000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

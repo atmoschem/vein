@@ -4,7 +4,17 @@
 \alias{emis_paved}
 \title{Estimation of resuspension emissions from paved roads}
 \usage{
-emis_paved(veh, lkm, k = 0.62, sL1 = 0.6, sL2 = 0.2, sL3 = 0.06, sL4 = 0.03, W)
+emis_paved(
+  veh,
+  adt,
+  lkm,
+  k = 0.62,
+  sL1 = 0.6,
+  sL2 = 0.2,
+  sL3 = 0.06,
+  sL4 = 0.03,
+  W
+)
 }
 \arguments{
 \item{veh}{Numeric vector with length of elements equals to number of streets
@@ -36,17 +46,24 @@ road, length of the road, emission factor from AP42 13.2.1 Paved roads.
 It is assumed dry hours and anual aggregation should consider moisture factor.
 It depends on Average Daily Traffic (ADT)
 }
+\note{
+silt values can vary a lot. For comparison:
+
+\tabular{lcc}{
+  ADT         \tab US-EPA g/m2  \tab  CENMA (Chile) g/m2 \cr
+  < 500       \tab 0.6           \tab  2.4   \cr
+  500-5000    \tab 0.2           \tab  0.7   \cr
+  5000-1000   \tab 0.06          \tab  0.6   \cr
+  >10000      \tab  0.03         \tab  0.3   \cr
+}
+}
 \examples{
 {
 # Do not run
-veh <- array(pnorm(q=c(1:100), mean=500, sd = 100),
-             c(100,24,7))
-W <- veh*1e+05
-lkm <-  rnorm(n = 100, mean = 10, sd = 1)
-sL1 <- 0.6
-emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65,
-                       sL1 = sL1, sL2 = sL1/4, sL3 = sL1/16, sL4 = sL1/32,
-                       W = W)
+veh <- matrix(1000, nrow = 10,ncol = 10)
+W <- veh*1.5
+lkm <-  1:10
+emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65, W = W)
 class(emi)
 head(emi)
 }
@@ -54,4 +71,7 @@ head(emi)
 \references{
 EPA, 2016. Emission factor documentation for AP-42. Section
 13.2.1, Paved Roads. https://www3.epa.gov/ttn/chief/ap42/ch13/final/c13s0201.pdf
+
+CENMA Chile: Actualizacion de inventario de emisiones de contaminntes atmosfericos RM 2020
+Universidad de Chile#'
 }
