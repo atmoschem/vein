@@ -1,8 +1,11 @@
-context("adt")
+context("aw")
+
 data(net)
 data(pc_profile)
 p1 <- pc_profile[, 1]
-adt1 <- adt(pc = net$ldv*0.75,
+
+test_that("aw works", {
+  aw1 <- aw(pc = net$ldv*0.75,
             lcv = net$ldv*0.1,
             hgv = net$hdv,
             bus = net$hdv*0.1,
@@ -12,9 +15,7 @@ adt1 <- adt(pc = net$ldv*0.75,
             p_hgv = p1,
             p_bus = p1,
             p_mc = p1)
-
-test_that("adt works", {
-  expect_equal(round(adt1[1]),
-               Vehicles(62445))
+  expect_equal(round(aw1$V1[1]), 1)
 })
+
 

@@ -33,7 +33,7 @@ stop inputs}
 
 \item{full.names}{Logical; full.names or not. Default is "TRUE".}
 
-\item{Logical}{Source with echo?}
+\item{echo}{Source with echo?}
 }
 \description{
 \code{\link{emis_source}} source vein scripts

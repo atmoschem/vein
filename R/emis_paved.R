@@ -8,6 +8,7 @@
 #'
 #' @param veh Numeric vector with length of elements equals to number of streets
 #' It is an array with dimenssions number of streets x hours of day x days of week
+#' @param adt Numeric vector of with Average Daily Traffic (ADT)
 #' @param lkm Length of each link
 #' @param k K_PM30 = 3.23 (g/vkm), K_PM15 = 0.77 (g/vkm), K_PM10 = 0.62 (g/vkm)
 #' and K_PM2.5 = 0.15  (g/vkm).
@@ -17,6 +18,7 @@
 #' @param sL4 Silt loading (g/m2) for roads with ADT > 10000
 #' @param W array of dimensions of veh. It consists in the hourly averaged
 #' weight of traffic fleet in each road
+#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @return emission estimation  g/h
 #' @export
 #' @references EPA, 2016. Emission factor documentation for AP-42. Section
@@ -38,19 +40,21 @@
 #' veh <- matrix(1000, nrow = 10,ncol = 10)
 #' W <- veh*1.5
 #' lkm <-  1:10
-#' emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65, W = W)
+#' ADT <-1000:1010
+#' emi  <- emis_paved(veh = veh, adt = ADT, lkm = lkm, k = 0.65, W = W)
 #' class(emi)
 #' head(emi)
 #' }
 emis_paved <- function(veh,         # hourly traffic flow multiplier of 24
-                        adt,
-                        lkm,
-                        k = 0.62,   # K_PM10 = 0.62 (g/vkm)
-                        sL1 = 0.6,  # g/m^2
-                        sL2 = 0.2,  # g/m^2
-                        sL3 = 0.06, # g/m^2
-                        sL4 = 0.03, # g/m^2
-                        W) {
+                       adt,
+                       lkm,
+                       k = 0.62,   # K_PM10 = 0.62 (g/vkm)
+                       sL1 = 0.6,  # g/m^2
+                       sL2 = 0.2,  # g/m^2
+                       sL3 = 0.06, # g/m^2
+                       sL4 = 0.03, # g/m^2
+                       W,
+                       net = net) {
 
   veh <- remove_units(veh)
   adt <- remove_units(adt)
@@ -65,5 +69,11 @@ emis_paved <- function(veh,         # hourly traffic flow multiplier of 24
   emi <- veh * lkm * k * sL^0.91 * W^1.02
 
   emi[is.na(emi)] <- 0
-  return(Emissions(emi))
+  if(!missing(net)) {
+    net <- sf::st_as_sf(net)
+    emi <- sf::st_sf(Emissions(emi), geometry = sf::st_geometry(net))
+    return(emi)
+  } else {
+    return(Emissions(emi))
+  }
 }

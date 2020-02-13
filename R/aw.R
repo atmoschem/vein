@@ -17,6 +17,8 @@
 #' @param w_hgv Numeric, factor equivalence
 #' @param w_bus Numeric, factor equivalence
 #' @param w_mc Numeric, factor equivalence
+#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
+#' @importFrom sf st_sf
 #' @return data.frame with with average weight
 #' @export
 #' @examples {
@@ -36,12 +38,13 @@
 #' head(aw1)
 #' }
 aw <- function(pc, lcv, hgv, bus, mc,
-                p_pc, p_lcv, p_hgv, p_bus, p_mc,
-                w_pc = 1,
-                w_lcv = 3.5,
-                w_hgv = 20,
-                w_bus = 20,
-                w_mc = 0.5) {
+               p_pc, p_lcv, p_hgv, p_bus, p_mc,
+               w_pc = 1,
+               w_lcv = 3.5,
+               w_hgv = 20,
+               w_bus = 20,
+               w_mc = 0.5,
+               net) {
   pc <- remove_units(pc)
   lcv <- remove_units(lcv)
   hgv <- remove_units(hgv)
@@ -65,5 +68,10 @@ aw <- function(pc, lcv, hgv, bus, mc,
   W <- (df_pc_w + df_lcv_w + df_hgv_w + df_bus_w + df_mc_w)/fleet
   W <- remove_units(W)
   W[is.na(W)] <- 0
-  return(W)
+  if(!missing(net)) {
+    net <- sf::st_as_sf(net)
+    W <- sf::st_sf(W, geometry = sf::st_geometry(net))
+  } else {
+    return(W)
+  }
 }
