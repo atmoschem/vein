@@ -11,7 +11,8 @@ emis_source(
   first,
   ask = TRUE,
   recursive = TRUE,
-  full.names = TRUE
+  full.names = TRUE,
+  echo = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ stop inputs}
 \item{recursive}{Logical; recursive or not. Default is "TRUE"}
 
 \item{full.names}{Logical; full.names or not. Default is "TRUE".}
+
+\item{Logical}{Source with echo?}
 }
 \description{
 \code{\link{emis_source}} source vein scripts

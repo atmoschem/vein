@@ -12,6 +12,7 @@
 #' @param recursive Logical; recursive or not. Default is "TRUE"
 #' @param full.names Logical; full.names or not. Default is "TRUE".
 #' @param first Character; first script.
+#' @param Logical Source with echo?
 #' @importFrom utils menu
 #' @export
 #' @examples {
@@ -22,7 +23,8 @@ emis_source <- function(path = "est",
                         ignore = "~",
                         first, ask = TRUE,
                         recursive = TRUE,
-                        full.names = TRUE){
+                        full.names = TRUE,
+                        echo = FALSE){
   inputs <- list.files(path = path, pattern = pattern,
                        recursive = recursive, full.names =  full.names)
   inputs <- inputs[!grepl(pattern = ignore, x = inputs)]
@@ -34,14 +36,16 @@ emis_source <- function(path = "est",
       choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
       if(choice == 1){
         for(i in 1:length(inputsa)){
-          source(inputsa[i])
+          cat("Sourcing ",inputsa[i], "...\n")
+          source(inputsa[i], echo = echo)
         }
       } else {
         stop("Change inputs")
       }
     } else {
       for(i in 1:length(inputsa)){
-        source(inputsa[i])
+        cat("Sourcing ",inputsa[i], "...\n")
+        source(inputsa[i], echo = echo)
       }
     }
   } else {
@@ -50,14 +54,16 @@ emis_source <- function(path = "est",
       choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
       if(choice == 1){
         for(i in 1:length(inputs)){
-          source(inputs[i])
+          cat("Sourcing ",inputs[i], "...\n")
+          source(inputs[i], echo = echo)
         }
       } else {
         stop("Change inputs")
       }
     } else {
       for(i in 1:length(inputs)){
-        source(inputs[i])
+        cat("Sourcing ",inputs[i], "...\n")
+        source(inputs[i], echo = echo)
       }
     }
 
