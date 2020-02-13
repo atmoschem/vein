@@ -140,7 +140,7 @@ in data. This function returns an object of class "sf".</p>
 <p>It is</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"sum"</span>, <span class='kw'>flux</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='no'>g</span>, <span class='no'>sr</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"lines"</span>, <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"sum"</span>, <span class='kw'>flux</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,6 +172,10 @@ not projected. Please, see http://spatialreference.org/.</p></td>
       <td><p>Logical, if TRUE, it return flux (mass / area / time (implicit))
 in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 as EDGAR provide data.</p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>Numeric to multiply emissions</p></td>
     </tr>
     </table>
 

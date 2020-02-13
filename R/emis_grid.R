@@ -18,6 +18,7 @@
 #' @param flux Logical, if TRUE, it return flux (mass / area / time (implicit))
 #' in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 #' as EDGAR provide data.
+#' @param k Numeric to multiply emissions
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area
 #' @importFrom data.table data.table .SD
 #' @importFrom sp CRS
@@ -52,7 +53,8 @@ emis_grid <- function (spobj = net,
                        sr,
                        type = "lines",
                        FN = "sum",
-                       flux = TRUE){
+                       flux = TRUE,
+                       k = 1){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   # add as.data.frame qhen net comes from data.table
@@ -109,7 +111,7 @@ emis_grid <- function (spobj = net,
 
     area <- units::set_units(area, "km^2")
 
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)*k
 
     dfm$id <- id
 
@@ -163,7 +165,7 @@ emis_grid <- function (spobj = net,
 
     area <- units::set_units(sf::st_area(g), "km^2")
 
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)*k
 
     dfm$id <- id
 
@@ -212,7 +214,9 @@ emis_grid <- function (spobj = net,
     id <- dfm$id
     dfm$id <- NULL
     area <- units::set_units(sf::st_area(g), "km^2")
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE) # !
+
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)*k
+
     cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))
     dfm$id <- id
