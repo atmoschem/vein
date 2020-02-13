@@ -21,40 +21,48 @@
 #' @export
 #' @references EPA, 2016. Emission factor documentation for AP-42. Section
 #' 13.2.1, Paved Roads. https://www3.epa.gov/ttn/chief/ap42/ch13/final/c13s0201.pdf
+#'
+#' CENMA Chile: Actualizacion de inventario de emisiones de contaminntes atmosfericos RM 2020
+#' Universidad de Chile#'
+#' @note silt values can vary a lot. For comparison:
+#'
+#' \tabular{lcc}{
+#'   ADT         \tab US-EPA g/m2  \tab  CENMA (Chile) g/m2 \cr
+#'   < 500       \tab 0.6           \tab  2.4   \cr
+#'   500-5000    \tab 0.2           \tab  0.7   \cr
+#'   5000-1000   \tab 0.06          \tab  0.6   \cr
+#'   >10000      \tab  0.03         \tab  0.3   \cr
+#' }
 #' @examples {
 #' # Do not run
-#' veh <- array(pnorm(q=c(1:100), mean=500, sd = 100),
-#'              c(100,24,7))
-#' W <- veh*1e+05
-#' lkm <-  rnorm(n = 100, mean = 10, sd = 1)
-#' sL1 <- 0.6
-#' emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65,
-#'                        sL1 = sL1, sL2 = sL1/4, sL3 = sL1/16, sL4 = sL1/32,
-#'                        W = W)
+#' veh <- matrix(1000, nrow = 10,ncol = 10)
+#' W <- veh*1.5
+#' lkm <-  1:10
+#' emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65, W = W)
 #' class(emi)
 #' head(emi)
 #' }
-emis_paved <- function(veh,
-                       lkm,
-                       k = 0.62,   # K_PM10 = 0.62 (g/vkm)
-                       sL1 = 0.6,  # g/m^2
-                       sL2 = 0.2,  # g/m^2
-                       sL3 = 0.06, # g/m^2
-                       sL4 = 0.03, # g/m^2
-                       W) {
-  sL <- array(data = ifelse(veh <= 500, sL1,
-                            ifelse(veh > 500 & veh <= 5000, sL2,
-                                   ifelse(veh > 5000 & veh <=1000, sL3,
-                                          sL4))),
-              dim = dim(veh))
-  lkm <- array(lkm, dim = dim(veh))
-  k <- array(k, dim = dim(veh))
+emis_paved <- function(veh,         # hourly traffic flow multiplier of 24
+                        adt,
+                        lkm,
+                        k = 0.62,   # K_PM10 = 0.62 (g/vkm)
+                        sL1 = 0.6,  # g/m^2
+                        sL2 = 0.2,  # g/m^2
+                        sL3 = 0.06, # g/m^2
+                        sL4 = 0.03, # g/m^2
+                        W) {
+
+  veh <- remove_units(veh)
+  lkm <- remove_units(lkm)
+  adt <- remove_units(adt)
+  veh$id <- NULL
+
+  sL <- ifelse(adt <= 500, sL1,
+               ifelse(adt > 500 & adt <= 5000, sL2,
+                      ifelse(adt > 5000 & adt <=10000, sL3,
+                             sL4)))
   emi <- veh * lkm * k * sL^0.91 * W^1.02
+
   emi[is.na(emi)] <- 0
-  if(length(dim(emi)) == 2){
-    names(emi) <- paste0("V",1:ncol(emi))
-    return(Emissions(emi))
-  } else {
-    return(EmissionsArray(emi))
-  }
+  return(Emissions(emi))
 }

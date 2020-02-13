@@ -1,7 +1,6 @@
 #' Average daily traffic (ADT) from hourly traffic data.
 #'
-#' @description \code{\link{adt}} calculates ADT based on hourly traffic data. The
-#' input traffic data is usually for morning rush hours.
+#' @description \code{\link{adt}} calculates ADT based on hourly traffic data.
 #'
 #' @param pc numeric vector for passenger cars
 #' @param lcv numeric vector for light commercial vehicles
@@ -13,10 +12,12 @@
 #' @param p_hgv data-frame profile for heavy good vehicles or trucks, 24 hours only.
 #' @param p_bus data-frame profile for bus, 24 hours only.
 #' @param p_mc data-frame profile for motorcycles, 24 hours only.
-#' @param expanded boolean argument for returning numeric vector or "Vehicles"
-#' @return numeric vector of total volume of traffic per link, or data-frames
-#' of expanded traffic
-#' @importFrom units as_units
+#' @param feq_pc Numeric, factor equivalence
+#' @param feq_lcv Numeric, factor equivalence
+#' @param feq_hgv Numeric, factor equivalence
+#' @param feq_bus Numeric, factor equivalence
+#' @param feq_mc Numeric, factor equivalence
+#' @return numeric vector of total volume of traffic per link as ADT
 #' @export
 #' @examples {
 #' data(net)
@@ -25,7 +26,7 @@
 #' adt1 <- adt(pc = net$ldv*0.75,
 #'             lcv = net$ldv*0.1,
 #'             hgv = net$hdv,
-#'             bus = 0,
+#'             bus = net$hdv*0.1,
 #'             mc = net$ldv*0.15,
 #'             p_pc = p1,
 #'             p_lcv = p1,
@@ -33,45 +34,33 @@
 #'             p_bus = p1,
 #'             p_mc = p1)
 #' head(adt1)
-#' plot(adt1)
-#' adt2 <- adt(pc = net$ldv*0.75,
-#'             lcv = net$ldv*0.1,
-#'             hgv = net$hdv,
-#'             bus = net$hdv,
-#'             mc = net$ldv*0.15,
-#'             p_pc = p1,
-#'             p_lcv = p1,
-#'             p_hgv = p1,
-#'             p_bus = p1*0, # when zero, must be the same size
-#'             p_mc = p1,
-#'             TRUE)
-#' head(adt2)
-#' plot(adt2) # Class Vehicles
 #' }
 adt <- function(pc, lcv, hgv, bus, mc,
                 p_pc, p_lcv, p_hgv, p_bus, p_mc,
-                expanded = FALSE) {
-  if(length(unlist(p_pc)) > 24 |
-     length(unlist(p_lcv)) > 24 |
-     length(unlist(p_hgv)) > 24 |
-     length(unlist(p_bus)) > 24 |
-     length(unlist(p_mc)) > 24){
-    stop("Profiles must be for 24 hours only")
-  }
-  df_pc <- vein::temp_fact(q = pc, pro = p_pc)
-  df_lcv <- vein::temp_fact(q = lcv, pro = p_lcv)
-  df_hgv <- vein::temp_fact(q = hgv, pro = p_hgv)
-  df_bus <- vein::temp_fact(q = bus, pro = p_bus)
-  df_mc <- vein::temp_fact(q = mc, pro = p_mc)
-  if (expanded == FALSE) {
-    df <- rowSums(df_pc) + rowSums(df_lcv) + rowSums(df_hgv) +
-      rowSums(df_bus) + rowSums(df_mc)
-    return(df*units::as_units("d-1"))
-  } else{
-    df <- df_pc + df_lcv + df_hgv + df_bus + df_mc
-    for (i  in 1:ncol(df) ) {
-      df[, i] <- as.numeric(df[, i])
-    }
-    return(Vehicles(df))
-  }
+                feq_pc = 1,
+                feq_lcv = 1.5,
+                feq_hgv = 2,
+                feq_bus = 2,
+                feq_mc = 0.5) {
+  pc <- remove_units(pc)
+  lcv <- remove_units(lcv)
+  hgv <- remove_units(hgv)
+  bus <- remove_units(bus)
+  mc <- remove_units(mc)
+
+  df_pc <- vein::temp_fact(q = pc*feq_pc, pro = p_pc)
+  df_lcv <- vein::temp_fact(q = lcv*feq_lcv, pro = p_lcv)
+  df_hgv <- vein::temp_fact(q = hgv*feq_hgv, pro = p_hgv)
+  df_bus <- vein::temp_fact(q = bus*feq_bus, pro = p_bus)
+  df_mc <- vein::temp_fact(q = mc*feq_mc, pro = p_mc)
+
+  veq = df_pc + df_lcv + df_hgv + df_bus + df_mc
+
+  n <- ncol(veq)/24
+  dx <- do.call("cbind", lapply(1:n, function(i){
+    rowSums(veq[, (24*(i-1) + 1) : (24*(i-1) + 24)])
+  }))
+
+  ADT <- rowMeans(dx)
+  return(Vehicles(ADT))
 }
