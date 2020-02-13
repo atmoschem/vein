@@ -53,8 +53,9 @@ emis_paved <- function(veh,         # hourly traffic flow multiplier of 24
                         W) {
 
   veh <- remove_units(veh)
-  lkm <- remove_units(lkm)
   adt <- remove_units(adt)
+  lkm <- remove_units(lkm)
+  W <- remove_units(W)
   veh$id <- NULL
 
   sL <- ifelse(adt <= 500, sL1,
