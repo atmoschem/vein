@@ -147,7 +147,8 @@ It depends on Average Daily Traffic (ADT)</p>
   <span class='kw'>sL2</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
   <span class='kw'>sL3</span> <span class='kw'>=</span> <span class='fl'>0.06</span>,
   <span class='kw'>sL4</span> <span class='kw'>=</span> <span class='fl'>0.03</span>,
-  <span class='no'>W</span>
+  <span class='no'>W</span>,
+  <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,6 +158,10 @@ It depends on Average Daily Traffic (ADT)</p>
       <th>veh</th>
       <td><p>Numeric vector with length of elements equals to number of streets
 It is an array with dimenssions number of streets x hours of day x days of week</p></td>
+    </tr>
+    <tr>
+      <th>adt</th>
+      <td><p>Numeric vector of with Average Daily Traffic (ADT)</p></td>
     </tr>
     <tr>
       <th>lkm</th>
@@ -188,6 +193,10 @@ and K_PM2.5 = 0.15  (g/vkm).</p></td>
       <td><p>array of dimensions of veh. It consists in the hourly averaged
 weight of traffic fleet in each road</p></td>
     </tr>
+    <tr>
+      <th>net</th>
+      <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -218,10 +227,23 @@ Universidad de Chile#'</p>
 <span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1000</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>,<span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>veh</span>*<span class='fl'>1.5</span>
 <span class='no'>lkm</span> <span class='kw'>&lt;-</span>  <span class='fl'>1</span>:<span class='fl'>10</span>
-<span class='no'>emi</span>  <span class='kw'>&lt;-</span> <span class='fu'>emis_paved</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>)
+<span class='no'>ADT</span> <span class='kw'>&lt;-</span><span class='fl'>1000</span>:<span class='fl'>1010</span>
+<span class='no'>emi</span>  <span class='kw'>&lt;-</span> <span class='fu'>emis_paved</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>adt</span> <span class='kw'>=</span> <span class='no'>ADT</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>emi</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>emi</span>)
-}</div><div class='output co'>#&gt; <span class='error'>Error in remove_units(adt): argument "adt" is missing, with no default</span></div></pre>
+}</div><div class='output co'>#&gt;              V1            V2            V3            V4            V5
+#&gt; 1  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]
+#&gt; 2  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]
+#&gt; 3  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]
+#&gt; 4 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g]
+#&gt; 5 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g]
+#&gt;              V6            V7            V8            V9           V10
+#&gt; 1  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]
+#&gt; 2  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]
+#&gt; 3  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]
+#&gt; 4 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g]
+#&gt; 5 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g]
+#&gt; ... and 1 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

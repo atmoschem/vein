@@ -19,7 +19,8 @@ aw(
   w_lcv = 3.5,
   w_hgv = 20,
   w_bus = 20,
-  w_mc = 0.5
+  w_mc = 0.5,
+  net
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ aw(
 \item{w_bus}{Numeric, factor equivalence}
 
 \item{w_mc}{Numeric, factor equivalence}
+
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 }
 \value{
 data.frame with with average weight

@@ -13,12 +13,15 @@ emis_paved(
   sL2 = 0.2,
   sL3 = 0.06,
   sL4 = 0.03,
-  W
+  W,
+  net = net
 )
 }
 \arguments{
 \item{veh}{Numeric vector with length of elements equals to number of streets
 It is an array with dimenssions number of streets x hours of day x days of week}
+
+\item{adt}{Numeric vector of with Average Daily Traffic (ADT)}
 
 \item{lkm}{Length of each link}
 
@@ -35,6 +38,8 @@ and K_PM2.5 = 0.15  (g/vkm).}
 
 \item{W}{array of dimensions of veh. It consists in the hourly averaged
 weight of traffic fleet in each road}
+
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 }
 \value{
 emission estimation  g/h
@@ -63,7 +68,8 @@ silt values can vary a lot. For comparison:
 veh <- matrix(1000, nrow = 10,ncol = 10)
 W <- veh*1.5
 lkm <-  1:10
-emi  <- emis_paved(veh = veh, lkm = lkm, k = 0.65, W = W)
+ADT <-1000:1010
+emi  <- emis_paved(veh = veh, adt = ADT, lkm = lkm, k = 0.65, W = W)
 class(emi)
 head(emi)
 }

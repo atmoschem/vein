@@ -12,7 +12,7 @@
 #' @param recursive Logical; recursive or not. Default is "TRUE"
 #' @param full.names Logical; full.names or not. Default is "TRUE".
 #' @param first Character; first script.
-#' @param Logical Source with echo?
+#' @param echo Source with echo?
 #' @importFrom utils menu
 #' @export
 #' @examples {
