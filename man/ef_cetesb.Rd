@@ -58,24 +58,24 @@ The new convention for vehicles names are translated from CETESB report:
   LCV_FG   \tab Light Commercial Vehicle Flex Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
   LCV_FE  \tab Light Commercial Vehicle Flex Ethanol (hydrous ethanol) \cr
   LCV_D  \tab Light Commercial Vehicle Diesel (5perc bio-diesel) \cr
-  TRUCKS_SL  \tab Trucks Semi Light Diesel (5perc bio-diesel) \cr
-  TRUCKS_L  \tab Trucks Light Diesel (5perc bio-diesel) \cr
-  TRUCKS_M  \tab Trucks Medium Diesel (5perc bio-diesel) \cr
-  TRUCKS_SH  \tab Trucks Semi Heavy Diesel (5perc bio-diesel) \cr
-  TRUCKS_H  \tab Trucks Heavy Diesel (5perc bio-diesel) \cr
-  BUS_URBAN  \tab Urban Bus Diesel (5perc bio-diesel) \cr
-  BUS_MICRO  \tab Micro Urban Bus Diesel (5perc bio-diesel) \cr
-  BUS_COACH  \tab Coach (inter-state) Bus Diesel (5perc bio-diesel) \cr
-  BUS_ARTIC  \tab Articulated Urban Bus Diesel (5perc bio-diesel) \cr
-  MC_G_150   \tab Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-  MC_G_150_500   \tab Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-  MC_G_500   \tab Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-  MC_FG_150   \tab Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-  MC_FG_150_500   \tab Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-  MC_FG_500   \tab Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-  MC_FE_150   \tab Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol) \cr
-  MC_FE_150_500   \tab Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol) \cr
-  MC_FE_500   \tab Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol) \cr
+  TRUCKS_SL_D  \tab Trucks Semi Light Diesel (5perc bio-diesel) \cr
+  TRUCKS_L_D  \tab Trucks Light Diesel (5perc bio-diesel) \cr
+  TRUCKS_M_D  \tab Trucks Medium Diesel (5perc bio-diesel) \cr
+  TRUCKS_SH_D  \tab Trucks Semi Heavy Diesel (5perc bio-diesel) \cr
+  TRUCKS_H_D  \tab Trucks Heavy Diesel (5perc bio-diesel) \cr
+  BUS_URBAN_D  \tab Urban Bus Diesel (5perc bio-diesel) \cr
+  BUS_MICRO_D  \tab Micro Urban Bus Diesel (5perc bio-diesel) \cr
+  BUS_COACH_D  \tab Coach (inter-state) Bus Diesel (5perc bio-diesel) \cr
+  BUS_ARTIC_D  \tab Articulated Urban Bus Diesel (5perc bio-diesel) \cr
+  MC_150_G   \tab Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+  MC_150_500_G   \tab Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+  MC_500_G   \tab Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+  MC_150_FG   \tab Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+  MC_150_500_FG   \tab Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+  MC_500_FG   \tab Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+  MC_150_FE   \tab Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol) \cr
+  MC_150_500_FE   \tab Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol) \cr
+  MC_500_FE   \tab Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol) \cr
 }
 
 The percentage varies of bioduels varies by law.
@@ -108,6 +108,8 @@ a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
 ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40)
 ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
 ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
+ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
+ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 }
 }
 \references{

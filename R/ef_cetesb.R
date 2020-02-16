@@ -41,24 +41,24 @@
 #'   LCV_FG   \tab Light Commercial Vehicle Flex Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
 #'   LCV_FE  \tab Light Commercial Vehicle Flex Ethanol (hydrous ethanol) \cr
 #'   LCV_D  \tab Light Commercial Vehicle Diesel (5perc bio-diesel) \cr
-#'   TRUCKS_SL  \tab Trucks Semi Light Diesel (5perc bio-diesel) \cr
-#'   TRUCKS_L  \tab Trucks Light Diesel (5perc bio-diesel) \cr
-#'   TRUCKS_M  \tab Trucks Medium Diesel (5perc bio-diesel) \cr
-#'   TRUCKS_SH  \tab Trucks Semi Heavy Diesel (5perc bio-diesel) \cr
-#'   TRUCKS_H  \tab Trucks Heavy Diesel (5perc bio-diesel) \cr
-#'   BUS_URBAN  \tab Urban Bus Diesel (5perc bio-diesel) \cr
-#'   BUS_MICRO  \tab Micro Urban Bus Diesel (5perc bio-diesel) \cr
-#'   BUS_COACH  \tab Coach (inter-state) Bus Diesel (5perc bio-diesel) \cr
-#'   BUS_ARTIC  \tab Articulated Urban Bus Diesel (5perc bio-diesel) \cr
-#'   MC_G_150   \tab Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-#'   MC_G_150_500   \tab Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-#'   MC_G_500   \tab Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-#'   MC_FG_150   \tab Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-#'   MC_FG_150_500   \tab Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-#'   MC_FG_500   \tab Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
-#'   MC_FE_150   \tab Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol) \cr
-#'   MC_FE_150_500   \tab Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol) \cr
-#'   MC_FE_500   \tab Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol) \cr
+#'   TRUCKS_SL_D  \tab Trucks Semi Light Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_L_D  \tab Trucks Light Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_M_D  \tab Trucks Medium Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_SH_D  \tab Trucks Semi Heavy Diesel (5perc bio-diesel) \cr
+#'   TRUCKS_H_D  \tab Trucks Heavy Diesel (5perc bio-diesel) \cr
+#'   BUS_URBAN_D  \tab Urban Bus Diesel (5perc bio-diesel) \cr
+#'   BUS_MICRO_D  \tab Micro Urban Bus Diesel (5perc bio-diesel) \cr
+#'   BUS_COACH_D  \tab Coach (inter-state) Bus Diesel (5perc bio-diesel) \cr
+#'   BUS_ARTIC_D  \tab Articulated Urban Bus Diesel (5perc bio-diesel) \cr
+#'   MC_150_G   \tab Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_150_500_G   \tab Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_500_G   \tab Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_150_FG   \tab Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_150_500_FG   \tab Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_500_FG   \tab Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)  \cr
+#'   MC_150_FE   \tab Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol) \cr
+#'   MC_150_500_FE   \tab Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol) \cr
+#'   MC_500_FE   \tab Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol) \cr
 #' }
 #'
 #' The percentage varies of bioduels varies by law.
@@ -93,115 +93,126 @@
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40)
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
+#' ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
+#' ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 #' }
 ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
   ef <- sysdata$cetesb
   ef[is.na(ef)] <- 0
 
   oldt <- c("SLT", "LT", "MT", "SHT", "HT",
-               "UB", "SUB", "COACH", "ARTIC")
-if(any(veh %in% oldt)) {
-veh <- switch(veh,
-              "SLT" = "TRUCKS_SL",
-              "LT" = "TRUCKS_L",
-              "MT" = "TRUCKS_M",
-              "SHT" = "TRUCKS_SH",
-              "HT" = "TRUCKS_H",
-              "UB" = "BUS_URBAN",
-              "SUB" = "BUS_MICRO",
-              "COACH" = "BUS_COACH",
-              "ARTIC" = "BUS_ARTIC")
-}
-  oldtm <- c("M_G_150", "M_G_150_500", "M_G_500",
-             "M_FG_150", "M_FG_150_500", "M_FG_500",
-             "M_FE_150", "M_FE_150_500", "M_FE_500")
-  if(any(veh %in% oldtm)) veh <- gsub(pattern = "M_", replacement = "MC_", x = veh)
+            "UB", "SUB", "COACH", "ARTIC",
+            "M_G_150", "M_G_150_500", "M_G_500",
+            "M_FG_150", "M_FG_150_500", "M_FG_500",
+            "M_FE_150", "M_FE_150_500", "M_FE_500")
+  if(any(veh %in% oldt)) {
+    message("I guess you wanted this:")
+    veh <- switch(veh,
+                  "SLT" = "TRUCKS_SL_D",
+                  "LT" = "TRUCKS_L_D",
+                  "MT" = "TRUCKS_M_D",
+                  "SHT" = "TRUCKS_SH_D",
+                  "HT" = "TRUCKS_H_D",
+                  "UB" = "BUS_URBAN_D",
+                  "SUB" = "BUS_MICRO_D",
+                  "COACH" = "BUS_COACH_D",
+                  "ARTIC" = "BUS_ARTIC_D",
+                  "M_G_150" = "MC_150_G",
+                  "M_G_150_500" = "MC_150_500_G",
+                  "M_G_500" = "MC_500_G",
+                  "M_FG_150" = "MC_150_FG",
+                  "M_FG_150_500" = "MC_150_500_FG",
+                  "M_FG_500" = "MC_500_FG",
+                  "M_FE_150" = "MC_150_FE",
+                  "M_FE_150_500" = "MC_150_500_FE",
+                  "M_FE_500" = "MC_500_FE")
+    message(veh)
+  }
+      year1 <- ef$Year[1]
 
-  year1 <- ef$Year[1]
+    p <- gsub(pattern = "d", replacement = "", x = p) #not break old code
 
-  p <- gsub(pattern = "d", replacement = "", x = p) #not break old code
-
-  if(year < 1956) stop("Choose a newer year")
+    if(year < 1956) stop("Choose a newer year")
     # Selecting
     ef <- ef[ef$Year <= year, ]
 
-  evapd <- c("D_20_35","D_10_25","D_0_15")
-  evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
-  pols <- as.character(unique(ef$Pollutant))
-  if(!p %in% pols){
-    stop(paste("Please, choose one of the following pollutants:", pols))
-  }
-  if(p %in% evapd){
-    message("Units: [g/day]\n")
-  }
-  if(p %in% evap){
-    message("Units: [g/trip]\n")
-  }
-  nveh <- names(ef)[12:ncol(ef)]
-  if(any(!veh %in% nveh)){
-    stop(paste("Please, choose on of the following categories:", nveh))
-  }
-  if(full) {
-    if(p %in% c(evapd, evap)){
-      df <- cbind(ef[ef$Pollutant == p, 1:11],
-                  ef[ef$Pollutant == p, veh])
-      names(df)[ncol(df)] <- p
+    evapd <- c("D_20_35","D_10_25","D_0_15")
+    evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
+    pols <- as.character(unique(ef$Pollutant))
+    if(!p %in% pols){
+      stop(cat("Please, choose one of the following pollutants:\n", pols, "\n"))
+    }
+    if(p %in% evapd){
+      message("Units: [g/day]\n")
+    }
+    if(p %in% evap){
+      message("Units: [g/trip]\n")
+    }
+    nveh <- names(ef)[12:ncol(ef)]
+    if(any(!veh %in% nveh)){
+      stop(cat("Please, choose on of the following categories:\n", nveh, "\n"))
+    }
+    if(full) {
+      if(p %in% c(evapd, evap)){
+        df <- cbind(ef[ef$Pollutant == p, 1:11],
+                    ef[ef$Pollutant == p, veh])
+        names(df)[ncol(df)] <- p
+
+      } else {
+        df <- cbind(ef[ef$Pollutant == p, 1:11],
+                    EmissionFactors(ef[ef$Pollutant == p, veh]))
+        names(df)[ncol(df)] <- p
+
+      }
+    } else{
+      if(p %in% c(evapd, evap)){
+        df <- ef[ef$Pollutant == p, veh]
+      } else {
+        df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh])
+      }
+
+    }
+    if(is.data.frame(df)){
+      # project future EF
+      if(project == "constant"){
+        if(year > year1){
+          dif <- year - year1
+
+          eff <- do.call("rbind",(lapply(1:dif, function(i){
+            df[1, ]
+          })))
+          edff <- rbind(eff, df[1:(agemax - dif), ])
+        }
+      }
+
+      #Filling older ef
+      if(!missing(agemax)){
+        if(nrow(df) < agemax){
+          dif <- agemax - nrow(df)
+          df[nrow(df):(nrow(df)+dif), ] <- df[nrow(df), ]
+        }
+        df <-  df[1:agemax, ]
+      }
 
     } else {
-      df <- cbind(ef[ef$Pollutant == p, 1:11],
-                  EmissionFactors(ef[ef$Pollutant == p, veh]))
-      names(df)[ncol(df)] <- p
-
-    }
-  } else{
-    if(p %in% c(evapd, evap)){
-      df <- ef[ef$Pollutant == p, veh]
-    } else {
-      df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh])
-    }
-
-  }
-  if(is.data.frame(df)){
-    # project future EF
-    if(project == "constant"){
-      if(year > year1){
-        dif <- year - year1
-
-        eff <- do.call("rbind",(lapply(1:dif, function(i){
-          df[1, ]
-        })))
-        edff <- rbind(eff, df[1:(agemax - dif), ])
+      # project future EF
+      if(project == "constant"){
+        if(year > year1){
+          dif <- year - year1
+          eff <- rep(df[1], dif)
+          df <- c(eff, df[1:(agemax - dif)])
+        }
       }
-    }
 
-    #Filling older ef
-    if(!missing(agemax)){
-      if(nrow(df) < agemax){
-        dif <- agemax - nrow(df)
-        df[nrow(df):(nrow(df)+dif), ] <- df[nrow(df), ]
+      #Filling older ef
+      if(!missing(agemax)){
+        if(length(df) < agemax){
+          dif <- agemax - length(df)
+          df[length(df):(length(df)+dif)] <- df[length(df)]
+        }
+        df <-  df[1:agemax]
       }
-      df <-  df[1:agemax, ]
-    }
 
-  } else {
-    # project future EF
-    if(project == "constant"){
-      if(year > year1){
-        dif <- year - year1
-        eff <- rep(df[1], dif)
-        df <- c(eff, df[1:(agemax - dif)])
-      }
     }
-
-    #Filling older ef
-    if(!missing(agemax)){
-      if(length(df) < agemax){
-        dif <- agemax - length(df)
-        df[length(df):(length(df)+dif)] <- df[length(df)]
-      }
-      df <-  df[1:agemax]
-    }
-
-  }
-  return(df)
+    return(df)
 }
