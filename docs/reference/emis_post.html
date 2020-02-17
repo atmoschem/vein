@@ -136,7 +136,7 @@ with hourly emissions at each street, or a data base with emissions by vehicular
 category, hour, including size, fuel and other characteristics.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_post</span>(<span class='no'>arra</span>, <span class='no'>veh</span>, <span class='no'>size</span>, <span class='no'>fuel</span>, <span class='no'>pollutant</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='no'>net</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_post</span>(<span class='no'>arra</span>, <span class='no'>veh</span>, <span class='no'>size</span>, <span class='no'>fuel</span>, <span class='no'>pollutant</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='no'>net</span>, <span class='no'>type_emi</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,15 +148,15 @@ category, hour, including size, fuel and other characteristics.</p>
     </tr>
     <tr>
       <th>veh</th>
-      <td><p>Type of vehicle</p></td>
+      <td><p>Character, type of vehicle</p></td>
     </tr>
     <tr>
       <th>size</th>
-      <td><p>Size or weight</p></td>
+      <td><p>Character, size or weight</p></td>
     </tr>
     <tr>
       <th>fuel</th>
-      <td><p>Fuel</p></td>
+      <td><p>Character, fuel</p></td>
     </tr>
     <tr>
       <th>pollutant</th>
@@ -174,6 +174,10 @@ row number of streets by hour and day of the week</p></td>
       <th>net</th>
       <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING". Only
 when by = 'streets_wide'</p></td>
+    </tr>
+    <tr>
+      <th>type_emi</th>
+      <td><p>Character, type of emissions(exhaust, evaporative, etc)</p></td>
     </tr>
     </table>
 
@@ -244,8 +248,12 @@ to use this function.</p>
 <span class='no'>E_COv2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis.html'>emis</a></span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>lpc</span>,  <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>[, <span class='fl'>1</span>:<span class='fl'>24</span>],
             <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>41</span>, <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>day</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>E_COv2</span>)
-<span class='no'>E_CO_DFv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_COv2</span>,  <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='st'>"&lt;1400"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
-<span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>)
+<span class='no'>E_CO_DFv2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_post</span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_COv2</span>,
+                       <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC"</span>,
+                       <span class='kw'>size</span> <span class='kw'>=</span> <span class='st'>"&lt;1400"</span>,
+                       <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>,
+                       <span class='kw'>type_emi</span> <span class='kw'>=</span> <span class='st'>"Exhaust"</span>,
+                       <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>E_CO_DFv2</span>)
 }</div><div class='output co'>#&gt; Total emissions by column in study area = 
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -260,7 +268,7 @@ to use this function.</p>
 #&gt; 
 #&gt; Emissions by column and street in study area = 
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;     0.0    94.2   463.3  1432.7  1470.3 70902.1 </div><div class='output co'>#&gt; Total emissions by column in study area = 
+#&gt;     0.0    94.2   463.3  1432.7  1470.3 70902.1 </div><div class='output co'>#&gt; <span class='warning'>Warning: You should add `type_emi`</span></div><div class='output co'>#&gt; Total emissions by column in study area = 
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;   91727  626362 1999708 2153703 3110559 7759702 
 #&gt; 
@@ -273,14 +281,14 @@ to use this function.</p>
 #&gt; 
 #&gt; Emissions by column and street in study area = 
 #&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt;      0.00     41.88    255.94   1431.03   1170.30 300368.51 </div><div class='output co'>#&gt; <span class='warning'>Warning: Arguments hour and day will be deprecated, they will derived from profile</span></div><div class='img'><img src='emis_post-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_post-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; Average =  13.11</div><div class='output co'>#&gt;     E_COv2             g veh  size fuel pollutant age hour
-#&gt; 1 E_COv2_1  700.9805 [g]  PC &lt;1400    G        CO   1    1
-#&gt; 2 E_COv2_2  816.5382 [g]  PC &lt;1400    G        CO   2    1
-#&gt; 3 E_COv2_3 1076.0330 [g]  PC &lt;1400    G        CO   3    1
-#&gt; 4 E_COv2_4 1714.7044 [g]  PC &lt;1400    G        CO   4    1
-#&gt; 5 E_COv2_5 2353.3410 [g]  PC &lt;1400    G        CO   5    1
-#&gt; 6 E_COv2_6 1166.5927 [g]  PC &lt;1400    G        CO   6    1</div></pre>
+#&gt;      0.00     41.88    255.94   1431.03   1170.30 300368.51 </div><div class='output co'>#&gt; <span class='warning'>Warning: You should add `type_emi`</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Arguments hour and day will be deprecated, they will derived from profile</span></div><div class='img'><img src='emis_post-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='emis_post-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; Average =  13.11</div><div class='output co'>#&gt;     E_COv2             g veh  size fuel type_emi pollutant age hour
+#&gt; 1 E_COv2_1  700.9805 [g]  PC &lt;1400    G  Exhaust        CO   1    1
+#&gt; 2 E_COv2_2  816.5382 [g]  PC &lt;1400    G  Exhaust        CO   2    1
+#&gt; 3 E_COv2_3 1076.0330 [g]  PC &lt;1400    G  Exhaust        CO   3    1
+#&gt; 4 E_COv2_4 1714.7044 [g]  PC &lt;1400    G  Exhaust        CO   4    1
+#&gt; 5 E_COv2_5 2353.3410 [g]  PC &lt;1400    G  Exhaust        CO   5    1
+#&gt; 6 E_COv2_6 1166.5927 [g]  PC &lt;1400    G  Exhaust        CO   6    1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

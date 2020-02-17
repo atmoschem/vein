@@ -7,9 +7,10 @@
 #'
 #' @param arra Array of emissions 4d: streets x category of vehicles x hours x days or
 #' 3d: streets x category of vehicles x hours
-#' @param veh Type of vehicle
-#' @param size Size or weight
-#' @param fuel Fuel
+#' @param veh Character, type of vehicle
+#' @param size Character, size or weight
+#' @param fuel Character, fuel
+#' @param type_emi Character, type of emissions(exhaust, evaporative, etc)
 #' @param pollutant Pollutant
 #' @param by Type of output, "veh" for total vehicular category ,
 #' "streets_narrow" or "streets". "streets" returns  a dataframe with
@@ -83,11 +84,15 @@
 #' E_COv2 <- emis(veh = lpc,  lkm = net$lkm, ef = lef, speed = speed[, 1:24],
 #'             agemax = 41, hour = 24, day = 1)
 #' plot(E_COv2)
-#' E_CO_DFv2 <- emis_post(arra = E_COv2,  veh = "PC", size = "<1400", fuel = "G",
-#' pollutant = "CO", by = "veh")
+#' E_CO_DFv2 <- emis_post(arra = E_COv2,
+#'                        veh = "PC",
+#'                        size = "<1400",
+#'                        fuel = "G",
+#'                        type_emi = "Exhaust",
+#'                        pollutant = "CO", by = "veh")
 #' head(E_CO_DFv2)
 #' }
-emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
+emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_emi) {
   if ( class(arra)[1] != "EmissionsArray"){
     stop("No EmissionsArray")
   } else if (length(dim(arra)) == 4){
@@ -106,10 +111,31 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
                     dim(arra)[3]*dim(arra)[4],
                     by = dim(arra)[4])
       df[,1] <- nombre
-      df$veh <- rep(veh, nrow(df))
-      df$size <- rep(size, nrow(df))
-      df$fuel <- rep(fuel, nrow(df))
-      df$pollutant <- rep(pollutant, nrow(df))
+      if(!missing(veh)) {
+        df$veh <- rep(veh, nrow(df))
+      } else {
+        warning("You should add `veh`")
+      }
+      if(!missing(size)) {
+        df$size <- rep(size, nrow(df))
+      } else {
+        warning("You should add `size`")
+      }
+      if(!missing(fuel)) {
+        df$fuel <- rep(fuel, nrow(df))
+      } else {
+        warning("You should add `fuel`")
+      }
+      if(!missing(type_emi)) {
+        df$type_emi <- rep(type_emi, nrow(df))
+      } else {
+        warning("You should add `type_emi`")
+      }
+      if(!missing(pollutant)) {
+        df$pollutant <- rep(pollutant, nrow(df))
+      } else {
+        stop("At pleast write the name of the `pollutant`")
+      }
       df$age <- rep(seq(1:dim(arra)[2]),
                     dim(arra)[3]*dim(arra)[4],
                     by = dim(arra)[4])
@@ -164,10 +190,31 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net) {
                           seq(1:dim(arra)[2]),
                           sep = "_"),dim(arra)[3], by=7 )
       df[,1] <- nombre
-      df$veh <- rep(veh, nrow(df))
-      df$size <- rep(size, nrow(df))
-      df$fuel <- rep(fuel, nrow(df))
-      df$pollutant <- rep(pollutant, nrow(df))
+      if(!missing(veh)) {
+        df$veh <- rep(veh, nrow(df))
+      } else {
+        warning("You should add `veh`")
+      }
+      if(!missing(size)) {
+        df$size <- rep(size, nrow(df))
+      } else {
+        warning("You should add `size`")
+      }
+      if(!missing(fuel)) {
+        df$fuel <- rep(fuel, nrow(df))
+      } else {
+        warning("You should add `fuel`")
+      }
+      if(!missing(type_emi)) {
+        df$type_emi <- rep(type_emi, nrow(df))
+      } else {
+        warning("You should add `type_emi`")
+      }
+      if(!missing(pollutant)) {
+        df$pollutant <- rep(pollutant, nrow(df))
+      } else {
+        stop("At pleast write the name of the `pollutant`")
+      }
       df$age <- rep(1:dim(arra)[2], dim(arra)[3])
 
       hour <- rep(1:dim(arra)[3], #hours x days

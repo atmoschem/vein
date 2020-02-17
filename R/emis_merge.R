@@ -55,29 +55,23 @@ emis_merge <- function (pol = "CO",
     x <-  x[grep(pattern = pol, x = x)]
   }
 
-  cat("\nReading emissions from:\n")
-  print(x)
 
   if(!missing(ignore)) {
     bo <- grepl(pattern = ignore, x = x)
     x <- x[!bo]
     cat("\nReading emissions from:\n")
     print(x)
-
-    di <- list.dirs(path = path)
-
+  } else {
+    cat("\nReading emissions from:\n")
+    print(x)
   }
 
   # reading
   x_rds <- lapply(x, readRDS)
 
-  # names
-  nx <- list.dirs(path = path)
-  nx <- nx[2:length(nx)]
-  names(x_rds) <- nx
-
   if(as_list) return(x_rds)
 
+  # colnames used for aggregating data.table
   nombres <- names(x_rds[[1]])
 
   if(streets){

@@ -133,12 +133,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>emis_merge</span>(
-  <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"NMHC"</span>,
+  <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
   <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"STREETS.rds"</span>,
   <span class='kw'>streets</span> <span class='kw'>=</span> <span class='no'>T</span>,
   <span class='no'>net</span>,
-  <span class='no'>ignore</span>,
   <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"sum"</span>,
+  <span class='no'>ignore</span>,
   <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"emi"</span>,
   <span class='no'>crs</span>,
   <span class='kw'>under</span> <span class='kw'>=</span> <span class='st'>"after"</span>,
@@ -172,12 +172,12 @@ It is expected #' that the number of rows is equal to the number of rows of
 street emissions. If #' not, the function will stop.</p></td>
     </tr>
     <tr>
-      <th>ignore</th>
-      <td><p>Character; Which pollutants or other charavter would you like to remove?</p></td>
-    </tr>
-    <tr>
       <th>FN</th>
       <td><p>Character indicating the function. Default is "sum"</p></td>
+    </tr>
+    <tr>
+      <th>ignore</th>
+      <td><p>Character; Which pollutants or other charavter would you like to remove?</p></td>
     </tr>
     <tr>
       <th>path</th>
