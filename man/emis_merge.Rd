@@ -5,12 +5,12 @@
 \title{Merge several emissions files returning data-frames or 'sf' of lines}
 \usage{
 emis_merge(
-  pol = "NMHC",
+  pol = "CO",
   what = "STREETS.rds",
   streets = T,
   net,
-  ignore,
   FN = "sum",
+  ignore,
   path = "emi",
   crs,
   under = "after",
@@ -33,9 +33,9 @@ rbind them.}
 It is expected #' that the number of rows is equal to the number of rows of
 street emissions. If #' not, the function will stop.}
 
-\item{ignore}{Character; Which pollutants or other charavter would you like to remove?}
-
 \item{FN}{Character indicating the function. Default is "sum"}
+
+\item{ignore}{Character; Which pollutants or other charavter would you like to remove?}
 
 \item{path}{Character. Path where emissions are located}
 
