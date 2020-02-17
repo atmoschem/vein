@@ -3,7 +3,7 @@
 
 <!-- date: "19 de Octubre de 2016" -->
 
-# VEIN <img src="man/figures/logo.png" align="right" alt="" width="150" />
+# VEIN <img src="man/figures/logo.png" align="right" alt="" width="220" />
 
   - build: [![Travis-CI Build
     Status](https://travis-ci.org/atmoschem/vein.svg?branch=master)](https://travis-ci.org/atmoschem/vein)
@@ -122,7 +122,7 @@ functions:
     “benzene\_gstart”, “EVAP\_gstart”, “CO2\_gstart”, “N20\_gstart”,
     “CH4\_gstart”
 
-### Emission factors from Chinese emission guidelines
+### Emission factors from Chinese emission guidelines 你好中国朋友
 
   - “CO”, “NOx”, “HC”, “PM10”, “PM2.5”.
   - They depend on humidity, temperature, altitude and other parameters.
@@ -133,36 +133,27 @@ vein imports functions from spatial packages listed below. In order to
 install these packages, firstly the user must install the requirements
 mentioned [here](https://www.github.com/r-spatial/sf).
 
-### Packages needed
-
-After installing system dependencies, you will need these packages:
-
-  - [sf](https://github.com/r-spatial/sf)
-  - [sp](https://github.com/edzer/sp/)
-  - [lwgeom](https://github.com/r-spatial/lwgeom/)
-  - [units](https://github.com/edzer/units/)
-  - [eixport](https://github.com/atmoschem/eixport/)
-
-In order to run the demo, this package is also needed:
-
-  - [ggplot2](https://github.com/tidyverse/ggplot2)
-
 ### Installation
 
 VEIN can be installed via CRAN or github
 
 ``` r
-library(devtools) 
-install_github("atmoschem/vein")
-library(vein)
-demo(VEIN)
+install.packages("vein")
 ```
 
-or
+``` r
+library(remotes) 
+install_github("atmoschem/vein")
+```
+
+In order to run the demo, this package is also needed:
+
+  - [ggplot2](https://github.com/tidyverse/ggplot2)
+
+<!-- end list -->
 
 ``` r
-install.packages("vein")
-library(vein)
+library(vein) 
 demo(VEIN)
 ```
 
@@ -170,9 +161,9 @@ demo(VEIN)
 
   - Added Fortran function to speedup calculations (currently, without
     speed)
-
-future steps:
-
+  - Improved
+    [ef\_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html).
+    future steps:
   - Enhance
     [inventory](https://atmoschem.github.io/vein/reference/inventory.html).
     The idea is to configurate a whole emissions inventory for emission
@@ -331,10 +322,7 @@ E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets")
 
   - [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
 
-You can use this function in two ways
-
-when spobj is “character”, it is a path to wrfinput file and then runs
-eixport::wrf\_grid to create a grid based on a wrf\_input file.
+<!-- end list -->
 
 1)  Create a grid using `make_grid`.The spobj is the spatial net. The
     size of the grid has the size of the net. You have to specify the
@@ -357,9 +345,6 @@ plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T))
 ```
 
 ![](https://i.imgur.com/Ydsvt8x.png)
-
-**At this step, you can feed you grid with emissions from other
-sources\!**
 
 ### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
 
@@ -440,20 +425,18 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
 
 ## Communications, doubts etc
 
-  - Drop me an email <sergio.ibarra@usp.br>
-  - You can ask on [Eart Science
-    Stackoverflow](https://earthscience.stackexchange.com/),.
-  - Check the project on
-    [ResearchGate](https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories).
+  - Drop me an email <sergio.ibarra@usp.br> or
+    <zergioibarra@hotmail.com> (你好中国朋友 - Hello Chinese friends\!)
   - Check the group on GoogleGroups
     [Group](https://groups.google.com/d/forum/veinmodel).
+  - Check the project on
+    [ResearchGate](https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories).
 
 ## Issues
 
 If you encounter any issues while using VEIN, please submit your issues
-to: <https://github.com/atmoschem/vein/issues/>
-
-If you have any suggestions just let me know to <sergio.ibarra@usp.br>.
+to: <https://github.com/atmoschem/vein/issues/> If you have any
+suggestions just let me know to <sergio.ibarra@usp.br>.
 
 ### Contributing
 
@@ -477,8 +460,6 @@ added this variable into the .bashrc
 
     nano ~/.bashrc
     export Lang=C
-
-### More
 
 More details on
 [StackOverflow](https://stackoverflow.com/questions/13575180/how-to-change-language-settings-in-r)
