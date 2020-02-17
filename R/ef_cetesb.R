@@ -27,6 +27,7 @@
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
 #' @param project haracter showing the method for projecting emission factors in
 #' future. Currently the only value is "constant"
+#' @param verbose Logical; To show more information
 #' @return A vector of Emission Factor or a data.frame
 #' @keywords  emission factors
 #' @note The new convention for vehicles names are translated from CETESB report:
@@ -96,7 +97,7 @@
 #' ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 #' ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 #' }
-ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant"){
+ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant", verbose = FALSE){
   ef <- sysdata$cetesb
   ef[is.na(ef)] <- 0
 
@@ -143,10 +144,10 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
       stop(cat("Please, choose one of the following pollutants:\n", pols, "\n"))
     }
     if(p %in% evapd){
-      message("Units: [g/day]\n")
+      if(verbose) message("Units: [g/day]\n")
     }
     if(p %in% evap){
-      message("Units: [g/trip]\n")
+      if(verbose) message("Units: [g/trip]\n")
     }
     nveh <- names(ef)[12:ncol(ef)]
     if(any(!veh %in% nveh)){

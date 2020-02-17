@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# VEIN <img src="man/figures/logo.png" align="right" alt="" width="150" />
+# VEIN <img src="man/figures/logo.png" align="right" alt="" width="180" />
 
 
 * build:

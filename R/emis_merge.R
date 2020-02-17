@@ -14,13 +14,13 @@
 #' @param net 'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
 #' It is expected #' that the number of rows is equal to the number of rows of
 #' street emissions. If #' not, the function will stop.
+#' @param ignore Character; Which pollutants or other charavter would you like to remove?
 #' @param FN Character indicating the function. Default is "sum"
 #' @param path Character. Path where emissions are located
 #' @param crs coordinate reference system in numeric format from
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform
 #' @param under "Character"; "after" when you stored your pollutant x as 'X_'
 #' "before" when '_X' and "none" for merging directly the files.
-#' @param ignore "Logical"; Would you liek your selection?
 #' @param as_list "Logical"; for returning the results as list or not.
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
@@ -30,15 +30,15 @@
 #' # Do not run
 #'
 #' }
-emis_merge <- function (pol = "CO",
+emis_merge <- function (pol = "NMHC",
                         what = "STREETS.rds",
                         streets = T,
                         net,
+                        ignore,
                         FN = "sum",
                         path = "emi",
                         crs,
                         under = "after",
-                        ignore = FALSE,
                         as_list = FALSE){
   # nocov start
   x <- list.files(path = path,
@@ -57,18 +57,21 @@ emis_merge <- function (pol = "CO",
 
 
 
-nx <- gsub(pattern = paste0(getwd(), '/', path),
-           replacement = "", x = x)
-kk <- substr(x = nx, start = 11, stop = 50)
-kk <- gsub(pattern = "/", replacement = "", kk)
-kk <- gsub(pattern = ".rds", replacement = "", kk)
-nx <- kk
+  nx <- gsub(pattern = paste0(getwd(), '/', path),
+             replacement = "", x = x)
+  kk <- substr(x = nx, start = 11, stop = 50)
+  kk <- gsub(pattern = "/", replacement = "", kk)
+  kk <- gsub(pattern = ".rds", replacement = "", kk)
+  nx <- kk
 
   cat("\nReading emissions from:\n")
   print(x)
-  if(ignore) {
-    ignore_this <- readline("Which ones would you to exclude?\n")
-    x <- x[!x %in% ignore_this]
+
+  if(!missing(ignore)) {
+    bo <- grepl(pattern = ignore, x = x)
+    x <- x[!bo]
+    cat("\nReading emissions from:\n")
+    print(x)
   }
   x_rds <- lapply(x, readRDS)
   names(x_rds) <- nx
