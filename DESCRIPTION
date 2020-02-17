@@ -2,7 +2,7 @@ Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
 Version: 0.8.7
-Date: 2020-02-05
+Date: 2020-02-17
 Authors@R: c(
   person(given = "Sergio", family = "Ibarra-Espinosa",
          role = c("aut", "cre"),
@@ -25,7 +25,7 @@ URL: https://atmoschem.github.io/vein/
 BugReports: https://github.com/atmoschem/vein/issues/
 LazyData: no
 Depends: R (>= 3.5.0)
-Imports: sf, sp, data.table, graphics, stats, units, methods, eixport
+Imports: sf, sp, data.table, units, graphics, stats, methods
 Suggests: knitr, rmarkdown, testthat, covr, lwgeom, cptcity
 RoxygenNote: 7.0.2
 Encoding: UTF-8

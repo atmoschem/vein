@@ -193,45 +193,7 @@ run each line to understand VEIN. **Remember, if you have doubts with any functi
 just type '?' with the name of the function. For intance: `?inventory`.**
 
 Using [inventory](https://atmoschem.github.io/vein/reference/inventory.html)
-
-```r
-library(vein)
-inventory(name = file.path(tempdir(), "YourCity"), 
-          vehcomp = c(PC = 1, LCV = 1, HGV = 1, BUS = 1, MC = 1),
-          show.dir = T, 
-          show.scripts = T)
-```
-
-```
-files at /tmp/RtmpEorTs8/YourCity
-Directories:
- [1] "/tmp/RtmpEorTs8/YourCity"              
- [2] "/tmp/RtmpEorTs8/YourCity/ef"           
- [3] "/tmp/RtmpEorTs8/YourCity/emi"          
- [4] "/tmp/RtmpEorTs8/YourCity/emi/BUS_01"  
- [5] "/tmp/RtmpEorTs8/YourCity/emi/HGV_01"   
- [6] "/tmp/RtmpEorTs8/YourCity/emi/LCV_01"  
- [7] "/tmp/RtmpEorTs8/YourCity/emi/MC_01"    
- [8] "/tmp/RtmpEorTs8/YourCity/emi/PC_01"   
- [9] "/tmp/RtmpEorTs8/YourCity/est"          
- [10] "/tmp/RtmpEorTs8/YourCity/images"       
- [11] "/tmp/RtmpEorTs8/YourCity/network"      
- [12] "/tmp/RtmpEorTs8/YourCity/post"        
- [13] "/tmp/RtmpEorTs8/YourCity/post/df"      
- [14] "/tmp/RtmpEorTs8/YourCity/post/grids"   
- [15] "/tmp/RtmpEorTs8/YourCity/post/streets" 
- [16] "/tmp/RtmpEorTs8/YourCity/profiles"    
- [17] "/tmp/RtmpEorTs8/YourCity/veh"         
-Scripts:
- [1] "est/BUS_01_input.R" 
- [2] "est/HGV_01_input.R" 
- [3] "est/LCV_01_input.R" 
- [4] "est/MC_01_input.R"  
- [5] "est/PC_01_input.R"  
- [6] "main.R"             
- [7] "post.R"            
- [8] "traffic.R" 
-```
+**Inventory will experience some changes, please be patient and check https://github.com/atmoschem/vein/projects/3**
 Please, read the examples in the documentation of each function and run the demo. 
 
 ### 1) Examples with traffic data:

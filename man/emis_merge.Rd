@@ -9,6 +9,7 @@ emis_merge(
   what = "STREETS.rds",
   streets = T,
   net,
+  FN = "sum",
   path = "emi",
   crs,
   under = "after",
@@ -31,6 +32,8 @@ rbind them.}
 \item{net}{'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
 It is expected #' that the number of rows is equal to the number of rows of
 street emissions. If #' not, the function will stop.}
+
+\item{FN}{Character indicating the function. Default is "sum"}
 
 \item{path}{Character. Path where emissions are located}
 

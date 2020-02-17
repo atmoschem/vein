@@ -25,7 +25,7 @@ long format
 \examples{
 {
 data(net)
-net <- net@data
+net <- sf::st_set_geometry(net, NULL)
 df <- wide_to_long(df = net)
 head(df)
 }

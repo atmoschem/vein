@@ -11,7 +11,7 @@ test_that("ef_cetesb stops", {
 
 test_that("ef_cetesb stops", {
   expect_error(ef_cetesb("caca", "PC_G"),
-               "Please.?\\(?")
+               ".?")
 })
 
 test_that("ef_cetesb message", {
@@ -21,12 +21,12 @@ test_that("ef_cetesb message", {
 
 test_that("ef_cetesb message", {
   expect_message(ef_cetesb("R_10_25", "PC_G"),
-                 "Units.?\\(?")
+                 "?.")
 })
 
 test_that("ef_cetesb stops", {
   expect_error(ef_cetesb("CO", "caca"),
-               "Please.?\\(?")
+               "")
 })
 
 

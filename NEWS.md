@@ -1,12 +1,14 @@
 NEWS
 ===========
 
-# vein 0.8.7  (Release date: 2020-02-05)
+# vein 0.8.7  (Release date: 2020-02-17)
 
 - emis_grid now returns emissions as flux: mass / area / time (implicit)
 - Deprecates matvect
 - Adds argument 'flux' in emis_grid to return polytgon flux or points, in a similar
-fashion with EDGAR
+fashion with EDGAR.
+- remove eixport and sp dependencies.
+- fix #73
 
 ## vein 0.8.6  (Release date: 2020-01-19)
 

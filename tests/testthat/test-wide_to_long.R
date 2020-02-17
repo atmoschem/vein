@@ -1,7 +1,7 @@
 context("wide_to_long")
 
 data(net)
-dnet <- net@data
+dnet <- sf::st_set_geometry(net, NULL)
 dnet$l <- 1
 row.names(dnet) <- 1:nrow(dnet)
 netsf <- sf::st_as_sf(net)
