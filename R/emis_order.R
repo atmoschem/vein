@@ -20,7 +20,6 @@
 #' day.
 #' @param verbose Logical; display additional information
 #' @aliases weekly
-#' @importFrom sp CRS
 #' @importFrom sf st_as_sf st_geometry st_set_geometry st_sf st_crs
 #' @format Emissions
 #'

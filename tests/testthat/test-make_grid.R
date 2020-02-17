@@ -16,16 +16,14 @@ test_that("emis_grid works", {
                1)
 })
 
-wrf <- paste(system.file("extdata", package = "eixport"),
-             "/wrfinput_d02", sep="")
-test_that("emis_grid works", {
-  expect_equal(make_grid(wrf)$id[1],
-               1)
-})
-
 b <- sf::st_bbox(net)
 test_that("emis_grid works", {
   expect_equal(make_grid(b, 1/102.47/2, crs = 31983)$id[1],
+               1)
+})
+
+test_that("emis_grid works", {
+  expect_equal(make_grid(b, 1/102.47/2, crs = "+init=epsg:31983")$id[1],
                1)
 })
 

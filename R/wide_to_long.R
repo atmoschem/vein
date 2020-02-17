@@ -13,10 +13,10 @@
 #' @export
 #' @examples {
 #' data(net)
-#' net <- net@data
+#' net <- sf::st_set_geometry(net, NULL)
 #' df <- wide_to_long(df = net)
 #' head(df)
-#' }
+  #' }
 wide_to_long <- function(df,
                          column_with_data = names(df),
                          column_fixed,

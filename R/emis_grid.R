@@ -21,7 +21,6 @@
 #' @param k Numeric to multiply emissions
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area
 #' @importFrom data.table data.table .SD
-#' @importFrom sp CRS
 #' @export
 #' @note \strong{1) If flux = TRUE (default), emissions are flux = mass / area / time (implicit), as polygons.}
 #' \strong{If flux = FALSE, emissions are mass / time (implicit), as points.}
@@ -69,8 +68,9 @@ emis_grid <- function (spobj = net,
   g <- sf::st_as_sf(g)
   g$id <- 1:nrow(g)
   if (!missing(sr)) {
+    "+init=epsg:31983"
     if (class(sr)[1] == "character") {
-      sr <- as.numeric(substr(sp::CRS(sr), 12, nchar(sr)))
+      sr <- as.numeric(substr(sr, 12, nchar(sr)))
     }
     message("Transforming spatial objects to 'sr' ")
     net <- sf::st_transform(net, sr)

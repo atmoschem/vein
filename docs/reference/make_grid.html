@@ -177,16 +177,10 @@ The default value is 4326</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='fu'>make_grid</span>(<span class='no'>net</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>) <span class='co'>#500 mts</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>grid</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'>#class sf</span>
-<span class='no'>wrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"eixport"</span>),
-<span class='st'>"/wrfinput_d02"</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>""</span>)
-<span class='no'>gwrf</span>  <span class='kw'>&lt;-</span> <span class='fu'>make_grid</span>(<span class='no'>wrf</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>gwrf</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 }</div><div class='output co'>#&gt; Number of lon points: 23
 #&gt; Number of lat points: 19
-#&gt; </div><div class='output co'>#&gt; <span class='message'>path to wrfinput</span></div><div class='img'><img src='make_grid-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; using grid info from: /home/sergio/R/x86_64-pc-linux-gnu-library/3.6/eixport/extdata/wrfinput_d02 
-#&gt; Number of lat points 51
-#&gt; Number of lon points 63</div><div class='img'><img src='make_grid-2.png' alt='' width='700' height='433' /></div></pre>
+#&gt; </div><div class='img'><img src='make_grid-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

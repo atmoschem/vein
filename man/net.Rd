@@ -4,10 +4,10 @@
 \name{net}
 \alias{net}
 \title{Road network of the west part of Sao Paulo city}
-\format{A data frame with 1796 rows and 1 variables:
+\format{A Spatial data.frame (sf) with 1796 rows and 1 variables:
 \describe{
-  \item{ldv}{Light Duty Vehicles (1/h)}
-  \item{hdv}{Heavy Duty Vehicles (1/h)}
+  \item{ldv}{Light Duty Vehicles (veh/h)}
+  \item{hdv}{Heavy Duty Vehicles (veh/h)}
   \item{lkm}{Length of the link (km)}
   \item{ps}{Peak Speed (km/h)}
   \item{ffs}{Free Flow Speed (km/h)}
@@ -15,6 +15,7 @@
   \item{lanes}{Number of lanes per link}
   \item{capacity}{Capacity of vehicles in each link (1/h)}
   \item{tmin}{Time for travelling each link (min)}
+  \item{geometry}{geometry}
 }}
 \source{
 \url{http://www.cetsp.com.br/}

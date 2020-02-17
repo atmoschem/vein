@@ -3,18 +3,19 @@
 #' @description \code{\link{emis_merge}} reads rds files and returns a data-frame
 #'  or an object of 'spatial feature' of streets, merging several files.
 #'
-#' @param path Character. Path where emissions are located
 #' @param pol Character. Pollutant.
 #' @param what Character. Word to search the emissions names, "STREETS", "DF" or
 #' whatever name. It is important to include the extension .'rds'. For instance,
 #' If you have several files "XX_CO_STREETS.rds", what should be "STREETS.rds"
-#' @param net 'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
-#' It is expected #' that the number of rows is equal to the number of rows of
-#' street emissions. If #' not, the function will stop.
 #' @param streets Logical. If true, \code{\link{emis_merge}} will read the street
 #' emissions created with \code{\link{emis_post}} by "streets_wide", returning an
 #' object with class 'sf'. If false, it will read the emissions data-frame and
 #' rbind them.
+#' @param net 'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
+#' It is expected #' that the number of rows is equal to the number of rows of
+#' street emissions. If #' not, the function will stop.
+#' @param FN Character indicating the function. Default is "sum"
+#' @param path Character. Path where emissions are located
 #' @param crs coordinate reference system in numeric format from
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform
 #' @param under "Character"; "after" when you stored your pollutant x as 'X_'
@@ -33,6 +34,7 @@ emis_merge <- function (pol = "CO",
                         what = "STREETS.rds",
                         streets = T,
                         net,
+                        FN = "sum",
                         path = "emi",
                         crs,
                         under = "after",
@@ -80,7 +82,7 @@ nx <- kk
     }
 
     x_st <- data.table::rbindlist(x_rds)
-    x_st <- as.data.frame(x_st[, lapply(.SD, sum, na.rm=TRUE),
+    x_st <- as.data.frame(x_st[, lapply(.SD, eval(parse(text = FN)), na.rm=TRUE),
                                by = "id",
                                .SDcols = nombres ])
     if(nrow(x_st) != nrow(net)){

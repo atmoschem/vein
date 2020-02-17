@@ -196,24 +196,24 @@ future. Currently the only value is "constant"</p></td>
 <tr><td>LCV_FG</td><td>Light Commercial Vehicle Flex Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
 <tr><td>LCV_FE</td><td>Light Commercial Vehicle Flex Ethanol (hydrous ethanol)</td></tr>
 <tr><td>LCV_D</td><td>Light Commercial Vehicle Diesel (5perc bio-diesel)</td></tr>
-<tr><td>TRUCKS_SL</td><td>Trucks Semi Light Diesel (5perc bio-diesel)</td></tr>
-<tr><td>TRUCKS_L</td><td>Trucks Light Diesel (5perc bio-diesel)</td></tr>
-<tr><td>TRUCKS_M</td><td>Trucks Medium Diesel (5perc bio-diesel)</td></tr>
-<tr><td>TRUCKS_SH</td><td>Trucks Semi Heavy Diesel (5perc bio-diesel)</td></tr>
-<tr><td>TRUCKS_H</td><td>Trucks Heavy Diesel (5perc bio-diesel)</td></tr>
-<tr><td>BUS_URBAN</td><td>Urban Bus Diesel (5perc bio-diesel)</td></tr>
-<tr><td>BUS_MICRO</td><td>Micro Urban Bus Diesel (5perc bio-diesel)</td></tr>
-<tr><td>BUS_COACH</td><td>Coach (inter-state) Bus Diesel (5perc bio-diesel)</td></tr>
-<tr><td>BUS_ARTIC</td><td>Articulated Urban Bus Diesel (5perc bio-diesel)</td></tr>
-<tr><td>MC_G_150</td><td>Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
-<tr><td>MC_G_150_500</td><td>Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
-<tr><td>MC_G_500</td><td>Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
-<tr><td>MC_FG_150</td><td>Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
-<tr><td>MC_FG_150_500</td><td>Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
-<tr><td>MC_FG_500</td><td>Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
-<tr><td>MC_FE_150</td><td>Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol)</td></tr>
-<tr><td>MC_FE_150_500</td><td>Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol)</td></tr>
-<tr><td>MC_FE_500</td><td>Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol)</td></tr>
+<tr><td>TRUCKS_SL_D</td><td>Trucks Semi Light Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_L_D</td><td>Trucks Light Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_M_D</td><td>Trucks Medium Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_SH_D</td><td>Trucks Semi Heavy Diesel (5perc bio-diesel)</td></tr>
+<tr><td>TRUCKS_H_D</td><td>Trucks Heavy Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_URBAN_D</td><td>Urban Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_MICRO_D</td><td>Micro Urban Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_COACH_D</td><td>Coach (inter-state) Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>BUS_ARTIC_D</td><td>Articulated Urban Bus Diesel (5perc bio-diesel)</td></tr>
+<tr><td>MC_150_G</td><td>Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_150_500_G</td><td>Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_500_G</td><td>Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_150_FG</td><td>Flex Motorcycle engine less than 150cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_150_500_FG</td><td>Flex Motorcycle engine 150-500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_500_FG</td><td>Flex Motorcycle greater than 500cc Gasohol (Gasoline + 27perc of anhydrous ethanol)</td></tr>
+<tr><td>MC_150_FE</td><td>Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol)</td></tr>
+<tr><td>MC_150_500_FE</td><td>Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol)</td></tr>
+<tr><td>MC_500_FE</td><td>Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol)</td></tr>
 </table>
 
 
@@ -245,11 +245,20 @@ url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>1970</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2030</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Units: [g/trip]</span></div><div class='output co'>#&gt; Units: [g/km]
-#&gt;  [1]  0.19  0.19  0.19  0.19  0.19  0.19  0.19  0.19  0.19  0.19  0.19  0.19
-#&gt; [13]  0.19  0.21  0.23  0.31  0.42  0.50  0.58  0.64  0.62  0.67  0.89  0.88
-#&gt; [25]  0.93  1.02  1.08  1.19  1.36  1.66  1.72  1.81  2.27  4.91  5.85  7.20
-#&gt; [37]  7.56  7.44 13.80 15.96</div></pre>
+<span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"TRUCKS_L_D"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>)
+<span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"SLT"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>) <span class='co'>#  olds names</span>
+}</div><div class='output co'>#&gt; <span class='message'>Units: [g/trip]</span></div><div class='output co'>#&gt; <span class='message'>I guess you wanted this:</span></div><div class='output co'>#&gt; <span class='message'>TRUCKS_SL_D</span></div><div class='output co'>#&gt; Units: [g/km]
+#&gt;  [1] 0.022603427 0.030000000 0.036000000 0.044000000 0.010964365 0.010964365
+#&gt;  [7] 0.005186483 0.368606294 0.400725631 0.381371353 0.361326557 0.563487880
+#&gt; [13] 0.563487880 0.360000000 0.360000000 0.374037404 0.374037404 0.686710873
+#&gt; [19] 0.686710873 0.763916392 0.764000000 0.764000000 0.764000000 0.764000000
+#&gt; [25] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
+#&gt; [31] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
+#&gt; [37] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
+#&gt; [43] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
+#&gt; [49] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
+#&gt; [55] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
+#&gt; [61] 0.764000000 0.764000000 0.764000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

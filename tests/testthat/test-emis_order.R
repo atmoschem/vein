@@ -126,13 +126,11 @@ test_that("emis_order works", {
                "Please.?\\(?")
 })
 
-E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide")
-net@data <- cbind(net@data, E_CO_STREETS)
-head(net@data)
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
+head(net)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
-net@data <- net@data[,- c(1:9)]
 names(net)
-E_CO_g <- emis_grid(spobj = net, g = g, sr= 31983)
+E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
 
 test_that("emis_order works", {
