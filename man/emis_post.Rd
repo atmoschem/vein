@@ -4,17 +4,17 @@
 \alias{emis_post}
 \title{Post emissions}
 \usage{
-emis_post(arra, veh, size, fuel, pollutant, by = "veh", net)
+emis_post(arra, veh, size, fuel, pollutant, by = "veh", net, type_emi)
 }
 \arguments{
 \item{arra}{Array of emissions 4d: streets x category of vehicles x hours x days or
 3d: streets x category of vehicles x hours}
 
-\item{veh}{Type of vehicle}
+\item{veh}{Character, type of vehicle}
 
-\item{size}{Size or weight}
+\item{size}{Character, size or weight}
 
-\item{fuel}{Fuel}
+\item{fuel}{Character, fuel}
 
 \item{pollutant}{Pollutant}
 
@@ -26,6 +26,8 @@ row number of streets by hour and day of the week}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING". Only
 when by = 'streets_wide'}
+
+\item{type_emi}{Character, type of emissions(exhaust, evaporative, etc)}
 }
 \description{
 \code{emis_post} simplify emissions estimated as total per type category of
@@ -99,8 +101,12 @@ lpc <-list(pc1*0.2, pc1*0.1, pc1*0.1, pc1*0.2, pc1*0.5, pc1*0.8,
 E_COv2 <- emis(veh = lpc,  lkm = net$lkm, ef = lef, speed = speed[, 1:24],
             agemax = 41, hour = 24, day = 1)
 plot(E_COv2)
-E_CO_DFv2 <- emis_post(arra = E_COv2,  veh = "PC", size = "<1400", fuel = "G",
-pollutant = "CO", by = "veh")
+E_CO_DFv2 <- emis_post(arra = E_COv2,
+                       veh = "PC",
+                       size = "<1400",
+                       fuel = "G",
+                       type_emi = "Exhaust",
+                       pollutant = "CO", by = "veh")
 head(E_CO_DFv2)
 }
 }

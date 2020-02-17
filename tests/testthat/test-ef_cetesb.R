@@ -15,12 +15,12 @@ test_that("ef_cetesb stops", {
 })
 
 test_that("ef_cetesb message", {
-  expect_message(ef_cetesb("D_10_25", "PC_G"),
+  expect_message(ef_cetesb("D_10_25", "PC_G", verbose = TRUE),
                  "Units.?\\(?")
 })
 
 test_that("ef_cetesb message", {
-  expect_message(ef_cetesb("R_10_25", "PC_G"),
+  expect_message(ef_cetesb("R_10_25", "PC_G", verbose = TRUE),
                  "?.")
 })
 
