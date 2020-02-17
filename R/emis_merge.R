@@ -30,12 +30,12 @@
 #' # Do not run
 #'
 #' }
-emis_merge <- function (pol = "NMHC",
+emis_merge <- function (pol = "CO",
                         what = "STREETS.rds",
                         streets = T,
                         net,
-                        ignore,
                         FN = "sum",
+                        ignore,
                         path = "emi",
                         crs,
                         under = "after",
@@ -55,15 +55,6 @@ emis_merge <- function (pol = "NMHC",
     x <-  x[grep(pattern = pol, x = x)]
   }
 
-
-
-  nx <- gsub(pattern = paste0(getwd(), '/', path),
-             replacement = "", x = x)
-  kk <- substr(x = nx, start = 11, stop = 50)
-  kk <- gsub(pattern = "/", replacement = "", kk)
-  kk <- gsub(pattern = ".rds", replacement = "", kk)
-  nx <- kk
-
   cat("\nReading emissions from:\n")
   print(x)
 
@@ -72,13 +63,23 @@ emis_merge <- function (pol = "NMHC",
     x <- x[!bo]
     cat("\nReading emissions from:\n")
     print(x)
+
+    di <- list.dirs(path = path)
+
   }
+
+  # reading
   x_rds <- lapply(x, readRDS)
+
+  # names
+  nx <- list.dirs(path = path)
+  nx <- nx[2:length(nx)]
   names(x_rds) <- nx
+
   if(as_list) return(x_rds)
 
   nombres <- names(x_rds[[1]])
-  if(any(is.numeric(as.numeric(nombres)))) paste0("h", nombres)
+
   if(streets){
     for (i in 1:length(x_rds)){
       x_rds[[i]]$id <- 1:nrow(x_rds[[i]])
