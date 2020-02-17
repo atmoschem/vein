@@ -3,9 +3,7 @@
 #' @description \code{make_grid} creates a sf grid of polygons. The spatial
 #' reference is taken from the spatial object.
 #'
-#' @param spobj A spatial object of class sp or sf or a Character. When it is
-#' a character, it is assumed that it is a path to wrfinput file to create
-#' a grid class 'sf' based on this file. This is done by running eixport::wrf_grid.
+#' @param spobj A spatial object of class sp or sf.
 #' @param width Width of grid cell. It is recommended to use projected values.
 #' @param height Height of grid cell.
 #' @param polygon  Deprecated! \code{\link{make_grid}} returns only sf grid of
