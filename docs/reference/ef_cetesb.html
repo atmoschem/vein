@@ -130,7 +130,15 @@
     <p><code>ef_cetesb</code> returns a vector or data.frame of Brazilian emission factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ef_cetesb</span>(<span class='no'>p</span>, <span class='no'>veh</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2017</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>project</span> <span class='kw'>=</span> <span class='st'>"constant"</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_cetesb</span>(
+  <span class='no'>p</span>,
+  <span class='no'>veh</span>,
+  <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2017</span>,
+  <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>,
+  <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>project</span> <span class='kw'>=</span> <span class='st'>"constant"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,6 +185,10 @@ Age, Year, Brazilian emissions standards and its euro equivalents.</p></td>
       <th>project</th>
       <td><p>haracter showing the method for projecting emission factors in
 future. Currently the only value is "constant"</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical; To show more information</p></td>
     </tr>
     </table>
 
@@ -247,7 +259,7 @@ url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2030</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"TRUCKS_L_D"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"SLT"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>) <span class='co'>#  olds names</span>
-}</div><div class='output co'>#&gt; <span class='message'>Units: [g/trip]</span></div><div class='output co'>#&gt; <span class='message'>I guess you wanted this:</span></div><div class='output co'>#&gt; <span class='message'>TRUCKS_SL_D</span></div><div class='output co'>#&gt; Units: [g/km]
+}</div><div class='output co'>#&gt; <span class='message'>I guess you wanted this:</span></div><div class='output co'>#&gt; <span class='message'>TRUCKS_SL_D</span></div><div class='output co'>#&gt; Units: [g/km]
 #&gt;  [1] 0.022603427 0.030000000 0.036000000 0.044000000 0.010964365 0.010964365
 #&gt;  [7] 0.005186483 0.368606294 0.400725631 0.381371353 0.361326557 0.563487880
 #&gt; [13] 0.563487880 0.360000000 0.360000000 0.374037404 0.374037404 0.686710873
