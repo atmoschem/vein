@@ -46,7 +46,7 @@ hours that start saturday, this function can do that. It is useful when you
 are going to start a air quality simulation for specific periods of time.
 }
 \examples{
-{
+\dontrun{
 data(net)
 data(pc_profile)
 data(fe2015)

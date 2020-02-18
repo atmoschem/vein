@@ -31,7 +31,7 @@ wide data.frame.
 wide format
 }
 \examples{
-{
+\dontrun{
 df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
 emission = vein::Emissions(1:30),
 region = rep(letters[1:2], 15))

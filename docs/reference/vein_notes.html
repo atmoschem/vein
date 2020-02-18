@@ -207,65 +207,12 @@ Inventory of Region XX, Base year XX"</p></td>
     <p>Writes a text file.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 (<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>())
 <span class='fu'>vein_notes</span>(<span class='st'>"notes"</span>,
            <span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>a</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>a</span>, <span class='st'>'.txt'</span>))
-}</div><div class='output co'>#&gt;  [1] "========================================"                
-#&gt;  [2] "Vehicular Emissions Inventory on REGIONXX BASE YEAR XXXX"
-#&gt;  [3] "========================================"                
-#&gt;  [4] ""                                                        
-#&gt;  [5] "Directory: /home/sergio/Documentos/vein/docs/reference"  
-#&gt;  [6] ""                                                        
-#&gt;  [7] "Local Time: 2020-02-17 19:13:55"                         
-#&gt;  [8] "Inventory compiler: sergio"                              
-#&gt;  [9] "========================================"                
-#&gt; [10] ""                                                        
-#&gt; [11] "sysname = Linux"                                         
-#&gt; [12] "release = 5.0.0-37-generic"                              
-#&gt; [13] "version = #40-Ubuntu SMP Thu Nov 14 00:14:01 UTC 2019"   
-#&gt; [14] "nodename = sergio-pc"                                    
-#&gt; [15] "machine = x86_64"                                        
-#&gt; [16] "user = sergio"                                           
-#&gt; [17] "R version = 3.6.2"                                       
-#&gt; [18] "nickname = Dark and Stormy Night"                        
-#&gt; [19] "Memory used = 1696Mb "                                   
-#&gt; [20] "========================================"                
-#&gt; [21] ""                                                        
-#&gt; [22] "VEIN version = 0.8.7"                                    
-#&gt; [23] "========================================"                
-#&gt; [24] ""                                                        
-#&gt; [25] "Traffic:"                                                
-#&gt; [26] "Your traffic information"                                
-#&gt; [27] ""                                                        
-#&gt; [28] "Approach:"                                               
-#&gt; [29] "Top Down"                                                
-#&gt; [30] ""                                                        
-#&gt; [31] "Vehicular composition:"                                  
-#&gt; [32] "Your traffic information"                                
-#&gt; [33] ""                                                        
-#&gt; [34] "Emission Factors:"                                       
-#&gt; [35] "Your information about emission factors"                 
-#&gt; [36] ""                                                        
-#&gt; [37] "Cold starts:"                                            
-#&gt; [38] "Your information about cold starts"                      
-#&gt; [39] ""                                                        
-#&gt; [40] "Evaporative:"                                            
-#&gt; [41] "Your information about evaporative emission factors"     
-#&gt; [42] ""                                                        
-#&gt; [43] "Traffic standards:"                                      
-#&gt; [44] "Your information about standards"                        
-#&gt; [45] ""                                                        
-#&gt; [46] "Traffic mileage:"                                        
-#&gt; [47] "Your information about mileage"                          
-#&gt; [48] ""                                                        
-#&gt; [49] "Notes:"                                                  
-#&gt; [50] "notes"                                                   
-#&gt; [51] ""                                                        
-#&gt; [52] ""                                                        
-#&gt; [53] ""                                                        
-#&gt; [54] "Thanks for using VEIN"                                   </div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

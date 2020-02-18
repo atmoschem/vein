@@ -32,7 +32,7 @@
 #' @export
 #' @note \strong{Your gridded emissions might have flux units (mass / area / time(implicit))}
 #' \strong{You must multiply your emissions with the area to return to the original units.}
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' data(fkm)
@@ -100,7 +100,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
 
   if(!missing(sr)){
     if(class(sr)[1] == "character"){
-      sr <- as.numeric(substr(sp::CRS(sr), 12, nchar(sr)))
+      sr <- as.numeric(substr(sr, 12, nchar(sr)))
     }
     if(verbose) message("Transforming spatial objects to 'sr' ")
     net <- sf::st_transform(net, sr)

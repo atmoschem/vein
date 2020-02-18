@@ -96,27 +96,27 @@ For \code{running_losses}, use \code{\link{emis_evap}}.
 }
 
 \examples{
-{
+\dontrun{
 # do not run
 # DEPRECATED
 }
-{
+\dontrun{
 # do not run
 # DEPRECATED
 }
-{
+\dontrun{
 # do not run
 # Use library(eixport)
 # eixport::to_as4wrf()
 }
-{
+\dontrun{
 # Do not run
 }
-{
+\dontrun{
 # do not run
 # DEPRECATED
 }
-{
+\dontrun{
 # Do not run
 }
 

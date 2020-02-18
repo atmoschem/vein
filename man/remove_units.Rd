@@ -16,7 +16,7 @@ remove_units(x)
 \code{\link{remove_units}} Remove units from data.frames, matrix or units.
 }
 \examples{
-{
+\dontrun{
 ef1 <- ef_cetesb(p = "CO", c("PC_G", "PC_FE"))
 class(ef1)
 sapply(ef1, class)

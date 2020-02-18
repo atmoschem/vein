@@ -252,14 +252,14 @@ Associates, Inc. for David Niemi, Marc Deslauriers, and Lisa Graham of
 Environment Canada, September 26, 2006.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Do not run</span>
 <span class='no'>pm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>400</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>speciate</span>(<span class='no'>pm</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"I"</span>)
 <span class='no'>dfa</span> <span class='kw'>&lt;-</span> <span class='fu'>speciate</span>(<span class='no'>pm</span>, <span class='kw'>spec</span> <span class='kw'>=</span> <span class='st'>"e_eth"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"Exhaust"</span>)
 <span class='no'>dfb</span> <span class='kw'>&lt;-</span> <span class='fu'>speciate</span>(<span class='no'>pm</span>, <span class='kw'>spec</span> <span class='kw'>=</span> <span class='st'>"e_tol"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='kw'>fuel</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"Exhaust"</span>)
 <span class='no'>dfc</span> <span class='kw'>&lt;-</span> <span class='fu'>speciate</span>(<span class='no'>pm</span>, <span class='kw'>spec</span> <span class='kw'>=</span> <span class='st'>"e_so4i"</span>)
-}</div><div class='output co'>#&gt; <span class='error'>Error in speciate(pm, spec = "e_so4i"): objeto 'dfb' não encontrado</span></div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

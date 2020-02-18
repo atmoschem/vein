@@ -94,7 +94,7 @@ dataframe of emission estimation in grams/days
 from EMEP/EEA emisison guidelines with Tier 2.
 }
 \examples{
-{
+\dontrun{
 data(net)
 PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
           133833,138441,142682,171029,151048,115228,98664,126444,101027,

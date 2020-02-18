@@ -191,7 +191,7 @@ as EDGAR provide data.</p></td>
 <strong>in km^2 and multiply by each column of the resulting emissions grid, and then sum.</strong></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>net</span>)
@@ -205,12 +205,7 @@ as EDGAR provide data.</p></td>
 <span class='no'>netg</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_grid</span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>netsf</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ldv"</span>, <span class='st'>"hdv"</span>)], <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>, <span class='kw'>flux</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>netg</span>[<span class='st'>"ldv"</span>], <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>,
 <span class='kw'>pal</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cpt.html'>cpt</a></span>(<span class='kw'>colorRampPalette</span><span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rev</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-}</div><div class='output co'>#&gt; Number of lon points: 23
-#&gt; Number of lat points: 19
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>veh/h</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 2095073
-#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>veh/h</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of street emissions 2095073
-#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>veh/h</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='img'><img src='emis_grid-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Sum of street emissions 2095073
-#&gt; Sum of gridded emissions 2095073</div><div class='img'><img src='emis_grid-5.png' alt='' width='700' height='433' /></div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

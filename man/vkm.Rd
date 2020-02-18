@@ -39,7 +39,7 @@ the distance driven by these vehicles in km. This function reads hourly
 vehiles and then extrapolates the vehicles
 }
 \examples{
-{
+\dontrun{
 # Do not run
 pc <- lkm <- abs(rnorm(10,1,1))*100
 pro <- matrix(abs(rnorm(24*7,0.5,1)), ncol=7, nrow=24)

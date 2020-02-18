@@ -27,7 +27,7 @@ emission factors grams/km
 The sources are tyres, breaks and road surface.
 }
 \examples{
-{
+\dontrun{
 data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)

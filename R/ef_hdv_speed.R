@@ -86,7 +86,7 @@
 #'
 #' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Quick view
 #' pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2",
 #' "AS_urban", "AS_rural", "AS_highway",

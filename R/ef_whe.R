@@ -16,7 +16,7 @@
 #' @return An emission factor by annual mileage.
 #' @keywords emission factors high emitters
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' # Let's say high emitter is 5 times the normal ef.
 #' co_efhe <- ef_cetesb(p = "COd", "PC_G") * 5
