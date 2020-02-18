@@ -22,7 +22,7 @@ NULL
 #' @section \code{Evaporative}:
 #' For \code{Evaporative}, use \code{\link{emis_evap}}.
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # do not run
 #' # DEPRECATED
 #' }

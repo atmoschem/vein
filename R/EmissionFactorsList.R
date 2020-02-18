@@ -13,7 +13,7 @@
 #' @rdname EmissionFactorsList
 #' @aliases EmissionFactorsList print.EmissionFactorsList
 #' summary.EmissionFactorsList plot.EmissionFactorsList
-#' @examples {
+#' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)
 #' class(fe2015)

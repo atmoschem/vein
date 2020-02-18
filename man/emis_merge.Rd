@@ -55,7 +55,7 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
  or an object of 'spatial feature' of streets, merging several files.
 }
 \examples{
-{
+\dontrun{
 # Do not run
 
 }

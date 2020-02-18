@@ -87,7 +87,7 @@
 #' @references Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
 #' url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' a <- ef_cetesb("CO", "PC_G")
 #' a <- ef_cetesb("R_10_25", "PC_G")
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE"))

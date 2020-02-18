@@ -1,6 +1,6 @@
 #' Road network of the west part of Sao Paulo city
 #'
-#' This dataset is a SpatialLineDataFrame of sp package with roads
+#' This dataset is a sf class object with roads
 #' from a traffic simulations made by CET Sao Paulo, Brazil
 #'
 #' @format A Spatial data.frame (sf) with 1796 rows and 1 variables:

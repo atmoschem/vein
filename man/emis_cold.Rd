@@ -67,7 +67,7 @@ respective speed.The estimation considers beta parameter, the fraction of
 mileage driven
 }
 \examples{
-{
+\dontrun{
 # Do not run
 data(net)
 data(pc_profile)

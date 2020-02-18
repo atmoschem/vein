@@ -250,7 +250,7 @@ they are internally changed to the new convention:
 url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>)
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"R_10_25"</span>, <span class='st'>"PC_G"</span>)
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_cetesb</span>(<span class='st'>"CO"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PC_G"</span>, <span class='st'>"PC_FE"</span>))
@@ -259,18 +259,7 @@ url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2030</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"TRUCKS_L_D"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"SLT"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>) <span class='co'>#  olds names</span>
-}</div><div class='output co'>#&gt; <span class='message'>I guess you wanted this:</span></div><div class='output co'>#&gt; <span class='message'>TRUCKS_SL_D</span></div><div class='output co'>#&gt; Units: [g/km]
-#&gt;  [1] 0.022603427 0.030000000 0.036000000 0.044000000 0.010964365 0.010964365
-#&gt;  [7] 0.005186483 0.368606294 0.400725631 0.381371353 0.361326557 0.563487880
-#&gt; [13] 0.563487880 0.360000000 0.360000000 0.374037404 0.374037404 0.686710873
-#&gt; [19] 0.686710873 0.763916392 0.764000000 0.764000000 0.764000000 0.764000000
-#&gt; [25] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
-#&gt; [31] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
-#&gt; [37] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
-#&gt; [43] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
-#&gt; [49] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
-#&gt; [55] 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000 0.764000000
-#&gt; [61] 0.764000000 0.764000000 0.764000000</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

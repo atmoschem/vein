@@ -26,7 +26,7 @@
 #' @importFrom data.table rbindlist .SD
 #' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #'
 #' }

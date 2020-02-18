@@ -54,7 +54,7 @@ Writes a text file.
 writting technical notes about this emissions inventory
 }
 \examples{
-{
+\dontrun{
 (a <- tempfile())
 vein_notes("notes",
            file = a)

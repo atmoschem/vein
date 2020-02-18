@@ -24,7 +24,7 @@
 data(net)
 }
 \description{
-This dataset is a SpatialLineDataFrame of sp package with roads
+This dataset is a sf class object with roads
 from a traffic simulations made by CET Sao Paulo, Brazil
 }
 \keyword{datasets}

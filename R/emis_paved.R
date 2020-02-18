@@ -35,7 +35,7 @@
 #'   5000-1000   \tab 0.06          \tab  0.6   \cr
 #'   >10000      \tab  0.03         \tab  0.3   \cr
 #' }
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' veh <- matrix(1000, nrow = 10,ncol = 10)
 #' W <- veh*1.5

@@ -111,7 +111,7 @@ they are internally changed to the new convention:
 "M_FE_150", "M_FE_150_500","M_FE_500",
 }
 \examples{
-{
+\dontrun{
 a <- ef_cetesb("CO", "PC_G")
 a <- ef_cetesb("R_10_25", "PC_G")
 a <- ef_cetesb("CO", c("PC_G", "PC_FE"))

@@ -65,7 +65,7 @@ Hour and day will be deprecated because they can be infered from the profile
 matrix.
 }
 \examples{
-{
+\dontrun{
 # Do not run
 data(net)
 data(pc_profile)
