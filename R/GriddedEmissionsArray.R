@@ -75,6 +75,7 @@ GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x),
               2,
               rev))
     }))
+    e <- array(as.numeric(e), c(cols, rows, times))
   } else {
     e <- array(unlist(df), c(cols, rows, times))
   }
