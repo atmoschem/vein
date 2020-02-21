@@ -157,13 +157,13 @@ test_that("emis_order works", {
                31531)
 })
 
-test_that("emis_order works", {
-  expect_equal(round(emis_order(sf::as_Spatial(E_CO_g),
-                                start = as.Date("2016-04-13"),
-                                utc = 3,
-                                hours = 70)$V70[1]),
-               31531)
-})
+# test_that("emis_order works", {
+#   expect_equal(round(emis_order(sf::as_Spatial(E_CO_g),
+#                                 start = as.Date("2016-04-13"),
+#                                 utc = 3,
+#                                 hours = 70)$V70[1]),
+#                31531)
+# })
 
 test_that("emis_order works", {
   expect_equal(round(emis_order(sf::st_set_geometry(E_CO_g, NULL),

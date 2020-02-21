@@ -1,8 +1,8 @@
 context("emis_cold")
 
 data(net)
-net <- sf::st_as_sf(net)
-net <- as(net[1,], "Spatial")
+# net <- sf::st_as_sf(net)
+net <- net[1,]
 data(pc_profile)
 data(fe2015)
 data(fkm)
