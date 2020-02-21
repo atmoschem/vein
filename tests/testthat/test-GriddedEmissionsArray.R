@@ -53,14 +53,14 @@ test_that("GriddedEmissionsArray works", {
 })
 
 
-test_that("GriddedEmissionsArray works", {
-  expect_equal(round(GriddedEmissionsArray(sf::as_Spatial(E_CO_STREETS),
-                                           rows = 19,
-                                           cols = 23,
-                                           times = 168,
-                                           T)[1]),
-               688)
-})
+# test_that("GriddedEmissionsArray works", {
+#   expect_equal(round(GriddedEmissionsArray(sf::as_Spatial(E_CO_STREETS),
+#                                            rows = 19,
+#                                            cols = 23,
+#                                            times = 168,
+#                                            T)[1]),
+#                688)
+# })
 
 
 test_that("GriddedEmissionsArray works", {
