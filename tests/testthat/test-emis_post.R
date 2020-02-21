@@ -19,8 +19,8 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
 
 test_that("emis_post works", {
   expect_equal(round(emis_post(arra = E_CO,
-                         pollutant = "CO",
-                         by = "streets_wide")[1,1]),
+                               pollutant = "CO",
+                               by = "streets_wide")[1,1]),
                Emissions(542))
 })
 
@@ -33,16 +33,19 @@ test_that("emis_post stops", {
 
 test_that("emis_post works", {
   expect_equal(round(emis_post(arra = E_CO,
-                                    pollutant = "CO", veh = "a", size = "s",
-                                    fuel = "d",
-                                    by = "veh")$g[1]),
+                               pollutant = "CO",
+                               veh = "a",
+                               size = "s",
+                               fuel = "d",
+                               type_emi = "exhaust",
+                               by = "veh")$g[1]),
                Emissions(416))
 })
 
 test_that("emis_post works", {
   expect_equal(round(emis_post(arra = E_CO,
-                                    pollutant = "CO",
-                                    by = "streets_narrow")$g[1]),
+                               pollutant = "CO",
+                               by = "streets_narrow")$g[1]),
                Emissions(542))
 })
 
@@ -65,8 +68,11 @@ test_that("emis_post stops", {
 
 test_that("emis_post works", {
   expect_equal(round(emis_post(arra = E_CO,
-                               pollutant = "CO", veh = "a", size = "s",
+                               pollutant = "CO",
+                               veh = "a",
+                               size = "s",
                                fuel = "d",
+                               type_emi = "exhaust",
                                by = "veh")$g[1]),
                Emissions(416))
 })
