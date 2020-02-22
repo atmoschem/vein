@@ -109,6 +109,16 @@ they are internally changed to the new convention:
 "SLT", "LT", "MT", "SHT","HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150",
 "M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
 "M_FE_150", "M_FE_150_500","M_FE_500",
+
+\strong{Emission factor for vehicles older than the reported by CETESB were filled as the moving average of 2:}
+
+\itemize{
+\item Range EF from PC and LCV otto: 2018 - 1982. EF for 1981 and older as movign average.
+\item Range LCV diesel : 2018 - 2006. EF for 2005 and older as movign average.
+\item Range Trucks and Buse: 2018 - 1998. EF for 1997 and older as movign average.
+\item Range MC Gasoline: 2018 - 2003.  EF for 2002 and older as movign average.
+\item Range MC Flex 150-500cc and >500cc: 2018 - 2012.  EF for 2011 and older as movign average.
+}
 }
 \examples{
 \dontrun{
