@@ -10,6 +10,7 @@ emis_order2(
   start_utc_time,
   desired_length,
   tz_lt = Sys.timezone(),
+  k = 1,
   net,
   verbose = TRUE
 )
@@ -35,6 +36,8 @@ of the WRF Chem simulations, states at namelist.input.}
 \item{tz_lt}{Character, Time zone of the local emissions. Default value is derived from
 Sys.timezone(), however, it accepts any other. If you enter a wrong tz, this function will show
 you a menu to choose one of the 697 time zones available.}
+
+\item{k}{Numeric, factor.}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING".}
 

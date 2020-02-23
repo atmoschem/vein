@@ -25,6 +25,7 @@
 #' @param tz_lt Character, Time zone of the local emissions. Default value is derived from
 #' Sys.timezone(), however, it accepts any other. If you enter a wrong tz, this function will show
 #' you a menu to choose one of the 697 time zones available.
+#' @param k Numeric, factor.
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING".
 #' @param verbose Logical, to show more information, default is TRUE.
 #' @importFrom sf st_as_sf st_geometry st_set_geometry st_sf st_crs
@@ -76,6 +77,7 @@ emis_order2 <- function(x, # 24 hours or one week
                         start_utc_time,
                         desired_length,
                         tz_lt = Sys.timezone(),
+                        k = 1,
                         net,
                         verbose = TRUE) {
 
@@ -135,7 +137,7 @@ emis_order2 <- function(x, # 24 hours or one week
                      cutc = as.character(lt + a))
 
   df <- merge(x = dwrf, y = df_x, by = "cutc", all.x = T)
-  x <- x[, df$nx]
+  x <- x[, df$nx] * k
 
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)
