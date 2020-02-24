@@ -111,7 +111,9 @@ emis_grid <- function (spobj = net,
 
     area <- units::set_units(area, "km^2")
 
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)*k
+    for(i in 1:ncol(dfm)) dfm[, i] <- dfm[, i]*k
+
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
 
     dfm$id <- id
 
@@ -165,7 +167,9 @@ emis_grid <- function (spobj = net,
 
     area <- units::set_units(sf::st_area(g), "km^2")
 
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)*k
+    for(i in 1:ncol(dfm)) dfm[, i] <- dfm[, i]*k
+
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
 
     dfm$id <- id
 
@@ -215,7 +219,9 @@ emis_grid <- function (spobj = net,
     dfm$id <- NULL
     area <- units::set_units(sf::st_area(g), "km^2")
 
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)*k
+    for(i in 1:ncol(dfm)) dfm[, i] <- dfm[, i]*k
+
+    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
 
     cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))
