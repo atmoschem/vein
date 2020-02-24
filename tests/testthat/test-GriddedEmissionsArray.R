@@ -61,15 +61,6 @@ test_that("GriddedEmissionsArray works", {
 # })
 
 
-test_that("GriddedEmissionsArray works", {
-  expect_equal(round(GriddedEmissionsArray(sf::st_set_geometry(E_CO_STREETS, NULL),
-                                           rows = 19,
-                                           cols = 23,
-                                           times = 1,
-                                           T)[1]),
-               216)
-})
-
 
 
 test_that("GriddedEmissionsArray works", {
