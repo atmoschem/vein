@@ -63,6 +63,7 @@ GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x),
   } else {
     df <- x
   }
+  if(times > ncol(df)) stop("`times` cannot be higher than number of columns of `x` without x$id")
   for (i in 1:ncol(df)) {
     df[, i] <- as.numeric(df[, i])
   }

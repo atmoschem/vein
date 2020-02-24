@@ -138,7 +138,7 @@ test_that("emis_order works", {
                                 start = as.Date("2016-04-13"),
                                 utc = 3,
                                 hours = 70)[1]),
-               3780)
+               111)
 })
 
 test_that("emis_order works", {
