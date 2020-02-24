@@ -99,7 +99,7 @@ emis_merge <- function (pol = "CO",
     return(netx)
   } else{
     x_st <- as.data.frame(data.table::rbindlist(x_rds))
-    for(i in 1:ncol(x_st)) x_st[, i] <- x_st[, i]*k
+   x_st$g <- x_st$g*k
     return(x_st)
   }
   # nocov end
