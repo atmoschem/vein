@@ -7,7 +7,7 @@
 \alias{plot.GriddedEmissionsArray}
 \title{Construction function for class "GriddedEmissionsArray"}
 \usage{
-GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate = FALSE)
+GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate)
 
 \method{print}{GriddedEmissionsArray}(x, ...)
 
@@ -27,7 +27,7 @@ GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate = FALSE)
 
 \item{times}{Number of times}
 
-\item{rotate}{Logical to rotate TRUE or not FALSE the array}
+\item{rotate}{Character, rotate array to "left" or "right"}
 
 \item{object}{object with class "EmissionsArray'}
 }
@@ -67,9 +67,9 @@ class(E_CO)
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
 g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
-gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
+gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168)
 plot(gr)
 # For some cptcity color gradients:
-plot(gr, col = cptcity::cpt(1))
+plot(gr, col = cptcity::lucky())
 }
 }
