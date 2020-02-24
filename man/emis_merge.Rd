@@ -14,7 +14,8 @@ emis_merge(
   path = "emi",
   crs,
   under = "after",
-  as_list = FALSE
+  as_list = FALSE,
+  k = 1
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
 "before" when '_X' and "none" for merging directly the files.}
 
 \item{as_list}{"Logical"; for returning the results as list or not.}
+
+\item{k}{factor}
 }
 \value{
 'Spatial feature' of lines or a dataframe of emissions

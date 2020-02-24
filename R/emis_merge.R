@@ -22,6 +22,7 @@
 #' @param under "Character"; "after" when you stored your pollutant x as 'X_'
 #' "before" when '_X' and "none" for merging directly the files.
 #' @param as_list "Logical"; for returning the results as list or not.
+#' @param k factor
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
 #' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
@@ -39,7 +40,8 @@ emis_merge <- function (pol = "CO",
                         path = "emi",
                         crs,
                         under = "after",
-                        as_list = FALSE){
+                        as_list = FALSE,
+                        k = 1){
   # nocov start
   x <- list.files(path = path,
                   pattern = what,
@@ -86,6 +88,9 @@ emis_merge <- function (pol = "CO",
     if(nrow(x_st) != nrow(net)){
       stop("Number of rows of net must be equal to number of rows of estimates")
     }
+
+    for(i in 1:ncol(x_st)) x_st[, i] <- x_st[, i]*k
+
     net <- sf::st_as_sf(net)
     if(!missing(crs)) {
       net <- sf::st_transform(net, crs)
@@ -94,6 +99,7 @@ emis_merge <- function (pol = "CO",
     return(netx)
   } else{
     x_st <- as.data.frame(data.table::rbindlist(x_rds))
+    for(i in 1:ncol(x_st)) x_st[, i] <- x_st[, i]*k
     return(x_st)
   }
   # nocov end
