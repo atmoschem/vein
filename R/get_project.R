@@ -23,8 +23,8 @@ get_project <- function(directory,
   utils::download.file(url = URL,
                        destfile =  tf)
 if(missing(directory)) stop("Please, add a path to a directory")
-  utils::untar(tarfile = tf, exdir = name)
-  message("Your directory is in ", name)
+  utils::untar(tarfile = tf, exdir = directory)
+  message("Your directory is in ", directory)
   } else{
     stop("Other cases not implemented yet")
   }}
