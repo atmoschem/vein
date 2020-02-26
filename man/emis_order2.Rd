@@ -25,10 +25,14 @@ emis_order2(
 
 In all cases, columns are hourly emissions.}
 
-\item{lt_emissions}{Local time of the emissions at first hour.}
+\item{lt_emissions}{Local time of the emissions at first hour. It must be
+the \strong{before}  time of start_utc_time. For instance, if
+start_utc_time is 2020-02-02 00:00, and your emissions starts monday at 00:00,
+your lt_emissions must be 2020-01-27 00:00. The argument tz_lt will detect your
+current local time zone and do the rest for you.}
 
 \item{start_utc_time}{UTC time for the desired first hour. For instance,
-the first hour of the namelist.input.}
+the first hour of the namelist.input for WRF.}
 
 \item{desired_length}{Integer; length to recycle or subset local emissions. For instance, the length
 of the WRF Chem simulations, states at namelist.input.}
@@ -98,5 +102,5 @@ wCO <- emis_order2(x = E_CO_g,
 
 }
 \seealso{
-\code{\link{emis_order}}
+\code{\link{GriddedEmissionsArray}}
 }
