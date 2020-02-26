@@ -17,9 +17,14 @@
 #'}
 #'
 #'In all cases, columns are hourly emissions.
-#' @param lt_emissions Local time of the emissions at first hour.
+#' @param lt_emissions Local time of the emissions at first hour. It must be
+#' the \strong{before}  time of start_utc_time. For instance, if
+#' start_utc_time is 2020-02-02 00:00, and your emissions starts monday at 00:00,
+#' your lt_emissions must be 2020-01-27 00:00. The argument tz_lt will detect your
+#' current local time zone and do the rest for you.
+#'
 #' @param start_utc_time UTC time for the desired first hour. For instance,
-#' the first hour of the namelist.input.
+#' the first hour of the namelist.input for WRF.
 #' @param desired_length Integer; length to recycle or subset local emissions. For instance, the length
 #' of the WRF Chem simulations, states at namelist.input.
 #' @param tz_lt Character, Time zone of the local emissions. Default value is derived from
@@ -31,7 +36,7 @@
 #' @importFrom sf st_as_sf st_geometry st_set_geometry st_sf st_crs
 #'
 #' @return sf or data.frame
-#' @seealso  \code{\link{emis_order}}
+#' @seealso  \code{\link{GriddedEmissionsArray}}
 #' @export
 #' @examples \dontrun{
 #' #do not run
@@ -81,22 +86,18 @@ emis_order2 <- function(x, # 24 hours or one week
                         net,
                         verbose = TRUE) {
 
-  if(verbose) cat("Transforming into data.frame")
+  if(verbose) cat("Transforming into data.frame\n")
 
   if(class(x)[1] == "sf"){
     x <- sf::st_set_geometry(x, NULL)
   }
-
-  x <- as.data.frame(x)
+  # x <- remove_units(x)
 
   x$id <- NULL
+
   dfx <- data.frame(nx = names(x))
 
-  x <- remove_units(x)
-
   nx <- ncol(x)
-
-  # sym_diff <- function(a,b) setdiff(union(a,b), intersect(a,b))
 
 
   # check tz
@@ -116,9 +117,8 @@ emis_order2 <- function(x, # 24 hours or one week
   a <- futc -  first_hour_lt
   if(verbose) cat("Difference with UTC: ", a, "\n")
 
-
   # primero ver start_day
-  seq_wrf <- seq.POSIXt(from = as.POSIXct(start_utc_time),
+  seq_wrf <- seq.POSIXt(from = as.POSIXct(start_utc_time, tz = "UTC"),
                         by = 3600,
                         length.out = desired_length)
   dwrf <- data.frame(seq_wrf = seq_wrf,
@@ -131,10 +131,11 @@ emis_order2 <- function(x, # 24 hours or one week
                    # Hence, recycling names(x)
                    length.out = nx*desired_length)
 
-  df_x <- data.frame(nx = names(x),
-                     lt = lt,
-                     utc = lt + a,
-                     cutc = as.character(lt + a))
+
+  df_x <- data.frame(lt = lt,
+                     utc = as.POSIXct(format(lt, tz = "UTC"), tz = "UTC"),
+                     cutc = as.character(as.POSIXct(format(lt, tz = "UTC"), tz = "UTC")))
+  df_x$nx <- names(x)
 
   df <- merge(x = dwrf, y = df_x, by = "cutc", all.x = T)
   x <- x[, df$nx] * k

@@ -170,12 +170,16 @@ in local time to the desired utc time, by recycling the local emissions.</p>
     </tr>
     <tr>
       <th>lt_emissions</th>
-      <td><p>Local time of the emissions at first hour.</p></td>
+      <td><p>Local time of the emissions at first hour. It must be
+the <strong>before</strong>  time of start_utc_time. For instance, if
+start_utc_time is 2020-02-02 00:00, and your emissions starts monday at 00:00,
+your lt_emissions must be 2020-01-27 00:00. The argument tz_lt will detect your
+current local time zone and do the rest for you.</p></td>
     </tr>
     <tr>
       <th>start_utc_time</th>
       <td><p>UTC time for the desired first hour. For instance,
-the first hour of the namelist.input.</p></td>
+the first hour of the namelist.input for WRF.</p></td>
     </tr>
     <tr>
       <th>desired_length</th>
@@ -207,7 +211,7 @@ you a menu to choose one of the 697 time zones available.</p></td>
     <p>sf or data.frame</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='emis_order.html'>emis_order</a></code></p></div>
+    <div class='dont-index'><p><code><a href='GriddedEmissionsArray.html'>GriddedEmissionsArray</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
