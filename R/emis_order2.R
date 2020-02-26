@@ -86,6 +86,9 @@ emis_order2 <- function(x, # 24 hours or one week
                         net,
                         verbose = TRUE) {
 
+  if(lt_emissions == start_utc_time) {
+    stop("lt_emissions must be before start_utc_time")
+  }
   if(verbose) cat("Transforming into data.frame\n")
 
   if(class(x)[1] == "sf"){
