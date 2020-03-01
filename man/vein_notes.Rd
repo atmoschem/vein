@@ -6,8 +6,8 @@
 \usage{
 vein_notes(
   notes,
-  yourname,
   file = "README",
+  yourname = Sys.info()["login"],
   title = "Notes for this VEIN run",
   approach = "Top Down",
   traffic = "Your traffic information",
@@ -22,10 +22,10 @@ vein_notes(
 \arguments{
 \item{notes}{Character; vector of notes.}
 
-\item{yourname}{Character; Name of the inventor compiler.}
-
 \item{file}{Character; Name of the file. The function will generate a file
 with an extension '.txt'.}
+
+\item{yourname}{Character; Name of the inventor compiler.}
 
 \item{title}{Character; Title of this file. For instance: "Vehicular Emissions
 Inventory of Region XX, Base year XX"}
@@ -55,9 +55,9 @@ writting technical notes about this emissions inventory
 }
 \examples{
 \dontrun{
-(a <- tempfile())
-vein_notes("notes",
+a <- tempfile()
+f <- vein_notes("notes",
            file = a)
-readLines(paste0(a, '.txt'))
+readLines(f)
 }
 }

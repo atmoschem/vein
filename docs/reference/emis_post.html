@@ -136,7 +136,7 @@ with hourly emissions at each street, or a data base with emissions by vehicular
 category, hour, including size, fuel and other characteristics.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_post</span>(<span class='no'>arra</span>, <span class='no'>veh</span>, <span class='no'>size</span>, <span class='no'>fuel</span>, <span class='no'>pollutant</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='no'>net</span>, <span class='no'>type_emi</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_post</span>(<span class='no'>arra</span>, <span class='no'>veh</span>, <span class='no'>size</span>, <span class='no'>fuel</span>, <span class='no'>pollutant</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"veh"</span>, <span class='no'>net</span>, <span class='no'>type_emi</span>, <span class='no'>k</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,6 +178,10 @@ when by = 'streets_wide'</p></td>
     <tr>
       <th>type_emi</th>
       <td><p>Character, type of emissions(exhaust, evaporative, etc)</p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>Numeric, factor</p></td>
     </tr>
     </table>
 

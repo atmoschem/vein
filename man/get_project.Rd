@@ -7,7 +7,8 @@
 get_project(directory, case = "brasil", approach = "bottom-up")
 }
 \arguments{
-\item{directory}{Character; Path to an existing or a new directory to be created.}
+\item{directory}{Character; Path to an existing or a new directory to be created.
+It needs absolute path.}
 
 \item{case}{Character; Currently only supports "brasil" (or "brazil").}
 

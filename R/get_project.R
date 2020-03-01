@@ -4,6 +4,7 @@
 #' The projects are available on Github.com/atmoschem/vein/projects
 #'
 #' @param directory Character; Path to an existing or a new directory to be created.
+#' It needs absolute path.
 #' @param case Character; Currently only supports "brasil" (or "brazil").
 #' @param approach Character; Currently only supports "bottom-up".
 #' @importFrom utils download.file untar
@@ -23,8 +24,9 @@ get_project <- function(directory,
   utils::download.file(url = URL,
                        destfile =  tf)
 if(missing(directory)) stop("Please, add a path to a directory")
-  utils::untar(tarfile = tf, exdir = directory)
+    utils::untar(tarfile = tf, exdir = directory)
   message("Your directory is in ", directory)
   } else{
     stop("Other cases not implemented yet")
-  }}
+  }
+  }

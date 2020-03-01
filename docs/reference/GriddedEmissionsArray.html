@@ -132,7 +132,7 @@
 "EmissionsArray" with 4 dimensios.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>GriddedEmissionsArray</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>cols</span>, <span class='no'>rows</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>x</span>), <span class='no'>rotate</span>)
+    <pre class="usage"><span class='fu'>GriddedEmissionsArray</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>cols</span>, <span class='no'>rows</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>x</span>), <span class='no'>rotate</span>, <span class='kw'>flip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for GriddedEmissionsArray</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -172,6 +172,10 @@
       <td><p>Character, rotate array to "left" or "right"</p></td>
     </tr>
     <tr>
+      <th>flip</th>
+      <td><p>Logical, To flip vertically the array or not</p></td>
+    </tr>
+    <tr>
       <th>object</th>
       <td><p>object with class "EmissionsArray'</p></td>
     </tr>
@@ -207,10 +211,12 @@
 <span class='no'>E_CO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis.html'>emis</a></span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc1</span>,<span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>lef</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>speed</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>41</span>,
               <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pc_profile</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>E_CO</span>)
-<span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_post.html'>emis_post</a></span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets"</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
+<span class='no'>E_CO_STREETS</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_post.html'>emis_post</a></span>(<span class='kw'>arra</span> <span class='kw'>=</span> <span class='no'>E_CO</span>, <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"streets"</span>,
+                          <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='fl'>1</span>, <span class='st'>"1/h"</span>))
 <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span>(<span class='no'>net</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>, <span class='fl'>1</span>/<span class='fl'>102.47</span>/<span class='fl'>2</span>) <span class='co'>#500m in degrees</span>
 <span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_grid.html'>emis_grid</a></span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>E_CO_STREETS</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
-<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>E_CO_g</span>[<span class='st'>"V9"</span>])
+<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='kw'>flip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>gr</span>)
 <span class='co'># For some cptcity color gradients:</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>gr</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/lucky.html'>lucky</a></span>())

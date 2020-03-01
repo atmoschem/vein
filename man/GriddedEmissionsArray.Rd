@@ -7,7 +7,7 @@
 \alias{plot.GriddedEmissionsArray}
 \title{Construction function for class "GriddedEmissionsArray"}
 \usage{
-GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate)
+GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate, flip = TRUE)
 
 \method{print}{GriddedEmissionsArray}(x, ...)
 
@@ -28,6 +28,8 @@ GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate)
 \item{times}{Number of times}
 
 \item{rotate}{Character, rotate array to "left" or "right"}
+
+\item{flip}{Logical, To flip vertically the array or not}
 
 \item{object}{object with class "EmissionsArray'}
 }
@@ -64,10 +66,12 @@ lef <- ef_ldv_scaled(co1, cod, v = "PC", t = "4S", cc = "<=1400",
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
               profile = pc_profile, simplify = TRUE)
 class(E_CO)
-E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets",
+                          net = net, k = units::set_units(1, "1/h"))
 g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
-gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168)
+plot(E_CO_g["V9"])
+gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, flip = FALSE)
 plot(gr)
 # For some cptcity color gradients:
 plot(gr, col = cptcity::lucky())
