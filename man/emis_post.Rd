@@ -4,7 +4,7 @@
 \alias{emis_post}
 \title{Post emissions}
 \usage{
-emis_post(arra, veh, size, fuel, pollutant, by = "veh", net, type_emi)
+emis_post(arra, veh, size, fuel, pollutant, by = "veh", net, type_emi, k)
 }
 \arguments{
 \item{arra}{Array of emissions 4d: streets x category of vehicles x hours x days or
@@ -28,6 +28,8 @@ row number of streets by hour and day of the week}
 when by = 'streets_wide'}
 
 \item{type_emi}{Character, type of emissions(exhaust, evaporative, etc)}
+
+\item{k}{Numeric, factor}
 }
 \description{
 \code{emis_post} simplify emissions estimated as total per type category of

@@ -51,17 +51,6 @@ test_that("GriddedEmissionsArray works", {
 })
 
 
-# test_that("GriddedEmissionsArray works", {
-#   expect_equal(round(GriddedEmissionsArray(sf::as_Spatial(E_CO_STREETS),
-#                                            rows = 19,
-#                                            cols = 23,
-#                                            times = 168,
-#                                            T)[1]),
-#                688)
-# })
-
-
-
 
 test_that("GriddedEmissionsArray works", {
   expect_error(GriddedEmissionsArray(E_CO_g,
@@ -76,7 +65,8 @@ test_that("GriddedEmissionsArray works", {
   expect_equal(plot(GriddedEmissionsArray(E_CO_g,
                                           rows = 19,
                                           cols = 23,
-                                          times = 1))$mfrow[1],
+                                          times = 1,
+                                          flip = FALSE))$mfrow[1],
                1)
 })
 
@@ -86,7 +76,7 @@ test_that("GriddedEmissionsArray works", {
                                            rows = 19,
                                            cols = 23,
                                            times = 1, rotate = "left")[1]),
-               10785)
+               1120)
 })
 
 test_that("GriddedEmissionsArray works", {
@@ -94,7 +84,7 @@ test_that("GriddedEmissionsArray works", {
                                            rows = 19,
                                            cols = 23,
                                            times = 1, rotate = "right")[1]),
-               1242)
+               5897)
 })
 
 test_that("GriddedEmissionsArray works", {

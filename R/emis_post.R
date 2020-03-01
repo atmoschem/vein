@@ -19,6 +19,7 @@
 #' row number of streets by hour and day of the week
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING". Only
 #' when by = 'streets_wide'
+#' @param k Numeric, factor
 #' @importFrom sf st_sf st_as_sf
 #' @export
 #' @note This function depends on EmissionsArray objests which currently has
@@ -92,7 +93,15 @@
 #'                        pollutant = "CO", by = "veh")
 #' head(E_CO_DFv2)
 #' }
-emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_emi) {
+emis_post <- function(arra,
+                      veh,
+                      size,
+                      fuel,
+                      pollutant,
+                      by = "veh",
+                      net,
+                      type_emi,
+                      k) {
   if ( class(arra)[1] != "EmissionsArray"){
     stop("No EmissionsArray")
   } else if (length(dim(arra)) == 4){
@@ -143,6 +152,9 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_em
                   each = dim(arra)[2]) #veh cat
       df$hour <- hour
       df$g <- Emissions(df$g)
+
+      if(!missing(k)) df$g <- df$g * k
+
       return(df)
     } else if (by == "streets_narrow") {
       # soon deprecated this function?
@@ -159,6 +171,9 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_em
       names(df) <- c("street", "g", "hour")
       df[,1] <- seq(1,dim(arra)[1])
       df[,2] <- Emissions(df[,2])
+
+      if(!missing(k)) df$g <- df$g * k
+
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
       x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
@@ -169,6 +184,8 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_em
       m <- matrix(x, nrow=dim(arra)[1], ncol=dim(arra)[3]*dim(arra)[4])
 
       df <- as.data.frame(m)
+
+      if(!missing(k)) for(i in 1:ncol(df))  df[, i] <- df[, i] * k
 
       nombres <- lapply(1:dim(m)[2], function(i){paste0("h",i)})
       if(!missing(net)){
@@ -221,6 +238,7 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_em
                   each = dim(arra)[2]) #veh cat
       df$hour <- hour
       df$g <- Emissions(df$g)
+      if(!missing(k)) df$g <- df$g * k
       return(df)
     } else if (by %in% c("streets_narrow")) {
       df <- as.vector(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
@@ -234,7 +252,9 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_em
 
       df <- as.data.frame(df)
 
-        if(!missing(net)){
+      if(!missing(k)) for(i in 1:ncol(df))  df[, i] <- df[, i] * k
+
+      if(!missing(net)){
         netsf <- sf::st_as_sf(net)
         dfsf <- sf::st_sf(Emissions(df), geometry = netsf$geometry)
         return(dfsf)
@@ -243,5 +263,5 @@ emis_post <- function(arra, veh, size, fuel, pollutant, by = "veh", net, type_em
       }
     }
 
-    }
+  }
 }

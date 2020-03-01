@@ -134,8 +134,8 @@ writting technical notes about this emissions inventory</p>
 
     <pre class="usage"><span class='fu'>vein_notes</span>(
   <span class='no'>notes</span>,
-  <span class='no'>yourname</span>,
   <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"README"</span>,
+  <span class='kw'>yourname</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.info.html'>Sys.info</a></span>()[<span class='st'>"login"</span>],
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"Notes for this VEIN run"</span>,
   <span class='kw'>approach</span> <span class='kw'>=</span> <span class='st'>"Top Down"</span>,
   <span class='kw'>traffic</span> <span class='kw'>=</span> <span class='st'>"Your traffic information"</span>,
@@ -155,13 +155,13 @@ writting technical notes about this emissions inventory</p>
       <td><p>Character; vector of notes.</p></td>
     </tr>
     <tr>
-      <th>yourname</th>
-      <td><p>Character; Name of the inventor compiler.</p></td>
-    </tr>
-    <tr>
       <th>file</th>
       <td><p>Character; Name of the file. The function will generate a file
 with an extension '.txt'.</p></td>
+    </tr>
+    <tr>
+      <th>yourname</th>
+      <td><p>Character; Name of the inventor compiler.</p></td>
     </tr>
     <tr>
       <th>title</th>
@@ -208,10 +208,10 @@ Inventory of Region XX, Base year XX"</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-(<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>())
-<span class='fu'>vein_notes</span>(<span class='st'>"notes"</span>,
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>()
+<span class='no'>f</span> <span class='kw'>&lt;-</span> <span class='fu'>vein_notes</span>(<span class='st'>"notes"</span>,
            <span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>a</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>a</span>, <span class='st'>'.txt'</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='no'>f</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

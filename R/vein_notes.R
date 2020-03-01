@@ -18,17 +18,17 @@
 #' @param mileage Character; vector of notes.
 #' @param notes Character; vector of notes.
 #' @return Writes a text file.
-#' @importFrom utils menu object.size packageVersion
+#' @importFrom utils menu object.size packageVersion sessionInfo
 #' @export
 #' @examples \dontrun{
-#' (a <- tempfile())
-#' vein_notes("notes",
+#' a <- tempfile()
+#' f <- vein_notes("notes",
 #'            file = a)
-#' readLines(paste0(a, '.txt'))
+#' readLines(f)
 #' }
 vein_notes <- function (notes,
-                        yourname,
                         file = "README",
+                        yourname = Sys.info()["login"],
                         title = "Notes for this VEIN run",
                         approach = "Top Down",
                         traffic = "Your traffic information",
@@ -38,9 +38,9 @@ vein_notes <- function (notes,
                         evaporative = "Your information about evaporative emission factors",
                         standards = "Your information about standards",
                         mileage = "Your information about mileage"){
-  if(!missing(file)){
-    file <- paste0(file,".txt")
-  }
+  file <- paste0(file, "_", gsub(" ", "_", as.character(Sys.time())),".txt")
+  file <- gsub(":", "", file)
+
   if(file.exists(file)){
     warning(paste0(file," already exists"))
     choice <- utils::menu(c("Yes", "No"), title="Do you want Overwrite?")
@@ -138,7 +138,16 @@ vein_notes <- function (notes,
       cat(paste0(notes[i], "\n"))
     }
   }
+
+  cat("========================================\n") # 40
+  cat("\n")
+  cat("Session Info:\n")
+  print(utils::sessionInfo())
+  cat("\n")
+  cat("========================================\n") # 40
   cat("\n\n\nThanks for using VEIN\n")
   sink()
+  cat("File at:", file, "\n")
+  return(file)
 }
 
