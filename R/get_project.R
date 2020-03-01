@@ -18,7 +18,7 @@ get_project <- function(directory,
                         approach = "bottom-up"){
 
   if(case %in% c("brasil", "brazil")) {
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/curso_brazil_bu_v2020-03-01.tar.gz"
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_v2020-03-01.tar.gz"
 
   tf <- paste0(tempfile(), ".tar.gz")
   utils::download.file(url = URL,
