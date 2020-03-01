@@ -31,7 +31,7 @@ eixport::wrf_create(wrfinput_dir         = pasta_wrfinput,
 wrf_create(wrfinput_dir         = pasta_wrfinput,
            wrfchemi_dir         = pasta_wrfchemi,
            domains              = domain,
-           frames_per_auxinput5 = 24,
+           frames_per_auxinput5 = wrf_times,
            auxinput5_interval_m = 60,
            variables            = emis_option,
            verbose              = TRUE)
@@ -73,7 +73,7 @@ for(i in seq_along(pol)) {
  gx <- GriddedEmissionsArray(x = xx, 
                              cols = cols, 
                              rows = rows, 
-                             times = 24)
+                             times = wrf_times)
  wrf_put(file = paste0("wrf/", wrfc),  
          name = paste0("E_",pol[i]),  
          POL =   gx*peso_molecular[i])
