@@ -59,6 +59,7 @@ Emissions <- function(x, time, ...) {
     if(!missing(time)){
       for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
     }
+    e <- sf::st_sf(e, geometry = geo)
 
   } else if ( is.matrix(x) ) {
 
