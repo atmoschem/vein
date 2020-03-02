@@ -15,7 +15,8 @@ age_moto(
   bystreet = FALSE,
   net,
   verbose = FALSE,
-  namerows
+  namerows,
+  time
 )
 }
 \arguments{
@@ -41,6 +42,8 @@ age_moto(
 
 \item{namerows}{Any vector to be change row.names. For instance, name of
 regions or streets.}
+
+\item{time}{Character to be the time units as denominator, eg "1/h"}
 }
 \value{
 dataframe of age distrubution of vehicles

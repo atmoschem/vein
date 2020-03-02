@@ -9,8 +9,9 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object object with class "Emissions"
+#' @param time Character to be the time units as denominator, eg "1/h"
 #' @param ... ignored
-#' @importFrom units as_units
+#' @importFrom units as_units as_units
 #'
 #' @rdname Emissions
 #' @aliases Emissions print.Emissions summary.Emissions plot.Emissions
@@ -27,7 +28,7 @@
 #' pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 #' pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-#' pckm <- units::set_units(fkm[[1]](1:24), "km"); pckma <- cumsum(pckm)
+#' pckm <- units::as_units(fkm[[1]](1:24), "km"); pckma <- cumsum(pckm)
 #' cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 #' cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #' #vehicles newer than pre-euro
@@ -40,26 +41,66 @@
 #' dim(E_CO) # streets x vehicle categories x hours x days
 #' class(E_CO)
 #' plot(E_CO)
+#' ####
+#' Emissions(1, time = "1/h")
 #' }
 #' @export
-Emissions <- function(x, ...) {
-  if ( is.matrix(x) ) {
-    e <- as.data.frame(x)
+Emissions <- function(x, time, ...) {
+
+  if(inherits(x, "sf")) {
+    geo <- sf::st_geometry(x)
+
+    ef <- sf::st_set_geometry(x, NULL)
+
     for(i in 1:ncol(e)){
       e[,i] <- e[,i]*units::as_units("g")
     }
+
+    if(!missing(time)){
+      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    }
+
+  } else if ( is.matrix(x) ) {
+
+    e <- as.data.frame(x)
+
+    for(i in 1:ncol(e)){
+      e[,i] <- e[,i]*units::as_units("g")
+    }
+
+    if(!missing(time)){
+      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    }
+
     class(e) <- c("Emissions", class(e))
+
   } else if ( is.data.frame(x) ) {
+
     e <- x
+
     for(i in 1:ncol(x)){
       e[,i] <- e[,i]*units::as_units("g")
     }
+
+    if(!missing(time)){
+      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    }
+
     class(e) <- c("Emissions",class(x))
+
   } else if ( class(x) == "units" ) {
+
     e <- x
+
     if(units(x)$numerator != "g") stop("units are not 'g'")
+
   } else if( class(x) == "numeric" | class(x) == "integer") {
+
     e <- x*units::as_units("g")
+
+    if(!missing(time)){
+      e <- e*units::as_units(1, time)
+    }
   }
   return(e)
 }

@@ -14,6 +14,7 @@
 #' @param verbose Logical;  message with average age and total numer of vehicles
 #' @param namerows Any vector to be change row.names. For instance, name of
 #' regions or streets.
+#' @param time Character to be the time units as denominator, eg "1/h"
 #' @return dataframe of age distrubution of vehicles
 #' @importFrom sf st_sf st_as_sf
 #' @note
@@ -48,7 +49,8 @@ age_ldv <- function (x,
                      bystreet = F,
                      net,
                      verbose = FALSE,
-                     namerows){
+                     namerows,
+                     time){
   # check na
   x[is.na(x)] <- 0
 
@@ -85,30 +87,39 @@ age_ldv <- function (x,
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
-      df <- df*k
+    df <- df*k
 
 
     if(verbose){
-    message(paste("Average age of",name, "is",
-                  round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
-                  sep=" "))
-    message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000, 2),
-                  "* 10^3 veh",
-                  sep=" ")
-    )
-    cat("\n")
+      message(paste("Average age of",name, "is",
+                    round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
+                    sep=" "))
+      message(paste("Number of",name, "is",
+                    round(sum(df, na.rm = T)/1000, 2),
+                    "* 10^3 veh",
+                    sep=" ")
+      )
+      cat("\n")
     }
     if(!missing(namerows)) {
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
       row.names(df) <- namerows
     }
+
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
-      dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)
+      if(!missing(time)){
+        dfsf <- sf::st_sf(Vehicles(df*k, time = time), geometry = netsf$geometry)
+      } else {
+        dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+      }
       return(dfsf)
     } else {
-      return(Vehicles(df*k))
+      if(!missing(time)){
+        return(Vehicles(df*k, time = time))
+      } else {
+        return(Vehicles(df*k))
+      }
     }
 
     #bystreet = FALSE
@@ -126,18 +137,18 @@ age_ldv <- function (x,
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
-      df <- df*k
+    df <- df*k
 
     if(verbose){
-    message(paste("Average age of",name, "is",
-                  round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
-                  sep=" "))
+      message(paste("Average age of",name, "is",
+                    round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
+                    sep=" "))
       message(paste("Number of",name, "is",
                     round(sum(df, na.rm = T), 3),
                     " [veh]",
                     sep=" "))
 
-    cat("\n")
+      cat("\n")
     }
     if(!missing(namerows)) {
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
@@ -147,12 +158,21 @@ age_ldv <- function (x,
     # replace NA and NaN
     df[is.na(df)] <- 0
 
+
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
-      dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)
+      if(!missing(time)){
+        dfsf <- sf::st_sf(Vehicles(df, time = time), geometry = netsf$geometry)
+      } else {
+        dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)
+      }
       return(dfsf)
     } else {
-      return(Vehicles(df))
+      if(!missing(time)){
+        return(Vehicles(df, time = time))
+      } else {
+        return(Vehicles(df))
+      }
     }
   }
 }

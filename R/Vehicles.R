@@ -11,6 +11,7 @@
 #' @param object Object with class "Vehicles"
 #' @param ... ignored
 #' @param message message with average age
+#' @param time Character to be the time units as denominator, eg "1/h"
 #' @importFrom units as_units install_symbolic_unit
 #'
 #' @rdname Vehicles
@@ -26,25 +27,52 @@
 #' plot(LT_B5)
 #' }
 #' @export
-Vehicles <- function(x, ...) {
+Vehicles <- function(x, ..., time) {
+
   units::install_symbolic_unit("veh", warn = F)
+
   if  ( is.matrix(x) ) {
+
     veh <- as.data.frame(x)
+
     for(i in 1:ncol(veh)){
       veh[,i] <- veh[,i]*units::as_units("veh")
     }
+
+    if(!missing(time)){
+      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    }
+
     class(veh) <- c("Vehicles",class(veh))
+
   } else if ( is.data.frame(x) ) {
+
     veh <- x
+
     for(i in 1:ncol(veh)){
       veh[,i] <- veh[,i]*units::as_units("veh")
     }
+
+    if(!missing(time)){
+      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    }
+
     class(veh) <- c("Vehicles",class(x))
+
   } else if ( class(x) == "units" ) {
+
     veh <- x
+
     if(units(x)$numerator != "veh") stop("units are not 'veh'")
+
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
+
     veh <- x*units::as_units("veh")
+
+    if(!missing(time)){
+      veh <- veh*units::as_units(1, time)
+    }
+
   }
   return(veh)
 }
