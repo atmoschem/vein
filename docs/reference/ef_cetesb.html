@@ -135,6 +135,7 @@
   <span class='no'>veh</span>,
   <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2017</span>,
   <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>,
+  <span class='no'>sppm</span>,
   <span class='kw'>full</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>project</span> <span class='kw'>=</span> <span class='st'>"constant"</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
@@ -147,7 +148,7 @@
       <th>p</th>
       <td><p>Character;</p>
 <p>Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
-"PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHO",
+"PM", "N2O", "KML", "FC", "NO2", "NO", "gD/KWH", "gCO2/KWH", "RCHO",
 "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 "RCHO_0km" and "ETOH_0km",
 (g/km).  Evaporative emissions at average temperature ranges:
@@ -175,6 +176,10 @@ If project is 'constant' values above 2017 and below 1980 will be repeated</p></
     <tr>
       <th>agemax</th>
       <td><p>Integer; age of oldest vehicles for that category</p></td>
+    </tr>
+    <tr>
+      <th>sppm</th>
+      <td><p>Numeric, sulfur (sulphur) in ppm in fuel.</p></td>
     </tr>
     <tr>
       <th>full</th>
@@ -268,6 +273,7 @@ url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2030</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"TRUCKS_L_D"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>)
 <span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"SLT"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2018</span>) <span class='co'>#  olds names</span>
+<span class='fu'>ef_cetesb</span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"SO2"</span>, <span class='kw'>veh</span> <span class='kw'>=</span> <span class='st'>"PC_G"</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2030</span>, <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>40</span>, <span class='kw'>sppm</span> <span class='kw'>=</span> <span class='fl'>300</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

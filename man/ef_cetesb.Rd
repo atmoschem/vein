@@ -9,6 +9,7 @@ ef_cetesb(
   veh,
   year = 2017,
   agemax = 40,
+  sppm,
   full = FALSE,
   project = "constant",
   verbose = FALSE
@@ -18,7 +19,7 @@ ef_cetesb(
 \item{p}{Character;
 
 Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
-"PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHO",
+"PM", "N2O", "KML", "FC", "NO2", "NO", "gD/KWH", "gCO2/KWH", "RCHO",
 "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 "RCHO_0km" and "ETOH_0km",
 (g/km).  Evaporative emissions at average temperature ranges:
@@ -40,6 +41,8 @@ and R hot/warm running losses (g/trip).}
 If project is 'constant' values above 2017 and below 1980 will be repeated}
 
 \item{agemax}{Integer; age of oldest vehicles for that category}
+
+\item{sppm}{Numeric, sulfur (sulphur) in ppm in fuel.}
 
 \item{full}{Logical; To return a data.frame instead or a vector adding
 Age, Year, Brazilian emissions standards and its euro equivalents.}
@@ -130,6 +133,7 @@ ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
 ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
 ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
+ef_cetesb(p = "SO2", veh = "PC_G", year = 2030, agemax = 40, sppm = 300)
 }
 }
 \references{
