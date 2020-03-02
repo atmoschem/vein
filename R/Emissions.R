@@ -50,7 +50,7 @@ Emissions <- function(x, time, ...) {
   if(inherits(x, "sf")) {
     geo <- sf::st_geometry(x)
 
-    ef <- sf::st_set_geometry(x, NULL)
+    e <- sf::st_set_geometry(x, NULL)
 
     for(i in 1:ncol(e)){
       e[,i] <- e[,i]*units::as_units("g")
