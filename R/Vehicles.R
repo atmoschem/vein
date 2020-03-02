@@ -28,10 +28,25 @@
 #' }
 #' @export
 Vehicles <- function(x, ..., time) {
-
   units::install_symbolic_unit("veh", warn = F)
 
-  if  ( is.matrix(x) ) {
+  if(inherits(x, "sf")) {
+
+    geo <- sf::st_geometry(x)
+
+    e <- sf::st_set_geometry(x, NULL)
+
+    for(i in 1:ncol(e)){
+      e[,i] <- e[,i]*units::as_units("veh")
+    }
+
+    if(!missing(time)){
+      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    }
+    e <- sf::st_sf(e, geometry = geo)
+
+
+  } else if  ( is.matrix(x) ) {
 
     veh <- as.data.frame(x)
 
