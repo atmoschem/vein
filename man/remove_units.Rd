@@ -7,13 +7,13 @@
 remove_units(x)
 }
 \arguments{
-\item{x}{Object with class "data.frame", "matrix" or "units"}
+\item{x}{Object with class "sf",  "data.frame", "matrix" or "units"}
 }
 \value{
-"data.frame", "matrix" or numeric
+"sf", data.frame", "matrix" or numeric
 }
 \description{
-\code{\link{remove_units}} Remove units from data.frames, matrix or units.
+\code{\link{remove_units}} Remove units from sf,  data.frames, matrix or units.
 }
 \examples{
 \dontrun{
