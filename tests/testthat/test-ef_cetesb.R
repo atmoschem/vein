@@ -4,6 +4,10 @@ test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO", "PC_G")[1]), 0.21)
 })
 
+test_that("ef_cetesb works", {
+  expect_equal(as.numeric(ef_cetesb("SO2", "PC_G", sppm = 300)[1]), 0.03518138)
+})
+
 test_that("ef_cetesb stops", {
   expect_error(ef_cetesb("CO", "PC_G", year = 10),
                "Choose.?\\(?")

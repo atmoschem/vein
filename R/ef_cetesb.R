@@ -4,7 +4,7 @@
 #' @param p Character;
 #'
 #' Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
-#' "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gD/KWH", "gCO2/KWH", "RCHO",
+#' "PM", "N2O", "KML", "FC", "NO2", "NO", "gD/KWH", "gCO2/KWH", "RCHO",
 #' "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 #' "RCHO_0km" and "ETOH_0km",
 #' (g/km).  Evaporative emissions at average temperature ranges:
@@ -23,6 +23,7 @@
 #' @param year Numeric; Filter the emission factor to start from a specific base year.
 #' If project is 'constant' values above 2017 and below 1980 will be repeated
 #' @param agemax Integer; age of oldest vehicles for that category
+#' @param sppm Numeric, sulfur (sulphur) in ppm in fuel.
 #' @param full Logical; To return a data.frame instead or a vector adding
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
 #' @param project haracter showing the method for projecting emission factors in
@@ -105,8 +106,16 @@
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
 #' ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 #' ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
+#' ef_cetesb(p = "SO2", veh = "PC_G", year = 2030, agemax = 40, sppm = 300)
 #' }
-ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = "constant", verbose = FALSE){
+ef_cetesb <- function(p,
+                      veh,
+                      year = 2017,
+                      agemax = 40,
+                      sppm,
+                      full = FALSE,
+                      project = "constant",
+                      verbose = FALSE){
   ef <- sysdata$cetesb
   ef[is.na(ef)] <- 0
 
@@ -149,9 +158,11 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
     evapd <- c("D_20_35","D_10_25","D_0_15")
     evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
     pols <- as.character(unique(ef$Pollutant))
-    if(!p %in% pols){
+
+    if(!p %in% c(pols, "SO2")){
       stop(cat("Please, choose one of the following pollutants:\n", pols, "\n"))
     }
+
     if(p %in% evapd){
       if(verbose) message("Units: [g/day]\n")
     }
@@ -162,6 +173,12 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
     if(any(!veh %in% nveh)){
       stop(cat("Please, choose on of the following categories:\n", nveh, "\n"))
     }
+
+    if(p == "SO2" & missing(sppm)){ stop("if p is 'SO2', sppm must be present")}
+
+    k <- ifelse(p == "SO2", sppm*2*1e-06, 1)
+    p <- ifelse(p == "SO2", "FC", p)
+
     if(full) {
       if(p %in% c(evapd, evap)){
         df <- cbind(ef[ef$Pollutant == p, 1:11],
@@ -170,7 +187,7 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
 
       } else {
         df <- cbind(ef[ef$Pollutant == p, 1:11],
-                    EmissionFactors(ef[ef$Pollutant == p, veh]))
+                    EmissionFactors(ef[ef$Pollutant == p, veh]*k)  )
         names(df)[ncol(df)] <- p
 
       }
@@ -178,7 +195,7 @@ ef_cetesb <- function(p, veh, year = 2017, agemax = 40, full = FALSE, project = 
       if(p %in% c(evapd, evap)){
         df <- ef[ef$Pollutant == p, veh]
       } else {
-        df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh])
+        df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh]*k)
       }
 
     }
