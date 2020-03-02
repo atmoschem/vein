@@ -113,6 +113,9 @@ they are internally changed to the new convention:
 "M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
 "M_FE_150", "M_FE_150_500","M_FE_500",
 
+If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
+it will show a warning
+
 \strong{Emission factor for vehicles older than the reported by CETESB were filled as the moving average of 2:}
 
 \itemize{
@@ -134,6 +137,7 @@ ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
 ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 ef_cetesb(p = "SO2", veh = "PC_G", year = 2030, agemax = 40, sppm = 300)
+ef_cetesb(p = "SO2", veh = "PC_FE", year = 2030, agemax = 40, sppm = 300)
 }
 }
 \references{

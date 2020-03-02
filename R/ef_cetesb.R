@@ -85,6 +85,9 @@
 #' "M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
 #' "M_FE_150", "M_FE_150_500","M_FE_500",
 #'
+#' If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
+#' it will show a warning
+#'
 #' \strong{Emission factor for vehicles older than the reported by CETESB were filled as the moving average of 2:}
 #'
 #' \itemize{
@@ -107,6 +110,7 @@
 #' ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 #' ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 #' ef_cetesb(p = "SO2", veh = "PC_G", year = 2030, agemax = 40, sppm = 300)
+#' ef_cetesb(p = "SO2", veh = "PC_FE", year = 2030, agemax = 40, sppm = 300)
 #' }
 ef_cetesb <- function(p,
                       veh,
@@ -147,99 +151,111 @@ ef_cetesb <- function(p,
                   "M_FE_500" = "MC_500_FE")
     message(veh)
   }
-      year1 <- ef$Year[1]
+  year1 <- ef$Year[1]
 
-    p <- gsub(pattern = "d", replacement = "", x = p) #not break old code
+  p <- gsub(pattern = "d", replacement = "", x = p) #not break old code
 
-    if(year < 1956) stop("Choose a newer year")
-    # Selecting
-    ef <- ef[ef$Year <= year, ]
+  s0 <- c("PC_E", "PC_FE", "LCV_E", "LCV_FE",
+          "MC_150_FE", "MC_150_500_FE", "MC_500_FE")
 
-    evapd <- c("D_20_35","D_10_25","D_0_15")
-    evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
-    pols <- as.character(unique(ef$Pollutant))
+  if(p == "SO2" & length(veh) > 1) warning("sppm must has the same length as veh")
 
-    if(!p %in% c(pols, "SO2")){
-      stop(cat("Please, choose one of the following pollutants:\n", pols, "\n"))
-    }
 
-    if(p %in% evapd){
-      if(verbose) message("Units: [g/day]\n")
-    }
-    if(p %in% evap){
-      if(verbose) message("Units: [g/trip]\n")
-    }
-    nveh <- names(ef)[12:ncol(ef)]
-    if(any(!veh %in% nveh)){
-      stop(cat("Please, choose on of the following categories:\n", nveh, "\n"))
-    }
+  if(year < 1956) stop("Choose a newer year")
+  # Selecting
+  ef <- ef[ef$Year <= year, ]
 
-    if(p == "SO2" & missing(sppm)){ stop("if p is 'SO2', sppm must be present")}
+  evapd <- c("D_20_35","D_10_25","D_0_15")
+  evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
+  pols <- as.character(unique(ef$Pollutant))
 
-    k <- ifelse(p == "SO2", sppm*2*1e-06, 1)
-    p <- ifelse(p == "SO2", "FC", p)
+  if(!p %in% c(pols, "SO2")){
+    stop(cat("Please, choose one of the following pollutants:\n", pols, "\n"))
+  }
 
-    if(full) {
-      if(p %in% c(evapd, evap)){
-        df <- cbind(ef[ef$Pollutant == p, 1:11],
-                    ef[ef$Pollutant == p, veh])
-        names(df)[ncol(df)] <- p
+  if(p %in% evapd){
+    if(verbose) message("Units: [g/day]\n")
+  }
+  if(p %in% evap){
+    if(verbose) message("Units: [g/trip]\n")
+  }
+  nveh <- names(ef)[12:ncol(ef)]
+  if(any(!veh %in% nveh)){
+    stop(cat("Please, choose on of the following categories:\n", nveh, "\n"))
+  }
 
-      } else {
-        df <- cbind(ef[ef$Pollutant == p, 1:11],
-                    EmissionFactors(ef[ef$Pollutant == p, veh]*k)  )
-        names(df)[ncol(df)] <- p
+  if(p == "SO2" & missing(sppm)){ stop("if p is 'SO2', sppm must be present")}
 
-      }
-    } else{
-      if(p %in% c(evapd, evap)){
-        df <- ef[ef$Pollutant == p, veh]
-      } else {
-        df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh]*k)
-      }
+  pol <- p
+  k <- ifelse(p == "SO2", sppm*2*1e-06, 1)
+  p <- ifelse(p == "SO2", "FC", p)
 
-    }
-    if(is.data.frame(df)){
-      # project future EF
-      if(project == "constant"){
-        if(year > year1){
-          dif <- year - year1
-
-          eff <- do.call("rbind",(lapply(1:dif, function(i){
-            df[1, ]
-          })))
-          edff <- rbind(eff, df[1:(agemax - dif), ])
-        }
-      }
-
-      #Filling older ef
-      if(!missing(agemax)){
-        if(nrow(df) < agemax){
-          dif <- agemax - nrow(df)
-          df[nrow(df):(nrow(df)+dif), ] <- df[nrow(df), ]
-        }
-        df <-  df[1:agemax, ]
-      }
+  if(full) {
+    if(p %in% c(evapd, evap)){
+      df <- cbind(ef[ef$Pollutant == p, 1:11],
+                  ef[ef$Pollutant == p, veh])
+      names(df)[ncol(df)] <- p
 
     } else {
-      # project future EF
-      if(project == "constant"){
-        if(year > year1){
-          dif <- year - year1
-          eff <- rep(df[1], dif)
-          df <- c(eff, df[1:(agemax - dif)])
-        }
+      if(pol == "SO2" & length(veh) == 1){
+        if(veh %in% s0) k = 0
       }
-
-      #Filling older ef
-      if(!missing(agemax)){
-        if(length(df) < agemax){
-          dif <- agemax - length(df)
-          df[length(df):(length(df)+dif)] <- df[length(df)]
-        }
-        df <-  df[1:agemax]
-      }
-
+      df <- cbind(ef[ef$Pollutant == p, 1:11],
+                  EmissionFactors(ef[ef$Pollutant == p, veh]*k)  )
+      names(df)[ncol(df)] <- p
     }
-    return(df)
+  } else {
+    if(p %in% c(evapd, evap)){
+      df <- ef[ef$Pollutant == p, veh]
+    } else {
+      if(pol == "SO2" & length(veh) == 1){
+        if(veh %in% s0) k = 0
+      }
+      df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh]*k)
+    }
+
+  }
+  if(is.data.frame(df)){
+    # project future EF
+    if(project == "constant"){
+      if(year > year1){
+        dif <- year - year1
+
+        eff <- do.call("rbind",(lapply(1:dif, function(i){
+          df[1, ]
+        })))
+        edff <- rbind(eff, df[1:(agemax - dif), ])
+      }
+    }
+
+    #Filling older ef
+    if(!missing(agemax)){
+      if(nrow(df) < agemax){
+        dif <- agemax - nrow(df)
+        df[nrow(df):(nrow(df)+dif), ] <- df[nrow(df), ]
+      }
+      df <-  df[1:agemax, ]
+    }
+
+  } else {
+    # project future EF
+    if(project == "constant"){
+      if(year > year1){
+        dif <- year - year1
+        eff <- rep(df[1], dif)
+        df <- c(eff, df[1:(agemax - dif)])
+      }
+    }
+
+    #Filling older ef
+    if(!missing(agemax)){
+      if(length(df) < agemax){
+        dif <- agemax - length(df)
+        df[length(df):(length(df)+dif)] <- df[length(df)]
+      }
+      df <-  df[1:agemax]
+    }
+
+  }
+  return(df)
 }

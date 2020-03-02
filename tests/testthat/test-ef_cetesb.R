@@ -74,30 +74,6 @@ test_that("ef_cetesb works", {
                0.19)
 })
 
-test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
-                                    c("PC_G", "LCV_G"),
-                                    year = 1980,
-                                    agemax = 10)[1,1]),
-               33.6)
-})
-
-test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
-                                    c("PC_G", "LCV_G"),
-                                    year = 2020,
-                                    agemax = 100)[1,1]),
-               0.19)
-})
-
-
-test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
-                                    c("PC_G", "LCV_G"),
-                                    year = 1980,
-                                    agemax = 100)[1,1]),
-               33.6)
-})
 
 test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO",
@@ -116,3 +92,18 @@ test_that("ef_cetesb works", {
                33.6)
 })
 
+test_that("ef_cetesb works", {
+  expect_warning(ef_cetesb("SO2",
+                                    c("PC_G", "LCV_G"),
+                                    year = 2020,
+                                    agemax = 10, sppm = 300),
+               "?")
+})
+
+test_that("ef_cetesb works", {
+  expect_error(ef_cetesb("SO2",
+                           c("PC_G", "LCV_G"),
+                           year = 2020,
+                           agemax = 10),
+                 "?")
+})
