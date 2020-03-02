@@ -9,7 +9,7 @@ test_that("remove_units works", {
 test_that("remove_units works", {
   df <- ef_cetesb(p = "CO", c("PC_G", "PC_FG"))[1, ]
   row.names(df) <- NULL
-  expect_equal(remove_units(df),
+  expect_equal(as.data.frame(remove_units(df)),
                data.frame(PC_G = 0.21, PC_FG = 0.34))
 })
 

@@ -7,7 +7,7 @@
 \alias{plot.Vehicles}
 \title{Construction function for class "Vehicles"}
 \usage{
-Vehicles(x, ...)
+Vehicles(x, ..., time)
 
 \method{print}{Vehicles}(x, ...)
 
@@ -19,6 +19,8 @@ Vehicles(x, ...)
 \item{x}{Object with class "Vehicles"}
 
 \item{...}{ignored}
+
+\item{time}{Character to be the time units as denominator, eg "1/h"}
 
 \item{object}{Object with class "Vehicles"}
 

@@ -7,7 +7,7 @@
 \alias{plot.Emissions}
 \title{Construction function for class "Emissions"}
 \usage{
-Emissions(x, ...)
+Emissions(x, time, ...)
 
 \method{print}{Emissions}(x, ...)
 
@@ -17,6 +17,8 @@ Emissions(x, ...)
 }
 \arguments{
 \item{x}{Object with class "data.frame", "matrix" or "numeric"}
+
+\item{time}{Character to be the time units as denominator, eg "1/h"}
 
 \item{...}{ignored}
 
@@ -45,7 +47,7 @@ veh <- data.frame(PC_G = PC_G)
 pc1 <- my_age(x = net$ldv, y = PC_G, name = "PC")
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 speed <- netspeed(pcw, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-pckm <- units::set_units(fkm[[1]](1:24), "km"); pckma <- cumsum(pckm)
+pckm <- units::as_units(fkm[[1]](1:24), "km"); pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = pckma[1:11])
 cod2 <- emis_det(po = "CO", cc = 1000, eu = "I", km = pckma[12:24])
 #vehicles newer than pre-euro
@@ -58,5 +60,7 @@ E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, agemax = 41,
 dim(E_CO) # streets x vehicle categories x hours x days
 class(E_CO)
 plot(E_CO)
+####
+Emissions(1, time = "1/h")
 }
 }

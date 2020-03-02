@@ -4,7 +4,7 @@
 \alias{temp_fact}
 \title{Expansion of hourly traffic data}
 \usage{
-temp_fact(q, pro, net)
+temp_fact(q, pro, net, time)
 }
 \arguments{
 \item{q}{Numeric; traffic data per each link}
@@ -12,6 +12,8 @@ temp_fact(q, pro, net)
 \item{pro}{Numeric; expansion factors data-frames}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
+
+\item{time}{Character to be the time units as denominator, eg "1/h"}
 }
 \value{
 data-frames of expanded traffic or sf.

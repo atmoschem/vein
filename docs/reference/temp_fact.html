@@ -134,7 +134,7 @@ hourly expansion data-frames to obtain a data-frame of traffic
 at each link to every hour</p>
     </div>
 
-    <pre class="usage"><span class='fu'>temp_fact</span>(<span class='no'>q</span>, <span class='no'>pro</span>, <span class='no'>net</span>)</pre>
+    <pre class="usage"><span class='fu'>temp_fact</span>(<span class='no'>q</span>, <span class='no'>pro</span>, <span class='no'>net</span>, <span class='no'>time</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,6 +150,10 @@ at each link to every hour</p>
     <tr>
       <th>net</th>
       <td><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></td>
+    </tr>
+    <tr>
+      <th>time</th>
+      <td><p>Character to be the time units as denominator, eg "1/h"</p></td>
     </tr>
     </table>
 
