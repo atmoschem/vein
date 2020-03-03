@@ -130,7 +130,9 @@ Currently, 2020, there are not any sistem for recovery of fuel vapors in Brazil.
 the FS takes into account the vapour that comes from the fuel tank inside the car and
 released into the atmosphere when injecting new fuel. There are discussions about
 incrementing implementing stage I and II and/or ORVR thesedays. The ef FS is calculated
-as (KM/L)^-1*g/L with g/L 1.14 fgor gasoline and o.37 for ethanol (CETESB, 2016)
+by transforming g FC/km into  (L/KM)*g/L with g/L 1.14 fgor gasoline and 0.37
+for ethanol (CETESB, 2016). The density considered is 0.75425 for gasoline and
+0.809 for ethanol (t/m^3)
 }
 \examples{
 {
