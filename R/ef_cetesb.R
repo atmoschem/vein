@@ -105,6 +105,7 @@
 #' released into the atmosphere when injecting new fuel. There are discussions about
 #' incrementing implementing stage I and II and/or ORVR thesedays. The ef FS is calculated
 #' as (KM/L)^-1*g/L with g/L 1.14 fgor gasoline and o.37 for ethanol (CETESB, 2016)
+#'
 #' @export
 #' @examples {
 #' a <- ef_cetesb("CO", "PC_G")
