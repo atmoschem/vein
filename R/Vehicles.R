@@ -16,7 +16,7 @@
 #'
 #' @rdname Vehicles
 #' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
-#' @examples \dontrun{
+#' @examples {
 #' lt <- rnorm(100, 300, 10)
 #' class(lt)
 #' vlt <- Vehicles(lt)

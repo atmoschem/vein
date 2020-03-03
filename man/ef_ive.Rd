@@ -64,7 +64,7 @@ model. This function depend on vectorized mileage, which means your can
 enter with the mileage by age of use and the name of the pollutant.
 }
 \examples{
-\dontrun{
+{
 # Do not run
 # Passenger Cars PC
 data(fkm)

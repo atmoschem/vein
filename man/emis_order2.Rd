@@ -61,7 +61,7 @@ time and cover only 168 hours starting on monday. This function tries to transfo
 in local time to the desired utc time, by recycling the local emissions.
 }
 \examples{
-\dontrun{
+{
 #do not run
 data(net)
 data(pc_profile)
@@ -95,7 +95,7 @@ gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
 wCO <- emis_order(gr, start = "sat", hours = 24, verbose = TRUE)
 wCO <- emis_order(E_CO_STREETS, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
 wCO <- emis_order2(x = E_CO_g,
-                   lt_emissions = "2020-02-24 00:00",
+                   lt_emissions = "2020-02-19 00:00",
                    start_utc_time = "2020-02-20 00:00",
                    desired_length = 241)
 }

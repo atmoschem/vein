@@ -27,7 +27,7 @@
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 #' efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",

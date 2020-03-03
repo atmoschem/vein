@@ -214,7 +214,7 @@ you a menu to choose one of the 697 time zones available.</p></td>
     <div class='dont-index'><p><code><a href='GriddedEmissionsArray.html'>GriddedEmissionsArray</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>{
 <span class='co'>#do not run</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
@@ -248,10 +248,21 @@ you a menu to choose one of the 697 time zones available.</p></td>
 <span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_order.html'>emis_order</a></span>(<span class='no'>gr</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"sat"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_order.html'>emis_order</a></span>(<span class='no'>E_CO_STREETS</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2016-04-06"</span>), <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>241</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order2</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>E_CO_g</span>,
-                   <span class='kw'>lt_emissions</span> <span class='kw'>=</span> <span class='st'>"2020-02-24 00:00"</span>,
+                   <span class='kw'>lt_emissions</span> <span class='kw'>=</span> <span class='st'>"2020-02-19 00:00"</span>,
                    <span class='kw'>start_utc_time</span> <span class='kw'>=</span> <span class='st'>"2020-02-20 00:00"</span>,
                    <span class='kw'>desired_length</span> <span class='kw'>=</span> <span class='fl'>241</span>)
-}</div></pre>
+}</div><div class='output co'>#&gt; Number of lon points: 23
+#&gt; Number of lat points: 19
+#&gt; </div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>g</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 361822086.99
+#&gt; Sum of gridded emissions 361822086.99</div><div class='output co'>#&gt; <span class='message'>Class :GriddedEmissionsArray</span>
+#&gt; <span class='message'>Class :array</span></div><div class='output co'>#&gt; emissions starting at sat with 24 hours</div><div class='output co'>#&gt; <span class='message'>Class :sf</span>
+#&gt; <span class='message'>Class :data.frame</span></div><div class='output co'>#&gt; 
+#&gt; using date: 2016-04-06 
+#&gt; emissions starting at thu with 241 hours
+#&gt; Transforming into data.frame
+#&gt; Your local_tz is:  America/Sao_Paulo 
+#&gt; Difference with UTC:  -3 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

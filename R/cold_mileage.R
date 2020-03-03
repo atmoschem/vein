@@ -10,7 +10,7 @@
 #' @keywords cold mileage
 #' @note This function is set so that values vaires between 0 and 1.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' lkm <- units::set_units(1:10, km)
 #' ta <- celsius(matrix(0:9, ncol = 12, nrow = 10))
 #' a <- cold_mileage(lkm, rbind(ta, ta))

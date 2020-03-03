@@ -47,7 +47,7 @@ It is
 \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
 }
 \examples{
-\dontrun{
+{
 data(net)
 g <- make_grid(net, 1/102.47/2) #500m in degrees
 names(net)

@@ -40,7 +40,7 @@
 #'  Vehicle Emissions Model. Transportation Research Board, 81st Annual Meeting,
 #'  January 2005, Washington, D.C.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' # Passenger Cars PC
 #' data(fkm)

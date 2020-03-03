@@ -20,7 +20,7 @@
 #' @return Writes a text file.
 #' @importFrom utils menu object.size packageVersion sessionInfo
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' a <- tempfile()
 #' f <- vein_notes("notes",
 #'            file = a)

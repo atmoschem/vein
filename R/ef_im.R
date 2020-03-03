@@ -17,7 +17,7 @@
 #' which would be approved in a inspection and mantainence program.
 #' @keywords mileage emission factors
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' # Passenger Cars PC
 #' data(fkm)

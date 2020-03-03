@@ -23,7 +23,7 @@ NULL
 #' @rdname vein-deprecated
 #'
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # do not run
 #' # Use library(eixport)
 #' # eixport::to_as4wrf()

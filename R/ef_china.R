@@ -69,7 +69,7 @@
 #' }
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{emis_hot_td}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # when standard is 'character'
 #' # Checking
 #' df_st <- rev(c(as.character(as.roman(5:1)), "PRE"))

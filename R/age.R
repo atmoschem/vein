@@ -59,7 +59,7 @@
 #' populations: an engineering approach for emissions calculations. Technological
 #' Forecasting and Social Change, 50(2), 135-149. Cited by Huo and Wang (2012)
 #'
-#' @examples \dontrun{
+#' @examples {
 #' vehLIA <- rep(1, 25)
 #' PV_Minia <- age(x = vehLIA)
 #' PV_Minib <- age(x = vehLIA, type = "weibull2", b = 11, a = 26)

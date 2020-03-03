@@ -44,7 +44,7 @@
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' PC_G <- c(33491,22340,24818,31808,46458,28574,24856,28972,37818,49050,87923,
 #'           133833,138441,142682,171029,151048,115228,98664,126444,101027,

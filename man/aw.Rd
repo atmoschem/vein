@@ -63,7 +63,7 @@ data.frame with with average weight
 \code{\link{aw}} average weight form traffic.
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 p1 <- pc_profile[, 1]

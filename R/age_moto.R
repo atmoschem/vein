@@ -30,7 +30,7 @@
 #' the shape of this curve.
 #' 4. You can use/merge/transform/adapt any of these functions.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' MOTO_E25_500 <- age_moto(x = net$ldv, name = "M_E25_500", k = 0.4)
 #' plot(MOTO_E25_500)

@@ -21,7 +21,7 @@
 #' @importFrom sf st_sf
 #' @return data.frame with with average weight
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' p1 <- pc_profile[, 1]

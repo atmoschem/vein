@@ -41,7 +41,7 @@ Objects of class "GriddedEmissionsArray"
 "EmissionsArray" with 4 dimensios.
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 data(fe2015)

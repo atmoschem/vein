@@ -127,7 +127,7 @@ it will show a warning
 }
 }
 \examples{
-\dontrun{
+{
 a <- ef_cetesb("CO", "PC_G")
 a <- ef_cetesb("R_10_25", "PC_G")
 a <- ef_cetesb("CO", c("PC_G", "PC_FE"))

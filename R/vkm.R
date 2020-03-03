@@ -14,7 +14,7 @@
 #' @param as_df Logical; when TRUE transform returning array in data.frame (streets x hour*days)
 #' @return emission estimation  of vkm
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' pc <- lkm <- abs(rnorm(10,1,1))*100
 #' pro <- matrix(abs(rnorm(24*7,0.5,1)), ncol=7, nrow=24)

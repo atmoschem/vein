@@ -23,7 +23,7 @@
 #' @note The length of the list should be equal to the name of the age categories of
 #' a specific type of vehicle
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' data(fe2015)
 #' co1 <- fe2015[fe2015$Pollutant=="CO",]

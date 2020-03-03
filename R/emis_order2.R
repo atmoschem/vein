@@ -38,7 +38,7 @@
 #' @return sf or data.frame
 #' @seealso  \code{\link{GriddedEmissionsArray}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' #do not run
 #' data(net)
 #' data(pc_profile)
@@ -72,7 +72,7 @@
 #' wCO <- emis_order(gr, start = "sat", hours = 24, verbose = TRUE)
 #' wCO <- emis_order(E_CO_STREETS, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
 #' wCO <- emis_order2(x = E_CO_g,
-#'                    lt_emissions = "2020-02-24 00:00",
+#'                    lt_emissions = "2020-02-19 00:00",
 #'                    start_utc_time = "2020-02-20 00:00",
 #'                    desired_length = 241)
 #' }
@@ -86,8 +86,8 @@ emis_order2 <- function(x, # 24 hours or one week
                         net,
                         verbose = TRUE) {
 
-  if(lt_emissions == start_utc_time) {
-    stop("lt_emissions must be before start_utc_time")
+  if(as.POSIXct(lt_emissions) >= as.POSIXct(start_utc_time)) {
+    stop("lt_emissions must start before start_utc_time")
   }
   if(verbose) cat("Transforming into data.frame\n")
 
