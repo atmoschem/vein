@@ -21,8 +21,8 @@ ef_cetesb(
 Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
 "PM", "N2O", "KML", "FC", "NO2", "NO", "gD/KWH", "gCO2/KWH", "RCHO",
 "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
-"RCHO_0km" and "ETOH_0km",
-(g/km).  Evaporative emissions at average temperature ranges:
+"RCHO_0km" and "ETOH_0km", "FS" (fuel sales) (g/km).
+Evaporative emissions at average temperature ranges:
 "D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15",
 "S_0_15" and "R_0_15" where D means diurnal (g/day), S hot/warm soak (g/trip)
 and R hot/warm running losses (g/trip).}
@@ -125,6 +125,11 @@ it will show a warning
 \item Range MC Gasoline: 2018 - 2003.  EF for 2002 and older as movign average.
 \item Range MC Flex 150-500cc and >500cc: 2018 - 2012.  EF for 2011 and older as movign average.
 }
+
+Currently, 2020, there are not any sistem for recovery of fuel vapors in Brazil. Hence,
+the FS takes into account the vapour that comes from the fuel tank inside the car and
+released into the atmosphere when injecting new fuel. There are discussions about
+incrementing implementing stage I and II and/or ORVR thesedays.
 }
 \examples{
 {
