@@ -28,7 +28,7 @@
 #' a specific type of vehicle. Thanks to Glauber Camponogara for the help.
 #' @seealso ef_ldv_seed
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(fe2015)
 #' co1 <- fe2015[fe2015$Pollutant=="CO", ]
 #' lef <- ef_ldv_scaled(dfcol = co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",

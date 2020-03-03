@@ -9,7 +9,7 @@
 #' @param approach Character; Currently only supports "bottom-up".
 #' @importFrom utils download.file untar
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' #do not run
 #' }
 #'

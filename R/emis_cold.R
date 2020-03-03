@@ -29,7 +29,7 @@
 #' @param verbose Logical; To show more information
 #' @return EmissionsArray  g/h
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' data(net)
 #' data(pc_profile)

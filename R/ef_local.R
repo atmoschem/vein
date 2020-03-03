@@ -25,7 +25,7 @@
 #' @note The names of the ef must be `Age`	`Year`	`Pollutant` and all the vehicle categories...
 #' @seealso  \code{\link{ef_cetesb}}
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' #do not run
 #' }
 ef_local <- function(p, veh, year = 2017, agemax = 40, ef, full = FALSE, project = "constant", verbose = TRUE){

@@ -60,7 +60,7 @@ numeric vector of total volume of traffic per link as ADT
 \code{\link{adt}} calculates ADT based on hourly traffic data.
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 p1 <- pc_profile[, 1]

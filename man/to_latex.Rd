@@ -23,7 +23,7 @@ a text file with extension .tex.
 table, aiming to replicate the method of tablegenerator.com
 }
 \examples{
-\dontrun{
+{
 df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
                  emission = vein::Emissions(1:30),
                  region = rep(letters[1:2], 15))

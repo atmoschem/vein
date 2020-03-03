@@ -27,7 +27,7 @@
 #' @note if length of eu is bigger than 1, cumileage can have values  of length 1
 #' or length equal to length of eu
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' efe10 <- ef_nitro(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
 #' eu = "III", p = "NH3", S = 10,
 #' show.equation = FALSE)

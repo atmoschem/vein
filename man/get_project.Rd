@@ -19,7 +19,7 @@ It needs absolute path.}
 The projects are available on Github.com/atmoschem/vein/projects
 }
 \examples{
-\dontrun{
+{
 #do not run
 }
 

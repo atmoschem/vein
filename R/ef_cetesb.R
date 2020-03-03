@@ -100,7 +100,7 @@
 #' @references Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
 #' url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' a <- ef_cetesb("CO", "PC_G")
 #' a <- ef_cetesb("R_10_25", "PC_G")
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
@@ -158,8 +158,12 @@ ef_cetesb <- function(p,
   s0 <- c("PC_E", "PC_FE", "LCV_E", "LCV_FE",
           "MC_150_FE", "MC_150_500_FE", "MC_500_FE")
 
-  if(p == "SO2" & length(veh) > 1) warning("sppm must has the same length as veh")
-
+  if(p == "SO2"){
+    if(missing(sppm)) stop("if p is 'SO2', sppm must be present")
+    if(length(veh) != length(sppm)) {
+      stop("sppm must has the same length as veh")
+    }
+  }
 
   if(year < 1956) stop("Choose a newer year")
   # Selecting
@@ -184,7 +188,7 @@ ef_cetesb <- function(p,
     stop(cat("Please, choose on of the following categories:\n", nveh, "\n"))
   }
 
-  if(p == "SO2" & missing(sppm)){ stop("if p is 'SO2', sppm must be present")}
+
 
   pol <- p
   k <- ifelse(p == "SO2", sppm*2*1e-06, 1)

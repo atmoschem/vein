@@ -46,7 +46,7 @@ lapply. This function is in development and pull request are welcome.
 \strong{You must multiply your emissions with the area to return to the original units.}
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 data(fkm)

@@ -26,7 +26,7 @@ NULL
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' }
 hot_soak <- function(x,carb,p,eshotc,eswarmc,eshotfi) {

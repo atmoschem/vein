@@ -15,7 +15,7 @@
 #' @return emission estimation  g/h
 #' @note  This function was created to copy and zip project without the emis.
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' }
 invcop <- function (in_name = getwd(),

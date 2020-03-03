@@ -222,7 +222,7 @@ weight of traffic fleet in each road</p></td>
 Universidad de Chile#'</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'>{
 <span class='co'># Do not run</span>
 <span class='no'>veh</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>1000</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>,<span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>veh</span>*<span class='fl'>1.5</span>
@@ -231,7 +231,19 @@ Universidad de Chile#'</p>
 <span class='no'>emi</span>  <span class='kw'>&lt;-</span> <span class='fu'>emis_paved</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>veh</span>, <span class='kw'>adt</span> <span class='kw'>=</span> <span class='no'>ADT</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>0.65</span>, <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>emi</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>emi</span>)
-}</div></pre>
+}</div><div class='output co'>#&gt;              V1            V2            V3            V4            V5
+#&gt; 1  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]
+#&gt; 2  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]
+#&gt; 3  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]
+#&gt; 4 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g]
+#&gt; 5 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g]
+#&gt;              V6            V7            V8            V9           V10
+#&gt; 1  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]  260893.8 [g]
+#&gt; 2  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]  521787.6 [g]
+#&gt; 3  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]  782681.4 [g]
+#&gt; 4 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g] 1043575.1 [g]
+#&gt; 5 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g] 1304468.9 [g]
+#&gt; ... and 1 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
