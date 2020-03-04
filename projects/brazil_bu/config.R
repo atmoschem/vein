@@ -28,6 +28,19 @@ if(!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles
   stop("Precisa adicionar coluna ",   setdiff(metadata$vehicles, names(veh)), " em veh")
 }
 
+#checar Year
+if(!"Year" %in% names(veh)) stop("Não estou enxergando a coluna 'Year' em 'veh'")
+if(!"Year" %in% names(mileage)) stop("Não estou enxergando a coluna 'Year' em 'mileage'")
+if(!"Year" %in% names(ef)) stop("Não estou enxergando a coluna 'Year' em 'ef'")
+
+# checar ano base
+if(veh$Year[1] != year) stop(paste0("The base year is ", year, 
+                                    " but the first year in 'veh' is ", veh$Year[1]))
+if(mileage$Year[1] != year) stop(paste0("The base year is ", year, 
+                                        " but the first year in 'mileage' is ", mileage$Year[1]))
+if(ef$Year[1] != year) stop(paste0("The base year is ", year, 
+                                   " but the first year in 'ef' is ", ef$Year[1]))
+
 message("Arquivos em ", getwd(), "/config/*\n")
 saveRDS(metadata, "config/metadata.rds")
 saveRDS(mileage, "config/mileage.rds")
