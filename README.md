@@ -36,8 +36,7 @@
 
 **V**ehicular **E**missions **IN**ventories (VEIN). An R package to
 estimate vehicular emissions. It currently covers the following
-pollutants in speed
-functions:
+pollutants in speed functions:
 
 ### European emission factors for all available vehicle categories exhaust:
 
@@ -107,8 +106,7 @@ functions:
     “e\_oli”, “e\_iso”, “e\_tol”, “e\_xyl”, “e\_c2h5oh”, “e\_ald”,
     “e\_hcho”, “e\_ch3oh”, “e\_ket”, “E\_SO4i”, “E\_SO4j”, “E\_NO3i”,
     “E\_NO3j”, “E\_MP2.5i”, “E\_MP2.5j”, “E\_ORGi”, “E\_ORGj”,
-    “E\_ECi”,
-“E\_ECj”
+    “E\_ECi”, “E\_ECj”
 
 ### Base emission factors from International Emission Model (IVE) for all available vehicle categories:
 
@@ -262,8 +260,7 @@ sp::spplot(as(dfspeednet, "Spatial"),
        col.regions = rev(cptcity::cpt()))
 ```
 
-![](https://i.imgur.com/qJUdMea.png) \#\#\# 2) Emission
-    Factors
+![](https://i.imgur.com/qJUdMea.png) \#\#\# 2) Emission Factors
 
   - [ef\_ldv\_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
   - [ef\_hdv\_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
@@ -307,8 +304,7 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
     hour.
   - When the argument by = “streets\_wide”, aggregated the emissions by
     street. In this cae, if you add the argument net with the respective
-    streets, it returns an spatial net with the hourly
-emissions.
+    streets, it returns an spatial net with the hourly emissions.
 
 <!-- end list -->
 
