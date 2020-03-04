@@ -54,10 +54,11 @@ Writes a text file.
 writting technical notes about this emissions inventory
 }
 \examples{
-{
-a <- tempfile()
-f <- vein_notes("notes",
-           file = a)
-readLines(f)
+\dontrun{
+#do not run
+a <- "delete"
+f <- vein_notes("notes", file = a)
+file.edit(f)
+file.remove("delete")
 }
 }
