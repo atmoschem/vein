@@ -191,7 +191,7 @@
 <p>VEIN can be installed via CRAN or github</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"vein"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(remotes) </a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">install_github</span>(<span class="st">"atmoschem/vein"</span>)</a></code></pre></div>
 <p>In order to run the demo, this package is also needed:</p>
 <ul>
 <li><a href="https://github.com/tidyverse/ggplot2">ggplot2</a></li>
@@ -334,7 +334,7 @@
 </ol>
 <!-- end list --><div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(eixport)</a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"EMISS"</span>))</a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="kw"><a href="https://rdrr.io/pkg/eixport/man/wrf_create.html">wrf_create</a></span>(<span class="dt">wrfinput_dir         =</span> <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"eixport"</span>),</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">wrf_create</span>(<span class="dt">wrfinput_dir         =</span> <span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"eixport"</span>),</a>
 <a class="sourceLine" id="cb12-4" title="4">           <span class="dt">wrfchemi_dir         =</span> <span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"EMISS"</span>),</a>
 <a class="sourceLine" id="cb12-5" title="5">           <span class="dt">domains              =</span> <span class="dv">2</span>,</a>
 <a class="sourceLine" id="cb12-6" title="6">           <span class="dt">frames_per_auxinput5 =</span> <span class="dv">1</span>, <span class="co">#hours</span></a>

@@ -20,11 +20,12 @@
 #' @return Writes a text file.
 #' @importFrom utils menu object.size packageVersion sessionInfo
 #' @export
-#' @examples {
-#' a <- tempfile()
-#' f <- vein_notes("notes",
-#'            file = a)
-#' readLines(f)
+#' @examples \dontrun{
+#' #do not run
+#' a <- "delete"
+#' f <- vein_notes("notes", file = a)
+#' file.edit(f)
+#' file.remove("delete")
 #' }
 vein_notes <- function (notes,
                         file = "README",
