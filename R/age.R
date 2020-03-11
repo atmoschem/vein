@@ -1,5 +1,7 @@
 #' Applies a survival rate to numeric new vehicles
 #'
+#' @family age
+#'
 #' @description \code{\link{age}} returns survived vehicles
 #'
 #' @param x Numeric; numerical vector of sales or registrations for each year

@@ -1,5 +1,7 @@
 #' Returns amount of vehicles at each age
 #'
+#' @family age
+#'
 #' @description \code{\link{age_moto}} returns amount of vehicles at each age
 #'
 #' @param x Numeric; numerical vector of vehicles with length equal to lines features of road network

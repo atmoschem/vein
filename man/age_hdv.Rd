@@ -73,3 +73,10 @@ LT_B5 <- age_hdv(x = net$hdv, name = "LT_B5", net = net)
 plot(LT_B5)
 }
 }
+\seealso{
+Other age: 
+\code{\link{age_ldv}()},
+\code{\link{age_moto}()},
+\code{\link{age}()}
+}
+\concept{age}
