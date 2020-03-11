@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis_order2.R
 \name{emis_order2}
 \alias{emis_order2}
-\title{Re-order the emission to match specific hours and days (experimental)}
+\title{Re-order the emission to match specific hours and days}
 \usage{
 emis_order2(
   x,
@@ -60,6 +60,10 @@ scan starts a thursday at 00:00 UTC, cover 271 hours of simulations, but hour em
 time and cover only 168 hours starting on monday. This function tries to transform our emissions
 in local time to the desired utc time, by recycling the local emissions.
 }
+\note{
+The function emis_order2 will be kept for back compatibility until version
+1.0.0, where will be superseded by emis_oder, the same function.
+}
 \examples{
 {
 #do not run
@@ -92,9 +96,7 @@ g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 head(E_CO_g) #class sf
 gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
-wCO <- emis_order(gr, start = "sat", hours = 24, verbose = TRUE)
-wCO <- emis_order(E_CO_STREETS, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
-wCO <- emis_order2(x = E_CO_g,
+wCO <- emis_order(x = E_CO_g,
                    lt_emissions = "2020-02-19 00:00",
                    start_utc_time = "2020-02-20 00:00",
                    desired_length = 241)

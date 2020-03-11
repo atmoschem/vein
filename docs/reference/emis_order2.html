@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Re-order the emission to match specific hours and days (experimental) — emis_order2 • vein</title>
+<title>Re-order the emission to match specific hours and days — emis_order2 • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,7 +42,7 @@
 
 
 
-<meta property="og:title" content="Re-order the emission to match specific hours and days (experimental) — emis_order2" />
+<meta property="og:title" content="Re-order the emission to match specific hours and days — emis_order2" />
 <meta property="og:description" content="Emissions are ususally estimated for a year, 24 hours or one week from monday to
 sunday (with 168 hours). This depends on the availability of traffic data.
 When an air quality simulation is going to be done, they cover
@@ -128,7 +128,7 @@ in local time to the desired utc time, by recycling the local emissions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Re-order the emission to match specific hours and days (experimental)</h1>
+    <h1>Re-order the emission to match specific hours and days</h1>
     
     <div class="hidden name"><code>emis_order2.Rd</code></div>
     </div>
@@ -209,6 +209,10 @@ you a menu to choose one of the 697 time zones available.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>sf or data.frame</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>The function emis_order2 will be kept for back compatibility until version
+1.0.0, where will be superseded by emis_oder, the same function.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='GriddedEmissionsArray.html'>GriddedEmissionsArray</a></code></p></div>
@@ -245,20 +249,14 @@ you a menu to choose one of the 697 time zones available.</p></td>
 <span class='no'>E_CO_g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_grid.html'>emis_grid</a></span>(<span class='kw'>spobj</span> <span class='kw'>=</span> <span class='no'>E_CO_STREETS</span>, <span class='kw'>g</span> <span class='kw'>=</span> <span class='no'>g</span>, <span class='kw'>sr</span><span class='kw'>=</span> <span class='fl'>31983</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>E_CO_g</span>) <span class='co'>#class sf</span>
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GriddedEmissionsArray.html'>GriddedEmissionsArray</a></span>(<span class='no'>E_CO_g</span>, <span class='kw'>rows</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fl'>23</span>, <span class='kw'>times</span> <span class='kw'>=</span> <span class='fl'>168</span>, <span class='no'>T</span>)
-<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_order.html'>emis_order</a></span>(<span class='no'>gr</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='st'>"sat"</span>, <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>24</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_order.html'>emis_order</a></span>(<span class='no'>E_CO_STREETS</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span>(<span class='st'>"2016-04-06"</span>), <span class='kw'>hours</span> <span class='kw'>=</span> <span class='fl'>241</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_order2</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>E_CO_g</span>,
+<span class='no'>wCO</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='emis_order.html'>emis_order</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>E_CO_g</span>,
                    <span class='kw'>lt_emissions</span> <span class='kw'>=</span> <span class='st'>"2020-02-19 00:00"</span>,
                    <span class='kw'>start_utc_time</span> <span class='kw'>=</span> <span class='st'>"2020-02-20 00:00"</span>,
                    <span class='kw'>desired_length</span> <span class='kw'>=</span> <span class='fl'>241</span>)
 }</div><div class='output co'>#&gt; Number of lon points: 23
 #&gt; Number of lat points: 19
 #&gt; </div><div class='output co'>#&gt; <span class='message'>Your units are: </span></div><div class='output co'>#&gt; <span class='message'>g</span></div><div class='output co'>#&gt; <span class='message'>Transforming spatial objects to 'sr' </span></div><div class='output co'>#&gt; Sum of street emissions 361822086.99
-#&gt; Sum of gridded emissions 361822086.99</div><div class='output co'>#&gt; <span class='message'>Class :GriddedEmissionsArray</span>
-#&gt; <span class='message'>Class :array</span></div><div class='output co'>#&gt; emissions starting at sat with 24 hours</div><div class='output co'>#&gt; <span class='message'>Class :sf</span>
-#&gt; <span class='message'>Class :data.frame</span></div><div class='output co'>#&gt; 
-#&gt; using date: 2016-04-06 
-#&gt; emissions starting at thu with 241 hours
+#&gt; Sum of gridded emissions 361822086.99
 #&gt; Transforming into data.frame
 #&gt; Your local_tz is:  America/Sao_Paulo 
 #&gt; Difference with UTC:  -3 </div><div class='input'>
@@ -269,6 +267,7 @@ you a menu to choose one of the 697 time zones available.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#note">Note</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

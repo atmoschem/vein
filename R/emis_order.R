@@ -1,40 +1,45 @@
 #' Re-order the emission to match specific hours and days
 #'
-#' @description returns the emission array matching with corresponding weekdays and with
-#' the desired number of hours, recycling or droping hours from the emission array. For
-#' instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
-#' want to reorder them to start saturday you with a total a new length of hours
-#' of 241, you must emis_order(EMISSION, as.Date("2016-04-06"), 241)
+#' @description Emissions are ususally estimated for a year, 24 hours or one week from monday to
+#' sunday (with 168 hours). This depends on the availability of traffic data.
+#' When an air quality simulation is going to be done, they cover
+#' specific periods of time. For instance, WRF Chem emissions files supports periods of time,
+#' or two emissions sets for a representative day (0-12z 12-0z). Also a WRF Chem simulation
+#' scan starts a thursday at 00:00 UTC, cover 271 hours of simulations, but hour emissions are in local
+#' time and cover only 168 hours starting on monday. This function tries to transform our emissions
+#' in local time to the desired utc time, by recycling the local emissions.
 #'
-#' @param EMISSION one of the following:
+#' @param x one of the following:
+#' \itemize{
+#' \item Spatial object of class "Spatial". Columns are hourly emissions.
+#' \item Spatial Object of class "sf". Columns are hourly emissions.
+#' \item "data.frame", "matrix" or "Emissions".
+#'}
 #'
-#' 1) GriddedEmissionsArray or array with characteristics of GriddedEmissionsArray
-#' 2) Spatial object of class "Spatial". Columns are hourly emissions.
-#' 3) Spatial Object of class "sf". Columns are hourly emissions.
-#' 4) "data.frame", "matrix" or "Emissions". Columns are hourly emissions.
+#'In all cases, columns are hourly emissions.
+#' @param lt_emissions Local time of the emissions at first hour. It must be
+#' the \strong{before}  time of start_utc_time. For instance, if
+#' start_utc_time is 2020-02-02 00:00, and your emissions starts monday at 00:00,
+#' your lt_emissions must be 2020-01-27 00:00. The argument tz_lt will detect your
+#' current local time zone and do the rest for you.
 #'
-#' @param start Date or the start weekday or first 3 letters
-#' @param hours Numeric; number of hours needed to the simualation
-#' @param utc Integer; transform local into UTC emissions. For instance,
-#' utc = -3 means that the first hour of emissions is at 21:00 of the previous
-#' day.
-#' @param verbose Logical; display additional information
-#' @aliases weekly
+#' @param start_utc_time UTC time for the desired first hour. For instance,
+#' the first hour of the namelist.input for WRF.
+#' @param desired_length Integer; length to recycle or subset local emissions. For instance, the length
+#' of the WRF Chem simulations, states at namelist.input.
+#' @param tz_lt Character, Time zone of the local emissions. Default value is derived from
+#' Sys.timezone(), however, it accepts any other. If you enter a wrong tz, this function will show
+#' you a menu to choose one of the 697 time zones available.
+#' @param k Numeric, factor.
+#' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING".
+#' @param verbose Logical, to show more information, default is TRUE.
 #' @importFrom sf st_as_sf st_geometry st_set_geometry st_sf st_crs
-#' @format Emissions
-#'
-#' @author Daniel Schuch & Sergio Ibarra
-#' @importFrom data.table wday
-#' @return GriddedEmissionsArray, sf or data.frame, depending on the class of
-#' EMISSION
+#' @aliases weekly emis_order
+#' @return sf or data.frame
+#' @seealso  \code{\link{GriddedEmissionsArray}}
 #' @export
-#' @note This function assumes that the emissions have hours with length of
-#' factor of 24, e.g: 24 hours, 24*2 hours etc. Then, it re-order the emissions
-#' by the hours of estimations to match another length of emissions. For
-#' instance, if the input covers 168 hours and it is desired an object of 241
-#' hours that start saturday, this function can do that. It is useful when you
-#' are going to start a air quality simulation for specific periods of time.
 #' @examples {
+#' #do not run
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)
@@ -64,120 +69,83 @@
 #' E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 #' head(E_CO_g) #class sf
 #' gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
-#' wCO <- emis_order(gr, start = "sat", hours = 24, verbose = TRUE)
-#' wCO <- emis_order(E_CO_STREETS, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
+#' wCO <- emis_order(x = E_CO_g,
+#'                    lt_emissions = "2020-02-19 00:00",
+#'                    start_utc_time = "2020-02-20 00:00",
+#'                    desired_length = 241)
 #' }
 #'
-emis_order <- function(EMISSION, start = "mon", hours = 168,
-                       utc, verbose = TRUE){
-  if(verbose){
-    message(paste0("Class :",
-                   class(EMISSION), '\n'))
+emis_order <- function(x, # 24 hours or one week
+                        lt_emissions,
+                        start_utc_time,
+                        desired_length,
+                        tz_lt = Sys.timezone(),
+                        k = 1,
+                        net,
+                        verbose = TRUE) {
+
+  if(as.POSIXct(lt_emissions) >= as.POSIXct(start_utc_time)) {
+    stop("lt_emissions must start before start_utc_time")
   }
+  if(verbose) cat("Transforming into data.frame\n")
 
-  seg <- 1:24
-  ter <- 25:48
-  qua <- 49:72
-  qui <- 73:96
-  sex <- 97:120
-  sab <- 121:144
-  dom <- 145:168
-
-  index <- vector(mode = "numeric",length = hours)
-
-  if(class(start)[1] == "Date"){
-    if(verbose)
-      cat("\nusing date:", paste(start),"\n")
-    s <- data.table::wday(start)
-    if(s == 1) start = "mon"
-    if(s == 2) start = "tue"
-    if(s == 3) start = "wed"
-    if(s == 4) start = "thu"
-    if(s == 5) start = "fri"
-    if(s == 6) start = "sat"
-    if(s == 7) start = "sun"
+  if(class(x)[1] == "sf"){
+    x <- sf::st_set_geometry(x, NULL)
   }
-  if(is.character(start)){
-    if(start == "mon")
-      index <- suppressWarnings(matrix( c(seg,ter,qua,qui,sex,sab,dom),
-                                        ncol = 1, nrow = hours, byrow = T ))
-    if(start == "tue")
-      index <- suppressWarnings(matrix( c(ter,qua,qui,sex,sab,dom,seg),
-                                        ncol = 1, nrow = hours, byrow = T ))
-    if(start == "wed")
-      index <- suppressWarnings(matrix( c(qua,qui,sex,sab,dom,seg,ter),
-                                        ncol = 1, nrow = hours, byrow = T ))
-    if(start == "thu")
-      index <- suppressWarnings(matrix( c(qui,sex,sab,dom,seg,ter,qua),
-                                        ncol = 1, nrow = hours, byrow = T ))
-    if(start == "fri")
-      index <- suppressWarnings(matrix( c(sex,sab,dom,seg,ter,qua,qui),
-                                        ncol = 1, nrow = hours, byrow = T ))
-    if(start == "sat")
-      index <- suppressWarnings(matrix( c(sab,dom,seg,ter,qua,qui,sex),
-                                        ncol = 1, nrow = hours, byrow = T ))
-    if(start == "sun")
-      index <- suppressWarnings(matrix( c(dom,seg,ter,qua,qui,sex,sab),
-                                        ncol = 1, nrow = hours, byrow = T ))
-    if(!missing(utc)){
-      if(utc > 0){
-        index <- c(index[abs(-3):length(index)],
-                   max(index[abs(-3):length(index)]):(length(index) -1))
+  # x <- remove_units(x)
 
-      } else if(utc < 0){
-        AA <- length(index) + utc
-        a <- index[(AA + 1):length(index)]
-        b <- index[1:(length(index) + utc)]
-        index <- c(a, b)
-      }
-    }
+  x$id <- NULL
 
-    if(verbose)
-      cat("emissions starting at",start,"with",hours,"hours\n")
+  dfx <- data.frame(nx = names(x))
+
+  nx <- ncol(x)
+
+
+  # check tz
+  itz <- intersect(tz_lt, OlsonNames())
+
+  if(length(itz) == 0){
+    choice <- utils::menu(OlsonNames(), title="Choose yout time zone")
+    tz_lt <- OlsonNames()[choice]
   }
-  else{
-    stop("invalid start argument!\n") # nocov
-  }
+  if(verbose) cat("Your local_tz is: ", tz_lt, "\n")
 
-  if(class(EMISSION)[1] %in% c("EmissionsArray")){
-    stop("Please, convert to an object with length of dimensions of 2 or 3, such as 'GriddedEmissionsArray'")
-  } else if(class(EMISSION)[1] %in% c("GriddedEmissionsArray", "array")){
-    # this lines rearange the GriddedEmissionsArray output to be used in wrf_put
-    NEW   <- array(NA, dim = c(dim(EMISSION)[1],dim(EMISSION)[2],hours))
-    NEW   <- EMISSION[, , c(index)]
-    return(NEW)
-  } else if(class(EMISSION)[1] %in% c("SpatialPolygonsDataFrame")){
-    sr <- sf::st_crs(sf::st_as_sf(EMISSION))
-    id <- 1:nrow(EMISSION)
-    EMISSION$id <- NULL
-    df <-  sf::st_as_sf(EMISSION)
-    geo <- sf::st_geometry(df)
-    df <- sf::st_set_geometry(df, NULL)
-    dft   <- df[, index]
-    dft <- cbind(data.frame(id = id), dft)
-    dft <- sf::st_sf(dft, geometry = geo, crs = sr)
-    return(dft)
-  } else if(class(EMISSION)[1] == c("sf")){
-    id <- 1:nrow(EMISSION)
-    EMISSION$id <- NULL
-    geo <- sf::st_geometry(EMISSION)
-    df <- sf::st_set_geometry(EMISSION, NULL)
-    dft   <- df[, index]
-    dft <- cbind(data.frame(id = id), dft)
-    dft <- sf::st_sf(dft, geometry = geo, crs = sf::st_crs(EMISSION))
-    return(dft)
-  } else if (class(EMISSION)[1] %in% c("matrix")){
-    id <- 1:nrow(EMISSION)
-    df <- as.data.frame(EMISSION)
-    dft   <- df[, index]
-    dft <- cbind(data.frame(id = id), dft)
-    return(dft)
-  } else  if(class(EMISSION)[1] %in% c("data.frame",  "Emissions")){
-    id <- 1:nrow(EMISSION)
-    EMISSION$id <- NULL
-    df <- as.data.frame(EMISSION)
-    dft   <- df[, index]
-    dft <- cbind(data.frame(id = id), dft)
-    return(dft)
+  # first_hour_lt <- as.POSIXct(x = local_time, tz = "Asia/Tokyo")
+  # first_hour_lt <- as.POSIXct(x = local_time, tz = "America/Sao_Paulo")
+  first_hour_lt <- as.POSIXct(x = lt_emissions, tz = tz_lt)
+  futc <- as.POSIXct(format(lt_emissions, tz = "UTC"), tz = "UTC")
+
+  a <- futc -  first_hour_lt
+  if(verbose) cat("Difference with UTC: ", a, "\n")
+
+  # primero ver start_day
+  seq_wrf <- seq.POSIXt(from = as.POSIXct(start_utc_time, tz = "UTC"),
+                        by = 3600,
+                        length.out = desired_length)
+  dwrf <- data.frame(seq_wrf = seq_wrf,
+                     cutc = as.character(seq_wrf))
+
+
+  lt <- seq.POSIXt(from = first_hour_lt,
+                   by = 3600,
+                   #I need that lt be long enoigh so that dwrf$cutc is inside df_x$cutc
+                   # Hence, recycling names(x)
+                   length.out = nx*desired_length)
+
+
+  df_x <- data.frame(lt = lt,
+                     utc = as.POSIXct(format(lt, tz = "UTC"), tz = "UTC"),
+                     cutc = as.character(as.POSIXct(format(lt, tz = "UTC"), tz = "UTC")))
+  df_x$nx <- names(x)
+
+  df <- merge(x = dwrf, y = df_x, by = "cutc", all.x = T)
+  x <- x[, df$nx] * k
+
+  if(!missing(net)){
+    netsf <- sf::st_as_sf(net)
+    dfsf <- sf::st_sf(x, geometry = netsf$geometry)
+    return(dfsf)
+  } else {
+    return(x)
   }
 }

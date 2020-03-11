@@ -73,3 +73,10 @@ MOTO_E25_500 <- age_moto(x = net$ldv, name = "M_E25_500", k = 0.4, net = net)
 plot(MOTO_E25_500)
 }
 }
+\seealso{
+Other age: 
+\code{\link{age_hdv}()},
+\code{\link{age_ldv}()},
+\code{\link{age}()}
+}
+\concept{age}

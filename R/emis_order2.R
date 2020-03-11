@@ -1,4 +1,4 @@
-#' Re-order the emission to match specific hours and days (experimental)
+#' Re-order the emission to match specific hours and days
 #'
 #' @description Emissions are ususally estimated for a year, 24 hours or one week from monday to
 #' sunday (with 168 hours). This depends on the availability of traffic data.
@@ -34,7 +34,8 @@
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING".
 #' @param verbose Logical, to show more information, default is TRUE.
 #' @importFrom sf st_as_sf st_geometry st_set_geometry st_sf st_crs
-#'
+#' @note The function emis_order2 will be kept for back compatibility until version
+#' 1.0.0, where will be superseded by emis_oder, the same function.
 #' @return sf or data.frame
 #' @seealso  \code{\link{GriddedEmissionsArray}}
 #' @export
@@ -69,9 +70,7 @@
 #' E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 #' head(E_CO_g) #class sf
 #' gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
-#' wCO <- emis_order(gr, start = "sat", hours = 24, verbose = TRUE)
-#' wCO <- emis_order(E_CO_STREETS, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
-#' wCO <- emis_order2(x = E_CO_g,
+#' wCO <- emis_order(x = E_CO_g,
 #'                    lt_emissions = "2020-02-19 00:00",
 #'                    start_utc_time = "2020-02-20 00:00",
 #'                    desired_length = 241)

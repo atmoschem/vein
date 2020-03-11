@@ -1,7 +1,12 @@
 NEWS
 ===========
 
-# vein 0.8.7  (Release date: 2020-02-17)
+# vein 0.8.8  (Release date: 2020-03-11)
+
+- Adds get_project to easily estimate emissions using a template
+- New emis_order with aliases to weekly. Thanks Daniel.
+
+## vein 0.8.7  (Release date: 2020-02-17)
 
 - emis_grid now returns emissions as flux: mass / area / time (implicit)
 - Deprecates matvect

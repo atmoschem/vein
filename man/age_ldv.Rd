@@ -76,3 +76,10 @@ PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
 plot(PC_E25_1400)
 }
 }
+\seealso{
+Other age: 
+\code{\link{age_hdv}()},
+\code{\link{age_moto}()},
+\code{\link{age}()}
+}
+\concept{age}

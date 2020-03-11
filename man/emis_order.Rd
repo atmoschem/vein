@@ -4,49 +4,66 @@
 \alias{emis_order}
 \alias{weekly}
 \title{Re-order the emission to match specific hours and days}
-\format{Emissions}
 \usage{
-emis_order(EMISSION, start = "mon", hours = 168, utc, verbose = TRUE)
+emis_order(
+  x,
+  lt_emissions,
+  start_utc_time,
+  desired_length,
+  tz_lt = Sys.timezone(),
+  k = 1,
+  net,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{EMISSION}{one of the following:
+\item{x}{one of the following:
+\itemize{
+\item Spatial object of class "Spatial". Columns are hourly emissions.
+\item Spatial Object of class "sf". Columns are hourly emissions.
+\item "data.frame", "matrix" or "Emissions".
+}
 
-1) GriddedEmissionsArray or array with characteristics of GriddedEmissionsArray
-2) Spatial object of class "Spatial". Columns are hourly emissions.
-3) Spatial Object of class "sf". Columns are hourly emissions.
-4) "data.frame", "matrix" or "Emissions". Columns are hourly emissions.}
+In all cases, columns are hourly emissions.}
 
-\item{start}{Date or the start weekday or first 3 letters}
+\item{lt_emissions}{Local time of the emissions at first hour. It must be
+the \strong{before}  time of start_utc_time. For instance, if
+start_utc_time is 2020-02-02 00:00, and your emissions starts monday at 00:00,
+your lt_emissions must be 2020-01-27 00:00. The argument tz_lt will detect your
+current local time zone and do the rest for you.}
 
-\item{hours}{Numeric; number of hours needed to the simualation}
+\item{start_utc_time}{UTC time for the desired first hour. For instance,
+the first hour of the namelist.input for WRF.}
 
-\item{utc}{Integer; transform local into UTC emissions. For instance,
-utc = -3 means that the first hour of emissions is at 21:00 of the previous
-day.}
+\item{desired_length}{Integer; length to recycle or subset local emissions. For instance, the length
+of the WRF Chem simulations, states at namelist.input.}
 
-\item{verbose}{Logical; display additional information}
+\item{tz_lt}{Character, Time zone of the local emissions. Default value is derived from
+Sys.timezone(), however, it accepts any other. If you enter a wrong tz, this function will show
+you a menu to choose one of the 697 time zones available.}
+
+\item{k}{Numeric, factor.}
+
+\item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING".}
+
+\item{verbose}{Logical, to show more information, default is TRUE.}
 }
 \value{
-GriddedEmissionsArray, sf or data.frame, depending on the class of
-EMISSION
+sf or data.frame
 }
 \description{
-returns the emission array matching with corresponding weekdays and with
-the desired number of hours, recycling or droping hours from the emission array. For
-instance, if your emissions starts Monday at 00:00 and cover 168 hours, and you
-want to reorder them to start saturday you with a total a new length of hours
-of 241, you must emis_order(EMISSION, as.Date("2016-04-06"), 241)
-}
-\note{
-This function assumes that the emissions have hours with length of
-factor of 24, e.g: 24 hours, 24*2 hours etc. Then, it re-order the emissions
-by the hours of estimations to match another length of emissions. For
-instance, if the input covers 168 hours and it is desired an object of 241
-hours that start saturday, this function can do that. It is useful when you
-are going to start a air quality simulation for specific periods of time.
+Emissions are ususally estimated for a year, 24 hours or one week from monday to
+sunday (with 168 hours). This depends on the availability of traffic data.
+When an air quality simulation is going to be done, they cover
+specific periods of time. For instance, WRF Chem emissions files supports periods of time,
+or two emissions sets for a representative day (0-12z 12-0z). Also a WRF Chem simulation
+scan starts a thursday at 00:00 UTC, cover 271 hours of simulations, but hour emissions are in local
+time and cover only 168 hours starting on monday. This function tries to transform our emissions
+in local time to the desired utc time, by recycling the local emissions.
 }
 \examples{
 {
+#do not run
 data(net)
 data(pc_profile)
 data(fe2015)
@@ -76,11 +93,13 @@ g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 head(E_CO_g) #class sf
 gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, T)
-wCO <- emis_order(gr, start = "sat", hours = 24, verbose = TRUE)
-wCO <- emis_order(E_CO_STREETS, start = as.Date("2016-04-06"), hours = 241, verbose = TRUE)
+wCO <- emis_order(x = E_CO_g,
+                   lt_emissions = "2020-02-19 00:00",
+                   start_utc_time = "2020-02-20 00:00",
+                   desired_length = 241)
 }
 
 }
-\author{
-Daniel Schuch & Sergio Ibarra
+\seealso{
+\code{\link{GriddedEmissionsArray}}
 }

@@ -107,3 +107,10 @@ legend(x = 20, y = 80000,
       lwd=c(2.5, 2.5, 2.5, 2.5))
 }
 }
+\seealso{
+Other age: 
+\code{\link{age_hdv}()},
+\code{\link{age_ldv}()},
+\code{\link{age_moto}()}
+}
+\concept{age}
