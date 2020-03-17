@@ -129,6 +129,7 @@ rm(ADT,
    verbose, 
    vk, vkbus, vkhgv, vklcv, vkmc, vkpc, W, x_DF,
    ef_cetesb2, ef_evaps, i, j, k, mileage, name_file_evap, num_vein, 
-   q, type_emis, vein_version, x, cores, fuel)
+   q, type_emis, vein_version, x, cores, fuel,
+   sL1,sL2, sL3, sL4)
 )
 
