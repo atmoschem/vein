@@ -17,6 +17,7 @@ mileage              <- readxl::read_xlsx(path = rota, sheet = "mileage")
 tfs                  <- readxl::read_xlsx(path = rota, sheet = "tfs")
 veh                  <- readxl::read_xlsx(path = rota, sheet = "fleet_age")
 fuel                 <- readxl::read_xlsx(path = rota, sheet = "fuel")
+year                <- 2018
 cores                <- c("black", "red", "green3", "blue", "cyan",
                           "magenta", "yellow", "gray", "brown")
 source("config.R")

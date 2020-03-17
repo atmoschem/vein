@@ -216,7 +216,7 @@ ef1 <- ef_ldv_speed(v = "LCV",t = "4S", cc = "<3.5", f = "G", eu = "PRE",
 p = "CO")
 efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]")
-lef <- lapply(1:40, function(i) {
+lef <- lapply(1:5, function(i) {
 ef_ldv_speed(v = "LCV", t = "4S", cc = "<3.5", f = "G",
           eu = euro[i], p = "CO", show.equation = FALSE)(25) })
 # to check the emission factor with a plot

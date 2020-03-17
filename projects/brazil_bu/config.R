@@ -31,15 +31,15 @@ if(!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles
 #checar Year
 if(!"Year" %in% names(veh)) stop("Não estou enxergando a coluna 'Year' em 'veh'")
 if(!"Year" %in% names(mileage)) stop("Não estou enxergando a coluna 'Year' em 'mileage'")
-if(!"Year" %in% names(ef)) stop("Não estou enxergando a coluna 'Year' em 'ef'")
+# if(!"Year" %in% names(ef)) stop("Não estou enxergando a coluna 'Year' em 'ef'")
 
 # checar ano base
 if(veh$Year[1] != year) stop(paste0("The base year is ", year, 
                                     " but the first year in 'veh' is ", veh$Year[1]))
 if(mileage$Year[1] != year) stop(paste0("The base year is ", year, 
                                         " but the first year in 'mileage' is ", mileage$Year[1]))
-if(ef$Year[1] != year) stop(paste0("The base year is ", year, 
-                                   " but the first year in 'ef' is ", ef$Year[1]))
+# if(ef$Year[1] != year) stop(paste0("The base year is ", year, 
+#                                    " but the first year in 'ef' is ", ef$Year[1]))
 
 message("Arquivos em ", getwd(), "/config/*\n")
 saveRDS(metadata, "config/metadata.rds")
@@ -170,6 +170,18 @@ for(i in 2:length(n_MC)) {
 }
 legend(x = "bottomright", col = cores[1:length(n_MC)], n_MC, pch = 16)
 dev.off()
+
+cat("Plotando quilometragem \n")
+for(i in seq_along(metadata$vehicles)) {
+
+  png(paste0("images/MILEAGE_",metadata$vehicles[i],".png"), 
+      2000, 1500, "px",res = 300)
+plot(mileage[[metadata$vehicles[i]]],
+     main = paste0("Quilometragem por ano de uso ", metadata$vehicles[i]),
+     xlab = "Ano de uso", ylab = "[km/ano]")
+dev.off()
+    
+}
 
 suppressWarnings(
   rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel,
