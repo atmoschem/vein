@@ -11,7 +11,6 @@ unlink("wrf/wrfchemi_00z_d02")
 unlink("wrf/wrfchemi_12z_d02")
 unlink(paste0("wrf/", wrfc))
 
-file.remove(".Rhistory")
 system("tar -caf brazil_bu.tar.gz .")
 system("cp brazil_bu.tar.gz brazil_bu_v2020-02-26.tar.gz")
 system("mv brazil_bu.tar.gz ../")
