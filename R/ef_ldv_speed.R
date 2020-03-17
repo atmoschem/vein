@@ -183,7 +183,7 @@
 #' p = "CO")
 #' efs <- EmissionFactors(ef1(1:150))
 #' plot(Speed(1:150), efs, xlab = "speed[km/h]")
-#' lef <- lapply(1:40, function(i) {
+#' lef <- lapply(1:5, function(i) {
 #' ef_ldv_speed(v = "LCV", t = "4S", cc = "<3.5", f = "G",
 #'           eu = euro[i], p = "CO", show.equation = FALSE)(25) })
 #' # to check the emission factor with a plot
@@ -267,9 +267,17 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
     }
   }
 
-  # fun starts
+  # try to solve error of negative values present in EEA guidelines
+  if(v == "LCV" && eu == "V") {
+    warning("When `v` is 'LCV' and `eu` is 'V', replaces `v` by 'PC' and `cc` by >'2000' see issue #204")
+    v <- "PC"
+    cc <- ">2000"
+  }
+
+    # fun starts
   if(!is.data.frame(eu)){
     if(length(eu) == 1){
+
       df <- ef_ldv[ef_ldv$VEH == v &
                      ef_ldv$TYPE == t &
                      ef_ldv$CC == cc &

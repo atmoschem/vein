@@ -1,6 +1,11 @@
 NEWS
 ===========
 
+-  when LCV and eu is V, ef_ldv_speed return wrong values, as shown on EEA 
+guidelines 2016. When `v` is 'LCV' and `eu` is 'V', replaces `v` by 'PC' 
+and `cc` by >'2000' see issue #204". I will update for version 2019,
+maybe in a newer function, o updating the existing ones.
+
 # vein 0.8.8  (Release date: 2020-03-11)
 
 - Adds get_project to easily estimate emissions using a template
