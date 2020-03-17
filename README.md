@@ -195,6 +195,8 @@ Using
 <https://github.com/atmoschem/vein/projects/3>** Please, read the
 examples in the documentation of each function and run the demo.
 
+**Brazilian users, just use get\_project and run a project read**
+
 ### 1\) Examples with traffic data:
 
 1.  If you know the distribution of the vehicles by age of use , use:
