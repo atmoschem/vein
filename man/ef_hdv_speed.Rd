@@ -118,7 +118,7 @@ The categories Pre Euro and Euro I were assigned with the factors of Euro II and
 The categories euro IV and euro V were assigned with euro III + SCR
 }
 \examples{
-{
+\dontrun{
 # Quick view
 pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2",
 "AS_urban", "AS_rural", "AS_highway",

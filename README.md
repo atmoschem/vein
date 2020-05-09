@@ -141,7 +141,7 @@ install.packages("vein")
 
 ``` r
 library(remotes) 
-install_github("atmoschem/vein")
+install_gitlab("atmoschem/vein")
 ```
 
 In order to run the demo, this package is also needed:

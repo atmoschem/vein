@@ -34,7 +34,7 @@ The type of objects supported are of classes "matrix", "data.frame" and
 dataframe.
 }
 \examples{
-{
+\dontrun{
 data(net)
 data(pc_profile)
 data(fe2015)

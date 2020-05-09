@@ -136,7 +136,7 @@ install.packages("vein")
 
 ```r
 library(remotes) 
-install_github("atmoschem/vein")
+install_gitlab("ibarraespinosa/vein")
 ```
 
 

@@ -32,7 +32,7 @@
 #' matrix.
 #' @export
 #' @importFrom sf st_set_geometry
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' data(net)
 #' data(pc_profile)

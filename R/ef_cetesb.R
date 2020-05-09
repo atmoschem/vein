@@ -109,7 +109,7 @@
 #' 0.809 for ethanol (t/m^3)
 #'
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' a <- ef_cetesb("CO", "PC_G")
 #' a <- ef_cetesb("R_10_25", "PC_G")
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE"))

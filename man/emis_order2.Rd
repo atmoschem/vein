@@ -65,7 +65,7 @@ The function emis_order2 will be kept for back compatibility until version
 1.0.0, where will be superseded by emis_oder, the same function.
 }
 \examples{
-{
+\dontrun{
 #do not run
 data(net)
 data(pc_profile)

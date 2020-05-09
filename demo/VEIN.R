@@ -9,7 +9,7 @@ library(ggplot2)
 
 ## ---- fig.width=8, fig.height=6------------------------------------------
 # 1 ####
-data(net)
+data(net) ; net <- as_Spatial(net)
 class(net$ldv) <- "numeric"
 
 spplot(net, "ldv", scales=list(Draw=T),cuts=12,
@@ -60,7 +60,7 @@ ggplot(df2, aes(x = Hour, y = TF, colour = Day,
 
 
 # 5 ####
-data(net)
+data(net) ; net <- as_Spatial(net)
 data(pc_profile)
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pcw, net$ps,
@@ -143,7 +143,7 @@ lef <- ef_ldv_scaled(dfcol = cod, v = "PC", cc = "<=1400",
 
 # 9 ####
 data(pc_profile)
-data(net)
+data(net) ; net <- as_Spatial(net)
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, profile = pc_profile)
 E_CO_DF <- emis_post(arra = E_CO, veh = "PC", size = "1400", fuel = "Gasoline",
                      pollutant = "CO", by = "veh")
@@ -205,7 +205,7 @@ E_CO_STREETS_n <- emis_post(arra = E_CO, pollutant = "CO",
                             by = "streets_narrow")
 E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO",
                           by = "streets_wide")
-data(net)
+data(net) ; net <- as_Spatial(net)
 # spplot does not plot 'units' therefore, columns needs to be converted to
 #numeric
 for (i in 1:ncol(E_CO_STREETS)) {
@@ -221,14 +221,17 @@ spplot(net, "V138", scales=list(Draw=T), cuts = 15,
 
 
 net@data <- net@data[,- c(1:9)]
+net <- st_as_sf(net)
 E_CO_g <- emis_grid(spobj = net, g = g, sr = 31983, type = "lines")
-E_CO_g <- as(E_CO_g, "Spatial")
+E_CO_g <- remove_units(E_CO_g)
+E_CO_g <- as_Spatial(E_CO_g)
 spplot(E_CO_g, "V138", scales=list(Draw=T),cuts=8,
        colorkey = list(space = "bottom", height = 1),
        col.regions = rev(bpy.colors(9)),
        sp.layout = list("sp.lines", net, pch = 16, cex = 2, col = "black"))
 # 12 ####
 E_CO_g$id <- NULL
+E_CO_g <- st_as_sf(E_CO_g)
 ldf <- list("co" = E_CO_g)
 df_wrf <- eixport::to_as4wrf(ldf,nr=1,dmyhm = "04-08-2014 00:00",
                    tz = "America/Sao_Paulo", islist=T)

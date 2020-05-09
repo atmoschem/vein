@@ -14,13 +14,13 @@ Elaboration of vehicular emissions inventories,
     in maps and databases. More details in Ibarra-Espinosa et al (2018) <doi:10.5194/gmd-11-2209-2018>.
     Before using VEIN you need to know the vehicular composition of your study area, in other words,
     the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
-    start with the function inventory to create a structure of directories and template scripts.
+    start with the project to download a template to create a structure of directories and scripts.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://atmoschem.github.io/vein/}
-  \item Report bugs at \url{https://github.com/atmoschem/vein/issues/}
+  \item \url{https://gitlab.com/ibarraespinosa/vein}
+  \item Report bugs at \url{https://gitlab.com/ibarraespinosa/vein/-/issues}
 }
 
 }

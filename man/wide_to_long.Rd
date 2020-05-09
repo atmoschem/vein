@@ -23,7 +23,7 @@ long data.frame.
 long format
 }
 \examples{
-{
+\dontrun{
 data(net)
 net <- sf::st_set_geometry(net, NULL)
 df <- wide_to_long(df = net)

@@ -19,7 +19,7 @@
 #' summary.GriddedEmissionsArray plot.GriddedEmissionsArray
 #' @importFrom sf st_set_geometry
 #' @importFrom utils head
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)

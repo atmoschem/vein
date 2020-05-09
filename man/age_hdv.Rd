@@ -65,7 +65,7 @@ the shape of this curve.
 4. You can use/merge/transform/adapt any of these functions.
 }
 \examples{
-{
+\dontrun{
 data(net)
 LT_B5 <- age_hdv(x = net$hdv,name = "LT_B5")
 plot(LT_B5)

@@ -58,7 +58,7 @@ emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 }
 \examples{
-{
+\dontrun{
 ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
 show.equation = TRUE)
 ef1(10)

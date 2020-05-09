@@ -32,7 +32,7 @@
 #' @export
 #' @note \strong{Your gridded emissions might have flux units (mass / area / time(implicit))}
 #' \strong{You must multiply your emissions with the area to return to the original units.}
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' data(fkm)

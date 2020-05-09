@@ -42,7 +42,7 @@
 #' Environment Agency, Copenhagen, 2009
 #' @importFrom data.table rbindlist
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' a <- ef_evap(ef = "eshotc", v = "PC", cc = "<=1400", dt = "0_15", ca = "no",
 #' pollutant = "cis-2-pentene")

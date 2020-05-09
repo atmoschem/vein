@@ -15,7 +15,7 @@ NULL
 #' @rdname vein-deprecated
 #'
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # do not run
 #' # DEPRECATED
 #' }

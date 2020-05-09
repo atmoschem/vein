@@ -32,7 +32,7 @@
 #'
 #' \strong{3) In order to check the sum of the emissions, you must calculate the grid-area}
 #' \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
 #' names(net)
@@ -58,9 +58,16 @@ emis_grid <- function (spobj = net,
   net$id <- NULL
   # add as.data.frame qhen net comes from data.table
   netdata <- as.data.frame(sf::st_set_geometry(net, NULL))
-  message("Your units are: ")
-  uninet <- units(netdata[[1]])
-  message(uninet)
+
+  if(is.null(attributes(netdata[[1]])) ) {
+    message("Your data has no units")
+    hasunits <- FALSE
+  } else {
+    message("Your units are: ")
+    hasunits <- TRUE
+    uninet <- units(netdata[[1]])
+    message(uninet)
+  }
   for (i in 1:length(netdata)) {
     netdata[, i] <- as.numeric(netdata[, i])
   }
@@ -125,7 +132,7 @@ emis_grid <- function (spobj = net,
 
     if(flux) {
       for(i in seq_along(namesnet)) {
-        units(gx[[namesnet[i]]]) <- uninet
+        if(hasunits) units(gx[[namesnet[i]]]) <- uninet
         gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
       }
       cat(paste0("Sum of gridded emissions ",
@@ -134,7 +141,7 @@ emis_grid <- function (spobj = net,
       return(gx)
     } else {
       for(i in seq_along(namesnet)) {
-        units(gx[[namesnet[i]]]) <- uninet
+        if(hasunits) units(gx[[namesnet[i]]]) <- uninet
       }
       cat(paste0("Sum of gridded emissions ",
                  round(sum(gx[namesnet]),2), "\n"))
@@ -182,7 +189,7 @@ emis_grid <- function (spobj = net,
 
     if(flux) {
       for(i in seq_along(namesnet)) {
-        units(gx[[namesnet[i]]]) <- uninet
+        if(hasunits) units(gx[[namesnet[i]]]) <- uninet
         gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
       }
       cat(paste0("Sum of gridded emissions ",
@@ -191,7 +198,7 @@ emis_grid <- function (spobj = net,
       return(gx)
     } else {
       for(i in seq_along(namesnet)) {
-        units(gx[[namesnet[i]]]) <- uninet
+        if(hasunits) units(gx[[namesnet[i]]]) <- uninet
       }
       cat(paste0("Sum of gridded emissions ",
                  round(sum(gx[namesnet]),2), "\n"))
@@ -232,7 +239,7 @@ emis_grid <- function (spobj = net,
 
     if(flux) {
       for(i in seq_along(namesnet)) {
-        units(gx[[namesnet[i]]]) <- uninet
+        if(hasunits) units(gx[[namesnet[i]]]) <- uninet
         gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
       }
       cat(paste0("Sum of gridded emissions ",
@@ -241,7 +248,7 @@ emis_grid <- function (spobj = net,
       return(gx)
     } else {
       for(i in seq_along(namesnet)) {
-        units(gx[[namesnet[i]]]) <- uninet
+        if(hasunits) units(gx[[namesnet[i]]]) <- uninet
       }
       cat(paste0("Sum of gridded emissions ",
                  round(sum(gx[namesnet]),2), "\n"))

@@ -21,7 +21,7 @@
 #' @export
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'.
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' po <- 1000

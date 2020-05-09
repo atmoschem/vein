@@ -19,7 +19,7 @@
 #' @param feq_mc Numeric, factor equivalence
 #' @return numeric vector of total volume of traffic per link as ADT
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' p1 <- pc_profile[, 1]

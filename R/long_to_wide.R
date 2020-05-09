@@ -12,7 +12,7 @@
 #' @importFrom sf st_sf st_as_sf
 #' @seealso \code{\link{emis_hot_td}} \code{\link{emis_cold_td}} \code{\link{wide_to_long}}
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
 #' emission = vein::Emissions(1:30),
 #' region = rep(letters[1:2], 15))

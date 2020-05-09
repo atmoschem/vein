@@ -7,7 +7,7 @@
 #' @param x Object with class "data.frame", "matrix",  "numeric" or "integer"
 #' @importFrom units as_units
 #'
-#' @examples {
+#' @examples \dontrun{
 #' a <- celsius(rnorm(100)*10)
 #' plot(a)
 #' b <- celsius(matrix(rnorm(100)*10, ncol = 10))

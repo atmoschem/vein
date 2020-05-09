@@ -135,7 +135,7 @@ for ethanol (CETESB, 2016). The density considered is 0.75425 for gasoline and
 0.809 for ethanol (t/m^3)
 }
 \examples{
-{
+\dontrun{
 a <- ef_cetesb("CO", "PC_G")
 a <- ef_cetesb("R_10_25", "PC_G")
 a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
