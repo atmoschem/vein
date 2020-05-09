@@ -32,6 +32,13 @@
     activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
     <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
+# The GitHub repository is a mirror from <https://gitlab.com/ibarraespinosa/vein>
+
+  - The most updated version is here
+    <https://gitlab.com/ibarraespinosa/vein>
+  - The GitHub <https://github.com/atmoschem/veinis> updated as soon as
+    possible, usually between 03:00:00 and 10:00:00 **UTC**
+
 ## What is VEIN?
 
 **V**ehicular **E**missions **IN**ventories (VEIN). An R package to
@@ -141,7 +148,7 @@ install.packages("vein")
 
 ``` r
 library(remotes) 
-install_gitlab("atmoschem/vein")
+install_gitlab("ibarraespinosa/vein")
 ```
 
 In order to run the demo, this package is also needed:
