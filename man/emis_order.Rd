@@ -62,7 +62,7 @@ time and cover only 168 hours starting on monday. This function tries to transfo
 in local time to the desired utc time, by recycling the local emissions.
 }
 \examples{
-{
+\dontrun{
 #do not run
 data(net)
 data(pc_profile)

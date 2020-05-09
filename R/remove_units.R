@@ -7,7 +7,7 @@
 #' @keywords units
 #' @importFrom sf st_geometry st_set_geometry
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' ef1 <- ef_cetesb(p = "CO", c("PC_G", "PC_FE"))
 #' class(ef1)
 #' sapply(ef1, class)

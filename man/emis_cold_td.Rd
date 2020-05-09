@@ -56,7 +56,7 @@ This funcion, as other in this package, adapts to the class of the input data.
 providing flexibility to the user.
 }
 \examples{
-{
+\dontrun{
 # Do not run
 veh <- age_ldv(1:10, agemax = 8)
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")

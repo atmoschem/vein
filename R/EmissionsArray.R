@@ -13,7 +13,7 @@
 #' @aliases EmissionsArray print.EmissionsArray summary.EmissionsArray
 #' plot.EmissionsArray
 #' @note Future version of this function will return an Array of 3 dimensions.
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)

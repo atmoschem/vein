@@ -15,7 +15,7 @@
 #'
 #' @rdname Emissions
 #' @aliases Emissions print.Emissions summary.Emissions plot.Emissions
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' data(pc_profile)
 #' data(fe2015)

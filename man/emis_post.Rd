@@ -46,7 +46,7 @@ if the user count with an EmissionsArry with 4 dimension, it will be able
 to use this function.
 }
 \examples{
-{
+\dontrun{
 # Do not run
 data(net)
 data(pc_profile)

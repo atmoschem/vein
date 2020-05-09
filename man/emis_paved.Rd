@@ -63,7 +63,7 @@ silt values can vary a lot. For comparison:
 }
 }
 \examples{
-{
+\dontrun{
 # Do not run
 veh <- matrix(1000, nrow = 10,ncol = 10)
 W <- veh*1.5

@@ -36,7 +36,7 @@ Objects of class "Vehicles" or "units"
  If the object is "numeric" it is converted to class "units".
 }
 \examples{
-{
+\dontrun{
 lt <- rnorm(100, 300, 10)
 class(lt)
 vlt <- Vehicles(lt)

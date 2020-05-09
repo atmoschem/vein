@@ -24,7 +24,7 @@ hourly expansion data-frames to obtain a data-frame of traffic
 at each link to every hour
 }
 \examples{
-{
+\dontrun{
 # Do not run
 data(net)
 data(pc_profile)

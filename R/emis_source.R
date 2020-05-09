@@ -15,7 +15,7 @@
 #' @param echo Source with echo?
 #' @importFrom utils menu
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' }
 emis_source <- function(path = "est",

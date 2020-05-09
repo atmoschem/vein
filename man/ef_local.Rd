@@ -52,7 +52,7 @@ returns a vector or data.frame of Brazilian emission factors.
 The names of the ef must be `Age`	`Year`	`Pollutant` and all the vehicle categories...
 }
 \examples{
-{
+\dontrun{
 #do not run
 }
 }

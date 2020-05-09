@@ -21,7 +21,7 @@
 #' @seealso \code{\link{add_polid}}
 #' @note When spobj is a 'Spatial' object (class of sp), they are converted
 #'  into 'sf'.
-#' @examples {
+#' @examples \dontrun{
 #' data(net)
 #' stpro = data.frame(stpro = as.character(unique(net$tstreet)),
 #'                    VAL = 1:9)

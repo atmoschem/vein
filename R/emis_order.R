@@ -38,7 +38,7 @@
 #' @return sf or data.frame
 #' @seealso  \code{\link{GriddedEmissionsArray}}
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' #do not run
 #' data(net)
 #' data(pc_profile)

@@ -22,7 +22,7 @@
 #' for "V", "VI" and "VIc". However, as these technologies are relative
 #' new,  accumulated milage is low and hence, deteerioration factors small.
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' data(fkm)
 #' pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 #' km <- units::set_units(pckma[1:11], km)

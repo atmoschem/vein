@@ -42,7 +42,7 @@
 #' T95 = Back-end distillation in o C.
 #'
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' f <- fuel_corr(euro = "I")
 #' names(f)
 #' }
