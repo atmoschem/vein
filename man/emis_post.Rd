@@ -4,7 +4,7 @@
 \alias{emis_post}
 \title{Post emissions}
 \usage{
-emis_post(arra, veh, size, fuel, pollutant, by = "veh", net, type_emi, k)
+emis_post(arra, veh, size, fuel, pollutant, by = "veh", net, type_emi, k = 1)
 }
 \arguments{
 \item{arra}{Array of emissions 4d: streets x category of vehicles x hours x days or
@@ -33,7 +33,7 @@ when by = 'streets_wide'}
 }
 \description{
 \code{emis_post} simplify emissions estimated as total per type category of
-vehicle or by street. It reads EmissionsArray. It can return an dataframe
+vehicle or by street. It reads EmissionsArray and Emissions classes. It can return an dataframe
 with hourly emissions at each street, or a data base with emissions by vehicular
 category, hour, including size, fuel and other characteristics.
 }

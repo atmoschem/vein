@@ -23,7 +23,7 @@
     in maps and databases. More details in Ibarra-Espinosa et al (2018) &lt;doi:10.5194/gmd-11-2209-2018&gt;.
     Before using VEIN you need to know the vehicular composition of your study area, in other words,
     the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
-    start with the function inventory to create a structure of directories and template scripts.">
+    start with the project to download a template to create a structure of directories and scripts.">
 <meta property="og:image" content="http://atmoschem.github.io/vein/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -50,7 +50,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.9</span>
       </span>
     </div>
 
@@ -81,6 +81,7 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div id="vein-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#vein-" class="anchor"></a>VEIN <img src="reference/figures/logo.png" align="right" alt="" width="220">
@@ -93,6 +94,17 @@
 <li>doi: <a href="https://zenodo.org/badge/latestdoi/88201850"><img src="https://zenodo.org/badge/88201850.svg" alt="DOI"></a>
 </li>
 <li>github: <a href="https://github.com/atmoschem/vein"><img src="https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&amp;label=Github" alt="Github Stars"></a> <img src="https://img.shields.io/github/languages/code-size/atmoschem/vein" alt="GitHub code size in bytes"><img src="https://img.shields.io/github/issues/atmoschem/vein" alt="GitHub issues"><!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) --><img src="https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein" alt="GitHub commit activity"><!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
+</li>
+</ul>
+</div>
+<div id="the-github-repository-is-a-mirror-from-httpsgitlabcomibarraespinosavein" class="section level1">
+<h1 class="hasAnchor">
+<a href="#the-github-repository-is-a-mirror-from-httpsgitlabcomibarraespinosavein" class="anchor"></a>The GitHub repository is a mirror from <a href="https://gitlab.com/ibarraespinosa/vein" class="uri">https://gitlab.com/ibarraespinosa/vein</a>
+</h1>
+<ul>
+<li>The most updated version is here <a href="https://gitlab.com/ibarraespinosa/vein" class="uri">https://gitlab.com/ibarraespinosa/vein</a>
+</li>
+<li>The GitHub <a href="https://github.com/atmoschem/veinis" class="uri">https://github.com/atmoschem/veinis</a> updated as soon as possible, usually between 03:00:00 and 10:00:00 <strong>UTC</strong>
 </li>
 </ul>
 <div id="what-is-vein" class="section level2">
@@ -191,7 +203,7 @@
 <p>VEIN can be installed via CRAN or github</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"vein"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(remotes) </a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"atmoschem/vein"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_gitlab.html">install_gitlab</a></span>(<span class="st">"ibarraespinosa/vein"</span>)</a></code></pre></div>
 <p>In order to run the demo, this package is also needed:</p>
 <ul>
 <li><a href="https://github.com/tidyverse/ggplot2">ggplot2</a></li>
@@ -226,6 +238,7 @@
 </ol>
 <p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
 <p>Using <a href="https://atmoschem.github.io/vein/reference/inventory.html">inventory</a> <strong>Inventory will experience some changes, please be patient and check <a href="https://github.com/atmoschem/vein/projects/3" class="uri">https://github.com/atmoschem/vein/projects/3</a></strong> Please, read the examples in the documentation of each function and run the demo.</p>
+<p><strong>Brazilian users, just use get_project and run a project read</strong></p>
 <div id="1-examples-with-traffic-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#1-examples-with-traffic-data" class="anchor"></a>1) Examples with traffic data:</h3>
@@ -407,6 +420,7 @@
 </div>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -415,7 +429,7 @@
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=vein">https://​cloud.r-project.org/​package=vein</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/atmoschem/vein/issues/">https://​github.com/​atmoschem/​vein/​issues/​</a>
+<li>Report a bug at <br><a href="https://gitlab.com/ibarraespinosa/vein/-/issues">https://​gitlab.com/​ibarraespinosa/​vein/​-/​issues</a>
 </li>
 </ul>
 </div>

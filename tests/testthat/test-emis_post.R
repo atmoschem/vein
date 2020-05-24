@@ -28,7 +28,7 @@ test_that("emis_post stops", {
   expect_error(emis_post(arra = 1,
                          pollutant = "CO",
                          by = "streets"),
-               "N.?")
+               ".?")
 })
 
 test_that("emis_post works", {
@@ -63,7 +63,7 @@ test_that("emis_post stops", {
   expect_error(emis_post(arra = 1,
                          pollutant = "CO",
                          by = "streets"),
-               "N.?")
+               ".?")
 })
 
 test_that("emis_post works", {
@@ -83,3 +83,4 @@ test_that("emis_post works", {
                                by = "streets_narrow")$g[1]),
                Emissions(542))
 })
+

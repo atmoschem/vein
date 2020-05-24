@@ -88,7 +88,7 @@ numeric vector." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.9</span>
       </span>
     </div>
 
@@ -210,7 +210,7 @@ the shape of this curve.
 4. You can use/merge/transform/adapt any of these functions.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='no'>dpc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span>,<span class='fl'>20</span>,<span class='fl'>3</span>), <span class='fl'>20</span>:<span class='fl'>10</span>)
 <span class='no'>PC_E25_1400</span> <span class='kw'>&lt;-</span> <span class='fu'>my_age</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>dpc</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"PC_E25_1400"</span>)
@@ -225,15 +225,7 @@ the shape of this curve.
 <span class='no'>pro_street</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"a"</span>)         <span class='co'># categorias de cada calle</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100</span>,<span class='fl'>5000</span>, <span class='fl'>3</span>)                               <span class='co'># vehiculos</span>
 <span class='fu'>my_age</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span>  <span class='no'>yy</span>, <span class='kw'>pro_street</span> <span class='kw'>=</span> <span class='no'>pro_street</span>)
-}</div><div class='output co'>#&gt; 
-#&gt; Average =  10.21</div><div class='output co'>#&gt; <span class='warning'>Warning: plotting the first 9 out of 18 attributes; use max.plot = 18 to plot all</span></div><div class='img'><img src='my_age-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='my_age-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           vehicle_1        vehicle_2   vehicle_3       vehicle_4
-#&gt; 1    6.666667 [veh]   13.33333 [veh] 2e+01 [veh]  26.66667 [veh]
-#&gt; 2 1666.666667 [veh] 1333.33333 [veh] 1e+03 [veh] 666.66667 [veh]
-#&gt; 3    0.200000 [veh]    0.40000 [veh] 6e-01 [veh]   0.80000 [veh]
-#&gt;         vehicle_5
-#&gt; 1  33.33333 [veh]
-#&gt; 2 333.33333 [veh]
-#&gt; 3   1.00000 [veh]</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

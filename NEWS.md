@@ -6,6 +6,8 @@ NEWS
 - Revise mileage functions. Especifically, fix KM_LDC_FLEX so that 
 it do not increase mileage over time.
 - Moved to https://gitlab.com/ibarraespinosa/vein.
+- Add add_lkm to add units km into R objects.(2020-25-24)
+- Enhance emis_post to read Emissions and EmissionsArray classes
 
 ## vein 0.8.8  (Release date: 2020-03-11)
 
