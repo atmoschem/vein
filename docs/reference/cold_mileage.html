@@ -89,7 +89,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.9</span>
       </span>
     </div>
 
@@ -155,13 +155,13 @@ data.frame, it is convenient that each column is each month.</p></td>
     <p>This function is set so that values vaires between 0 and 1.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='no'>lkm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>, <span class='no'>km</span>)
 <span class='no'>ta</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>:<span class='fl'>9</span>, <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>10</span>))
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>cold_mileage</span>(<span class='no'>lkm</span>, <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='no'>ta</span>, <span class='no'>ta</span>))
 (<span class='no'>a</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/filled.contour.html'>filled.contour</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>a</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/lucky.html'>lucky</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>16</span>))
-}</div><div class='output co'>#&gt; Colour gradient: kst_20_hue_sat_light2, number: 4659 </div><div class='img'><img src='cold_mileage-1.png' alt='' width='700' height='433' /></div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -91,7 +91,7 @@ This function subset an internal database of emission factors with each argument
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.9</span>
       </span>
     </div>
 
@@ -194,7 +194,7 @@ for "V", "VI" and "VIc". However, as these technologies are relative
 new,  accumulated milage is low and hence, deteerioration factors small.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fkm</span>)
 <span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>pckm</span>)
 <span class='no'>km</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>], <span class='no'>km</span>)
@@ -222,16 +222,7 @@ new,  accumulated milage is low and hence, deteerioration factors small.</p>
 <span class='no'>euro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"V"</span>, <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"IV"</span>, <span class='fl'>5</span>), <span class='st'>"III"</span>)
 <span class='no'>euros</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='no'>euro</span>, <span class='no'>euro</span>)
 (<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euros</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>))
-}</div><div class='output co'>#&gt; b = 7.13e-06, c = 0.769, MAX MC URBAN = 1.91, 
-#&gt; f = 1.5e-06, g = 0.955, MAX MC ROAD = 1.2
-#&gt; V &lt; 19: MC_URBAN = b*km + c
-#&gt; V &gt;= 63: MC_ROAD = f*km + g
-#&gt; 19 &lt;= V &lt; 63: MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44</div><div class='img'><img src='emis_det-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Colour gradient: km_purple_orange_d05, number: 4627 </div><div class='img'><img src='emis_det-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;   V1 V2       V3       V4       V5      V6       V7       V8       V9      V10
-#&gt; 1  1  1 1.038558 1.135773 1.235658 1.33765 1.441215 1.545847 1.651069 1.756434
-#&gt; 2  1  1 1.038558 1.135773 1.235658 1.33765 1.441215 1.545847 1.651069 1.756434
-#&gt;       V11       speed
-#&gt; 1 1.86152 18.9 [km/h]
-#&gt; 2 1.86152 18.9 [km/h]</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

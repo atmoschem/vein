@@ -1,7 +1,7 @@
 #' Post emissions
 #'
 #' @description \code{emis_post} simplify emissions estimated as total per type category of
-#' vehicle or by street. It reads EmissionsArray. It can return an dataframe
+#' vehicle or by street. It reads EmissionsArray and Emissions classes. It can return an dataframe
 #' with hourly emissions at each street, or a data base with emissions by vehicular
 #' category, hour, including size, fuel and other characteristics.
 #'
@@ -101,10 +101,8 @@ emis_post <- function(arra,
                       by = "veh",
                       net,
                       type_emi,
-                      k) {
-  if ( class(arra)[1] != "EmissionsArray"){
-    stop("No EmissionsArray")
-  } else if (length(dim(arra)) == 4){
+                      k = 1) {
+   if (length(dim(arra)) == 4){
     if (by == "veh"){
       x <- unlist(lapply(1:dim(arra)[4], function(j) {
         unlist(lapply (1:dim(arra)[3],function(i) {
@@ -151,9 +149,7 @@ emis_post <- function(arra,
       hour <- rep(1:(dim(arra)[3]*dim(arra)[4]), #hours x days
                   each = dim(arra)[2]) #veh cat
       df$hour <- hour
-      df$g <- Emissions(df$g)
-
-      if(!missing(k)) df$g <- df$g * k
+      df$g <- Emissions(df$g)*k
 
       return(df)
     } else if (by == "streets_narrow") {
@@ -162,7 +158,7 @@ emis_post <- function(arra,
         unlist(lapply (1:dim(arra)[3],function(i) { # hora
           rowSums(arra[,,i,j], na.rm = TRUE)
         }))
-      }))
+      }))*k
       df <- cbind(deparse(substitute(arra)),as.data.frame(x))
       hour <- rep(seq(0: (dim(arra)[3]-1) ),
                   times = dim(arra)[4],
@@ -172,7 +168,6 @@ emis_post <- function(arra,
       df[,1] <- seq(1,dim(arra)[1])
       df[,2] <- Emissions(df[,2])
 
-      if(!missing(k)) df$g <- df$g * k
 
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
@@ -180,12 +175,11 @@ emis_post <- function(arra,
         unlist(lapply (1:dim(arra)[3],function(i) { # hora
           rowSums(arra[,,i,j], na.rm = T)
         }))
-      }))
+      }))*k
       m <- matrix(x, nrow=dim(arra)[1], ncol=dim(arra)[3]*dim(arra)[4])
 
       df <- as.data.frame(m)
 
-      if(!missing(k)) for(i in 1:ncol(df))  df[, i] <- df[, i] * k
 
       nombres <- lapply(1:dim(m)[2], function(i){paste0("h",i)})
       if(!missing(net)){
@@ -197,7 +191,7 @@ emis_post <- function(arra,
       }
     }
 
-  } else {
+  } else if(length(dim(arra) == 3)){
     if (by == "veh"){
       x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
       df <- cbind(deparse(substitute(arra)),
@@ -237,8 +231,7 @@ emis_post <- function(arra,
       hour <- rep(1:dim(arra)[3], #hours x days
                   each = dim(arra)[2]) #veh cat
       df$hour <- hour
-      df$g <- Emissions(df$g)
-      if(!missing(k)) df$g <- df$g * k
+      df$g <- Emissions(df$g)*k
       return(df)
     } else if (by %in% c("streets_narrow")) {
       df <- as.vector(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
@@ -247,12 +240,10 @@ emis_post <- function(arra,
                        hour = rep(1:dim(arra)[3], each = dim(arra)[1]))
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
-      df <- apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE)
+      df <- apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE)*k
       names(df) <- paste0("h",1:length(df))
 
       df <- as.data.frame(df)
-
-      if(!missing(k)) for(i in 1:ncol(df))  df[, i] <- df[, i] * k
 
       if(!missing(net)){
         netsf <- sf::st_as_sf(net)
@@ -263,5 +254,19 @@ emis_post <- function(arra,
       }
     }
 
-  }
+
+  } else if(length(dim(arra) == 2)) {
+    if(by != "veh") stop("Only by  == 'veh' accepted")
+    x_DF <- data.frame(array_x = paste0("array_", 1:nrow(arra)))
+    x_DF$g <- arra$emissions*k
+    x_DF$veh <- veh
+    x_DF$size <- size
+    x_DF$fuel <- fuel
+    x_DF$type_emi <- type_emi
+    x_DF$pollutant <- pollutant
+    x_DF$age <- arra$age
+    return(x_DF)
+  } else {
+      stop("emis_post only reads `EmissionsArray` or `Emissions`")
+    }
 }
