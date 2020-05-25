@@ -55,13 +55,13 @@ for(i in seq_along(metadata$vehicles)) {
                     agemax = ncol(x), 
                     verbose = verbose)
     
-    (array_x <- emis_hot_td(veh = x, 
+    array_x <- emis_hot_td(veh = x, 
                            lkm = mileage[[metadata$vehicles[i]]], 
                            ef = ef, 
                            pro_month = pmonth[[metadata$vehicles[i]]],
                            fortran = TRUE,
                            verbose = verbose)
-    )
+    
     x_DF <- emis_post(arra = array_x, 
                       veh = metadata$vehicles[i], 
                       size = metadata$size[i],
@@ -69,7 +69,6 @@ for(i in seq_along(metadata$vehicles)) {
                       pollutant = pol[j],
                       type_emi = "Exhaust",
                       by = 'veh')
-    
     
     saveRDS(x_DF, 
             file = paste0('emi/', 
