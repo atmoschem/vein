@@ -2,37 +2,19 @@ language: r
 
 r:
   - release
-#  - oldrel
-#  - devel
-
-# cache: packages
 
 sudo: required
-
 dist: trusty
 
 addons:
-  postgresql: "9.6"
-
-  "addons": {
-    "apt": {
-      "packages": [
-        "libmagickcore-dev",
-        "libmagickwand-dev"
-      ]
-    }}
-  
-
-before_install:
-  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
-  - sudo apt-get --yes --force-yes update -qq
-  - sudo apt-get install --yes libpng12-dev
-  # units/udunits2 dependency:
-  - sudo apt-get install --yes libudunits2-dev
-  # sf dependencies:
-  - sudo apt-get install --yes libproj-dev libgeos-dev libgdal-dev gdal-bin libnetcdf-dev  netcdf-bin
-
-warnings_are_errors: false
+  apt:
+    sources:
+      - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
+    packages:
+      - libudunits2-dev
+      - libproj-dev
+      - libgeos-dev
+      - libgdal-dev
 
 r_packages:
   - covr
