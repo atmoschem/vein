@@ -20,10 +20,10 @@ for(i in seq_along(metadata$vehicles)) {
                            verbose = verbose)
     
     x_DF <- emis_post(arra = array_x,
-                      veh = "PC",
-                      size = "<1400",
-                      fuel = "G",
-                      pollutant = "CO",
+                      veh = metadata$vehicles[i],
+                      size = metadata$size[i],
+                      fuel = metadata$fuel[i],
+                      pollutant = pol[j],
                       by = "veh",
                       type_emi = "Exhaust")
     
@@ -51,7 +51,7 @@ dt$pollutant <- as.character(dt$pollutant)
 dt$t <- units::set_units(dt$g, t)
 
 dt0 <- dt[pollutant == "FC", 
-          round(sum(t)*factor_emi, 2), 
+          round(sum(t), 2), 
           by = .(fuel)]
 data.table::setkey(dt0, "fuel")
 

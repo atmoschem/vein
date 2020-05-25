@@ -34,9 +34,9 @@ source("scripts/net.R")
 net                  <- readRDS("network/net.rds")
 metadata             <- readRDS("config/metadata.rds")
 veh                  <- readRDS("config/fleet_age.rds")
-k_D                  <- 1
-k_E                  <- 1
-k_G                  <- 1 
+k_D                  <- 1/1.853396
+k_E                  <- 1/1.772143
+k_G                  <- 1/2.347402
 verbose              <- FALSE
 year                 <- 2018
 cores                <- c("black", "red", "green3", "blue", "brown",
@@ -48,6 +48,7 @@ metadata             <- readRDS("config/metadata.rds")
 mileage              <- readRDS("config/mileage.rds")
 veh                  <- readRDS("config/fleet_age.rds")
 net                  <- readRDS("network/net.rds")
+pmonth               <- readRDS("config/pmonth.rds")
 verbose              <- FALSE
 year                 <- 2018
 cores                <- c("black", "red", "green3", "blue", "cyan",
@@ -55,13 +56,12 @@ cores                <- c("black", "red", "green3", "blue", "cyan",
 # fuel calibration with fuel consumption data
 fuel                 <- readRDS("config/fuel.rds")
 pol                  <- "FC"
-factor_emi           <- 365             # convert estimation from daily to annual
 source('scripts/fuel_eval.R') # repetir ate bater consumo e estimativa
 
 # Estimativa
 pol                  <- c("CO", "HC", "NMHC",  "NOx", "CO2","RCHO",
                           "PM", "NO2", "NO")
-source('scripts/escapamento.R')
+source('scripts/exhaust.R')
 
 #evaporativas
 diurnal_ef           <- "D_20_35"
