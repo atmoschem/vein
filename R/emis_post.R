@@ -266,6 +266,9 @@ emis_post <- function(arra,
     x_DF$type_emi <- type_emi
     x_DF$pollutant <- pollutant
     x_DF$age <- arra$age
+    if("month" %in% names(arra)) {
+      x_DF$month <- rep(arra$month, each = nrow(arra)/max(arra$month))
+    }
     return(x_DF)
   } else {
       stop("emis_post only reads `EmissionsArray` or `Emissions`")
