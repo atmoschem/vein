@@ -66,7 +66,7 @@ dtf$estimation_consumption <- dtf$estimation_t/dtf$consumption_t
 print(dtf[, c(1,2,6,7)])
 
 cat("Limpando... \n")
-rm(i, j, pol, dt, dt0, dtf, factor_emi, fuel)
+suppressWarnings(rm(i, j, pol, dt, dt0, dtf, factor_emi, fuel))
 
 ls()   
 gc()

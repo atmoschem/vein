@@ -267,7 +267,7 @@ emis_post <- function(arra,
     x_DF$pollutant <- pollutant
     x_DF$age <- arra$age
     if("month" %in% names(arra)) {
-      x_DF$month <- rep(arra$month, each = nrow(arra)/max(arra$month))
+      x_DF$month <- arra$month
     }
     return(x_DF)
   } else {
