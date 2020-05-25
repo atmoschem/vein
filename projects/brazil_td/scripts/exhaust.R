@@ -77,23 +77,13 @@ for(i in seq_along(metadata$vehicles)) {
                           pol[j], 
                           '_DF.rds'))
     
-    x_STREETS <- emis_post(arra = array_x, 
-                           pollutant = pol[j], 
-                           by = 'streets') 
-    saveRDS(x_STREETS, 
-            file = paste0('emi/', 
-                          metadata$vehicles[i] ,'/', 
-                          metadata$vehicles[i] ,'_', 
-                          pol[j], 
-                          '_STREETS.rds'))
-    
   }
-  rm(array_x, ef, x, x_DF, x_STREETS)
+  rm(array_x, ef, x, x_DF)
 }
 
 
-cat(paste0("Arquivos em ", getwd(), "/emi/*\n"))
-cat("Limpando... \n")
+message(paste0("Files in ", getwd(), "/emi/*\n"))
+cat("Cleaning... \n")
 suppressWarnings(
   rm(i, j, pol, 
      n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC,

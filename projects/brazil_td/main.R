@@ -56,18 +56,18 @@ cores                <- c("black", "red", "green3", "blue", "cyan",
 # fuel calibration with fuel consumption data
 fuel                 <- readRDS("config/fuel.rds")
 pol                  <- "FC"
-source('scripts/fuel_eval.R') # repetir ate bater consumo e estimativa
+source('scripts/fuel_eval.R')
 
-# Estimativa
+# Exhaust
 pol                  <- c("CO", "HC", "NMHC",  "NOx", "CO2","RCHO",
                           "PM", "NO2", "NO")
 source('scripts/exhaust.R')
 
-#evaporativas
+# Evaporative
 diurnal_ef           <- "D_20_35"
 running_losses_ef    <- "R_20_35"
 hot_soak_ef          <- "S_20_35"
-source('scripts/evaporativas.R')
+source('scripts/evaporatives.R')
 
 # ressuspensao gera PM e PM10
 metadata             <- readRDS("config/metadata.rds")
