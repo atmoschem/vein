@@ -240,7 +240,6 @@ emis_post <- function(arra,
                        hour = rep(1:dim(arra)[3], each = dim(arra)[1]))
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
-      print("aqui")
       df <- apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE)*k
       names(df) <- paste0("h",1:length(df))
 
