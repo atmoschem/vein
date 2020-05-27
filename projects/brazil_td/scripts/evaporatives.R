@@ -16,7 +16,7 @@ for(i in seq_along(veh_ev)) {
     
   x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
 
-    ef <- ef_cetesb(p = ef_evaps[j], 
+  ef <- ef_cetesb(p = ef_evaps[j], 
                     veh = veh_ev[i], 
                     year = year,
                     agemax = ncol(x),
@@ -33,13 +33,12 @@ for(i in seq_along(veh_ev)) {
   # adicionar unidades
   ef <- EmissionFactors(ef)
   
-  array_x <- emis(veh = x, 
-                  lkm = lkm, 
-                  ef = ef, 
-                  profile = tfs[[veh_ev[i]]], 
-                  fortran = TRUE, 
-                  simplify = TRUE,
-                  verbose = verbose)
+  array_x <- emis_hot_td(veh = x, 
+                         lkm = mileage[[metadata$vehicles[i]]], 
+                         ef = ef, 
+                         pro_month = pmonth[[metadata$vehicles[i]]],
+                         fortran = TRUE,
+                         verbose = verbose)
   
   x_DF <- emis_post(arra = array_x, 
                     veh = veh_ev[i], 
