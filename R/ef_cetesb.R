@@ -100,13 +100,20 @@
 #' @references Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
 #' url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
 #'
-#' @note Currently, 2020, there are not any sistem for recovery of fuel vapors in Brazil. Hence,
+#' @note Currently, 2020, there are not any system for recovery of fuel vapors in Brazil. Hence,
 #' the FS takes into account the vapour that comes from the fuel tank inside the car and
 #' released into the atmosphere when injecting new fuel. There are discussions about
 #' incrementing implementing stage I and II and/or ORVR thesedays. The ef FS is calculated
 #' by transforming g FC/km into  (L/KM)*g/L with g/L 1.14 fgor gasoline and 0.37
 #' for ethanol (CETESB, 2016). The density considered is 0.75425 for gasoline and
 #' 0.809 for ethanol (t/m^3)
+#'
+#' CETESB emission factors did not cover evaporative emissions from motorcycles,
+#' which occure. Therefore, in the abscence of better data, it was assumed the
+#' same ratio from passenger cars.
+#'
+#' Li, Lan, et al. "Exhaust and evaporative emissions from motorcycles fueled
+#' with ethanol gasoline blends." Science of the Total Environment 502 (2015): 627-631.
 #'
 #' @export
 #' @examples \dontrun{
@@ -205,8 +212,16 @@ ef_cetesb <- function(p,
 
   if(full) {
     if(p %in% c(evapd, evap)){
-      df <- cbind(ef[ef$Pollutant == p, 1:11],
-                  ef[ef$Pollutant == p, veh])
+      df1 <- ef[ef$Pollutant == p, 1:11]
+      df2 <- ef[ef$Pollutant == p, veh]
+      if(length(veh) == 1) {
+        df2 <- units::as_units(df2, "g")
+      } else {
+        for(i in 1:ncol(df2)) df2[, i] <- units::as_units(df2[, i], "g")
+      }
+
+      df <- cbind(df1, df2)
+
       names(df)[ncol(df)] <- p
 
     } else {
@@ -220,6 +235,13 @@ ef_cetesb <- function(p,
   } else {
     if(p %in% c(evapd, evap)){
       df <- ef[ef$Pollutant == p, veh]
+
+      if(length(veh) == 1) {
+        df <- units::as_units(df, "g")
+      } else {
+        for(i in 1:ncol(df)) df[, i] <- units::as_units(df[, i], "g")
+      }
+
     } else {
       if(pol == "SO2" & length(veh) == 1){
         if(veh %in% s0) k = 0
