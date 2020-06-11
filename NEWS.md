@@ -1,13 +1,18 @@
 NEWS
 ===========
 
-## vein 0.8.9  (Release date: 2020-05-08)
+## vein 0.8.10  (Release date: 2020-06-11)
+
+- evaporative emissions from ef_cetesb return units with grams (2020-06-11)
+
+## vein 0.8.9  (Release date: 2020-06-11)
 
 - Revise mileage functions. Especifically, fix KM_LDC_FLEX so that 
-it do not increase mileage over time.
-- Moved to https://gitlab.com/ibarraespinosa/vein.
-- Add add_lkm to add units km into R objects.(2020-25-24)
-- Enhance emis_post to read Emissions and EmissionsArray classes
+it do not increase mileage over time. (2020-05-08)
+- Moved to https://gitlab.com/ibarraespinosa/vein. (2020-05-08)
+- Add add_lkm to add units km into R objects.(2020-05-24)
+- Enhance emis_post to read Emissions and EmissionsArray classes (2020-05-24)
+- Assume evaporative emission factors from PC into MC ef_cetesb
 
 ## vein 0.8.8  (Release date: 2020-03-11)
 
