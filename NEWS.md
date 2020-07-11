@@ -1,9 +1,11 @@
 NEWS
 ===========
 
-## vein 0.8.10  (Release date: 2020-06-11)
+## vein 0.8.10
 
 - evaporative emissions from ef_cetesb return units with grams (2020-06-11)
+- Added projet "emislacovid" (2020-07-11)
+- Improved colplot (2020-07-11)
 
 ## vein 0.8.9  (Release date: 2020-06-11)
 

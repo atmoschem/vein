@@ -116,7 +116,7 @@ n_MC <- metadata$vehicles[grep(pattern = "MC", x = metadata$vehicles)]
 # PC
 df_x <- tfs[, n_PC]
 png("images/TFS_PC.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
+vplot(df_x, 
      xlab = "Hour",
      ylab = "tf",
      main = "TFS PC",
@@ -124,21 +124,12 @@ plot(df_x[[1]],
      type = "b", 
      pch = 16, 
      col = cores[1]) 
-for(i in 2:length(n_PC)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "bottomright", 
-       col = cores[1:length(n_PC)], 
-       n_PC, 
-       pch = 16)
 dev.off()
 
 # LCV
 df_x <- tfs[, n_LCV]
 png("images/TFS_LCV.png", 2000, 1500, "px",res = 300)
+par(xpd=T, mar=par()$mar+c(0,0,0,8))
 plot(df_x[[1]], 
      xlab = "Hour", 
      ylab = "tf",
@@ -153,15 +144,18 @@ for(i in 2:length(n_LCV)) {
          pch = 16, 
          col = cores[i]) 
 }
-legend(x = "bottomright", 
+legend(x = nrow(tfs)*1.05,
+       y = max(df_x), 
        col = cores[1:length(n_LCV)], 
-       n_LCV, 
+       legend = n_LCV, 
        pch = 16)
+par(mar=c(5, 4, 4, 2) + 0.1) # default
 dev.off()
 
 # TRUCKS
 df_x <- tfs[, n_TRUCKS]
 png("images/TFS_TRUCKS.png", 2000, 1500, "px",res = 300)
+par(xpd=T, mar=par()$mar+c(0,0,0,8))
 plot(df_x[[1]], 
      xlab = "Hour", 
      ylab = "tf",
@@ -176,15 +170,18 @@ for(i in 2:length(n_TRUCKS)) {
          pch = 16, 
          col = cores[i]) 
 }
-legend(x = "bottomright", 
+legend(x = nrow(tfs)*1.05,
+       y = max(df_x), 
        col = cores[1:length(n_TRUCKS)], 
-       n_TRUCKS, 
+       legend = n_TRUCKS, 
        pch = 16)
+par(mar=c(5, 4, 4, 2) + 0.1) # default
 dev.off()
 
 # BUS
 df_x <- tfs[, n_BUS]
 png("images/TFS_BUS.png", 2000, 1500, "px",res = 300)
+par(xpd=T, mar=par()$mar+c(0,0,0,8))
 plot(df_x[[1]], 
      xlab = "Hour", 
      ylab = "tf",
@@ -199,15 +196,18 @@ for(i in 2:length(n_BUS)) {
          pch = 16, 
          col = cores[i]) 
 }
-legend(x = "bottomright", 
+legend(x = nrow(tfs)*1.05,
+       y = max(df_x), 
        col = cores[1:length(n_BUS)], 
-       n_BUS, 
+       legend = n_BUS, 
        pch = 16)
+par(mar=c(5, 4, 4, 2) + 0.1) # default
 dev.off()
 
 # MC
 df_x <- tfs[, n_MC]
 png("images/TFS_MC.png", 2000, 1500, "px",res = 300)
+par(xpd=T, mar=par()$mar+c(0,0,0,8))
 plot(df_x[[1]], 
      xlab = "Hour", 
      ylab = "tf",
@@ -222,10 +222,12 @@ for(i in 2:length(n_MC)) {
          pch = 16, 
          col = cores[i]) 
 }
-legend(x = "bottomright", 
+legend(x = nrow(tfs)*1.05,
+       y = max(df_x), 
        col = cores[1:length(n_MC)], 
-       n_MC, 
+       legend = n_MC, 
        pch = 16)
+par(mar=c(5, 4, 4, 2) + 0.1) # default
 dev.off()
 
 # plotting mileage ####
@@ -234,6 +236,7 @@ cat("Plotting mileage \n")
 # PC
 df_x <- mileage[, n_PC]
 png("images/MILEAGE_PC.png", 2000, 1500, "px",res = 300)
+par(xpd=T, mar=par()$mar+c(0,0,0,8))
 plot(df_x[[1]], 
      xlab = "Age of use", 
      ylab = "Mileage [km/year]",
@@ -248,10 +251,12 @@ for(i in 2:length(n_PC)) {
          pch = 16, 
          col = cores[i]) 
 }
-legend(x = "topright", 
+legend(x = nrow(mileage)*1.05,
+       y = max(df_x), 
        col = cores[1:length(n_PC)], 
-       n_PC, 
+       legend = n_PC, 
        pch = 16)
+par(mar=c(5, 4, 4, 2) + 0.1) # default
 dev.off()
 
 # LCV
@@ -352,6 +357,7 @@ cat("Plotting monthly profiles \n")
 # PC
 df_x <- pmonth[, n_PC]
 png("images/PMONTH_PC.png", 2000, 1500, "px",res = 300)
+par(xpd=T, mar=par()$mar+c(0,0,0,8))
 plot(df_x[[1]], 
      xlab = "Months", 
      ylab = "Monthly profile [%]",
@@ -370,6 +376,7 @@ legend(x = "bottomright",
        col = cores[1:length(n_PC)], 
        n_PC, 
        pch = 16)
+par(mar=c(5, 4, 4, 2) + 0.1) # default
 dev.off()
 
 # LCV
