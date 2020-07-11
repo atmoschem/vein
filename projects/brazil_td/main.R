@@ -1,5 +1,4 @@
 options(encoding = "UTF-8")
-
 library(vein)                     # vein
 library(sf)                       # spatial data
 library(cptcity)                  # 7120 colour palettes

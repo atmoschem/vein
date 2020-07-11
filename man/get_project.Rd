@@ -10,7 +10,7 @@ get_project(directory, case = "brasil", approach = "bottom-up")
 \item{directory}{Character; Path to an existing or a new directory to be created.
 It needs absolute path.}
 
-\item{case}{Character; Currently only supports "brasil" (or "brazil").}
+\item{case}{Character; Currently only supports "brasil" (or "brazil") and "emislacovid".}
 
 \item{approach}{Character; Currently only supports "bottom-up".}
 }
