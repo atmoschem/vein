@@ -1,5 +1,4 @@
 options(encoding = "UTF-8")
-
 library(vein)                     # vein
 library(sf)                       # ler dados espaciais
 library(cptcity)                  # 7120 paletas de cores
@@ -17,9 +16,8 @@ mileage              <- readxl::read_xlsx(path = rota, sheet = "mileage")
 tfs                  <- readxl::read_xlsx(path = rota, sheet = "tfs")
 veh                  <- readxl::read_xlsx(path = rota, sheet = "fleet_age")
 fuel                 <- readxl::read_xlsx(path = rota, sheet = "fuel")
-year                <- 2018
-cores                <- c("black", "red", "green3", "blue", "cyan",
-                          "magenta", "yellow", "gray", "brown")
+year                 <- 2018
+theme                <- "black" #dark clean ing  
 source("config.R")
 
 # 1) Network ####

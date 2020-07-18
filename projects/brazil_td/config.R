@@ -119,104 +119,53 @@ png("images/TFS_PC.png", 2000, 1500, "px",res = 300)
 colplot(df = df_x,
         cols = n_PC,
         xlab = "Hour",
-        ylab = NULL,
+        ylab = "",
         main = "TFS PC",
-        ylim = c(0, max(df_x)), 
-        type = "b", 
-        pch = 16, 
-        col = cores) 
+        theme = theme) 
 dev.off()
 
 # LCV
 df_x <- tfs[, n_LCV]
 png("images/TFS_LCV.png", 2000, 1500, "px",res = 300)
 colplot(df = df_x,
-        cols = n_PC,
+        cols = n_LCV,
         xlab = "Hour",
-        ylab = "tf",
+        ylab = "",
         main = "TFS LCV",
-        ylim = c(0, max(df_x)), 
-        type = "b", 
-        pch = 16, 
-        col = cores) 
+        theme = theme) 
 dev.off()
 
 # TRUCKS
 df_x <- tfs[, n_TRUCKS]
 png("images/TFS_TRUCKS.png", 2000, 1500, "px",res = 300)
-par(xpd=T, mar=par()$mar+c(0,0,0,8))
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS TRUCKS",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_TRUCKS)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = nrow(tfs)*1.05,
-       y = max(df_x), 
-       col = cores[1:length(n_TRUCKS)], 
-       legend = n_TRUCKS, 
-       pch = 16)
-par(mar=c(5, 4, 4, 2) + 0.1) # default
+colplot(df = df_x,
+        cols = n_TRUCKS,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS TRUCKS",
+        theme = theme) 
 dev.off()
 
 # BUS
 df_x <- tfs[, n_BUS]
 png("images/TFS_BUS.png", 2000, 1500, "px",res = 300)
-par(xpd=T, mar=par()$mar+c(0,0,0,8))
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS BUS",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_BUS)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = nrow(tfs)*1.05,
-       y = max(df_x), 
-       col = cores[1:length(n_BUS)], 
-       legend = n_BUS, 
-       pch = 16)
-par(mar=c(5, 4, 4, 2) + 0.1) # default
+colplot(df = df_x,
+        cols = n_BUS,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS BUS",
+        theme = theme) 
 dev.off()
 
 # MC
 df_x <- tfs[, n_MC]
 png("images/TFS_MC.png", 2000, 1500, "px",res = 300)
-par(xpd=T, mar=par()$mar+c(0,0,0,8))
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS MC",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_MC)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = nrow(tfs)*1.05,
-       y = max(df_x), 
-       col = cores[1:length(n_MC)], 
-       legend = n_MC, 
-       pch = 16)
-par(mar=c(5, 4, 4, 2) + 0.1) # default
+colplot(df = df_x,
+        cols = n_MC,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS MC",
+        theme = theme) 
 dev.off()
 
 # plotting mileage ####
@@ -225,119 +174,58 @@ cat("Plotting mileage \n")
 # PC
 df_x <- mileage[, n_PC]
 png("images/MILEAGE_PC.png", 2000, 1500, "px",res = 300)
-par(xpd=T, mar=par()$mar+c(0,0,0,8))
-plot(df_x[[1]], 
-     xlab = "Age of use", 
-     ylab = "Mileage [km/year]",
-     main = "Mileage PC",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_PC)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = nrow(mileage)*1.05,
-       y = max(df_x), 
-       col = cores[1:length(n_PC)], 
-       legend = n_PC, 
-       pch = 16)
-par(mar=c(5, 4, 4, 2) + 0.1) # default
+colplot(df = df_x,
+        cols = n_PC,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage PC",
+        theme = theme)
 dev.off()
 
 # LCV
 df_x <- mileage[, n_LCV]
 png("images/MILEAGE_LCV.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Age of use", 
-     ylab = "Mileage [km/year]",
-     main = "Mileage LCV",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_LCV)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_LCV)], 
-       n_LCV, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_LCV,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage LCV",
+        theme = theme)
 dev.off()
 
 # TRUCKS
 df_x <- mileage[, n_TRUCKS]
 png("images/MILEAGE_TRUCKS.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Age of use", 
-     ylab = "Mileage [km/year]",
-     main = "Mileage TRUCKS",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_TRUCKS)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_TRUCKS)], 
-       n_TRUCKS, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_TRUCKS,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage TRUCKS",
+        spl = 8,
+        theme = theme)
 dev.off()
 
 # BUS
 df_x <- mileage[, n_BUS]
 png("images/MILEAGE_BUS.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Age of use", 
-     ylab = "Mileage [km/year]",
-     main = "Mileage BUS",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_BUS)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_BUS)], 
-       n_BUS, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_BUS,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage BUS",
+        theme = theme)
 dev.off()
 
 # MC
 df_x <- mileage[, n_MC]
 png("images/MILEAGE_MC.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Age of use", 
-     ylab = "Mileage [km/year]",
-     main = "Mileage MC",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_MC)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_MC)], 
-       n_MC, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_MC,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage MC",
+        spl = 8,
+        theme = theme)
 dev.off()
 
 # Plotting monthly profiles ####
@@ -346,118 +234,60 @@ cat("Plotting monthly profiles \n")
 # PC
 df_x <- pmonth[, n_PC]
 png("images/PMONTH_PC.png", 2000, 1500, "px",res = 300)
-par(xpd=T, mar=par()$mar+c(0,0,0,8))
-plot(df_x[[1]], 
-     xlab = "Months", 
-     ylab = "Monthly profile [%]",
-     main = "Monthly profile PC",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_PC)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "bottomright", 
-       col = cores[1:length(n_PC)], 
-       n_PC, 
-       pch = 16)
-par(mar=c(5, 4, 4, 2) + 0.1) # default
+colplot(df = df_x,
+        cols = n_PC,
+        xlab = "Months", 
+        ylab = "Monthly profile [%]",
+        main = "Monthly profile PC",
+        spl = 5,
+        theme = theme)
 dev.off()
 
 # LCV
 df_x <- pmonth[, n_LCV]
 png("images/PMONTH_LCV.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Months", 
-     ylab = "Monthly profile [%]",
-     main = "Monthly profile LCV",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_LCV)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "bottomright", 
-       col = cores[1:length(n_LCV)], 
-       n_LCV, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_LCV,
+        xlab = "Months", 
+        ylab = "Monthly profile [%]",
+        main = "Monthly profile LCV",
+        theme = theme)
 dev.off()
 
 # TRUCKS
 df_x <- pmonth[, n_TRUCKS]
 png("images/PMONTH_TRUCKS.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Months", 
-     ylab = "Monthly profile [%]",
-     main = "Monthly profile TRUCKS",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_TRUCKS)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "bottomright", 
-       col = cores[1:length(n_TRUCKS)], 
-       n_TRUCKS, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_TRUCKS,
+        xlab = "Months", 
+        ylab = "Monthly profile [%]",
+        main = "Monthly profile TRUCKS",
+        spl = 8,
+        theme = theme)
 dev.off()
 
 # BUS
 df_x <- pmonth[, n_BUS]
 png("images/PMONTH_BUS.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Months", 
-     ylab = "Monthly profile [%]",
-     main = "Monthly profile BUS",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_BUS)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "bottomright", 
-       col = cores[1:length(n_BUS)], 
-       n_BUS, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_BUS,
+        xlab = "Months", 
+        ylab = "Monthly profile [%]",
+        main = "Monthly profile BUS",
+        spl = 8,
+        theme = theme)
 dev.off()
 
 # MC
 df_x <- pmonth[, n_MC]
 png("images/PMONTH_MC.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Months", 
-     ylab = "Monthly profile [%]",
-     main = "Monthly profile MC",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_MC)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = "bottomright", 
-       col = cores[1:length(n_MC)], 
-       n_MC, 
-       pch = 16)
+colplot(df = df_x,
+        cols = n_MC,
+        xlab = "Months", 
+        ylab = "Monthly profile [%]",
+        main = "Monthly profile MC",
+        spl = 9,
+        theme = theme)
 dev.off()
 
 # saveRDS
@@ -473,5 +303,5 @@ message("Files in ", getwd(), "/config/*\n",
 suppressWarnings(
   rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel,
      n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, path,
-     pmonth, met)
+     pmonth, met, theme)
 )
