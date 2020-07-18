@@ -6,17 +6,18 @@
 \usage{
 colplot(
   df,
-  cols,
-  xlab = NULL,
-  ylab = NULL,
+  cols = names(df),
+  xlab = "",
+  ylab = "",
   main = NULL,
-  ylim = c(0, max(df)),
+  theme = "black",
+  col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4], n = length(names(df))),
   type = "b",
-  pch = 16,
-  col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4], n = length(a)),
-  colaxes = "black",
-  bg = "white",
-  spl = 8
+  lwd = 2,
+  pch = 1:ncol(df),
+  familyfont = "",
+  spl = 5,
+  all_values = FALSE
 )
 }
 \arguments{
@@ -24,9 +25,18 @@ colplot(
 
 \item{cols}{Character, columns of data.frame.}
 
+\item{xlab}{a label for the x axis, defaults to a description of x.}
+
+\item{ylab}{a label for the x axis, defaults to a description of x.}
+
 \item{main}{Character, a main title for the plot, see also \code{\link{title}}.}
 
-\item{ylim}{Numeric, numeric vectors of length 2, giving the x and y coordinates ranges.}
+\item{theme}{Character; "black", "dark", "clean", "ink"}
+
+\item{col}{The colors for lines and points. Multiple colors can
+be specified so that each point can be given its own color. If
+there are fewer colors than points they are recycled in the
+standard fashion. Default are cptcity colour palette "kst_18_pastels"}
 
 \item{type}{1-character string giving the type of plot desired.
 The following values are possible, for details, see plot: "p" for
@@ -34,6 +44,8 @@ points, "l" for lines, "b" for both points and lines, "c"
 for empty points joined by lines, "o" for overplotted points and
 lines, "s" and "S" for stair steps and "h" for histogram-like vertical
 lines. Finally, "n" does not produce any points or lines.}
+
+\item{lwd}{a vector of line widths, see \code{\link{par}}.}
 
 \item{pch}{plotting ‘character’, i.e., symbol to use. This can either be a
 single character or an integer code for one of a set of graphics symbols.
@@ -48,31 +60,30 @@ of the device, often specified by an argument pointsize.
 For pch in 0:25 the default size is about 75% of
 the character height (see par("cin")).}
 
-\item{col}{The colors for lines and points. Multiple colors can
-be specified so that each point can be given its own color. If
-there are fewer colors than points they are recycled in the
-standard fashion. Lines will all be plotted in the first colour specified.
-future. Currently the only value is "constant"}
+\item{familyfont}{"Character" to specify font, default is"", options "serif",
+"sans", "mono" or more according device}
 
-\item{colaxes}{Character; "white" or "black".}
+\item{spl}{numer to control space for legend, default is 5.}
 
-\item{bg}{a vector of background colors for open plot symbols, see
-points. Note: this is not the same setting as par("bg").}
-
-\item{spl}{numer to control space for legend, default is 8.}
-
-\item{xlim}{Numeric, numeric vectors of length 2, giving the x and y coordinates ranges.}
+\item{all_values}{logical, if FALSe shows only positive > 0 values}
 }
 \value{
-a plot
+a nice plot
 }
 \description{
 \code{\link{colplot}} plots columns of data.frame
 }
-\examples{
-\dontrun{
-a <- ef_cetesb("CO", c("PC_G", "PC_FE"), agemax = 10)
-colplot(a, cols = names(a))
-colplot(a, cols = names(a), main = "title")
+\note{
+This plot shows values > 0 by default. To plot all values, use all_values = TRUE
 }
+\examples{
+{
+a <- ef_cetesb("CO", c("PC_G", "PC_FE", "PC_FG"), agemax = 20)
+colplot(df = a, ylab = "CO [g/km]", theme = "dark")
+colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
+colplot(df = a, ylab = "CO [g/km]", theme = "clean")
+}
+}
+\seealso{
+\code{\link{par}}
 }

@@ -132,17 +132,18 @@
 
     <pre class="usage"><span class='fu'>colplot</span>(
   <span class='no'>df</span>,
-  <span class='no'>cols</span>,
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>df</span>),
+  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>main</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>df</span>)),
+  <span class='kw'>theme</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cpt.html'>cpt</a></span>(<span class='kw'>pal</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/find_cpt.html'>find_cpt</a></span>(<span class='st'>"pastel"</span>)[<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>df</span>))),
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"b"</span>,
-  <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cpt.html'>cpt</a></span>(<span class='kw'>pal</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/find_cpt.html'>find_cpt</a></span>(<span class='st'>"pastel"</span>)[<span class='fl'>4</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>a</span>)),
-  <span class='kw'>colaxes</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>bg</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-  <span class='kw'>spl</span> <span class='kw'>=</span> <span class='fl'>8</span>
+  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>df</span>),
+  <span class='kw'>familyfont</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>spl</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>all_values</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -157,12 +158,27 @@
       <td><p>Character, columns of data.frame.</p></td>
     </tr>
     <tr>
+      <th>xlab</th>
+      <td><p>a label for the x axis, defaults to a description of x.</p></td>
+    </tr>
+    <tr>
+      <th>ylab</th>
+      <td><p>a label for the x axis, defaults to a description of x.</p></td>
+    </tr>
+    <tr>
       <th>main</th>
       <td><p>Character, a main title for the plot, see also <code><a href='https://rdrr.io/r/graphics/title.html'>title</a></code>.</p></td>
     </tr>
     <tr>
-      <th>ylim</th>
-      <td><p>Numeric, numeric vectors of length 2, giving the x and y coordinates ranges.</p></td>
+      <th>theme</th>
+      <td><p>Character; "black", "dark", "clean", "ink"</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>The colors for lines and points. Multiple colors can
+be specified so that each point can be given its own color. If
+there are fewer colors than points they are recycled in the
+standard fashion. Default are cptcity colour palette "kst_18_pastels"</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -172,6 +188,10 @@ points, "l" for lines, "b" for both points and lines, "c"
 for empty points joined by lines, "o" for overplotted points and
 lines, "s" and "S" for stair steps and "h" for histogram-like vertical
 lines. Finally, "n" does not produce any points or lines.</p></td>
+    </tr>
+    <tr>
+      <th>lwd</th>
+      <td><p>a vector of line widths, see <code><a href='https://rdrr.io/r/graphics/par.html'>par</a></code>.</p></td>
     </tr>
     <tr>
       <th>pch</th>
@@ -189,48 +209,45 @@ For pch in 0:25 the default size is about 75<!-- % of -->
 the character height (see par("cin")).</p></td>
     </tr>
     <tr>
-      <th>col</th>
-      <td><p>The colors for lines and points. Multiple colors can
-be specified so that each point can be given its own color. If
-there are fewer colors than points they are recycled in the
-standard fashion. Lines will all be plotted in the first colour specified.
-future. Currently the only value is "constant"</p></td>
-    </tr>
-    <tr>
-      <th>colaxes</th>
-      <td><p>Character; "white" or "black".</p></td>
-    </tr>
-    <tr>
-      <th>bg</th>
-      <td><p>a vector of background colors for open plot symbols, see
-points. Note: this is not the same setting as par("bg").</p></td>
+      <th>familyfont</th>
+      <td><p>"Character" to specify font, default is"", options "serif",
+"sans", "mono" or more according device</p></td>
     </tr>
     <tr>
       <th>spl</th>
-      <td><p>numer to control space for legend, default is 8.</p></td>
+      <td><p>numer to control space for legend, default is 5.</p></td>
     </tr>
     <tr>
-      <th>xlim</th>
-      <td><p>Numeric, numeric vectors of length 2, giving the x and y coordinates ranges.</p></td>
+      <th>all_values</th>
+      <td><p>logical, if FALSe shows only positive &gt; 0 values</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a plot</p>
+    <p>a nice plot</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This plot shows values &gt; 0 by default. To plot all values, use all_values = TRUE</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/graphics/par.html'>par</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span>(<span class='st'>"CO"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PC_G"</span>, <span class='st'>"PC_FE"</span>), <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>colplot</span>(<span class='no'>a</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>a</span>))
-<span class='fu'>colplot</span>(<span class='no'>a</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>a</span>), <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"title"</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'>{
+<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span>(<span class='st'>"CO"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PC_G"</span>, <span class='st'>"PC_FE"</span>, <span class='st'>"PC_FG"</span>), <span class='kw'>agemax</span> <span class='kw'>=</span> <span class='fl'>20</span>)
+<span class='fu'>colplot</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='no'>a</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"CO [g/km]"</span>, <span class='kw'>theme</span> <span class='kw'>=</span> <span class='st'>"dark"</span>)
+<span class='fu'>colplot</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='no'>a</span>, <span class='kw'>cols</span> <span class='kw'>=</span> <span class='st'>"PC_FG"</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"EF"</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"CO [g/km]"</span>)
+<span class='fu'>colplot</span>(<span class='kw'>df</span> <span class='kw'>=</span> <span class='no'>a</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"CO [g/km]"</span>, <span class='kw'>theme</span> <span class='kw'>=</span> <span class='st'>"clean"</span>)
+}</div><div class='img'><img src='colplot-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='colplot-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='colplot-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#note">Note</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
