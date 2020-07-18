@@ -19,8 +19,7 @@ fuel                 <- readxl::read_xlsx(path = path, sheet = "fuel")
 pmonth               <- readxl::read_xlsx(path = path, sheet = "pmonth")
 met                  <- readxl::read_xlsx(path = path, sheet = "met")
 year                 <- 2018
-cores                <- c("black", "red", "green3", "blue", "brown",
-                          "magenta", "yellow", "gray", "magenta")
+theme                <- "black" #dark clean ing  
 source("config.R")
 
 # 1) Network ####

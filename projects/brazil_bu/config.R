@@ -70,7 +70,6 @@ dir.create(path = "post/streets")
 dir.create(path = "post/grids")
 dir.create(path = "veh")
 
-
 for(i in seq_along(metadata$vehicles)) {
   dir.create(path = paste0("emi/", metadata$vehicles[i]))
 }
@@ -86,7 +85,6 @@ cat(paste0(po,"\n"))
 cat(paste0(pa,"\n"))
 cat("veh\n")
 
-
 cat("Plotando perfis `tfs`\n")
 
 # identicar nomes de grupos
@@ -99,91 +97,131 @@ n_MC <- metadata$vehicles[grep(pattern = "MC", x = metadata$vehicles)]
 # PC ####
 df_x <- tfs[, n_PC]
 png("images/TFS_PC.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Hour",
-     ylab = "tf",
-     main = "TFS PC",
-     ylim = c(0, max(df_x)), 
-     type = "b", pch = 16, col = cores[1]) 
-for(i in 2:length(n_PC)) {
-  points(df_x[[i]], type = "b", pch = 16, col = cores[i]) 
-}
-legend(x = "bottomright", col = cores[1:length(n_PC)], n_PC, pch = 16)
+colplot(df = df_x,
+        cols = n_PC,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS PC",
+        theme = theme) 
 dev.off()
 
 # LCV ####
 df_x <- tfs[, n_LCV]
 png("images/TFS_LCV.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS LCV",
-     ylim = c(0, max(df_x)), 
-     type = "b", pch = 16, col = cores[1]) 
-for(i in 2:length(n_LCV)) {
-  points(df_x[[i]], type = "b", pch = 16, col = cores[i]) 
-}
-legend(x = "bottomright", col = cores[1:length(n_LCV)], n_LCV, pch = 16)
+colplot(df = df_x,
+        cols = n_LCV,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS LCV",
+        theme = theme) 
 dev.off()
 
 # TRUCKS ####
 df_x <- tfs[, n_TRUCKS]
 png("images/TFS_TRUCKS.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS TRUCKS",
-     ylim = c(0, max(df_x)), 
-     type = "b", pch = 16, col = cores[1]) 
-for(i in 2:length(n_TRUCKS)) {
-  points(df_x[[i]], type = "b", pch = 16, col = cores[i]) 
-}
-legend(x = "bottomright", col = cores[1:length(n_TRUCKS)], n_TRUCKS, pch = 16)
+colplot(df = df_x,
+        cols = n_TRUCKS,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS TRUCKS",
+        spl = 8,
+        theme = theme) 
 dev.off()
 
 # BUS ####
 df_x <- tfs[, n_BUS]
 png("images/TFS_BUS.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS BUS",
-     ylim = c(0, max(df_x)), 
-     type = "b", pch = 16, col = cores[1]) 
-for(i in 2:length(n_BUS)) {
-  points(df_x[[i]], type = "b", pch = 16, col = cores[i]) 
-}
-legend(x = "bottomright", col = cores[1:length(n_BUS)], n_BUS, pch = 16)
+colplot(df = df_x,
+        cols = n_BUS,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS BUS",
+        spl = 8,
+        theme = theme) 
 dev.off()
 
 # MC ####
 df_x <- tfs[, n_MC]
 png("images/TFS_MC.png", 2000, 1500, "px",res = 300)
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS MC",
-     ylim = c(0, max(df_x)), 
-     type = "b", pch = 16, col = cores[1]) 
-for(i in 2:length(n_MC)) {
-  points(df_x[[i]], type = "b", pch = 16, col = cores[i]) 
-}
-legend(x = "bottomright", col = cores[1:length(n_MC)], n_MC, pch = 16)
+colplot(df = df_x,
+        cols = n_MC,
+        xlab = "Hour",
+        ylab = "",
+        main = "TFS MC",
+        spl = 9,
+        theme = theme) 
 dev.off()
 
 cat("Plotando quilometragem \n")
-for(i in seq_along(metadata$vehicles)) {
-
-  png(paste0("images/MILEAGE_",metadata$vehicles[i],".png"), 
-      2000, 1500, "px",res = 300)
-plot(mileage[[metadata$vehicles[i]]],
-     main = paste0("Quilometragem por ano de uso ", metadata$vehicles[i]),
-     xlab = "Ano de uso", ylab = "[km/ano]")
+# PC
+df_x <- mileage[, n_PC]
+png("images/MILEAGE_PC.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_PC,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage PC",
+        theme = theme)
 dev.off()
-    
-}
+
+# LCV
+df_x <- mileage[, n_LCV]
+png("images/MILEAGE_LCV.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_LCV,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage LCV",
+        theme = theme)
+dev.off()
+
+# TRUCKS
+df_x <- mileage[, n_TRUCKS]
+png("images/MILEAGE_TRUCKS.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_TRUCKS,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage TRUCKS",
+        spl = 8,
+        theme = theme)
+dev.off()
+
+# BUS
+df_x <- mileage[, n_BUS]
+png("images/MILEAGE_BUS.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_BUS,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage BUS",
+        theme = theme,
+        spl = 8)
+dev.off()
+
+# MC
+df_x <- mileage[, n_MC]
+png("images/MILEAGE_MC.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_MC,
+        xlab = "Age of use", 
+        ylab = "Mileage [km/year]",
+        main = "Mileage MC",
+        spl = 9,
+        theme = theme)
+dev.off()
+
+# saveRDS
+
+message("Files in ", getwd(), "/config/*\n",
+        "config/metadata.rds\n",
+        "config/mileage.rds\n",
+        "config/tfs.rds\n",
+        "config/fleet_age.rds\n",
+        "config/fuel.rds\n")
+
 
 suppressWarnings(
-  rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel,
+  rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel, theme,
    n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, rota)
 )
