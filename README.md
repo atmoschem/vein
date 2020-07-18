@@ -162,22 +162,22 @@ library(vein)
 demo(VEIN)
 ```
 
-## What is new?
+### What is new?
 
-  - Added Fortran function to speedup calculations (currently, without
-    speed)
-  - Improved
-    [ef\_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html).
-    future steps:
-  - Enhance
-    [inventory](https://atmoschem.github.io/vein/reference/inventory.html).
-    The idea is to configurate a whole emissions inventory for emission
-    factors of CETESB, COPERT.
+  - [colplot](https://atmoschem.github.io/vein/reference/colplot.html).
+  - emisla (COVID-19) in get\_project. Emissions for March 2020 in São
+    Paulo.
+
+### Future steps
+
+  - Add OpenMP in Fortran.
   - Improve plots.
-  - Adds or connect traffic from gtfs services.
-  - Add HBEFA EF.
+  - Add projects for European and Chinese emission factors
+  - Add HBEFA and EMFAC EF.
   - Estimation of evaporative emissions with Copert Tier 3.
   - Group species by chemical mechanism.
+  - See issues [GitHub](https://github.com/atmoschem/vein/issues) and
+    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
 ## How does it work?
 
@@ -202,7 +202,9 @@ Using
 <https://github.com/atmoschem/vein/projects/3>** Please, read the
 examples in the documentation of each function and run the demo.
 
-**Brazilian users, just use get\_project and run a project read**
+**Brazilian users, just use `get_project` and run a project read**
+
+  - <https://ibarraespinosa.github.io/cursovein>
 
 ### 1\) Examples with traffic data:
 

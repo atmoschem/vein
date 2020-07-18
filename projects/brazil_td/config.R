@@ -116,40 +116,29 @@ n_MC <- metadata$vehicles[grep(pattern = "MC", x = metadata$vehicles)]
 # PC
 df_x <- tfs[, n_PC]
 png("images/TFS_PC.png", 2000, 1500, "px",res = 300)
-vplot(df_x, 
-     xlab = "Hour",
-     ylab = "tf",
-     main = "TFS PC",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
+colplot(df = df_x,
+        cols = n_PC,
+        xlab = "Hour",
+        ylab = NULL,
+        main = "TFS PC",
+        ylim = c(0, max(df_x)), 
+        type = "b", 
+        pch = 16, 
+        col = cores) 
 dev.off()
 
 # LCV
 df_x <- tfs[, n_LCV]
 png("images/TFS_LCV.png", 2000, 1500, "px",res = 300)
-par(xpd=T, mar=par()$mar+c(0,0,0,8))
-plot(df_x[[1]], 
-     xlab = "Hour", 
-     ylab = "tf",
-     main = "TFS LCV",
-     ylim = c(0, max(df_x)), 
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-for(i in 2:length(n_LCV)) {
-  points(df_x[[i]], 
-         type = "b", 
-         pch = 16, 
-         col = cores[i]) 
-}
-legend(x = nrow(tfs)*1.05,
-       y = max(df_x), 
-       col = cores[1:length(n_LCV)], 
-       legend = n_LCV, 
-       pch = 16)
-par(mar=c(5, 4, 4, 2) + 0.1) # default
+colplot(df = df_x,
+        cols = n_PC,
+        xlab = "Hour",
+        ylab = "tf",
+        main = "TFS LCV",
+        ylim = c(0, max(df_x)), 
+        type = "b", 
+        pch = 16, 
+        col = cores) 
 dev.off()
 
 # TRUCKS
@@ -483,6 +472,6 @@ message("Files in ", getwd(), "/config/*\n",
 
 suppressWarnings(
   rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel,
-   n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, path,
-   pmonth, met)
+     n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, path,
+     pmonth, met)
 )

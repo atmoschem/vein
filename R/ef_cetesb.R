@@ -120,13 +120,14 @@
 #' a <- ef_cetesb("CO", "PC_G")
 #' a <- ef_cetesb("R_10_25", "PC_G")
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
-#' ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40)
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
 #' ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
 #' ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 #' ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 #' ef_cetesb(p = "SO2", veh = "PC_G", year = 2030, agemax = 40, sppm = 300)
 #' ef_cetesb(p = "SO2", veh = "PC_FE", year = 2030, agemax = 40, sppm = 300)
+#' a <- ef_cetesb(p = "NMHC", veh = c("PC_G", "PC_FG", "PC_FE", "PC_E"), year = 2018, agemax = 20)
+#' colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
 #' }
 ef_cetesb <- function(p,
                       veh,
