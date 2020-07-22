@@ -6,6 +6,7 @@ NEWS
 - evaporative emissions from ef_cetesb return units with grams (2020-06-11)
 - Added projet "emislacovid" (2020-07-11)
 - Improved colplot (2020-07-17)
+- Added scaled brazilian emission factors with tunnel measurements (2020-07-21) and speciations.
 
 ## vein 0.8.9  (Release date: 2020-06-11)
 

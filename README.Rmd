@@ -100,14 +100,15 @@ It currently covers the following pollutants in speed functions:
 
 - "COd", "HCd", "NMHCd", "CH4", "NOxd", "CO2"
 "PM", "N2O", "KML", "FC", "NO2d", "NOd", "gCO2/KWH", "RCHOd",
-"CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO"
+"CO", "HC", "NMHC", "NOx", "NO2" ,"NO", "RCHO" and scaled factors based on tunnel measurements
+see [ef_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html).
 
 ### Brazilian speciation based on IAG/USP (Fátima's group) studies:
 
 - "e_eth", "e_hc3", "e_hc5", "e_hc8", "e_ol2", "e_olt", "e_oli", "e_iso",
 "e_tol", "e_xyl", "e_c2h5oh", "e_ald", "e_hcho", "e_ch3oh", "e_ket",
 "E_SO4i", "E_SO4j", "E_NO3i", "E_NO3j", "E_MP2.5i", "E_MP2.5j", "E_ORGi",
-"E_ORGj", "E_ECi", "E_ECj"
+"E_ORGj", "E_ECi", "E_ECj" with option to scaled based on tunnel measurements.
 
 ### Base emission factors from International Emission Model (IVE)  for all available vehicle categories:
 

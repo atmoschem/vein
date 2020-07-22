@@ -34,11 +34,11 @@ if(!"Year" %in% names(mileage)) stop("Não estou enxergando a coluna 'Year' em '
 # if(!"Year" %in% names(ef)) stop("Não estou enxergando a coluna 'Year' em 'ef'")
 
 # checar ano base
-if(veh$Year[1] != year) stop(paste0("The base year is ", year, 
+if(veh$Year[1] != year) stop(paste0("The base year is ", year,
                                     " but the first year in 'veh' is ", veh$Year[1]))
-if(mileage$Year[1] != year) stop(paste0("The base year is ", year, 
+if(mileage$Year[1] != year) stop(paste0("The base year is ", year,
                                         " but the first year in 'mileage' is ", mileage$Year[1]))
-# if(ef$Year[1] != year) stop(paste0("The base year is ", year, 
+# if(ef$Year[1] != year) stop(paste0("The base year is ", year,
 #                                    " but the first year in 'ef' is ", ef$Year[1]))
 
 message("Arquivos em ", getwd(), "/config/*\n")
@@ -85,14 +85,86 @@ cat(paste0(po,"\n"))
 cat(paste0(pa,"\n"))
 cat("veh\n")
 
-cat("Plotando perfis `tfs`\n")
-
-# identicar nomes de grupos
+# identicar nomes de grupos ####
 n_PC <- metadata$vehicles[grep(pattern = "PC", x = metadata$vehicles)]
 n_LCV <- metadata$vehicles[grep(pattern = "LCV", x = metadata$vehicles)]
 n_TRUCKS <- metadata$vehicles[grep(pattern = "TRUCKS", x = metadata$vehicles)]
 n_BUS <- metadata$vehicles[grep(pattern = "BUS", x = metadata$vehicles)]
 n_MC <- metadata$vehicles[grep(pattern = "MC", x = metadata$vehicles)]
+
+cat("Plotando frota \n")
+
+# PC ####
+df_x <- veh[, n_PC]
+png("images/FLEET_PC.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_PC,
+        xlab = "Age",
+        ylab = "veh/h",
+        main = "PC",
+        type = "l",
+        pch = NULL,
+        theme = theme)
+dev.off()
+
+# LCV ####
+df_x <- veh[, n_LCV]
+png("images/FLEET_LCV.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_LCV,
+        xlab = "Age",
+        ylab = "veh/h",
+        main = "LCV",
+        type = "l",
+        pch = NULL,
+        theme = theme)
+dev.off()
+
+# TRUCKS ####
+df_x <- veh[, n_TRUCKS]
+png("images/FLEET_TRUCKS.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_TRUCKS,
+        xlab = "Age",
+        ylab = "veh/h",
+        main = "TRUCKS",
+        type = "l",
+        pch = NULL,
+        spl = 8,
+        theme = theme)
+dev.off()
+
+# BUS ####
+df_x <- veh[, n_BUS]
+png("images/FLEET_BUS.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_BUS,
+        xlab = "Age",
+        ylab = "veh/h",
+        main = "BUS",
+        type = "l",
+        pch = NULL,
+        spl = 8,
+        theme = theme)
+dev.off()
+
+# MC ####
+df_x <- veh[, n_MC]
+png("images/FLEET_MC.png", 2000, 1500, "px",res = 300)
+colplot(df = df_x,
+        cols = n_MC,
+        xlab = "Age",
+        ylab = "veh/h",
+        main = "Motorcycles",
+        type = "l",
+        pch = NULL,
+        spl = 9,
+        theme = theme)
+dev.off()
+
+
+cat("Plotando perfis `tfs`\n")
+
 
 # PC ####
 df_x <- tfs[, n_PC]
@@ -102,7 +174,9 @@ colplot(df = df_x,
         xlab = "Hour",
         ylab = "",
         main = "TFS PC",
-        theme = theme) 
+        type = "l",
+        pch = NULL,
+        theme = theme)
 dev.off()
 
 # LCV ####
@@ -113,7 +187,9 @@ colplot(df = df_x,
         xlab = "Hour",
         ylab = "",
         main = "TFS LCV",
-        theme = theme) 
+        type = "l",
+        pch = NULL,
+        theme = theme)
 dev.off()
 
 # TRUCKS ####
@@ -124,8 +200,10 @@ colplot(df = df_x,
         xlab = "Hour",
         ylab = "",
         main = "TFS TRUCKS",
+        type = "l",
+        pch = NULL,
         spl = 8,
-        theme = theme) 
+        theme = theme)
 dev.off()
 
 # BUS ####
@@ -136,8 +214,10 @@ colplot(df = df_x,
         xlab = "Hour",
         ylab = "",
         main = "TFS BUS",
+        type = "l",
+        pch = NULL,
         spl = 8,
-        theme = theme) 
+        theme = theme)
 dev.off()
 
 # MC ####
@@ -148,8 +228,10 @@ colplot(df = df_x,
         xlab = "Hour",
         ylab = "",
         main = "TFS MC",
+        type = "l",
+        pch = NULL,
         spl = 9,
-        theme = theme) 
+        theme = theme)
 dev.off()
 
 cat("Plotando quilometragem \n")
@@ -158,9 +240,11 @@ df_x <- mileage[, n_PC]
 png("images/MILEAGE_PC.png", 2000, 1500, "px",res = 300)
 colplot(df = df_x,
         cols = n_PC,
-        xlab = "Age of use", 
+        xlab = "Age of use",
         ylab = "Mileage [km/year]",
         main = "Mileage PC",
+        type = "l",
+        pch = NULL,
         theme = theme)
 dev.off()
 
@@ -169,9 +253,11 @@ df_x <- mileage[, n_LCV]
 png("images/MILEAGE_LCV.png", 2000, 1500, "px",res = 300)
 colplot(df = df_x,
         cols = n_LCV,
-        xlab = "Age of use", 
+        xlab = "Age of use",
         ylab = "Mileage [km/year]",
         main = "Mileage LCV",
+        type = "l",
+        pch = NULL,
         theme = theme)
 dev.off()
 
@@ -180,9 +266,11 @@ df_x <- mileage[, n_TRUCKS]
 png("images/MILEAGE_TRUCKS.png", 2000, 1500, "px",res = 300)
 colplot(df = df_x,
         cols = n_TRUCKS,
-        xlab = "Age of use", 
+        xlab = "Age of use",
         ylab = "Mileage [km/year]",
         main = "Mileage TRUCKS",
+        type = "l",
+        pch = NULL,
         spl = 8,
         theme = theme)
 dev.off()
@@ -192,9 +280,11 @@ df_x <- mileage[, n_BUS]
 png("images/MILEAGE_BUS.png", 2000, 1500, "px",res = 300)
 colplot(df = df_x,
         cols = n_BUS,
-        xlab = "Age of use", 
+        xlab = "Age of use",
         ylab = "Mileage [km/year]",
         main = "Mileage BUS",
+        type = "l",
+        pch = NULL,
         theme = theme,
         spl = 8)
 dev.off()
@@ -204,9 +294,11 @@ df_x <- mileage[, n_MC]
 png("images/MILEAGE_MC.png", 2000, 1500, "px",res = 300)
 colplot(df = df_x,
         cols = n_MC,
-        xlab = "Age of use", 
+        xlab = "Age of use",
         ylab = "Mileage [km/year]",
         main = "Mileage MC",
+        type = "l",
+        pch = NULL,
         spl = 9,
         theme = theme)
 dev.off()
@@ -223,5 +315,5 @@ message("Files in ", getwd(), "/config/*\n",
 
 suppressWarnings(
   rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel, theme,
-   n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, rota)
+     n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, rota)
 )

@@ -5,15 +5,16 @@
 #' will be added more speciations
 #'
 #' @param x Emissions estimation
-#' @param spec speciation: The speciations are: "bcom", tyre" (or "tire"), "brake", "road",
-#' "iag", "nox" and "nmhc". 'iag' now includes a speciation for use of industrial and
+#' @param spec speciation: The speciations are: "bcom", "tyre" (or "tire"), "brake", "road",
+#' "iag", "iag-tunnel","pmiag", "pmiag-tunnel", "nox", "nmhc". 'iag' now includes a speciation for use of industrial and
 #' building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
 #' speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
 #' gridded emissions (flux). It also accepts one of the following pollutants:
 #' 'e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
 #' 'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket',
 #' "e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
-#' "e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj". Also "h2o"
+#' "e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj" and these pollutants
+#' with tunnel, e.g. "e_eth-tunnel".
 #' @param veh Type of vehicle:
 #' When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
 #' When spec is "iag" veh can take two values depending:
@@ -102,7 +103,7 @@ nvoc <- c('e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
 pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
                    "e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj", "h2o"))
 
-  # black carbon and organic matter
+  # bcom black carbon and organic matter####
   if (spec=="bcom") {
     bcom <- sysdata$bcom
     df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
@@ -140,8 +141,18 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
       dfb <- as.list(dfb)
     }
     # iag ####
-  } else if (spec=="iag") {
+  } else if (spec %in% c("iag", "iag-tunnel")) {
     iag <- sysdata$iag
+    if(spec == "iag-tunnel") {
+      iag[iag$STANDARD == "Exhaust" &
+            iag$FUEL %in% c("G", "E"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
+                                                  iag$FUEL %in% c("G", "E"), 4:18]*1.842674
+      iag[iag$STANDARD == "Exhaust" &
+            iag$FUEL %in% c("D"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
+                                                      iag$FUEL %in% c("D"), 4:18]*2.905313
+    }
+
+
     df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
@@ -173,9 +184,20 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     if (show == TRUE) {
       print(df)
     }
-    # names PMIAG ####
-  } else if (spec %in% nvoc) {
+    # names IAG ####
+  } else if (spec %in% c(nvoc, paste0(nvoc, "-tunnel"))) {
     iag <- sysdata$iag
+
+    if(spec %in% paste0(nvoc, "-tunnel")) {
+      iag[iag$STANDARD == "Exhaust" &
+            iag$FUEL %in% c("G", "E"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
+                                                      iag$FUEL %in% c("G", "E"), 4:18]*1.842674
+      iag[iag$STANDARD == "Exhaust" &
+            iag$FUEL %in% c("D"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
+                                                 iag$FUEL %in% c("D"), 4:18]*2.905313
+    }
+
+
     df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , spec]
     df <- data.frame(spec = df)
     names(df) <- spec
@@ -262,7 +284,8 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
       dfb <- as.list(dfb)
     }
     # PM2.5 IAG ####
-  } else if(spec == "pmiag"){
+  } else if(spec %in% c("pmiag", "pmiag-tunnel")){
+
     message("Input emissions must be in g/(km^2)/h\n")
     message("Output flux will be  ug/(m^2)/s\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
@@ -295,6 +318,9 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
                        h2o = 0.277)
 
     }
+
+    if(spec == "pmiag-tunnel") df <- df*1.487109
+
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
         x[ , i] <- units::set_units(x[ , i], "ug/m^2/s")
@@ -325,7 +351,7 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     if (show == TRUE) {
       print(df)
     }
-  } else if (spec %in% pmdf) {
+  } else if (spec %in% c(pmdf, paste0(pmdf, "-tunnel"))) {
     message("Input emissions must be in g/(km^2)/h\n")
     message("Output flux will be  ug/(m^2)/s\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
@@ -360,6 +386,9 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     }
 
     names(df) <- spec
+
+    if(spec %in% spec %in% paste0(pmdf, "-tunnel")) df <- df*1.487109
+
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
         x[ , i] <- units::set_units(x[ , i], "ug/m^2/s")

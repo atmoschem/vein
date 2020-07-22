@@ -98,6 +98,20 @@ test_that("speciate works", {
                0)
 })
 
+test_that("speciate works", {
+  expect_equal(round(speciate(pm, spec = "iag-tunnel",
+                              veh = "veh", fuel = "G", eu = "Exhaust", show = TRUE)$e_eth[1]),
+               0)
+  expect_output(speciate(pm, spec = "iag",
+                         veh = "veh", fuel = "G", eu = "Exhaust",show = TRUE),
+                ".?")
+  expect_equal(as.numeric(round(speciate(data.frame(pm), spec = "iag",
+                                         veh = "veh", fuel = "G",
+                                         eu = "Exhaust",
+                                         list = TRUE, show = TRUE)[[1]][1,1])),
+               0)
+})
+
 
 test_that("speciate works", {
   expect_equal(round(speciate(pm, spec = "nmhc",
@@ -129,4 +143,12 @@ test_that("speciate works", {
                0)
   expect_output(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$e_so4i[1])),
                ".?")
+})
+
+
+test_that("speciate works", {
+  expect_equal(as.numeric(round(speciate(g, spec = "pmiag-tunnel",show = TRUE)$e_so4i[1])),
+               0)
+  expect_output(as.numeric(round(speciate(g, spec = "pmiag-tunnel",show = TRUE)$e_so4i[1])),
+                ".?")
 })

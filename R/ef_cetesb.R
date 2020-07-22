@@ -3,10 +3,13 @@
 #' \code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
 #' @param p Character;
 #'
-#' Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2","RCHO", "ETOH",
-#' "PM", "N2O", "KML", "FC", "NO2", "NO", "gD/KWH", "gCO2/KWH", "RCHO",
+#' Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2",
+#' "RCHO" (aldehydes + formaldehyde), "ETOH",
+#' "PM", "N2O", "KML", "FC", "NO2", "NO",
+#' "gD/KWH", "gCO2/KWH", "RCHO_0km" (aldehydes + formaldehyde),
 #' "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
-#' "RCHO_0km" and "ETOH_0km", "FS" (fuel sales) (g/km).
+#' "RCHO_0km" and "ETOH_0km", "FS" (fuel sales) (g/km). If scale = "tunnel" is
+#' used, there is also "ALD" for aldehydes and "HCHO" for  formaldehydes
 #' Evaporative emissions at average temperature ranges:
 #' "D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15",
 #' "S_0_15" and "R_0_15" where D means diurnal (g/day), S hot/warm soak (g/trip)
@@ -23,6 +26,8 @@
 #' @param year Numeric; Filter the emission factor to start from a specific base year.
 #' If project is 'constant' values above 2017 and below 1980 will be repeated
 #' @param agemax Integer; age of oldest vehicles for that category
+#' @param scale Character; values "default" or "tunnel". If "tunnel", emission
+#' factors are scaled to represent EF measurements in tunnels in Sao Paulo
 #' @param sppm Numeric, sulfur (sulphur) in ppm in fuel.
 #' @param full Logical; To return a data.frame instead or a vector adding
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
@@ -115,6 +120,20 @@
 #' Li, Lan, et al. "Exhaust and evaporative emissions from motorcycles fueled
 #' with ethanol gasoline blends." Science of the Total Environment 502 (2015): 627-631.
 #'
+#' If scale is used with tunnel, the references are:
+#' \itemize{
+#' \item Pérez-Martinez, P. J., Miranda, R. M., Nogueira, T., Guardani, M. L.,
+#' Fornaro, A., Ynoue, R., and Andrade, M. F. (2014). Emission
+#' factors of air pollutants from vehicles measured inside road tunnels in
+#' Sao Paulo: case study comparison. International Journal of
+#' Environmental Science and Technology, 11(8), 2155-2168.
+#' \item Nogueira, T., de Souza, K. F., Fornaro, A., de Fatima Andrade, M., and
+#'  de Carvalho, L. R. F. (2015). On-road emissions of carbonyls
+#'  from vehicles powered by biofuel blends in traffic tunnels in the
+#'  Metropolitan Area of Sao Paulo, Brazil. Atmospheric Environment, 108, 88-97.
+#'}
+#'
+#'
 #' @export
 #' @examples \dontrun{
 #' a <- ef_cetesb("CO", "PC_G")
@@ -133,12 +152,53 @@ ef_cetesb <- function(p,
                       veh,
                       year = 2017,
                       agemax = 40,
+                      scale = "default",
                       sppm,
                       full = FALSE,
                       project = "constant",
                       verbose = FALSE){
   ef <- sysdata$cetesb
   ef[is.na(ef)] <- 0
+
+  # tunel
+  if(scale == "tunnel") {
+    ef <- sysdata$cetesb
+    names(ef)
+    LDV <- c(grep(pattern = "PC_", x = names(ef), value = T),
+             grep(pattern = "LCV_", x = names(ef), value = T)[1:4],
+             grep(pattern = "MC_", x = names(ef), value = T))
+
+    HDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = T),
+             grep(pattern = "BUS_", x = names(ef), value = T),
+             "LCV_D")
+    # CO HC NMHC
+    COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km")
+    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*1.842674
+
+    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.905313
+
+    # NONO2 NOx
+    NONO<- c("NOx", "NO2", "NO", "NOx_0km", "NO2_0km", "NO_0km")
+    ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.459931
+
+    # PM
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.487109
+
+    # ALD # ja tem NMHC incrementado
+    efALD <- ef[ef$Pollutant %in% "NMHC", ]
+    efALD$Pollutant <- "ALD"
+    efALD[, LDV] <- efALD[, LDV]*0.02420901
+    efALD[, HDV] <- efALD[, HDV]*0.08494866
+    ef <- rbind(ef, efALD)
+
+    # HCHO # ja tem NMHC incrementado
+    efHCHO <- ef[ef$Pollutant %in% "NMHC", ]
+    efHCHO$Pollutant <- "HCHO"
+    efHCHO[, LDV] <- efHCHO[, LDV]*0.01864748
+    efHCHO[, HDV] <- efHCHO[, HDV]*0.08494866
+    ef <- rbind(ef, efHCHO)
+
+  }
 
   oldt <- c("SLT", "LT", "MT", "SHT", "HT",
             "UB", "SUB", "COACH", "ARTIC",
