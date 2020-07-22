@@ -9,15 +9,16 @@ speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE, pmpar)
 \arguments{
 \item{x}{Emissions estimation}
 
-\item{spec}{speciation: The speciations are: "bcom", tyre" (or "tire"), "brake", "road",
-"iag", "nox" and "nmhc". 'iag' now includes a speciation for use of industrial and
+\item{spec}{speciation: The speciations are: "bcom", "tyre" (or "tire"), "brake", "road",
+"iag", "iag-tunnel","pmiag", "pmiag-tunnel", "nox", "nmhc". 'iag' now includes a speciation for use of industrial and
 building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
 speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
 gridded emissions (flux). It also accepts one of the following pollutants:
 'e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
 'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket',
 "e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
-"e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj". Also "h2o"}
+"e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj" and these pollutants
+with tunnel, e.g. "e_eth-tunnel".}
 
 \item{veh}{Type of vehicle:
 When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
