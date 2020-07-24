@@ -53,12 +53,11 @@ lkm                 <- net$lkm
 scale               <- "default"
 verbose             <- FALSE
 year                <- 2018
-progress            <- "default"  # bar
 
 # Fuel eval
 fuel                <- readRDS("config/fuel.rds")
 pol                 <- "FC"
-factor_emi          <- 365    # convertir estimativa diaria a anual
+factor_emi          <- 365/(nrow(tfs)/24)    # daily to annual
 source('scripts/fuel_eval.R')
 
 # Exhaust
@@ -85,7 +84,8 @@ sL1                 <- 0.6        # silt [g/m^2] se ADT < 500 (US-EPA AP42) i
 sL2                 <- 0.2        # silt [g/m^2] se 500 < ADT < 5000 (US-EPA AP42)
 sL3                 <- 0.06       # silt [g/m^2] se 5000 < ADT < 10000 (US-EPA AP42)
 sL4                 <- 0.03       # silt [g/m^2] se ADT > 10000 (US-EPA AP42)
-source('scripts/ressuspensao.R')
+progress            <- "default"  # bar
+source('scripts/pavedroads.R')
 
 # 4) Post-estimation #### 
 net                 <- readRDS("network/net.rds")
@@ -100,7 +100,7 @@ g                   <- eixport::wrf_grid("wrf/wrfinput_d02")
 # Number of lat points 51
 # Number of lon points 63
 crs                 <- 31983
-factor_emi          <- 365        # convertir estimativa diaria a anual
+factor_emi          <- 365/(nrow(tfs)/24)    # daily to annual
 source('scripts/post.R')
 
 # plots

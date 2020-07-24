@@ -19,8 +19,8 @@ ln  <- list(n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC)
 for(i in seq_along(ns)) {
   
   dl <- lapply(seq_along(pol), function(j){
-      data.frame(ef_cetesb(p = pol[j], veh = ln[[i]], year = year,
-                           agemax = 40, verbose = verbose), pol = pol[j])
+    data.frame(ef_cetesb(p = pol[j], veh = ln[[i]], year = year,
+                         agemax = 40, verbose = verbose), pol = pol[j])
   })
   
   dl <- do.call("rbind", dl)
@@ -53,34 +53,25 @@ switch (language,
         "spanish" = cat("Estimando emisiones\n"))
 
 
-if(progress == "bar") pb = txtProgressBar(min = 0, 
-                                          max = length(metadata$vehicles), 
-                                          initial = 0, 
-                                          style = 3) 
 
 for(i in seq_along(metadata$vehicles)) {
   
-  if(progress == "bar") {
-    setTxtProgressBar(pb,i)
-  }  else {
-    cat("\n", metadata$vehicles[i], 
-        rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i])))
-    
-  }
+  cat("\n", metadata$vehicles[i], 
+      rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i])))
   
   x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
   
   for(j in seq_along(pol)){
     
-    if(progress != "bar") cat(pol[j], " ")
+    cat(pol[j], " ")
     
-      ef <- ef_cetesb(p = pol[j], 
-                      veh = metadata$vehicles[i], 
-                      year = year,
-                      agemax = ncol(x), 
-                      verbose = verbose,
-                      scale = scale)
-
+    ef <- ef_cetesb(p = pol[j], 
+                    veh = metadata$vehicles[i], 
+                    year = year,
+                    agemax = ncol(x), 
+                    verbose = verbose,
+                    scale = scale)
+    
     array_x <- emis(veh = x, 
                     lkm = lkm, 
                     ef = ef, 

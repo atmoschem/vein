@@ -24,34 +24,81 @@ name_file_evap <- c("/DIURNAL_", "/RUNNING_LOSSES_", "/HOT_SOAK_")
 
 ef_d  <- paste0("D_", tem)
 ef_rl <- paste0("R_", tem)
-ef_hs <- paste0("H_", tem)
+ef_hs <- paste0("S_", tem)
 
+# plot
+n_PC <- metadata[metadata$family == "PC", ]$vehicles
+n_LCV <- metadata[metadata$family == "LCV", ]$vehicles[1:4]
+n_MC <- metadata[metadata$family == "MC", ]$vehicles
 
+ns <- c("PC", "LCV",  "MC",
+        "PC", "LCV",  "MC",
+        "PC", "LCV",  "MC")
+ln  <- list(n_PC, n_LCV, n_MC,
+            n_PC, n_LCV, n_MC,
+            n_PC, n_LCV, n_MC)
+laby <- c("g/day", "g/day", "g/day", 
+          "g/trip","g/trip","g/trip",
+          "g/trip","g/trip","g/trip")
+ev <- c("DIURNAL","DIURNAL","DIURNAL",
+        "RUNNING_LOSSES", "RUNNING_LOSSES","RUNNING_LOSSES",
+        "HOT_SOAK", "HOT_SOAK", "HOT_SOAK")
+
+# plotting
 switch (language,
-        "portuguese" = cat("Emissões evaporativas diurnal\n"),
-        "english" = cat("Evporative diurnal emissions\n"),
-        "chinese" = cat("蒸发昼间排放\n"),
-        "spanish" = cat("Emisiones evaporativas diurnal\n"))
+        "portuguese" = cat("Plotando EF\n"),
+        "english" = cat("Plotting EF\n"),
+        "chinese" = cat("绘图 EF\n"),
+        "spanish" = cat("Plotando EF\n"))
 
-if(progress == "bar") pb = txtProgressBar(min = 0, 
-                                          max = length(veh_ev), 
-                                          initial = 0, 
-                                          style = 3) 
+for(i in seq_along(ns)) {
+  
+  dl <- lapply(seq_along(ef_d), function(j){
+    data.frame(ef_cetesb(p = ef_d[j], veh = ln[[i]], year = year,
+                         agemax = 40, verbose = verbose),month = nmonth[j])
+  })
+  
+  dl <- rbindlist(dl)
+  df <- wide_to_long(df = dl, 
+                     column_with_data = ln[[i]], 
+                     column_fixed = "month")
+  df$age <- 1:40
+  setDT(df)
+  names(df) <- c("ef", "month", "veh", "age")
+  p <- ggplot(df[df$ef > 0, ], 
+              aes(x = age, y = ef, colour = veh)) +
+    geom_line() +
+    facet_wrap(~month) +
+    ylim(0, NA) +
+    labs(y = laby[i], title = ev[i]) +
+    # scale_y_log10() +
+    theme_bw()
+  
+  png(filename =  paste0("images/EF_", ev[i], "_", ns[i], ".png"),
+      width = 2100, height = 1500, units ="px", pointsize = 12,
+      bg = "white",  res = 300)
+  print(p)
+  dev.off()
+}
 
-# Evaporativas  ####
+
+
+# Diurnal  ####
+switch (language,
+        "portuguese" = cat("\nEmissões evaporativas diurnal\n"),
+        "english" = cat("\nEvaporative diurnal emissions\n"),
+        "chinese" = cat("\n蒸发昼间排放\n"),
+        "spanish" = cat("\nEmisiones evaporativas diurnal\n"))
+
 for(i in seq_along(veh_ev)) {
-
-  if(progress == "bar") {
-    setTxtProgressBar(pb,i)
-  }  else {
-    cat("\n", veh_ev[i], 
-        rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
-  }
-
-    
+  
+  cat("\n", veh_ev[i], 
+      rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
+  
+  
   for(j in seq_along(te)){
     
-    if(progress != "bar") cat(nmonth[j], " ")
+    cat(nmonth[j], " ")
     
     x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
     
@@ -78,7 +125,7 @@ for(i in seq_along(veh_ev)) {
                       size = metadata$size[i],
                       fuel = metadata$fuel[i], 
                       pollutant = "NMHC", 
-                      type_emi = type_emis[j],
+                      type_emi = paste("Diurnal", nmonth[j]),
                       by = 'veh')
     
     
@@ -86,7 +133,8 @@ for(i in seq_along(veh_ev)) {
             file = paste0('emi/', 
                           veh_ev[i] , 
                           name_file_evap[1],
-                          nmonth[j] ,'_', 
+                          nmonth[j] ,'_',
+                          veh_ev[i] ,'_',
                           'EVAP_NMHC_DF.rds'))
     
     x_STREETS <- emis_post(arra = array_x, 
@@ -97,6 +145,7 @@ for(i in seq_along(veh_ev)) {
                           veh_ev[i] ,
                           name_file_evap[1],
                           nmonth[j] ,'_', 
+                          veh_ev[i] ,'_',
                           'EVAP_HCNM_STREETS.rds'))
     
     rm(array_x, ef, x, x_DF, x_STREETS)
@@ -105,119 +154,160 @@ for(i in seq_along(veh_ev)) {
 }
 
 
-# Evaporativas running losses ####
+# Running Losses ####
+switch (language,
+        "portuguese" = cat("\nEmissões evaporativas running-losses\n"),
+        "english" = cat("\nEvaporative running-losses emissions\n"),
+        "chinese" = cat("\n蒸发流失排放\n"),
+        "spanish" = cat("\nEmisiones evaporativas running-loses\n"))
+
 for(i in seq_along(veh_ev)) {
   
-  cat("Estimando emissões evaporativas running losses de:", veh_ev[i], "...\n")
-  x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
+  if(progress == "bar") {
+    setTxtProgressBar(pb,i)
+  }  else {
+    cat("\n", veh_ev[i], 
+        rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
+  }
   
-  ef <- ef_cetesb(p = running_losses_ef, 
-                  veh = veh_ev[i], 
-                  year = year,
-                  agemax = ncol(x),
-                  # g/trip * trip/day * day/km = g/km
-                  verbose = verbose)*meta_ev$trips_day[i]/(mileage[[veh_ev[i]]]/365)
   
-  # muda NaNaN para 0
-  ef[is.na(ef)] <- 0
-  
-
-    # adicionar unidades
-  ef <- EmissionFactors(ef)
-  
-  array_x <- emis(veh = x, 
-                  lkm = lkm, 
-                  ef = ef, 
-                  profile = tfs[[veh_ev[i]]], 
-                  fortran = TRUE, 
-                  simplify = TRUE,
-                  verbose = verbose)
-  
-  x_DF <- emis_post(arra = array_x, 
+  for(j in seq_along(te)){
+    
+    if(progress != "bar") cat(nmonth[j], " ")
+    x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
+    
+    ef <- ef_cetesb(p = ef_rl[j], 
                     veh = veh_ev[i], 
-                    size = metadata$size[i],
-                    fuel = metadata$fuel[i], 
-                    pollutant = "NMHC", 
-                    type_emi = "Running Losses",
-                    by = 'veh')
-  
-  saveRDS(x_DF, 
-          file = paste0('emi/', 
-                        veh_ev[i] ,'/RUNNING_LOSSES_', 
-                        veh_ev[i] ,'_', 
-                        'EVAP_NMHC_DF.rds'))
-  
-  x_STREETS <- emis_post(arra = array_x, 
-                         pollutant = veh_ev[j], 
-                         by = 'streets') 
-  saveRDS(x_STREETS, 
-          file = paste0('emi/', 
-                        veh_ev[i] ,'/RUNNING_LOSSES_', 
-                        veh_ev[i] ,'_', 
-                        'EVAP_NMHC_STREETS.rds'))
-  
-  rm(array_x, ef, x, x_DF, x_STREETS)
+                    year = year,
+                    agemax = ncol(x),
+                    # g/trip * trip/day * day/km = g/km
+                    verbose = verbose)*meta_ev$trips_day[i]/(mileage[[veh_ev[i]]]/365)
+    
+    # muda NaNaN para 0
+    ef[is.na(ef)] <- 0
+    
+    
+    array_x <- emis(veh = x, 
+                    lkm = lkm, 
+                    ef = ef, 
+                    profile = tfs[[veh_ev[i]]], 
+                    fortran = TRUE, 
+                    simplify = TRUE,
+                    verbose = verbose)
+    
+    x_DF <- emis_post(arra = array_x, 
+                      veh = veh_ev[i], 
+                      size = metadata$size[i],
+                      fuel = metadata$fuel[i], 
+                      pollutant = "NMHC", 
+                      type_emi = paste("Running Losses", nmonth[j]),
+                      by = 'veh')
+    
+    saveRDS(x_DF, 
+            file = paste0('emi/', 
+                          veh_ev[i] , 
+                          name_file_evap[2],
+                          nmonth[j] ,'_', 
+                          'EVAP_NMHC_DF.rds'))
+    
+    x_STREETS <- emis_post(arra = array_x, 
+                           pollutant = veh_ev[j], 
+                           by = 'streets') 
+    saveRDS(x_STREETS, 
+            file = paste0('emi/', 
+                          veh_ev[i] ,
+                          name_file_evap[2],
+                          nmonth[j] ,'_', 
+                          'EVAP_HCNM_STREETS.rds'))
+    
+    rm(array_x, ef, x, x_DF, x_STREETS)
+  }
 }
 
+# Hot Soak ####
+switch (language,
+        "portuguese" = cat("\nEmissões evaporativas hot-soak\n"),
+        "english" = cat("\nEvaporative hot-soak emissions\n"),
+        "chinese" = cat("\n蒸发式热浸排放\n"),
+        "spanish" = cat("\nEmisiones evaporativas hot-soak\n"))
 
-# Evaporativas hot soak ####
 for(i in seq_along(veh_ev)) {
   
-  cat("Estimando emissões evaporativas hot soak de:", veh_ev[i], "...\n")
-  x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
+  if(progress == "bar") {
+    setTxtProgressBar(pb,i)
+  }  else {
+    cat("\n", veh_ev[i], 
+        rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
+  }
   
-  ef <- ef_cetesb(p = hot_soak_ef, 
-                  veh = veh_ev[i], 
-                  year = year,
-                  agemax = ncol(x),
-                  verbose = verbose)*meta_ev$trips_day[i]/(mileage[[veh_ev[i]]]/365) # quilometragem medio diario
   
-  # muda NaNaN para 0
-  ef[is.na(ef)] <- 0
-  
-  # adicionar unidades
-  ef <- EmissionFactors(ef)
-  
-  array_x <- emis(veh = x, 
-                  lkm = lkm, 
-                  ef = ef, 
-                  profile = tfs[[veh_ev[i]]], 
-                  fortran = TRUE, 
-                  simplify = TRUE,
-                  verbose = verbose)
-  
-  x_DF <- emis_post(arra = array_x, 
+  for(j in seq_along(te)){
+    
+    if(progress != "bar") cat(nmonth[j], " ")
+    x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
+    
+    ef <- ef_cetesb(p = ef_hs[j], 
                     veh = veh_ev[i], 
-                    size = metadata$size[i],
-                    fuel = metadata$fuel[i], 
-                    pollutant = "NMHC", 
-                    type_emi = "Hot Soak",
-                    by = 'veh')
-  
-  saveRDS(x_DF, 
-          file = paste0('emi/', 
-                        veh_ev[i] ,'/HOT_SOAK_', 
-                        veh_ev[i] ,'_', 
-                        'EVAP_NMHC_DF.rds'))
-  
-  x_STREETS <- emis_post(arra = array_x, 
-                         pollutant = veh_ev[j], 
-                         by = 'streets') 
-  saveRDS(x_STREETS, 
-          file = paste0('emi/', 
-                        veh_ev[i] ,'/HOT_SOAK_', 
-                        veh_ev[i] ,'_', 
-                        'EVAP_NMHC_STREETS.rds'))
-  
-  rm(array_x, ef, x, x_DF, x_STREETS)
+                    year = year,
+                    agemax = ncol(x),
+                    verbose = verbose)*meta_ev$trips_day[i]/(mileage[[veh_ev[i]]]/365) # quilometragem medio diario
+    
+    # muda NaNaN para 0
+    ef[is.na(ef)] <- 0
+    
+    
+    array_x <- emis(veh = x, 
+                    lkm = lkm, 
+                    ef = ef, 
+                    profile = tfs[[veh_ev[i]]], 
+                    fortran = TRUE, 
+                    simplify = TRUE,
+                    verbose = verbose)
+    
+    x_DF <- emis_post(arra = array_x, 
+                      veh = veh_ev[i], 
+                      size = metadata$size[i],
+                      fuel = metadata$fuel[i], 
+                      pollutant = "NMHC", 
+                      type_emi = paste("Hot Soak", nmonth[j]),
+                      by = 'veh')
+    
+    saveRDS(x_DF, 
+            file = paste0('emi/', 
+                          veh_ev[i] , 
+                          name_file_evap[3],
+                          nmonth[j] ,'_', 
+                          'EVAP_NMHC_DF.rds'))
+    
+    x_STREETS <- emis_post(arra = array_x, 
+                           pollutant = veh_ev[j], 
+                           by = 'streets') 
+    saveRDS(x_STREETS, 
+            file = paste0('emi/', 
+                          veh_ev[i] ,
+                          name_file_evap[3],
+                          nmonth[j] ,'_', 
+                          'EVAP_HCNM_STREETS.rds'))
+    
+    rm(array_x, ef, x, x_DF, x_STREETS)
+  }
 }
 
+switch (language,
+        "portuguese" = message("\n\nArquivos em: /emi/*:"),
+        "english" = message("\nFiles in: /emi/*"),
+        "chinese" = message("\n文件位于: /emi/*"),
+        "spanish" = message("\nArchivos en: /emi/*"))
 
-cat(paste0("Arquivos em ", getwd(), "/emi/*\n"))
-cat("Limpando... \n")
-rm(i, mileage, meta_ev, veh_ev, year,
-   diurnal_ef, hot_soak_ef, running_losses_ef)
 
-# deberiamos ter al menos: "composition" "net"         "veh"         "year"       
-ls()   
+switch (language,
+        "portuguese" = message("Limpando..."),
+        "english" = message("Cleaning..."),
+        "chinese" = message("清洁用品..."),
+        "spanish" = message("Limpiando..."))
+
+suppressWarnings(rm(i, mileage, meta_ev, veh_ev, year,
+                    diurnal_ef, hot_soak_ef, running_losses_ef)
+)
+
 gc()

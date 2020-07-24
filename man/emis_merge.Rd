@@ -15,7 +15,8 @@ emis_merge(
   crs,
   under = "after",
   as_list = FALSE,
-  k = 1
+  k = 1,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
 \item{as_list}{"Logical"; for returning the results as list or not.}
 
 \item{k}{factor}
+
+\item{verbose}{Logical to display more information or not. Default is TRUE}
 }
 \value{
 'Spatial feature' of lines or a dataframe of emissions
