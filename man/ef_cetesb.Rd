@@ -54,7 +54,7 @@ factors are scaled to represent EF measurements in tunnels in Sao Paulo}
 \item{full}{Logical; To return a data.frame instead or a vector adding
 Age, Year, Brazilian emissions standards and its euro equivalents.}
 
-\item{project}{haracter showing the method for projecting emission factors in
+\item{project}{Character showing the method for projecting emission factors in
 future. Currently the only value is "constant"}
 
 \item{verbose}{Logical; To show more information}

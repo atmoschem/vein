@@ -1,3 +1,5 @@
+# calibração combustivel http://dadosenergeticos.energia.sp.gov.br/portalcev2/intranet/PetroGas/index.html
+
 # tfs
 tfs <- as.data.frame(tfs)
 
@@ -5,7 +7,7 @@ tfs <- as.data.frame(tfs)
 # Escapamento ####
 for(i in seq_along(metadata$vehicles)) {
   
-  cat("Estimando emissões de:", metadata$vehicles[i], "...\n")
+  cat(metadata$vehicles[i], "...\n")
   x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
   
   for(j in seq_along(pol)){
@@ -15,7 +17,8 @@ for(i in seq_along(metadata$vehicles)) {
                     veh = metadata$vehicles[i], 
                     year = year,
                     agemax = nrow(x), 
-                    verbose = verbose)
+                    verbose = verbose, 
+                    scale = scale)
     
     array_x <- emis(veh = x, 
                     lkm = lkm, 
@@ -45,7 +48,11 @@ for(i in seq_along(metadata$vehicles)) {
   rm(array_x, ef, x, x_DF)
 }
 
-cat(paste0("Arquivos em ", getwd(), "/emi/*\n"))
+switch (language,
+        "portuguese" = message("\nArquivos em: /emi/*:"),
+        "english" = message("\nFiles in: /emi/*"),
+        "chinese" = message("\n文件位于: /emi/*"),
+        "spanish" = message("\nArchivos en: /emi/*"))
 
 # data.table ####
 dt <- data.table::rbindlist(
@@ -70,8 +77,13 @@ dtf$consumption_t <- dtf$consumption_m3*dtf$density_tm3
 dtf$estimation_consumption <- dtf$estimation_t/dtf$consumption_t
 print(dtf)
 
-cat("Limpando... \n")
-rm(i, j, pol, dt, dt0, dtf, factor_emi, fuel)
+switch (language,
+        "portuguese" = message("Limpando..."),
+        "english" = message("Cleaning..."),
+        "chinese" = message("清洁用品..."),
+        "spanish" = message("Limpiando..."))
+
+suppressWarnings(rm(i, j, pol, dt, dt0, dtf, factor_emi, fuel))
 
 ls()   
 gc()

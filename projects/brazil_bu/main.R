@@ -1,47 +1,45 @@
 options(encoding = "UTF-8")
 library(vein)                     # vein
-library(sf)                       # ler dados espaciais
-library(cptcity)                  # 7120 paletas de cores
+library(sf)                       # spatial data
+library(cptcity)                  # 7120 colour palettes
 library(ggplot2)                  # plots
-library(eixport)                  # criar wrfchemi
-library(data.table)
+library(eixport)                  # WRF Chem
+library(data.table)               # blasting speed
 sessionInfo()
 
 # 0 Configuration
-# source("config/packages.R")
-rota                 <- "config/inventory.xlsx"
-readxl::excel_sheets(rota)
-metadata             <- readxl::read_xlsx(path = rota, sheet = "metadata")
-mileage              <- readxl::read_xlsx(path = rota, sheet = "mileage")
-tfs                  <- readxl::read_xlsx(path = rota, sheet = "tfs")
-veh                  <- readxl::read_xlsx(path = rota, sheet = "fleet_age")
-fuel                 <- readxl::read_xlsx(path = rota, sheet = "fuel")
+language             <- "portuguese" # english chinese spanish 
+path                 <- "config/inventory.xlsx"
+readxl::excel_sheets(path )       # For libre office, readODS::read_ods()
+metadata             <- readxl::read_xlsx(path = path, sheet = "metadata")
+mileage              <- readxl::read_xlsx(path = path, sheet = "mileage")
+tfs                  <- readxl::read_xlsx(path = path, sheet = "tfs")
+veh                  <- readxl::read_xlsx(path = path, sheet = "fleet_age")
+fuel                 <- readxl::read_xlsx(path = path, sheet = "fuel")
+met                  <- readxl::read_xlsx(path = path, sheet = "met")
 year                 <- 2018
-theme                <- "black" #dark clean ing  
+theme                <- "black"   # dark clean ink  
+scale                <- "default"
 source("config.R")
 
 # 1) Network ####
 net                  <- sf::st_read("network/net.gpkg")
 crs                  <- 31983
 tit                  <- "Fluxo veicular [veh/h] em São Paulo"
-veiculos             <- c("pc", "lcv", "trucks", "bus", "mc") # presentes em network/net.gpkg
+categories             <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
 source("scripts/net.R")
 
 # 2) Traffic ####
-# para ler libre office calc, pode usar readODS::read_ods()
 net                 <- readRDS("network/net.rds")
 metadata            <- readRDS("config/metadata.rds")
-veiculos            <- c("pc", "lcv", "trucks", "bus", "mc") # estão em network/net.gpkg
+categories            <- c("pc", "lcv", "trucks", "bus", "mc")  # in network/net.gpkg
 veh                 <- readRDS("config/fleet_age.rds")
-k_D                 <- 1/0.5664265
-k_E                 <- 1/0.1763184
-k_G                 <- 1/0.2523449 
+k_D                 <- 1/0.5661912 
+k_E                 <- 1/0.1764558 
+k_G                 <- 1/0.2528435
 verbose             <- FALSE
 year                <- 2018
-tit                 <- "Veículos [veh/h] por ano de uso em São Paulo"
-tit2                <- "Veículos em São Paulo [%]"
-cores               <- c("black", "red", "green3", "blue", "cyan",
-                         "magenta", "yellow", "gray", "brown")
+theme               <- "black"     # dark clean ink  
 source('scripts/traffic.R')
 
 # 3) Estimation #### 
@@ -49,29 +47,27 @@ metadata            <- readRDS("config/metadata.rds")
 mileage             <- readRDS("config/mileage.rds")
 tfs                 <- readRDS("config/tfs.rds")
 veh                 <- readRDS("config/fleet_age.rds")
+met                 <- readRDS("config/met.rds")
 net                 <- readRDS("network/net.rds")
 lkm                 <- net$lkm
+scale               <- "default"
 verbose             <- FALSE
 year                <- 2018
-cores               <- c("black", "red", "green3", "blue", "cyan",
-                         "magenta", "yellow", "gray", "brown")
+progress            <- "default"  # bar
 
-# calibração combustivel http://dadosenergeticos.energia.sp.gov.br/portalcev2/intranet/PetroGas/index.html
+# Fuel eval
 fuel                <- readRDS("config/fuel.rds")
 pol                 <- "FC"
-factor_emi          <- 365             # convertir estimativa diaria a anual
-source('scripts/fuel_eval.R') # repetir ate bater consumo e estimativa
+factor_emi          <- 365    # convertir estimativa diaria a anual
+source('scripts/fuel_eval.R')
 
-# Estimativa
+# Exhaust
 pol                 <- c("CO", "HC", "NMHC",  "NOx", "CO2","RCHO",
                          "PM", "NO2", "NO")
-source('scripts/escapamento.R')
+source('scripts/exhaust.R')
 
-#evaporativas
-diurnal_ef          <- "D_20_35"
-running_losses_ef   <- "R_20_35"
-hot_soak_ef         <- "S_20_35"
-source('scripts/evaporativas.R')
+# Evaporatives
+source('scripts/evaporatives.R')
 
 # ressuspensao gera PM e PM10
 metadata            <- readRDS("config/metadata.rds")
