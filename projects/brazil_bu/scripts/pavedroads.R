@@ -73,9 +73,26 @@ W <-  aw(pc = PC,
 pol <- c("PM10", "PM")
 k <- c(0.62, 0.15)
 
+if(progress == "bar") pb = txtProgressBar(min = 0, 
+                                          max = length(metadata$vehicles), 
+                                          initial = 0, 
+                                          style = 3) 
+
+
 for(i in seq_along(metadata$vehicles)) {
-   for(j in seq_along(pol)) {
-      cat("Estimando ", pol[j], " ressuspensão de:", metadata$vehicles[i], "...\n")
+   
+   if(progress == "bar") {
+      setTxtProgressBar(pb,i)
+   }  else {
+      cat("\n", metadata$vehicles[i], 
+          rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i])))
+      
+   }
+
+      for(j in seq_along(pol)) {
+      
+         if(progress != "bar") cat(pol[j], " ")
+         
       x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
       q <- temp_fact(q = rowSums(x),  pro = tfs[[metadata$vehicles[i]]])
       
@@ -92,7 +109,7 @@ for(i in seq_along(metadata$vehicles)) {
               file = paste0('emi/', 
                             metadata$vehicles[i] ,'/', 
                             metadata$vehicles[i] ,
-                            '_RESUSPENSSAO_', 
+                            '_PAVED_ROADS_', 
                             pol[j], 
                             '_STREETS.rds'))
       
@@ -111,7 +128,7 @@ for(i in seq_along(metadata$vehicles)) {
               file = paste0('emi/', 
                             metadata$vehicles[i] ,'/', 
                             metadata$vehicles[i] ,
-                            '_RESUSPENSSAO_', 
+                            '_PAVED_ROADS_', 
                             pol[j], 
                             '_DF.rds'))
       

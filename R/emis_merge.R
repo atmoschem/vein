@@ -23,6 +23,7 @@
 #' "before" when '_X' and "none" for merging directly the files.
 #' @param as_list "Logical"; for returning the results as list or not.
 #' @param k factor
+#' @param verbose Logical to display more information or not. Default is TRUE
 #' @return 'Spatial feature' of lines or a dataframe of emissions
 #' @importFrom data.table rbindlist .SD
 #' @importFrom sf st_set_geometry st_sf st_geometry st_as_sf st_transform
@@ -41,7 +42,8 @@ emis_merge <- function (pol = "CO",
                         crs,
                         under = "after",
                         as_list = FALSE,
-                        k = 1){
+                        k = 1,
+                        verbose = TRUE){
   # nocov start
   x <- list.files(path = path,
                   pattern = what,
@@ -61,11 +63,15 @@ emis_merge <- function (pol = "CO",
   if(!missing(ignore)) {
     bo <- grepl(pattern = ignore, x = x)
     x <- x[!bo]
-    cat("\nReading emissions from:\n")
-    print(x)
+    if(verbose) {
+      cat("\nReading emissions from:\n")
+      print(x)
+    }
   } else {
-    cat("\nReading emissions from:\n")
-    print(x)
+    if(verbose) {
+      cat("\nReading emissions from:\n")
+      print(x)
+    }
   }
 
   # reading
@@ -99,7 +105,7 @@ emis_merge <- function (pol = "CO",
     return(netx)
   } else{
     x_st <- as.data.frame(data.table::rbindlist(x_rds))
-   x_st$g <- x_st$g*k
+    x_st$g <- x_st$g*k
     return(x_st)
   }
   # nocov end

@@ -7,11 +7,14 @@ tfs <- as.data.frame(tfs)
 # Escapamento ####
 for(i in seq_along(metadata$vehicles)) {
   
-  cat(metadata$vehicles[i], "...\n")
+  cat("\n", metadata$vehicles[i], 
+      rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i])))
+  
   x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
   
   for(j in seq_along(pol)){
-    cat(pol[j], "\n")
+
+    cat(pol[j], " ")
     
     ef <- ef_cetesb(p = pol[j], 
                     veh = metadata$vehicles[i], 
