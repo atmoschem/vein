@@ -31,7 +31,7 @@
 #' @param sppm Numeric, sulfur (sulphur) in ppm in fuel.
 #' @param full Logical; To return a data.frame instead or a vector adding
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
-#' @param project haracter showing the method for projecting emission factors in
+#' @param project Character showing the method for projecting emission factors in
 #' future. Currently the only value is "constant"
 #' @param verbose Logical; To show more information
 #' @return A vector of Emission Factor or a data.frame
