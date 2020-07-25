@@ -61,7 +61,7 @@ switch (language,
 dt <- data.table::rbindlist(
   lapply(seq_along(pol), function(i){
     pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-    emis_merge(pols, what = 'DF.rds', FALSE)
+    emis_merge(pols, what = 'DF.rds', FALSE, verbose = FALSE)
   })
 )
 dt$pollutant <- as.character(dt$pollutant)
