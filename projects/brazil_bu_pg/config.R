@@ -322,7 +322,10 @@ switch (language,
         "chinese" = cat("\n做笔记\n"),
         "spanish" = cat("\nEscribiendo notas\n"))
 
-vein_notes(notes = c("Default notes for vein::get_project"), 
+vein_notes(notes = c("Default notes for vein::get_project",
+                     "This project generates a emi/DF.csv to be read by data.table::fread",
+                     "All the spatial emissions are stored in a postgis db",
+                     "An also, fuel consumption FC in emi/FC.csv"), 
            file = "notes/README", 
            title = paste0("Metropolitan Area of São Paulo (MASP) ", year), 
            approach = 'Bottom-up', 

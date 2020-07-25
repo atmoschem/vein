@@ -9,27 +9,27 @@ n_MC <- nveh[grep(pattern = "MC", x = nveh)]
 
 # rowSums
 PC <- lapply(seq_along(n_PC), function(i){
-  rowSums(readRDS(paste0("veh/", n_PC[i], ".rds")))
+   rowSums(readRDS(paste0("veh/", n_PC[i], ".rds")))
 })
 PC <- rowSums(do.call("cbind", PC))
 
 LCV <- lapply(seq_along(n_LCV), function(i){
-  rowSums(readRDS(paste0("veh/", n_LCV[i], ".rds")))
+   rowSums(readRDS(paste0("veh/", n_LCV[i], ".rds")))
 })
 LCV <- rowSums(do.call("cbind", LCV))
 
 TRUCKS <- lapply(seq_along(n_TRUCKS), function(i){
-  rowSums(readRDS(paste0("veh/", n_TRUCKS[i], ".rds")))
+   rowSums(readRDS(paste0("veh/", n_TRUCKS[i], ".rds")))
 })
 TRUCKS <- rowSums(do.call("cbind", TRUCKS))
 
 BUS <- lapply(seq_along(n_BUS), function(i){
-  rowSums(readRDS(paste0("veh/", n_BUS[i], ".rds")))
+   rowSums(readRDS(paste0("veh/", n_BUS[i], ".rds")))
 })
 BUS <- rowSums(do.call("cbind", BUS))
 
 MC <- lapply(seq_along(n_MC), function(i){
-  rowSums(readRDS(paste0("veh/", n_MC[i], ".rds")))
+   rowSums(readRDS(paste0("veh/", n_MC[i], ".rds")))
 })
 MC <- rowSums(do.call("cbind", MC))
 
@@ -73,9 +73,16 @@ W <-  aw(pc = PC,
 pol <- c("PM10", "PM")
 k <- c(0.62, 0.15)
 
+
 for(i in seq_along(metadata$vehicles)) {
+   
+   cat("\n", metadata$vehicles[i], 
+       rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i])))
+   
    for(j in seq_along(pol)) {
-      cat("Estimando ", pol[j], " ressuspensão de:", metadata$vehicles[i], "...\n")
+      
+      cat(pol[j], " ")
+      
       x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
       q <- temp_fact(q = rowSums(x),  pro = tfs[[metadata$vehicles[i]]])
       
@@ -92,7 +99,7 @@ for(i in seq_along(metadata$vehicles)) {
               file = paste0('emi/', 
                             metadata$vehicles[i] ,'/', 
                             metadata$vehicles[i] ,
-                            '_RESUSPENSSAO_', 
+                            '_PAVED_ROADS_', 
                             pol[j], 
                             '_STREETS.rds'))
       
@@ -111,25 +118,40 @@ for(i in seq_along(metadata$vehicles)) {
               file = paste0('emi/', 
                             metadata$vehicles[i] ,'/', 
                             metadata$vehicles[i] ,
-                            '_RESUSPENSSAO_', 
+                            '_PAVED_ROADS_', 
                             pol[j], 
                             '_DF.rds'))
       
    }
 }
 
+switch (language,
+        "portuguese" = message("\n\nArquivos em: /emi/*:"),
+        "english" = message("\nFiles in: /emi/*"),
+        "chinese" = message("\n文件位于: /emi/*"),
+        "spanish" = message("\nArchivos en: /emi/*"))
+
+
+switch (language,
+        "portuguese" = message("Limpando..."),
+        "english" = message("Cleaning..."),
+        "chinese" = message("清洁用品..."),
+        "spanish" = message("Limpiando..."))
+
+
+
 suppressWarnings(
-rm(ADT, 
-   PC, LCV, TRUCKS, BUS, MC,
-   n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, 
-   tf_PC, tf_LCV, tf_TRUCKS, tf_BUS, tf_MC, 
-   emi, g, lkm, 
-   metadata,  tfs,veh, 
-    net, nveh,  pol, 
-   verbose, 
-   vk, vkbus, vkhgv, vklcv, vkmc, vkpc, W, x_DF,
-   ef_cetesb2, ef_evaps, i, j, k, mileage, name_file_evap, num_vein, 
-   q, type_emis, vein_version, x, cores, fuel,
-   sL1,sL2, sL3, sL4)
+   rm(ADT, 
+      PC, LCV, TRUCKS, BUS, MC,
+      n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, 
+      tf_PC, tf_LCV, tf_TRUCKS, tf_BUS, tf_MC, 
+      emi, g, lkm, 
+      metadata,  tfs,veh, 
+      net, nveh,  pol, 
+      verbose, 
+      vk, vkbus, vkhgv, vklcv, vkmc, vkpc, W, x_DF,
+      ef_cetesb2, ef_evaps, i, j, k, mileage, name_file_evap, num_vein, 
+      q, type_emis, vein_version, x, cores, fuel,
+      sL1,sL2, sL3, sL4)
 )
 

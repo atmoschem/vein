@@ -19,7 +19,7 @@
 #' in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 #' as EDGAR provide data.
 #' @param k Numeric to multiply emissions
-#' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area
+#' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area st_geometry
 #' @importFrom data.table data.table .SD
 #' @export
 #' @note \strong{1) If flux = TRUE (default), emissions are flux = mass / area / time (implicit), as polygons.}
@@ -71,7 +71,7 @@ emis_grid <- function (spobj = net,
   for (i in 1:length(netdata)) {
     netdata[, i] <- as.numeric(netdata[, i])
   }
-  net <- sf::st_sf(netdata, geometry = net$geometry)
+  net <- sf::st_sf(netdata, geometry = sf::st_geometry(net))
   g <- sf::st_as_sf(g)
   g$id <- 1:nrow(g)
   if (!missing(sr)) {
