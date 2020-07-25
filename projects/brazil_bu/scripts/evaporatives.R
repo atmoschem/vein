@@ -81,6 +81,12 @@ for(i in seq_along(ns)) {
   dev.off()
 }
 
+switch (language,
+        "portuguese" = message("\nFiguras em /images\n"),
+        "english" = message("\nFigures in /image\n"),
+        "chinese" = message("\n/图片中的数字\n"),
+        "spanish" = message("\nFiguras en /images\n"))
+
 
 
 # Diurnal  ####
@@ -133,20 +139,22 @@ for(i in seq_along(veh_ev)) {
             file = paste0('emi/', 
                           veh_ev[i] , 
                           name_file_evap[1],
-                          nmonth[j] ,'_',
-                          veh_ev[i] ,'_',
-                          'EVAP_NMHC_DF.rds'))
+                          veh_ev[i], '_',
+                          'EVAP', '_',
+                          nmonth[j], '_',
+                          'NMHC_DF.rds'))
     
     x_STREETS <- emis_post(arra = array_x, 
                            pollutant = veh_ev[j], 
                            by = 'streets') 
     saveRDS(x_STREETS, 
             file = paste0('emi/', 
-                          veh_ev[i] ,
+                          veh_ev[i] , 
                           name_file_evap[1],
-                          nmonth[j] ,'_', 
-                          veh_ev[i] ,'_',
-                          'EVAP_HCNM_STREETS.rds'))
+                          veh_ev[i], '_',
+                          'EVAP', '_',
+                          nmonth[j], '_',
+                          'NMHC_STREETS.rds'))
     
     rm(array_x, ef, x, x_DF, x_STREETS)
     
@@ -163,17 +171,13 @@ switch (language,
 
 for(i in seq_along(veh_ev)) {
   
-  if(progress == "bar") {
-    setTxtProgressBar(pb,i)
-  }  else {
-    cat("\n", veh_ev[i], 
-        rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
-  }
+  cat("\n", veh_ev[i], 
+      rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
   
   
   for(j in seq_along(te)){
     
-    if(progress != "bar") cat(nmonth[j], " ")
+    cat(nmonth[j], " ")
     x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
     
     ef <- ef_cetesb(p = ef_rl[j], 
@@ -207,18 +211,22 @@ for(i in seq_along(veh_ev)) {
             file = paste0('emi/', 
                           veh_ev[i] , 
                           name_file_evap[2],
-                          nmonth[j] ,'_', 
-                          'EVAP_NMHC_DF.rds'))
+                          veh_ev[i], '_',
+                          'EVAP', '_',
+                          nmonth[j], '_',
+                          'NMHC_DF.rds'))
     
     x_STREETS <- emis_post(arra = array_x, 
                            pollutant = veh_ev[j], 
                            by = 'streets') 
     saveRDS(x_STREETS, 
             file = paste0('emi/', 
-                          veh_ev[i] ,
+                          veh_ev[i] , 
                           name_file_evap[2],
-                          nmonth[j] ,'_', 
-                          'EVAP_HCNM_STREETS.rds'))
+                          veh_ev[i], '_',
+                          'EVAP', '_',
+                          nmonth[j], '_',
+                          'NMHC_STREETS.rds'))
     
     rm(array_x, ef, x, x_DF, x_STREETS)
   }
@@ -233,17 +241,13 @@ switch (language,
 
 for(i in seq_along(veh_ev)) {
   
-  if(progress == "bar") {
-    setTxtProgressBar(pb,i)
-  }  else {
-    cat("\n", veh_ev[i], 
-        rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
-  }
+  cat("\n", veh_ev[i], 
+      rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])))
   
   
   for(j in seq_along(te)){
     
-    if(progress != "bar") cat(nmonth[j], " ")
+    cat(nmonth[j], " ")
     x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
     
     ef <- ef_cetesb(p = ef_hs[j], 
@@ -276,18 +280,22 @@ for(i in seq_along(veh_ev)) {
             file = paste0('emi/', 
                           veh_ev[i] , 
                           name_file_evap[3],
-                          nmonth[j] ,'_', 
-                          'EVAP_NMHC_DF.rds'))
+                          veh_ev[i], '_',
+                          'EVAP', '_',
+                          nmonth[j], '_',
+                          'NMHC_DF.rds'))
     
     x_STREETS <- emis_post(arra = array_x, 
                            pollutant = veh_ev[j], 
                            by = 'streets') 
     saveRDS(x_STREETS, 
             file = paste0('emi/', 
-                          veh_ev[i] ,
+                          veh_ev[i] , 
                           name_file_evap[3],
-                          nmonth[j] ,'_', 
-                          'EVAP_HCNM_STREETS.rds'))
+                          veh_ev[i], '_',
+                          'EVAP', '_',
+                          nmonth[j], '_',
+                          'NMHC_STREETS.rds'))
     
     rm(array_x, ef, x, x_DF, x_STREETS)
   }

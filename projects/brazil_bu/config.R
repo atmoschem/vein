@@ -353,6 +353,12 @@ message("config/metadata.rds\n",
         "config/fuel.rds\n")
 
 switch (language,
+        "portuguese" = message("\nFiguras em /images\n"),
+        "english" = message("\nFigures in /image\n"),
+        "chinese" = message("\n/图片中的数字\n"),
+        "spanish" = message("\nFiguras en /images\n"))
+
+switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
         "chinese" = message("清洁用品..."),

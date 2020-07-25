@@ -45,6 +45,12 @@ for(i in seq_along(ns)) {
   dev.off()
 }
 
+switch (language,
+        "portuguese" = message("\nFiguras em /images\n"),
+        "english" = message("\nFigures in /image\n"),
+        "chinese" = message("\n/图片中的数字\n"),
+        "spanish" = message("\nFiguras en /images\n"))
+
 # Escapamento ####
 switch (language,
         "portuguese" = cat("Estimando emissões\n"),
@@ -108,7 +114,6 @@ for(i in seq_along(metadata$vehicles)) {
     
   }
   rm(array_x, ef, x, x_DF, x_STREETS)
-  close(pb)
 }
 
 
