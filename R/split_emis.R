@@ -17,7 +17,7 @@
 #' names(net)
 #' dim(net)
 #' netsf <- sf::st_as_sf(net)[, "ldv"]
-#' x <- split_emis(netsf, g)
+#' x <- split_emis(net = netsf, distance = g)
 #' dim(x)
 #' g$A <- rep(letters, length = 20)[1:nrow(g)]
 #' g$B <- rev(g$A)
@@ -52,7 +52,7 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   }
 
   gnet$LKM2 <- sf::st_length(gnet)
-  geo <- gnet$geometry
+  geo <- sf::st_geometry(gnet)
   gnet <- as.data.frame(sf::st_set_geometry(gnet, NULL))
   gnet[, ncolnet] <- gnet[, ncolnet] * as.numeric(gnet$LKM2/gnet$LKM)
   gnet <- as.data.frame(gnet[, ncolnet])
@@ -66,7 +66,7 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
       gnet[[add_column[i]]] <- nc[[i]]
     }
   }
-
+names(gnet) <- ncolnet
   gnet$id <- 1:nrow(gnet)
   gnet <- sf::st_sf(gnet, geometry = geo)
   return(gnet)

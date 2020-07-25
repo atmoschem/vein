@@ -60,7 +60,7 @@ netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
     df_scheme <- Speed(dfv)
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
-      df_schemesf <- sf::st_sf(df_scheme, geometry = netsf$geometry)
+      df_schemesf <- sf::st_sf(df_scheme, geometry = sf::st_geometry(netsf))
       return(df_schemesf)
     } else {
       return(df_scheme)
@@ -78,7 +78,7 @@ netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
 
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)
-    df_speedsf <- sf::st_sf(df_speed, geometry = netsf$geometry)
+    df_speedsf <- sf::st_sf(df_speed, geometry = sf::st_geometry(netsf))
     return(df_speedsf)
   } else {
     return(df_speed)

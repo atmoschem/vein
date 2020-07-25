@@ -111,9 +111,9 @@ age_ldv <- function (x,
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       if(!missing(time)){
-        dfsf <- sf::st_sf(Vehicles(df*k, time = time), geometry = netsf$geometry)
+        dfsf <- sf::st_sf(Vehicles(df*k, time = time), geometry = sf::st_geometry(netsf))
       } else {
-        dfsf <- sf::st_sf(Vehicles(df*k), geometry = netsf$geometry)
+        dfsf <- sf::st_sf(Vehicles(df*k), geometry = sf::st_geometry(netsf))
       }
       return(dfsf)
     } else {
@@ -164,9 +164,9 @@ age_ldv <- function (x,
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       if(!missing(time)){
-        dfsf <- sf::st_sf(Vehicles(df, time = time), geometry = netsf$geometry)
+        dfsf <- sf::st_sf(Vehicles(df, time = time), geometry = sf::st_geometry(netsf))
       } else {
-        dfsf <- sf::st_sf(Vehicles(df), geometry = netsf$geometry)
+        dfsf <- sf::st_sf(Vehicles(df), geometry = sf::st_geometry(netsf))
       }
       return(dfsf)
     } else {

@@ -28,7 +28,7 @@ g <- make_grid(net, 1/102.47/2) #500m in degrees
 names(net)
 dim(net)
 netsf <- sf::st_as_sf(net)[, "ldv"]
-x <- split_emis(netsf, g)
+x <- split_emis(net = netsf, distance = g)
 dim(x)
 g$A <- rep(letters, length = 20)[1:nrow(g)]
 g$B <- rev(g$A)

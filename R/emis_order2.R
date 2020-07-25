@@ -144,7 +144,7 @@ emis_order2 <- function(x, # 24 hours or one week
 
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)
-    dfsf <- sf::st_sf(x, geometry = netsf$geometry)
+    dfsf <- sf::st_sf(x, geometry = sf::st_geometry(netsf))
     return(dfsf)
   } else {
     return(x)
