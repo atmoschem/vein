@@ -58,7 +58,6 @@ writting technical notes about this emissions inventory
 #do not run
 a <- "delete"
 f <- vein_notes("notes", file = a)
-file.edit(f)
-file.remove("delete")
+file.remove(f)
 }
 }

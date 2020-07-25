@@ -23,8 +23,7 @@
 #' #do not run
 #' a <- "delete"
 #' f <- vein_notes("notes", file = a)
-#' file.edit(f)
-#' file.remove("delete")
+#' file.remove(f)
 #' }
 vein_notes <- function (notes,
                         file = "README",
@@ -147,7 +146,7 @@ vein_notes <- function (notes,
   cat("========================================\n") # 40
   cat("\n\n\nThanks for using VEIN\n")
   sink()
-  message("File at:", file, "\n")
-  # return(file)
+  message("File at: ")
+  return(file)
 }
 

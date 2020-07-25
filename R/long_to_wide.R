@@ -9,7 +9,7 @@
 #' @param column_fixed Character,  column that will remain fixed
 #' @param net To return a sf
 #' @return wide data.frame.
-#' @importFrom sf st_sf st_as_sf
+#' @importFrom sf st_sf st_as_sf st_geometry
 #' @seealso \code{\link{emis_hot_td}} \code{\link{emis_cold_td}} \code{\link{wide_to_long}}
 #' @export
 #' @examples \dontrun{
@@ -51,7 +51,7 @@ long_to_wide <- function(df,
     return(aa)
   } else {
     net <- sf::st_as_sf(net)
-    aa <- sf::st_sf(aa, geometry = net$geometry)
+    aa <- sf::st_sf(aa, geometry = sf::st_geometry(net))
     return(aa)
   }
 }

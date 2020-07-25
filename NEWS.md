@@ -9,11 +9,12 @@ NEWS
 - Added scaled brazilian emission factors with tunnel measurements (2020-07-21) and speciations.
 - Remove evaporative emission factors of flex motorcycles for year 2008. (2020-07-23)
 - Add verbose argument in emis_merge to show list of files being reador not. (2020-07-24)
+- Replaces net$geometry by st_geometry(net) to avoid geometry name. (2020-07-24)
 
 ## vein 0.8.9  (Release date: 2020-06-11)
 
 - Revise mileage functions. Especifically, fix KM_LDC_FLEX so that 
-it do not increase mileage over time. (2020-05-08)
+it does not increase mileage over time. (2020-05-08)
 - Moved to https://gitlab.com/ibarraespinosa/vein. (2020-05-08)
 - Add add_lkm to add units km into R objects.(2020-05-24)
 - Enhance emis_post to read Emissions and EmissionsArray classes (2020-05-24)

@@ -27,7 +27,7 @@
 #' "h3"... `char`` can be "h"
 #'
 #' @param verbose Logical; to show more info.
-#' @importFrom sf st_sf st_as_sf st_transform st_set_geometry st_length  st_intersection
+#' @importFrom sf st_sf st_as_sf st_transform st_set_geometry st_length  st_intersection st_geometry
 #' @importFrom data.table as.data.table ':='
 #' @export
 #' @note \strong{Your gridded emissions might have flux units (mass / area / time(implicit))}
@@ -96,7 +96,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
   for(i in 1:length(netdata)){
     netdata[, i] <- as.numeric(netdata[, i])
   }
-  net <- sf::st_sf(netdata, geometry = net$geometry)
+  net <- sf::st_sf(netdata, geometry = sf::st_geometry(net))
 
   if(!missing(sr)){
     if(class(sr)[1] == "character"){
