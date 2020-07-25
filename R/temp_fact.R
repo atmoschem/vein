@@ -33,7 +33,7 @@ temp_fact <- function(q, pro, net, time) {
 
    if(!missing(net)){
   netsf <- sf::st_as_sf(net)
-  speed <- sf::st_sf(df, geometry = netsf$geometry)
+  speed <- sf::st_sf(df, geometry = sf::st_geometry(netsf))
   return(speed)
   } else {
     return(df)
