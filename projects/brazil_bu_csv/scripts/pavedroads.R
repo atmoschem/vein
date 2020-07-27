@@ -1,3 +1,5 @@
+unlink("emis/DF_PAVED.csv.gz")
+unlink("emis/STREETS_PAVED.csv.gz")
 
 # identicar nomes de grupos
 nveh <- names(veh)
@@ -32,7 +34,6 @@ MC <- lapply(seq_along(n_MC), function(i){
    rowSums(readRDS(paste0("veh/", n_MC[i], ".rds")))
 })
 MC <- rowSums(do.call("cbind", MC))
-
 
 
 # Fluxo semanal horario vezes veiculo equivalente (veh eq)
@@ -86,41 +87,43 @@ for(i in seq_along(metadata$vehicles)) {
       x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
       q <- temp_fact(q = rowSums(x),  pro = tfs[[metadata$vehicles[i]]])
       
-      emi <- emis_paved(veh = q, 
-                        adt = ADT, 
-                        lkm = lkm,
-                        k = k[j], 
-                        sL1 = sL1, 
-                        sL2 = sL2, 
-                        sL3 = sL3, 
-                        sL4 = sL4, 
-                        W = W)
-      saveRDS(emi, 
-              file = paste0('emi/', 
-                            metadata$vehicles[i] ,'/', 
-                            metadata$vehicles[i] ,
-                            '_PAVED_ROADS_', 
-                            pol[j], 
-                            '_STREETS.rds'))
+      x_STREETS <- emis_paved(veh = q, 
+                              adt = ADT, 
+                              lkm = lkm,
+                              k = k[j], 
+                              sL1 = sL1, 
+                              sL2 = sL2, 
+                              sL3 = sL3, 
+                              sL4 = sL4, 
+                              W = W)
       
-      g <- Emissions(colSums(emi))
+      g <- Emissions(colSums(x_STREETS))
       x_DF <- data.frame(array_x = rep("array_x", length(tfs[[metadata$vehicles[i]]])),
                          g = g,
-                         veh = rep(metadata$vehicles[i], ncol(emi)),
-                         size = rep("RESUS", ncol(emi)),
-                         fuel = rep("ALL", ncol(emi)),
-                         type_emi = rep("Paved Roads", ncol(emi)),
-                         pollutant = rep(pol[j], ncol(emi)),
-                         age = rep(NA, ncol(emi)),
-                         hour = 1:ncol(emi))
+                         veh = rep(metadata$vehicles[i], ncol(x_STREETS)),
+                         size = rep("RESUS", ncol(x_STREETS)),
+                         fuel = rep("ALL", ncol(x_STREETS)),
+                         type_emi = rep("Paved Roads", ncol(x_STREETS)),
+                         pollutant = rep(pol[j], ncol(x_STREETS)),
+                         age = rep(NA, ncol(x_STREETS)),
+                         hour = 1:ncol(x_STREETS))
       
-      saveRDS(x_DF, 
-              file = paste0('emi/', 
-                            metadata$vehicles[i] ,'/', 
-                            metadata$vehicles[i] ,
-                            '_PAVED_ROADS_', 
-                            pol[j], 
-                            '_DF.rds'))
+      x_STREETS$id <- 1:nrow(x_STREETS) 
+      x_STREETS$veh <- metadata$vehicles[i] 
+      x_STREETS$size <- metadata$size[i]
+      x_STREETS$fuel <- metadata$fuel[i] 
+      x_STREETS$pollutant <- pol[j]
+      x_STREETS$type_emi <- "Paved Roads"
+      
+      data.table::fwrite(x_STREETS, 
+                         file = 'emi/STREETS_PAVED.csv.gz', 
+                         append = TRUE)
+      
+      
+      
+      data.table::fwrite(x_DF, 
+                         file = 'emi/DF_PAVED.csv.gz', 
+                         append = TRUE)
       
    }
 }

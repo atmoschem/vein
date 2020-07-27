@@ -174,7 +174,6 @@ if(language == "portuguese") {
   
 }
 
-dir.create(path = "csv")
 dir.create(path = "emi")
 dir.create(path = "images")
 dir.create(path = "notes")
@@ -184,7 +183,7 @@ dir.create(path = "post/streets")
 dir.create(path = "post/grids")
 dir.create(path = "veh")
 
-for(i in seq_along(metadata$vehicles)) dir.create(path = paste0("emi/", metadata$vehicles[i]))
+# for(i in seq_along(metadata$vehicles)) dir.create(path = paste0("emi/", metadata$vehicles[i]))
 
 
 pa <- list.dirs(path = "emi", full.names = T, recursive = T)

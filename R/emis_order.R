@@ -9,6 +9,8 @@
 #' time and cover only 168 hours starting on monday. This function tries to transform our emissions
 #' in local time to the desired utc time, by recycling the local emissions.
 #'
+#' @aliases emis_order2
+#'
 #' @param x one of the following:
 #' \itemize{
 #' \item Spatial object of class "Spatial". Columns are hourly emissions.
@@ -16,7 +18,7 @@
 #' \item "data.frame", "matrix" or "Emissions".
 #'}
 #'
-#'In all cases, columns are hourly emissions.
+#' In all cases, columns are hourly emissions.
 #' @param lt_emissions Local time of the emissions at first hour. It must be
 #' the \strong{before}  time of start_utc_time. For instance, if
 #' start_utc_time is 2020-02-02 00:00, and your emissions starts monday at 00:00,
@@ -30,6 +32,7 @@
 #' @param tz_lt Character, Time zone of the local emissions. Default value is derived from
 #' Sys.timezone(), however, it accepts any other. If you enter a wrong tz, this function will show
 #' you a menu to choose one of the 697 time zones available.
+#' @param seconds Number of seconds to add
 #' @param k Numeric, factor.
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING".
 #' @param verbose Logical, to show more information, default is TRUE.
@@ -80,6 +83,7 @@ emis_order <- function(x, # 24 hours or one week
                         start_utc_time,
                         desired_length,
                         tz_lt = Sys.timezone(),
+                        seconds = 0,
                         k = 1,
                         net,
                         verbose = TRUE) {
@@ -115,8 +119,6 @@ emis_order <- function(x, # 24 hours or one week
   first_hour_lt <- as.POSIXct(x = lt_emissions, tz = tz_lt)
   futc <- as.POSIXct(format(lt_emissions, tz = "UTC"), tz = "UTC")
 
-  a <- futc -  first_hour_lt
-  if(verbose) cat("Difference with UTC: ", a, "\n")
 
   # primero ver start_day
   seq_wrf <- seq.POSIXt(from = as.POSIXct(start_utc_time, tz = "UTC"),
@@ -134,8 +136,13 @@ emis_order <- function(x, # 24 hours or one week
 
 
   df_x <- data.frame(lt = lt,
-                     utc = as.POSIXct(format(lt, tz = "UTC"), tz = "UTC"),
-                     cutc = as.character(as.POSIXct(format(lt, tz = "UTC"), tz = "UTC")))
+                     utc = as.POSIXct(format(lt, tz = "UTC"), tz = "UTC")+seconds,
+                     cutc = as.character(as.POSIXct(format(lt, tz = "UTC"), tz = "UTC")+seconds))
+
+  a <- data.table::hour(df_x$lt[1]) - data.table::hour(df_x$utc[1])
+  if(verbose) cat("Difference with UTC: ", a, "\n")
+
+
   df_x$nx <- names(x)
 
   df <- merge(x = dwrf, y = df_x, by = "cutc", all.x = T)

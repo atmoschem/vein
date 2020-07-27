@@ -10,6 +10,8 @@ NEWS
 - Remove evaporative emission factors of flex motorcycles for year 2008. (2020-07-23)
 - Add verbose argument in emis_merge to show list of files being reador not. (2020-07-24)
 - Replaces net$geometry by st_geometry(net) to avoid geometry name. (2020-07-24)
+- Add argument seconds to emis_order to control time difference with UTC. This is
+useful when local time changes for daylight (2020-07-26)
 
 ## vein 0.8.9  (Release date: 2020-06-11)
 

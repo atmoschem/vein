@@ -20,7 +20,7 @@ for(i in seq_along(categories)) {
   plot(net[categories[i]], 
        axes = T, 
        pal = cpt(colorRampPalette = T, rev = T), 
-       main = paste0(tit, ": ", categories[i]))
+       main = categories[i])
   dev.off()
 }
 

@@ -164,7 +164,7 @@ resulting object.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>net</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>net</span>)
 <span class='no'>netsf</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(<span class='no'>net</span>)[, <span class='st'>"ldv"</span>]
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>split_emis</span>(<span class='no'>netsf</span>, <span class='no'>g</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>split_emis</span>(<span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>netsf</span>, <span class='kw'>distance</span> <span class='kw'>=</span> <span class='no'>g</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>x</span>)
 <span class='no'>g</span>$<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>, <span class='kw'>length</span> <span class='kw'>=</span> <span class='fl'>20</span>)[<span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>g</span>)]
 <span class='no'>g</span>$<span class='no'>B</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='no'>g</span>$<span class='no'>A</span>)

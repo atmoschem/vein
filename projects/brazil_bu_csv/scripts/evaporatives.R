@@ -96,6 +96,9 @@ switch (language,
         "chinese" = cat("\n蒸发昼间排放\n"),
         "spanish" = cat("\nEmisiones evaporativas diurnal\n"))
 
+unlink("emi/DF_EVAPORATIVE.csv.gz")
+unlink("emi/STREETS_EVAPORATIVE.csv.gz")
+
 for(i in seq_along(veh_ev)) {
   
   cat("\n", veh_ev[i], 
@@ -128,33 +131,31 @@ for(i in seq_along(veh_ev)) {
     
     x_DF <- emis_post(arra = array_x, 
                       veh = veh_ev[i], 
-                      size = metadata$size[i],
-                      fuel = metadata$fuel[i], 
+                      size = meta_ev$size[i],
+                      fuel = meta_ev$fuel[i], 
                       pollutant = "NMHC", 
                       type_emi = paste("Diurnal", nmonth[j]),
                       by = 'veh')
     
     
-    saveRDS(x_DF, 
-            file = paste0('emi/', 
-                          veh_ev[i] , 
-                          name_file_evap[1],
-                          veh_ev[i], '_',
-                          'EVAP', '_',
-                          nmonth[j], '_',
-                          'NMHC_DF.rds'))
+    data.table::fwrite(x_DF, 
+                       file = 'emi/DF_EVAPORATIVE.csv.gz', 
+                       append = TRUE)
     
     x_STREETS <- emis_post(arra = array_x, 
                            pollutant = veh_ev[j], 
                            by = 'streets') 
-    saveRDS(x_STREETS, 
-            file = paste0('emi/', 
-                          veh_ev[i] , 
-                          name_file_evap[1],
-                          veh_ev[i], '_',
-                          'EVAP', '_',
-                          nmonth[j], '_',
-                          'NMHC_STREETS.rds'))
+    
+    x_STREETS$id <- 1:nrow(x_STREETS) 
+    x_STREETS$veh <- meta_ev$vehicles[i] 
+    x_STREETS$size <- meta_ev$size[i]
+    x_STREETS$fuel <- meta_ev$fuel[i] 
+    x_STREETS$pollutant <- "NMHC"
+    x_STREETS$type_emi <- paste("Diurnal", nmonth[j])
+    
+    data.table::fwrite(x_STREETS, 
+                       file = 'emi/STREETS_EVAPORATIVE.csv.gz', 
+                       append = TRUE)
     
     rm(array_x, ef, x, x_DF, x_STREETS)
     
@@ -201,32 +202,30 @@ for(i in seq_along(veh_ev)) {
     
     x_DF <- emis_post(arra = array_x, 
                       veh = veh_ev[i], 
-                      size = metadata$size[i],
-                      fuel = metadata$fuel[i], 
+                      size = meta_ev$size[i],
+                      fuel = meta_ev$fuel[i], 
                       pollutant = "NMHC", 
                       type_emi = paste("Running Losses", nmonth[j]),
                       by = 'veh')
     
-    saveRDS(x_DF, 
-            file = paste0('emi/', 
-                          veh_ev[i] , 
-                          name_file_evap[2],
-                          veh_ev[i], '_',
-                          'EVAP', '_',
-                          nmonth[j], '_',
-                          'NMHC_DF.rds'))
+    data.table::fwrite(x_DF, 
+                       file = 'emi/DF_EVAPORATIVE.csv.gz', 
+                       append = TRUE)
     
     x_STREETS <- emis_post(arra = array_x, 
                            pollutant = veh_ev[j], 
                            by = 'streets') 
-    saveRDS(x_STREETS, 
-            file = paste0('emi/', 
-                          veh_ev[i] , 
-                          name_file_evap[2],
-                          veh_ev[i], '_',
-                          'EVAP', '_',
-                          nmonth[j], '_',
-                          'NMHC_STREETS.rds'))
+    
+    x_STREETS$id <- 1:nrow(x_STREETS) 
+    x_STREETS$veh <- meta_ev$vehicles[i] 
+    x_STREETS$size <- meta_ev$size[i]
+    x_STREETS$fuel <- meta_ev$fuel[i] 
+    x_STREETS$pollutant <- "NMHC"
+    x_STREETS$type_emi <- paste("Running Losses", nmonth[j])
+    
+    data.table::fwrite(x_STREETS, 
+                       file = 'emi/STREETS_EVAPORATIVE.csv.gz', 
+                       append = TRUE)
     
     rm(array_x, ef, x, x_DF, x_STREETS)
   }
@@ -270,32 +269,30 @@ for(i in seq_along(veh_ev)) {
     
     x_DF <- emis_post(arra = array_x, 
                       veh = veh_ev[i], 
-                      size = metadata$size[i],
-                      fuel = metadata$fuel[i], 
+                      size = meta_ev$size[i],
+                      fuel = meta_ev$fuel[i], 
                       pollutant = "NMHC", 
                       type_emi = paste("Hot Soak", nmonth[j]),
                       by = 'veh')
     
-    saveRDS(x_DF, 
-            file = paste0('emi/', 
-                          veh_ev[i] , 
-                          name_file_evap[3],
-                          veh_ev[i], '_',
-                          'EVAP', '_',
-                          nmonth[j], '_',
-                          'NMHC_DF.rds'))
+    data.table::fwrite(x_DF, 
+                       file = 'emi/DF_EVAPORATIVE.csv.gz', 
+                       append = TRUE)
     
     x_STREETS <- emis_post(arra = array_x, 
                            pollutant = veh_ev[j], 
                            by = 'streets') 
-    saveRDS(x_STREETS, 
-            file = paste0('emi/', 
-                          veh_ev[i] , 
-                          name_file_evap[3],
-                          veh_ev[i], '_',
-                          'EVAP', '_',
-                          nmonth[j], '_',
-                          'NMHC_STREETS.rds'))
+    
+    x_STREETS$id <- 1:nrow(x_STREETS) 
+    x_STREETS$veh <- meta_ev$vehicles[i] 
+    x_STREETS$size <- meta_ev$size[i]
+    x_STREETS$fuel <- meta_ev$fuel[i] 
+    x_STREETS$pollutant <- "NMHC"
+    x_STREETS$type_emi <- paste("Hot Soak", nmonth[j])
+    
+    data.table::fwrite(x_STREETS, 
+                       file = 'emi/STREETS_EVAPORATIVE.csv.gz', 
+                       append = TRUE)
     
     rm(array_x, ef, x, x_DF, x_STREETS)
   }
