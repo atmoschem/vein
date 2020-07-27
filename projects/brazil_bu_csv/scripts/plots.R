@@ -15,20 +15,30 @@ switch (language,
         "english" = cat("\nPlotting streets\n"),
         "chinese" = cat("\n绘制街道\n"),
         "spanish" = cat("\nPlotando calles\n"))
-for(i in seq_along(pol)) {
+
+pols <- list.files(path = "post/streets", full.names = T)
+na <- gsub(".rds", "", list.files(path = "post/streets", full.names = F))
+nat <- gsub("_", " ", na)
+nat <- gsub("Diurnal", "Diurnal ", nat)
+nat <- gsub("RunningLosses", "Running Losses ", nat)
+nat <- gsub("HotSoak", "Hot Soak ", nat)
+nat <- gsub("PavedRoads", "Paved Roads", nat)
+
+for(i in seq_along(pols)) {
   for(j in seq_along(hours)) {
-    x <- readRDS(paste0("post/streets/", pol[i], ".rds"))
+    x <- readRDS(pols[i])
     cn <- names(x)[hours + 1]
     
-    png(filename =  paste0("images/STREETS_", pol[i],"_", hh[j], ".png"),
+    png(filename =  paste0("images/STREETS_", na[i],"_", hh[j], ".png"),
         width = 2100, height = 1500, units = "px", pointsize = 12,
         bg = "white",  res = 300)
     par(bg = 'white')
     plot(x[as.numeric(x[[cn[j] ]]) > 0, ][cn[j]], 
          axes = TRUE,
          bg = bg,
-         main = paste0(pol[i], ": ", tit, " [g/h] ", hh[j], " LT"),
-         pal = cptcity::cpt(colorRampPalette = TRUE, rev = TRUE, pal = pal), lwd = 2)
+         main = paste0(nat[i], " [g/h] ", hh[j], " LT"),
+         pal = cptcity::cpt(colorRampPalette = TRUE, rev = TRUE, pal = pal),
+         lwd = 3)
     dev.off()
     
   }
@@ -40,21 +50,24 @@ switch (language,
         "english" = cat("\nPlotting grids\n"),
         "chinese" = cat("\n绘制网格\n"),
         "spanish" = cat("\nPlotando grillas\n"))
-for(i in seq_along(pol)) {
+
+pols <- list.files(path = "post/grids", full.names = T)
+
+for(i in seq_along(pols)) {
   for(j in seq_along(hours)) {
-    x <- readRDS(paste0("post/grids/", pol[i], ".rds"))
+    x <- readRDS(pols[i])
     cn <- names(x)[hours + 1]
     
-    png(filename =  paste0("images/GRIDS_", pol[i],"_", hh[j], ".png"),
+    png(filename =  paste0("images/GRIDS_", na[i],"_", hh[j], ".png"),
         width = 2100, height = 1500, units = "px", pointsize = 12,
         bg = "white",  res = 300)
     par(bg = 'white')
     plot(x[as.numeric(x[[cn[j] ]]) > 0, ][cn[j]], 
          axes = TRUE,
          bg = bg,
-         lty = 0.3,
-         main = paste0(pol[i], ": ", tit, " [g/km^2/h] ", hh[j], " LT"),
-         pal = cptcity::cpt(colorRampPalette = TRUE, rev = TRUE, pal = pal))
+         main = paste0(nat[i], " [g/h/km²] ", hh[j], " LT"),
+         pal = cptcity::cpt(colorRampPalette = TRUE, rev = TRUE, pal = pal), 
+         lwd = 0.5)
     dev.off()
     
   }
@@ -65,14 +78,28 @@ for(i in seq_along(pol)) {
 dt <- readRDS("post/datatable/emissions.rds")
 dt0 <- dt[, round(sum(t)*factor_emi, 2), by = .(pollutant, type_emi)]
 
+di <- unique(grep(pattern = "Diurnal", x = dt1$type_emi, value = T))
+rli <- unique(grep(pattern = "Running", x = dt1$type_emi, value = T))
+hsi <- unique(grep(pattern = "Hot", x = dt1$type_emi, value = T))
+dt$pollutant <- ifelse(
+  dt$type_emi %in% di, "NMHC Diurnal",
+  ifelse(
+    dt$type_emi %in% rli, "NMHC Running Losses",
+    ifelse(
+      dt$type_emi %in% hsi, "NMHC Hot Soak",
+      dt$pollutant
+    )
+  ))
 
 dt$veh <- as.character(dt$veh)
 uv <- unique(dt$veh)
+
 n_PC <- uv[grep(pattern = "PC", x = uv)]
 n_LCV <- uv[grep(pattern = "LCV", x = uv)]
 n_TRUCKS <- uv[grep(pattern = "TRUCKS", x = uv)]
 n_BUS <- uv[grep(pattern = "BUS", x = uv)]
 n_MC <- uv[grep(pattern = "MC", x = uv)]
+
 dt$vehicles <-  ifelse(
   dt$veh %in% n_PC, "PC",
   ifelse(
@@ -90,17 +117,20 @@ switch (language,
         "english" = cat("\nPlotting categories by total\n"),
         "chinese" = cat("\n按总计绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por total\n"))
-dt1 <- dt[pollutant %in% pol, 
-          as.numeric(sum(t))*factor_emi, 
-          by = .(pollutant, veh)]
+dt1 <- dt[, as.numeric(sum(t))*factor_emi, 
+          by = .(pollutant, veh, type_emi)]
 dt1$veh <- factor(x = dt1$veh, 
                   levels = metadata$vehicles)
+
+pol <-  unique(dt1$pollutant)
+
 for(i in seq_along(pol)){
   p <- ggplot(dt1[pollutant == pol[i]], 
               aes(x = veh, y = V1, fill = V1)) + 
     geom_bar(stat = "identity", col = "black") + 
+    facet_wrap(~type_emi, ncol = 6) +
     labs(y = "t/ano", 
-         title =  paste0(pol[i], ": ", tit)) +
+         title =  pol[i]) +
     scale_fill_gradientn(pol[i], colours = cpt()) +
     scale_x_discrete(limits = rev(metadata$vehicles)) +
     theme_bw() +
@@ -131,8 +161,9 @@ for(i in seq_along(pole)){
   p <- ggplot(dt1[pol_te == pole[i]], 
               aes(x = veh, y = V1, fill = V1)) + 
     geom_bar(stat = "identity", col = "black") + 
+    facet_wrap(~type_emi, ncol = 6) +
     labs(y = "t/ano", 
-         title =  paste0(pole[i], ": ", tit)) +
+         title =  pole[i]) +
     scale_fill_gradientn(pole[i], colours = cpt()) +
     scale_x_discrete(limits = rev(metadata$vehicles)) +
     theme_bw() +
@@ -161,7 +192,7 @@ for(i in seq_along(pol)){
               aes(x = veh, y = V1, fill = type_emi)) + 
     geom_bar(stat = "identity", col = "black") + 
     labs(y = "t/ano", 
-         title =  paste0(pol[i], ": ", tit)) +
+         title =  pol[i]) +
     scale_x_discrete(limits = rev(metadata$vehicles)) +
     coord_flip()+
     theme_bw()
@@ -180,6 +211,7 @@ switch (language,
         "english" = cat("\nPlotting categories by hour\n"),
         "chinese" = cat("\n按小时绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por hora\n"))
+
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
           by = .(pollutant, vehicles, hour)]
@@ -189,7 +221,7 @@ for(i in seq_along(pol)){
               aes(x = hour, y = V1, fill = vehicles)) + 
     geom_bar(stat = "identity", col = "black") + 
     labs(y = "t/ano", 
-         title =  paste0(pol[i], ": ", tit)) +
+         title =  pol[i]) +
     theme_bw()
   
   png(filename =  paste0("images/HOUR_", pol[i], ".png"),
@@ -204,10 +236,13 @@ switch (language,
         "english" = cat("\nPlotting categories by hour and type_emi\n"),
         "chinese" = cat("\n按小时和type_emi绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por hora y type_emi\n"))
+
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
           by = .(pollutant, vehicles, hour, type_emi)]
+
 dt1$pol_te <- as.character(paste0(dt1$pollutant, "_", dt1$type_emi))
+
 pole <- as.character(unique(dt1$pol_te))
 
 for(i in seq_along(pole)){
@@ -215,7 +250,7 @@ for(i in seq_along(pole)){
               aes(x = hour, y = V1, fill = vehicles)) + 
     geom_bar(stat = "identity", col = "black") + 
     labs(y = "t/ano", 
-         title =  paste0(pol[i], ": ", tit)) +
+         title =  pol[i]) +
     theme_bw()
   
   png(filename =  paste0("images/HOUR_", pole[i], ".png"),
@@ -228,16 +263,16 @@ for(i in seq_along(pole)){
 # totais x age
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
-          by = .(pollutant, vehicles, age)]
+          by = .(pollutant, vehicles, age, type_emi)]
+
 
 for(i in seq_along(pol)){
   p <- ggplot(dt1[pollutant == pol[i]], 
               aes(x = age, y = V1, fill = vehicles)) + 
     geom_bar(stat = "identity", col = "black") + 
+    facet_wrap(~type_emi, ncol = 6) +
     labs(y = "t/ano", 
-         title =  ifelse(pol[i] == "PM", 
-                         paste0(pol[i], ": ", tit, " sem ressuspenssao "),
-                         paste0(pol[i], ": ",tit))) +
+         title =  pol[i]) +
     theme_bw()
   
   png(filename =  paste0("images/AGE_", pol[i], ".png"),

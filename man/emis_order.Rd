@@ -2,6 +2,7 @@
 % Please edit documentation in R/emis_order.R
 \name{emis_order}
 \alias{emis_order}
+\alias{emis_order2}
 \alias{weekly}
 \title{Re-order the emission to match specific hours and days}
 \usage{
@@ -11,6 +12,7 @@ emis_order(
   start_utc_time,
   desired_length,
   tz_lt = Sys.timezone(),
+  seconds = 0,
   k = 1,
   net,
   verbose = TRUE
@@ -41,6 +43,8 @@ of the WRF Chem simulations, states at namelist.input.}
 \item{tz_lt}{Character, Time zone of the local emissions. Default value is derived from
 Sys.timezone(), however, it accepts any other. If you enter a wrong tz, this function will show
 you a menu to choose one of the 697 time zones available.}
+
+\item{seconds}{Number of seconds to add}
 
 \item{k}{Numeric, factor.}
 
