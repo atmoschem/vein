@@ -158,7 +158,6 @@ ef_cetesb <- function(p,
                       project = "constant",
                       verbose = FALSE){
   ef <- sysdata$cetesb
-  ef[is.na(ef)] <- 0
 
   # tunel
   if(scale == "tunnel") {
@@ -199,6 +198,7 @@ ef_cetesb <- function(p,
     ef <- rbind(ef, efHCHO)
 
   }
+  ef[is.na(ef)] <- 0
 
   oldt <- c("SLT", "LT", "MT", "SHT", "HT",
             "UB", "SUB", "COACH", "ARTIC",
