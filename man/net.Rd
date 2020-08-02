@@ -4,7 +4,8 @@
 \name{net}
 \alias{net}
 \title{Road network of the west part of Sao Paulo city}
-\format{A Spatial data.frame (sf) with 1796 rows and 1 variables:
+\format{
+A Spatial data.frame (sf) with 1796 rows and 1 variables:
 \describe{
   \item{ldv}{Light Duty Vehicles (veh/h)}
   \item{hdv}{Heavy Duty Vehicles (veh/h)}
@@ -16,7 +17,8 @@
   \item{capacity}{Capacity of vehicles in each link (1/h)}
   \item{tmin}{Time for travelling each link (min)}
   \item{geometry}{geometry}
-}}
+}
+}
 \source{
 \url{http://www.cetsp.com.br/}
 }

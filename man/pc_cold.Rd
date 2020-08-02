@@ -4,10 +4,12 @@
 \name{pc_cold}
 \alias{pc_cold}
 \title{Profile of Vehicle start patterns}
-\format{A data frame with 24 rows and 1 variables:
+\format{
+A data frame with 24 rows and 1 variables:
 \describe{
   \item{V1}{24 hours profile vehicle starts for Monday}
-}}
+}
+}
 \usage{
 data(pc_cold)
 }

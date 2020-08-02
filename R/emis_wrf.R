@@ -29,6 +29,6 @@ NULL
 #' # eixport::to_as4wrf()
 #' }
 emis_wrf <- function(sdf, nr = 1, dmyhm, tz, crs = 4326, islist){
-  .Deprecated("emis_wrf")
-  "emis_wrf"
+  .Deprecated("emis_wrf") # nocov
+  "eixport::to_as4wrf()"# nocov
 }

@@ -246,5 +246,56 @@ test_that("emis_hot_td works", {
 
 
 
+veh_month <- as.data.frame(matrix(veh_month, ncol = 12) )
 
 
+# Caso ef es data.frame y perfil mensual tambien ####
+efm <- matrix(1, nrow = 1, ncol = ncol(veh))
+efs <- EmissionFactors(matrix(1, nrow = 12, ncol = ncol(veh)))
+efs2 <- EmissionFactors(matrix(1, nrow = nrow(veh), ncol = ncol(veh)))
+
+test_that("emis_hot_td works", {
+  expect_error(emis_hot_td(veh = veh,
+                           lkm = lkm,
+                           ef = efm,
+                           pro_month = veh_month,
+                           verbose = TRUE),
+               ".?")
+
+  expect_equal(emis_hot_td(veh = veh,
+                           lkm = lkm,
+                           ef = EmissionFactors(efm),
+                           pro_month = veh_month,
+                           verbose = TRUE)$rows[1],
+               "1")
+
+  expect_error(emis_hot_td(veh = veh,
+                           lkm = lkm,
+                           pro_month = veh_month,
+                           ef = efs,
+                           fortran = T,
+                           verbose = TRUE),
+               ".?")
+  expect_equal(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = efs2, pro_month = veh_month,
+                                 verbose = TRUE)$emissions[1]),
+               Emissions(111))
+
+  expect_message(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = efs2, pro_month = veh_month,
+                                 verbose = TRUE)$emissions[1]),
+               ".?")
+
+  expect_equal(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = efs2, pro_month = veh_month,fortran = T,
+                                 verbose = TRUE)$emissions[1]),
+               Emissions(111))
+  expect_message(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = efs2, pro_month = veh_month,fortran = T,
+                                 verbose = TRUE)$emissions[1]),
+               ".?")
+})

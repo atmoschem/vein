@@ -4,7 +4,8 @@
 \name{pc_profile}
 \alias{pc_profile}
 \title{Profile of traffic data 24 hours 7 n days of the week}
-\format{A data frame with 24 rows and 7 variables:
+\format{
+A data frame with 24 rows and 7 variables:
 \describe{
   \item{V1}{24 hours profile for Monday}
   \item{V2}{24 hours profile for Tuesday}
@@ -13,7 +14,8 @@
   \item{V5}{24 hours profile for Friday}
   \item{V6}{24 hours profile for Saturday}
   \item{V7}{24 hours profile for Sunday}
-}}
+}
+}
 \usage{
 data(pc_profile)
 }

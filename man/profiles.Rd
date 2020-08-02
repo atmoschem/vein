@@ -4,7 +4,8 @@
 \name{profiles}
 \alias{profiles}
 \title{Profile of traffic data 24 hours 7 n days of the week}
-\format{A list of data-frames with 24 rows and 7 variables:
+\format{
+A list of data-frames with 24 rows and 7 variables:
 \describe{
   \item{PC_JUNE_2012}{168 hours}
   \item{PC_JUNE_2013}{168 hours}
@@ -29,7 +30,8 @@
   \item{HGV_JANUARY_2012}{168 hours}
   \item{HGV_JANUARY_2013}{168 hours}
   \item{HGV_JANUARY_2014}{168 hours}
-}}
+}
+}
 \usage{
 data(pc_profile)
 }
