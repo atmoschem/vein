@@ -35,7 +35,6 @@ Vehicles <- function(x, ..., time) {
     geo <- sf::st_geometry(x)
 
     e <- sf::st_set_geometry(x, NULL)
-
     for(i in 1:ncol(e)){
       e[,i] <- e[,i]*units::as_units("veh")
     }
@@ -43,10 +42,10 @@ Vehicles <- function(x, ..., time) {
     if(!missing(time)){
       for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
     }
-    e <- sf::st_sf(e, geometry = geo)
+    veh <- sf::st_sf(e, geometry = geo)
 
 
-  } else if  ( is.matrix(x) ) {
+  } else  if  (is.matrix(x) ) {
 
     veh <- as.data.frame(x)
 
