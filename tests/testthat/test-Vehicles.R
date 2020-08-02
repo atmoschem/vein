@@ -1,5 +1,9 @@
 context("Vehicles")
 
+data(net)
+nett <- net[1, "ldv"]
+nett$ldv <- remove_units(nett$ldv)
+
 test_that("Vehicles works", {
   expect_equal(Vehicles(as.numeric(ef_cetesb("CO", "PC_G")))[[1]],
                0.21 )
@@ -23,5 +27,7 @@ test_that("Vehicles works", {
                NULL)
   expect_equal(plot(Vehicles(matrix(1, ncol = 8))),
                NULL)
+  expect_equal(Vehicles(nett)$ldv,
+               Vehicles(4350))
 })
 
