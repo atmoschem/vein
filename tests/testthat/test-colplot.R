@@ -25,5 +25,17 @@ test_that("colplot works", {
                                  b = 1:5)
                       ),
       theme = "clean")$mfrow[1], 1)
+  expect_equal(
+    colplot(
+      EmissionFactors(data.frame(a = 1:5,
+                                 b = 1:5)
+      ),
+      theme = "ink")$mfrow[1], 1)
+  expect_equal(
+    colplot(
+      EmissionFactors(data.frame(a = 1:5,
+                                 b = 1:5)
+      ),
+      theme = "dark")$mfrow[1], 1)
 })
 
