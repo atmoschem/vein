@@ -4,7 +4,8 @@
 \name{fe2015}
 \alias{fe2015}
 \title{Emission factors from Environmental Agency of Sao Paulo CETESB}
-\format{A data frame with 288 rows and 12 variables:
+\format{
+A data frame with 288 rows and 12 variables:
 \describe{
   \item{Age}{Age of use}
   \item{Year}{Year of emission factor}
@@ -22,7 +23,8 @@
   "II", "III", "V"}
   \item{PC_G}{CETESB emission standard for Passenger Cars with Gasoline (g/km)}
   \item{LT}{CETESB emission standard for Light Trucks with Diesel (g/km)}
-}}
+}
+}
 \source{
 CETESB
 }

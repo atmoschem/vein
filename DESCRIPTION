@@ -22,7 +22,7 @@ LazyData: no
 Depends: R (>= 3.5.0)
 Imports: sf, data.table, units, graphics, stats, methods
 Suggests: knitr, rmarkdown, testthat, covr, lwgeom, cptcity
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 NeedsCompilation: yes
 Packaged: 2016-10-21 10:31:39 UTC; sergio

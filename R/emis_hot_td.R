@@ -250,6 +250,8 @@ emis_hot_td <- function (veh,
 
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
+      if(nrow(ef) != nrow(veh)) stop("number of rows of `ef` must be the same as number of rows of `veh`")
+
       #when pro_month varies in each simple feature
       if(is.data.frame(pro_month) & nrow(ef) == nrow(veh)){
 
@@ -401,6 +403,7 @@ emis_hot_td <- function (veh,
         if(verbose) message("'pro_month' is numeric and number of rows of 'ef' is 12*number of rows 'veh'")
 
         if(fortran){
+
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
@@ -502,6 +505,7 @@ emis_hot_td <- function (veh,
           e$month <- rep(seq(1, pmonth), each = ncolv*nrowv)          # k
 
         } else {
+
           e <- do.call("rbind",lapply(1:12, function(k){
             dfi <- unlist(lapply(1:ncol(veh), function(j){
               lkm[j] * veh[, j] * pro_month[, k] *ef[j]
@@ -649,6 +653,7 @@ emis_hot_td <- function (veh,
         e[, names(params)[i]] <- params[[i]]
       }
     }
+
     if(verbose) cat("Sum of emissions:", sum(e$emissions), "\n")
 
   }

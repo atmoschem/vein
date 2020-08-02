@@ -4,7 +4,8 @@
 \name{pollutants}
 \alias{pollutants}
 \title{Data.frame with pollutants names and molar mass used in VEIN}
-\format{A data frame with 148 rows and 10 variables:
+\format{
+A data frame with 148 rows and 10 variables:
 \describe{
   \item{n}{Number for each pollutant, from 1 to 132}
   \item{group1}{classification for pollutants including "NMHC",
@@ -19,7 +20,8 @@
   \item{MOIR}{Reactivity (gm O3 / gm VOC)}
   \item{EBIR}{Reactivity (gm O3 / gm VOC)}
   \item{notes}{Inform some assumption for molar mass}
-}}
+}
+}
 \usage{
 data(pollutants)
 }

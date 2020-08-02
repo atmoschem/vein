@@ -117,10 +117,10 @@ emis_cold_td <- function (veh,
     if(class(ef[, 1]) != "units"){
       stop("columns of ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
-    if(units(ef[, 1])$numerator != "g" | units(ef[, 1])$denominator != "km"){
+    if(units(ef[, 1])$numerator != "g" || units(ef[, 1])$denominator != "km"){
       stop("Units of efcold must be 'g/km' ")
     }
-    if(units(ef[, 1])$numerator == "g" | units(ef[, 1])$denominator == "km"){
+    if(units(ef[, 1])$numerator == "g" || units(ef[, 1])$denominator == "km"){
       for(i in 1:ncol(veh)){
         ef[, i] <- as.numeric(ef[, i])
       }
@@ -129,22 +129,22 @@ emis_cold_td <- function (veh,
     if(class(ef) != "units"){
       stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
-    if(units(ef)$numerator != "g" | units(ef)$denominator != "km"){
+    if(units(ef)$numerator != "g" || units(ef)$denominator != "km"){
       stop("Units of ef must be 'g/km' ")
     }
-    if(units(ef)$numerator == "g" | units(ef)$denominator == "km"){
-      ef <- as.numeric(ef)
-    }
+    # if(units(ef)$numerator == "g" || units(ef)$denominator == "km"){ # not tested
+      # ef <- as.numeric(ef)
+    # }
   }
 
   # Checking ef cold
   if(class(efcold[, 1]) != "units"){
     stop("columns of efcold must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
   }
-  if(units(efcold[, 1])$numerator != "g" | units(efcold[, 1])$denominator != "km"){
+  if(units(efcold[, 1])$numerator != "g" || units(efcold[, 1])$denominator != "km"){
     stop("Units of efcold must be 'g/km' ")
   }
-  if(units(efcold[, 1])$numerator == "g" & units(efcold[, 1])$denominator == "km"){
+  if(units(efcold[, 1])$numerator == "g" && units(efcold[, 1])$denominator == "km"){
     for(i in 1:ncol(veh)){
       efcold[, i] <- as.numeric(efcold[, i])
     }
