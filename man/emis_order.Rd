@@ -2,7 +2,6 @@
 % Please edit documentation in R/emis_order.R
 \name{emis_order}
 \alias{emis_order}
-\alias{emis_order2}
 \alias{weekly}
 \title{Re-order the emission to match specific hours and days}
 \usage{

@@ -4,23 +4,32 @@
 \alias{get_project}
 \title{Download vein project to a specificor new directory}
 \usage{
-get_project(directory, case = "brasil", approach = "bottom-up")
+get_project(directory, case = "brasil")
 }
 \arguments{
 \item{directory}{Character; Path to an existing or a new directory to be created.
 It needs absolute path.}
 
-\item{case}{Character; Currently only supports "brasil" (or "brazil") and "emislacovid".}
-
-\item{approach}{Character; Currently only supports "bottom-up".}
+\item{case}{Character; One of  "brazil", "emislacovid" or "brazil_csvgz",}
 }
 \description{
 \code{\link{get_project}} downloads a project for runnign vein.
 The projects are available on Github.com/atmoschem/vein/projects
 }
+\note{
+The projects are:
+\tabular{lll}{
+  Case                \tab Description          \tab   Outputs   \cr
+  brazil or brazil_bu \tab Bottom-up estimation \tab  .rds       \cr
+  emislacovid         \tab Bottom-up estimation March 2020 \tab  .rds\cr
+  brazil_bu_csvgz     \tab Bottom-up estimation \tab  .csv.gz    \cr
+  brazil_bu_csv       \tab Bottom-up estimation \tab  .csv Soon! \cr
+}
+}
 \examples{
 \dontrun{
 #do not run
+get_proeject("awesomecity")
 }
 
 }

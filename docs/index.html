@@ -25,7 +25,6 @@
     Before using VEIN you need to know the vehicular composition of your study area, in other words,
     the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
     start with the project to download a template to create a structure of directories and scripts.">
-<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -366,7 +365,7 @@
 </ol>
 <!-- end list --><div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">eixport</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"EMISS"</span>))
-<span class="fu">wrf_create</span>(<span class="kw">wrfinput_dir</span>         <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"eixport"</span>),
+<span class="fu"><a href="https://rdrr.io/pkg/eixport/man/wrf_create.html">wrf_create</a></span>(<span class="kw">wrfinput_dir</span>         <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"eixport"</span>),
            <span class="kw">wrfchemi_dir</span>         <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"EMISS"</span>),
            <span class="kw">domains</span>              <span class="kw">=</span> <span class="fl">2</span>,
            <span class="kw">frames_per_auxinput5</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="co">#hours</span>
@@ -374,10 +373,10 @@
            <span class="kw">verbose</span>              <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="no">path_to_wrfi</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"eixport"</span>), <span class="st">"/wrfinput_d02"</span>)
 <span class="no">path_to_wrfc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"EMISS"</span>), <span class="kw">full.names</span> <span class="kw">=</span> <span class="fl">TRUE</span>)[<span class="fl">1</span>]
-<span class="no">gwrf</span> <span class="kw">&lt;-</span> <span class="kw pkg">eixport</span><span class="kw ns">::</span><span class="fu">wrf_grid</span>(<span class="no">path_to_wrfi</span>)
+<span class="no">gwrf</span> <span class="kw">&lt;-</span> <span class="kw pkg">eixport</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/eixport/man/wrf_grid.html">wrf_grid</a></span>(<span class="no">path_to_wrfi</span>)
 <span class="no">E_CO_gwrf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span>(<span class="kw">spobj</span> <span class="kw">=</span> <span class="no">E_CO_STREETSnet</span>, <span class="kw">g</span> <span class="kw">=</span> <span class="no">gwrf</span>)
 <span class="no">gr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span>(<span class="no">E_CO_gwrf</span>, <span class="kw">rows</span> <span class="kw">=</span> <span class="fl">51</span>, <span class="kw">cols</span> <span class="kw">=</span> <span class="fl">63</span>, <span class="kw">times</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="kw pkg">eixport</span><span class="kw ns">::</span><span class="fu">wrf_put</span>(<span class="kw">file</span> <span class="kw">=</span> <span class="no">path_to_wrfc</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"E_CO"</span>, <span class="kw">POL</span> <span class="kw">=</span> <span class="no">gr</span>)</pre></div>
+<span class="kw pkg">eixport</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/eixport/man/wrf_put.html">wrf_put</a></span>(<span class="kw">file</span> <span class="kw">=</span> <span class="no">path_to_wrfc</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"E_CO"</span>, <span class="kw">POL</span> <span class="kw">=</span> <span class="no">gr</span>)</pre></div>
 </div>
 <div id="creating-a-wrfchem-input-file-using-as4wrf" class="section level3">
 <h3 class="hasAnchor">
