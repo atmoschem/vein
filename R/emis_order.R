@@ -9,8 +9,6 @@
 #' time and cover only 168 hours starting on monday. This function tries to transform our emissions
 #' in local time to the desired utc time, by recycling the local emissions.
 #'
-#' @aliases emis_order2
-#'
 #' @param x one of the following:
 #' \itemize{
 #' \item Spatial object of class "Spatial". Columns are hourly emissions.

@@ -49,7 +49,6 @@
 <meta property="og:title" content="Download vein project to a specificor new directory — get_project" />
 <meta property="og:description" content="get_project downloads a project for runnign vein.
 The projects are available on Github.com/atmoschem/vein/projects" />
-<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 
 
 
@@ -140,7 +139,7 @@ The projects are available on Github.com/atmoschem/vein/projects" />
 The projects are available on Github.com/atmoschem/vein/projects</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_project</span>(<span class='no'>directory</span>, <span class='kw'>case</span> <span class='kw'>=</span> <span class='st'>"brasil"</span>, <span class='kw'>approach</span> <span class='kw'>=</span> <span class='st'>"bottom-up"</span>)</pre>
+    <pre class="usage"><span class='fu'>get_project</span>(<span class='no'>directory</span>, <span class='kw'>case</span> <span class='kw'>=</span> <span class='st'>"brasil"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,18 +151,26 @@ It needs absolute path.</p></td>
     </tr>
     <tr>
       <th>case</th>
-      <td><p>Character; Currently only supports "brasil" (or "brazil") and "emislacovid".</p></td>
-    </tr>
-    <tr>
-      <th>approach</th>
-      <td><p>Character; Currently only supports "bottom-up".</p></td>
+      <td><p>Character; One of  "brazil", "emislacovid" or "brazil_csvgz",</p></td>
     </tr>
     </table>
+
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>The projects are:</p><table class='table'>
+<tr><td>Case</td><td>Description</td><td>Outputs</td></tr>
+<tr><td>brazil or brazil_bu</td><td>Bottom-up estimation</td><td>.rds</td></tr>
+<tr><td>emislacovid</td><td>Bottom-up estimation March 2020</td><td>.rds</td></tr>
+<tr><td>brazil_bu_csvgz</td><td>Bottom-up estimation</td><td>.csv.gz</td></tr>
+<tr><td>brazil_bu_csv</td><td>Bottom-up estimation</td><td>.csv Soon!</td></tr>
+</table>
+
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>#do not run</span>
+<span class='fu'>get_proeject</span>(<span class='st'>"awesomecity"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
