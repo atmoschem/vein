@@ -151,27 +151,27 @@ It needs absolute path.</p></td>
     </tr>
     <tr>
       <th>case</th>
-      <td><p>Character; One of  "brazil", "emislacovid" or "brazil_csvgz",</p></td>
+      <td><p>Character; One of  of the following:</p><table class='table'>
+<tr><td><strong>case</strong></td><td><strong>Description</strong></td><td><strong>Outputs</strong></td></tr>
+<tr><td>brazil or brazil_bu</td><td>Bottom-up</td><td>.rds</td></tr>
+<tr><td>emislacovid</td><td>Bottom-up March 2020</td><td>.rds</td></tr>
+<tr><td>brazil_bu_csvgz</td><td>Bottom-up</td><td>.csv.gz</td></tr>
+<tr><td>brazil_bu_csv</td><td>Bottom-up. Faster but heavier</td><td>.csv</td></tr>
+<tr><td>brazil_bu_cb05</td><td>Bottom-up CB05</td><td>.rds</td></tr>
+</table>
+</td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The projects are:</p><table class='table'>
-<tr><td>Case</td><td>Description</td><td>Outputs</td></tr>
-<tr><td>brazil or brazil_bu</td><td>Bottom-up estimation</td><td>.rds</td></tr>
-<tr><td>emislacovid</td><td>Bottom-up estimation March 2020</td><td>.rds</td></tr>
-<tr><td>brazil_bu_csvgz</td><td>Bottom-up estimation</td><td>.csv.gz</td></tr>
-<tr><td>brazil_bu_csv</td><td>Bottom-up estimation</td><td>.csv</td></tr>
-<tr><td>brazil_td_csv</td><td>Top-down estimation</td><td>.csv  Soon!</td></tr>
-</table>
-
-
+    <p>default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
+the same</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>#do not run</span>
-<span class='fu'>get_proeject</span>(<span class='st'>"awesomecity"</span>)
+<span class='fu'>get_project</span>(<span class='st'>"awesomecity"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

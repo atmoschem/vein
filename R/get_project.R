@@ -5,21 +5,22 @@
 #'
 #' @param directory Character; Path to an existing or a new directory to be created.
 #' It needs absolute path.
-#' @param case Character; One of  "brazil", "emislacovid" or "brazil_csvgz",
+#' @param case Character; One of  of the following:
+#' \tabular{lll}{
+#'   \strong{case}       \tab \strong{Description} \tab \strong{Outputs}   \cr
+#'   brazil or brazil_bu \tab Bottom-up \tab  .rds       \cr
+#'   emislacovid         \tab Bottom-up March 2020 \tab  .rds\cr
+#'   brazil_bu_csvgz     \tab Bottom-up \tab  .csv.gz    \cr
+#'   brazil_bu_csv       \tab Bottom-up. Faster but heavier\tab  .csv  \cr
+#'   brazil_bu_cb05      \tab Bottom-up CB05\tab  .rds       \cr
+#' }
+#' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
+#' the same
 #' @importFrom utils download.file untar
 #' @export
-#' @note The projects are:
-#' \tabular{lll}{
-#'   Case                \tab Description          \tab   Outputs   \cr
-#'   brazil or brazil_bu \tab Bottom-up estimation \tab  .rds       \cr
-#'   emislacovid         \tab Bottom-up estimation March 2020 \tab  .rds\cr
-#'   brazil_bu_csvgz     \tab Bottom-up estimation \tab  .csv.gz    \cr
-#'   brazil_bu_csv       \tab Bottom-up estimation \tab  .csv  \cr
-#'   brazil_td_csv       \tab Top-down estimation \tab  .csv  Soon!\cr
-#' }
 #' @examples \dontrun{
 #' #do not run
-#' get_proeject("awesomecity")
+#' get_project("awesomecity")
 #' }
 #'
 get_project <- function(directory,
@@ -39,7 +40,10 @@ get_project <- function(directory,
   } else if(case %in% c("brazil_bu_csv")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csv.tar.gz"
 
-    } else{
+  } else if(case %in% c("brazil_bu_csv_cb05")){
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_cb05.tar.gz"
+
+  } else{
     stop("Other cases not supported yet")
   }
   tf <- paste0(tempfile(), ".tar.gz")
