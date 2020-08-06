@@ -20,6 +20,7 @@ pmonth               <- readxl::read_xlsx(path = path, sheet = "pmonth")
 met                  <- readxl::read_xlsx(path = path, sheet = "met")
 year                 <- 2018
 theme                <- "black" #dark clean ing  
+delete_directories   <- TRUE
 source("config.R")
 
 # 1) Network ####

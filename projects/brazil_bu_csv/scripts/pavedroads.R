@@ -1,5 +1,5 @@
-unlink("emis/DF_PAVED.csv.gz")
-unlink("emis/STREETS_PAVED.csv.gz")
+unlink("emis/DF_PAVED.csv")
+unlink("emis/STREETS_PAVED.csv")
 
 # identicar nomes de grupos
 nveh <- names(veh)
@@ -116,13 +116,13 @@ for(i in seq_along(metadata$vehicles)) {
       x_STREETS$type_emi <- "Paved Roads"
       
       data.table::fwrite(x_STREETS, 
-                         file = 'emi/STREETS_PAVED.csv.gz', 
+                         file = 'emi/STREETS_PAVED.csv', 
                          append = TRUE)
       
       
       
       data.table::fwrite(x_DF, 
-                         file = 'emi/DF_PAVED.csv.gz', 
+                         file = 'emi/DF_PAVED.csv', 
                          append = TRUE)
       
    }

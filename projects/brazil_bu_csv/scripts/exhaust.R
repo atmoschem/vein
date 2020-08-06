@@ -59,8 +59,8 @@ switch (language,
         "spanish" = cat("Estimando emisiones\n"))
 
 # unlink
-unlink('emi/DF_EXHAUST.csv.gz')
-unlink('emi/STREETS_EXHAUST.csv.gz')
+unlink('emi/DF_EXHAUST.csv')
+unlink('emi/STREETS_EXHAUST.csv')
 for(i in seq_along(metadata$vehicles)) {
   
   cat("\n", metadata$vehicles[i], 
@@ -97,7 +97,7 @@ for(i in seq_along(metadata$vehicles)) {
     
     
     data.table::fwrite(x_DF, 
-                       file = 'emi/DF_EXHAUST.csv.gz', 
+                       file = 'emi/DF_EXHAUST.csv', 
                        append = TRUE)
     
     x_STREETS <- emis_post(arra = array_x, 
@@ -112,7 +112,7 @@ for(i in seq_along(metadata$vehicles)) {
     x_STREETS$type_emi <- "Exhaust"
     
     data.table::fwrite(x_STREETS, 
-                       file = 'emi/STREETS_EXHAUST.csv.gz', 
+                       file = 'emi/STREETS_EXHAUST.csv', 
                        append = TRUE)
     
   }

@@ -14,7 +14,8 @@
 #'   brazil or brazil_bu \tab Bottom-up estimation \tab  .rds       \cr
 #'   emislacovid         \tab Bottom-up estimation March 2020 \tab  .rds\cr
 #'   brazil_bu_csvgz     \tab Bottom-up estimation \tab  .csv.gz    \cr
-#'   brazil_bu_csv       \tab Bottom-up estimation \tab  .csv Soon! \cr
+#'   brazil_bu_csv       \tab Bottom-up estimation \tab  .csv  \cr
+#'   brazil_td_csv       \tab Top-down estimation \tab  .csv  Soon!\cr
 #' }
 #' @examples \dontrun{
 #' #do not run
@@ -35,7 +36,10 @@ get_project <- function(directory,
   } else if(case %in% c("brazil_bu_csvgz")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csvgz.tar.gz"
 
-  } else{
+  } else if(case %in% c("brazil_bu_csv")){
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csv.tar.gz"
+
+    } else{
     stop("Other cases not supported yet")
   }
   tf <- paste0(tempfile(), ".tar.gz")

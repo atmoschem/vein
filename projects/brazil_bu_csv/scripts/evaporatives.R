@@ -96,8 +96,8 @@ switch (language,
         "chinese" = cat("\n蒸发昼间排放\n"),
         "spanish" = cat("\nEmisiones evaporativas diurnal\n"))
 
-unlink("emi/DF_EVAPORATIVE.csv.gz")
-unlink("emi/STREETS_EVAPORATIVE.csv.gz")
+unlink("emi/DF_EVAPORATIVE.csv")
+unlink("emi/STREETS_EVAPORATIVE.csv")
 
 for(i in seq_along(veh_ev)) {
   
@@ -139,7 +139,7 @@ for(i in seq_along(veh_ev)) {
     
     
     data.table::fwrite(x_DF, 
-                       file = 'emi/DF_EVAPORATIVE.csv.gz', 
+                       file = 'emi/DF_EVAPORATIVE.csv', 
                        append = TRUE)
     
     x_STREETS <- emis_post(arra = array_x, 
@@ -154,7 +154,7 @@ for(i in seq_along(veh_ev)) {
     x_STREETS$type_emi <- paste("Diurnal", nmonth[j])
     
     data.table::fwrite(x_STREETS, 
-                       file = 'emi/STREETS_EVAPORATIVE.csv.gz', 
+                       file = 'emi/STREETS_EVAPORATIVE.csv', 
                        append = TRUE)
     
     rm(array_x, ef, x, x_DF, x_STREETS)
@@ -209,7 +209,7 @@ for(i in seq_along(veh_ev)) {
                       by = 'veh')
     
     data.table::fwrite(x_DF, 
-                       file = 'emi/DF_EVAPORATIVE.csv.gz', 
+                       file = 'emi/DF_EVAPORATIVE.csv', 
                        append = TRUE)
     
     x_STREETS <- emis_post(arra = array_x, 
@@ -224,7 +224,7 @@ for(i in seq_along(veh_ev)) {
     x_STREETS$type_emi <- paste("Running Losses", nmonth[j])
     
     data.table::fwrite(x_STREETS, 
-                       file = 'emi/STREETS_EVAPORATIVE.csv.gz', 
+                       file = 'emi/STREETS_EVAPORATIVE.csv', 
                        append = TRUE)
     
     rm(array_x, ef, x, x_DF, x_STREETS)
@@ -276,7 +276,7 @@ for(i in seq_along(veh_ev)) {
                       by = 'veh')
     
     data.table::fwrite(x_DF, 
-                       file = 'emi/DF_EVAPORATIVE.csv.gz', 
+                       file = 'emi/DF_EVAPORATIVE.csv', 
                        append = TRUE)
     
     x_STREETS <- emis_post(arra = array_x, 
@@ -291,7 +291,7 @@ for(i in seq_along(veh_ev)) {
     x_STREETS$type_emi <- paste("Hot Soak", nmonth[j])
     
     data.table::fwrite(x_STREETS, 
-                       file = 'emi/STREETS_EVAPORATIVE.csv.gz', 
+                       file = 'emi/STREETS_EVAPORATIVE.csv', 
                        append = TRUE)
     
     rm(array_x, ef, x, x_DF, x_STREETS)

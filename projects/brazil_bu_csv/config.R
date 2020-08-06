@@ -124,64 +124,65 @@ saveRDS(fuel, "config/fuel.rds")
 saveRDS(met, "config/met.rds")
 
 # pastas
-if(language == "portuguese") {
-  choice <- utils::menu(c("Sim", "Não"), title="Apagar pastas csv, emi, images, notes, post e veh??")
-  if(choice == 1){
-    message("Apagando pastas `emi`, `images`, `notes`, `post` e `veh`")
-    unlink("csv", recursive = T)
-    unlink("emi", recursive = T)
-    unlink("images", recursive = T)
-    unlink("notes", recursive = T)
-    unlink("post", recursive = T)
-    unlink("veh", recursive = T)
-  } 
-} else if(language == "english"){
-  choice <- utils::menu(c("Yes", "No"), title="Delete folders `csv`, `emi`, `images`, `notes`, `post` e `veh`??")
-  if(choice == 1){
-    message("Deleting folders `emi`, `images`, `notes`, `post` and `veh`")
-    unlink("csv", recursive = T)
-    unlink("emi", recursive = T)
-    unlink("images", recursive = T)
-    unlink("notes", recursive = T)
-    unlink("post", recursive = T)
-    unlink("veh", recursive = T)
-  } 
-  
-} else if (language == "chinese") {
-  choice <- utils::menu(c("是的", "没有"), 
-                        title="删除文件夹 `csv`, `emi`, `images`, `notes`, `post`, `veh`??")
-  if(choice == 1){
-    message("删除文件夹 `emi`, `images`, `notes`, `post`, `veh`")
-    unlink("csv", recursive = T)
-    unlink("emi", recursive = T)
-    unlink("images", recursive = T)
-    unlink("notes", recursive = T)
-    unlink("post", recursive = T)
-    unlink("veh", recursive = T)
-  } 
-  
-} else if(language == "spanish"){
-  choice <- utils::menu(c("Si", "No"), title="Borrar carpetas `csv`, `emi`, `images`, `notes`, `post` y `veh`??")
-  if(choice == 1){
-    message("Borrando carpetas `emi`, `images`, `notes`, `post` y `veh`")
-    unlink("csv", recursive = T)
-    unlink("emi", recursive = T)
-    unlink("notes", recursive = T)
-    unlink("images", recursive = T)
-    unlink("post", recursive = T)
-    unlink("veh", recursive = T)
-  } 
-  
+if(delete_directories) {
+  choice <- 1
+  if(language == "portuguese") {
+    # choice <- utils::menu(c("Sim", "Não"), title="Apagar pastas csv, emi, images, notes, post e veh??")
+    if(choice == 1){
+      message("Apagando pastas `emi`, `images`, `notes`, `post` e `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("images", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    }
+  } else if(language == "english"){
+    # choice <- utils::menu(c("Yes", "No"), title="Delete folders `csv`, `emi`, `images`, `notes`, `post` e `veh`??")
+    if(choice == 1){
+      message("Deleting folders `emi`, `images`, `notes`, `post` and `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("images", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    }
+    
+  } else if (language == "chinese") {
+    # choice <- utils::menu(c("是的", "没有"), title="删除文件夹 `csv`, `emi`, `images`, `notes`, `post`, `veh`??")
+    if(choice == 1){
+      message("删除文件夹 `emi`, `images`, `notes`, `post`, `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("images", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    }
+    
+  } else if(language == "spanish"){
+    # choice <- utils::menu(c("Si", "No"), title="Borrar carpetas `csv`, `emi`, `images`, `notes`, `post` y `veh`??")
+    if(choice == 1){
+      message("Borrando carpetas `emi`, `images`, `notes`, `post` y `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("images", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    }
+  }
 }
 
-dir.create(path = "emi")
-dir.create(path = "images")
-dir.create(path = "notes")
-dir.create(path = "post")
-dir.create(path = "post/datatable")
-dir.create(path = "post/streets")
-dir.create(path = "post/grids")
-dir.create(path = "veh")
+dir.create(path = "emi", showWarnings = FALSE)
+dir.create(path = "images", showWarnings = FALSE)
+dir.create(path = "notes", showWarnings = FALSE)
+dir.create(path = "post", showWarnings = FALSE)
+dir.create(path = "post/datatable", showWarnings = FALSE)
+dir.create(path = "post/streets", showWarnings = FALSE)
+dir.create(path = "post/grids", showWarnings = FALSE)
+dir.create(path = "veh", showWarnings = FALSE)
 
 # for(i in seq_along(metadata$vehicles)) dir.create(path = paste0("emi/", metadata$vehicles[i]))
 
@@ -301,7 +302,7 @@ for(i in seq_along(n_veh)) {
 # Temperature ####
 units(celsius(1))$numerator
 png("images/Temperature.png", 
-  2000, 1500, "px",res = 300)
+    2000, 1500, "px",res = 300)
 colplot(df = met,
         cols = "Temperature",
         xlab = "Months",

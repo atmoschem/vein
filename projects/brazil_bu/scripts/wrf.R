@@ -43,7 +43,7 @@ lf <- paste0("post/grids/", pol, ".rds")
 for(i in seq_along(pol)) {
   x <- readRDS(lf[i])
   
-  xx <- emis_order2(x = x,
+  xx <- emis_order(x = x,
                     lt_emissions = lt_emissions,
                     start_utc_time = ti,
                     desired_length = wrf_times,

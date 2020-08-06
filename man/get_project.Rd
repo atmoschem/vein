@@ -23,7 +23,8 @@ The projects are:
   brazil or brazil_bu \tab Bottom-up estimation \tab  .rds       \cr
   emislacovid         \tab Bottom-up estimation March 2020 \tab  .rds\cr
   brazil_bu_csvgz     \tab Bottom-up estimation \tab  .csv.gz    \cr
-  brazil_bu_csv       \tab Bottom-up estimation \tab  .csv Soon! \cr
+  brazil_bu_csv       \tab Bottom-up estimation \tab  .csv  \cr
+  brazil_td_csv       \tab Top-down estimation \tab  .csv  Soon!\cr
 }
 }
 \examples{

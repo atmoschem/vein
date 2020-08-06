@@ -78,9 +78,9 @@ for(i in seq_along(pols)) {
 dt <- readRDS("post/datatable/emissions.rds")
 dt0 <- dt[, round(sum(t)*factor_emi, 2), by = .(pollutant, type_emi)]
 
-di <- unique(grep(pattern = "Diurnal", x = dt1$type_emi, value = T))
-rli <- unique(grep(pattern = "Running", x = dt1$type_emi, value = T))
-hsi <- unique(grep(pattern = "Hot", x = dt1$type_emi, value = T))
+di <- unique(grep(pattern = "Diurnal", x = dt0$type_emi, value = T))
+rli <- unique(grep(pattern = "Running", x = dt0$type_emi, value = T))
+hsi <- unique(grep(pattern = "Hot", x = dt0$type_emi, value = T))
 dt$pollutant <- ifelse(
   dt$type_emi %in% di, "NMHC Diurnal",
   ifelse(

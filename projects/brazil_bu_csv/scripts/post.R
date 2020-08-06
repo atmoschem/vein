@@ -3,14 +3,14 @@ g                  <- st_transform(g, crs)
 
 # streets  and grids####
 switch (language,
-        "portuguese" = message("\nLendo emi/STREETS.csv.gz...\n"),
-        "english" = message("\nReading emi/STREETS.csv.gz...\n"),
-        "chinese" = message("\n读 emi/STREETS.csv.gz...\n"),
-        "spanish" = message("\nLeyendo emi/STREETS.csv.gz...\n"))
+        "portuguese" = message("\nLendo emi/STREETS.csv...\n"),
+        "english" = message("\nReading emi/STREETS.csv...\n"),
+        "chinese" = message("\n读 emi/STREETS.csv...\n"),
+        "spanish" = message("\nLeyendo emi/STREETS.csv...\n"))
 
-st <- rbind(fread("emi/STREETS_EXHAUST.csv.gz"),
-            fread("emi/STREETS_EVAPORATIVE.csv.gz"),
-            fread("emi/STREETS_PAVED.csv.gz"))
+st <- rbind(fread("emi/STREETS_EXHAUST.csv"),
+            fread("emi/STREETS_EVAPORATIVE.csv"),
+            fread("emi/STREETS_PAVED.csv"))
 na <- paste0("V", 1:nrow(tfs))
 geo <- st_geometry(net)
 
@@ -50,9 +50,9 @@ switch (language,
         "chinese" = message("\n按类别汇总排放...\n"),
         "spanish" = message("\nAgregando emisiones por categoria...\n"))
 
-dt <- rbind(fread("emi/DF_EXHAUST.csv.gz"),
-            fread("emi/DF_EVAPORATIVE.csv.gz"),
-            fread("emi/DF_PAVED.csv.gz"))
+dt <- rbind(fread("emi/DF_EXHAUST.csv"),
+            fread("emi/DF_EVAPORATIVE.csv"),
+            fread("emi/DF_PAVED.csv"))
 dt$pollutant <- as.character(dt$pollutant)
 dt$t <- units::set_units(units::set_units(dt$g, g), t)
 saveRDS(dt, "post/datatable/emissions.rds")
