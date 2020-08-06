@@ -38,12 +38,15 @@ wrf_create(wrfinput_dir         = pasta_wrfinput,
 
 
 # Grades
-lf <- paste0("post/grids/", pol, ".rds")
+lf <- unlist(lapply(seq_along(pol),function(i){
+  list.files(path = "post/grids", pattern =  paste0(pol[i], "_"), full.names = TRUE)
+} ))
+
 
 for(i in seq_along(pol)) {
   x <- readRDS(lf[i])
   
-  xx <- emis_order2(x = x,
+  xx <- emis_order(x = x,
                     lt_emissions = lt_emissions,
                     start_utc_time = ti,
                     desired_length = wrf_times,

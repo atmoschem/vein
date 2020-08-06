@@ -78,14 +78,14 @@ if(choice == 1){
   message("I did not delete any directory!")
 }
 
-dir.create(path = "csv")
-dir.create(path = "emi")
-dir.create(path = "images")
-dir.create(path = "post")
-dir.create(path = "post/datatable")
-dir.create(path = "post/streets")
-dir.create(path = "post/grids")
-dir.create(path = "veh")
+dir.create(path = "csv", showWarnings = FALSE)
+dir.create(path = "emi", showWarnings = FALSE)
+dir.create(path = "images", showWarnings = FALSE)
+dir.create(path = "post", showWarnings = FALSE)
+dir.create(path = "post/datatable", showWarnings = FALSE)
+dir.create(path = "post/streets", showWarnings = FALSE)
+dir.create(path = "post/grids", showWarnings = FALSE)
+dir.create(path = "veh", showWarnings = FALSE)
 
 
 for(i in seq_along(metadata$vehicles)) {

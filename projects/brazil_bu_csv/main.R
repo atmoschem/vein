@@ -22,6 +22,7 @@ met                  <- readxl::read_xlsx(path = path, sheet = "met")
 year                 <- 2018
 theme                <- "black"   # dark clean ink  
 scale                <- "default"
+delete_directories   <- TRUE
 source("config.R")
 
 # 1) Network ####

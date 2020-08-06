@@ -4,7 +4,7 @@
 tfs <- as.data.frame(tfs)
 
 # Deleting existing DF.csv to avoid appending more emissions and double counting
-unlink("emi/FC.csv.gz")
+unlink("emi/FC.csv")
 # Escapamento ####
 for(i in seq_along(metadata$vehicles)) {
   
@@ -42,7 +42,7 @@ for(i in seq_along(metadata$vehicles)) {
     
     
     fwrite(x = x_DF, 
-           file ='emi/FC.csv.gz',
+           file ='emi/FC.csv',
            append = TRUE)
     
   }
@@ -56,7 +56,7 @@ switch (language,
         "spanish" = message("\nArchivo en: /emi/FC.csv"))
 
 # data.table ####
-dt <- fread("emi/FC.csv.gz")
+dt <- fread("emi/FC.csv")
 dt$pollutant <- as.character(dt$pollutant)
 dt$t <- units::set_units(units::set_units(dt$g, g), t)
 

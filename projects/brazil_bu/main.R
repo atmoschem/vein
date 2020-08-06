@@ -20,6 +20,7 @@ met                  <- readxl::read_xlsx(path = path, sheet = "met")
 year                 <- 2018
 theme                <- "black"   # dark clean ink  
 scale                <- "default"
+delete_directories   <- TRUE
 source("config.R")
 
 # 1) Network ####
@@ -105,7 +106,7 @@ source('scripts/post.R')
 metadata            <- readRDS("config/metadata.rds")
 tfs                 <- readRDS("config/tfs.rds")
 veh                 <- readRDS("config/fleet_age.rds")
-pol                 <- c("CO", "HC", "NOx", "CO2","PM", "NMHC")
+pol                 <- c("CO", "HC", "NOx", "CO2","PM")
 year                <- 2018
 factor_emi          <- 365           # convertir estimativa diaria a anual
 hours               <- 8
