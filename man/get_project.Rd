@@ -10,27 +10,28 @@ get_project(directory, case = "brasil")
 \item{directory}{Character; Path to an existing or a new directory to be created.
 It needs absolute path.}
 
-\item{case}{Character; One of  "brazil", "emislacovid" or "brazil_csvgz",}
+\item{case}{Character; One of  of the following:
+\tabular{lll}{
+  \strong{case}       \tab \strong{Description} \tab \strong{Outputs}   \cr
+  brazil or brazil_bu \tab Bottom-up \tab  .rds       \cr
+  emislacovid         \tab Bottom-up March 2020 \tab  .rds\cr
+  brazil_bu_csvgz     \tab Bottom-up \tab  .csv.gz    \cr
+  brazil_bu_csv       \tab Bottom-up. Faster but heavier\tab  .csv  \cr
+  brazil_bu_cb05      \tab Bottom-up CB05\tab  .rds       \cr
+}}
 }
 \description{
 \code{\link{get_project}} downloads a project for runnign vein.
 The projects are available on Github.com/atmoschem/vein/projects
 }
 \note{
-The projects are:
-\tabular{lll}{
-  Case                \tab Description          \tab   Outputs   \cr
-  brazil or brazil_bu \tab Bottom-up estimation \tab  .rds       \cr
-  emislacovid         \tab Bottom-up estimation March 2020 \tab  .rds\cr
-  brazil_bu_csvgz     \tab Bottom-up estimation \tab  .csv.gz    \cr
-  brazil_bu_csv       \tab Bottom-up estimation \tab  .csv  \cr
-  brazil_td_csv       \tab Top-down estimation \tab  .csv  Soon!\cr
-}
+default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
+the same
 }
 \examples{
 \dontrun{
 #do not run
-get_proeject("awesomecity")
+get_project("awesomecity")
 }
 
 }
