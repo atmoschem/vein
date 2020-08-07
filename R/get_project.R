@@ -40,7 +40,7 @@ get_project <- function(directory,
   } else if(case %in% c("brazil_bu_csv")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csv.tar.gz"
 
-  } else if(case %in% c("brazil_bu_csv_cb05")){
+  } else if(case %in% c("brazil_bu_cb05")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_cb05.tar.gz"
 
   } else{
