@@ -23,13 +23,13 @@ year                 <- 2018
 theme                <- "black"   # dark clean ink  
 scale                <- "default"
 delete_directories   <- TRUE
-source("config.R")
+eval(parse('config.R', encoding = 'UTF-8'))
 
 # 1) Network ####
 net                  <- sf::st_read("network/net.gpkg")
 crs                  <- 31983
 categories             <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
-source("scripts/net.R")
+eval(parse('scripts/net.R', encoding = 'UTF-8'))
 
 # 2) Traffic ####
 language             <- "english" # english chinese spanish 
@@ -43,7 +43,7 @@ k_G                 <- 1/0.2528435
 verbose             <- FALSE
 year                <- 2018
 theme               <- "black"     # dark clean ink  
-source('scripts/traffic.R')
+eval(parse('scripts/traffic.R', encoding = 'UTF-8'))
 
 # 3) Estimation #### 
 language             <- "english" # english chinese spanish 
@@ -62,15 +62,15 @@ year                <- 2018
 fuel                <- readRDS("config/fuel.rds")
 pol                 <- "FC"
 factor_emi          <- 365/(nrow(tfs)/24)    # daily to annual
-source('scripts/fuel_eval.R')
+eval(parse('scripts/fuel_eval.R', encoding = 'UTF-8'))
 
 # Exhaust
 pol                 <- c("CO", "HC", "NMHC",  "NOx", "CO2","RCHO",
                          "PM", "NO2", "NO")
-source('scripts/exhaust.R')
+eval(parse('scripts/exhaust.R', encoding = 'UTF-8'))
 
 # Evaporatives
-source('scripts/evaporatives.R')
+eval(parse('scripts/evaporatives.R', encoding = 'UTF-8'))
 
   # ressuspensao gera PM e PM10
 language             <- "english" # english chinese spanish 
@@ -89,7 +89,7 @@ sL1                 <- 0.6        # silt [g/m^2] se ADT < 500 (US-EPA AP42) i
 sL2                 <- 0.2        # silt [g/m^2] se 500 < ADT < 5000 (US-EPA AP42)
 sL3                 <- 0.06       # silt [g/m^2] se 5000 < ADT < 10000 (US-EPA AP42)
 sL4                 <- 0.03       # silt [g/m^2] se ADT > 10000 (US-EPA AP42)
-source('scripts/pavedroads.R')
+eval(parse('scripts/pavedroads.R', encoding = 'UTF-8'))
 
 # 4) Post-estimation #### 
 language             <- "english" # english chinese spanish 
@@ -100,7 +100,7 @@ g                   <- eixport::wrf_grid("wrf/wrfinput_d02")
 # Number of lon points 63
 crs                 <- 31983
 factor_emi          <- 365/(nrow(tfs)/24)    # daily to annual
-source('scripts/post.R')
+eval(parse('scripts/post.R', encoding = 'UTF-8'))
 
 # plots
 metadata            <- readRDS("config/metadata.rds")
@@ -112,7 +112,7 @@ hours               <- 8
 bg                  <- "white"
 pal                 <- "mpl_viridis" # ?cptcity::find_cpt
 breaks              <- "quantile"    # "sd" "quantile" "pretty"
-source('scripts/plots.R')
+eval(parse('scripts/plots.R', encoding = 'UTF-8'))
 
 # WRF CHEM
 cols                <- 63
@@ -127,4 +127,4 @@ pol                 <- c("CO", "NO")
 peso_molecular      <- c(12 + 16, 14 + 16)
 wrf_times           <- 24
 lt_emissions        <- "2011-07-25 00:00:00"
-source("scripts/wrf.R")
+eval(parse('scripts/wrf.R', encoding = 'UTF-8'))
