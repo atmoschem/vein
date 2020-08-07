@@ -93,4 +93,4 @@ suppressWarnings(
 ls()   
 
 
-gc()
+invisible(gc())

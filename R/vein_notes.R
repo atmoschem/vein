@@ -146,7 +146,7 @@ vein_notes <- function (notes,
   cat("========================================\n") # 40
   cat("\n\n\nThanks for using VEIN\n")
   sink()
-  message("File at: ")
+  # message("File at: ")
   return(file)
 }
 

@@ -18,4 +18,4 @@ suppressWarnings(
   rm(i, region, net, veiculos, crs)
   
 )
-gc()
+invisible(gc())

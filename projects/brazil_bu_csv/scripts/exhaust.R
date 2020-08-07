@@ -139,4 +139,4 @@ suppressWarnings(
      ns, ln, p, df, dl, cores) 
 )
 
-gc()
+invisible(gc())

@@ -318,4 +318,4 @@ suppressWarnings(rm(i, mileage, meta_ev, veh_ev, year,
                     diurnal_ef, hot_soak_ef, running_losses_ef)
 )
 
-gc()
+invisible(gc())

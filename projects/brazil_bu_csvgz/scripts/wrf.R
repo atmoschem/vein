@@ -109,5 +109,5 @@ suppressWarnings(
    "ti", "wrfi", "x", "xx",
    "lt_emissions", "sep", "sL1", "sL2", "sL3", "sL4", "wrf_times")
 )
-gc()
+invisible(gc())
 

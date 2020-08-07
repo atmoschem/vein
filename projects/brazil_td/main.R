@@ -8,6 +8,7 @@ library(data.table)
 sessionInfo()
 
 # 0 Configuration
+language             <- "chinese" # english chinese spanish portuguese 
 path                 <- "config/inventory.xlsx"
 # To read libre office calc, use readODS::read_ods()
 readxl::excel_sheets(path)
@@ -19,28 +20,29 @@ fuel                 <- readxl::read_xlsx(path = path, sheet = "fuel")
 pmonth               <- readxl::read_xlsx(path = path, sheet = "pmonth")
 met                  <- readxl::read_xlsx(path = path, sheet = "met")
 year                 <- 2018
+scale                <- "tunnel"
 theme                <- "black" #dark clean ing  
 delete_directories   <- TRUE
-source("config.R")
+eval(parse('config.R', encoding = 'UTF-8'))
 
 # 1) Network ####
 net                  <- sf::st_read("network/net.gpkg")
 crs                  <- 31983
 region               <- "São Paulo"
-source("scripts/net.R")
+eval(parse('scripts/net.R', encoding = 'UTF-8'))
 
 # 2) Traffic ####
 net                  <- readRDS("network/net.rds")
 metadata             <- readRDS("config/metadata.rds")
+categories            <- c("pc", "lcv", "trucks", "bus", "mc")  # in network/net.gpkg
 veh                  <- readRDS("config/fleet_age.rds")
 k_D                  <- 1/1.853396
 k_E                  <- 1/1.772143
 k_G                  <- 1/2.347402
 verbose              <- FALSE
 year                 <- 2018
-cores                <- c("black", "red", "green3", "blue", "brown",
-                          "magenta", "yellow", "gray", "magenta")
-source('scripts/traffic.R')
+theme               <- "black"     # dark clean ink  
+eval(parse('scripts/traffic.R', encoding = 'UTF-8'))
 
 # 3) Estimation #### 
 metadata             <- readRDS("config/metadata.rds")
@@ -55,18 +57,18 @@ cores                <- c("black", "red", "green3", "blue", "cyan",
 # fuel calibration with fuel consumption data
 fuel                 <- readRDS("config/fuel.rds")
 pol                  <- "FC"
-source('scripts/fuel_eval.R')
+eval(parse('scripts/fuel_eval.R', encoding = 'UTF-8'))
 
 # Exhaust
 pol                  <- c("CO", "HC", "NMHC",  "NOx", "CO2","RCHO",
                           "PM", "NO2", "NO")
-source('scripts/exhaust.R')
+eval(parse('scripts/exhaust.R', encoding = 'UTF-8'))
 
 # Evaporative
 diurnal_ef           <- "D_20_35"
 running_losses_ef    <- "R_20_35"
 hot_soak_ef          <- "S_20_35"
-source('scripts/evaporatives.R')
+eval(parse('scripts/evaporatives.R', encoding = 'UTF-8'))
 
 # ressuspensao gera PM e PM10
 metadata             <- readRDS("config/metadata.rds")
@@ -84,7 +86,7 @@ sL1                  <- 0.6        # silt [g/m^2] se ADT < 500 (US-EPA AP42) i
 sL2                  <- 0.2        # silt [g/m^2] se 500 < ADT < 5000 (US-EPA AP42)
 sL3                  <- 0.06       # silt [g/m^2] se 5000 < ADT < 10000 (US-EPA AP42)
 sL4                  <- 0.03       # silt [g/m^2] se ADT > 10000 (US-EPA AP42)
-source('scripts/ressuspensao.R')
+eval(parse('scripts/ressuspensao.R', encoding = 'UTF-8'))
 
 # 4) Post-estimation #### 
 net                  <- readRDS("network/net.rds")
@@ -100,7 +102,7 @@ g                    <- eixport::wrf_grid("wrf/wrfinput_d02")
 # Number of lon points 63
 crs                  <- 31983
 factor_emi           <- 365        # convertir estimativa diaria a anual
-source('scripts/post.R')
+eval(parse('scripts/post.R', encoding = 'UTF-8'))
 
 # plots
 metadata             <- readRDS("config/metadata.rds")
@@ -114,7 +116,7 @@ bg                   <- "white"
 pal                  <- "mpl_viridis"# procura mais paletas com ?cptcity::find_cpt
 breaks               <- "quantile"        # "sd" "quantile" "pretty"
 tit                  <- "Emissões veiculares em São Paulo [t/ano]"
-source('scripts/plots.R')
+eval(parse('scripts/plots.R', encoding = 'UTF-8'))
 
 # WRF CHEM
 cols                 <- 63                                       # da grade
@@ -129,4 +131,4 @@ pol                  <- c("CO", "NO")
 peso_molecular       <- c(12 + 16, 14 + 16)
 wrf_times            <- 24
 lt_emissions         <- "2011-07-25 00:00:00"
-source("scripts/wrf.R")
+eval(parse('scripts/wrf.R', encoding = 'UTF-8'))

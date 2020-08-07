@@ -356,4 +356,4 @@ suppressWarnings(rm(kPC, kPC_G, kPC_E, kPC_FG, kPC_FE,
    na, nveh, p, tit, tit2, veiculos, verbose, x, kf,
    k_G, k_D, k_E,
    metadata, net, veh, year))
-gc()
+invisible(gc())
