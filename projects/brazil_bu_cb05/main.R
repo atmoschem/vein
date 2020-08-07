@@ -21,14 +21,14 @@ year                 <- 2018
 theme                <- "black"   # dark clean ink  
 scale                <- "default"
 delete_directories   <- TRUE
-source("config.R")
+eval(parse('config.R', encoding = 'UTF-8'))
 
 # 1) Network ####
 net                  <- sf::st_read("network/net.gpkg")
 crs                  <- 31983
 tit                  <- "Fluxo veicular [veh/h] em São Paulo"
 categories             <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
-source("scripts/net.R")
+eval(parse('scripts/net.R', encoding = 'UTF-8'))
 
 # 2) Traffic ####
 net                 <- readRDS("network/net.rds")
@@ -41,7 +41,7 @@ k_G                 <- 1/0.2528435
 verbose             <- FALSE
 year                <- 2018
 theme               <- "black"     # dark clean ink  
-source('scripts/traffic.R')
+eval(parse('scripts/traffic.R', encoding = 'UTF-8'))
 
 # 3) Estimation #### 
 metadata            <- readRDS("config/metadata.rds")
@@ -59,16 +59,16 @@ year                <- 2018
 fuel                <- readRDS("config/fuel.rds")
 pol                 <- "FC"
 factor_emi          <- 365/(nrow(tfs)/24)    # daily to annual
-source('scripts/fuel_eval.R')
+eval(parse('scripts/fuel_eval.R', encoding = 'UTF-8'))
 
 # Exhaust
 pol                 <- c("CO", "HC", "NMHC",  "NOx", "CO2","RCHO", "SO2",
                          "PM", "NO2", "NO")
 sppm                <-  50
-source('scripts/exhaust.R')
+eval(parse('scripts/exhaust.R', encoding = 'UTF-8'))
 
 # Evaporatives
-source('scripts/evaporatives.R')
+eval(parse('scripts/evaporatives.R', encoding = 'UTF-8'))
 
 # ressuspensao gera PM e PM10
 metadata            <- readRDS("config/metadata.rds")
@@ -86,7 +86,7 @@ sL1                 <- 2.4       # silt [g/m^2] se ADT < 500 (CENMA CHILE) i
 sL2                 <- 0.7       # silt [g/m^2] se 500 < ADT < 5000 (CENMA CHILE)
 sL3                 <- 0.6       # silt [g/m^2] se 5000 < ADT < 10000 (CENMA CHILE)
 sL4                 <- 0.3       # silt [g/m^2] se ADT > 10000 (CENMA CHILE)
-source('scripts/pavedroads.R')
+eval(parse('scripts/pavedroads.R', encoding = 'UTF-8'))
 
 # 4) Post-estimation #### 
 net                 <- readRDS("network/net.rds")
@@ -101,7 +101,7 @@ g                   <- eixport::wrf_grid("wrf/wrfinput_d02")
 # Number of lon points 63
 crs                 <- 31983
 factor_emi          <- 365/(nrow(tfs)/24)    # daily to annual
-source('scripts/post.R')
+eval(parse('scripts/post.R', encoding = 'UTF-8'))
 
 # # plots
 # metadata            <- readRDS("config/metadata.rds")
@@ -120,7 +120,7 @@ source('scripts/post.R')
 # CBMZ ####
 evap                    <- c("G_EVAP_10", "E_EVAP_10")
 g                   <- eixport::wrf_grid("wrf/wrfinput_d02")
-source('scripts/cbmz.R')
+eval(parse('scripts/cb05.R', encoding = 'UTF-8'))
 
 # WRF CHEM
 net                 <- readRDS("network/net.rds")
@@ -136,4 +136,4 @@ wrfi                <- "wrf/wrfinput_d02"
 domain              <- 2
 lt_emissions        <- "2011-07-25 00:00:00"
 hours               <- 0
-source("scripts/wrf.R")
+eval(parse('scripts/wrf.R', encoding = 'UTF-8'))
