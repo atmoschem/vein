@@ -182,4 +182,4 @@ rm(i, mileage, meta_ev, veh_ev, year,
 
 # deberiamos ter al menos: "composition" "net"         "veh"         "year"       
 ls()   
-gc()
+invisible(gc())

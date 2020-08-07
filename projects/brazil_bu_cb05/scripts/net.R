@@ -50,4 +50,4 @@ suppressWarnings(
   rm(i, tit, net, categories, crs)
   
 )
-gc()
+invisible(gc())

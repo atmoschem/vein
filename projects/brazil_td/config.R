@@ -1,307 +1,369 @@
-# deleting data
+# apagando dados ####
 a <- list.files(path = "config", pattern = ".rds", full.names = T)
 file.remove(a)
 
-# configuration
+# configuracao ####
 metadata <- as.data.frame(metadata)
 mileage <- as.data.frame(mileage)
+mileage[, metadata$vehicles] <- add_lkm(mileage[, metadata$vehicles])
 tfs <- as.data.frame(tfs)
 veh <- as.data.frame(veh)
 fuel <- as.data.frame(fuel)
-pmonth <- as.data.frame(pmonth)
-met <- as.data.frame(met)[1:12, ] # to avoid possible blank lines
+met <- as.data.frame(met)
 
-# check metadata$vehicles
-cat("Your vehicles are:\n")
+# checkar metadata$vehicles ####
+switch (language,
+        "portuguese" = cat( "Metadata$Vehicles é:\n"),
+        "english" = cat( "Metadata$Vehicles is:\n"),
+        "chinese" = cat( "Metadata$Vehicles 是:\n"),
+        "spanish" = cat( "Metadata$Vehicles es:\n"))
+
+# cat( "Metadata$Vehicles é:\n")
 print(metadata$vehicles)
 
-# check names mileage
+# checar nomes mileage ####
 if(!length(intersect(metadata$vehicles, names(mileage))) == length(metadata$vehicles)) {
-  stop("You need to add column ",   setdiff(metadata$vehicles, names(mileage)), " in mileage")
+  switch (language,
+          "portuguese" = stop("Precisa adicionar coluna ",
+                              setdiff(metadata$vehicles, names(mileage)),
+                              " em `mileage`"),
+          "english" = stop("You need to add column ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " in `mileage`"),
+          "chinese" = stop("您需要添加列 ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " 在 `mileage`"),
+          "spanish" = stop("Necesitas agregar la columna ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " en `mileage`"))
+  
 }
 
-# check names tfs
+# checar nomes tfs ####
 if(!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles)) {
-  stop("You need to add column ",   setdiff(metadata$vehicles, names(tfs)), " in tfs")
+  switch (language,
+          "portuguese" = stop("Precisa adicionar coluna ",
+                              setdiff(metadata$vehicles, names(mileage)),
+                              " em `tfs`"),
+          "english" = stop("You need to add column ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " in `tfs`"),
+          "chinese" = stop("您需要添加列 ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " 在 `tfs`"),
+          "spanish" = stop("Necesitas agregar la columna ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " en `tfs`"))
 }
 
-# check names veh
+# checar nomes veh ####
 if(!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles)) {
-  stop("You need to add column ",   setdiff(metadata$vehicles, names(veh)), " in veh")
+  switch (language,
+          "portuguese" = stop("Precisa adicionar coluna ",
+                              setdiff(metadata$vehicles, names(mileage)),
+                              " em `veh`"),
+          "english" = stop("You need to add column ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " in `veh`"),
+          "chinese" = stop("您需要添加列 ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " 在 `veh`"),
+          "spanish" = stop("Necesitas agregar la columna ",
+                           setdiff(metadata$vehicles, names(mileage)),
+                           " en `veh`"))
 }
 
-# check names pmonth
-if(!length(intersect(metadata$vehicles, names(pmonth))) == length(metadata$vehicles)) {
-  stop("You need to add column ",   setdiff(metadata$vehicles, names(pmonth)), " in veh")
+#checar Year ####
+if(!"Year" %in% names(veh)){
+  switch (language,
+          "portuguese" = stop("Não estou enxergando a coluna 'Year' em `veh`"),
+          "english" = stop("I'm not seeing column 'Year' in `veh`"),
+          "chinese" = stop("我没有在 `veh`中看到“ Year”列"),
+          "spanish" = stop("No estoy viendo la columna 'Year' in `veh`"))
+  
+} 
+if(!"Year" %in% names(mileage)) {
+  switch (language,
+          "portuguese" = stop("Não estou enxergando a coluna 'Year' em `mileage`"),
+          "english" = stop("I'm not seeing column 'Year' in `mileage`"),
+          "chinese" = stop("我没有在 `mileage`中看到“ Year”列"),
+          "spanish" = stop("No estoy viendo la columna 'Year' in `mileage`"))
+  
 }
 
-# check Year
-if(!"Year" %in% names(veh)) stop("I'm not seeing column 'Year' in 'veh'")
-if(!"Year" %in% names(mileage)) stop("I'm not seeing column 'Year' in 'mileage'")
-
-# check base year
-if(veh$Year[1] != year) stop(paste0("The base year is ", year, 
-                                    " but the first year in 'veh' is ", veh$Year[1]))
-if(mileage$Year[1] != year) stop(paste0("The base year is ", year, 
-                                        " but the first year in 'mileage' is ", mileage$Year[1]))
-
-# add lkm into mileage
-cat("Adding `km`` unitinto mileage:\n")
-mileage[metadata$vehicles] <- add_lkm(mileage[metadata$vehicles])
-
-# normalizing monthyl profiles
-cat("Calculating percentage in monthly profiles:\n")
-for(i in seq_along(metadata$vehicles)){
-  pmonth[[metadata$vehicles[i]]] <- 100*pmonth[[metadata$vehicles[i]]]/sum(pmonth[[metadata$vehicles[i]]])
+# checar ano base
+if(veh$Year[1] != year) {
+  switch (language,
+          "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `veh` é ", veh$Year[1])),
+          "english" = stop(paste0("The base year is ", year, " but the first year in `veh` is ", veh$Year[1])),
+          "chinese" = stop("基准年是", year, "，但是`veh`的第一年是", veh$Year[1]),
+          "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `veh` es ", veh$Year[1])))
+  
+}
+if(mileage$Year[1] != year) {
+  switch (language,
+          "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `mileage` é ", mileage$Year[1])),
+          "english" = stop(paste0("The base year is ", year, " but the first year in `mileage` is ", veh$Year[1])),
+          "chinese" = stop("基准年是", year, "，但是`mileage`的第一年是", veh$Year[1]),
+          "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `mileage` es ", mileage$Year[1])))
+  
 }
 
-# saveRDS
-message("Files in ", getwd(), "/config/*\n")
+
+switch (language,
+        "portuguese" = message("Arquivos em: ", getwd(), "/config/*\n"),
+        "english" = message("Files in: ", getwd(), "/config/*\n"),
+        "chinese" = message("文件位于: ", getwd(), "/config/*\n"),
+        "spanish" = message("Archivos en: ", getwd(), "/config/*\n"))
+
 saveRDS(metadata, "config/metadata.rds")
 saveRDS(mileage, "config/mileage.rds")
 saveRDS(tfs, "config/tfs.rds")
 saveRDS(veh, "config/fleet_age.rds")
 saveRDS(fuel, "config/fuel.rds")
-saveRDS(pmonth, "config/pmonth.rds")
 saveRDS(met, "config/met.rds")
 
 # pastas
-choice <- utils::menu(c("Yes", "No"), title="Delete directories 'csv', 'emi', 'images', 'post' and 'veh'?")
-if(choice == 1){
-  message("Deleting directories 'csv', 'emi', 'images', 'post' and 'veh'")
-  unlink("csv", recursive = T)
-  unlink("emi", recursive = T)
-  unlink("images", recursive = T)
-  unlink("post", recursive = T)
-  unlink("veh", recursive = T)
-} else {
-  message("I did not delete any directory!")
+if(delete_directories){
+  choice <- 1
+  
+  if(language == "portuguese") {
+    # choice <- utils::menu(c("Sim", "Não"), title="Apagar pastas csv, emi, images, notes, post e veh??")
+    if(choice == 1){
+      message("Apagando pastas `emi`, `images`, `notes`, `post` e `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("images", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    } 
+  } else if(language == "english"){
+    # choice <- utils::menu(c("Yes", "No"), title="Delete folders `csv`, `emi`, `images`, `notes`, `post` e `veh`??")
+    if(choice == 1){
+      message("Deleting folders `emi`, `images`, `notes`, `post` and `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("images", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    } 
+    
+  } else if (language == "chinese") {
+    # choice <- utils::menu(c("是的", "没有"), title="删除文件夹 `csv`, `emi`, `images`, `notes`, `post`, `veh`??")
+    if(choice == 1){
+      message("删除文件夹 `emi`, `images`, `notes`, `post`, `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("images", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    } 
+    
+  } else if(language == "spanish"){
+    # choice <- utils::menu(c("Si", "No"), title="Borrar carpetas `csv`, `emi`, `images`, `notes`, `post` y `veh`??")
+    if(choice == 1){
+      message("Borrando carpetas `emi`, `images`, `notes`, `post` y `veh`")
+      unlink("csv", recursive = T)
+      unlink("emi", recursive = T)
+      unlink("notes", recursive = T)
+      unlink("images", recursive = T)
+      unlink("post", recursive = T)
+      unlink("veh", recursive = T)
+    } 
+  }
 }
 
 dir.create(path = "csv", showWarnings = FALSE)
 dir.create(path = "emi", showWarnings = FALSE)
 dir.create(path = "images", showWarnings = FALSE)
+dir.create(path = "notes", showWarnings = FALSE)
 dir.create(path = "post", showWarnings = FALSE)
 dir.create(path = "post/datatable", showWarnings = FALSE)
 dir.create(path = "post/streets", showWarnings = FALSE)
 dir.create(path = "post/grids", showWarnings = FALSE)
 dir.create(path = "veh", showWarnings = FALSE)
 
-
-for(i in seq_along(metadata$vehicles)) {
-  dir.create(path = paste0("emi/", metadata$vehicles[i]))
-}
+for(i in seq_along(metadata$vehicles)) dir.create(path = paste0("emi/", metadata$vehicles[i]))
 
 
 pa <- list.dirs(path = "emi", full.names = T, recursive = T)
 po <- list.dirs("post", full.names = T, recursive = T)
 
-message("New directories created:\n")
-cat("csv\n")
-cat("images\n")
-cat(paste0(po,"\n"))
-cat(paste0(pa,"\n"))
-cat("veh\n")
+switch (language,
+        "portuguese" = message("Novas pastas:"),
+        "english" = message("New folders:"),
+        "chinese" = message("文件位于: ", getwd(), "/config/*\n"),
+        "spanish" = message("Nuevas carpetas"))
 
-# Plotting temporal factors ####
-cat("Plotting temporal factors `tfs`\n")
+message("csv\n")
+message("images\n")
+message(paste0(po,"\n"))
+message(paste0(pa,"\n"))
+message("veh\n")
 
-# check group names
+# names groups ####
 n_PC <- metadata$vehicles[grep(pattern = "PC", x = metadata$vehicles)]
 n_LCV <- metadata$vehicles[grep(pattern = "LCV", x = metadata$vehicles)]
 n_TRUCKS <- metadata$vehicles[grep(pattern = "TRUCKS", x = metadata$vehicles)]
 n_BUS <- metadata$vehicles[grep(pattern = "BUS", x = metadata$vehicles)]
 n_MC <- metadata$vehicles[grep(pattern = "MC", x = metadata$vehicles)]
+n_veh <- list(PC = n_PC, 
+              LCV = n_LCV, 
+              TRUCKS = n_TRUCKS, 
+              BUS = n_BUS, 
+              MC = n_MC)
 
-# PC
-df_x <- tfs[, n_PC]
-png("images/TFS_PC.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_PC,
-        xlab = "Hour",
-        ylab = "",
-        main = "TFS PC",
-        theme = theme) 
+# Fleet ####
+switch (language,
+        "portuguese" = cat("Plotando frota \n"),
+        "english" = cat("Plotting fleet \n"),
+        "chinese" = cat("密谋舰队 \n"),
+        "spanish" = cat("Plotando flota \n"))
+
+for(i in seq_along(n_veh)) {
+  df_x <- veh[, n_veh[[i]]]
+  png(
+    paste0("images/FLEET_", 
+           names(n_veh)[i],
+           ".png"), 
+    2000, 1500, "px",res = 300)
+  colplot(df = df_x,
+          cols = n_veh[[i]],
+          xlab = "Age",
+          ylab = "veh/h",
+          main = names(n_veh)[i],
+          type = "l",
+          pch = NULL,
+          lwd =1,
+          theme = theme,
+          spl = 8)
+  dev.off()
+}
+
+#TFS ####
+
+switch (language,
+        "portuguese" = cat("Plotando perfis `tfs`\n"),
+        "english" = cat("Plotting profiles `tfs`\n"),
+        "chinese" = cat("绘制轮廓 `tfs`\n"),
+        "spanish" = cat("Plotando perfiles `tfs`\n"))
+
+for(i in seq_along(n_veh)) {
+  df_x <- tfs[, n_veh[[i]]]
+  png(
+    paste0("images/TFS_", 
+           names(n_veh)[i],
+           ".png"), 
+    2000, 1500, "px",res = 300)
+  colplot(df = df_x,
+          cols = n_veh[[i]],
+          xlab = "Hour",
+          ylab = "",
+          main = paste0("TFS ", names(n_veh)[i]),
+          type = "l",
+          pch = NULL,
+          lwd =1,
+          theme = theme,
+          spl = 8)
+  dev.off()
+}
+
+
+# Mileage ####
+
+switch (language,
+        "portuguese" = cat("Plotando quilometragem \n"),
+        "english" = cat("Plotting mileage `tfs`\n"),
+        "chinese" = cat("绘制里程 `tfs`\n"),
+        "spanish" = cat("Plotando kilometraje `tfs`\n"))
+
+for(i in seq_along(n_veh)) {
+  df_x <- veh[, n_veh[[i]]]
+  png(
+    paste0("images/MILEAGE_", 
+           names(n_veh)[i],
+           ".png"), 
+    2000, 1500, "px",res = 300)
+  colplot(df = df_x,
+          cols = n_veh[[i]],
+          xlab = "Age of use",
+          ylab = "[km/year]",
+          main = paste0("Mileage ", names(n_veh)[i]),
+          type = "l",
+          pch = NULL,
+          lwd =1,
+          theme = theme,
+          spl = 8)
+  dev.off()
+}
+
+
+# Temperature ####
+units(celsius(1))$numerator
+png("images/Temperature.png", 
+    2000, 1500, "px",res = 300)
+colplot(df = met,
+        cols = "Temperature",
+        xlab = "Months",
+        ylab = units(celsius(1))$numerator,
+        main = "Temperature",
+        type = "l",
+        pch = NULL,
+        lwd =1,
+        theme = theme,
+        spl = 8)
 dev.off()
 
-# LCV
-df_x <- tfs[, n_LCV]
-png("images/TFS_LCV.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_LCV,
-        xlab = "Hour",
-        ylab = "",
-        main = "TFS LCV",
-        theme = theme) 
-dev.off()
+# Notes ####
+switch (language,
+        "portuguese" = cat("\nFazendo anotações\n"),
+        "english" = cat("\nTaking some notes\n"),
+        "chinese" = cat("\n做笔记\n"),
+        "spanish" = cat("\nEscribiendo notas\n"))
 
-# TRUCKS
-df_x <- tfs[, n_TRUCKS]
-png("images/TFS_TRUCKS.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_TRUCKS,
-        xlab = "Hour",
-        ylab = "",
-        main = "TFS TRUCKS",
-        theme = theme) 
-dev.off()
-
-# BUS
-df_x <- tfs[, n_BUS]
-png("images/TFS_BUS.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_BUS,
-        xlab = "Hour",
-        ylab = "",
-        main = "TFS BUS",
-        theme = theme) 
-dev.off()
-
-# MC
-df_x <- tfs[, n_MC]
-png("images/TFS_MC.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_MC,
-        xlab = "Hour",
-        ylab = "",
-        main = "TFS MC",
-        theme = theme) 
-dev.off()
-
-# plotting mileage ####
-cat("Plotting mileage \n")
-
-# PC
-df_x <- mileage[, n_PC]
-png("images/MILEAGE_PC.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_PC,
-        xlab = "Age of use", 
-        ylab = "Mileage [km/year]",
-        main = "Mileage PC",
-        theme = theme)
-dev.off()
-
-# LCV
-df_x <- mileage[, n_LCV]
-png("images/MILEAGE_LCV.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_LCV,
-        xlab = "Age of use", 
-        ylab = "Mileage [km/year]",
-        main = "Mileage LCV",
-        theme = theme)
-dev.off()
-
-# TRUCKS
-df_x <- mileage[, n_TRUCKS]
-png("images/MILEAGE_TRUCKS.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_TRUCKS,
-        xlab = "Age of use", 
-        ylab = "Mileage [km/year]",
-        main = "Mileage TRUCKS",
-        spl = 8,
-        theme = theme)
-dev.off()
-
-# BUS
-df_x <- mileage[, n_BUS]
-png("images/MILEAGE_BUS.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_BUS,
-        xlab = "Age of use", 
-        ylab = "Mileage [km/year]",
-        main = "Mileage BUS",
-        theme = theme)
-dev.off()
-
-# MC
-df_x <- mileage[, n_MC]
-png("images/MILEAGE_MC.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_MC,
-        xlab = "Age of use", 
-        ylab = "Mileage [km/year]",
-        main = "Mileage MC",
-        spl = 8,
-        theme = theme)
-dev.off()
-
-# Plotting monthly profiles ####
-cat("Plotting monthly profiles \n")
-
-# PC
-df_x <- pmonth[, n_PC]
-png("images/PMONTH_PC.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_PC,
-        xlab = "Months", 
-        ylab = "Monthly profile [%]",
-        main = "Monthly profile PC",
-        spl = 5,
-        theme = theme)
-dev.off()
-
-# LCV
-df_x <- pmonth[, n_LCV]
-png("images/PMONTH_LCV.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_LCV,
-        xlab = "Months", 
-        ylab = "Monthly profile [%]",
-        main = "Monthly profile LCV",
-        theme = theme)
-dev.off()
-
-# TRUCKS
-df_x <- pmonth[, n_TRUCKS]
-png("images/PMONTH_TRUCKS.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_TRUCKS,
-        xlab = "Months", 
-        ylab = "Monthly profile [%]",
-        main = "Monthly profile TRUCKS",
-        spl = 8,
-        theme = theme)
-dev.off()
-
-# BUS
-df_x <- pmonth[, n_BUS]
-png("images/PMONTH_BUS.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_BUS,
-        xlab = "Months", 
-        ylab = "Monthly profile [%]",
-        main = "Monthly profile BUS",
-        spl = 8,
-        theme = theme)
-dev.off()
-
-# MC
-df_x <- pmonth[, n_MC]
-png("images/PMONTH_MC.png", 2000, 1500, "px",res = 300)
-colplot(df = df_x,
-        cols = n_MC,
-        xlab = "Months", 
-        ylab = "Monthly profile [%]",
-        main = "Monthly profile MC",
-        spl = 9,
-        theme = theme)
-dev.off()
-
+vein_notes(notes = c("Default notes for vein::get_project"), 
+           file = "notes/README", 
+           title = paste0("Metropolitan Area of São Paulo (MASP) ", year), 
+           approach = 'Bottom-up', 
+           traffic = "Samples of travel demand models for MASP", 
+           composition = "CETESB", 
+           ef = paste0("CETESB ", scale), 
+           cold_start = "Not Applicable", 
+           evaporative = "Running Losses, Diurnal and Hot Soak", 
+           standards = "PROCONVE, PROMOT", 
+           mileage = "Bruni and Bales 2013")
 # saveRDS
-message("Files in ", getwd(), "/config/*\n",
-        "config/metadata.rds\n",
+
+switch (language,
+        "portuguese" = message("\nArquivos em:"),
+        "english" = message("\nFiles in:"),
+        "chinese" = message("\n文件位于:"),
+        "spanish" = message("\nArchivos en:"))
+
+message("config/metadata.rds\n",
         "config/mileage.rds\n",
         "config/tfs.rds\n",
         "config/fleet_age.rds\n",
-        "config/fuel.rds\n",
-        "config/pmonth.rds\n",
-        "config/met.rds\n")
+        "config/fuel.rds\n")
+
+switch (language,
+        "portuguese" = message("\nFiguras em \n"),
+        "english" = message("\nFigures in \n"),
+        "chinese" = message("\n在数字\n"),
+        "spanish" = message("\nFiguras en \n"))
+message("/images")
+
+switch (language,
+        "portuguese" = message("Limpando..."),
+        "english" = message("Cleaning..."),
+        "chinese" = message("清洁用品..."),
+        "spanish" = message("Limpiando..."))
+
 
 suppressWarnings(
-  rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel,
-     n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, path,
-     pmonth, met, theme)
+  rm(i, choice, pa, metadata, po, tfs, veh, mileage, fuel, theme,
+     n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC, df_x, ef, cores, vkm, ef, a, rota)
 )

@@ -361,4 +361,4 @@ suppressWarnings(
    metadata, net, veh, year,
    theme)
 )   
-gc()
+invisible(gc())

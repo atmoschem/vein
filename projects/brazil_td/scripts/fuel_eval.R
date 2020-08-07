@@ -69,4 +69,4 @@ cat("Limpando... \n")
 suppressWarnings(rm(i, j, pol, dt, dt0, dtf, factor_emi, fuel))
 
 ls()   
-gc()
+invisible(gc())
