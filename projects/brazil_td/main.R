@@ -24,7 +24,7 @@ year                 <- 2018
 scale                <- "tunnel"
 theme                <- "black" #dark clean ing  
 delete_directories   <- TRUE
-eval(parse('config.R', encoding = 'UTF-8'))
+eval(parse('config/config.R', encoding = 'UTF-8'))
 
 # 1) Network ####
 net                  <- sf::st_read("network/net.gpkg")

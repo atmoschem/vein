@@ -48,7 +48,6 @@ ev <- c("DIURNAL","DIURNAL","DIURNAL",
 switch (language,
         "portuguese" = cat("Plotando EF\n"),
         "english" = cat("Plotting EF\n"),
-        "chinese" = cat("绘图 EF\n"),
         "spanish" = cat("Plotando EF\n"))
 
 for(i in seq_along(ns)) {
@@ -84,7 +83,6 @@ for(i in seq_along(ns)) {
 switch (language,
         "portuguese" = message("\nFiguras em /images\n"),
         "english" = message("\nFigures in /image\n"),
-        "chinese" = message("\n/图片中的数字\n"),
         "spanish" = message("\nFiguras en /images\n"))
 
 
@@ -93,7 +91,6 @@ switch (language,
 switch (language,
         "portuguese" = cat("\nEmissões evaporativas diurnal\n"),
         "english" = cat("\nEvaporative diurnal emissions\n"),
-        "chinese" = cat("\n蒸发昼间排放\n"),
         "spanish" = cat("\nEmisiones evaporativas diurnal\n"))
 
 unlink("emi/DF_EVAPORATIVE.csv.gz")
@@ -167,7 +164,6 @@ for(i in seq_along(veh_ev)) {
 switch (language,
         "portuguese" = cat("\nEmissões evaporativas running-losses\n"),
         "english" = cat("\nEvaporative running-losses emissions\n"),
-        "chinese" = cat("\n蒸发流失排放\n"),
         "spanish" = cat("\nEmisiones evaporativas running-loses\n"))
 
 for(i in seq_along(veh_ev)) {
@@ -235,7 +231,6 @@ for(i in seq_along(veh_ev)) {
 switch (language,
         "portuguese" = cat("\nEmissões evaporativas hot-soak\n"),
         "english" = cat("\nEvaporative hot-soak emissions\n"),
-        "chinese" = cat("\n蒸发式热浸排放\n"),
         "spanish" = cat("\nEmisiones evaporativas hot-soak\n"))
 
 for(i in seq_along(veh_ev)) {
@@ -301,14 +296,12 @@ for(i in seq_along(veh_ev)) {
 switch (language,
         "portuguese" = message("\n\nArquivos em: /emi/*:"),
         "english" = message("\nFiles in: /emi/*"),
-        "chinese" = message("\n文件位于: /emi/*"),
         "spanish" = message("\nArchivos en: /emi/*"))
 
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 suppressWarnings(rm(i, mileage, meta_ev, veh_ev, year,

@@ -9,9 +9,6 @@ for(i in seq_along(metadata$vehicles)) {
             "english" = cat( "Incomptaible names:\n",
                              "metadata:",metadata$vehicles[i], "\n",
                              "`veh`:",names(veh)[i + 1], "\n"),
-            "chinese" = cat( "不兼容的名称:\n",
-                             "metadata:",metadata$vehicles[i], "\n",
-                             "`veh`:",names(veh)[i + 1], "\n"),
             "spanish" = cat( "Nombres incomptatibles:\n",
                              "metadata:",metadata$vehicles[i], "\n",
                              "`veh`:",names(veh)[i + 1], "\n"))
@@ -26,7 +23,6 @@ for(i in seq_along(metadata$vehicles)) {
 switch (language,
         "portuguese" = message("Apagando veh/*.rds\n"),
         "english" = message("Deleting veh/*.rds\n"),
-        "chinese" = message("删除中 veh/*.rds\n"),
         "spanish" = message("Borrando veh/*.rds\n"))
 
 arquivos <- list.files(path = "veh", pattern = ".rds", full.names = TRUE)
@@ -39,7 +35,6 @@ veh[is.na(veh)] <- 0
 switch (language,
         "portuguese" = cat("Plotando fluxos\n"),
         "english" = cat("Plotting traffic flows\n"),
-        "chinese" = cat("绘制交通流\n"),
         "spanish" = cat("Plotando flujos\n"))
 
 # identicar nomes de grupos
@@ -296,7 +291,6 @@ dev.off()
 switch (language,
         "portuguese" = cat("Plotando composição veicular\n"),
         "english" = cat("Plotting vehicular composition\n"),
-        "chinese" = cat("绘制车辆组成\n"),
         "spanish" = cat("Plotando composición vehicular\n"))
 
 
@@ -329,19 +323,16 @@ dev.off()
 switch (language,
         "portuguese" = message("\nArquivos em: /veh:"),
         "english" = message("\nFiles in: /veh"),
-        "chinese" = message("\n文件位于: /veh"),
         "spanish" = message("\nArchivos en: /veh"))
 
 switch (language,
         "portuguese" = message("Figuras em: /images:"),
         "english" = message("Figures in: /images"),
-        "chinese" = message("中的数字: /images"),
         "spanish" = message("Figuras en: /images"))
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 

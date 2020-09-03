@@ -52,7 +52,6 @@ for(i in seq_along(metadata$vehicles)) {
 switch (language,
         "portuguese" = message("\nArquivo em: /emi/FC.csv:"),
         "english" = message("\nFile in: /emi/FC.csv"),
-        "chinese" = message("\n文件位于: /emi/FC.csv"),
         "spanish" = message("\nArchivo en: /emi/FC.csv"))
 
 # data.table ####
@@ -76,7 +75,6 @@ print(dtf)
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 suppressWarnings(rm(i, j, pol, dt, dt0, dtf, factor_emi, fuel))

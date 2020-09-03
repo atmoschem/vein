@@ -5,7 +5,6 @@ g                  <- st_transform(g, crs)
 switch (language,
         "portuguese" = message("\nAgregando emissões por rua...\n"),
         "english" = message("\nAgregating emissions by street...\n"),
-        "chinese" = message("\n按街道汇总排放量...\n"),
         "spanish" = message("\nAgregando emisiones por calle...\n"))
 
 for(i in seq_along(pol)) {
@@ -19,7 +18,6 @@ for(i in seq_along(pol)) {
 switch (language,
         "portuguese" = message("\nAgregando emissões por grade\n"),
         "english" = message("\nAgregating emissions by grid...\n"),
-        "chinese" = message("\n网格汇总排放...\n"),
         "spanish" = message("\nAgregando emisiones por grilla...\n"))
 
 lf <- list.files(path = "post/streets", pattern = ".rds", full.names = TRUE)
@@ -36,7 +34,6 @@ for(i in seq_along(lf)) {
 switch (language,
         "portuguese" = message("\nAgregando emissões em data.table\n"),
         "english" = message("\nAgregating emissions in data.table...\n"),
-        "chinese" = message("\ndata.table排放总量...\n"),
         "spanish" = message("\nAgregando emisiones en data.table...\n"))
 for(i in seq_along(pol)) {
   pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
@@ -50,7 +47,6 @@ for(i in seq_along(pol)) {
 switch (language,
         "portuguese" = message("\nAgregando emissões por categoria\n"),
         "english" = message("\nAggregating emissions by category...\n"),
-        "chinese" = message("\n按类别汇总排放...\n"),
         "spanish" = message("\nAgregando emisiones por categoria...\n"))
 
 dt <- data.table::rbindlist(
@@ -90,14 +86,12 @@ data.table::fwrite(df3, "csv/emissions_by_age.csv", row.names = FALSE)
 switch (language,
         "portuguese" = message("\n\nArquivos em: /post/*:"),
         "english" = message("\nFiles in: /post/*"),
-        "chinese" = message("\n文件位于: /post/*"),
         "spanish" = message("\nArchivos en: /post/*"))
 
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 suppressWarnings(
