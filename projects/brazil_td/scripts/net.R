@@ -10,12 +10,11 @@ plot(st_geometry(net),
      main = region)
 dev.off()
 
-
-message(paste0("Files in ", getwd(), "/net\n"))
+message(paste0("Files in ", getwd(), "/netWORK\n"))
 cat("Cleaning... \n")
 
 suppressWarnings(
-  rm(i, region, net, veiculos, crs)
+  rm(i, region, net, veiculos, crs, osm, st)
   
 )
 invisible(gc())

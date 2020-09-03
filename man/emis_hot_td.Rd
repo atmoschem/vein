@@ -42,6 +42,23 @@ different average monthly temperature.
 This funcion, as other in this package, adapts to the class of the input data.
 providing flexibility to the user.
 }
+\details{
+List  to make easier to use this function.
+\enumerate{
+ \item{`pro_month` is data.frame AND rows of `ef` and `veh` are equal.}
+ \item{`pro_month` is numeric AND rows of `ef` and `veh` are equal.}
+ \item{`pro_month` is data.frame AND rows of `ef` is 12X rows of `veh`.}
+ \item{`pro_month` is numeric AND rows of `ef` is 12X rows of `veh`.}
+ \item{`pro_month` is data,frame AND class of `ef` is 'units'.}
+ \item{`pro_month` is numeric AND class of `ef` is 'units'.}
+ \item{NO `pro_month` AND class of `ef` is 'units'.}
+ \item{NO `pro_month` AND `ef` is data.frame.}
+ \item{`pro_month` is numeric AND rows of `ef` is 12 (monthly `ef`).}
+}
+}
+\note{
+
+}
 \examples{
 \dontrun{
 # Do not run

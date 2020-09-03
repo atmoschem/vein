@@ -1,24 +1,47 @@
-# check names
 for(i in seq_along(metadata$vehicles)) {
-  if(identical(names(veh)[i + 1], metadata$vehicles[i]) == FALSE) {
-    cat( "Metadata$Vehicles is: ", metadata$vehicles[i], "but `veh`` is: ", names(veh)[i + 1], "\n")
+  if(identical(names(veh)[i + 1],metadata$vehicles[i]) == FALSE) {
+    
+    switch (language,
+            "portuguese" = cat( "Nomes incompativeis:\n",
+                                "metadata:",metadata$vehicles[i], "\n",
+                                "`veh`:",names(veh)[i + 1], "\n"),
+            "english" = cat( "Incomptaible names:\n",
+                             "metadata:",metadata$vehicles[i], "\n",
+                             "`veh`:",names(veh)[i + 1], "\n"),
+            "chinese" = cat( "不兼容的名称:\n",
+                             "metadata:",metadata$vehicles[i], "\n",
+                             "`veh`:",names(veh)[i + 1], "\n"),
+            "spanish" = cat( "Nombres incomptatibles:\n",
+                             "metadata:",metadata$vehicles[i], "\n",
+                             "`veh`:",names(veh)[i + 1], "\n"))
+    
+    
     stop()
   }
 }
 
 
-# deleting files
-cat("Deleting files '.rds' in `veh`\n")
-arquivos <- list.files(path = "veh", 
-                       pattern = ".rds", 
-                       full.names = TRUE)
+# apagando arquivos
+switch (language,
+        "portuguese" = message("Apagando veh/*.rds\n"),
+        "english" = message("Deleting veh/*.rds\n"),
+        "chinese" = message("删除中 veh/*.rds\n"),
+        "spanish" = message("Borrando veh/*.rds\n"))
+
+arquivos <- list.files(path = "veh", pattern = ".rds", full.names = TRUE)
 file.remove(arquivos)
 
 # fleet age
 veh[is.na(veh)] <- 0
 
-cat("Plotting fleet `veh`\n")
-# identify names in groups
+# plotting
+switch (language,
+        "portuguese" = cat("Plotando fluxos\n"),
+        "english" = cat("Plotting traffic flows\n"),
+        "chinese" = cat("绘制交通流\n"),
+        "spanish" = cat("Plotando flujos\n"))
+
+# identicar nomes de grupos
 nveh <- names(veh)
 n_PC <- nveh[grep(pattern = "PC", x = nveh)]
 n_LCV <- nveh[grep(pattern = "LCV", x = nveh)]
@@ -54,30 +77,8 @@ for(i in seq_along(n_PC)) {
   saveRDS(x, paste0("veh/", n_PC[i], ".rds"))
   l_PC[[i]] <- unlist(x)
 }
-
-png("images/FLEET_PC.png", 2000, 1500, "px",res = 300)
-plot(l_PC[[1]], 
-     xlab = "Age", 
-     main = "Passenger Cars by age of use [veh/year]",
-     ylim = c(0, max(unlist(l_PC))), 
-     ylab = "[veh]",
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-mtext(side = 3,
-     at = c(0, length(x)), 
-     text = c(year, year - length(x) + 1))
-for(i in 2:length(n_PC)) {
-  points(l_PC[[i]], 
-         type = "b", 
-         pch = 16 - i, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_PC)], 
-       legend = n_PC, 
-       pch = c(16, 16 - 2:length(n_PC)))
-dev.off()
+dfpc <- as.data.frame(do.call("cbind", l_PC))
+names(dfpc) <- n_PC
 
 # LCV ####
 #
@@ -109,30 +110,8 @@ for(i in seq_along(n_LCV)) {
   saveRDS(x, paste0("veh/", n_LCV[i], ".rds"))
   l_LCV[[i]] <- unlist(x)
 }
-
-png("images/FLEET_LCV.png", 2000, 1500, "px",res = 300)
-plot(l_LCV[[1]], 
-     xlab = "Age", 
-     main = "Light Commercial Vehicles by age of use [veh/year]",
-     ylim = c(0, max(unlist(l_LCV))), 
-     ylab = "[veh]",
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-mtext(side = 3,
-      at = c(0, length(x)), 
-      text = c(year, year - length(x) + 1))
-for(i in 2:length(n_LCV)) {
-  points(l_LCV[[i]], 
-         type = "b", 
-         pch = 16 - i, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_LCV)], 
-       legend = n_LCV, 
-       pch = c(16, 16 - 2:length(n_LCV)))
-dev.off()
+dflcv <- as.data.frame(do.call("cbind", l_LCV))
+names(dflcv) <- n_LCV
 
 # TRUCKS ####
 #
@@ -164,31 +143,8 @@ for(i in seq_along(n_TRUCKS)) {
   saveRDS(x, paste0("veh/", n_TRUCKS[i], ".rds"))
   l_TRUCKS[[i]] <- unlist(x)
 }
-
-png("images/FLEET_TRUCKS.png", 2000, 1500, "px",res = 300)
-plot(l_TRUCKS[[1]], 
-     xlab = "Age", 
-     main = "Trucks by age of use [veh/year]",
-     ylim = c(0, max(unlist(l_TRUCKS))), 
-     ylab = "[veh]",
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-mtext(side = 3,
-      at = c(0, length(x)), 
-      text = c(year, year - length(x) + 1))
-for(i in 2:length(n_TRUCKS)) {
-  points(l_TRUCKS[[i]], 
-         type = "b", 
-         pch = 16 - i, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_TRUCKS)], 
-       legend = n_TRUCKS, 
-       pch = c(16, 16 - 2:length(n_TRUCKS)))
-dev.off()
-
+dft <- as.data.frame(do.call("cbind", l_TRUCKS))
+names(dft) <- n_TRUCKS
 
 # BUS ####
 #
@@ -216,31 +172,8 @@ for(i in seq_along(n_BUS)) {
   saveRDS(x, paste0("veh/", n_BUS[i], ".rds"))
   l_BUS[[i]] <- unlist(x)
 }
-
-png("images/FLEET_BUS.png", 2000, 1500, "px",res = 300)
-plot(l_BUS[[1]], 
-     xlab = "Age", 
-     main = "Buses by age of use [veh/h]",
-     ylim = c(0, max(unlist(l_BUS))), 
-     ylab = "[veh]",
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-mtext(side = 3,
-      at = c(0, length(x)), 
-      text = c(year, year - length(x) + 1))
-for(i in 2:length(n_BUS)) {
-  points(l_BUS[[i]], 
-         type = "b", 
-         pch = 16 - i, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_BUS)], 
-       legend = n_BUS, 
-       pch = c(16, 16 - 2:length(n_BUS)))
-dev.off()
-
+dfb <- as.data.frame(do.call("cbind", l_BUS))
+names(dfb) <- n_BUS
 
 # MC ####
 #
@@ -285,32 +218,41 @@ for(i in seq_along(n_MC)) {
   saveRDS(x, paste0("veh/", n_MC[i], ".rds"))
   l_MC[[i]] <- unlist(x)
 }
+dfm <- as.data.frame(do.call("cbind", l_MC))
+names(dfm) <- n_MC
 
-png("images/FLEET_MC.png", 2000, 1500, "px",res = 300)
-plot(l_MC[[1]], 
-     xlab = "Age", 
-     main = "Motorcycles by age of use [veh/h]",
-     ylim = c(0, max(unlist(l_MC))), 
-     ylab = "[veh]",
-     type = "b", 
-     pch = 16, 
-     col = cores[1]) 
-mtext(side = 3,
-      at = c(0, length(x)), 
-      text = c(year, year - length(x) + 1))
-for(i in 2:length(n_MC)) {
-  points(l_MC[[i]], 
-         type = "b", 
-         pch = 16 - i, 
-         col = cores[i]) 
-}
-legend(x = "topright", 
-       col = cores[1:length(n_MC)], 
-       legend = n_MC, 
-       pch = c(16, 16 - 2:length(n_MC)))
-dev.off()
+df <- cbind(dfpc, dflcv, dft, dfb, dfm)
 
 # plots ####
+switch (language,
+        "portuguese" = cat("Plotando frota \n"),
+        "english" = cat("Plotting fleet \n"),
+        "chinese" = cat("密谋舰队 \n"),
+        "spanish" = cat("Plotando flota \n"))
+
+for(i in seq_along(n_veh)) {
+  df_x <- df[, n_veh[[i]]]
+  png(
+    paste0("images/FLEET_", 
+           names(n_veh)[i],
+           ".png"), 
+    2000, 1500, "px",res = 300)
+  colplot(df = df_x,
+          cols = n_veh[[i]],
+          xlab = "Age",
+          ylab = "veh",
+          main = names(n_veh)[i],
+          type = "l",
+          pch = NULL,
+          lwd =1,
+          theme = theme,
+          spl = 8)
+  dev.off()
+}
+
+
+
+# ggplot2
 f <- list.files(path = "veh", pattern = ".rds", full.names = T)
 na <- list.files(path = "veh", pattern = ".rds")
 na <- gsub(pattern = ".rds", replacement = "", x = na)

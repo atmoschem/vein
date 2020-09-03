@@ -10,6 +10,10 @@ tfs <- as.data.frame(tfs)
 veh <- as.data.frame(veh)
 fuel <- as.data.frame(fuel)
 met <- as.data.frame(met)
+pmonth <- as.data.frame(pmonth)
+for(i in 2:ncol(pmonth)) {
+  pmonth[[i]] <- 100*pmonth[[i]] /sum(pmonth[[i]] ) 
+}
 
 # checkar metadata$vehicles ####
 switch (language,
@@ -122,6 +126,7 @@ saveRDS(tfs, "config/tfs.rds")
 saveRDS(veh, "config/fleet_age.rds")
 saveRDS(fuel, "config/fuel.rds")
 saveRDS(met, "config/met.rds")
+saveRDS(pmonth, "config/pmonth.rds")
 
 # pastas
 if(delete_directories){
@@ -316,6 +321,29 @@ colplot(df = met,
         theme = theme,
         spl = 8)
 dev.off()
+
+# month
+for(i in seq_along(n_veh)) {
+  df_x <- pmonth[, n_veh[[i]]]
+  png(
+    paste0("images/PMONTH_", 
+           names(n_veh)[i],
+           ".png"), 
+    2000, 1500, "px",res = 300)
+  colplot(df = df_x,
+          cols = n_veh[[i]],
+          xlab = "Month",
+          ylab = "%",
+          main = names(n_veh)[i],
+          type = "l",
+          pch = NULL,
+          lwd =1,
+          theme = theme,
+          spl = 8)
+  dev.off()
+}
+
+
 
 # Notes ####
 switch (language,
