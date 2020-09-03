@@ -131,14 +131,12 @@ for(i in seq_along(metadata$vehicles)) {
 switch (language,
         "portuguese" = message("\n\nArquivos em: /emi/*:"),
         "english" = message("\nFiles in: /emi/*"),
-        "chinese" = message("\n文件位于: /emi/*"),
         "spanish" = message("\nArchivos en: /emi/*"))
 
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 

@@ -3,7 +3,6 @@ if(length(hours) > nrow(tfs)) {
   switch (language,
           "portuguese" = stop("\nEscolhe um número de horas menor ou igual que numero de horas de tfs\n"),
           "english" = stop("\nChoose a number of hours less than or equal to the number of hours of tfs\n"),
-          "chinese" = stop("\n选择小于或等于tfs小时数的小时数\n"),
           "spanish" = stop("\nEscoje un numero de horas menor o igual que el numero de horas de tfs\n"))
 }
 
@@ -13,7 +12,6 @@ hh <- paste0(ifelse(nchar(hours) < 2, paste0("0", hours), hours), "-00")
 switch (language,
         "portuguese" = cat("\nPlotando ruas\n"),
         "english" = cat("\nPlotting streets\n"),
-        "chinese" = cat("\n绘制街道\n"),
         "spanish" = cat("\nPlotando calles\n"))
 
 pols <- list.files(path = "post/streets", full.names = T)
@@ -48,7 +46,6 @@ for(i in seq_along(pols)) {
 switch (language,
         "portuguese" = cat("\nPlotando grades\n"),
         "english" = cat("\nPlotting grids\n"),
-        "chinese" = cat("\n绘制网格\n"),
         "spanish" = cat("\nPlotando grillas\n"))
 
 pols <- list.files(path = "post/grids", full.names = T)
@@ -115,7 +112,6 @@ dt$vehicles <-  ifelse(
 switch (language,
         "portuguese" = cat("\nPlotando categorias por total\n"),
         "english" = cat("\nPlotting categories by total\n"),
-        "chinese" = cat("\n按总计绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por total\n"))
 dt1 <- dt[, as.numeric(sum(t))*factor_emi, 
           by = .(pollutant, veh, type_emi)]
@@ -147,7 +143,6 @@ for(i in seq_along(pol)){
 switch (language,
         "portuguese" = cat("\nPlotando categorias por type_emi\n"),
         "english" = cat("\nPlotting categories by type_emi\n"),
-        "chinese" = cat("\n按type_emi绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por type_emi\n"))
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
@@ -180,7 +175,6 @@ for(i in seq_along(pole)){
 switch (language,
         "portuguese" = cat("\nPlotando categorias por total e tipo\n"),
         "english" = cat("\nPlotting categories by total and type\n"),
-        "chinese" = cat("\n按总数和类型绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por total y tipo\n"))
 
 dt1 <- dt[pollutant %in% pol, 
@@ -209,7 +203,6 @@ for(i in seq_along(pol)){
 switch (language,
         "portuguese" = cat("\nPlotando categorias por hora\n"),
         "english" = cat("\nPlotting categories by hour\n"),
-        "chinese" = cat("\n按小时绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por hora\n"))
 
 dt1 <- dt[pollutant %in% pol, 
@@ -234,7 +227,6 @@ for(i in seq_along(pol)){
 switch (language,
         "portuguese" = cat("\nPlotando categorias por hora e type_emi\n"),
         "english" = cat("\nPlotting categories by hour and type_emi\n"),
-        "chinese" = cat("\n按小时和type_emi绘制类别\n"),
         "spanish" = cat("\nPlotando categorias por hora y type_emi\n"))
 
 dt1 <- dt[pollutant %in% pol, 
@@ -285,14 +277,12 @@ for(i in seq_along(pol)){
 switch (language,
         "portuguese" = message("\nFiguras em /images\n"),
         "english" = message("\nFigures in /image\n"),
-        "chinese" = message("\n/图片中的数字\n"),
         "spanish" = message("\nFiguras en /images\n"))
 
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 

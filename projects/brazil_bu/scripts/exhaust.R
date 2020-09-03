@@ -3,7 +3,6 @@
 switch (language,
         "portuguese" = cat("Plotando EF\n"),
         "english" = cat("Plotting EF\n"),
-        "chinese" = cat("绘图 EF\n"),
         "spanish" = cat("Plotando EF\n"))
 
 # fatores de emissão
@@ -48,14 +47,12 @@ for(i in seq_along(ns)) {
 switch (language,
         "portuguese" = message("\nFiguras em /images\n"),
         "english" = message("\nFigures in /image\n"),
-        "chinese" = message("\n/图片中的数字\n"),
         "spanish" = message("\nFiguras en /images\n"))
 
 # Escapamento ####
 switch (language,
         "portuguese" = cat("Estimando emissões\n"),
         "english" = cat("Estimating emissions\n"),
-        "chinese" = cat("估算排放\n"),
         "spanish" = cat("Estimando emisiones\n"))
 
 
@@ -120,14 +117,12 @@ for(i in seq_along(metadata$vehicles)) {
 switch (language,
         "portuguese" = message("\n\nArquivos em: /emi/*:"),
         "english" = message("\n\nFiles in: /emi/*"),
-        "chinese" = message("\n\n文件位于: /emi/*"),
         "spanish" = message("\n\nArchivos en: /emi/*"))
 
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 suppressWarnings(

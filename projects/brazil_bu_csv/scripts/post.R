@@ -5,7 +5,6 @@ g                  <- st_transform(g, crs)
 switch (language,
         "portuguese" = message("\nLendo emi/STREETS.csv...\n"),
         "english" = message("\nReading emi/STREETS.csv...\n"),
-        "chinese" = message("\n读 emi/STREETS.csv...\n"),
         "spanish" = message("\nLeyendo emi/STREETS.csv...\n"))
 
 st <- rbind(fread("emi/STREETS_EXHAUST.csv"),
@@ -25,7 +24,6 @@ pols <- unique(st$pols)
 switch (language,
         "portuguese" = message("\nAgregando emissões por grade\n"),
         "english" = message("\nAgregating emissions by grid...\n"),
-        "chinese" = message("\n网格汇总排放...\n"),
         "spanish" = message("\nAgregando emisiones por grilla...\n"))
 
 for(i in seq_along(pols)) {
@@ -47,7 +45,6 @@ for(i in seq_along(pols)) {
 switch (language,
         "portuguese" = message("\nAgregando emissões por categoria\n"),
         "english" = message("\nAggregating emissions by category...\n"),
-        "chinese" = message("\n按类别汇总排放...\n"),
         "spanish" = message("\nAgregando emisiones por categoria...\n"))
 
 dt <- rbind(fread("emi/DF_EXHAUST.csv"),
@@ -65,14 +62,12 @@ print(dt0)
 switch (language,
         "portuguese" = message("\n\nArquivos em: /post/*:"),
         "english" = message("\nFiles in: /post/*"),
-        "chinese" = message("\n文件位于: /post/*"),
         "spanish" = message("\nArchivos en: /post/*"))
 
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 suppressWarnings(

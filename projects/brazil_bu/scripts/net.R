@@ -4,7 +4,6 @@ library(sf)
 switch (language,
         "portuguese" = cat("\nNomes: ", names(net), "\n"),
         "english" = cat("\nNames: ", names(net), "\n"),
-        "chinese" = cat("\n名字: ", names(net), "\n"),
         "spanish" = cat("\nNombres: ", names(net), "\n"))
 
 net <- st_transform(net, crs)
@@ -31,19 +30,16 @@ saveRDS(net, 'network/net.rds')
 switch (language,
         "portuguese" = message("\nArquivos em: /net:"),
         "english" = message("\nFiles in: /net"),
-        "chinese" = message("\n文件位于: /net"),
         "spanish" = message("\nArchivos en: /net"))
 
 switch (language,
         "portuguese" = message("Figuras em: /images:"),
         "english" = message("Figures in: /images"),
-        "chinese" = message("中的数字: /images"),
         "spanish" = message("Figuras en: /images"))
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 suppressWarnings(
