@@ -4,7 +4,8 @@ library(sf)                       # spatial data
 library(cptcity)                  # 7120 colour palettes
 library(ggplot2)                  # plots
 library(eixport)                  # create wrfchemi
-library(data.table)
+library(data.table)               # fster data.frames
+library(geofabrik)                # Downloads OSM data from geofabrik
 sessionInfo()
 
 # 0 Configuration
@@ -28,8 +29,11 @@ eval(parse('config.R', encoding = 'UTF-8'))
 # 1) Network ####
 net                  <- sf::st_read("network/net.gpkg")
 crs                  <- 31983
-region               <- "São Paulo"
 eval(parse('scripts/net.R', encoding = 'UTF-8'))
+download_osm         <- TRUE
+OSM_region           <- "sudeste" # see urlgeo. Takes lots of time
+type                 <- "shp" # "pbf" or 
+eval(parse('scripts/osm.R', encoding = 'UTF-8'))
 
 # 2) Traffic ####
 net                  <- readRDS("network/net.rds")
@@ -37,19 +41,21 @@ metadata             <- readRDS("config/metadata.rds")
 categories            <- c("pc", "lcv", "trucks", "bus", "mc")  # in network/net.gpkg
 veh                  <- readRDS("config/fleet_age.rds")
 k_D                  <- 1/1.853396
-k_E                  <- 1/1.772143
-k_G                  <- 1/2.347402
+k_E                  <- 1/1.688162
+k_G                  <- 1/2.285774 
 verbose              <- FALSE
 year                 <- 2018
 theme               <- "black"     # dark clean ink  
 eval(parse('scripts/traffic.R', encoding = 'UTF-8'))
 
 # 3) Estimation #### 
+language             <- "spanish" # english chinese spanish portuguese 
 metadata             <- readRDS("config/metadata.rds")
 mileage              <- readRDS("config/mileage.rds")
 veh                  <- readRDS("config/fleet_age.rds")
 net                  <- readRDS("network/net.rds")
 pmonth               <- readRDS("config/pmonth.rds")
+met                  <- readRDS("config/met.rds")
 verbose              <- FALSE
 year                 <- 2018
 cores                <- c("black", "red", "green3", "blue", "cyan",
@@ -65,33 +71,12 @@ pol                  <- c("CO", "HC", "NMHC",  "NOx", "CO2","RCHO",
 eval(parse('scripts/exhaust.R', encoding = 'UTF-8'))
 
 # Evaporative
-diurnal_ef           <- "D_20_35"
-running_losses_ef    <- "R_20_35"
-hot_soak_ef          <- "S_20_35"
 eval(parse('scripts/evaporatives.R', encoding = 'UTF-8'))
-
-# ressuspensao gera PM e PM10
-metadata             <- readRDS("config/metadata.rds")
-mileage              <- readRDS("config/mileage.rds")
-tfs                  <- readRDS("config/tfs.rds")
-net                  <- readRDS("network/net.rds")
-veh                  <- readRDS("config/fleet_age.rds")
-lkm                  <- net$lkm
-tf_PC                <- tfs$PC_G
-tf_LCV               <- tfs$LCV_G
-tf_TRUCKS            <- tfs$TRUCKS_L_D
-tf_BUS               <- tfs$BUS_URBAN_D
-tf_MC                <- tfs$MC_150_G
-sL1                  <- 0.6        # silt [g/m^2] se ADT < 500 (US-EPA AP42) i
-sL2                  <- 0.2        # silt [g/m^2] se 500 < ADT < 5000 (US-EPA AP42)
-sL3                  <- 0.06       # silt [g/m^2] se 5000 < ADT < 10000 (US-EPA AP42)
-sL4                  <- 0.03       # silt [g/m^2] se ADT > 10000 (US-EPA AP42)
-eval(parse('scripts/ressuspensao.R', encoding = 'UTF-8'))
 
 # 4) Post-estimation #### 
 net                  <- readRDS("network/net.rds")
 pol                  <- c("CO", "HC",  "NOx", "CO2","RCHO", 
-                          "PM", "PM10",
+                          "PM",
                           "NO2", "NO",
                           "D_NMHC","G_NMHC","E_NMHC",
                           "G_EVAP", "E_EVAP",

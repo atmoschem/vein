@@ -32,7 +32,7 @@ eval(parse('scripts/net.R', encoding = 'UTF-8'))
 
 # 2) Traffic ####
 net                 <- readRDS("network/net.rds")
-metadata            <- readRDS("config/metadata.rds")
+  metadata            <- readRDS("config/metadata.rds")
 categories            <- c("pc", "lcv", "trucks", "bus", "mc")  # in network/net.gpkg
 veh                 <- readRDS("config/fleet_age.rds")
 k_D                 <- 1/0.5661912 

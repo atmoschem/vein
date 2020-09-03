@@ -27,6 +27,19 @@
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 #' @export
+#' @note
+#' @details List  to make easier to use this function.
+#' \enumerate{
+#'  \item{`pro_month` is data.frame AND rows of `ef` and `veh` are equal.}
+#'  \item{`pro_month` is numeric AND rows of `ef` and `veh` are equal.}
+#'  \item{`pro_month` is data.frame AND rows of `ef` is 12X rows of `veh`.}
+#'  \item{`pro_month` is numeric AND rows of `ef` is 12X rows of `veh`.}
+#'  \item{`pro_month` is data,frame AND class of `ef` is 'units'.}
+#'  \item{`pro_month` is numeric AND class of `ef` is 'units'.}
+#'  \item{NO `pro_month` AND class of `ef` is 'units'.}
+#'  \item{NO `pro_month` AND `ef` is data.frame.}
+#'  \item{`pro_month` is numeric AND rows of `ef` is 12 (monthly `ef`).}
+#' }
 #' @examples \dontrun{
 #' # Do not run
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
@@ -250,9 +263,10 @@ emis_hot_td <- function (veh,
 
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
-      if(nrow(ef) != nrow(veh)) stop("number of rows of `ef` must be the same as number of rows of `veh`")
+      # if(nrow(ef) != nrow(veh)) stop("number of rows of `ef` must be the same as number of rows of `veh`")
 
       #when pro_month varies in each simple feature
+      # is.data.frame(pro_month) & nrow(ef) == nrow(veh) ####
       if(is.data.frame(pro_month) & nrow(ef) == nrow(veh)){
 
         if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' and 'veh' are equal")
@@ -299,7 +313,7 @@ emis_hot_td <- function (veh,
             dfi
           }))
         }
-
+     # is.numeric(pro_month) & nrow(ef) == nrow(veh) ####
       } else if(is.numeric(pro_month) & nrow(ef) == nrow(veh)){
 
         if(verbose) message("'pro_month' is numeric and number of rows of 'ef' and 'veh' are equal")
@@ -347,6 +361,54 @@ emis_hot_td <- function (veh,
           }))
         }
 
+        # is.numeric(pro_month) & nrow(ef) == 12 ####
+      } else if(is.numeric(pro_month) & nrow(ef) == 12){
+
+        if(verbose) message("'pro_month' is numeric and you have 12 montly ef")
+
+        # if(fortran) {
+        #   nrowv <- as.integer(nrow(veh))
+        #   ncolv <- as.integer(ncol(veh))
+        #   pmonth <- as.integer(length(pro_month))
+        #   lkm <- as.numeric(lkm)
+        #   ef <- as.matrix(ef[, 1:ncol(veh)])
+        #   month <- as.numeric(pro_month)
+        #
+        #   if(verbose) message("Calling emistd1f.f95")
+        #
+        #   a <-   .Fortran("emistd1f",
+        #                   nrowv = nrowv,
+        #                   ncolv = ncolv,
+        #                   pmonth = pmonth,
+        #                   veh = as.matrix(veh),
+        #                   lkm = lkm,
+        #                   ef = ef,
+        #                   month = month,
+        #                   emis = numeric(nrowv*ncolv*pmonth))$emis
+        #
+        #   e <- data.frame(emissions = a)
+        #   e <- Emissions(e)
+        #   e$rows <- rep(row.names(veh), ncolv*pmonth)            # i
+        #   e$age <- rep(rep(seq(1, ncolv), each = nrowv), pmonth) # j
+        #   e$month <- rep(seq(1, pmonth), each = ncolv*nrowv)            # k
+
+        # } else {
+          e <- do.call("rbind",lapply(1:12, function(k){
+            dfi <- unlist(lapply(1:ncol(veh), function(j){
+              lkm[j] * veh[, j] * pro_month[k] *ef[k, j]
+            }))
+            dfi <- as.data.frame(dfi)
+            names(dfi) <- "emissions"
+            dfi <- Emissions(dfi)
+            dfi$rows <- row.names(veh)
+            dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+            dfi$month <- (1:length(pro_month))[k]
+            dfi
+          }))
+        # }
+
+
+        # is.data.frame(pro_month) & nrow(ef) == 12*nrow(veh) ####
       } else if(is.data.frame(pro_month) & nrow(ef) == 12*nrow(veh)){
 
         if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' is 12*number of rows 'veh'")
@@ -397,7 +459,7 @@ emis_hot_td <- function (veh,
           }))
 
         }
-
+     # is.numeric(pro_month) & nrow(ef) == 12*nrow(veh) ####
       } else if(is.numeric(pro_month) & nrow(ef) == 12*nrow(veh)){
 
         if(verbose) message("'pro_month' is numeric and number of rows of 'ef' is 12*number of rows 'veh'")
@@ -470,6 +532,7 @@ emis_hot_td <- function (veh,
       if(verbose) message("Assuming you have the same emission factors in each simple feature")
 
       # when pro_month vary each row
+      # is.data.frame(pro_month) | is.matrix(pro_month) ####
       if(is.data.frame(pro_month) | is.matrix(pro_month)){
 
         if(verbose) message("'pro_month' is data.frame and 'ef' is numeric")
@@ -520,7 +583,7 @@ emis_hot_td <- function (veh,
           }))
 
         }
-
+      # is.numeric(pro_month) ####
       } else if(is.numeric(pro_month)){
 
         if(verbose) message("'pro_month' is numeric and 'ef' is numeric")
@@ -589,6 +652,7 @@ emis_hot_td <- function (veh,
   } else {
     if(verbose) message("Estimation without monthly profile")
 
+    # !is.data.frame(ef) ####
     if(!is.data.frame(ef)) {
 
       if(verbose) message("'ef' is a numeric vector with units")
@@ -629,6 +693,7 @@ emis_hot_td <- function (veh,
         e$age <- rep(1:ncol(veh), each = nrow(veh))
 
       }
+      # ef is data.frame
     } else {
       if(verbose) message("'ef' is data.frame")
       if(nrow(ef) != nrow(veh)) stop("Number of rows of 'ef' and 'veh' must be equal")

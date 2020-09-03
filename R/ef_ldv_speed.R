@@ -100,7 +100,7 @@
 #' has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.
 #' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 #' @export
-#' @examples \dontrun{
+#' @examples L{
 #' # Passenger Cars PC
 #' # Emission factor function
 #' V <- 0:150
@@ -214,8 +214,17 @@
 #' persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Euros",
 #' zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
 #' }
-ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
-                         show.equation = FALSE, fcorr = rep(1, 8)){
+ef_ldv_speed <- function(v,
+                         t  = "4S",
+                         cc,
+                         f,
+                         eu,
+                         p,
+                         x,
+                         k = 1,
+                         speed,
+                         show.equation = FALSE,
+                         fcorr = rep(1, 8)){
   ef_ldv <- sysdata$ldv
   xas <-  c("AS_urban", "AS_rural", "AS_highway")
   npm <- c("N_urban", "N_rural", "N_highway",
@@ -230,15 +239,10 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
 
   # Check speed
   if(!missing(speed)){
-    if(class(speed) != "units"){
-      stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
+    if(!class(speed)[1] %in% c("units", "Speed")){
+      stop("speed neeeds to has class 'Speed' or 'units' in 'km/h'. Please, check package '?units::set_units'")
     }
-    if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){
-      stop("Units of g must be 'km/h' ")
-    }
-    if(units(speed)$numerator == "km" & units(speed)$denominator == "h"){
-      speed <- as.numeric(speed)
-    }
+      speed <- remove_units(speed)
   }
 
   #Function to case when
@@ -305,48 +309,65 @@ ef_ldv_speed <- function(v, t  = "4S", cc, f, eu, p, x, k = 1, speed,
           eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
         }
       }
+
+# check for speed as numeric or data.frame
       if(!missing(speed)){
+        if(is.numeric(speed)){
           f1 <- EmissionFactors(f1(speed))
           return(f1)
+        } else if(is.data.frame(speed)){
+          f1 <- EmissionFactors(sapply(speed, f1))
+          return(f1)
+        }
         } else {
         return(f1)
-      }
+        }
+
 
     } else if(length(eu) > 1){
       if(!missing(speed)){
-        dff <- do.call("cbind", lapply(1:length(eu), function(i){
-          df <- ef_ldv[ef_ldv$VEH == v &
-                         ef_ldv$TYPE == t &
-                         ef_ldv$CC == cc &
-                         ef_ldv$FUEL == f &
-                         ef_ldv$EURO == eu[i] &
-                         ef_ldv$POLLUTANT == p, ]
-          k2 <- lala(eu[i])
 
-          if(p %in% c("SO2","Pb")){
-            f1 <- function(V){
-              a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
-              V <- ifelse(V < df$MINV, df$MINV,
-                          ifelse(V > df$MAXV, df$MAXV, V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                     0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) )
+        if(is.numeric(speed)) {
+          dff <- do.call("cbind", lapply(1:length(eu), function(i){
+            df <- ef_ldv[ef_ldv$VEH == v &
+                           ef_ldv$TYPE == t &
+                           ef_ldv$CC == cc &
+                           ef_ldv$FUEL == f &
+                           ef_ldv$EURO == eu[i] &
+                           ef_ldv$POLLUTANT == p, ]
+            k2 <- lala(eu[i])
+
+            if(p %in% c("SO2","Pb")){
+              f1 <- function(V){
+                a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
+                V <- ifelse(V < df$MINV, df$MINV,
+                            ifelse(V > df$MAXV, df$MAXV, V))
+                ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
+                       0,
+                       eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) )
+              }
+            } else {
+              f1 <- function(V){
+                a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
+                V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
+                ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
+                       0,
+                       eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
+              }
             }
-          } else {
-            f1 <- function(V){
-              a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
-              V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                     0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
-            }
-          }
-          f1(speed)
-        }))
-        dff <- EmissionFactors(dff)
-        names(dff) <- paste0(eu, 1:length(eu))
-        dff$speed <- speed
-        return(dff)
+            f1(speed)
+          }))
+          dff <- EmissionFactors(dff)
+          names(dff) <- paste0(eu, 1:length(eu))
+          dff$speed <- speed
+          return(dff)
+          } else if (is.data.frame(speed)){}
+
+
+
+
+
+
       } else {
         dff <- lapply(1:length(eu), function(i){
           df <- ef_ldv[ef_ldv$VEH == v &

@@ -13,6 +13,7 @@ NEWS
 - Add argument seconds to emis_order to control time difference with UTC. This is
 useful when local time changes for daylight (2020-07-26)
 - Add projects csv, csv.gz abd cb05. (2020-08-06)
+- Add option to include monthly emission factors in emis_hot_td 
 
 ## vein 0.8.9  (Release date: 2020-06-11)
 

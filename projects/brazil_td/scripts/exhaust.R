@@ -43,11 +43,13 @@ for(i in seq_along(ns)) {
 # Exhaust ####
 for(i in seq_along(metadata$vehicles)) {
   
-  cat("Estimating emissions de:", metadata$vehicles[i], "...\n")
+  cat("\n", metadata$vehicles[i], 
+      rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i])))
+  
   x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
   
   for(j in seq_along(pol)){
-    cat(pol[j], "\n")
+    cat(pol[j], " ")
     
     ef <- ef_cetesb(p = pol[j], 
                     veh = metadata$vehicles[i], 
@@ -82,7 +84,7 @@ for(i in seq_along(metadata$vehicles)) {
 }
 
 
-message(paste0("Files in ", getwd(), "/emi/*\n"))
+message(paste0("\nFiles in ", getwd(), "/emi/*\n"))
 cat("Cleaning... \n")
 suppressWarnings(
   rm(i, j, pol, 
