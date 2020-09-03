@@ -62,7 +62,7 @@ cat(paste0(
   "PC_E  ", round(kPC_E, 3), " \n",
   "PC_FG ", round(kPC_FG, 3), " \n",
   "PC_FE ", round(kPC_FE, 3), " \n",
-  "∑: ", kPC_G + kPC_E + kPC_FG +  kPC_FE, "\n\n"))
+  "SUM: ", kPC_G + kPC_E + kPC_FG +  kPC_FE, "\n\n"))
 
 # combustivel
 kf <- c(k_G, k_E, k_G, k_E)
@@ -108,7 +108,7 @@ cat(paste0(
   "LCV_FG ", round(kLCV_FG, 3), " \n",
   "LCV_FE ", round(kLCV_FE, 3), " \n",
   "LCV_D ", round(kLCV_D, 3), " \n",
-  "∑: ", kLCV_G + kLCV_FG +  kLCV_FE +  kLCV_E + kLCV_D, "\n\n"))
+  "SUM: ", kLCV_G + kLCV_FG +  kLCV_FE +  kLCV_E + kLCV_D, "\n\n"))
 
 # combustivel
 kf <- c(k_G, k_E, k_G, k_E, k_D)
@@ -154,7 +154,7 @@ cat(paste0(
   "TRUCKS_FE ", round(kTRUCKS_M_D, 3), " \n",
   "TRUCKS_E ", round(kTRUCKS_SH_D, 3), " \n",
   "TRUCKS_D ", round(kTRUCKS_H_D, 3), " \n\n",
-  "∑: ", kTRUCKS_SL_D + kTRUCKS_L_D +  kTRUCKS_M_D +  kTRUCKS_SH_D + kTRUCKS_H_D, "\n"))
+  "SUM: ", kTRUCKS_SL_D + kTRUCKS_L_D +  kTRUCKS_M_D +  kTRUCKS_SH_D + kTRUCKS_H_D, "\n"))
 
 # combustivel
 kf <- rep(k_D, 5)
@@ -198,7 +198,7 @@ cat(paste0(
   "BUS_URBAN_D ", round(kBUS_URBAN_D, 3), " \n",
   "BUS_MICRO_D ", round(kBUS_MICRO_D, 3), " \n",
   "BUS_URBAN_D ", round(kBUS_COACH_D, 3), " \n",
-  "∑: ", kBUS_URBAN_D + kBUS_MICRO_D +  kBUS_COACH_D, "\n\n"))
+  "SUM: ", kBUS_URBAN_D + kBUS_MICRO_D +  kBUS_COACH_D, "\n\n"))
 
 # combustivel
 kf <- rep(k_D, 3)
@@ -256,7 +256,7 @@ cat(paste0(
   "MC_150_FE  ", round(kMC_150_FE, 3), " \n",
   "MC_150_500_FE  ", round(kMC_150_500_FE, 3), " MC\n",
   "MC_500_FE  ", round(kMC_500_FE, 3), " MC\n",
-  "∑: ", 
+  "SUM: ", 
   kMC_150_G + kMC_150_500_G +  kMC_500_G +
     kMC_150_FG + kMC_150_500_FG + kMC_500_FG +
     kMC_150_FE + kMC_150_500_FE + kMC_500_FE, "\n\n"))
