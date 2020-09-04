@@ -12,7 +12,7 @@ It needs absolute path.}
 
 \item{case}{Character; One of  of the following:
 \tabular{llll}{
-  \strong{case}       \tab \strong{Description} \strong{EF} \tab \strong{Outputs}   \cr
+  \strong{case}       \tab \strong{Description}\tab  \strong{EF} \tab \strong{Outputs}   \cr
   brazil or brazil_bu or brasil or brasil_bu\tab Bottom-up \tab CETESB \tab  .rds       \cr
   emislacovid         \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
   brazil_bu_csvgz     \tab Bottom-up \tab CETESB \tab  .csv.gz    \cr
