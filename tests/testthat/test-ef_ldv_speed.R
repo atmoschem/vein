@@ -184,14 +184,6 @@ test_that("ef_ldv_speed works", {
 })
 
 
-test_that("ef_ldv_speed works", {
-  expect_error(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
-                            eu = data.frame("PRE"),
-                            p = "CO", show.equation = FALSE,
-                            speed = units::set_units(10, "m/m")),
-               "U.?")
-})
-
 
 test_that("ef_ldv_speed works", {
   expect_output(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "D",
@@ -263,3 +255,4 @@ test_that("ef_ldv_speed works", {
                                   p = "HC")[[1]](0)),
                6)
 })
+

@@ -56,11 +56,8 @@ List  to make easier to use this function.
  \item{`pro_month` is numeric AND rows of `ef` is 12 (monthly `ef`).}
 }
 }
-\note{
-
-}
 \examples{
-\dontrun{
+{
 # Do not run
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",

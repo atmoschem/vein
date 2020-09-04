@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_project.R
 \name{get_project}
 \alias{get_project}
-\title{Download vein project to a specificor new directory}
+\title{Download vein project}
 \usage{
 get_project(directory, case = "brasil")
 }
@@ -11,17 +11,17 @@ get_project(directory, case = "brasil")
 It needs absolute path.}
 
 \item{case}{Character; One of  of the following:
-\tabular{lll}{
-  \strong{case}       \tab \strong{Description} \tab \strong{Outputs}   \cr
-  brazil or brazil_bu \tab Bottom-up \tab  .rds       \cr
-  emislacovid         \tab Bottom-up March 2020 \tab  .rds\cr
-  brazil_bu_csvgz     \tab Bottom-up \tab  .csv.gz    \cr
-  brazil_bu_csv       \tab Bottom-up. Faster but heavier\tab  .csv  \cr
-  brazil_bu_cb05      \tab Bottom-up CB05\tab  .rds       \cr
+\tabular{llll}{
+  \strong{case}       \tab \strong{Description} \strong{EF} \tab \strong{Outputs}   \cr
+  brazil or brazil_bu or brasil or brasil_bu\tab Bottom-up \tab CETESB \tab  .rds       \cr
+  emislacovid         \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
+  brazil_bu_csvgz     \tab Bottom-up \tab CETESB \tab  .csv.gz    \cr
+  brazil_bu_csv       \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
+  brazil_bu_cb05      \tab Bottom-up CB05\tab CETESB\tab  .rds       \cr
 }}
 }
 \description{
-\code{\link{get_project}} downloads a project for runnign vein.
+\code{\link{get_project}} downloads a project for running vein.
 The projects are available on Github.com/atmoschem/vein/projects
 }
 \note{
