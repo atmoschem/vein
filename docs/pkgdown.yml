@@ -1,8 +1,8 @@
-pandoc: '2.5'
+pandoc: 2.7.3
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles: []
-last_built: 2020-08-06T13:23Z
+last_built: 2020-09-04T13:35Z
 urls:
   reference: http://atmoschem.github.io/vein//reference
   article: http://atmoschem.github.io/vein//articles

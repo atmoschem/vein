@@ -27,7 +27,6 @@
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 #' @export
-#' @note
 #' @details List  to make easier to use this function.
 #' \enumerate{
 #'  \item{`pro_month` is data.frame AND rows of `ef` and `veh` are equal.}
@@ -40,7 +39,7 @@
 #'  \item{NO `pro_month` AND `ef` is data.frame.}
 #'  \item{`pro_month` is numeric AND rows of `ef` is 12 (monthly `ef`).}
 #' }
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 #' efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
