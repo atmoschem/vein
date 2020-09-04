@@ -286,7 +286,7 @@ switch (language,
         "spanish" = cat("Plotando kilometraje `tfs`\n"))
 
 for(i in seq_along(n_veh)) {
-  df_x <- veh[, n_veh[[i]]]
+  df_x <- mileage[, n_veh[[i]]]
   png(
     paste0("images/MILEAGE_", 
            names(n_veh)[i],
