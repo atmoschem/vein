@@ -19,6 +19,8 @@
 #' data(net)
 #' grid <- make_grid(net, width = 0.5/102.47) #500 mts
 #' plot(grid, axes = TRUE) #class sf
+#' # make grid now returns warnings for crs with form +init...
+#' #grid <- make_grid(net, width = 0.5/102.47) #500 mts
 #'
 #' }
 make_grid <- function(spobj, width, height = width,  polygon, crs = 4326, ...){
@@ -26,6 +28,10 @@ make_grid <- function(spobj, width, height = width,  polygon, crs = 4326, ...){
     message("argument 'polygon' is not needed")
   }
 
+  if(substr(crs, 1, 5) == "+init"){
+    warning("GDAL Message 1: +init=epsg:XXXX syntax is deprecated.
+         It might return a CRS with a non-EPSG compliant axis order.")
+  }
 if(class(spobj)[1] != "character"){
   if(class(spobj)[1] == "bbox") {
     spobj <- sf::st_as_sfc(spobj)
@@ -34,6 +40,7 @@ if(class(spobj)[1] != "character"){
   }
 
   net <- sf::st_as_sf(spobj)
+  # from sf::st_make_grid
     # g <- sf::st_make_grid(x = net, cellsize = width, ...)
 makinggrid <- function (x,
                         cellsize = c(width, height),
