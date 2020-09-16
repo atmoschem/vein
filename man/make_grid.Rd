@@ -34,6 +34,8 @@ reference is taken from the spatial object.
 data(net)
 grid <- make_grid(net, width = 0.5/102.47) #500 mts
 plot(grid, axes = TRUE) #class sf
+# make grid now returns warnings for crs with form +init...
+#grid <- make_grid(net, width = 0.5/102.47) #500 mts
 
 }
 }

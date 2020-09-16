@@ -32,13 +32,6 @@
     activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
     <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
-# The GitHub repository is a mirror from <https://gitlab.com/ibarraespinosa/vein>
-
-  - The most updated version is here
-    <https://gitlab.com/ibarraespinosa/vein>
-  - The GitHub <https://github.com/atmoschem/veinis> updated as soon as
-    possible, usually between 03:00:00 and 10:00:00 **UTC**
-
 ## What is VEIN?
 
 **V**ehicular **E**missions **IN**ventories (VEIN). An R package to
@@ -413,8 +406,8 @@ Thanks and enjoy VEIN\!
 ## Citation
 
 If you use VEIN, please, cite it
-([BIBTEX](https://www.geosci-model-dev.net/11/2209/2018/gmd-11-2209-2018.bib),
-[ENDNOTE](https://www.geosci-model-dev.net/11/2209/2018/gmd-11-2209-2018.ris)):
+([BIBTEX](https://gmd.copernicus.org/articles/11/2209/2018/gmd-11-2209-2018.bib),
+[ENDNOTE](https://gmd.copernicus.org/articles/11/2209/2018/gmd-11-2209-2018.ris)):
 
 Ibarra-Espinosa, S., Ynoue, R., O’Sullivan, S., Pebesma, E., Andrade, M.
 D. F., and Osses, M.: VEIN v0.2.2: an R package for bottom-up vehicular
@@ -429,7 +422,7 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
     year = {2018},
     number = {6},
     pages = {2209--2229},
-    url = {https://www.geosci-model-dev.net/11/2209/2018/},
+    url = {https://gmd.copernicus.org/articles/11/2209/2018/},
     doi = {10.5194/gmd-11-2209-2018}
     }
 

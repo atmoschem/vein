@@ -49,6 +49,7 @@
 <meta property="og:title" content="Creates rectangular grid for emission allocation — make_grid" />
 <meta property="og:description" content="make_grid creates a sf grid of polygons. The spatial
 reference is taken from the spatial object." />
+<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 
 
 
@@ -182,6 +183,8 @@ The default value is 4326</p></td>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
 <span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='fu'>make_grid</span>(<span class='no'>net</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>) <span class='co'>#500 mts</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>grid</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'>#class sf</span>
+<span class='co'># make grid now returns warnings for crs with form +init...</span>
+<span class='co'>#grid &lt;- make_grid(net, width = 0.5/102.47) #500 mts</span>
 
 }</div></pre>
   </div>
