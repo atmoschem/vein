@@ -100,7 +100,7 @@
 #' has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.
 #' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' # Passenger Cars PC
 #' # Emission factor function
 #' V <- 0:150

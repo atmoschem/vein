@@ -39,7 +39,7 @@
 #' @importFrom graphics legend par plot points
 #' @seealso \code{\link{par}}
 #' @export
-#' @examples {
+#' @examples \dontrun{
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE", "PC_FG"), agemax = 20)
 #' colplot(df = a, ylab = "CO [g/km]", theme = "dark", pch = NULL, type = "l")
 #' colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
