@@ -57,7 +57,7 @@ List  to make easier to use this function.
 }
 }
 \examples{
-{
+\dontrun{
 # Do not run
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",

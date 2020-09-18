@@ -39,7 +39,7 @@
 #'  \item{NO `pro_month` AND `ef` is data.frame.}
 #'  \item{`pro_month` is numeric AND rows of `ef` is 12 (monthly `ef`).}
 #' }
-#' @examples {
+#' @examples \dontrun{
 #' # Do not run
 #' euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 #' efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
