@@ -16,13 +16,20 @@ a <- emis_hot_td(veh = veh,
                  lkm = lkm,
                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
                  verbose = TRUE)
-a <- emis_hot_td(veh = veh,
+system.time(a <- emis_hot_td(veh = veh,
                  lkm = lkm,
                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
                  verbose = TRUE,
                  fortran = TRUE)
-
-
+)
+system.time(
+a <- emis_hot_td(veh = veh,
+                 lkm = lkm,
+                 ef = EmissionFactors(as.numeric(efh[, 1:8])),
+                 verbose = TRUE,
+                 fortran = TRUE,
+                 nt = check_nt()/2)
+)
 # caso simple ####
 test_that("emis_hot_td works", {
   expect_equal(round(emis_hot_td(veh = veh,
@@ -262,12 +269,40 @@ test_that("emis_hot_td works", {
                            verbose = TRUE),
                ".?")
 
-  expect_equal(emis_hot_td(veh = veh,
+  expect_equal(round(emis_hot_td(veh = veh,
                            lkm = lkm,
                            ef = EmissionFactors(efm),
                            pro_month = veh_month,
-                           verbose = TRUE)$rows[1],
-               "1")
+                           verbose = TRUE)$emissions[1]),
+               Emissions(111))
+
+  expect_error(round(emis_hot_td(veh = veh[1, ],
+                                 lkm = lkm,
+                                 ef = EmissionFactors(rbind(efm, efm)),
+                                 pro_month = veh_month,
+                                 verbose = TRUE)$emissions[1]),
+               ".?")
+
+  expect_error(round(emis_hot_td(veh = veh[1, ],
+                                 lkm = lkm,
+                                 ef = EmissionFactors(cbind(efm, efm)),
+                                 pro_month = veh_month,
+                                 verbose = TRUE)$emissions[1]),
+               ".?")
+
+  expect_error(round(emis_hot_td(veh = veh[1, ],
+                                 lkm = c(lkm,lkm),
+                                 ef = EmissionFactors(efm),
+                                 pro_month = veh_month,
+                                 verbose = TRUE)$emissions[1]),
+               ".?")
+
+  expect_error(round(emis_hot_td(veh = veh[1, ],
+                                 lkm = c(lkm,lkm),
+                                 ef = EmissionFactors(efm),
+                                 pro_month = rbind(veh_month, veh_month),
+                                 verbose = TRUE)$emissions[1]),
+               ".?")
 
   expect_error(emis_hot_td(veh = veh,
                            lkm = lkm,
@@ -276,12 +311,6 @@ test_that("emis_hot_td works", {
                            fortran = T,
                            verbose = TRUE),
                ".?")
-  expect_error(round(emis_hot_td(veh = veh,
-                                 lkm = lkm,
-                                 ef = efs2,
-                                 pro_month = veh_month,
-                                 verbose = TRUE)$emissions[1]),
-               ".?")
 
   expect_equal(round(emis_hot_td(veh = veh,
                                  lkm = lkm,
@@ -293,14 +322,6 @@ test_that("emis_hot_td works", {
                                  verbose = TRUE)$emissions[1]),
                Emissions(111))
 
-
-  expect_error(round(emis_hot_td(veh = veh,
-                                 lkm = lkm,
-                                 ef = efs2,
-                                 pro_month = veh_month,
-                                 fortran = T,
-                                 verbose = TRUE)$emissions[1]),
-               ".?")
   expect_equal(round(emis_hot_td(veh = veh,
                                  lkm = lkm,
                                  ef = efs2,
@@ -311,8 +332,74 @@ test_that("emis_hot_td works", {
                                  fortran = T,
                                  verbose = TRUE)$emissions[1]),
                Emissions(111))
+  expect_equal(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = efs2,
+                                 pro_month = matrix(as.numeric(veh_month),
+                                                    nrow = nrow(veh),
+                                                    ncol = 12,
+                                                    byrow = TRUE),
+                                 fortran = T,
+                                 verbose = TRUE,
+                                 nt = 1)$emissions[1]),
+               Emissions(111))
 
-  expect_message(round(emis_hot_td(veh = veh,
+  expect_error(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = efs2,
+                                 pro_month = matrix(as.numeric(veh_month),
+                                                    nrow = nrow(veh),
+                                                    ncol = 12,
+                                                    byrow = TRUE),
+                                 fortran = T,
+                                 verbose = TRUE,
+                                 nt = 1000)$emissions[1]),
+               ".?")
+
+
+    expect_equal(round(emis_hot_td(veh = veh,
+                                 lkm = lkm,
+                                 ef = efs2,
+                                 pro_month = as.numeric(veh_month),
+                                 fortran = T,
+                                 verbose = TRUE,
+                                 nt = 1)$emissions[1]),
+               Emissions(111))
+
+    expect_equal(round(emis_hot_td(veh = veh,
+                                   lkm = lkm,
+                                   ef = efs2,
+                                   pro_month = as.numeric(veh_month),
+                                   fortran = T,
+                                   verbose = TRUE,
+                                   nt = 1)$emissions[1]),
+                 Emissions(111))
+
+    expect_equal(round(emis_hot_td(veh = veh[1, ],
+                                 lkm = lkm,
+                                 ef = efs2[1, ],
+                                 pro_month = veh_month,
+                                 fortran = T,
+                                 verbose = TRUE)$emissions[1]),
+               Emissions(111))
+
+    expect_equal(round(emis_hot_td(veh = veh[1, ],
+                                   lkm = lkm,
+                                   ef = efs2[1, ],
+                                   pro_month = veh_month,
+                                   fortran = T,
+                                   verbose = TRUE,
+                                   nt = 1)$emissions[1]),
+                 Emissions(111))
+
+    expect_error(round(emis_hot_td(veh = veh[1, ],
+                                   lkm = lkm,
+                                   ef = efs2,
+                                   pro_month = veh_month,
+                                   verbose = TRUE)$emissions[1]),
+                 ".?")
+
+        expect_message(round(emis_hot_td(veh = veh,
                                  lkm = lkm,
                                  ef = efs2,
                                  pro_month = matrix(as.numeric(veh_month),

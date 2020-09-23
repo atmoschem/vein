@@ -59,9 +59,22 @@ test_that("emis_cold works", {
                7)
   efhh <- as.data.frame(
     matrix(seq_along(veh), nrow =  nrow(veh), ncol = ncol(veh)))
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(efhh),
+                                  efcold = efc,
+                                  fortran = T,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T,
+                                  nt = 1)$emissions[1]),
+               30)
   expect_equal(round(emis_cold_td(veh = veh, lkm = lkm, ef = EmissionFactors(efhh), efcold = efc, fortran = T,
                                   beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
                30)
+  expect_error(emis_cold_td(veh = veh, lkm = lkm, ef = EmissionFactors(efhh), efcold = efc, fortran = T,
+                                  beta = cold_lkm, pro_month = veh_month, verbose = T, nt = 100),
+               ".?")
   expect_message(round(emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
                                     beta = cold_lkm,
                                     pro_month = veh_month,
@@ -131,31 +144,111 @@ veh_month <- as.data.frame(matrix(veh_month, ncol = 12) )
 
 
 test_that("emis_cold works", {
-  expect_equal(round(emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
-                                  beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = efh,
+                                  efcold = efc,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T)$emissions[1]),
                7)
-  expect_error(emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc, fortran = TRUE,
-                                  beta = cold_lkm, pro_month = veh_month, verbose = T),
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(as.numeric(efh[, 1:ncol(veh)])),
+                                  efcold = efc,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T)$emissions[1]),
+               7)
+
+  expect_error(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(as.numeric(efh[, 1:ncol(veh)])),
+                                  efcold = efc,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T,
+                                  fortran = TRUE,
+                                  nt = 1000)$emissions[1]),
                ".?")
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(as.numeric(efh[, 1:ncol(veh)])),
+                                  efcold = efc,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T,
+                                  fortran = TRUE)$emissions[1]),
+               7)
+
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(as.numeric(efh[, 1:ncol(veh)])),
+                                  efcold = efc,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T,
+                                  fortran = TRUE,
+                                  nt = 1)$emissions[1]),
+               7)
+
+  expect_error(emis_cold_td(veh = veh,
+                            lkm = lkm,
+                            ef = efh,
+                            efcold = efc,
+                            fortran = TRUE,
+                            beta = cold_lkm,
+                            pro_month = veh_month,
+                            verbose = T),
+               ".?")
+
   efhh <- as.data.frame(
     matrix(seq_along(veh), nrow =  nrow(veh), ncol = ncol(veh)))
-  expect_equal(round(emis_cold_td(veh = veh, lkm = lkm, ef = EmissionFactors(efhh), efcold = efc,
-                                  beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
+
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(efhh),
+                                  efcold = efc,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T)$emissions[1]),
                30)
-  expect_equal(round(emis_cold_td(veh = veh, lkm = lkm, ef = EmissionFactors(efhh), efcold = efc,
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(efhh),
+                                  efcold = efc,
                                   fortran = TRUE,
-                                  beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T)$emissions[1]),
+               30)
+  expect_equal(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = EmissionFactors(efhh),
+                                  efcold = efc,
+                                  fortran = TRUE,
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T,
+                                  nt = 1)$emissions[1]),
                30)
 })
 
 
 test_that("emis_cold does not work", {
-  expect_error(round(emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = remove_units(efc),
-                                  beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
+  expect_error(round(emis_cold_td(veh = veh,
+                                  lkm = lkm,
+                                  ef = efh,
+                                  efcold = remove_units(efc),
+                                  beta = cold_lkm,
+                                  pro_month = veh_month,
+                                  verbose = T)$emissions[1]),
                ".?")
+
   efhh <- as.data.frame(
     matrix(seq_along(veh), nrow =  nrow(veh), ncol = ncol(veh)))
   expect_error(round(emis_cold_td(veh = veh, lkm = lkm, ef = EmissionFactors(efhh), efcold = remove_units(efc),
                                   beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
                ".?")
 })
+

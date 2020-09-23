@@ -5,6 +5,15 @@ test_that("ef_cetesb works", {
 })
 
 test_that("ef_cetesb works", {
+  expect_equal(round(as.numeric(ef_cetesb("CO", "SLT", scale = "tunnel")[1])), 0)
+})
+
+test_that("ef_cetesb message", {
+  expect_message(ef_cetesb("CO", "SLT", scale = "tunnel"), ".?")
+})
+
+
+test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("SO2", "PC_G", sppm = 300)[1]), 0.03518138)
 })
 
