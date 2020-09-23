@@ -13,7 +13,8 @@ ef_cetesb(
   sppm,
   full = FALSE,
   project = "constant",
-  verbose = FALSE
+  verbose = FALSE,
+  csv
 )
 }
 \arguments{
@@ -58,6 +59,9 @@ Age, Year, Brazilian emissions standards and its euro equivalents.}
 future. Currently the only value is "constant"}
 
 \item{verbose}{Logical; To show more information}
+
+\item{csv}{String with the path to download the ef in a .csv file. For instance,
+ef.csv}
 }
 \value{
 A vector of Emission Factor or a data.frame

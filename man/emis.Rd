@@ -15,7 +15,8 @@ emis(
   fortran = FALSE,
   hour = nrow(profile),
   day = ncol(profile),
-  verbose = FALSE
+  verbose = FALSE,
+  nt = ifelse(check_nt() == 1, 1, check_nt()/2)
 )
 }
 \arguments{
@@ -49,6 +50,9 @@ of rows of argument profile}
 \item{day}{Number of considered days in estimation}
 
 \item{verbose}{Logical; To show more information}
+
+\item{nt}{Integer; Number of threads wich must be lower than max available. See \code{\link{check_nt}}.
+Only when fortran = TRUE}
 }
 \value{
 If the user applies a top-down approach, the resulting units will be

@@ -34,6 +34,8 @@
 #' @param project Character showing the method for projecting emission factors in
 #' future. Currently the only value is "constant"
 #' @param verbose Logical; To show more information
+#' @param csv String with the path to download the ef in a .csv file. For instance,
+#' ef.csv
 #' @return A vector of Emission Factor or a data.frame
 #' @keywords  emission factors
 #' @note The new convention for vehicles names are translated from CETESB report:
@@ -156,7 +158,8 @@ ef_cetesb <- function(p,
                       sppm,
                       full = FALSE,
                       project = "constant",
-                      verbose = FALSE){
+                      verbose = FALSE,
+                      csv){
   ef <- sysdata$cetesb
 
   # tunel
@@ -352,6 +355,9 @@ ef_cetesb <- function(p,
       df <-  df[1:agemax]
     }
 
+  }
+  if(!missing(csv)) {
+    data.table::fwrite(x = df, file = csv)
   }
   return(df)
 }

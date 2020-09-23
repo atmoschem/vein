@@ -97,7 +97,7 @@ providing flexibility to the user." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -161,7 +161,8 @@ providing flexibility to the user.</p>
   <span class='no'>pro_month</span>,
   <span class='no'>params</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>fortran</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>nt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='check_nt.html'>check_nt</a></span>() <span class='kw'>==</span> <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fu'><a href='check_nt.html'>check_nt</a></span>()/<span class='fl'>2</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -208,6 +209,11 @@ for each spatial feature or subregion, the columns are the age of use of vehicle
     <tr>
       <th>fortran</th>
       <td><p>Logical; to try the fortran calculation.</p></td>
+    </tr>
+    <tr>
+      <th>nt</th>
+      <td><p>Integer; Number of threads wich must be lower than max available. See <code><a href='check_nt.html'>check_nt</a></code>.
+Only when fortran = TRUE</p></td>
     </tr>
     </table>
 

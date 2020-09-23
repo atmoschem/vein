@@ -24,6 +24,8 @@
 #' of rows of argument profile
 #' @param day Number of considered days in estimation
 #' @param verbose Logical; To show more information
+#' @param nt Integer; Number of threads wich must be lower than max available. See \code{\link{check_nt}}.
+#' Only when fortran = TRUE
 #' @useDynLib  vein, .registration = TRUE
 #' @return If the user applies a top-down approach, the resulting units will be
 #' according its own data. For instance, if the vehicles are veh/day, the units
@@ -154,7 +156,8 @@ emis <- function (veh,
                   fortran = FALSE,
                   hour = nrow(profile),
                   day = ncol(profile),
-                  verbose = FALSE) {
+                  verbose = FALSE,
+                  nt = ifelse(check_nt()==1, 1, check_nt()/2)) {
   # Check units
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
@@ -195,13 +198,37 @@ emis <- function (veh,
         ef <- as.numeric(ef)
         nrowv = as.integer(nrow(veh))
         ncolv = as.integer(ncol(veh))
-        a <-   .Fortran("emis2df",
-                        nrowv = nrowv,
-                        ncolv = ncolv,
-                        veh = veh,
-                        lkm = lkm,
-                        ef = ef,
-                        emis = numeric(nrowv*ncolv))$emis
+
+        if(length(lkm) != nrow(veh)) stop("length of `lkm` must be equal to number of rows of `veh`")
+        if(length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+        # emis(i, j) = veh(i,j) * lkm(i) * ef(j)
+
+        if(!missing(nt)) {
+          if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                    " threads and nt must be lower")
+
+          if(verbose) message("Calling emis2dfpar.f95")
+          a <-   .Fortran("emis2dfpar",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          veh = veh,
+                          lkm = lkm,
+                          ef = ef,
+                          emis = numeric(nrowv*ncolv),
+                          nt = as.integer(nt))$emis
+
+        } else {
+          if(verbose) message("Calling emis2df.f95")
+          a <-   .Fortran("emis2df",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          veh = veh,
+                          lkm = lkm,
+                          ef = ef,
+                          emis = numeric(nrowv*ncolv))$emis
+
+        }
+
         # fortran
         # do concurrent(i= 1:nrowv, j = 1:ncolv)
         # emis(i, j) = veh(i,j) * lkm(i) * ef(j)
@@ -322,15 +349,40 @@ emis <- function (veh,
           ncolv <- as.integer(ncol(veh))
           prok <- as.integer(length(unlist(profile)))
 
-          a <-   .Fortran("emis3df",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          prok = prok,
-                          veh = veh,
-                          lkm = lkm,
-                          ef = ef,
-                          pro = profile,
-                          emis = numeric(nrowv*ncolv*prok))$emis
+          if(length(lkm) != nrow(veh)) stop("length of `lkm` must be equal to number of rows of `veh`")
+          if(length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+          # emis(i, j, k) = veh(i, j) * lkm(i) * ef(j)*pro(k)
+
+
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+
+            if(verbose) message("Calling emis3dfpar.f95")
+            a <-   .Fortran("emis3dfpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            prok = prok,
+                            veh = veh,
+                            lkm = lkm,
+                            ef = ef,
+                            pro = profile,
+                            emis = numeric(nrowv*ncolv*prok),
+                            nt = as.integer(nt))$emis
+
+          } else {
+            if(verbose) message("Calling emis3df.f95")
+            a <-   .Fortran("emis3df",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            prok = prok,
+                            veh = veh,
+                            lkm = lkm,
+                            ef = ef,
+                            pro = profile,
+                            emis = numeric(nrowv*ncolv*prok))$emis
+
+          }
           # fortran
           # do concurrent(i= 1:nrowv, j = 1:ncolv, k = 1:prok)
           # emis(i, j,k) = veh(i,j) * lkm(i) * ef(j)*pro(k)
@@ -354,16 +406,44 @@ emis <- function (veh,
           proh <- as.integer(nrow(profile))
           prod <- as.integer(ncol(profile))
 
-          a <-   .Fortran("emis4df",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          proh = proh,
-                          prod = prod,
-                          veh = veh,
-                          lkm = lkm,
-                          ef = ef,
-                          pro = profile,
-                          emis = numeric(nrowv*ncolv*proh*prod))$emis
+
+          if(length(lkm) != nrow(veh)) stop("length of `lkm` must be equal to number of rows of `veh`")
+          if(length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+          # emis(i, j, k, l) = veh(i,j) * lkm(i) * ef(j)*pro(k,l)
+
+
+          if(!missing(nt)) {
+
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+
+            if(verbose) message("Calling emis4dfpar.f95")
+
+            a <-   .Fortran("emis4dfpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            proh = proh,
+                            prod = prod,
+                            veh = veh,
+                            lkm = lkm,
+                            ef = ef,
+                            pro = profile,
+                            emis = numeric(nrowv*ncolv*proh*prod))$emis
+          } else {
+
+            if(verbose) message("Calling emis4df.f95")
+
+            a <-   .Fortran("emis4df",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            proh = proh,
+                            prod = prod,
+                            veh = veh,
+                            lkm = lkm,
+                            ef = ef,
+                            pro = profile,
+                            emis = numeric(nrowv*ncolv*proh*prod))$emis
+          }
           e <- array(a, dim = c(nrowv, ncolv,proh, prod))
           return(EmissionsArray(e))
 

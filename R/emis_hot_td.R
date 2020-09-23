@@ -24,6 +24,8 @@
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
 #' @param fortran Logical; to try the fortran calculation.
+#' @param nt Integer; Number of threads wich must be lower than max available. See \code{\link{check_nt}}.
+#' Only when fortran = TRUE
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 #' @export
@@ -187,7 +189,8 @@ emis_hot_td <- function (veh,
                          pro_month,
                          params,
                          verbose = FALSE,
-                         fortran = FALSE) {
+                         fortran = FALSE,
+                         nt = ifelse(check_nt()==1, 1, check_nt()/2)) {
   # Checking sf
   if(any(class(veh) %in% "sf")){
     if(verbose) message("converting sf to data.frame")
@@ -262,37 +265,59 @@ emis_hot_td <- function (veh,
 
       if(verbose) message("Assuming you have emission factors for each simple feature and then for each month")
 
-      # if(nrow(ef) != nrow(veh)) stop("number of rows of `ef` must be the same as number of rows of `veh`")
-
       #when pro_month varies in each simple feature
-      # is.data.frame(pro_month) & nrow(ef) == nrow(veh) ####
       if(is.data.frame(pro_month) & nrow(ef) == nrow(veh)){
 
         if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' and 'veh' are equal")
 
+
+        if(nrow(pro_month) == 1) {
+          message("Replicating one-row matrix to match number of rows of `veh`")
+          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month))
+        }
+
         if(nrow(ef) != nrow(veh)) stop("Number of rows of 'veh' and 'ef' must be equal")
+        if(ncol(ef) != ncol(veh)) stop("Number of cols of `ef` and `veh` must be equal")
+        if(length(lkm) != ncol(veh)) stop("Length of `lkm` must be equal to number of columns of `veh`")
+        if(nrow(pro_month) != nrow(veh)) stop("Number of rows of `month` and `veh` must be equal")
 
-        if(nrow(pro_month) != nrow(veh)) stop("Number of rows of 'pmonth' and 'veh' must be equal")
-
-         if(fortran){
-           nrowv <- as.integer(nrow(veh))
+        if(fortran){
+          nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(ncol(pro_month))
           lkm <- as.numeric(lkm)
           ef <- as.matrix(ef[, 1:ncol(veh)])
           month <- as.matrix(pro_month)
+          # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(i, k)
 
-          if(verbose) message("Calling emistd2f.f95")
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+            if(verbose) message("Calling emistd2fpar.f95")
+            a <-   .Fortran("emistd2fpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth),
+                            nt = as.integer(nt))$emis
 
-          a <-   .Fortran("emistd2f",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          pmonth = pmonth,
-                          veh = as.matrix(veh),
-                          lkm = lkm,
-                          ef = ef,
-                          month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))$emis
+          } else {
+            if(verbose) message("Calling emistd2f.f95")
+            a <-   .Fortran("emistd2f",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          }
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -315,12 +340,14 @@ emis_hot_td <- function (veh,
             dfi
           }))
         }
-     # is.numeric(pro_month) & nrow(ef) == nrow(veh) ####
+        # is.numeric(pro_month) & nrow(ef) == nrow(veh) ####
       } else if(is.numeric(pro_month) & nrow(ef) == nrow(veh)){
 
         if(verbose) message("'pro_month' is numeric and number of rows of 'ef' and 'veh' are equal")
 
-        if(nrow(ef) != nrow(veh)) stop("Number of rows of 'veh' and 'ef' must be equal")
+        if(nrow(ef) != nrow(veh)) stop("Number of rows of `ef` and `veh` must be equal")
+        if(ncol(ef) != ncol(veh)) stop("Number of cols of `ef` and `veh` must be equal")
+        if(length(lkm) != ncol(veh)) stop("Length of `lkm` must be equal to number of columns of `veh`")
 
         if(fortran) {
           nrowv <- as.integer(nrow(veh))
@@ -330,17 +357,37 @@ emis_hot_td <- function (veh,
           ef <- as.matrix(ef[, 1:ncol(veh)])
           month <- as.numeric(pro_month)
 
-          if(verbose) message("Calling emistd1f.f95")
+          # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(k)
 
-          a <-   .Fortran("emistd1f",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          pmonth = pmonth,
-                          veh = as.matrix(veh),
-                          lkm = lkm,
-                          ef = ef,
-                          month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))$emis
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+            if(verbose) message("Calling emistd1fpar.f95")
+            a <-   .Fortran("emistd1fpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth),
+                            nt = as.integer(nt))$emis
+
+          } else {
+            if(verbose) message("Calling emistd1f.f95")
+            a <-   .Fortran("emistd1f",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          }
+
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -395,18 +442,18 @@ emis_hot_td <- function (veh,
         #   e$month <- rep(seq(1, pmonth), each = ncolv*nrowv)            # k
 
         # } else {
-          e <- do.call("rbind",lapply(1:12, function(k){
-            dfi <- unlist(lapply(1:ncol(veh), function(j){
-              lkm[j] * veh[, j] * pro_month[k] *ef[k, j]
-            }))
-            dfi <- as.data.frame(dfi)
-            names(dfi) <- "emissions"
-            dfi <- Emissions(dfi)
-            dfi$rows <- row.names(veh)
-            dfi$age <- rep(1:ncol(veh), each = nrow(veh))
-            dfi$month <- (1:length(pro_month))[k]
-            dfi
+        e <- do.call("rbind",lapply(1:12, function(k){
+          dfi <- unlist(lapply(1:ncol(veh), function(j){
+            lkm[j] * veh[, j] * pro_month[k] *ef[k, j]
           }))
+          dfi <- as.data.frame(dfi)
+          names(dfi) <- "emissions"
+          dfi <- Emissions(dfi)
+          dfi$rows <- row.names(veh)
+          dfi$age <- rep(1:ncol(veh), each = nrow(veh))
+          dfi$month <- (1:length(pro_month))[k]
+          dfi
+        }))
         # }
 
 
@@ -416,6 +463,8 @@ emis_hot_td <- function (veh,
         if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' is 12*number of rows 'veh'")
 
         if(nrow(pro_month) != nrow(veh)) stop("Number of rows of 'pmonth' and 'veh' must be equal")
+        if(length(ef2) != length(unlist(veh))*pmonth) stop("length of `ef` and `veh`*`months` must be equal be equal")
+        if(length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
 
 
         if(fortran){
@@ -428,17 +477,38 @@ emis_hot_td <- function (veh,
           ef2 <- as.numeric(unlist(lapply(ef2, unlist)))
           month <- as.matrix(pro_month)
 
-          if(verbose) message("Calling emistd4f.f95")
+          # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(i, k)
 
-          a <-   .Fortran("emistd4f",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          pmonth = pmonth,
-                          veh = as.matrix(veh),
-                          lkm = lkm,
-                          ef = ef2,
-                          month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))$emis
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+
+            if(verbose) message("Calling emistd4fpar.f95")
+            a <-   .Fortran("emistd4fpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef2,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth),
+                            nt = as.integer(nt))$emis
+          } else {
+
+            if(verbose) message("Calling emistd4f.f95")
+
+            a <-   .Fortran("emistd4f",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef2,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth))$emis
+          }
+
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -464,7 +534,7 @@ emis_hot_td <- function (veh,
           }))
 
         }
-     # is.numeric(pro_month) & nrow(ef) == 12*nrow(veh) ####
+        # is.numeric(pro_month) & nrow(ef) == 12*nrow(veh) ####
       } else if(is.numeric(pro_month) & nrow(ef) == 12*nrow(veh)){
 
         if(verbose) message("'pro_month' is numeric and number of rows of 'ef' is 12*number of rows 'veh'")
@@ -477,20 +547,45 @@ emis_hot_td <- function (veh,
           ef$month <- rep(1:12, each = nrow(veh))
           ef2 <- split(ef[, 1:ncol(veh)], ef$month)
           ef2 <- as.numeric(unlist(lapply(ef2, unlist)))
-         lkm <- as.numeric(lkm)
+          lkm <- as.numeric(lkm)
           month <- as.numeric(pro_month)
 
-          if(verbose) message("Calling emistd3f.f95")
 
-          a <-   .Fortran("emistd3f",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          pmonth = pmonth,
-                          veh = as.matrix(veh),
-                          lkm = lkm,
-                          ef = ef2,
-                          month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))$emis
+          if(length(ef2) != length(unlist(veh))*pmonth) stop("length of `ef` and `veh`*`months` must be equal be equal")
+          if(length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
+          # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(k)
+
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+
+
+            if(verbose) message("Calling emistd3fpar.f95")
+
+            a <-   .Fortran("emistd3fpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef2,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth),
+                            nt = as.integer(nt))$emis
+          } else {
+            if(verbose) message("Calling emistd3f.f95")
+
+            a <-   .Fortran("emistd3f",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef2,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          }
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh),  ncolv*pmonth)           # i
@@ -514,6 +609,8 @@ emis_hot_td <- function (veh,
             dfi
           }))
         }
+      } else {
+        stop("Condition is not met. Review your input data dn read the documentation, please")
       }
       # else if(nrow(ef) !=  nrow(veh) & nrow(ef) != 12)(
       # stop("The number of rows can be equal to number of rows of veh, or number of rows of veh times 12")
@@ -542,9 +639,15 @@ emis_hot_td <- function (veh,
 
         if(verbose) message("'pro_month' is data.frame and 'ef' is numeric")
 
-        if(length(ef) != ncol(veh)) stop("Number of columns of 'veh' and length of 'ef' must be equal")
 
-        if(length(lkm) != ncol(veh)) stop("Length of 'lkm' and number of columns 'veh' must be equal")
+        if(nrow(pro_month) == 1) {
+          message("Replicating one-row matrix to match number of rows of `veh`")
+          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month))
+        }
+
+        if(length(ef) != ncol(veh)) stop("Length of `ef` and number of cols of `veh` must be equal")
+        if(length(lkm) != ncol(veh)) stop("Length of `lkm` must be equal to number of columns of `veh`")
+        if(nrow(pro_month) != nrow(veh)) stop("Number of rows of `month` and `veh` must be equal")
 
         if(fortran){
           nrowv <- as.integer(nrow(veh))
@@ -554,17 +657,39 @@ emis_hot_td <- function (veh,
           ef <- as.numeric(ef)
           month <- as.matrix(pro_month)
 
-          if(verbose) message("Calling emistd6f.f95")
+          # emis(i, j, k) = veh(i,j) * lkm(j) * ef(j) * month(i, k)
 
-          a <-   .Fortran("emistd6f",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          pmonth = pmonth,
-                          veh = as.matrix(veh),
-                          lkm = lkm,
-                          ef = ef,
-                          month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))$emis
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+
+            if(verbose) message("Calling emistd6fpar.f95")
+
+            a <-   .Fortran("emistd6fpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth),
+                            nt = as.integer(nt))$emis
+
+          } else {
+            if(verbose) message("Calling emistd6f.f95")
+
+            a <-   .Fortran("emistd6f",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          }
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -588,7 +713,7 @@ emis_hot_td <- function (veh,
           }))
 
         }
-      # is.numeric(pro_month) ####
+        # is.numeric(pro_month) ####
       } else if(is.numeric(pro_month)){
 
         if(verbose) message("'pro_month' is numeric and 'ef' is numeric")
@@ -603,17 +728,42 @@ emis_hot_td <- function (veh,
           month <- as.numeric(pro_month)
           ef <- as.numeric(ef)
 
-          if(verbose) message("Calling emistd5f.f95")
 
-          a <-   .Fortran("emistd5f",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          pmonth = pmonth,
-                          veh = as.matrix(veh),
-                          lkm = lkm,
-                          ef = ef,
-                          month = month,
-                          emis = numeric(nrowv*ncolv*pmonth))$emis
+          if(length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+          if(length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
+          # emis(i, j, k) = veh(i, j) * lkm(j) * ef(j) * month(k)
+
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+
+            if(verbose) message("Calling emistd5fpar.f95")
+
+            a <-   .Fortran("emistd5fpar",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth),
+                            nt = as.integer(nt))$emis
+
+          } else {
+            if(verbose) message("Calling emistd5f.f95")
+
+            a <-   .Fortran("emistd5f",
+                            nrowv = nrowv,
+                            ncolv = ncolv,
+                            pmonth = pmonth,
+                            veh = as.matrix(veh),
+                            lkm = lkm,
+                            ef = ef,
+                            month = month,
+                            emis = numeric(nrowv*ncolv*pmonth))$emis
+
+          }
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -668,15 +818,38 @@ emis_hot_td <- function (veh,
         nrowv = as.integer(nrow(veh))
         ncolv = as.integer(ncol(veh))
 
-        if(verbose) message("Calling emistd7f.f95")
+        if(length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+        if(length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
+        # emis(i, j) = veh(i,j) * lkm(j) * ef(j)
 
-        a <-   .Fortran("emistd7f",
-                        nrowv = nrowv,
-                        ncolv = ncolv,
-                        veh = as.matrix(veh),
-                        lkm = lkm,
-                        ef = ef,
-                        emis = numeric(nrowv*ncolv))$emis
+
+        if(!missing(nt)) {
+          if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                    " threads and nt must be lower")
+
+          if(verbose) message("Calling emistd7fpar.f95")
+
+          a <-   .Fortran("emistd7fpar",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          veh = as.matrix(veh),
+                          lkm = lkm,
+                          ef = ef,
+                          emis = numeric(nrowv*ncolv),
+                          nt = as.integer(nt))$emis
+
+        } else {
+          if(verbose) message("Calling emistd7f.f95")
+
+          a <-   .Fortran("emistd7f",
+                          nrowv = nrowv,
+                          ncolv = ncolv,
+                          veh = as.matrix(veh),
+                          lkm = lkm,
+                          ef = ef,
+                          emis = numeric(nrowv*ncolv))$emis
+
+        }
         # fortran
         # do concurrent(i= 1:nrowv, j = 1:ncolv)
         # emis(i, j) = veh(i,j) * lkm(i) * ef(j)

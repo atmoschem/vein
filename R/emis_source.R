@@ -31,7 +31,7 @@ emis_source <- function(path = "est",
   if(!missing(first)){
     inputsa <- c(inputs[grepl(pattern = first, x = inputs)],
                  inputs[!grepl(pattern = first, x = inputs)])
-    if(ask){
+    if(ask){              #nocov start
       print(inputsa)
       choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
       if(choice == 1){
@@ -41,7 +41,7 @@ emis_source <- function(path = "est",
         }
       } else {
         stop("Change inputs")
-      }
+      }                   #nocov end
     } else {
       for(i in 1:length(inputsa)){
         cat("Sourcing ",inputsa[i], "...\n")
@@ -49,7 +49,7 @@ emis_source <- function(path = "est",
       }
     }
   } else {
-    if(ask){
+    if(ask){                 #nocov start
       print(inputs)
       choice <- utils::menu(c("Yes", "No"), title="inputs are OK?")
       if(choice == 1){
@@ -59,7 +59,7 @@ emis_source <- function(path = "est",
         }
       } else {
         stop("Change inputs")
-      }
+      }                      #nocov end
     } else {
       for(i in 1:length(inputs)){
         cat("Sourcing ",inputs[i], "...\n")
