@@ -123,10 +123,10 @@ GriddedEmissionsArray <- function(x, ..., cols, rows, times = ncol(x),
 #' @export
 print.GriddedEmissionsArray <- function(x,  ...) {
   e <- x
-  cat(paste0("This GriddedEmissionsArray has:\n",
+  cat(paste0("This GriddedEmissionsArray has:\n", #nocov start
                  dim(e)[1], " lat points\n",
                  dim(e)[2], " lon points\n",
-                 dim(e)[3],  " hours\n"))
+                 dim(e)[3],  " hours\n"))  #nocov end
   print(utils::head(e))
 }
 

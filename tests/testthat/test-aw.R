@@ -1,6 +1,8 @@
 context("aw")
 
 data(net)
+net <- sf::st_as_sf(net[1:10, ])
+
 data(pc_profile)
 p1 <- pc_profile[, 1]
 

@@ -2,7 +2,7 @@ context("age")
 
 vehLIA <- rep(1, 25)
 data(net)
-net <- sf::st_as_sf(net)
+net <- sf::st_as_sf(net[1:10, ])
 test_that("age works", {
   expect_equal(round(age(x = vehLIA, type = "gompertz", agemax = 10)[1]),
                Vehicles(1))

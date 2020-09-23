@@ -272,8 +272,10 @@ emis_hot_td <- function (veh,
 
         if(nrow(ef) != nrow(veh)) stop("Number of rows of 'veh' and 'ef' must be equal")
 
-        if(fortran){
-          nrowv <- as.integer(nrow(veh))
+        if(nrow(pro_month) != nrow(veh)) stop("Number of rows of 'pmonth' and 'veh' must be equal")
+
+         if(fortran){
+           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(ncol(pro_month))
           lkm <- as.numeric(lkm)
@@ -301,6 +303,7 @@ emis_hot_td <- function (veh,
         } else {
           e <- do.call("rbind",lapply(1:12, function(k){
             dfi <- unlist(lapply(1:ncol(veh), function(j){
+
               lkm[j] * veh[, j] * pro_month[, k] *ef[, j]
             }))
             dfi <- as.data.frame(dfi)
@@ -411,6 +414,9 @@ emis_hot_td <- function (veh,
       } else if(is.data.frame(pro_month) & nrow(ef) == 12*nrow(veh)){
 
         if(verbose) message("'pro_month' is data.frame and number of rows of 'ef' is 12*number of rows 'veh'")
+
+        if(nrow(pro_month) != nrow(veh)) stop("Number of rows of 'pmonth' and 'veh' must be equal")
+
 
         if(fortran){
           nrowv <- as.integer(nrow(veh))

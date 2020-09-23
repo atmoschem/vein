@@ -107,3 +107,4 @@ test_that("ef_cetesb works", {
                            agemax = 10),
                  "?")
 })
+

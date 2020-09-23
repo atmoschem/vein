@@ -1,5 +1,6 @@
 context("age_ldv")
 data(net)
+net <- sf::st_as_sf(net[1:10, ])
 
 test_that("age_ldv works 2", {
   expect_equal(age_ldv(x = 10, name = "MC", agemax = 2),
@@ -79,15 +80,6 @@ test_that("age_ldv works 2", {
 test_that("age_ldv works 2", {
   expect_equal(age_ldv(x = net$ldv, name = "MC", agemax = 2, net = net)$MC_1[1],
                Vehicles(2175))
-})
-
-test_that("age_ldv warns 1", {
-  expect_warning(age_ldv(x = net$ldv,
-                         name = "MC",
-                         agemax = 2,
-                         a = rep(1, nrow(net)),
-                         b = rep(0, nrow(net)))$MC_1[1],
-                 "l.?")
 })
 
 test_that("age_ldv works", {

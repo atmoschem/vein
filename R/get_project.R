@@ -26,7 +26,7 @@
 get_project <- function(directory,
                         case = "brasil"){
 
-  if(missing(directory)) stop("Please, add a path to a directory")
+  if(missing(directory)) stop("Please, add a path to a directory") #nocov start
 
   if(case %in% c("brasil", "brazil", "brazil_bu", "brasil_bu")) {
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu.tar.gz"
@@ -50,5 +50,5 @@ get_project <- function(directory,
   utils::download.file(url = URL,
                        destfile =  tf)
   utils::untar(tarfile = tf, exdir = directory)
-  message("Your directory is in ", directory)
+  message("Your directory is in ", directory) #nocov end
 }
