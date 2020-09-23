@@ -1,4 +1,4 @@
-#' Average Weight from hourly traffic data.
+#' Average Weight for hourly traffic data.
 #'
 #' @description \code{\link{aw}} average weight form traffic.
 #'

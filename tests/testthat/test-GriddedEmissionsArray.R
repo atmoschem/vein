@@ -1,6 +1,7 @@
 context("GriddedEmissionsArray")
 
 data(net)
+net <- sf::st_as_sf(net)[1:10, ]
 data(pc_profile)
 data(fe2015)
 data(fkm)
@@ -30,24 +31,14 @@ E_CO_g <- emis_grid(spobj = E_CO_STREETS["V1"], g = g, sr= 31983)
 
 a <- capture_output_lines(GriddedEmissionsArray(E_CO_g,
                                                 rows = 19,
-                                                cols = 23,
+                                                cols = 16,
                                                 times = 1))
 test_that("GriddedEmissionsArray works", {
   expect_equal(round(GriddedEmissionsArray(E_CO_g,
                                            rows = 19,
-                                           cols = 23,
+                                           cols = 16,
                                            times = 1)[1]),
-               337)
-})
-
-
-
-test_that("GriddedEmissionsArray works", {
-  expect_equal(capture_output_lines(GriddedEmissionsArray(E_CO_g,
-                                                          rows = 19,
-                                                          cols = 23,
-                                                          times = 1)),
-               a)
+               18)
 })
 
 
@@ -55,7 +46,7 @@ test_that("GriddedEmissionsArray works", {
 test_that("GriddedEmissionsArray works", {
   expect_error(GriddedEmissionsArray(E_CO_g,
                                      rows = 19,
-                                     cols = 23,
+                                     cols = 16,
                                      times = 168,
                                      "left"),
                ".?")
@@ -64,7 +55,7 @@ test_that("GriddedEmissionsArray works", {
 test_that("GriddedEmissionsArray works", {
   expect_equal(plot(GriddedEmissionsArray(E_CO_g,
                                           rows = 19,
-                                          cols = 23,
+                                          cols = 16,
                                           times = 1,
                                           flip = FALSE))$mfrow[1],
                1)
@@ -73,34 +64,17 @@ test_that("GriddedEmissionsArray works", {
 
 test_that("GriddedEmissionsArray works", {
   expect_equal(round(GriddedEmissionsArray(E_CO_g,
-                                           rows = 19,
-                                           cols = 23,
+                                           rows = 16,
+                                           cols = 19,
                                            times = 1, rotate = "left")[1]),
-               1120)
+               0)
 })
 
 test_that("GriddedEmissionsArray works", {
   expect_equal(round(GriddedEmissionsArray(E_CO_g,
-                                           rows = 19,
-                                           cols = 23,
+                                           rows = 16,
+                                           cols = 19,
                                            times = 1, rotate = "right")[1]),
-               5897)
-})
-
-test_that("GriddedEmissionsArray works", {
-  expect_equal(print(round(GriddedEmissionsArray(E_CO_g,
-                                                 rows = 19,
-                                                 cols = 23,
-                                                 times = 1)[1])),
-               337)
-})
-
-test_that("GriddedEmissionsArray prints", {
-  a <- GriddedEmissionsArray(E_CO_g,
-                             rows = 19,
-                             cols = 23,
-                             times = 1)
-  expect_output(print(a), "This GriddedEmissionsArray has:?")
-  expect_equal(print(round(a[1])), 337)
+               0)
 })
 

@@ -31,6 +31,7 @@ test_that("ef_china works", {# PM2.5
 test_that("ef_china works", {# PM10
   expect_equal(ef_china(t = "Mini", f = "G", standard = df_st, p = "PM10"),
                EmissionFactors(c(0.031, 0.029, 0.012, 0.008, 0.003, 0.003)))})
+
 # Small G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(t = "Small", f = "G", standard = df_st, p = "CO"),

@@ -42,8 +42,8 @@
 #' @examples \dontrun{
 #' a <- ef_cetesb("CO", c("PC_G", "PC_FE", "PC_FG"), agemax = 20)
 #' colplot(df = a, ylab = "CO [g/km]", theme = "dark", pch = NULL, type = "l")
-#' colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
-#' colplot(df = a, ylab = "CO [g/km]", theme = "clean")
+#' #colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
+#' #colplot(df = a, ylab = "CO [g/km]", theme = "clean")
 #' }
 colplot <- function(df,
                     cols = names(df),
@@ -61,7 +61,7 @@ colplot <- function(df,
                     all_values = FALSE) {
 
   #based on https://github.com/KKPMW/basetheme/blob/master/R/themes.R
-  if(theme == "clean") {
+  if(theme == "clean") {# nocov
     graphics::par(fg              = "black",
         adj             = 0.5,
         ann             = TRUE,
@@ -98,7 +98,7 @@ colplot <- function(df,
         xpd             = FALSE,
         yaxs            = "r",
         yaxt            = "s")
-  } else if(theme == "ink") {
+  } else if(theme == "ink") {# nocov
     graphics::par(fg              = "blue",
         adj             = 0.5,
         ann             = TRUE,
@@ -135,7 +135,7 @@ colplot <- function(df,
         xpd             = FALSE,
         yaxs            = "r",
         yaxt            = "s")
-  } else if(theme == "dark") {
+  } else if(theme == "dark") {# nocov
     graphics::par(fg              = "#7E848C",
         adj             = 0.5,
         ann             = TRUE,

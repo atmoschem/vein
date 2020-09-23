@@ -2,7 +2,7 @@
 % Please edit documentation in R/aw.R
 \name{aw}
 \alias{aw}
-\title{Average Weight from hourly traffic data.}
+\title{Average Weight for hourly traffic data.}
 \usage{
 aw(
   pc,

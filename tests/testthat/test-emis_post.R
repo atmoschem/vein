@@ -1,6 +1,7 @@
 context("emis_post")
 
 data(net)
+net <- sf::st_as_sf(net)[1:10, ]
 data(pc_profile)
 data(fe2015)
 data(fkm)
@@ -39,7 +40,7 @@ test_that("emis_post works", {
                                fuel = "d",
                                type_emi = "exhaust",
                                by = "veh")$g[1]),
-               Emissions(416))
+               Emissions(2))
 })
 
 test_that("emis_post works", {
@@ -50,8 +51,12 @@ test_that("emis_post works", {
 })
 
 # 3d
-E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed,
-             profile = pc_profile, simplify = TRUE)
+E_CO <- emis(veh = pc1,
+             lkm = net$lkm,
+             ef = lef,
+             speed = speed,
+             profile = pc_profile,
+             simplify = TRUE)
 test_that("emis_post works", {
   expect_equal(round(emis_post(arra = E_CO,
                                pollutant = "CO",
@@ -74,7 +79,7 @@ test_that("emis_post works", {
                                fuel = "d",
                                type_emi = "exhaust",
                                by = "veh")$g[1]),
-               Emissions(416))
+               Emissions(2))
 })
 
 test_that("emis_post works", {
