@@ -3,15 +3,15 @@ NEWS
 
 ## TODO
 
-### get_project with top-down approaches
-### get_project with Europe and Chinese EF
-### Add EF from EMFAC and MOVES
-### Update ef_ldv* and ef_hdv* to EEA2019
-### Include speed functions with Fortran and OpenMP
-### Include several chemical mechanism
-### Add EF from HBEFA?
+- get_project with top-down approaches
+- get_project with Europe and Chinese EF
+- Add EF from EMFAC and MOVES
+- Update ef_ldv* and ef_hdv* to EEA2019
+- Include speed functions with Fortran and OpenMP
+- Include several chemical mechanism
+- Add EF from HBEFA?
 
-### vein 0.9.0
+### vein 0.9.0 (Release date: 2020-09-23) "Stuck-at-home"
 
 - evaporative emissions from ef_cetesb return units with grams (2020-06-11)
 - Added projet "emislacovid" (2020-07-11)
