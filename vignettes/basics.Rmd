@@ -1,7 +1,5 @@
 ---
 title: "Basics for running VEIN"
-author: "Sergio Ibarra-Espinosa"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Basics for running VEIN}
@@ -9,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -18,10 +16,10 @@ knitr::opts_chunk$set(
 
 
 This vignette shows how to install and run VEIN for people who **do not know R**
-
-## Install VEIN
-
-You can install VEIN with 
+  
+  ## Install VEIN
+  
+  You can install VEIN with 
 
 - GitLab: `remotes::install_gitlab("ibarraespinosa/vein")`
 - GitHub: `remotes::install_github("atmoschem/vein")`
@@ -45,17 +43,17 @@ Check the documentation of get_project
 
 ```
 
-or [here]()
+or [here](https://atmoschem.github.io/vein/reference/get_project.html)
 
 Choose a name, for instance, "awesome_city" 
 
-```{r, eval = T}
+```{r, eval = F}
 get_project(directory = "awesome_city")
 system("tree  awesome_city")
 
 ```
 The structure is:
-
+  
 ```
 awesome_city
 ├── config
@@ -79,19 +77,27 @@ awesome_city
 │   ├── traffic.R
 │   └── wrf.R
 └── wrf
-    └── wrfinput_d02
+└── wrfinput_d02
 
 ```
 
 You have to open the file `main.Rproj` with Rstudio and then open and run `main.R`
 
+To run `main.R` you will need these extra packages:
+
+- ggplot2
+- readxl
+- eixport (If you plan to generate WRF Chem emissions file)
+
+If you do not have them already, you can install:
+
+
+```{r, eval = F}
+install.packages(c("ggplot2", "readxl", "eixport"))
+```
 
 ## Too complicated? Watch a YouTube video in Portuguese:
 
-![](https://youtu.be/6-07Y0Eimng)
 
 [here](https://youtu.be/6-07Y0Eimng)
 
-```{r, echo = FALSE}
-system("rm -rf  awesome_city")
-```
