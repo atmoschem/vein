@@ -122,6 +122,13 @@ see [ef_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html).
 - They depend on humidity, temperature, altitude and  other parameters.
 
 
+## New in R?
+
+![](https://i.imgur.com/WkqJ0sk.jpg)
+
+No worries! Just install [R](https://www.google.com/search?q=install+R&oq=install+R&aqs=chrome..69i57j35i39l2j0l3j69i60l2.1308j0j7&sourceid=chrome&ie=UTF-8), [Rstudio](https://www.google.com/search?sxsrf=ALeKk00EtkaL-W834eJbAfWxSgAtHlzAuw%3A1600952042358&ei=6pZsX7G5FaS65OUP9NuOqAk&q=install+Rstudio&oq=install+Rstudio&gs_lcp=CgZwc3ktYWIQAzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywE6BAgAEEdQiaIBWJSoAWCPqgFoAHABeAGAAaMCiAGuB5IBBTAuNS4xmAEAoAEBqgEHZ3dzLXdpesgBCMABAQ&sclient=psy-ab&ved=0ahUKEwix1qWO64HsAhUkHbkGHfStA5UQ4dUDCA0&uact=5) and then
+
+
 ### System requirements
 
 vein imports functions from spatial packages listed below. In order to
@@ -137,13 +144,54 @@ install.packages("vein")
 
 ```r
 library(remotes) 
-install_gitlab("ibarraespinosa/vein")
+remotes::install_gitlab("ibarraespinosa/vein")
 ```
 
+## Approaches
 
-In order to run the demo, this package is also needed:
+### get a project (easy)
 
-- [ggplot2](https://github.com/tidyverse/ggplot2)
+- Load vein
+- read the documentation of the function get_project 
+- choose a name, for instance, “awesome_city”
+- and use it
+
+
+```r
+library(vein)
+?get_project
+get_project(directory = "awesome_city")
+
+```
+
+The structure of the new directory "awesome_city" is:
+
+
+```r
+awesome_city
+├── config
+│   ├── clean.R
+│   ├── config.R
+│   ├── inventory.xlsx
+│   └── packages.R
+├── main.R
+├── main.Rproj
+├── network
+│   ├── net.gpkg
+│   └── net.rds
+├── scripts
+│   ├── evaporatives.R
+│   ├── exhaust.R
+│   ├── fuel_eval.R
+│   ├── net.R
+│   ├── pavedroads.R
+│   ├── plots.R
+│   ├── post.R
+│   ├── traffic.R
+│   └── wrf.R
+└── wrf
+└── wrfinput_d02
+```
 
 ```r
 library(vein) 
@@ -151,20 +199,49 @@ demo(VEIN)
 ```
 
 
+You have to open the file `main.Rproj` with Rstudio and then open and run `main.R`
+
+To run `main.R` you will need these extra packages:
+
+- ggplot2
+- readxl
+- eixport (If you plan to generate WRF Chem emissions file)
+
+If you do not have them already, you can install:
+
+
+```{r, eval = F}
+install.packages(c("ggplot2", "readxl", "eixport"))
+```
+
+## Too complicated? Watch a YouTube video in Portuguese:
+
+
+![here](https://youtu.be/6-07Y0Eimng)
+
+[here](https://youtu.be/6-07Y0Eimng)
+
+
+### Use inventory (hard)
+
+
 ### What is new?
 
-- [colplot](https://atmoschem.github.io/vein/reference/colplot.html).
-- emisla (COVID-19) in get_project. Emissions for March 2020 in São Paulo.
+- OpenMP in all subroutines.
 
 ### Future steps
 
-- Add OpenMP in Fortran.
-- Improve plots.
-- Add projects for European and Chinese emission factors
-- Add HBEFA and EMFAC EF.
-- Estimation of evaporative emissions with Copert Tier 3.
-- Group species by chemical mechanism.
+- get_project with top-down approaches
+- get_project with Europe and Chinese EF
+- Add EF from EMFAC and MOVES
+- Update ef_ldv* and ef_hdv* to EEA2019
+- Include speed functions with Fortran and OpenMP
+- Include several chemical mechanism
+- Add EF from HBEFA?
 - See issues [GitHub](https://github.com/atmoschem/vein/issues) and [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
+
+# Approaches
+
 
 ## How does it work?
 
