@@ -166,7 +166,6 @@ install.packages("vein")
 ```
 
 ``` r
-library(remotes) 
 remotes::install_gitlab("ibarraespinosa/vein")
 ```
 
