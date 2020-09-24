@@ -215,11 +215,6 @@ awesome_city
 └── wrfinput_d02
 ```
 
-``` r
-library(vein) 
-demo(VEIN)
-```
-
 You have to open the file `main.Rproj` with Rstudio and then open and
 run `main.R`
 
@@ -244,6 +239,13 @@ install.packages(c("ggplot2", "readxl", "eixport"))
 [here](https://www.youtube.com/watch?v=6-07Y0Eimng)
 
 ### 2\. Use inventory (a bit not so easy)
+
+run the demo to see vein in action
+
+``` r
+library(vein) 
+demo(VEIN)
+```
 
 ## How does it work?
 
