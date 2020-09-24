@@ -98,6 +98,7 @@ install.packages(c("ggplot2", "readxl", "eixport"))
 
 ## Too complicated? Watch a YouTube video in Portuguese:
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 [here](https://youtu.be/6-07Y0Eimng)
 

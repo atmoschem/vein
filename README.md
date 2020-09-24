@@ -32,11 +32,9 @@
     activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
     <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
-## What is VEIN?
+# **V**ehicular **E**missions **IN**ventories (VEIN)
 
-**V**ehicular **E**missions **IN**ventories (VEIN). An R package to
-estimate vehicular emissions. It currently covers the following
-pollutants in speed functions:
+Cover the following pollutants:
 
 ### European emission factors for all available vehicle categories exhaust:
 
@@ -128,9 +126,25 @@ pollutants in speed functions:
   - “CO”, “NOx”, “HC”, “PM10”, “PM2.5”.
   - They depend on humidity, temperature, altitude and other parameters.
 
-## New in R?
+## What is new?
 
-![](https://i.imgur.com/WkqJ0sk.jpg)
+  - OpenMP in all Fortran subroutines.
+
+## 
+
+  - get\_project with top-down approaches
+  - get\_project with Europe and Chinese EF
+  - Add EF from EMFAC and MOVES
+  - Update ef\_ldv\* and ef\_hdv\* to EEA2019
+  - Include speed functions with Fortran and OpenMP
+  - Include several chemical mechanism
+  - Add EF from HBEFA?
+  - See issues [GitHub](https://github.com/atmoschem/vein/issues) and
+    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
+
+# New in VEIN?
+
+![](https://i.imgur.com/bsA6iDU.png)
 
 No worries\! Just install
 [R](https://www.google.com/search?q=install+R&oq=install+R&aqs=chrome..69i57j35i39l2j0l3j69i60l2.1308j0j7&sourceid=chrome&ie=UTF-8),
@@ -158,10 +172,11 @@ remotes::install_gitlab("ibarraespinosa/vein")
 
 ## Approaches
 
-### get a project (easy)
+### 1\. get a project (easier)
 
   - Load vein
-  - read the documentation of the function get\_project
+  - read the documentation of the function
+    [get\_project](https://atmoschem.github.io/vein/reference/get_project.html)
   - choose a name, for instance, “awesome\_city”
   - and use it
 
@@ -223,29 +238,13 @@ install.packages(c("ggplot2", "readxl", "eixport"))
 
 ## Too complicated? Watch a YouTube video in Portuguese:
 
-![here](https://youtu.be/6-07Y0Eimng)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
-[here](https://youtu.be/6-07Y0Eimng)
+</iframe>
 
-### Use inventory (hard)
+[here](https://www.youtube.com/watch?v=6-07Y0Eimng)
 
-### What is new?
-
-  - OpenMP in all subroutines.
-
-### Future steps
-
-  - get\_project with top-down approaches
-  - get\_project with Europe and Chinese EF
-  - Add EF from EMFAC and MOVES
-  - Update ef\_ldv\* and ef\_hdv\* to EEA2019
-  - Include speed functions with Fortran and OpenMP
-  - Include several chemical mechanism
-  - Add EF from HBEFA?
-  - See issues [GitHub](https://github.com/atmoschem/vein/issues) and
-    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
-
-# Approaches
+### 2\. Use inventory (a bit not so easy)
 
 ## How does it work?
 
