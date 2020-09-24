@@ -96,9 +96,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basics for running VEIN</h1>
-                        <h4 class="author">Sergio Ibarra-Espinosa</h4>
             
-            <h4 class="date">2020-09-24</h4>
       
       <small class="dont-index">Source: <a href="https://gitlab.com/ibarraespinosa/vein/blob/master/vignettes/basics.Rmd"><code>vignettes/basics.Rmd</code></a></small>
       <div class="hidden name"><code>basics.Rmd</code></div>
@@ -108,9 +106,7 @@
     
     
 <p>This vignette shows how to install and run VEIN for people who <strong>do not know R</strong></p>
-<div id="install-vein" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install-vein" class="anchor"></a>Install VEIN</h2>
+<p>## Install VEIN</p>
 <p>You can install VEIN with</p>
 <ul>
 <li>GitLab: <code><a href="https://remotes.r-lib.org/reference/install_gitlab.html">remotes::install_gitlab("ibarraespinosa/vein")</a></code>
@@ -123,16 +119,14 @@
 <p>GitHub and GitLab are more updated</p>
 <p>Then, use vein</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">vein</span>)</pre></body></html></div>
-</div>
 <div id="download-a-project" class="section level2">
 <h2 class="hasAnchor">
 <a href="#download-a-project" class="anchor"></a>Download a project</h2>
 <p>Check the documentation of get_project</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r">?<span class="no">get_project</span></pre></body></html></div>
-<p>or <a href="">here</a></p>
+<p>or <a href="https://atmoschem.github.io/vein/reference/get_project.html">here</a></p>
 <p>Choose a name, for instance, “awesome_city”</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/get_project.html">get_project</a></span>(<span class="kw">directory</span> <span class="kw">=</span> <span class="st">"awesome_city"</span>)
-<span class="co">#&gt; Your directory is in awesome_city</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"tree  awesome_city"</span>)</pre></body></html></div>
 <p>The structure is:</p>
 <pre><code>awesome_city
@@ -157,14 +151,23 @@
 │   ├── traffic.R
 │   └── wrf.R
 └── wrf
-    └── wrfinput_d02
+└── wrfinput_d02
 </code></pre>
 <p>You have to open the file <code>main.Rproj</code> with Rstudio and then open and run <code>main.R</code></p>
+<p>To run <code>main.R</code> you will need these extra packages:</p>
+<ul>
+<li>ggplot2</li>
+<li>readxl</li>
+<li>eixport (If you plan to generate WRF Chem emissions file)</li>
+</ul>
+<p>If you do not have them already, you can install:</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span>))</pre></body></html></div>
 </div>
 <div id="too-complicated-watch-a-youtube-video-in-portuguese" class="section level2">
 <h2 class="hasAnchor">
 <a href="#too-complicated-watch-a-youtube-video-in-portuguese" class="anchor"></a>Too complicated? Watch a YouTube video in Portuguese:</h2>
-<p><img src="https://youtu.be/6-07Y0Eimng"></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
 <p><a href="https://youtu.be/6-07Y0Eimng">here</a></p>
 </div>
   </div>
