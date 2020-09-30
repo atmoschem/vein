@@ -1,10 +1,15 @@
 language: r
-
-r:
-  - release
-
+cache: packages
 sudo: required
-dist: bionic
+
+matrix:
+  include:
+    - dist: focal
+    - os: osx
+      brew_packages: libomp
+    - os: osx
+      osx_image: xcode
+      disable_homebrew: true
 
 addons:
   apt:
