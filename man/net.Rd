@@ -20,7 +20,7 @@ A Spatial data.frame (sf) with 1796 rows and 1 variables:
 }
 }
 \source{
-\url{http://www.cetsp.com.br/}
+\url{https://www.cetsp.com.br/}
 }
 \usage{
 data(net)

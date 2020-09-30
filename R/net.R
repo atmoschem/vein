@@ -16,7 +16,7 @@
 #'   \item{tmin}{Time for travelling each link (min)}
 #'   \item{geometry}{geometry}
 #' }
-#' @source \url{http://www.cetsp.com.br/}
+#' @source \url{https://www.cetsp.com.br/}
 #' @usage data(net)
 #' @docType data
 "net"
