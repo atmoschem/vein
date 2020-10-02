@@ -7,14 +7,11 @@ matrix:
     - dist: focal
     - os: osx
       brew_packages: libomp
-    - os: osx
-      osx_image: xcode
-      disable_homebrew: true
 
 addons:
   apt:
     sources:
-      - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
+      - sourceline: "ppa:ubuntugis/ubuntugis-unstable"
     packages:
       - libudunits2-dev
       - libproj-dev
