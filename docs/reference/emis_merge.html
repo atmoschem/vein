@@ -152,20 +152,20 @@
  or an object of 'spatial feature' of streets, merging several files.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_merge</span>(
-  <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"CO"</span>,
-  <span class='kw'>what</span> <span class='kw'>=</span> <span class='st'>"STREETS.rds"</span>,
-  <span class='kw'>streets</span> <span class='kw'>=</span> <span class='no'>T</span>,
-  <span class='no'>net</span>,
-  <span class='kw'>FN</span> <span class='kw'>=</span> <span class='st'>"sum"</span>,
-  <span class='no'>ignore</span>,
-  <span class='kw'>path</span> <span class='kw'>=</span> <span class='st'>"emi"</span>,
-  <span class='no'>crs</span>,
-  <span class='kw'>under</span> <span class='kw'>=</span> <span class='st'>"after"</span>,
-  <span class='kw'>as_list</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>emis_merge</span><span class='op'>(</span>
+  pol <span class='op'>=</span> <span class='st'>"CO"</span>,
+  what <span class='op'>=</span> <span class='st'>"STREETS.rds"</span>,
+  streets <span class='op'>=</span> <span class='cn'>T</span>,
+  <span class='va'>net</span>,
+  FN <span class='op'>=</span> <span class='st'>"sum"</span>,
+  <span class='va'>ignore</span>,
+  path <span class='op'>=</span> <span class='st'>"emi"</span>,
+  <span class='va'>crs</span>,
+  under <span class='op'>=</span> <span class='st'>"after"</span>,
+  as_list <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  k <span class='op'>=</span> <span class='fl'>1</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -234,10 +234,11 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
     <p>'Spatial feature' of lines or a dataframe of emissions</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Do not run</span>
 
-}</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -253,7 +254,7 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -156,20 +156,20 @@ emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ef_nitro</span>(
-  <span class='no'>v</span>,
-  <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>,
-  <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>,
-  <span class='no'>cc</span>,
-  <span class='no'>f</span>,
-  <span class='no'>eu</span>,
-  <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>,
-  <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='no'>cumileage</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fcorr</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>ef_nitro</span><span class='op'>(</span>
+  <span class='va'>v</span>,
+  t <span class='op'>=</span> <span class='st'>"Hot"</span>,
+  cond <span class='op'>=</span> <span class='st'>"Urban"</span>,
+  <span class='va'>cc</span>,
+  <span class='va'>f</span>,
+  <span class='va'>eu</span>,
+  p <span class='op'>=</span> <span class='st'>"NH3"</span>,
+  S <span class='op'>=</span> <span class='fl'>10</span>,
+  <span class='va'>cumileage</span>,
+  k <span class='op'>=</span> <span class='fl'>1</span>,
+  show.equation <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fcorr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -238,18 +238,19 @@ or an EmissionFactor</p>
 or length equal to length of eu</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
-<span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-<span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>efe50</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
-<span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-<span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>efe10</span>(<span class='fl'>10</span>)
-<span class='fu'>efe50</span>(<span class='fl'>10</span>)
-<span class='no'>efe10</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_nitro</span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>t</span> <span class='kw'>=</span> <span class='st'>"Hot"</span>, <span class='kw'>cond</span> <span class='kw'>=</span> <span class='st'>"Urban"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"G"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
-<span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"NH3"</span>, <span class='kw'>S</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>cumileage</span> <span class='kw'>=</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='fl'>25000</span>, <span class='st'>"km"</span>))
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>efe10</span> <span class='op'>&lt;-</span> <span class='fu'>ef_nitro</span><span class='op'>(</span>v <span class='op'>=</span> <span class='st'>"PC"</span>, t <span class='op'>=</span> <span class='st'>"Hot"</span>, cond <span class='op'>=</span> <span class='st'>"Urban"</span>, f <span class='op'>=</span> <span class='st'>"G"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>,
+eu <span class='op'>=</span> <span class='st'>"III"</span>, p <span class='op'>=</span> <span class='st'>"NH3"</span>, S <span class='op'>=</span> <span class='fl'>10</span>,
+show.equation <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>efe50</span> <span class='op'>&lt;-</span> <span class='fu'>ef_nitro</span><span class='op'>(</span>v <span class='op'>=</span> <span class='st'>"PC"</span>, t <span class='op'>=</span> <span class='st'>"Hot"</span>, cond <span class='op'>=</span> <span class='st'>"Urban"</span>, f <span class='op'>=</span> <span class='st'>"G"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>,
+eu <span class='op'>=</span> <span class='st'>"III"</span>, p <span class='op'>=</span> <span class='st'>"NH3"</span>, S <span class='op'>=</span> <span class='fl'>50</span>,
+show.equation <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>efe10</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'>efe50</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='va'>efe10</span> <span class='op'>&lt;-</span> <span class='fu'>ef_nitro</span><span class='op'>(</span>v <span class='op'>=</span> <span class='st'>"PC"</span>, t <span class='op'>=</span> <span class='st'>"Hot"</span>, cond <span class='op'>=</span> <span class='st'>"Urban"</span>, f <span class='op'>=</span> <span class='st'>"G"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>,
+eu <span class='op'>=</span> <span class='st'>"III"</span>, p <span class='op'>=</span> <span class='st'>"NH3"</span>, S <span class='op'>=</span> <span class='fl'>10</span>, cumileage <span class='op'>=</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>25000</span>, <span class='st'>"km"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -265,7 +266,7 @@ or length equal to length of eu</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

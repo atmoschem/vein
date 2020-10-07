@@ -158,15 +158,15 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 This function subset an internal database of emission factors with each argument</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_det</span>(
-  <span class='no'>po</span>,
-  <span class='no'>cc</span>,
-  <span class='no'>eu</span>,
-  <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>18.9</span>),
-  <span class='no'>km</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>emis_det</span><span class='op'>(</span>
+  <span class='va'>po</span>,
+  <span class='va'>cc</span>,
+  <span class='va'>eu</span>,
+  speed <span class='op'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span><span class='op'>(</span><span class='fl'>18.9</span><span class='op'>)</span>,
+  <span class='va'>km</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show.equation <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,35 +214,36 @@ for "V", "VI" and "VIc". However, as these technologies are relative
 new,  accumulated milage is low and hence, deteerioration factors small.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fkm</span>)
-<span class='no'>pckm</span> <span class='kw'>&lt;-</span> <span class='no'>fkm</span><span class='kw'>[[</span><span class='fl'>1</span>]](<span class='fl'>1</span>:<span class='fl'>24</span>); <span class='no'>pckma</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>pckm</span>)
-<span class='no'>km</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='no'>pckma</span>[<span class='fl'>1</span>:<span class='fl'>11</span>], <span class='no'>km</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>fkm</span><span class='op'>)</span>
+<span class='va'>pckm</span> <span class='op'>&lt;-</span> <span class='va'>fkm</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>24</span><span class='op'>)</span>; <span class='va'>pckma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span><span class='op'>(</span><span class='va'>pckm</span><span class='op'>)</span>
+<span class='va'>km</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='va'>pckma</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>11</span><span class='op'>]</span>, <span class='va'>km</span><span class='op'>)</span>
 <span class='co'># length eu = length km = 1</span>
-<span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>5</span>], <span class='kw'>show.equation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>emis_det</span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, eu <span class='op'>=</span> <span class='st'>"III"</span>, km <span class='op'>=</span> <span class='va'>km</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>]</span>, show.equation <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='co'># length eu = length km = 1, length speed &gt; 1</span>
-<span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>5</span>], <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
+<span class='fu'>emis_det</span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, eu <span class='op'>=</span> <span class='st'>"III"</span>, km <span class='op'>=</span> <span class='va'>km</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>]</span>, speed <span class='op'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># length km != length eu error</span>
 <span class='co'># (cod1 &lt;- emis_det(po = "CO", cc = "&lt;=1400", eu = c("III", "IV"), speed = Speed(30),</span>
 <span class='co'># km = km[4]))</span>
 <span class='co'># length eu = 1 length km &gt; 1</span>
-<span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='st'>"III"</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>)
+<span class='fu'>emis_det</span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, eu <span class='op'>=</span> <span class='st'>"III"</span>, km <span class='op'>=</span> <span class='va'>km</span><span class='op'>)</span>
 <span class='co'># length eu = 2, length km = 2 (if different length, error!)</span>
-(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"III"</span>, <span class='st'>"IV"</span>), <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>4</span>:<span class='fl'>5</span>]))
+<span class='op'>(</span><span class='va'>cod1</span> <span class='op'>&lt;-</span> <span class='fu'>emis_det</span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, eu <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"III"</span>, <span class='st'>"IV"</span><span class='op'>)</span>, km <span class='op'>=</span> <span class='va'>km</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># length eu = 2, length km = 2, length speed &gt; 1</span>
-(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"III"</span>, <span class='st'>"IV"</span>), <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>0</span>:<span class='fl'>130</span>),
-<span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>4</span>:<span class='fl'>5</span>]))
-<span class='no'>euros</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"V"</span>,<span class='st'>"V"</span>,<span class='st'>"V"</span>, <span class='st'>"IV"</span>, <span class='st'>"IV"</span>, <span class='st'>"IV"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>)
+<span class='op'>(</span><span class='va'>cod1</span> <span class='op'>&lt;-</span> <span class='fu'>emis_det</span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, eu <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"III"</span>, <span class='st'>"IV"</span><span class='op'>)</span>, speed <span class='op'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>130</span><span class='op'>)</span>,
+km <span class='op'>=</span> <span class='va'>km</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>euros</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"V"</span>,<span class='st'>"V"</span>,<span class='st'>"V"</span>, <span class='st'>"IV"</span>, <span class='st'>"IV"</span>, <span class='st'>"IV"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span>, <span class='st'>"III"</span><span class='op'>)</span>
 <span class='co'># length eu = 2, length km = 2, length speed &gt; 1</span>
-(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euros</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span>(<span class='fl'>1</span>:<span class='fl'>100</span>),
-<span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))
-<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>cod1</span>[, <span class='fl'>1</span>:<span class='fl'>11</span>])
-<span class='fu'><a href='https://rdrr.io/r/graphics/filled.contour.html'>filled.contour</a></span>(<span class='no'>cod1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cpt.html'>cpt</a></span>(<span class='fl'>6277</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>20</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/filled.contour.html'>filled.contour</a></span>(<span class='no'>cod1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw pkg'>cptcity</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/lucky.html'>lucky</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>19</span>))
-<span class='no'>euro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"V"</span>, <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"IV"</span>, <span class='fl'>5</span>), <span class='st'>"III"</span>)
-<span class='no'>euros</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='no'>euro</span>, <span class='no'>euro</span>)
-(<span class='no'>cod1</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_det</span>(<span class='kw'>po</span> <span class='kw'>=</span> <span class='st'>"CO"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>eu</span> <span class='kw'>=</span> <span class='no'>euros</span>, <span class='kw'>km</span> <span class='kw'>=</span> <span class='no'>km</span>))
-}</div></pre>
+<span class='op'>(</span><span class='va'>cod1</span> <span class='op'>&lt;-</span> <span class='fu'>emis_det</span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, eu <span class='op'>=</span> <span class='va'>euros</span>, speed <span class='op'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>)</span>,
+km <span class='op'>=</span> <span class='va'>km</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>cod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>cod1</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>11</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/filled.contour.html'>filled.contour</a></span><span class='op'>(</span><span class='va'>cod1</span>, col <span class='op'>=</span> <span class='fu'>cptcity</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/cpt.html'>cpt</a></span><span class='op'>(</span><span class='fl'>6277</span>, n <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/filled.contour.html'>filled.contour</a></span><span class='op'>(</span><span class='va'>cod1</span>, col <span class='op'>=</span> <span class='fu'>cptcity</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/lucky.html'>lucky</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>19</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>euro</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"V"</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"IV"</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='st'>"III"</span><span class='op'>)</span>
+<span class='va'>euros</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>euro</span>, <span class='va'>euro</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>cod1</span> <span class='op'>&lt;-</span> <span class='fu'>emis_det</span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, eu <span class='op'>=</span> <span class='va'>euros</span>, km <span class='op'>=</span> <span class='va'>km</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -258,7 +259,7 @@ new,  accumulated milage is low and hence, deteerioration factors small.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

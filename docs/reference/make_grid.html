@@ -152,7 +152,7 @@ reference is taken from the spatial object." />
 reference is taken from the spatial object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_grid</span>(<span class='no'>spobj</span>, <span class='no'>width</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='no'>width</span>, <span class='no'>polygon</span>, <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>make_grid</span><span class='op'>(</span><span class='va'>spobj</span>, <span class='va'>width</span>, height <span class='op'>=</span> <span class='va'>width</span>, <span class='va'>polygon</span>, crs <span class='op'>=</span> <span class='fl'>4326</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,14 +191,15 @@ The default value is 4326</p></td>
     <p>A grid of polygons class 'sf'</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='no'>grid</span> <span class='kw'>&lt;-</span> <span class='fu'>make_grid</span>(<span class='no'>net</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0.5</span>/<span class='fl'>102.47</span>) <span class='co'>#500 mts</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>grid</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'>#class sf</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
+<span class='va'>grid</span> <span class='op'>&lt;-</span> <span class='fu'>make_grid</span><span class='op'>(</span><span class='va'>net</span>, width <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>/</span><span class='fl'>102.47</span><span class='op'>)</span> <span class='co'>#500 mts</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>grid</span>, axes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'>#class sf</span>
 <span class='co'># make grid now returns warnings for crs with form +init...</span>
 <span class='co'>#grid &lt;- make_grid(net, width = 0.5/102.47) #500 mts</span>
 
-}</div></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -214,7 +215,7 @@ The default value is 4326</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

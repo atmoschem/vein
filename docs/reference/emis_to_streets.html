@@ -156,7 +156,7 @@ each feature. "Spatial" objects are converter to "sf" objects. Currently,
 in each street.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_to_streets</span>(<span class='no'>streets</span>, <span class='no'>dfemis</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='no'>stpro</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>emis_to_streets</span><span class='op'>(</span><span class='va'>streets</span>, <span class='va'>dfemis</span>, by <span class='op'>=</span> <span class='st'>"ID"</span>, <span class='va'>stpro</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,25 +198,26 @@ to each category of street</p></td>
     <div class='dont-index'><p><code><a href='add_polid.html'>add_polid</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='no'>stpro</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>stpro</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>net</span>$<span class='no'>tstreet</span>)),
-                   <span class='kw'>VAL</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>9</span>)
-<span class='no'>dnet</span> <span class='kw'>&lt;-</span> <span class='no'>net</span>[<span class='st'>"ldv"</span>]
-<span class='no'>dnet</span>$<span class='no'>stpro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>net</span>$<span class='no'>tstreet</span>)
-<span class='no'>dnet</span>$<span class='no'>ID</span> <span class='kw'>&lt;-</span> <span class='st'>"A"</span>
-<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>BC</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>CO</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>ID</span> <span class='kw'>=</span> <span class='st'>"A"</span>)
-<span class='no'>ste</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_to_streets</span>(<span class='kw'>streets</span> <span class='kw'>=</span> <span class='no'>dnet</span>, <span class='kw'>dfemis</span> <span class='kw'>=</span> <span class='no'>df2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>ste</span>$<span class='no'>ldv</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>ste</span>$<span class='no'>BC</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>df2</span>$<span class='no'>BC</span>)
-<span class='no'>ste2</span> <span class='kw'>&lt;-</span> <span class='fu'>emis_to_streets</span>(<span class='kw'>streets</span> <span class='kw'>=</span> <span class='no'>dnet</span>, <span class='kw'>dfemis</span> <span class='kw'>=</span> <span class='no'>df2</span>, <span class='kw'>stpro</span> <span class='kw'>=</span> <span class='no'>stpro</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>ste2</span>$<span class='no'>ldv</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>ste2</span>$<span class='no'>BC</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>df2</span>$<span class='no'>BC</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
+<span class='va'>stpro</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>stpro <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>tstreet</span><span class='op'>)</span><span class='op'>)</span>,
+                   VAL <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>)</span>
+<span class='va'>dnet</span> <span class='op'>&lt;-</span> <span class='va'>net</span><span class='op'>[</span><span class='st'>"ldv"</span><span class='op'>]</span>
+<span class='va'>dnet</span><span class='op'>$</span><span class='va'>stpro</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>tstreet</span><span class='op'>)</span>
+<span class='va'>dnet</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='st'>"A"</span>
+<span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>BC <span class='op'>=</span> <span class='fl'>10</span>, CO <span class='op'>=</span> <span class='fl'>20</span>, ID <span class='op'>=</span> <span class='st'>"A"</span><span class='op'>)</span>
+<span class='va'>ste</span> <span class='op'>&lt;-</span> <span class='fu'>emis_to_streets</span><span class='op'>(</span>streets <span class='op'>=</span> <span class='va'>dnet</span>, dfemis <span class='op'>=</span> <span class='va'>df2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>ste</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>ste</span><span class='op'>$</span><span class='va'>BC</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>$</span><span class='va'>BC</span><span class='op'>)</span>
+<span class='va'>ste2</span> <span class='op'>&lt;-</span> <span class='fu'>emis_to_streets</span><span class='op'>(</span>streets <span class='op'>=</span> <span class='va'>dnet</span>, dfemis <span class='op'>=</span> <span class='va'>df2</span>, stpro <span class='op'>=</span> <span class='va'>stpro</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>ste2</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>ste2</span><span class='op'>$</span><span class='va'>BC</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>$</span><span class='va'>BC</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -232,7 +233,7 @@ to each category of street</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

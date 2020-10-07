@@ -152,7 +152,7 @@ The sources are tyres, breaks and road surface." />
 The sources are tyres, breaks and road surface.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ef_wear</span>(<span class='no'>wear</span>, <span class='no'>type</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"TSP"</span>, <span class='no'>speed</span>, <span class='kw'>load</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>axle</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_wear</span><span class='op'>(</span><span class='va'>wear</span>, <span class='va'>type</span>, pol <span class='op'>=</span> <span class='st'>"TSP"</span>, <span class='va'>speed</span>, load <span class='op'>=</span> <span class='fl'>0.5</span>, axle <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,13 +193,14 @@ and road abrasion. In: EEA, EMEP. EEA air pollutant emission inventory
 guidebook-2009. European Environment Agency, Copenhagen, 2016</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
-<span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>ef</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_wear</span>(<span class='kw'>wear</span> <span class='kw'>=</span> <span class='st'>"tyre"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>pol</span> <span class='kw'>=</span> <span class='st'>"PM10"</span>, <span class='kw'>speed</span> <span class='kw'>=</span> <span class='no'>df</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>pc_week</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>+</span><span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span><span class='op'>(</span><span class='va'>pc_week</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>ef</span> <span class='op'>&lt;-</span> <span class='fu'>ef_wear</span><span class='op'>(</span>wear <span class='op'>=</span> <span class='st'>"tyre"</span>, type <span class='op'>=</span> <span class='st'>"PC"</span>, pol <span class='op'>=</span> <span class='st'>"PM10"</span>, speed <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -215,7 +216,7 @@ guidebook-2009. European Environment Agency, Copenhagen, 2016</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

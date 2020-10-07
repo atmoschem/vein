@@ -92,7 +92,7 @@
 
       
 
-      </header><script src="basics_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="basics_files/header-attrs-2.4/header-attrs.js"></script><script src="basics_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basics for running VEIN</h1>
@@ -118,16 +118,19 @@
 </ul>
 <p>GitHub and GitLab are more updated</p>
 <p>Then, use vein</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">vein</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/ibarraespinosa/vein">vein</a></span><span class="op">)</span></pre></div>
 <div id="download-a-project" class="section level2">
 <h2 class="hasAnchor">
 <a href="#download-a-project" class="anchor"></a>Download a project</h2>
 <p>Check the documentation of get_project</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r">?<span class="no">get_project</span></pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="op">?</span><span class="va">get_project</span></pre></div>
 <p>or <a href="https://atmoschem.github.io/vein/reference/get_project.html">here</a></p>
 <p>Choose a name, for instance, “awesome_city”</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/get_project.html">get_project</a></span>(<span class="kw">directory</span> <span class="kw">=</span> <span class="st">"awesome_city"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"tree  awesome_city"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="../reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"tree  awesome_city"</span><span class="op">)</span></pre></div>
 <p>The structure is:</p>
 <pre><code>awesome_city
 ├── config
@@ -161,7 +164,8 @@
 <li>eixport (If you plan to generate WRF Chem emissions file)</li>
 </ul>
 <p>If you do not have them already, you can install:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></pre></div>
 </div>
 <div id="too-complicated-watch-a-youtube-video-in-portuguese" class="section level2">
 <h2 class="hasAnchor">
@@ -187,7 +191,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

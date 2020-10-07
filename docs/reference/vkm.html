@@ -154,15 +154,15 @@ the distance driven by these vehicles in km. This function reads hourly
 vehiles and then extrapolates the vehicles</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vkm</span>(
-  <span class='no'>veh</span>,
-  <span class='no'>lkm</span>,
-  <span class='no'>profile</span>,
-  <span class='kw'>hour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>profile</span>),
-  <span class='kw'>day</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='no'>profile</span>),
-  <span class='kw'>array</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>as_df</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>vkm</span><span class='op'>(</span>
+  <span class='va'>veh</span>,
+  <span class='va'>lkm</span>,
+  <span class='va'>profile</span>,
+  hour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>profile</span><span class='op'>)</span>,
+  day <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>profile</span><span class='op'>)</span>,
+  array <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  as_df <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,17 +203,18 @@ profile as a dataframe producing an array with dimensions (streets x hours x day
     <p>emission estimation  of vkm</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Do not run</span>
-<span class='no'>pc</span> <span class='kw'>&lt;-</span> <span class='no'>lkm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span>))*<span class='fl'>100</span>
-<span class='no'>pro</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>24</span>*<span class='fl'>7</span>,<span class='fl'>0.5</span>,<span class='fl'>1</span>)), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>7</span>, <span class='kw'>nrow</span><span class='kw'>=</span><span class='fl'>24</span>)
-<span class='no'>vkms</span>  <span class='kw'>&lt;-</span> <span class='fu'>vkm</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pro</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>vkms</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>vkms</span>)
-<span class='no'>vkms2</span>  <span class='kw'>&lt;-</span> <span class='fu'>vkm</span>(<span class='kw'>veh</span> <span class='kw'>=</span> <span class='no'>pc</span>, <span class='kw'>lkm</span> <span class='kw'>=</span> <span class='no'>lkm</span>, <span class='kw'>profile</span> <span class='kw'>=</span> <span class='no'>pro</span>, <span class='kw'>as_df</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>vkms2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>vkms2</span>)
-}</div></pre>
+<span class='va'>pc</span> <span class='op'>&lt;-</span> <span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>100</span>
+<span class='va'>pro</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>24</span><span class='op'>*</span><span class='fl'>7</span>,<span class='fl'>0.5</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>7</span>, nrow<span class='op'>=</span><span class='fl'>24</span><span class='op'>)</span>
+<span class='va'>vkms</span>  <span class='op'>&lt;-</span> <span class='fu'>vkm</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc</span>, lkm <span class='op'>=</span> <span class='va'>lkm</span>, profile <span class='op'>=</span> <span class='va'>pro</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>vkms</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>vkms</span><span class='op'>)</span>
+<span class='va'>vkms2</span>  <span class='op'>&lt;-</span> <span class='fu'>vkm</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc</span>, lkm <span class='op'>=</span> <span class='va'>lkm</span>, profile <span class='op'>=</span> <span class='va'>pro</span>, as_df <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>vkms2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>vkms2</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -229,7 +230,7 @@ profile as a dataframe producing an array with dimensions (streets x hours x day
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

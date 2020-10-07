@@ -158,7 +158,7 @@ a vehicle with a normal deterioration, but that it will pass the
 Inspection and Manteinance program.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ef_im</span>(<span class='no'>ef</span>, <span class='no'>tc</span>, <span class='no'>amileage</span>, <span class='no'>max_amileage</span>, <span class='no'>max_ef</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_im</span><span class='op'>(</span><span class='va'>ef</span>, <span class='va'>tc</span>, <span class='va'>amileage</span>, <span class='va'>max_amileage</span>, <span class='va'>max_ef</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,14 +197,15 @@ this value, mileage is constant.</p></td>
 which would be approved in a inspection and mantainence program.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Do not run</span>
 <span class='co'># Passenger Cars PC</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>fkm</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>fkm</span><span class='op'>)</span>
 <span class='co'># cumulative mileage from 1 to 50 years of use, 40:50</span>
-<span class='no'>mil</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span>(<span class='no'>fkm</span>$<span class='fu'>KM_PC_E25</span>(<span class='fl'>1</span>:<span class='fl'>10</span>))
-<span class='fu'>ef_im</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span>), <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span>), <span class='no'>mil</span>)
-}</div></pre>
+<span class='va'>mil</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span><span class='op'>(</span><span class='va'>fkm</span><span class='op'>$</span><span class='fu'>KM_PC_E25</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>ef_im</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>2</span>, <span class='fl'>0.2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='fl'>1</span>, <span class='fl'>0.1</span><span class='op'>)</span>, <span class='va'>mil</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -220,7 +221,7 @@ which would be approved in a inspection and mantainence program.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
