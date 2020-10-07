@@ -152,19 +152,19 @@ from EMEP/EEA emisison guidelines" />
 from EMEP/EEA emisison guidelines</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ef_evap</span>(
-  <span class='no'>ef</span>,
-  <span class='no'>v</span>,
-  <span class='no'>cc</span>,
-  <span class='no'>dt</span>,
-  <span class='no'>ca</span>,
-  <span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"NMHC"</span>,
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>ltrip</span>,
-  <span class='no'>kmday</span>,
-  <span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>ef_evap</span><span class='op'>(</span>
+  <span class='va'>ef</span>,
+  <span class='va'>v</span>,
+  <span class='va'>cc</span>,
+  <span class='va'>dt</span>,
+  <span class='va'>ca</span>,
+  pollutant <span class='op'>=</span> <span class='st'>"NMHC"</span>,
+  k <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>ltrip</span>,
+  <span class='va'>kmday</span>,
+  show <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,33 +249,34 @@ EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 Environment Agency, Copenhagen, 2009</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Do not run</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"eshotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-<span class='kw'>pollutant</span> <span class='kw'>=</span> <span class='st'>"cis-2-pentene"</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"ed"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"erhotc"</span>, <span class='st'>"erhotc"</span>), <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
-<span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"erhotc"</span>, <span class='st'>"erhotc"</span>), <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
- <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"eshotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='st'>"0_15"</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>temps</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>:<span class='fl'>20</span>
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span> <span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>temps</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-<span class='kw'>show</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1</span>:<span class='fl'>24</span>,<span class='fl'>5</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>12</span>) <span class='co'># 12 months</span>
-<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='celsius.html'>celsius</a></span>(<span class='no'>dt</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span><span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>,
-<span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>dt</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>)
-<span class='no'>lkm</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>units</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span>(<span class='fl'>10</span>, <span class='no'>km</span>)
-<span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_evap</span>(<span class='kw'>ef</span> <span class='kw'>=</span><span class='st'>"erhotc"</span>, <span class='kw'>v</span> <span class='kw'>=</span> <span class='st'>"PC"</span>, <span class='kw'>cc</span> <span class='kw'>=</span> <span class='st'>"&lt;=1400"</span>, <span class='kw'>ltrip</span> <span class='kw'>=</span> <span class='no'>lkm</span>,
-<span class='kw'>dt</span> <span class='kw'>=</span> <span class='no'>dt</span>, <span class='kw'>ca</span> <span class='kw'>=</span> <span class='st'>"no"</span>)
-}</div></pre>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='st'>"eshotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, dt <span class='op'>=</span> <span class='st'>"0_15"</span>, ca <span class='op'>=</span> <span class='st'>"no"</span>,
+pollutant <span class='op'>=</span> <span class='st'>"cis-2-pentene"</span><span class='op'>)</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='st'>"ed"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, dt <span class='op'>=</span> <span class='st'>"0_15"</span>, ca <span class='op'>=</span> <span class='st'>"no"</span>,
+show <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"erhotc"</span>, <span class='st'>"erhotc"</span><span class='op'>)</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>,
+dt <span class='op'>=</span> <span class='st'>"0_15"</span>, ca <span class='op'>=</span> <span class='st'>"no"</span>,
+show <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"erhotc"</span>, <span class='st'>"erhotc"</span><span class='op'>)</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>,
+ dt <span class='op'>=</span> <span class='st'>"0_15"</span>, ca <span class='op'>=</span> <span class='st'>"no"</span>,
+show <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='st'>"eshotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, dt <span class='op'>=</span> <span class='st'>"0_15"</span>, ca <span class='op'>=</span> <span class='st'>"no"</span>,
+show <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='st'>"erhotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, dt <span class='op'>=</span> <span class='st'>"0_15"</span>, ca <span class='op'>=</span> <span class='st'>"no"</span>,
+show <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>temps</span> <span class='op'>&lt;-</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>20</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span> <span class='st'>"erhotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, dt <span class='op'>=</span> <span class='va'>temps</span>, ca <span class='op'>=</span> <span class='st'>"no"</span>,
+show <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>24</span>,<span class='fl'>5</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span> <span class='co'># 12 months</span>
+<span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='celsius.html'>celsius</a></span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span><span class='st'>"erhotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>,
+dt <span class='op'>=</span> <span class='va'>dt</span>, ca <span class='op'>=</span> <span class='st'>"no"</span><span class='op'>)</span>
+<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>km</span><span class='op'>)</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span><span class='st'>"erhotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, ltrip <span class='op'>=</span> <span class='va'>lkm</span>,
+dt <span class='op'>=</span> <span class='va'>dt</span>, ca <span class='op'>=</span> <span class='st'>"no"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -291,7 +292,7 @@ Environment Agency, Copenhagen, 2009</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

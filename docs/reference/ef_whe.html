@@ -160,7 +160,7 @@ applicable in cities without a inspection and mantainence program and with
 Weighted emission factors considering that part of the fleet are high emitters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ef_whe</span>(<span class='no'>efhe</span>, <span class='no'>phe</span>, <span class='no'>ef</span>)</pre>
+    <pre class="usage"><span class='fu'>ef_whe</span><span class='op'>(</span><span class='va'>efhe</span>, <span class='va'>phe</span>, <span class='va'>ef</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,21 +187,22 @@ program.</p></td>
     <p>An emission factor by annual mileage.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Do not run</span>
 <span class='co'># Let's say high emitter is 5 times the normal ef.</span>
-<span class='no'>co_efhe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"COd"</span>, <span class='st'>"PC_G"</span>) * <span class='fl'>5</span>
+<span class='va'>co_efhe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='st'>"COd"</span>, <span class='st'>"PC_G"</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>5</span>
 <span class='co'># Let's say that the perfil of high emitters increases linearly</span>
 <span class='co'># till 30 years and after that percentage is constant</span>
-<span class='no'>perc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.01</span>, <span class='fl'>0.3</span>, <span class='fl'>0.01</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.3</span>, <span class='fl'>20</span>))
+<span class='va'>perc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>0.01</span>, <span class='fl'>0.3</span>, <span class='fl'>0.01</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.3</span>, <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># Now, lets use our ef with normal deterioration</span>
-<span class='no'>co_ef_normal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span>(<span class='kw'>p</span> <span class='kw'>=</span> <span class='st'>"COd"</span>, <span class='st'>"PC_G"</span>)
-<span class='no'>efd</span> <span class='kw'>&lt;-</span> <span class='fu'>ef_whe</span>(<span class='kw'>efhe</span> <span class='kw'>=</span> <span class='no'>co_efhe</span>, <span class='kw'>phe</span> <span class='kw'>=</span> <span class='no'>perc</span>, <span class='kw'>ef</span> <span class='kw'>=</span> <span class='no'>co_ef_normal</span>)
+<span class='va'>co_ef_normal</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='st'>"COd"</span>, <span class='st'>"PC_G"</span><span class='op'>)</span>
+<span class='va'>efd</span> <span class='op'>&lt;-</span> <span class='fu'>ef_whe</span><span class='op'>(</span>efhe <span class='op'>=</span> <span class='va'>co_efhe</span>, phe <span class='op'>=</span> <span class='va'>perc</span>, ef <span class='op'>=</span> <span class='va'>co_ef_normal</span><span class='op'>)</span>
 <span class='co'># now, we can plot the three ef</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>co_efhe</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>co_ef_normal</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span> )
-<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='no'>efd</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>16</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>co_efhe</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>co_ef_normal</span>, pch <span class='op'>=</span> <span class='fl'>16</span>, col <span class='op'>=</span> <span class='st'>"red"</span> <span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>efd</span>, pch <span class='op'>=</span> <span class='fl'>16</span>, col <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -217,7 +218,7 @@ program.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

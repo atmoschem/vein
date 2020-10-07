@@ -25,8 +25,6 @@
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
 #' @param fortran Logical; to try the fortran calculation.
-#' @param nt Integer; Number of threads wich must be lower than max available. See \code{\link{check_nt}}.
-#' Only when fortran = TRUE
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_cold}}
 #' @export
@@ -101,8 +99,7 @@ emis_cold_td <- function (veh,
                           pro_month,
                           params,
                           verbose = FALSE,
-                          fortran = FALSE,
-                          nt = ifelse(check_nt()==1, 1, check_nt()/2)) {
+                          fortran = FALSE) {
   # Check units
   if(class(lkm) != "units"){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
@@ -222,26 +219,6 @@ emis_cold_td <- function (veh,
           if(nrow(month) != nrow(veh)) stop("number of rows of `month` and `veh` must be equal")
           # emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(i, k)
 
-          if(!missing(nt)) {
-            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
-                                      " threads and nt must be lower")
-
-            if(verbose) message("Calling emistd4coldfpar.f95")
-
-            a <-   .Fortran("emistd4coldfpar",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            efcold = efcold,
-                            beta = beta,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth),
-                            nt = as.integer(nt))$emis
-
-          } else {
             if(verbose) message("Calling emistd4coldf.f95")
 
             a <-   .Fortran("emistd4coldf",
@@ -255,8 +232,6 @@ emis_cold_td <- function (veh,
                             beta = beta,
                             month = month,
                             emis = numeric(nrowv*ncolv*pmonth))$emis
-
-          }
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -303,26 +278,6 @@ emis_cold_td <- function (veh,
           if(ncol(ef) != ncol(veh)) stop("number of cols of `ef` and `veh` must be equal")
           # emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(k)
 
-          if(!missing(nt)) {
-            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
-                                      " threads and nt must be lower")
-
-            if(verbose) message("Calling emistd5coldfpar.f95")
-
-            a <-   .Fortran("emistd5coldfpar",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            ef = efcold,
-                            beta = beta,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth),
-                            nt = as.integer(nt))$emis
-
-          } else {
             if(verbose) message("Calling emistd5coldf.f95")
 
             a <-   .Fortran("emistd5coldf",
@@ -337,7 +292,6 @@ emis_cold_td <- function (veh,
                             month = month,
                             emis = numeric(nrowv*ncolv*pmonth))$emis
 
-          }
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)
@@ -408,25 +362,6 @@ emis_cold_td <- function (veh,
           if(nrow(month) != nrow(veh)) stop("number of rows of `month` and `veh` must be equal")
           # emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(i, k)
 
-          if(!missing(nt)) {
-            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
-                                      " threads and nt must be lower")
-
-            if(verbose) message("Calling emistd6coldfpar.f95")
-
-            a <-   .Fortran("emistd6coldfpar",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            ef = efcold,
-                            beta = beta,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth),
-                            nt = as.integer(nt))$emis
-          } else {
             if(verbose) message("Calling emistd6coldf.f95")
 
             a <-   .Fortran("emistd6coldf",
@@ -440,9 +375,7 @@ emis_cold_td <- function (veh,
                             beta = beta,
                             month = month,
                             emis = numeric(nrowv*ncolv*pmonth))$emis
-
-          }
-          e <- data.frame(emissions = a)
+        e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)
           e$age <- rep(rep(seq(1, ncolv), each = nrowv), pmonth)
@@ -484,25 +417,6 @@ emis_cold_td <- function (veh,
           if(length(ef) != ncol(veh)) stop("number of rows of `ef` and `veh` must be equal")
           # emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(k)
 
-          if(!missing(nt)) {
-            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
-                                      " threads and nt must be lower")
-
-            if(verbose) message("Calling emistd3coldfpar.f95")
-
-            a <-   .Fortran("emistd3coldfpar",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            ef = efcold,
-                            beta = beta,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth),
-                            nt = as.integer(nt))$emis
-          } else {
             if(verbose) message("Calling emistd3coldf.f95")
 
             a <-   .Fortran("emistd3coldf",
@@ -516,8 +430,6 @@ emis_cold_td <- function (veh,
                             beta = beta,
                             month = month,
                             emis = numeric(nrowv*ncolv*pmonth))$emis
-
-          }
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -572,25 +484,6 @@ emis_cold_td <- function (veh,
       # emis(i, j) = beta(i) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j)
 
 
-      if(!missing(nt)) {
-        if(nt >= check_nt()) stop("Your machine has ", check_nt(),
-                                  " threads and nt must be lower")
-
-        if(verbose) message("Calling emistd2coldfpar.f95")
-
-        a <-   .Fortran("emistd2coldfpar",
-                        nrowv = nrowv,
-                        ncolv = ncolv,
-                        veh = as.matrix(veh),
-                        lkm = lkm,
-                        ef = ef,
-                        ef = efcold,
-                        beta = beta,
-                        emis = numeric(nrowv*ncolv),
-                        nt = as.integer(nt))$emis
-      } else {
-        if(verbose) message("Calling emistd2coldf.f95")
-
         a <-   .Fortran("emistd2coldf",
                         nrowv = nrowv,
                         ncolv = ncolv,
@@ -600,8 +493,6 @@ emis_cold_td <- function (veh,
                         ef = efcold,
                         beta = beta,
                         emis = numeric(nrowv*ncolv))$emis
-
-      }
 
       e <- data.frame(emissions = a)
       e <- Emissions(e)

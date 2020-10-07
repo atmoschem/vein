@@ -122,9 +122,9 @@ see [ef_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html).
 
 ## What is new?
 
-- OpenMP in all Fortran subroutines.
+*REMOVED OpenMP because of MacOS issues. I hope in the version 1.0 of vein I can add this*
 
-##
+### TODO
 
 - get_project with top-down approaches
 - get_project with Europe and Chinese EF

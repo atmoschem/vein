@@ -27,8 +27,7 @@ a <- emis_hot_td(veh = veh,
                  lkm = lkm,
                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
                  verbose = TRUE,
-                 fortran = TRUE,
-                 nt = check_nt()/2)
+                 fortran = TRUE)
 )
 # caso simple ####
 test_that("emis_hot_td works", {
@@ -340,21 +339,8 @@ test_that("emis_hot_td works", {
                                                     ncol = 12,
                                                     byrow = TRUE),
                                  fortran = T,
-                                 verbose = TRUE,
-                                 nt = 1)$emissions[1]),
+                                 verbose = TRUE)$emissions[1]),
                Emissions(111))
-
-  expect_error(round(emis_hot_td(veh = veh,
-                                 lkm = lkm,
-                                 ef = efs2,
-                                 pro_month = matrix(as.numeric(veh_month),
-                                                    nrow = nrow(veh),
-                                                    ncol = 12,
-                                                    byrow = TRUE),
-                                 fortran = T,
-                                 verbose = TRUE,
-                                 nt = 1000)$emissions[1]),
-               ".?")
 
 
     expect_equal(round(emis_hot_td(veh = veh,
@@ -362,8 +348,7 @@ test_that("emis_hot_td works", {
                                  ef = efs2,
                                  pro_month = as.numeric(veh_month),
                                  fortran = T,
-                                 verbose = TRUE,
-                                 nt = 1)$emissions[1]),
+                                 verbose = TRUE)$emissions[1]),
                Emissions(111))
 
     expect_equal(round(emis_hot_td(veh = veh,
@@ -371,8 +356,7 @@ test_that("emis_hot_td works", {
                                    ef = efs2,
                                    pro_month = as.numeric(veh_month),
                                    fortran = T,
-                                   verbose = TRUE,
-                                   nt = 1)$emissions[1]),
+                                   verbose = TRUE)$emissions[1]),
                  Emissions(111))
 
     expect_equal(round(emis_hot_td(veh = veh[1, ],
@@ -388,8 +372,7 @@ test_that("emis_hot_td works", {
                                    ef = efs2[1, ],
                                    pro_month = veh_month,
                                    fortran = T,
-                                   verbose = TRUE,
-                                   nt = 1)$emissions[1]),
+                                   verbose = TRUE)$emissions[1]),
                  Emissions(111))
 
     expect_error(round(emis_hot_td(veh = veh[1, ],

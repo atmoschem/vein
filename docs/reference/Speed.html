@@ -158,16 +158,16 @@
  is applied to numeric vectors it add class "units".</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Speed</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>Speed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Speed</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Speed</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Speed</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,16 +194,17 @@
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/difftime.html'>units</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
-<span class='no'>speed</span> <span class='kw'>&lt;-</span> <span class='fu'>Speed</span>(<span class='no'>net</span>$<span class='no'>ps</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>speed</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>speed</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>)
-<span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>df</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>speed</span> <span class='op'>&lt;-</span> <span class='fu'>Speed</span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>speed</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>speed</span>, type <span class='op'>=</span> <span class='st'>"l"</span><span class='op'>)</span>
+<span class='va'>pc_week</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>+</span><span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span><span class='op'>(</span><span class='va'>pc_week</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -219,7 +220,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

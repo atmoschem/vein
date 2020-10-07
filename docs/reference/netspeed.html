@@ -152,7 +152,7 @@ and each link based on morning rush traffic data" />
 and each link based on morning rush traffic data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>netspeed</span>(<span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>ps</span>, <span class='no'>ffs</span>, <span class='no'>cap</span>, <span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='no'>net</span>, <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>netspeed</span><span class='op'>(</span>q <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>ps</span>, <span class='va'>ffs</span>, <span class='va'>cap</span>, <span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>0.15</span>, beta <span class='op'>=</span> <span class='fl'>4</span>, <span class='va'>net</span>, scheme <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,21 +210,22 @@ default  profile. It needs ffs and ps:</p><table class='table'>
     <p>dataframe speeds with units or sf.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
-<span class='no'>pc_week</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span>(<span class='no'>net</span>$<span class='no'>ldv</span>+<span class='no'>net</span>$<span class='no'>hdv</span>, <span class='no'>pc_profile</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='no'>pc_week</span>, <span class='no'>net</span>$<span class='no'>ps</span>, <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='no'>net</span>$<span class='no'>capacity</span>, <span class='no'>net</span>$<span class='no'>lkm</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>df</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>df</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='kw'>ps</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ps</span>, <span class='kw'>ffs</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>df</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>df</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
-<span class='no'>dfsf</span> <span class='kw'>&lt;-</span> <span class='fu'>netspeed</span>(<span class='kw'>ps</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ps</span>, <span class='kw'>ffs</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ffs</span>, <span class='kw'>scheme</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>net</span> <span class='kw'>=</span> <span class='no'>net</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>dfsf</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>dfsf</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>dfsf</span>) <span class='co'>#plot of the average speed at each hour, +- sd</span>
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>pc_week</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>+</span><span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>netspeed</span><span class='op'>(</span><span class='va'>pc_week</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='co'>#plot of the average speed at each hour, +- sd</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>netspeed</span><span class='op'>(</span>ps <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, ffs <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, scheme <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='co'>#plot of the average speed at each hour, +- sd</span>
+<span class='va'>dfsf</span> <span class='op'>&lt;-</span> <span class='fu'>netspeed</span><span class='op'>(</span>ps <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, ffs <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, scheme <span class='op'>=</span> <span class='cn'>TRUE</span>, net <span class='op'>=</span> <span class='va'>net</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>dfsf</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dfsf</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dfsf</span><span class='op'>)</span> <span class='co'>#plot of the average speed at each hour, +- sd</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -240,7 +241,7 @@ default  profile. It needs ffs and ps:</p><table class='table'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

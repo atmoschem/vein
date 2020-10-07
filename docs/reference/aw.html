@@ -150,24 +150,24 @@
     <p><code>aw</code> average weight form traffic.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>aw</span>(
-  <span class='no'>pc</span>,
-  <span class='no'>lcv</span>,
-  <span class='no'>hgv</span>,
-  <span class='no'>bus</span>,
-  <span class='no'>mc</span>,
-  <span class='no'>p_pc</span>,
-  <span class='no'>p_lcv</span>,
-  <span class='no'>p_hgv</span>,
-  <span class='no'>p_bus</span>,
-  <span class='no'>p_mc</span>,
-  <span class='kw'>w_pc</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>w_lcv</span> <span class='kw'>=</span> <span class='fl'>3.5</span>,
-  <span class='kw'>w_hgv</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>w_bus</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>w_mc</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='no'>net</span>
-)</pre>
+    <pre class="usage"><span class='fu'>aw</span><span class='op'>(</span>
+  <span class='va'>pc</span>,
+  <span class='va'>lcv</span>,
+  <span class='va'>hgv</span>,
+  <span class='va'>bus</span>,
+  <span class='va'>mc</span>,
+  <span class='va'>p_pc</span>,
+  <span class='va'>p_lcv</span>,
+  <span class='va'>p_hgv</span>,
+  <span class='va'>p_bus</span>,
+  <span class='va'>p_mc</span>,
+  w_pc <span class='op'>=</span> <span class='fl'>1</span>,
+  w_lcv <span class='op'>=</span> <span class='fl'>3.5</span>,
+  w_hgv <span class='op'>=</span> <span class='fl'>20</span>,
+  w_bus <span class='op'>=</span> <span class='fl'>20</span>,
+  w_mc <span class='op'>=</span> <span class='fl'>0.5</span>,
+  <span class='va'>net</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -243,22 +243,23 @@
     <p>data.frame with with average weight</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>net</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>pc_profile</span>)
-<span class='no'>p1</span> <span class='kw'>&lt;-</span> <span class='no'>pc_profile</span>[, <span class='fl'>1</span>]
-<span class='no'>aw1</span> <span class='kw'>&lt;-</span> <span class='fu'>aw</span>(<span class='kw'>pc</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>*<span class='fl'>0.75</span>,
-            <span class='kw'>lcv</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>*<span class='fl'>0.1</span>,
-            <span class='kw'>hgv</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>hdv</span>,
-            <span class='kw'>bus</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>hdv</span>*<span class='fl'>0.1</span>,
-            <span class='kw'>mc</span> <span class='kw'>=</span> <span class='no'>net</span>$<span class='no'>ldv</span>*<span class='fl'>0.15</span>,
-            <span class='kw'>p_pc</span> <span class='kw'>=</span> <span class='no'>p1</span>,
-            <span class='kw'>p_lcv</span> <span class='kw'>=</span> <span class='no'>p1</span>,
-            <span class='kw'>p_hgv</span> <span class='kw'>=</span> <span class='no'>p1</span>,
-            <span class='kw'>p_bus</span> <span class='kw'>=</span> <span class='no'>p1</span>,
-            <span class='kw'>p_mc</span> <span class='kw'>=</span> <span class='no'>p1</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>aw1</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>p1</span> <span class='op'>&lt;-</span> <span class='va'>pc_profile</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>aw1</span> <span class='op'>&lt;-</span> <span class='fu'>aw</span><span class='op'>(</span>pc <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>*</span><span class='fl'>0.75</span>,
+            lcv <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>*</span><span class='fl'>0.1</span>,
+            hgv <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>,
+            bus <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span><span class='op'>*</span><span class='fl'>0.1</span>,
+            mc <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>*</span><span class='fl'>0.15</span>,
+            p_pc <span class='op'>=</span> <span class='va'>p1</span>,
+            p_lcv <span class='op'>=</span> <span class='va'>p1</span>,
+            p_hgv <span class='op'>=</span> <span class='va'>p1</span>,
+            p_bus <span class='op'>=</span> <span class='va'>p1</span>,
+            p_mc <span class='op'>=</span> <span class='va'>p1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>aw1</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -274,7 +275,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

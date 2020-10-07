@@ -13,8 +13,7 @@ emis_cold_td(
   pro_month,
   params,
   verbose = FALSE,
-  fortran = FALSE,
-  nt = ifelse(check_nt() == 1, 1, check_nt()/2)
+  fortran = FALSE
 )
 }
 \arguments{
@@ -41,9 +40,6 @@ for each spatial feature or subregion, the columns are the age of use of vehicle
 \item{verbose}{Logical; To show more information}
 
 \item{fortran}{Logical; to try the fortran calculation.}
-
-\item{nt}{Integer; Number of threads wich must be lower than max available. See \code{\link{check_nt}}.
-Only when fortran = TRUE}
 }
 \value{
 Emissions data.frame

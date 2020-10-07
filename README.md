@@ -128,9 +128,10 @@ Cover the following pollutants:
 
 ## What is new?
 
-  - OpenMP in all Fortran subroutines.
+*REMOVED OpenMP because of MacOS issues. I hope in the version 1.0 of
+vein I can add this*
 
-## 
+### TODO
 
   - get\_project with top-down approaches
   - get\_project with Europe and Chinese EF
