@@ -5,6 +5,7 @@
 /* FIXME:
  Check these declarations against the C/Fortran source code.
  */
+#include "myomp.h"
 
 /* .Fortran calls */
 extern void F77_NAME(checkntf)(void *);
