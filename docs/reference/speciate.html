@@ -92,7 +92,7 @@ will be added more speciations" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.2</span>
       </span>
     </div>
 
@@ -165,47 +165,70 @@ will be added more speciations</p>
     </tr>
     <tr>
       <th>spec</th>
-      <td><p>speciation: The speciations are: "bcom", "tyre" (or "tire"), "brake", "road",
-"iag", "iag-tunnel","pmiag", "pmiag-tunnel", "nox", "nmhc". 'iag' now includes a speciation for use of industrial and
-building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
-speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
-gridded emissions (flux). It also accepts one of the following pollutants:
-'e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
-'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket',
-"e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
-"e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj" and these pollutants
-with tunnel, e.g. "e_eth-tunnel".</p></td>
+      <td><p>The speciations are:</p><ul>
+<li><p>"bcom": Splits PM2.5 in black carbon and organic matter.</p></li>
+<li><p>"tyre" or "tire": Splits PM in PM10, PM2.5, PM1 and PM0.1.</p></li>
+<li><p>"brake": Splits PM in PM10, PM2.5, PM1 and PM0.1.</p></li>
+<li><p>"road": Splits PM in PM10 and PM2.5.</p></li>
+<li><p>"nox": Splits NOx in NO and NO2.</p></li>
+<li><p>"nmhc": Splits NMHC in compounds, see <code><a href='ef_ldv_speed.html'>ef_ldv_speed</a></code>.</p></li>
+<li><p>"pmiag", "pmneu",  "pmneu2": Splits PM in groups, see note below.</p></li>
+<li><p>"iag_racm": ethanol emissions added in hc3.</p></li>
+<li><p>"iag" or "iag_cb05": Splits NMHC by CB05 (WRF exb05_opt1) group .</p></li>
+<li><p>"iag_cb05v2": Splits NMHC by CB05 (WRF exb05_opt2) group .</p></li>
+<li><p>"neu_cb05": Splits NMHC by CB05 (WRF exb05_opt2) group alternative.</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>veh</th>
-      <td><p>Type of vehicle:
-When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
-When spec is "iag" veh can take two values depending:
-when the speciation is for vehicles veh accepts "veh", eu "Evaporative",
-"Liquid" or "Exhaust" and fuel "G", "E" or "D",
-when the speciation is for painting, veh is "paint" fuel or eu can be
-"industrial" or "building"
-when spec is "nmhc", veh can be "LDV" with fuel "G" or "D" and eu "PRE", "I",
-"II", "III", "IV", "V", or "VI".
-when spec is "nmhc", veh can be "HDV" with fuel "D" and eu  "PRE", "I",
-"II", "III", "IV", "V", or "VI".
-when spec is "nmhc" and fuel is "LPG", veh and eu must be "ALL"</p></td>
+      <td><p>Type of vehicle:</p><ul>
+<li><p>"bcom": veh can be "PC", "LCV", HDV" or "Motorcycle".</p></li>
+<li><p>"tyre" or "tire": not necessary.</p></li>
+<li><p>"brake": not necessary.</p></li>
+<li><p>"road": not necessary.</p></li>
+<li><p>"nox": veh can be "PC", "LCV", HDV" or "Motorcycle".</p></li>
+<li><p>"nmhc": veh can be "LDV", "HDV" or "LPG".</p></li>
+<li><p>""pmiag", "pmneu",  "pmneu2": not necessary.</p></li>
+<li><p>"iag_racm": veh accepts "veh".</p></li>
+<li><p>"iag" or "iag_cb05": veh accepts "veh" .</p></li>
+<li><p>"iag_cb05v2": veh accepts "veh" .</p></li>
+<li><p>"neu_cb05": veh accepts "veh" .</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>fuel</th>
-      <td><p>Fuel. When spec is "bcom" fuel can be "G" or "D".
-When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
-be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "brake" or "road".
-When spec is "nmhc" fuel can be G, D or LPG.</p></td>
+      <td><p>Fuel.</p><ul>
+<li><p>"bcom": "G" or "D".</p></li>
+<li><p>"tyre" or "tire": not necessary.</p></li>
+<li><p>"brake": not necessary.</p></li>
+<li><p>"road": not necessary.</p></li>
+<li><p>"nox": "G", "D", "LPG", "E85" or "CNG".</p></li>
+<li><p>"nmhc": "G", "D" or "LPG".</p></li>
+<li><p>"pmiag", "pmneu",  "pmneu2": not necessary.</p></li>
+<li><p>"iag_racm": "G", "E" or "D".</p></li>
+<li><p>"iag" or "iag_cb05": "G", "E" or "D".</p></li>
+<li><p>"iag_cb05v2": "G", "E" or "D".</p></li>
+<li><p>"neu_cb05": "G", "E" or "D".</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>eu</th>
-      <td><p>Euro emission standard: "PRE", "ECE_1501", "ECE_1502", "ECE_1503",
-"I", "II", "III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
-"IV-ADFP","V-ADFP" and "OPEN_LOOP". When spec is "iag" accept the values
-"Exhaust" "Evaporative" and "Liquid". When spec is "nox" eu can be
-"PRE", "I", "II", "III", "IV", "V", "VI", "VIc", "III-DPF" or "III+CRT".
-Not required for "tyre", "brake" or "road"</p></td>
+      <td><p>Emission standard</p><ul>
+<li><p>"bcom": "G" or "D".</p></li>
+<li><p>"tyre" or "tire": not necessary.</p></li>
+<li><p>"brake": not necessary.</p></li>
+<li><p>"road": not necessary.</p></li>
+<li><p>"nox": "G", "D", "LPG", "E85" or "CNG".</p></li>
+<li><p>"nmhc": "PRE", "ECE_1501", "ECE_1502", "ECE_1503","I", "II",
+"III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
+"IV-ADFP","V-ADFP" or "OPEN_LOOP". eu can be "ALL" if spec is "nmhc" and
+fuel is "LPG"</p></li>
+<li><p>"pmiag", "pmneu",  "pmneu2": not necessary.</p></li>
+<li><p>"iag_racm": "Exhaust", "Evaporative" or "Liquid".</p></li>
+<li><p>"iag" or "iag_cb05": "Exhaust", "Evaporative" or "Liquid".</p></li>
+<li><p>"iag_cb05v2": "Exhaust", "Evaporative" or "Liquid".</p></li>
+<li><p>"neu_cb05": "Exhaust", "Evaporative" or "Liquid".</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>show</th>
@@ -223,7 +246,7 @@ c(e_so4i = 0.0077,  e_so4j = 0.0623,  e_no3i = 0.00247,
 e_no3j = 0.01053,  e_pm2.5i = 0.1,  e_pm2.5j = 0.3,
 e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
 e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
-argument is preseent, new values are used.</p></td>
+argument is present, new values are used.</p></td>
     </tr>
     </table>
 
@@ -232,17 +255,15 @@ argument is preseent, new values are used.</p></td>
     <p>dataframe of speciation in grams or mols</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>when spec = "iag":
-veh is only "veh",
-fuel is "G"  (blended with 25% ethanol), "D" (blended with 5% of biodiesel)
-or "E" (Ethanol 100%).
-eu is "Evaporative", "Liquid" or "Exhaust",</p>
-<p>emissions of "pmiag" speciate pm2.5 into e_so4i, e_so4j, e_no3i,
+    <p>spec <strong>"pmiag"</strong> speciate pm2.5 into e_so4i, e_so4j, e_no3i,
 e_no3j, e_mp2.5i, e_mp2.5j, e_orgi, e_orgj, e_eci, e_ecj and h2o. Reference:
 Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
 cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
 amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
 Parana, 2015.</p>
+<p>specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
+from Northeastern University</p>
+<p>pmiag2 pass the mass only on j fraction</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>"bcom": Ntziachristos and Zamaras. 2016. Passneger cars, light
@@ -276,10 +297,15 @@ Environment Canada, September 26, 2006.</p>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Do not run</span>
 <span class='va'>pm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>100</span>, mean <span class='op'>=</span> <span class='fl'>400</span>, sd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, veh <span class='op'>=</span> <span class='st'>"PC"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"I"</span><span class='op'>)</span>
-<span class='va'>dfa</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"e_eth"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span>
-<span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"e_tol"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span>
-<span class='va'>dfc</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"e_so4i"</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, veh <span class='op'>=</span> <span class='st'>"PC"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"I"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"brake"</span>, veh <span class='op'>=</span> <span class='st'>"PC"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"I"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>dfa</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"iag"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"iag_cb05v2"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"neu_cb05"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='va'>pm</span>, <span class='st'>"g/km^2/h"</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmiag"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmneu"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmneu2"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

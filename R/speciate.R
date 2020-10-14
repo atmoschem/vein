@@ -5,38 +5,65 @@
 #' will be added more speciations
 #'
 #' @param x Emissions estimation
-#' @param spec speciation: The speciations are: "bcom", "tyre" (or "tire"), "brake", "road",
-#' "iag", "iag-tunnel","pmiag", "pmiag-tunnel", "nox", "nmhc". 'iag' now includes a speciation for use of industrial and
-#' building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
-#' speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
-#' gridded emissions (flux). It also accepts one of the following pollutants:
-#' 'e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
-#' 'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket',
-#' "e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
-#' "e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj" and these pollutants
-#' with tunnel, e.g. "e_eth-tunnel".
+#' @param spec The speciations are:
+#' \itemize{
+#' \item{"bcom"}{: Splits PM2.5 in black carbon and organic matter.}
+#' \item{"tyre" or "tire"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
+#' \item{"brake"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
+#' \item{"road"}{: Splits PM in PM10 and PM2.5.}
+#' \item{"nox"}{: Splits NOx in NO and NO2.}
+#' \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
+#' \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
+#' \item{"iag_racm"}{: ethanol emissions added in hc3.}
+#' \item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
+#' \item{"iag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group .}
+#' \item{"neu_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
+#' }
 #' @param veh Type of vehicle:
-#' When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
-#' When spec is "iag" veh can take two values depending:
-#' when the speciation is for vehicles veh accepts "veh", eu "Evaporative",
-#' "Liquid" or "Exhaust" and fuel "G", "E" or "D",
-#' when the speciation is for painting, veh is "paint" fuel or eu can be
-#' "industrial" or "building"
-#' when spec is "nmhc", veh can be "LDV" with fuel "G" or "D" and eu "PRE", "I",
-#' "II", "III", "IV", "V", or "VI".
-#' when spec is "nmhc", veh can be "HDV" with fuel "D" and eu  "PRE", "I",
-#' "II", "III", "IV", "V", or "VI".
-#' when spec is "nmhc" and fuel is "LPG", veh and eu must be "ALL"
-#' @param fuel Fuel. When spec is "bcom" fuel can be "G" or "D".
-#' When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
-#' be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "brake" or "road".
-#' When spec is "nmhc" fuel can be G, D or LPG.
-#' @param eu Euro emission standard: "PRE", "ECE_1501", "ECE_1502", "ECE_1503",
-#'  "I", "II", "III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
-#'  "IV-ADFP","V-ADFP" and "OPEN_LOOP". When spec is "iag" accept the values
-#'  "Exhaust" "Evaporative" and "Liquid". When spec is "nox" eu can be
-#'  "PRE", "I", "II", "III", "IV", "V", "VI", "VIc", "III-DPF" or "III+CRT".
-#'  Not required for "tyre", "brake" or "road"
+#' \itemize{
+#' \item{"bcom"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
+#' \item{"tyre" or "tire"}{: not necessary.}
+#' \item{"brake"}{: not necessary.}
+#' \item{"road"}{: not necessary.}
+#' \item{"nox"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
+#' \item{"nmhc"}{: veh can be "LDV", "HDV" or "LPG".}
+#' \item{""pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+#' \item{"iag_racm"}{: veh accepts "veh".}
+#' \item{"iag" or "iag_cb05"}{: veh accepts "veh" .}
+#' \item{"iag_cb05v2"}{: veh accepts "veh" .}
+#' \item{"neu_cb05"}{: veh accepts "veh" .}
+#' }
+#' @param fuel Fuel.
+#' \itemize{
+#' \item{"bcom"}{: "G" or "D".}
+#' \item{"tyre" or "tire"}{: not necessary.}
+#' \item{"brake"}{: not necessary.}
+#' \item{"road"}{: not necessary.}
+#' \item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
+#' \item{"nmhc"}{: "G", "D" or "LPG".}
+#' \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+#' \item{"iag_racm"}{: "G", "E" or "D".}
+#' \item{"iag" or "iag_cb05"}{: "G", "E" or "D".}
+#' \item{"iag_cb05v2"}{: "G", "E" or "D".}
+#' \item{"neu_cb05"}{: "G", "E" or "D".}
+#' }
+#' @param eu Emission standard
+#' \itemize{
+#' \item{"bcom"}{: "G" or "D".}
+#' \item{"tyre" or "tire"}{: not necessary.}
+#' \item{"brake"}{: not necessary.}
+#' \item{"road"}{: not necessary.}
+#' \item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
+#' \item{"nmhc"}{: "PRE", "ECE_1501", "ECE_1502", "ECE_1503","I", "II",
+#' "III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
+#' "IV-ADFP","V-ADFP" or "OPEN_LOOP". eu can be "ALL" if spec is "nmhc" and
+#' fuel is "LPG"}
+#' \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+#' \item{"iag_racm"}{: "Exhaust", "Evaporative" or "Liquid".}
+#' \item{"iag" or "iag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+#' \item{"iag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
+#' \item{"neu_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+#' }
 #' @param show when TRUE shows row of table with respective speciation
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
@@ -45,7 +72,7 @@
 #' e_no3j = 0.01053,  e_pm2.5i = 0.1,  e_pm2.5j = 0.3,
 #' e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
 #' e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
-#' argument is preseent, new values are used.
+#' argument is present, new values are used.
 #' @importFrom units as_units
 #' @importFrom sf st_as_sf st_set_geometry
 #' @return dataframe of speciation in grams or mols
@@ -76,260 +103,291 @@
 #' Associates, Inc. for David Niemi, Marc Deslauriers, and Lisa Graham of
 #' Environment Canada, September 26, 2006.
 #'
-#' @note when spec = "iag":
-#' veh is only "veh",
-#' fuel is "G"  (blended with 25\% ethanol), "D" (blended with 5\% of biodiesel)
-#' or "E" (Ethanol 100\%).
-#' eu is "Evaporative", "Liquid" or "Exhaust",
-#' @note emissions of "pmiag" speciate pm2.5 into e_so4i, e_so4j, e_no3i,
+#' @note spec \strong{"pmiag"} speciate pm2.5 into e_so4i, e_so4j, e_no3i,
 #' e_no3j, e_mp2.5i, e_mp2.5j, e_orgi, e_orgj, e_eci, e_ecj and h2o. Reference:
 #' Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
 #' cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
 #' amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
 #' Parana, 2015.
+#'
+#' specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
+#' from Northeastern University
+#'
+#' pmiag2 pass the mass only on j fraction
 #' @export
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' # Do not run
 #' pm <- rnorm(n = 100, mean = 400, sd = 2)
-#' df <- speciate(pm, veh = "PC", fuel = "G", eu = "I")
-#' dfa <- speciate(pm, spec = "e_eth", veh = "veh", fuel = "G", eu = "Exhaust")
-#' dfb <- speciate(pm, spec = "e_tol", veh = "veh", fuel = "G", eu = "Exhaust")
-#' dfc <- speciate(pm, spec = "e_so4i")
+#' (df <- speciate(pm, veh = "PC", fuel = "G", eu = "I"))
+#' (df <- speciate(pm, spec = "brake", veh = "PC", fuel = "G", eu = "I"))
+#' (dfa <- speciate(pm, spec = "iag", veh = "veh", fuel = "G", eu = "Exhaust"))
+#' (dfb <- speciate(pm, spec = "iag_cb05v2", veh = "veh", fuel = "G", eu = "Exhaust"))
+#' (dfb <- speciate(pm, spec = "neu_cb05", veh = "veh", fuel = "G", eu = "Exhaust"))
+#' pm <- units::set_units(pm, "g/km^2/h")
+#' (dfb <- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))
+#' (dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
+#' (dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
 #' }
-speciate <- function (x, spec = "bcom", veh, fuel, eu, show = FALSE,
-                      list = FALSE, pmpar) {
-nvoc <- c('e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
-            'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket')
-pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
-                   "e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj", "h2o"))
+speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
+                     list = FALSE, pmpar) {
+  nvoc <- c(
+    "e_eth", "e_hc3", "e_hc5", "e_hc8", "e_ol2", "e_olt", "e_oli",
+    "e_iso", "e_tol", "e_xyl", "e_c2h5oh", "e_hcho", "e_ch3oh", "e_ket"
+  )
+  pmdf <- data.frame(c(
+    "e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
+    "e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj", "h2o"
+  ))
 
   # bcom black carbon and organic matter####
-  if (spec=="bcom") {
+  if (spec == "bcom") {
     bcom <- sysdata$bcom
-    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-    dfb <- Emissions(data.frame(BC = x*df$BC/100,
-                                OM = (df$OM/100)*(x*df$BC/100)))
-    if (show == TRUE) {print(df) } else if (list == TRUE){
-      dfb <- as.list(dfb) }
-    # tyre ####
-  } else if (spec=="tyre" | spec=="tire") {
-    df <- data.frame(PM10 = 0.6, PM2.5 = 0.42,PM1 = 0.06,
-                     PM0.1 = 0.048)
-    dfb <- Emissions(data.frame(PM10 = x*0.6, PM2.5 = x*0.42,PM1 = x*0.06,
-                                PM0.1 = x*0.048))
+    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ]
+    dfb <- Emissions(data.frame(
+      BC = x * df$BC / 100,
+      OM = (df$OM / 100) * (x * df$BC / 100)
+    ))
     if (show == TRUE) {
       print(df)
-    } else if (list == TRUE){
+    } else if (list == TRUE) {
+      dfb <- as.list(dfb)
+    }
+    # tyre ####
+  } else if (spec == "tyre" | spec == "tire") {
+    df <- data.frame(
+      PM10 = 0.6, PM2.5 = 0.42, PM1 = 0.06,
+      PM0.1 = 0.048
+    )
+    dfb <- Emissions(data.frame(
+      PM10 = x * 0.6, PM2.5 = x * 0.42, PM1 = x * 0.06,
+      PM0.1 = x * 0.048
+    ))
+    if (show == TRUE) {
+      print(df)
+    } else if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # brake ####
-  } else if (spec=="brake") {
-    df <- data.frame(PM10 = 0.98, PM2.5 = 0.39,PM1 = 0.1,
-                     PM0.1 = 0.08)
-    dfb <- Emissions(data.frame(PM10 = x*0.98, PM2.5 = x*0.39,PM1 = x*0.1,
-                                PM0.1 = x*0.08))
+  } else if (spec == "brake") {
+    df <- data.frame(
+      PM10 = 0.98, PM2.5 = 0.39, PM1 = 0.1,
+      PM0.1 = 0.08
+    )
+    dfb <- Emissions(data.frame(
+      PM10 = x * 0.98, PM2.5 = x * 0.39, PM1 = x * 0.1,
+      PM0.1 = x * 0.08
+    ))
     if (show == TRUE) {
       print(df)
-    } else if (list == TRUE){
+    } else if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # road ####
-  } else if (spec=="road") {
+  } else if (spec == "road") {
     df <- data.frame(PM10 = 0.5, PM2.5 = 0.27)
-    dfb <- Emissions(data.frame(PM10 = x*0.5, PM2.5 = x*0.27))
-    if (show == TRUE) {print(df) } else if (list == TRUE){
+    dfb <- Emissions(data.frame(PM10 = x * 0.5, PM2.5 = x * 0.27))
+    if (show == TRUE) {
+      print(df)
+    } else if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # iag ####
-  } else if (spec %in% c("iag", "iag-tunnel")) {
+  } else if (spec %in% c("iag", "iag_cb05", "iag_cb05v2", "neu_cb05", "iag_racm")) {
     iag <- sysdata$iag
-    if(spec == "iag-tunnel") {
-      iag[iag$STANDARD == "Exhaust" &
-            iag$FUEL %in% c("G", "E"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
-                                                  iag$FUEL %in% c("G", "E"), 4:18]*1.842674
-      iag[iag$STANDARD == "Exhaust" &
-            iag$FUEL %in% c("D"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
-                                                      iag$FUEL %in% c("D"), 4:18]*2.905313
-    }
 
+    spec <- ifelse(spec == "iag", "iag_cb05", spec)
 
-    df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
+    iag <- iag[iag$mech == spec, ]
+    iag$VEH_FUEL_STANDARD <- paste(iag$VEH, iag$FUEL, iag$STANDARD, sep = "_")
+    iag2 <- long_to_wide(
+      df = iag,
+      column_with_new_names = "groups",
+      column_with_data = "x",
+      column_fixed = "VEH_FUEL_STANDARD"
+    )
+
+    iag2 <- cbind(
+      iag2,
+      do.call(
+        "rbind",
+        strsplit(
+          x = iag2$VEH_FUEL_STANDARD,
+          split = "_"
+        )
+      )
+    )
+    names(iag2)[ncol(iag2)] <- "STANDARD"
+    names(iag2)[ncol(iag2) - 1] <- "FUEL"
+    names(iag2)[ncol(iag2) - 2] <- "VEH"
+    iag <- iag2
+    iag$VEH_FUEL_STANDARD <- NULL
+    df <- iag[iag$VEH == veh &
+      iag$FUEL == fuel &
+      iag$STANDARD == eu, ]
+
+    df <- df[, 1:(ncol(df) - 3)]
+
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
-        x[ , i] <- as.numeric(x[ , i])
+        x[, i] <- as.numeric(x[, i])
       }
     }
     if (list == T) {
-      dfx <- df[, 4:ncol(df)]
-      dfb <- lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100
+      dfx <- df[, 1:ncol(df)]
+      dfb <- lapply(1:ncol(dfx), function(i) {
+        dfx[, i] * x / 100
       })
       names(dfb) <- names(dfx)
       for (j in 1:length(dfb)) {
         for (i in 1:ncol(x)) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("mol h-1")
+          dfb[[j]][, i] <- dfb[[j]][, i] * units::as_units("mol h-1")
         }
       }
-      if (show == TRUE) { print(df) }
+      if (show == TRUE) {
+        print(df)
+      }
     } else {
-      dfx <- df[, 4:ncol(df)]
-      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100
+      dfx <- df[, 1:ncol(df)]
+      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i) {
+        dfx[, i] * x / 100
       }))
       names(dfb) <- names(dfx)
-      # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
-      # e_xyl, e_c2h5oh, e_hcho /100 because it is based on 100g of fuel
-      # e_ch3oh and e_ket /100 because it is percentage
     }
     if (show == TRUE) {
       print(df)
     }
     # names IAG ####
-  } else if (spec %in% c(nvoc, paste0(nvoc, "-tunnel"))) {
-    iag <- sysdata$iag
-
-    if(spec %in% paste0(nvoc, "-tunnel")) {
-      iag[iag$STANDARD == "Exhaust" &
-            iag$FUEL %in% c("G", "E"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
-                                                      iag$FUEL %in% c("G", "E"), 4:18]*1.842674
-      iag[iag$STANDARD == "Exhaust" &
-            iag$FUEL %in% c("D"), 4:18] <- iag[iag$STANDARD == "Exhaust" &
-                                                 iag$FUEL %in% c("D"), 4:18]*2.905313
-    }
-
-
-    df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , spec]
-    df <- data.frame(spec = df)
-    names(df) <- spec
-    if (is.data.frame(x)) {
-      for (i in 1:ncol(x)) {
-        x[ , i] <- as.numeric(x[ , i])
-      }
-    }
-    if (list == T) {
-      dfx <- df
-      dfb <- lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100
-      })
-      names(dfb) <- names(dfx)
-      for (j in 1:length(dfb)) {
-        for (i in 1:ncol(x)) {
-          dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("mol h-1")
-        }
-      }
-      if (show == TRUE) { print(df) }
-    } else {
-      dfx <- df
-      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100
-      }))
-      names(dfb) <- names(dfx)
-      # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
-      # e_xyl, e_c2h5oh, e_hcho /100 because it is based on 100g of fuel
-      # e_ch3oh and e_ket /100 because it is percentage
-    }
-    if (show == TRUE) {
-      print(df)
-    }
-
-
 
     # nmhc ####
-  } else if (spec=="nmhc") {
+  } else if (spec == "nmhc") {
     iag <- sysdata$nmhc
-    df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu , ]
+    df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu, ]
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
-        x[ , i] <- as.numeric(x[ , i])
+        x[, i] <- as.numeric(x[, i])
       }
-
     }
     if (list == T) {
       dfx <- df[, 4:ncol(df)]
-      dfb <- lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100 #percentage
+      dfb <- lapply(1:ncol(dfx), function(i) {
+        dfx[, i] * x / 100 # percentage
       })
       names(dfb) <- names(dfx)
 
-      if(is.data.frame(x)) {
+      if (is.data.frame(x)) {
         for (j in 1:length(dfb)) {
           for (i in 1:ncol(x)) {
-            dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("g h-1")
+            dfb[[j]][, i] <- dfb[[j]][, i] * units::as_units("g h-1")
           }
         }
       } else {
         dfb <- lapply(dfb, Emissions)
       }
 
-      if (show == TRUE) { print(df) }
-
+      if (show == TRUE) {
+        print(df)
+      }
     } else {
       dfx <- df[, 4:ncol(df)]
-      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x/100
+      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i) {
+        dfx[, i] * x / 100
       }))
       names(dfb) <- names(dfx)
-
     }
     if (show == TRUE) {
       print(df)
     }
     # nox ####
-  } else if (spec=="nox") {
+  } else if (spec == "nox") {
     bcom <- sysdata$nox
-    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu , ]
-    dfb <- Emissions(data.frame(NO2 = x*df$NO2,
-                                NO =  x*df$NO))
-    if (show == TRUE) {print(df) } else if (list == TRUE){
+    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ]
+    dfb <- Emissions(data.frame(
+      NO2 = x * df$NO2,
+      NO = x * df$NO
+    ))
+    if (show == TRUE) {
+      print(df)
+    } else if (list == TRUE) {
       dfb <- as.list(dfb)
     }
-    # PM2.5 IAG ####
-  } else if(spec %in% c("pmiag", "pmiag-tunnel")){
-
+    # MP ####
+  } else if (spec %in% c("pmiag", "pmneu", "pmneu2")) {
     message("Input emissions must be in g/(km^2)/h\n")
     message("Output flux will be  ug/(m^2)/s\n")
     message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
-    if(class(x)[1] == "sf"){
+    if (class(x)[1] == "sf") {
       x <- sf::st_set_geometry(x, NULL)
-    } else if(class(x) == "Spatial"){
+    } else if (class(x) == "Spatial") {
       x <- sf::st_as_sf(x)
       x <- sf::st_set_geometry(x, NULL)
     }
     x$id <- NULL
+
     # x (g / Xkm^2 / h)
     # x <- x*1000000 # g to micro grams
     # x <- x*(1/1000)^2 # km^2 to m^2
     # x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
-    if(!missing(pmpar)) {
-      if(length(pmpar) != 11) stop("length 'pmpar' must be 11")
+    if (!missing(pmpar)) {
+      if (length(pmpar) != 11) stop("length 'pmpar' must be 11")
       df <- as.data.frame(matrix(pmpar, ncol = length(pmpar)))
       names(df) <- names(pmpar)
     } else {
-      df <- data.frame(e_so4i = 0.0077,
-                       e_so4j = 0.0623,
-                       e_no3i = 0.00247,
-                       e_no3j = 0.01053,
-                       e_pm2.5i = 0.1,
-                       e_pm2.5j = 0.3,
-                       e_orgi = 0.0304,
-                       e_orgj = 0.1296,
-                       e_eci = 0.056,
-                       e_ecj = 0.024,
-                       h2o = 0.277)
-
+      if (spec == "pmiag") {
+        df <- data.frame(
+          e_so4i = 0.0077,
+          e_so4j = 0.0623,
+          e_no3i = 0.00247,
+          e_no3j = 0.01053,
+          e_pm2.5i = 0.1,
+          e_pm2.5j = 0.3,
+          e_orgi = 0.0304,
+          e_orgj = 0.1296,
+          e_eci = 0.056,
+          e_ecj = 0.024,
+          h2o = 0.277
+        )
+      } else if (spec == "pmneu") {
+        df <- data.frame(
+          e_so4i = 0,
+          e_so4j = 0.0077 + 0.0623,
+          e_no3i = 0,
+          e_no3j = 0.00247 + 0.01053,
+          e_pm2.5i = 0,
+          e_pm2.5j = 0.1 + 0.3,
+          e_orgi = 0,
+          e_orgj = 0.0304 + 0.1296,
+          e_eci = 0,
+          e_ecj = 0.056 + 0.024,
+          h2o = 0.277
+        )
+      } else if (spec == "pmneu2") {
+        df <- data.frame(
+          e_so4i = 0,
+          e_so4j = 0.07,
+          e_no3i = 0,
+          e_no3j = 0.015,
+          e_pm2.5i = 0,
+          e_pm2.5j = 0.3,
+          e_orgi = 0,
+          e_orgj = 0.35,
+          e_eci = 0,
+          e_ecj = 0.18,
+          h2o = 0.277
+        )
+      }
     }
 
-    if(spec == "pmiag-tunnel") df <- df*1.487109
 
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
-        x[ , i] <- units::set_units(x[ , i], "ug/m^2/s")
+        x[, i] <- units::set_units(x[, i], "ug/m^2/s")
       }
     }
     if (list == T) {
       dfx <- df
-      dfb <- lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x
+      dfb <- lapply(1:ncol(dfx), function(i) {
+        dfx[, i] * x
       })
       names(dfb) <- names(dfx)
       # for (j in 1:length(dfb)) {
@@ -337,11 +395,13 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
       #     dfb[[j]][ , i] <-   units::set_units(dfb[[j]][ , i], "g/m^2/s")
       #   }
       # }
-      if (show == TRUE) { print(df) }
+      if (show == TRUE) {
+        print(df)
+      }
     } else {
       dfx <- df
-      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x
+      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i) {
+        dfx[, i] * x
       }))
       names(dfb) <- names(dfx)
       # for (i in 1:ncol(x)) {
@@ -351,76 +411,8 @@ pmdf <- data.frame(c("e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
     if (show == TRUE) {
       print(df)
     }
-  } else if (spec %in% c(pmdf, paste0(pmdf, "-tunnel"))) {
-    message("Input emissions must be in g/(km^2)/h\n")
-    message("Output flux will be  ug/(m^2)/s\n")
-    message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
-    if(class(x)[1] == "sf"){
-      x <- sf::st_set_geometry(x, NULL)
-    } else if(class(x) == "Spatial"){
-      x <- sf::st_as_sf(x)
-      x <- sf::st_set_geometry(x, NULL)
-    }
-    x$id <- NULL
-    # x (g / Xkm^2 / h)
-    # x <- x*1000000 # g to micro grams
-    # x <- x*(1/1000)^2 # km^2 to m^2
-    # x <- x/3600#*(dx)^-2  # h to seconds. Consider the DX
-    if(!missing(pmpar)) {
-      if(length(pmpar) != 11) stop("length 'pmpar' must be 11")
-      df <- as.data.frame(matrix(pmpar, ncol = length(pmpar)))
-      names(df) <- names(pmpar)
-    } else {
-      df <- data.frame(e_so4i = 0.0077,
-                       e_so4j = 0.0623,
-                       e_no3i = 0.00247,
-                       e_no3j = 0.01053,
-                       e_pm2.5i = 0.1,
-                       e_pm2.5j = 0.3,
-                       e_orgi = 0.0304,
-                       e_orgj = 0.1296,
-                       e_eci = 0.056,
-                       e_ecj = 0.024,
-                       h2o = 0.277)
-
-    }
-
-    names(df) <- spec
-
-    if(spec %in% spec %in% paste0(pmdf, "-tunnel")) df <- df*1.487109
-
-    if (is.data.frame(x)) {
-      for (i in 1:ncol(x)) {
-        x[ , i] <- units::set_units(x[ , i], "ug/m^2/s")
-      }
-    }
-    if (list == T) {
-      dfx <- df
-      dfb <- lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x
-      })
-      names(dfb) <- names(dfx)
-      # for (j in 1:length(dfb)) {
-      #   for (i in 1:ncol(x)) {
-      #     dfb[[j]][ , i] <- dfb[[j]][ , i] * units::as_units("mol h-1")
-      #   }
-      # }
-      if (show == TRUE) { print(df) }
-    } else {
-      dfx <- df
-      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i){
-        dfx[, i]*x
-      }))
-      names(dfb) <- names(dfx)
-      # e_eth, e_hc3, e_hc5, e_hc8, e_ol2, e_olt, e_oli, e_iso, e_tol,
-      # e_xyl, e_c2h5oh, e_hcho /100 because it is based on 100g of fuel
-      # e_ch3oh and e_ket /100 because it is percentage
-    }
-    if (show == TRUE) {
-      print(df)
-    }
-
-
+  } else {
+    stop("Selelect another `spec`")
   }
   return(dfb)
 }
