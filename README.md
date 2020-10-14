@@ -40,8 +40,8 @@
 
   - *REMOVED OpenMP because of MacOS issues. I hope in the version 1.0
     of vein I can add this*
-  - Add mechanisms neu\_cb05, neu\_cb05v2, pmneu, pmneu2 (thanks to
-    Daniel Schuch from Northeastern University)
+  - Add mechanisms neu\_cb05, pmneu, pmneu2 (thanks to Daniel Schuch
+    from Northeastern University)
 
 ### TODO
 
