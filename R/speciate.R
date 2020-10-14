@@ -311,7 +311,7 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
     } else if (list == TRUE) {
       dfb <- as.list(dfb)
     }
-    # MP ####
+    # PM ####
   } else if (spec %in% c("pmiag", "pmneu", "pmneu2")) {
     message("Input emissions must be in g/(km^2)/h\n")
     message("Output flux will be  ug/(m^2)/s\n")
