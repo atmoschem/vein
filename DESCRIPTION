@@ -1,8 +1,8 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 0.9.0
-Date: 2020-09-23
+Version: 0.9.0.2
+Date: 2020-10-13
 Authors@R: c( 
   person(given = "Sergio", family = "Ibarra-Espinosa",
          role = c("aut", "cre", "wdc"),

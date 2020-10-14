@@ -50,7 +50,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0.2</span>
       </span>
     </div>
 
@@ -119,92 +119,15 @@
 <div id="vehicular-emissions-inventories-vein" class="section level1">
 <h1 class="hasAnchor">
 <a href="#vehicular-emissions-inventories-vein" class="anchor"></a><strong>V</strong>ehicular <strong>E</strong>missions <strong>IN</strong>ventories (VEIN)</h1>
-<p>Cover the following pollutants:</p>
-<div id="european-emission-factors-for-all-available-vehicle-categories-exhaust" class="section level3">
+<p><img src="https://i.imgur.com/bsA6iDU.png"></p>
+<div id="what-is-new" class="section level3">
 <h3 class="hasAnchor">
-<a href="#european-emission-factors-for-all-available-vehicle-categories-exhaust" class="anchor"></a>European emission factors for all available vehicle categories exhaust:</h3>
+<a href="#what-is-new" class="anchor"></a>What is new?</h3>
 <ul>
-<li>
-<strong>Criteria (g/km)</strong>: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”, “SO2”, “Pb”, “FC” (Fuel Consumption),“NO”, “NO2”.</li>
-<li>
-<strong>PAH and POP</strong>: “indeno(1,2,3-cd)pyrene”, “benzo(k)fluoranthene”, “benzo(b)fluoranthene”, “benzo(ghi)perylene”, “fluoranthene”, “benzo(a)pyrene”, “pyrene”, “perylene”, “anthanthrene”, “benzo(b)fluorene”, “benzo(e)pyrene”, “triphenylene”, “benzo(j)fluoranthene”, “dibenzo(a,j)anthacene”, “dibenzo(a,l)pyrene”, “3,6-dimethyl-phenanthrene”, “benzo(a)anthracene”, “acenaphthylene”, “acenapthene”, “chrysene”, “phenanthrene”, “napthalene”, “anthracene”, “coronene”, “dibenzo(ah)anthracene”.</li>
-<li>
-<strong>Dioxins and Furans (g/km)</strong>: “PCDD”, “PCDF”, “PCB”.</li>
-<li>
-<strong>Metals (g/km)</strong>: “As”, “Cd”, “Cr”, “Cu”, “Hg”, “Ni”, “Pb”, “Se”, “Zn”.</li>
-<li>
-<strong>NMHC (g/km)</strong>:</li>
-<li>
-<em>ALKANES</em>: “ethane”, “propane”, “butane”, “isobutane”, “pentane”, “isopentane”, “hexane”, “heptane”, “octane”, “2-methylhexane”, “nonane”, “2-methylheptane”, “3-methylhexane”, “decane”, “3-methylheptane”, “alkanes_C10_C12”, “alkanes_C13”.</li>
-<li>
-<em>CYCLOALKANES</em>: “cycloalcanes”.</li>
-<li>
-<em>ALKENES</em>: “ethylene”, “propylene”, “propadiene”, “1-butene”, “isobutene”, “2-butene”, “1,3-butadiene”, “1-pentene”, “2-pentene”, “1-hexene”, “dimethylhexene”.</li>
-<li>
-<em>ALKYNES</em>:“1-butyne”, “propyne”, “acetylene”.</li>
-<li>
-<em>ALDEHYDES</em>: “formaldehyde”, “acetaldehyde”, “acrolein”, “benzaldehyde”, “crotonaldehyde”, “methacrolein”, “butyraldehyde”, “isobutanaldehyde”, “propionaldehyde”, “hexanal”, “i_valeraldehyde”, “valeraldehyde”, “o_tolualdehyde”, “m_tolualdehyde”, “p_tolualdehyde”.</li>
-<li>
-<em>KETONES</em>: “acetone”, “methylethlketone”.</li>
-<li>
-<em>AROMATICS</em>: “toluene”, “ethylbenzene”, “m-xylene”, “p-xylene”, “o-xylene”, “1,2,3-trimethylbenzene”, “1,2,4-trimethylbenzene”, “1,3,5-trimethylbenzene”, “styrene”, “benzene”, “C9”, “C10”, “C13”.</li>
-<li><strong>Active Surface (cm2/km)</strong></li>
-<li>“AS_urban”, “AS_rural”, “AS_highway”.</li>
-<li><strong>Total Number of particles (N/km)</strong></li>
-<li>“N_urban”, “N_rural”, “N_highway”, “N_50nm_urban”, “N_50_100nm_rural”, “N_100_1000nm_highway”.</li>
+<li><em>REMOVED OpenMP because of MacOS issues. I hope in the version 1.0 of vein I can add this</em></li>
+<li>Add mechanisms neu_cb05, neu_cb05v2, pmneu, pmneu2 (thanks to Daniel Schuch from Northeastern University)</li>
 </ul>
 </div>
-<div id="european-emission-factors-speciation-for-evapoative-emissions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#european-emission-factors-speciation-for-evapoative-emissions" class="anchor"></a>European emission factors speciation for evapoative emissions:</h3>
-<ul>
-<li>
-<strong>Criteria (g/km)</strong>: “NMHC”.</li>
-<li>
-<strong>NMHC (g/km)</strong>:</li>
-<li>
-<em>ALKANES</em>: “ethane”, “propane”, “n-butane”, “i-pentane”, “n-pentane”, “2-methylheptane”, “3-methylheptane”, “n-hexane”, “n-heptane”</li>
-<li>
-<em>ALKENES</em>: “ethene”, “propene”, “1-butene”, “trans-2-butene”, “isobutene”, “cis-2-butene”, “1,3-butadiene”, “trans-2-pentene”, “cis-2-pentene”, “isoprene”</li>
-<li>
-<em>ALKYNES</em>:“propyne”, “acetylene”.</li>
-<li>
-<em>AROMATICS</em>: “benzene”, “toluene”, “ethylbenzene”, “m-xylene”, “o-xylene”, “1,2,3-trimethylbenzene” and “1,3,5-trimethylbenzene”,</li>
-</ul>
-</div>
-<div id="brazilian-emission-factors-for-all-available-vehicle-categories" class="section level3">
-<h3 class="hasAnchor">
-<a href="#brazilian-emission-factors-for-all-available-vehicle-categories" class="anchor"></a>Brazilian emission factors for all available vehicle categories:</h3>
-<ul>
-<li>“COd”, “HCd”, “NMHCd”, “CH4”, “NOxd”, “CO2” “PM”, “N2O”, “KML”, “FC”, “NO2d”, “NOd”, “gCO2/KWH”, “RCHOd”, “CO”, “HC”, “NMHC”, “NOx”, “NO2” ,“NO”, “RCHO” and scaled factors based on tunnel measurements see <a href="https://atmoschem.github.io/vein/reference/ef_cetesb.html">ef_cetesb</a>.</li>
-</ul>
-</div>
-<div id="brazilian-speciation-based-on-iagusp-fátimas-group-studies" class="section level3">
-<h3 class="hasAnchor">
-<a href="#brazilian-speciation-based-on-iagusp-f%C3%A1timas-group-studies" class="anchor"></a>Brazilian speciation based on IAG/USP (Fátima’s group) studies:</h3>
-<ul>
-<li>“e_eth”, “e_hc3”, “e_hc5”, “e_hc8”, “e_ol2”, “e_olt”, “e_oli”, “e_iso”, “e_tol”, “e_xyl”, “e_c2h5oh”, “e_ald”, “e_hcho”, “e_ch3oh”, “e_ket”, “E_SO4i”, “E_SO4j”, “E_NO3i”, “E_NO3j”, “E_MP2.5i”, “E_MP2.5j”, “E_ORGi”, “E_ORGj”, “E_ECi”, “E_ECj” with option to scaled based on tunnel measurements.</li>
-</ul>
-</div>
-<div id="base-emission-factors-from-international-emission-model-ive-for-all-available-vehicle-categories" class="section level3">
-<h3 class="hasAnchor">
-<a href="#base-emission-factors-from-international-emission-model-ive-for-all-available-vehicle-categories" class="anchor"></a>Base emission factors from International Emission Model (IVE) for all available vehicle categories:</h3>
-<ul>
-<li>“VOC_gkm”, “CO_gkm”, “NOx_gkm”, “PM_gkm”, “Pb_gkm”, “SO2_gkm”, “NH3_gkm”, “ONE_3_butadiene_gkm”, “formaldehyde_gkm”, “acetaldehyde_gkm”, “benzene_gkm”, “EVAP_gkm”, “CO2_gkm”, “N20_gkm”, “CH4_gkm”, “VOC_gstart”, “CO_gstart”, “NOx_gstart”, “PM_gstart”, “Pb_gstart”, “SO2_gstart”, “NH3_gstart”, “ONE_3butadiene_gstart”, “formaldehyde_gstart”,“acetaldehyde_gstart”, “benzene_gstart”, “EVAP_gstart”, “CO2_gstart”, “N20_gstart”, “CH4_gstart”</li>
-</ul>
-</div>
-<div id="emission-factors-from-chinese-emission-guidelines-你好中国朋友" class="section level3">
-<h3 class="hasAnchor">
-<a href="#emission-factors-from-chinese-emission-guidelines-%E4%BD%A0%E5%A5%BD%E4%B8%AD%E5%9B%BD%E6%9C%8B%E5%8F%8B" class="anchor"></a>Emission factors from Chinese emission guidelines 你好中国朋友</h3>
-<ul>
-<li>“CO”, “NOx”, “HC”, “PM10”, “PM2.5”.</li>
-<li>They depend on humidity, temperature, altitude and other parameters.</li>
-</ul>
-</div>
-<div id="what-is-new" class="section level2">
-<h2 class="hasAnchor">
-<a href="#what-is-new" class="anchor"></a>What is new?</h2>
-<p><em>REMOVED OpenMP because of MacOS issues. I hope in the version 1.0 of vein I can add this</em></p>
 <div id="todo" class="section level3">
 <h3 class="hasAnchor">
 <a href="#todo" class="anchor"></a>TODO</h3>
@@ -215,17 +138,15 @@
 <li>Update ef_ldv* and ef_hdv* to EEA2019</li>
 <li>Include speed functions with Fortran and OpenMP</li>
 <li>Include several chemical mechanism</li>
+<li>tidy the code</li>
 <li>Add EF from HBEFA?</li>
 <li>See issues <a href="https://github.com/atmoschem/vein/issues">GitHub</a> and <a href="https://gitlab.com/ibarraespinosa/vein/-/issues">GitLab</a>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div id="new-in-vein" class="section level1">
-<h1 class="hasAnchor">
-<a href="#new-in-vein" class="anchor"></a>New in VEIN?</h1>
-<p><img src="https://i.imgur.com/bsA6iDU.png"></p>
+<div id="new-in-vein" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-in-vein" class="anchor"></a>New in VEIN?</h2>
 <p>No worries! Just install <a href="https://www.google.com/search?q=install+R&amp;oq=install+R&amp;aqs=chrome..69i57j35i39l2j0l3j69i60l2.1308j0j7&amp;sourceid=chrome&amp;ie=UTF-8">R</a>, <a href="https://www.google.com/search?sxsrf=ALeKk00EtkaL-W834eJbAfWxSgAtHlzAuw%3A1600952042358&amp;ei=6pZsX7G5FaS65OUP9NuOqAk&amp;q=install+Rstudio&amp;oq=install+Rstudio&amp;gs_lcp=CgZwc3ktYWIQAzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywE6BAgAEEdQiaIBWJSoAWCPqgFoAHABeAGAAaMCiAGuB5IBBTAuNS4xmAEAoAEBqgEHZ3dzLXdpesgBCMABAQ&amp;sclient=psy-ab&amp;ved=0ahUKEwix1qWO64HsAhUkHbkGHfStA5UQ4dUDCA0&amp;uact=5">Rstudio</a> and then</p>
 <div id="system-requirements" class="section level3">
 <h3 class="hasAnchor">
@@ -240,6 +161,7 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"vein"</span><span class="op">)</span></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_gitlab.html">install_gitlab</a></span><span class="op">(</span><span class="st">"ibarraespinosa/vein"</span><span class="op">)</span></pre></div>
+</div>
 </div>
 <div id="approaches" class="section level2">
 <h2 class="hasAnchor">

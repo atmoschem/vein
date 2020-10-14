@@ -9,41 +9,68 @@ speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE, pmpar)
 \arguments{
 \item{x}{Emissions estimation}
 
-\item{spec}{speciation: The speciations are: "bcom", "tyre" (or "tire"), "brake", "road",
-"iag", "iag-tunnel","pmiag", "pmiag-tunnel", "nox", "nmhc". 'iag' now includes a speciation for use of industrial and
-building paintings. "bcom" stands for black carbon and organic matter. "pmiag"
-speciates PM2.5 and requires only argument x of PM2.5 emissions in g/h/km^2 as
-gridded emissions (flux). It also accepts one of the following pollutants:
-'e_eth', 'e_hc3', 'e_hc5', 'e_hc8', 'e_ol2', 'e_olt', 'e_oli',
-'e_iso', 'e_tol', 'e_xyl', 'e_c2h5oh', 'e_hcho', 'e_ch3oh', 'e_ket',
-"e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
-"e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj" and these pollutants
-with tunnel, e.g. "e_eth-tunnel".}
+\item{spec}{The speciations are:
+\itemize{
+\item{"bcom"}{: Splits PM2.5 in black carbon and organic matter.}
+\item{"tyre" or "tire"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
+\item{"brake"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
+\item{"road"}{: Splits PM in PM10 and PM2.5.}
+\item{"nox"}{: Splits NOx in NO and NO2.}
+\item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
+\item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
+\item{"iag_racm"}{: ethanol emissions added in hc3.}
+\item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
+\item{"iag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group .}
+\item{"neu_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
+}}
 
 \item{veh}{Type of vehicle:
-When spec is "bcom" or "nox" veh can be "PC", "LCV", HDV" or "Motorcycle".
-When spec is "iag" veh can take two values depending:
-when the speciation is for vehicles veh accepts "veh", eu "Evaporative",
-"Liquid" or "Exhaust" and fuel "G", "E" or "D",
-when the speciation is for painting, veh is "paint" fuel or eu can be
-"industrial" or "building"
-when spec is "nmhc", veh can be "LDV" with fuel "G" or "D" and eu "PRE", "I",
-"II", "III", "IV", "V", or "VI".
-when spec is "nmhc", veh can be "HDV" with fuel "D" and eu  "PRE", "I",
-"II", "III", "IV", "V", or "VI".
-when spec is "nmhc" and fuel is "LPG", veh and eu must be "ALL"}
+\itemize{
+\item{"bcom"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
+\item{"tyre" or "tire"}{: not necessary.}
+\item{"brake"}{: not necessary.}
+\item{"road"}{: not necessary.}
+\item{"nox"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
+\item{"nmhc"}{: veh can be "LDV", "HDV" or "LPG".}
+\item{""pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+\item{"iag_racm"}{: veh accepts "veh".}
+\item{"iag" or "iag_cb05"}{: veh accepts "veh" .}
+\item{"iag_cb05v2"}{: veh accepts "veh" .}
+\item{"neu_cb05"}{: veh accepts "veh" .}
+}}
 
-\item{fuel}{Fuel. When spec is "bcom" fuel can be "G" or "D".
-When spec is "iag" fuel can be "G", "E" or "D". When spec is "nox" fuel can
-be "G", "D", "LPG", "E85" or "CNG". Not required for "tyre", "brake" or "road".
-When spec is "nmhc" fuel can be G, D or LPG.}
+\item{fuel}{Fuel.
+\itemize{
+\item{"bcom"}{: "G" or "D".}
+\item{"tyre" or "tire"}{: not necessary.}
+\item{"brake"}{: not necessary.}
+\item{"road"}{: not necessary.}
+\item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
+\item{"nmhc"}{: "G", "D" or "LPG".}
+\item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+\item{"iag_racm"}{: "G", "E" or "D".}
+\item{"iag" or "iag_cb05"}{: "G", "E" or "D".}
+\item{"iag_cb05v2"}{: "G", "E" or "D".}
+\item{"neu_cb05"}{: "G", "E" or "D".}
+}}
 
-\item{eu}{Euro emission standard: "PRE", "ECE_1501", "ECE_1502", "ECE_1503",
-"I", "II", "III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
-"IV-ADFP","V-ADFP" and "OPEN_LOOP". When spec is "iag" accept the values
-"Exhaust" "Evaporative" and "Liquid". When spec is "nox" eu can be
-"PRE", "I", "II", "III", "IV", "V", "VI", "VIc", "III-DPF" or "III+CRT".
-Not required for "tyre", "brake" or "road"}
+\item{eu}{Emission standard
+\itemize{
+\item{"bcom"}{: "G" or "D".}
+\item{"tyre" or "tire"}{: not necessary.}
+\item{"brake"}{: not necessary.}
+\item{"road"}{: not necessary.}
+\item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
+\item{"nmhc"}{: "PRE", "ECE_1501", "ECE_1502", "ECE_1503","I", "II",
+"III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
+"IV-ADFP","V-ADFP" or "OPEN_LOOP". eu can be "ALL" if spec is "nmhc" and
+fuel is "LPG"}
+\item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+\item{"iag_racm"}{: "Exhaust", "Evaporative" or "Liquid".}
+\item{"iag" or "iag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+\item{"iag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
+\item{"neu_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+}}
 
 \item{show}{when TRUE shows row of table with respective speciation}
 
@@ -55,7 +82,7 @@ c(e_so4i = 0.0077,  e_so4j = 0.0623,  e_no3i = 0.00247,
 e_no3j = 0.01053,  e_pm2.5i = 0.1,  e_pm2.5j = 0.3,
 e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
 e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
-argument is preseent, new values are used.}
+argument is present, new values are used.}
 }
 \value{
 dataframe of speciation in grams or mols
@@ -66,27 +93,31 @@ It covers black carbon and organic matter from particulate matter. Soon it
 will be added more speciations
 }
 \note{
-when spec = "iag":
-veh is only "veh",
-fuel is "G"  (blended with 25\% ethanol), "D" (blended with 5\% of biodiesel)
-or "E" (Ethanol 100\%).
-eu is "Evaporative", "Liquid" or "Exhaust",
-
-emissions of "pmiag" speciate pm2.5 into e_so4i, e_so4j, e_no3i,
+spec \strong{"pmiag"} speciate pm2.5 into e_so4i, e_so4j, e_no3i,
 e_no3j, e_mp2.5i, e_mp2.5j, e_orgi, e_orgj, e_eci, e_ecj and h2o. Reference:
 Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da
 cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
 amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
 Parana, 2015.
+
+specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
+from Northeastern University
+
+pmiag2 pass the mass only on j fraction
 }
 \examples{
 \dontrun{
 # Do not run
 pm <- rnorm(n = 100, mean = 400, sd = 2)
-df <- speciate(pm, veh = "PC", fuel = "G", eu = "I")
-dfa <- speciate(pm, spec = "e_eth", veh = "veh", fuel = "G", eu = "Exhaust")
-dfb <- speciate(pm, spec = "e_tol", veh = "veh", fuel = "G", eu = "Exhaust")
-dfc <- speciate(pm, spec = "e_so4i")
+(df <- speciate(pm, veh = "PC", fuel = "G", eu = "I"))
+(df <- speciate(pm, spec = "brake", veh = "PC", fuel = "G", eu = "I"))
+(dfa <- speciate(pm, spec = "iag", veh = "veh", fuel = "G", eu = "Exhaust"))
+(dfb <- speciate(pm, spec = "iag_cb05v2", veh = "veh", fuel = "G", eu = "Exhaust"))
+(dfb <- speciate(pm, spec = "neu_cb05", veh = "veh", fuel = "G", eu = "Exhaust"))
+pm <- units::set_units(pm, "g/km^2/h")
+(dfb <- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))
+(dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
+(dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
 }
 }
 \references{

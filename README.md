@@ -34,102 +34,14 @@
 
 # **V**ehicular **E**missions **IN**ventories (VEIN)
 
-Cover the following pollutants:
+![](https://i.imgur.com/bsA6iDU.png)
 
-### European emission factors for all available vehicle categories exhaust:
+### What is new?
 
-  - **Criteria (g/km)**: “CO”, “NOx”, “HC”, “PM”, “CH4”, “NMHC”, “CO2”,
-    “SO2”, “Pb”, “FC” (Fuel Consumption),“NO”, “NO2”.
-  - **PAH and POP**: “indeno(1,2,3-cd)pyrene”, “benzo(k)fluoranthene”,
-    “benzo(b)fluoranthene”, “benzo(ghi)perylene”, “fluoranthene”,
-    “benzo(a)pyrene”, “pyrene”, “perylene”, “anthanthrene”,
-    “benzo(b)fluorene”, “benzo(e)pyrene”, “triphenylene”,
-    “benzo(j)fluoranthene”, “dibenzo(a,j)anthacene”,
-    “dibenzo(a,l)pyrene”, “3,6-dimethyl-phenanthrene”,
-    “benzo(a)anthracene”, “acenaphthylene”, “acenapthene”, “chrysene”,
-    “phenanthrene”, “napthalene”, “anthracene”, “coronene”,
-    “dibenzo(ah)anthracene”.
-  - **Dioxins and Furans (g/km)**: “PCDD”, “PCDF”, “PCB”.
-  - **Metals (g/km)**: “As”, “Cd”, “Cr”, “Cu”, “Hg”, “Ni”, “Pb”, “Se”,
-    “Zn”.
-  - **NMHC (g/km)**:
-  - *ALKANES*: “ethane”, “propane”, “butane”, “isobutane”, “pentane”,
-    “isopentane”, “hexane”, “heptane”, “octane”, “2-methylhexane”,
-    “nonane”, “2-methylheptane”, “3-methylhexane”, “decane”,
-    “3-methylheptane”, “alkanes\_C10\_C12”, “alkanes\_C13”.
-  - *CYCLOALKANES*: “cycloalcanes”.
-  - *ALKENES*: “ethylene”, “propylene”, “propadiene”, “1-butene”,
-    “isobutene”, “2-butene”, “1,3-butadiene”, “1-pentene”,
-    “2-pentene”, “1-hexene”, “dimethylhexene”.
-  - *ALKYNES*:“1-butyne”, “propyne”, “acetylene”.
-  - *ALDEHYDES*: “formaldehyde”, “acetaldehyde”, “acrolein”,
-    “benzaldehyde”, “crotonaldehyde”, “methacrolein”, “butyraldehyde”,
-    “isobutanaldehyde”, “propionaldehyde”, “hexanal”,
-    “i\_valeraldehyde”, “valeraldehyde”, “o\_tolualdehyde”,
-    “m\_tolualdehyde”, “p\_tolualdehyde”.
-  - *KETONES*: “acetone”, “methylethlketone”.
-  - *AROMATICS*: “toluene”, “ethylbenzene”, “m-xylene”, “p-xylene”,
-    “o-xylene”, “1,2,3-trimethylbenzene”, “1,2,4-trimethylbenzene”,
-    “1,3,5-trimethylbenzene”, “styrene”, “benzene”, “C9”, “C10”,
-    “C13”.
-  - **Active Surface (cm2/km)**
-  - “AS\_urban”, “AS\_rural”, “AS\_highway”.
-  - **Total Number of particles (N/km)**
-  - “N\_urban”, “N\_rural”, “N\_highway”, “N\_50nm\_urban”,
-    “N\_50\_100nm\_rural”, “N\_100\_1000nm\_highway”.
-
-### European emission factors speciation for evapoative emissions:
-
-  - **Criteria (g/km)**: “NMHC”.
-  - **NMHC (g/km)**:
-  - *ALKANES*: “ethane”, “propane”, “n-butane”, “i-pentane”,
-    “n-pentane”, “2-methylheptane”, “3-methylheptane”, “n-hexane”,
-    “n-heptane”
-  - *ALKENES*: “ethene”, “propene”, “1-butene”, “trans-2-butene”,
-    “isobutene”, “cis-2-butene”, “1,3-butadiene”, “trans-2-pentene”,
-    “cis-2-pentene”, “isoprene”
-  - *ALKYNES*:“propyne”, “acetylene”.
-  - *AROMATICS*: “benzene”, “toluene”, “ethylbenzene”, “m-xylene”,
-    “o-xylene”, “1,2,3-trimethylbenzene” and “1,3,5-trimethylbenzene”,
-
-### Brazilian emission factors for all available vehicle categories:
-
-  - “COd”, “HCd”, “NMHCd”, “CH4”, “NOxd”, “CO2” “PM”, “N2O”, “KML”,
-    “FC”, “NO2d”, “NOd”, “gCO2/KWH”, “RCHOd”, “CO”, “HC”, “NMHC”,
-    “NOx”, “NO2” ,“NO”, “RCHO” and scaled factors based on tunnel
-    measurements see
-    [ef\_cetesb](https://atmoschem.github.io/vein/reference/ef_cetesb.html).
-
-### Brazilian speciation based on IAG/USP (Fátima’s group) studies:
-
-  - “e\_eth”, “e\_hc3”, “e\_hc5”, “e\_hc8”, “e\_ol2”, “e\_olt”,
-    “e\_oli”, “e\_iso”, “e\_tol”, “e\_xyl”, “e\_c2h5oh”, “e\_ald”,
-    “e\_hcho”, “e\_ch3oh”, “e\_ket”, “E\_SO4i”, “E\_SO4j”, “E\_NO3i”,
-    “E\_NO3j”, “E\_MP2.5i”, “E\_MP2.5j”, “E\_ORGi”, “E\_ORGj”,
-    “E\_ECi”, “E\_ECj” with option to scaled based on tunnel
-    measurements.
-
-### Base emission factors from International Emission Model (IVE) for all available vehicle categories:
-
-  - “VOC\_gkm”, “CO\_gkm”, “NOx\_gkm”, “PM\_gkm”, “Pb\_gkm”, “SO2\_gkm”,
-    “NH3\_gkm”, “ONE\_3\_butadiene\_gkm”, “formaldehyde\_gkm”,
-    “acetaldehyde\_gkm”, “benzene\_gkm”, “EVAP\_gkm”, “CO2\_gkm”,
-    “N20\_gkm”, “CH4\_gkm”, “VOC\_gstart”, “CO\_gstart”,
-    “NOx\_gstart”, “PM\_gstart”, “Pb\_gstart”, “SO2\_gstart”,
-    “NH3\_gstart”, “ONE\_3butadiene\_gstart”,
-    “formaldehyde\_gstart”,“acetaldehyde\_gstart”,
-    “benzene\_gstart”, “EVAP\_gstart”, “CO2\_gstart”, “N20\_gstart”,
-    “CH4\_gstart”
-
-### Emission factors from Chinese emission guidelines 你好中国朋友
-
-  - “CO”, “NOx”, “HC”, “PM10”, “PM2.5”.
-  - They depend on humidity, temperature, altitude and other parameters.
-
-## What is new?
-
-*REMOVED OpenMP because of MacOS issues. I hope in the version 1.0 of
-vein I can add this*
+  - *REMOVED OpenMP because of MacOS issues. I hope in the version 1.0
+    of vein I can add this*
+  - Add mechanisms neu\_cb05, neu\_cb05v2, pmneu, pmneu2 (thanks to
+    Daniel Schuch from Northeastern University)
 
 ### TODO
 
@@ -139,13 +51,12 @@ vein I can add this*
   - Update ef\_ldv\* and ef\_hdv\* to EEA2019
   - Include speed functions with Fortran and OpenMP
   - Include several chemical mechanism
+  - tidy the code
   - Add EF from HBEFA?
   - See issues [GitHub](https://github.com/atmoschem/vein/issues) and
     [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
-# New in VEIN?
-
-![](https://i.imgur.com/bsA6iDU.png)
+## New in VEIN?
 
 No worries\! Just install
 [R](https://www.google.com/search?q=install+R&oq=install+R&aqs=chrome..69i57j35i39l2j0l3j69i60l2.1308j0j7&sourceid=chrome&ie=UTF-8),

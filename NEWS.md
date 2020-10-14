@@ -11,6 +11,13 @@ NEWS
 - Include several chemical mechanism
 - Add EF from HBEFA?
 
+### vein 0.9.0.2 (Release date: 2020-10-07)
+
+- Add mechanisms neu_cb05, neu_cb05v2, pmneu, pmneu2 (thanks to Daniel Schuch from Northeastern University) (2020-10-13)
+
+### vein 0.9.0.1 (Release date: 2020-10-13)
+- REMOVED OPENMP DUE TO MAC OS ISSUES ANd FORTRAN
+
 ### vein 0.9.0 (Release date: 2020-09-23) "Stuck-at-home"
 
 - evaporative emissions from ef_cetesb return units with grams (2020-06-11)
@@ -24,7 +31,6 @@ NEWS
 useful when local time changes for daylight (2020-07-26)
 - Add projects csv, csv.gz and cb05. (2020-08-06)
 - Add option to include monthly emission factors in emis_hot_td
-- REMOVED OPENMP DUE TO MAC OS ISSUES
 - -Add OpenMP option in all functions with fortran = TRUE (2020-09-23)-.
 - -Add the function check_nt() to return max number of threads (2020-09-23)-.
 - Add option to write ef_cetesb in csv file. (2020-09-23).
