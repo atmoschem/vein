@@ -6,6 +6,7 @@
 \usage{
 colplot(
   df,
+  x,
   cols = names(df),
   xlab = "",
   ylab = "",
@@ -22,6 +23,8 @@ colplot(
 }
 \arguments{
 \item{df}{data.frame.}
+
+\item{x}{the coordinates of points in the plot. (optional)}
 
 \item{cols}{Character, columns of data.frame.}
 
