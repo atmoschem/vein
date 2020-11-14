@@ -2,10 +2,10 @@ context("colplot")
 
 test_that("colplot works", {
   expect_equal(
-    colplot(
+    round(colplot(
       EmissionFactors(
         data.frame(a = 1:5)
         )
-      )$mfrow[1], 1)
+      )$rect$w), 0)
 })
 
