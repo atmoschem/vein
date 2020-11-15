@@ -5,15 +5,17 @@ NEWS
 
 - get_project with top-down approaches
 - get_project with Europe and Chinese EF
-- Add EF from EMFAC and MOVES
+- Add EF MOVES
+- Add EF from HBEFA
 - Update ef_ldv* and ef_hdv* to EEA2019
-- Include speed functions with Fortran and OpenMP
-- Include several chemical mechanism
-- Add EF from HBEFA?
+- Include speed functions with OpenMP
 
 ### vein 0.9.0.2 (Release date: 2020-10-07)
 
 - Add mechanisms neu_cb05, neu_cb05v2, pmneu, pmneu2 (thanks to Daniel Schuch from Northeastern University) (2020-10-13)
+- Add x to colplot (2020-11-14)
+- Add ELEC EF to ef_cetesb (2020-11-14)
+- Add ELEC EF to ef_emfac (2020-11-14)
 
 ### vein 0.9.0.1 (Release date: 2020-10-13)
 - REMOVED OPENMP DUE TO MAC OS ISSUES ANd FORTRAN

@@ -100,9 +100,11 @@ The new convention for vehicles names are translated from CETESB report:
   MC_150_FE   \tab Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol) \cr
   MC_150_500_FE   \tab Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol) \cr
   MC_500_FE   \tab Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol) \cr
+  PC_ELEC   \tab Passenger Car Electric  \cr
+  LCV_ELEC   \tab Light Commercial Vehicle Electric \cr
 }
 
-The percentage varies of bioduels varies by law.
+The percentage varies of biofuels varies by law.
 
 This emission factors are not exactly the same as the report of CETESB.
 
@@ -130,11 +132,11 @@ it will show a warning
 \strong{Emission factor for vehicles older than the reported by CETESB were filled as the moving average of 2:}
 
 \itemize{
-\item Range EF from PC and LCV otto: 2018 - 1982. EF for 1981 and older as movign average.
-\item Range LCV diesel : 2018 - 2006. EF for 2005 and older as movign average.
-\item Range Trucks and Buse: 2018 - 1998. EF for 1997 and older as movign average.
-\item Range MC Gasoline: 2018 - 2003.  EF for 2002 and older as movign average.
-\item Range MC Flex 150-500cc and >500cc: 2018 - 2012.  EF for 2011 and older as movign average.
+\item Range EF from PC and LCV otto: 2018 - 1982. EF for 1981 and older as moving average.
+\item Range LCV diesel : 2018 - 2006. EF for 2005 and older as moving average.
+\item Range Trucks and Buse: 2018 - 1998. EF for 1997 and older as moving average.
+\item Range MC Gasoline: 2018 - 2003.  EF for 2002 and older as moving average.
+\item Range MC Flex 150-500cc and >500cc: 2018 - 2012.  EF for 2011 and older as moving average.
 }
 
 Currently, 2020, there are not any system for recovery of fuel vapors in Brazil. Hence,

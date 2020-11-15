@@ -68,9 +68,11 @@
 #'   MC_150_FE   \tab Flex Motorcycle engine less than 150cc Ethanol (hydrous ethanol) \cr
 #'   MC_150_500_FE   \tab Flex Motorcycle engine 150-500cc Ethanol (hydrous ethanol) \cr
 #'   MC_500_FE   \tab Flex Motorcycle greater than 500cc Ethanol (hydrous ethanol) \cr
+#'   PC_ELEC   \tab Passenger Car Electric  \cr
+#'   LCV_ELEC   \tab Light Commercial Vehicle Electric \cr
 #' }
 #'
-#' The percentage varies of bioduels varies by law.
+#' The percentage varies of biofuels varies by law.
 #'
 #' This emission factors are not exactly the same as the report of CETESB.
 #'
@@ -98,11 +100,11 @@
 #' \strong{Emission factor for vehicles older than the reported by CETESB were filled as the moving average of 2:}
 #'
 #' \itemize{
-#' \item Range EF from PC and LCV otto: 2018 - 1982. EF for 1981 and older as movign average.
-#' \item Range LCV diesel : 2018 - 2006. EF for 2005 and older as movign average.
-#' \item Range Trucks and Buse: 2018 - 1998. EF for 1997 and older as movign average.
-#' \item Range MC Gasoline: 2018 - 2003.  EF for 2002 and older as movign average.
-#' \item Range MC Flex 150-500cc and >500cc: 2018 - 2012.  EF for 2011 and older as movign average.
+#' \item Range EF from PC and LCV otto: 2018 - 1982. EF for 1981 and older as moving average.
+#' \item Range LCV diesel : 2018 - 2006. EF for 2005 and older as moving average.
+#' \item Range Trucks and Buse: 2018 - 1998. EF for 1997 and older as moving average.
+#' \item Range MC Gasoline: 2018 - 2003.  EF for 2002 and older as moving average.
+#' \item Range MC Flex 150-500cc and >500cc: 2018 - 2012.  EF for 2011 and older as moving average.
 #'}
 #' @references Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
 #' url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
@@ -161,17 +163,23 @@ ef_cetesb <- function(p,
                       verbose = FALSE,
                       csv){
   ef <- sysdata$cetesb
+  ef$PC_ELEC <- ef$PC_G*0
+  ef$LCV_ELEC <- ef$LCV_G*0
+  ef$BUS_ELEC <- ef$BUS_URBAN_D*0
+  ef$M_ELEC_150 <- ef$M_G_150*0
+  ef$M_ELEC_150_500 <- ef$M_G_150_500*0
+  ef$M_ELEC_500 <- ef$M_G_500*0
 
   # tunel
   if(scale == "tunnel") {
     ef <- sysdata$cetesb
     names(ef)
-    LDV <- c(grep(pattern = "PC_", x = names(ef), value = T),
-             grep(pattern = "LCV_", x = names(ef), value = T)[1:4],
-             grep(pattern = "MC_", x = names(ef), value = T))
+    LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
+             grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
+             grep(pattern = "MC_", x = names(ef), value = TRUE))
 
-    HDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = T),
-             grep(pattern = "BUS_", x = names(ef), value = T),
+    HDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = TRUE),
+             grep(pattern = "BUS_", x = names(ef), value = TRUE),
              "LCV_D")
     # CO HC NMHC
     COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km")
