@@ -9,14 +9,14 @@ library(geofabrik)                # Downloads OSM data from geofabrik
 sessionInfo()
 
 # 0 Configuration
-language             <- "chinese" # english chinese spanish portuguese 
+language             <- "english" # english spanish portuguese 
 path                 <- "config/inventory.xlsx"
 # To read libre office calc, use readODS::read_ods()
 readxl::excel_sheets(path)
 metadata             <- readxl::read_xlsx(path = path, sheet = "metadata")
 mileage              <- readxl::read_xlsx(path = path, sheet = "mileage")
 tfs                  <- readxl::read_xlsx(path = path, sheet = "tfs")
-veh                  <- readxl::read_xlsx(path = path, sheet = "fleet_age")
+veh                  <- readxl::read_xlsx(path = path, sheet = "registered fleet")
 fuel                 <- readxl::read_xlsx(path = path, sheet = "fuel")
 pmonth               <- readxl::read_xlsx(path = path, sheet = "pmonth")
 met                  <- readxl::read_xlsx(path = path, sheet = "met")
