@@ -164,7 +164,6 @@ ef_cetesb <- function(p,
                       verbose = FALSE,
                       csv){
   ef <- sysdata$cetesb
-  print(names(ef))
   ef$PC_ELEC <- ef$PC_G*0
   ef$LCV_ELEC <- ef$LCV_G*0
   ef$BUS_ELEC <- ef$BUS_URBAN_D*0
