@@ -184,30 +184,30 @@ ef_cetesb <- function(p,
              "LCV_D")
     # CO HC NMHC
     COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km")
-    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*5.823289
-
-    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.359374
+    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*4.123004
+    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.750847
 
     # NONO2 NOx
     NONO<- c("NOx", "NO2", "NO", "NOx_0km", "NO2_0km", "NO_0km")
-    ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.405462
-    ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.188174
+    ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.109799
+    ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.382359
 
     # PM
-    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.38637
+    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.244528
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.235672
 
     # ALD # ja tem NMHC incrementado
     efALD <- ef[ef$Pollutant %in% "NMHC", ]
     efALD$Pollutant <- "ALD"
-    efALD[, LDV] <- efALD[, LDV]*0.06693206
-    efALD[, HDV] <- efALD[, HDV]*0.05016216
+    efALD[, LDV] <- efALD[, LDV]*0.04949294
+    efALD[, HDV] <- efALD[, HDV]*0.07377323
     ef <- rbind(ef, efALD)
 
     # HCHO # ja tem NMHC incrementado
     efHCHO <- ef[ef$Pollutant %in% "NMHC", ]
     efHCHO$Pollutant <- "HCHO"
-    efHCHO[, LDV] <- efHCHO[, LDV]*0.05155577
-    efHCHO[, HDV] <- efHCHO[, HDV]*0.05016216
+    efHCHO[, LDV] <- efHCHO[, LDV]*0.03812294
+    efHCHO[, HDV] <- efHCHO[, HDV]*0.07377323
     ef <- rbind(ef, efHCHO)
 
   }
