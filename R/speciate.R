@@ -69,7 +69,7 @@
 #' the number species of pollutants
 #' @param pmpar Numeric vector for PM speciation eg:
 #' c(e_so4i = 0.0077,  e_so4j = 0.0623,  e_no3i = 0.00247,
-#' e_no3j = 0.01053,  e_pm2.5i = 0.1,  e_pm2.5j = 0.3,
+#' e_no3j = 0.01053,  e_pm25i = 0.1,  e_pm25j = 0.3,
 #' e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
 #' e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
 #' argument is present, new values are used.
@@ -135,9 +135,10 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
     "e_eth", "e_hc3", "e_hc5", "e_hc8", "e_ol2", "e_olt", "e_oli",
     "e_iso", "e_tol", "e_xyl", "e_c2h5oh", "e_hcho", "e_ch3oh", "e_ket"
   )
+
   pmdf <- data.frame(c(
-    "e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm2.5i",
-    "e_pm2.5j", "e_orgi", "e_orgj", "e_eci", "e_ecj", "h2o"
+    "e_so4i", "e_so4j", "e_no3i", "e_no3j", "e_pm25i",
+    "e_pm25j", "e_orgi", "e_orgj", "e_eci", "e_ecj", "h2o"
   ))
 
   # bcom black carbon and organic matter####
@@ -339,8 +340,8 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
           e_so4j = 0.0623,
           e_no3i = 0.00247,
           e_no3j = 0.01053,
-          e_pm2.5i = 0.1,
-          e_pm2.5j = 0.3,
+          e_pm25i = 0.1,
+          e_pm25j = 0.3,
           e_orgi = 0.0304,
           e_orgj = 0.1296,
           e_eci = 0.056,
@@ -353,8 +354,8 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
           e_so4j = 0.0077 + 0.0623,
           e_no3i = 0,
           e_no3j = 0.00247 + 0.01053,
-          e_pm2.5i = 0,
-          e_pm2.5j = 0.1 + 0.3,
+          e_pm25i = 0,
+          e_pm25j = 0.1 + 0.3,
           e_orgi = 0,
           e_orgj = 0.0304 + 0.1296,
           e_eci = 0,
@@ -367,8 +368,8 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
           e_so4j = 0.07,
           e_no3i = 0,
           e_no3j = 0.015,
-          e_pm2.5i = 0,
-          e_pm2.5j = 0.3,
+          e_pm25i = 0,
+          e_pm25j = 0.3,
           e_orgi = 0,
           e_orgj = 0.35,
           e_eci = 0,
@@ -378,7 +379,7 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
       }
     }
 
-
+names(df) <- toupper(names(df))
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
         x[, i] <- units::set_units(x[, i], "ug/m^2/s")
