@@ -15,7 +15,8 @@ NEWS
 - Add mechanisms neu_cb05, neu_cb05v2, pmneu, pmneu2 (thanks to Daniel Schuch from Northeastern University) (2020-10-13)
 - Add x to colplot (2020-11-14)
 - Add ELEC EF to ef_cetesb (2020-11-14)
-- Add ELEC EF to ef_emfac (2020-11-14)
+- Add ef_emfac (2020-11-14)
+- speciate names upper and without point (e_pm2.55i -> E_PM25I) (2020-11-17)
 
 ### vein 0.9.0.1 (Release date: 2020-10-13)
 - REMOVED OPENMP DUE TO MAC OS ISSUES ANd FORTRAN
