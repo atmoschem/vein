@@ -255,6 +255,9 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
       }))
       names(dfb) <- names(dfx)
     }
+
+    names(df) <- toupper(names(df))
+
     if (show == TRUE) {
       print(df)
     }
@@ -380,6 +383,7 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
     }
 
 names(df) <- toupper(names(df))
+
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {
         x[, i] <- units::set_units(x[, i], "ug/m^2/s")

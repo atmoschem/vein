@@ -6,25 +6,24 @@ library(ggplot2) # plots
 library(eixport) # create wrfchemi
 library(data.table) # fster data.frames
 library(geofabrik) # Downloads OSM data from geofabrik
+library(readxl)
 sessionInfo()
 
 # 0 Configuration
-language <- "english" # english spanish portuguese
-path <- "config/inventory.xlsx"
-# To read libre office calc, use readODS::read_ods()
+language       <- "english" # english spanish portuguese
+path           <- "config/inventory.xlsx"
 readxl::excel_sheets(path)
-metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
-mileage <- readxl::read_xlsx(path = path, sheet = "mileage")
-tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
-veh <- readxl::read_xlsx(path = path, sheet = "registered fleet")
-fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
-pmonth <- readxl::read_xlsx(path = path, sheet = "pmonth")
-met <- readxl::read_xlsx(path = path, sheet = "met")
-year <- 2018
-scale <- "tunnel"
-theme <- "black" # dark clean ing
-delete_directories <- TRUE
-eval(parse("config/config.R", encoding = "UTF-8"))
+metadata       <- read_xlsx(path = path, sheet = "metadata")
+mileage        <- read_xlsx(path = path, sheet = "mileage")
+tfs            <- read_xlsx(path = path, sheet = "tfs")
+veh            <- read_xlsx(path = path, sheet = "registered_fleet")
+fuel           <- read_xlsx(path = path, sheet = "fuel")
+pmonth         <- read_xlsx(path = path, sheet = "pmonth")
+met            <- read_xlsx(path = path, sheet = "met")
+year           <- 2018
+scale          <- "tunnel"
+theme          <- "black" # dark clean
+source("config/config.R", encoding = "UTF-8")
 
 # 1) Network ####
 net <- sf::st_read("network/net.gpkg")
