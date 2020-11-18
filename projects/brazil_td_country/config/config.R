@@ -19,8 +19,8 @@ for(i in 2:ncol(pmonth)) {
 switch (language,
         "portuguese" = cat( "Metadata$Vehicles é:\n"),
         "english" = cat( "Metadata$Vehicles is:\n"),
-        "chinese" = cat( "Metadata$Vehicles 是:\n"),
         "spanish" = cat( "Metadata$Vehicles es:\n"))
+
 
 # cat( "Metadata$Vehicles é:\n")
 print(metadata$vehicles)
@@ -34,14 +34,12 @@ if(!length(intersect(metadata$vehicles, names(mileage))) == length(metadata$vehi
           "english" = stop("You need to add column ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " in `mileage`"),
-          "chinese" = stop("您需要添加列 ",
-                           setdiff(metadata$vehicles, names(mileage)),
-                           " 在 `mileage`"),
           "spanish" = stop("Necesitas agregar la columna ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " en `mileage`"))
   
 }
+
 
 # checar nomes tfs ####
 if(!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles)) {
@@ -52,9 +50,6 @@ if(!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles
           "english" = stop("You need to add column ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " in `tfs`"),
-          "chinese" = stop("您需要添加列 ",
-                           setdiff(metadata$vehicles, names(mileage)),
-                           " 在 `tfs`"),
           "spanish" = stop("Necesitas agregar la columna ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " en `tfs`"))
@@ -69,20 +64,17 @@ if(!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles
           "english" = stop("You need to add column ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " in `veh`"),
-          "chinese" = stop("您需要添加列 ",
-                           setdiff(metadata$vehicles, names(mileage)),
-                           " 在 `veh`"),
           "spanish" = stop("Necesitas agregar la columna ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " en `veh`"))
 }
+
 
 #checar Year ####
 if(!"Year" %in% names(veh)){
   switch (language,
           "portuguese" = stop("Não estou enxergando a coluna 'Year' em `veh`"),
           "english" = stop("I'm not seeing column 'Year' in `veh`"),
-          "chinese" = stop("我没有在 `veh`中看到“ Year”列"),
           "spanish" = stop("No estoy viendo la columna 'Year' in `veh`"))
   
 } 
@@ -90,7 +82,6 @@ if(!"Year" %in% names(mileage)) {
   switch (language,
           "portuguese" = stop("Não estou enxergando a coluna 'Year' em `mileage`"),
           "english" = stop("I'm not seeing column 'Year' in `mileage`"),
-          "chinese" = stop("我没有在 `mileage`中看到“ Year”列"),
           "spanish" = stop("No estoy viendo la columna 'Year' in `mileage`"))
   
 }
@@ -100,7 +91,6 @@ if(veh$Year[1] != year) {
   switch (language,
           "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `veh` é ", veh$Year[1])),
           "english" = stop(paste0("The base year is ", year, " but the first year in `veh` is ", veh$Year[1])),
-          "chinese" = stop("基准年是", year, "，但是`veh`的第一年是", veh$Year[1]),
           "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `veh` es ", veh$Year[1])))
   
 }
@@ -108,7 +98,6 @@ if(mileage$Year[1] != year) {
   switch (language,
           "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `mileage` é ", mileage$Year[1])),
           "english" = stop(paste0("The base year is ", year, " but the first year in `mileage` is ", veh$Year[1])),
-          "chinese" = stop("基准年是", year, "，但是`mileage`的第一年是", veh$Year[1]),
           "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `mileage` es ", mileage$Year[1])))
   
 }
@@ -117,7 +106,6 @@ if(mileage$Year[1] != year) {
 switch (language,
         "portuguese" = message("Arquivos em: ", getwd(), "/config/*\n"),
         "english" = message("Files in: ", getwd(), "/config/*\n"),
-        "chinese" = message("文件位于: ", getwd(), "/config/*\n"),
         "spanish" = message("Archivos en: ", getwd(), "/config/*\n"))
 
 saveRDS(metadata, "config/metadata.rds")
