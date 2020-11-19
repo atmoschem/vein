@@ -114,17 +114,18 @@ data(net)
 g <- make_grid(net, 2)
 g$PM = 10
 test_that("speciate works", {
-  expect_equal(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$e_so4i[1])),
+  expect_equal(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$E_SO4I[1])),
                0)
-  expect_output(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$e_so4i[1])),
+  expect_output(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$E_SO4I[1])),
                ".?")
 })
 
 
 test_that("speciate works", {
-  expect_equal(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$e_so4i[1])),
+  expect_equal(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$E_SO4I[1])),
                0)
-  expect_output(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$e_so4i[1])),
+  expect_output(as.numeric(round(speciate(g, spec = "pmiag",show = TRUE)$E_SO4I[1])),
                 ".?")
 })
 #
+
