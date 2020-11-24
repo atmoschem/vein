@@ -1,4 +1,4 @@
-## ----setup, include = FALSE---------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -11,11 +11,11 @@ library(vein)
 ?get_project
 
 
-## ---- eval = T----------------------------------------------------------------
-get_project(directory = "awesome_city")
-system("tree  awesome_city")
+## ---- eval = F----------------------------------------------------------------
+#  get_project(directory = "awesome_city")
+#  system("tree  awesome_city")
+#  
 
-
-## ---- echo = FALSE------------------------------------------------------------
-system("rm -rf  awesome_city")
+## ---- eval = F----------------------------------------------------------------
+#  install.packages(c("ggplot2", "readxl", "eixport"))
 

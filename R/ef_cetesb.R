@@ -179,11 +179,14 @@ ef_cetesb <- function(p,
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
              grep(pattern = "MC_", x = names(ef), value = TRUE))
 
-    HDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = TRUE),
-             grep(pattern = "BUS_", x = names(ef), value = TRUE),
-             "LCV_D")
-    # CO HC NMHC
-    COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km")
+    # Tunnel measurements of heavy trucks covered only big trucks
+    HDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = TRUE))
+
+    # CO HC NMHC (add running losses)
+
+    COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km",
+              "R_0_15", "R_10_25", "R_0_25")
+
     ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*4.123004
     ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.750847
 
