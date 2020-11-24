@@ -7,7 +7,7 @@
 \alias{plot.GriddedEmissionsArray}
 \title{Construction function for class "GriddedEmissionsArray"}
 \usage{
-GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate, flip = TRUE)
+GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate = "default")
 
 \method{print}{GriddedEmissionsArray}(x, ...)
 
@@ -27,9 +27,9 @@ GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate, flip = TRUE)
 
 \item{times}{Number of times}
 
-\item{rotate}{Character, rotate array to "left" or "right"}
-
-\item{flip}{Logical, To flip vertically the array or not}
+\item{rotate}{Character, rotate array:"default",  "left", "right",
+"cols","rows", "both", "br", "colsbr", "rowsbr", "bothbr".
+br means starting a matrix byrow}
 
 \item{object}{object with class "EmissionsArray'}
 }
@@ -37,8 +37,8 @@ GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate, flip = TRUE)
 Objects of class "GriddedEmissionsArray"
 }
 \description{
-\code{GriddedEmissionsArray} returns a tranformed object with class
-"EmissionsArray" with 4 dimensios.
+\code{GriddedEmissionsArray} returns a transformed object with class
+"EmissionsArray" with 4 dimensions.
 }
 \examples{
 \dontrun{
@@ -71,9 +71,21 @@ E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets",
 g <- make_grid(net, 1/102.47/2, 1/102.47/2) #500m in degrees
 E_CO_g <- emis_grid(spobj = E_CO_STREETS, g = g, sr= 31983)
 plot(E_CO_g["V9"])
-gr <- GriddedEmissionsArray(E_CO_g, rows = 19, cols = 23, times = 168, flip = FALSE)
-plot(gr)
-# For some cptcity color gradients:
-plot(gr, col = cptcity::lucky())
+# check all
+rots <- c("default", "left", "right",
+          "cols","rows", "both",
+          "br", "colsbr", "rowsbr", "bothbr")
+oldpar <- par()
+par(mfrow = c(2,5))
+lg <- lapply(seq_along(rots), function(i){
+            x <- GriddedEmissionsArray(E_CO_g,
+                                rows = 19,
+                                cols = 23,
+                                times = 168,
+                                rotate = rots[i])
+         plot(x, main = rots[i])
+        })
+
+par(mfrow = c(1,1))
 }
 }

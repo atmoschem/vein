@@ -33,12 +33,17 @@ a <- capture_output_lines(GriddedEmissionsArray(E_CO_g,
                                                 rows = 19,
                                                 cols = 16,
                                                 times = 1))
+plot(GriddedEmissionsArray(E_CO_g,
+                           rows = 19,
+                           cols = 16,
+                           times = 1))
+
 test_that("GriddedEmissionsArray works", {
   expect_equal(round(GriddedEmissionsArray(E_CO_g,
                                            rows = 19,
                                            cols = 16,
                                            times = 1)[1]),
-               18)
+               0)
 })
 
 
@@ -50,15 +55,6 @@ test_that("GriddedEmissionsArray works", {
                                      times = 168,
                                      "left"),
                ".?")
-})
-
-test_that("GriddedEmissionsArray works", {
-  expect_equal(plot(GriddedEmissionsArray(E_CO_g,
-                                          rows = 19,
-                                          cols = 16,
-                                          times = 1,
-                                          flip = FALSE))$mfrow[1],
-               1)
 })
 
 

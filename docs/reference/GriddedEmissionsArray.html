@@ -47,8 +47,8 @@
 
 
 <meta property="og:title" content="Construction function for class "GriddedEmissionsArray" — GriddedEmissionsArray" />
-<meta property="og:description" content="GriddedEmissionsArray returns a tranformed object with class
-&quot;EmissionsArray&quot; with 4 dimensios." />
+<meta property="og:description" content="GriddedEmissionsArray returns a transformed object with class
+&quot;EmissionsArray&quot; with 4 dimensions." />
 <meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 
 
@@ -148,11 +148,11 @@
     </div>
 
     <div class="ref-description">
-    <p><code>GriddedEmissionsArray</code> returns a tranformed object with class
-"EmissionsArray" with 4 dimensios.</p>
+    <p><code>GriddedEmissionsArray</code> returns a transformed object with class
+"EmissionsArray" with 4 dimensions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>GriddedEmissionsArray</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, <span class='va'>cols</span>, <span class='va'>rows</span>, times <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>rotate</span>, flip <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>GriddedEmissionsArray</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, <span class='va'>cols</span>, <span class='va'>rows</span>, times <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, rotate <span class='op'>=</span> <span class='st'>"default"</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GriddedEmissionsArray</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -189,11 +189,9 @@
     </tr>
     <tr>
       <th>rotate</th>
-      <td><p>Character, rotate array to "left" or "right"</p></td>
-    </tr>
-    <tr>
-      <th>flip</th>
-      <td><p>Logical, To flip vertically the array or not</p></td>
+      <td><p>Character, rotate array:"default",  "left", "right",
+"cols","rows", "both", "br", "colsbr", "rowsbr", "bothbr".
+br means starting a matrix byrow</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -236,10 +234,22 @@
 <span class='va'>g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='make_grid.html'>make_grid</a></span><span class='op'>(</span><span class='va'>net</span>, <span class='fl'>1</span><span class='op'>/</span><span class='fl'>102.47</span><span class='op'>/</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>/</span><span class='fl'>102.47</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span> <span class='co'>#500m in degrees</span>
 <span class='va'>E_CO_g</span> <span class='op'>&lt;-</span> <span class='fu'><a href='emis_grid.html'>emis_grid</a></span><span class='op'>(</span>spobj <span class='op'>=</span> <span class='va'>E_CO_STREETS</span>, g <span class='op'>=</span> <span class='va'>g</span>, sr<span class='op'>=</span> <span class='fl'>31983</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>E_CO_g</span><span class='op'>[</span><span class='st'>"V9"</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span><span class='op'>(</span><span class='va'>E_CO_g</span>, rows <span class='op'>=</span> <span class='fl'>19</span>, cols <span class='op'>=</span> <span class='fl'>23</span>, times <span class='op'>=</span> <span class='fl'>168</span>, flip <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>gr</span><span class='op'>)</span>
-<span class='co'># For some cptcity color gradients:</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>gr</span>, col <span class='op'>=</span> <span class='fu'>cptcity</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/lucky.html'>lucky</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># check all</span>
+<span class='va'>rots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"default"</span>, <span class='st'>"left"</span>, <span class='st'>"right"</span>,
+          <span class='st'>"cols"</span>,<span class='st'>"rows"</span>, <span class='st'>"both"</span>,
+          <span class='st'>"br"</span>, <span class='st'>"colsbr"</span>, <span class='st'>"rowsbr"</span>, <span class='st'>"bothbr"</span><span class='op'>)</span>
+<span class='va'>oldpar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>rots</span><span class='op'>)</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span><span class='op'>{</span>
+            <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>GriddedEmissionsArray</span><span class='op'>(</span><span class='va'>E_CO_g</span>,
+                                rows <span class='op'>=</span> <span class='fl'>19</span>,
+                                cols <span class='op'>=</span> <span class='fl'>23</span>,
+                                times <span class='op'>=</span> <span class='fl'>168</span>,
+                                rotate <span class='op'>=</span> <span class='va'>rots</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>
+         <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, main <span class='op'>=</span> <span class='va'>rots</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>
+        <span class='op'>}</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>
