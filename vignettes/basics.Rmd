@@ -96,7 +96,13 @@ If you do not have them already, you can install:
 install.packages(c("ggplot2", "readxl", "eixport"))
 ```
 
-## Too complicated? Watch a YouTube video in Portuguese:
+## Too complicated? Watch a YouTube video
+
+in English:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tHSWIjg26vg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+in Portuguese:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
