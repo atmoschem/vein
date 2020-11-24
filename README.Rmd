@@ -34,7 +34,7 @@ knitr::opts_chunk$set(
 ![GitHub issues](https://img.shields.io/github/issues/atmoschem/vein)
 <!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) -->
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
-[![R build status](https://github.com/r-lib/vein/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/vein/actions)
+[![R build status](https://github.com/atmoschem/vein/workflows/R-CMD-check/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 

@@ -1,17 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- date: "19 de Octubre de 2016" -->
 
 # VEIN <img src="man/figures/logo.png" align="right" alt="" width="220" />
 
-  - build: [![Travis-CI Build
+-   build: [![Travis-CI Build
     Status](https://travis-ci.org/atmoschem/vein.svg?branch=master)](https://travis-ci.org/atmoschem/vein)
     [![AppVeyor Build
     Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
     [![Coverage
     Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
-  - cran:
+-   cran:
     [![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
     [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein)
     [![CRAN
@@ -19,9 +18,9 @@
     [![Package
     Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
     ![CRAN/METACRAN](https://img.shields.io/cran/l/vein?style=plastic)
-  - doi:
+-   doi:
     [![DOI](https://zenodo.org/badge/88201850.svg)](https://zenodo.org/badge/latestdoi/88201850)
-  - github: [![Github
+-   github: [![Github
     Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
     ![GitHub code size in
     bytes](https://img.shields.io/github/languages/code-size/atmoschem/vein)
@@ -30,7 +29,10 @@
     <!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) -->
     ![GitHub commit
     activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
-    <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
+    [![R build
+    status](https://github.com/atmoschem/vein/workflows/R-CMD-check/badge.svg)](https://github.com/atmoschem/vein/actions)
+
+<!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
 # **V**ehicular **E**missions **IN**ventories (VEIN)
 
@@ -38,27 +40,27 @@
 
 ### What is new?
 
-  - *REMOVED OpenMP because of MacOS issues. I hope in the version 1.0
+-   *REMOVED OpenMP because of MacOS issues. I hope in the version 1.0
     of vein I can add this*
-  - Add mechanisms neu\_cb05, pmneu, pmneu2 (thanks to Daniel Schuch
+-   Add mechanisms neu\_cb05, pmneu, pmneu2 (thanks to Daniel Schuch
     from Northeastern University)
 
 ### TODO
 
-  - get\_project with top-down approaches
-  - get\_project with Europe and Chinese EF
-  - Add EF from EMFAC and MOVES
-  - Update ef\_ldv\* and ef\_hdv\* to EEA2019
-  - Include speed functions with Fortran and OpenMP
-  - Include several chemical mechanism
-  - tidy the code
-  - Add EF from HBEFA?
-  - See issues [GitHub](https://github.com/atmoschem/vein/issues) and
+-   get\_project with top-down approaches
+-   get\_project with Europe and Chinese EF
+-   Add EF from EMFAC and MOVES
+-   Update ef\_ldv\* and ef\_hdv\* to EEA2019
+-   Include speed functions with Fortran and OpenMP
+-   Include several chemical mechanism
+-   tidy the code
+-   Add EF from HBEFA?
+-   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
     [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
 ## New in VEIN?
 
-No worries\! Just install
+No worries! Just install
 [R](https://www.google.com/search?q=install+R&oq=install+R&aqs=chrome..69i57j35i39l2j0l3j69i60l2.1308j0j7&sourceid=chrome&ie=UTF-8),
 [Rstudio](https://www.google.com/search?sxsrf=ALeKk00EtkaL-W834eJbAfWxSgAtHlzAuw%3A1600952042358&ei=6pZsX7G5FaS65OUP9NuOqAk&q=install+Rstudio&oq=install+Rstudio&gs_lcp=CgZwc3ktYWIQAzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywE6BAgAEEdQiaIBWJSoAWCPqgFoAHABeAGAAaMCiAGuB5IBBTAuNS4xmAEAoAEBqgEHZ3dzLXdpesgBCMABAQ&sclient=psy-ab&ved=0ahUKEwix1qWO64HsAhUkHbkGHfStA5UQ4dUDCA0&uact=5)
 and then
@@ -83,15 +85,13 @@ remotes::install_gitlab("ibarraespinosa/vein")
 
 ## Approaches
 
-### 1\. get a project (easier)
+### 1. get a project (easier)
 
-  - Load vein
-  - read the documentation of the function
+-   Load vein
+-   read the documentation of the function
     [get\_project](https://atmoschem.github.io/vein/reference/get_project.html)
-  - choose a name, for instance, “awesome\_city”
-  - and use it
-
-<!-- end list -->
+-   choose a name, for instance, “awesome\_city”
+-   and use it
 
 ``` r
 library(vein)
@@ -132,9 +132,9 @@ run `main.R`
 
 To run `main.R` you will need these extra packages:
 
-  - ggplot2
-  - readxl
-  - eixport (If you plan to generate WRF Chem emissions file)
+-   ggplot2
+-   readxl
+-   eixport (If you plan to generate WRF Chem emissions file)
 
 If you do not have them already, you can install:
 
@@ -145,12 +145,11 @@ install.packages(c("ggplot2", "readxl", "eixport"))
 ## Too complicated? Watch a YouTube video in Portuguese:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-
 </iframe>
 
 [here](https://www.youtube.com/watch?v=6-07Y0Eimng)
 
-### 2\. Use inventory (a bit not so easy)
+### 2. Use inventory (a bit not so easy)
 
 run the demo to see vein in action
 
@@ -184,9 +183,9 @@ examples in the documentation of each function and run the demo.
 
 **Brazilian users, just use `get_project` and run a project read**
 
-  - <https://ibarraespinosa.github.io/cursovein>
+-   <https://ibarraespinosa.github.io/cursovein>
 
-### 1\) Examples with traffic data:
+### 1) Examples with traffic data:
 
 1.  If you know the distribution of the vehicles by age of use , use:
     [my\_age](https://atmoschem.github.io/vein/reference/my_age.html)
@@ -203,8 +202,6 @@ examples in the documentation of each function and run the demo.
     For instance, you dont know the sales or registry of vehicles, but
     somehow you know the shape of this curve.
 4.  You can use/merge/transform/adapt any of these functions.
-
-<!-- end list -->
 
 ``` r
 data("net")
@@ -225,8 +222,8 @@ plot(PC_E25_1400net)
 
 ![](https://atmoschem.github.io/vein/reference/age_ldv-2.png)
 
-  - [temp\_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
-  - [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
+-   [temp\_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
+-   [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
 
 temporal factors and netspeed
 
@@ -253,14 +250,12 @@ sp::spplot(as(dfspeednet, "Spatial"),
 
 ![](https://i.imgur.com/qJUdMea.png) \#\#\# 2) Emission Factors
 
-  - [ef\_ldv\_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
-  - [ef\_hdv\_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
-  - [ef\_ldv\_scaled](https://atmoschem.github.io/vein/reference/ef_ldv_scaled.html)
-  - [ef\_hdv\_scaled](https://atmoschem.github.io/vein/reference/ef_hdv_scaled.html)
-  - [EmissionFactors](https://atmoschem.github.io/vein/reference/EmissionFactors.html)
-  - [EmissionFactorsList](https://atmoschem.github.io/vein/reference/EmissionFactorsList.html)
-
-<!-- end list -->
+-   [ef\_ldv\_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
+-   [ef\_hdv\_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
+-   [ef\_ldv\_scaled](https://atmoschem.github.io/vein/reference/ef_ldv_scaled.html)
+-   [ef\_hdv\_scaled](https://atmoschem.github.io/vein/reference/ef_hdv_scaled.html)
+-   [EmissionFactors](https://atmoschem.github.io/vein/reference/EmissionFactors.html)
+-   [EmissionFactorsList](https://atmoschem.github.io/vein/reference/EmissionFactorsList.html)
 
 ``` r
 V <- 0:150
@@ -272,11 +267,9 @@ plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 
 ![](https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png)
 
-### 3\) Estimation of emissions
+### 3) Estimation of emissions
 
-  - [emis](https://atmoschem.github.io/vein/reference/emis.html)
-
-<!-- end list -->
+-   [emis](https://atmoschem.github.io/vein/reference/emis.html)
 
 ``` r
 euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
@@ -288,16 +281,14 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
              profile = pc_profile)
 ```
 
-### 4\) Post Emissions
+### 4) Post Emissions
 
-  - [emis\_post](https://atmoschem.github.io/vein/reference/emis_post.html)
-  - When the argument by = “veh” the emissions are aggregated by age and
+-   [emis\_post](https://atmoschem.github.io/vein/reference/emis_post.html)
+-   When the argument by = “veh” the emissions are aggregated by age and
     hour.
-  - When the argument by = “streets\_wide”, aggregated the emissions by
+-   When the argument by = “streets\_wide”, aggregated the emissions by
     street. In this cae, if you add the argument net with the respective
     streets, it returns an spatial net with the hourly emissions.
-
-<!-- end list -->
 
 ``` r
 E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
@@ -307,18 +298,14 @@ E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets")
 
 #### Grids
 
-  - [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
+-   [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
 
-<!-- end list -->
-
-1)  Create a grid using `make_grid`.The spobj is the spatial net. The
+1.  Create a grid using `make_grid`.The spobj is the spatial net. The
     size of the grid has the size of the net. You have to specify the
     grid spacing.
-2)  Create a grid using a path to wrfinput file instead a net. The grid
+2.  Create a grid using a path to wrfinput file instead a net. The grid
     will have the size of the wrf\_input. You don’t have to specify the
     grid spacing.
-
-<!-- end list -->
 
 ``` r
 data(net)
@@ -349,8 +336,6 @@ plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T))
     [GriddedEmissionsArray](https://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html)
     into the wrf chem input file using
     [eixport::wrf\_put](https://atmoschem.github.io/eixport/reference/wrf_put.html).
-
-<!-- end list -->
 
 ``` r
 library(eixport)
@@ -385,7 +370,7 @@ eixport::wrf_put(file = path_to_wrfc, name = "E_CO", POL = gr)
 5.  Contact the developer of AS4WRF Angel Vara <alvv1986@gmail.com> to
     get a copy and run AS4WRF.ncl.
 
-Thanks and enjoy VEIN\!
+Thanks and enjoy VEIN!
 
 ## Citation
 
@@ -412,11 +397,11 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
 
 ## Communications, doubts etc
 
-  - Drop me an email <sergio.ibarra@usp.br> or
-    <zergioibarra@hotmail.com> (你好中国朋友 - Hello Chinese friends\!)
-  - Check the group on GoogleGroups
+-   Drop me an email <sergio.ibarra@usp.br> or
+    <zergioibarra@hotmail.com> (你好中国朋友 - Hello Chinese friends!)
+-   Check the group on GoogleGroups
     [Group](https://groups.google.com/d/forum/veinmodel).
-  - Check the project on
+-   Check the project on
     [ResearchGate](https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories).
 
 ## Issues
