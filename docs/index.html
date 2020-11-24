@@ -112,9 +112,10 @@
 </li>
 <li>doi: <a href="https://zenodo.org/badge/latestdoi/88201850"><img src="https://zenodo.org/badge/88201850.svg" alt="DOI"></a>
 </li>
-<li>github: <a href="https://github.com/atmoschem/vein"><img src="https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&amp;label=Github" alt="Github Stars"></a> <img src="https://img.shields.io/github/languages/code-size/atmoschem/vein" alt="GitHub code size in bytes"><img src="https://img.shields.io/github/issues/atmoschem/vein" alt="GitHub issues"><!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) --><img src="https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein" alt="GitHub commit activity"><!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
+<li>github: <a href="https://github.com/atmoschem/vein"><img src="https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&amp;label=Github" alt="Github Stars"></a> <img src="https://img.shields.io/github/languages/code-size/atmoschem/vein" alt="GitHub code size in bytes"><img src="https://img.shields.io/github/issues/atmoschem/vein" alt="GitHub issues"><!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) --><img src="https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein" alt="GitHub commit activity"><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/R-CMD-check/badge.svg" alt="R build status"></a>
 </li>
 </ul>
+<!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 </div>
 <div id="vehicular-emissions-inventories-vein" class="section level1">
 <h1 class="hasAnchor">
@@ -176,7 +177,7 @@
 <li>choose a name, for instance, “awesome_city”</li>
 <li>and use it</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb3"><pre class="downlit">
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/ibarraespinosa/vein">vein</a></span><span class="op">)</span>
 <span class="op">?</span><span class="va">get_project</span>
 <span class="fu"><a href="reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span></pre></div>
@@ -257,7 +258,7 @@
 <li>If you know the theoretical shape of the circulating fleet and you can use <a href="https://atmoschem.github.io/vein/reference/age_ldv.html">age_ldv</a>, <a href="https://atmoschem.github.io/vein/reference/age_hdv.html">age_hdv</a> or <a href="https://atmoschem.github.io/vein/reference/age_moto.html">age_moto</a>. For instance, you dont know the sales or registry of vehicles, but somehow you know the shape of this curve.</li>
 <li>You can use/merge/transform/adapt any of these functions.</li>
 </ol>
-<!-- end list --><div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span>
 <span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, name <span class="op">=</span> <span class="st">"PC_E25_1400"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400</span>, xlab <span class="op">=</span> <span class="st">"age of use"</span><span class="op">)</span></pre></div>
@@ -295,7 +296,7 @@
 <li><a href="https://atmoschem.github.io/vein/reference/EmissionFactors.html">EmissionFactors</a></li>
 <li><a href="https://atmoschem.github.io/vein/reference/EmissionFactorsList.html">EmissionFactorsList</a></li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="va">V</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>
 <span class="va">ef1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>,t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="st">"PRE"</span>,
 p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span>
@@ -309,7 +310,7 @@ p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/emis.html">emis</a></li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="va">euro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"IV"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"III"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"II"</span>, <span class="fl">5</span><span class="op">)</span>,
           <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"PRE"</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span>
 <span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
@@ -326,7 +327,7 @@ p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span
 <li>When the argument by = “veh” the emissions are aggregated by age and hour.</li>
 <li>When the argument by = “streets_wide”, aggregated the emissions by street. In this cae, if you add the argument net with the respective streets, it returns an spatial net with the hourly emissions.</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb13"><pre class="downlit">
+<div class="sourceCode" id="cb13"><pre class="downlit">
 <span class="va">E_CO_DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>,  veh <span class="op">=</span> <span class="st">"PC"</span>, size <span class="op">=</span> <span class="st">"&lt;1400"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>,
 pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"veh"</span><span class="op">)</span>
 <span class="va">E_CO_STREETS</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>, pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"streets"</span><span class="op">)</span></pre></div>
@@ -337,8 +338,10 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <li>
 <a href="https://atmoschem.github.io/vein/reference/make_grid.html">make_grid</a>.</li>
 </ul>
-<!-- end list --><p>1) Create a grid using <code>make_grid</code>.The spobj is the spatial net. The size of the grid has the size of the net. You have to specify the grid spacing. 2) Create a grid using a path to wrfinput file instead a net. The grid will have the size of the wrf_input. You don’t have to specify the grid spacing.</p>
-<!-- end list -->
+<ol>
+<li>Create a grid using <code>make_grid</code>.The spobj is the spatial net. The size of the grid has the size of the net. You have to specify the grid spacing.</li>
+<li>Create a grid using a path to wrfinput file instead a net. The grid will have the size of the wrf_input. You don’t have to specify the grid spacing.</li>
+</ol>
 <div class="sourceCode" id="cb14"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>
 <span class="va">E_CO_STREETSnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>, pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"streets_wide"</span>,
@@ -361,7 +364,7 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <li>Create a wrfchem input file <span class="math display"><em>e</em><em>i</em><em>x</em><em>p</em><em>o</em><em>r</em><em>t</em> :  : <em>w</em><em>r</em><em>f</em>_<em>c</em><em>r</em><em>e</em><em>a</em><em>t</em><em>e</em></span>(<a href="https://atmoschem.github.io/eixport/reference/wrf_create.html" class="uri">https://atmoschem.github.io/eixport/reference/wrf_create.html</a>.</li>
 <li>Put the <a href="https://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a> into the wrf chem input file using <a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">eixport::wrf_put</a>.</li>
 </ol>
-<!-- end list --><div class="sourceCode" id="cb15"><pre class="downlit">
+<div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://atmoschem.github.io/eixport/">eixport</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_create.html">wrf_create</a></span><span class="op">(</span>wrfinput_dir         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"eixport"</span><span class="op">)</span>,
