@@ -5,11 +5,8 @@ sudo: required
 matrix:
   include:
     - dist: focal
-    - os: osx
-      brew_packages: llvm
+    - dist: bionic
 
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rm "/usr/local/bin/gfortran"; fi
 
 addons:
   apt:
