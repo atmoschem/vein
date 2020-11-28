@@ -13,6 +13,7 @@
 #'   brazil_mech         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
 #'   brazil_bu_cb05      \tab Bottom-up CB05\tab CETESB\tab  .rds       \cr
 #' }
+#' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
 #' the same
 #' @importFrom utils download.file untar
@@ -23,10 +24,12 @@
 #' }
 #'
 get_project <- function(directory,
-                        case = "brasil"){
+                        case = "brasil",
+                        url){
 
   if(missing(directory)) stop("Please, add a path to a directory") #nocov start
 
+  if(missing(url)){
   if(case %in% c("brasil", "brazil", "brazil_bu", "brasil_bu")) {
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu.tar.gz"
 
@@ -40,10 +43,12 @@ get_project <- function(directory,
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csv.tar.gz"
 
   } else if(case %in% c("brazil_bu_cb05", "brazil_mech")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_cb05.tar.gz"
-
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_mech.tar.gz"
   } else{
     stop("Other cases not supported yet")
+  }
+  } else {
+    URL <- url
   }
   tf <- paste0(tempfile(), ".tar.gz")
   utils::download.file(url = URL,
