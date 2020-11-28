@@ -1,5 +1,8 @@
 
-cat("Plotting ef ...\n")
+switch (language,
+        "portuguese" = cat("Plotando EF\n"),
+        "english" = cat("Plotting EF\n"),
+        "spanish" = cat("Plotando EF\n"))
 
 # emission factors
 n_PC <- metadata[metadata$family == "PC", ]$vehicles
@@ -39,6 +42,16 @@ for(i in seq_along(ns)) {
   print(p)
   dev.off()
 }
+switch (language,
+        "portuguese" = message("\nFiguras em /images\n"),
+        "english" = message("\nFigures in /image\n"),
+        "spanish" = message("\nFiguras en /images\n"))
+
+# Escapamento ####
+switch (language,
+        "portuguese" = cat("Estimando emissões\n"),
+        "english" = cat("Estimating emissions\n"),
+        "spanish" = cat("Estimando emisiones\n"))
 
 # Exhaust ####
 for(i in seq_along(metadata$vehicles)) {
@@ -84,8 +97,17 @@ for(i in seq_along(metadata$vehicles)) {
 }
 
 
-message(paste0("\nFiles in ", getwd(), "/emi/*\n"))
-cat("Cleaning... \n")
+switch (language,
+        "portuguese" = message("\n\nArquivos em: /emi/*:"),
+        "english" = message("\n\nFiles in: /emi/*"),
+        "spanish" = message("\n\nArchivos en: /emi/*"))
+
+
+switch (language,
+        "portuguese" = message("Limpando..."),
+        "english" = message("Cleaning..."),
+        "spanish" = message("Limpiando..."))
+
 suppressWarnings(
   rm(i, j, pol, 
      n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC,

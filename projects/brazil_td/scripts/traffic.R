@@ -8,9 +8,6 @@ for(i in seq_along(metadata$vehicles)) {
             "english" = cat( "Incomptaible names:\n",
                              "metadata:",metadata$vehicles[i], "\n",
                              "`veh`:",names(veh)[i + 1], "\n"),
-            "chinese" = cat( "不兼容的名称:\n",
-                             "metadata:",metadata$vehicles[i], "\n",
-                             "`veh`:",names(veh)[i + 1], "\n"),
             "spanish" = cat( "Nombres incomptatibles:\n",
                              "metadata:",metadata$vehicles[i], "\n",
                              "`veh`:",names(veh)[i + 1], "\n"))
@@ -25,7 +22,6 @@ for(i in seq_along(metadata$vehicles)) {
 switch (language,
         "portuguese" = message("Apagando veh/*.rds\n"),
         "english" = message("Deleting veh/*.rds\n"),
-        "chinese" = message("删除中 veh/*.rds\n"),
         "spanish" = message("Borrando veh/*.rds\n"))
 
 arquivos <- list.files(path = "veh", pattern = ".rds", full.names = TRUE)
@@ -38,7 +34,6 @@ veh[is.na(veh)] <- 0
 switch (language,
         "portuguese" = cat("Plotando fluxos\n"),
         "english" = cat("Plotting traffic flows\n"),
-        "chinese" = cat("绘制交通流\n"),
         "spanish" = cat("Plotando flujos\n"))
 
 # identicar nomes de grupos
@@ -50,6 +45,13 @@ n_BUS <- nveh[grep(pattern = "BUS", x = nveh)]
 n_MC <- nveh[grep(pattern = "MC", x = nveh)]
 
 # PC ####
+# apply survival functions
+for(i in seq_along(metadata$vehicles)) {
+  veh[[metadata$vehicles[i]]] <-   age(x = veh[[metadata$vehicles[i]]], 
+                                       type = metadata$survival[i], 
+                                       a = metadata$survival_param_a[i],
+                                       b = metadata$survival_param_b[i])
+}
 #
 # calculate proportion in PC 
 #
@@ -227,13 +229,12 @@ df <- cbind(dfpc, dflcv, dft, dfb, dfm)
 switch (language,
         "portuguese" = cat("Plotando frota \n"),
         "english" = cat("Plotting fleet \n"),
-        "chinese" = cat("密谋舰队 \n"),
         "spanish" = cat("Plotando flota \n"))
 
 for(i in seq_along(n_veh)) {
   df_x <- df[, n_veh[[i]]]
   png(
-    paste0("images/FLEET_", 
+    paste0("images/VEH_", 
            names(n_veh)[i],
            ".png"), 
     2000, 1500, "px",res = 300)
@@ -241,7 +242,7 @@ for(i in seq_along(n_veh)) {
           cols = n_veh[[i]],
           xlab = "Age",
           ylab = "veh",
-          main = names(n_veh)[i],
+          main = paste0("Veh", names(n_veh)[i]),
           type = "l",
           pch = NULL,
           lwd =1,
@@ -257,7 +258,7 @@ f <- list.files(path = "veh", pattern = ".rds", full.names = T)
 na <- list.files(path = "veh", pattern = ".rds")
 na <- gsub(pattern = ".rds", replacement = "", x = na)
 ff <- unlist(lapply(seq_along(f), function(i){
-  sum(readRDS(f[i]))
+  sum(readRDS(f[i]), na.rm =T)
 }))
 df <- data.frame(per = ff,
                  Categoria = na)
@@ -280,11 +281,24 @@ png(filename =  paste0("images/TRAFFIC.png"),
 print(p)
 dev.off()
 
-message("Figures in images\n")
-message("Files in veh\n")
-message(paste0("veh/", metadata$vehicles, ".rds\n"))
+switch (language,
+        "portuguese" = message("\nArquivos em:"),
+        "english" = message("\nFiles in:"),
+        "spanish" = message("\nArchivos en:"))
 
-cat("Cleaning... \n")
+message("veh/*\n")
+
+switch (language,
+        "portuguese" = message("\nFiguras em"),
+        "english" = message("\nFigures in"),
+        "spanish" = message("\nFiguras en"))
+message("/images")
+
+switch (language,
+        "portuguese" = message("Limpando..."),
+        "english" = message("Cleaning..."),
+        "spanish" = message("Limpiando..."))
+
 suppressWarnings(rm(kPC, kPC_G, kPC_E, kPC_FG, kPC_FE,
    kLCV, kLCV_G, kLCV_E, kLCV_FG, kLCV_FE, kLCV_D,
    kTRUCKS, kTRUCKS_SL_D, kTRUCKS_L_D, kTRUCKS_M_D, kTRUCKS_SH_D, kTRUCKS_H_D,

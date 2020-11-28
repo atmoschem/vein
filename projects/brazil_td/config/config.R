@@ -19,7 +19,6 @@ for(i in 2:ncol(pmonth)) {
 switch (language,
         "portuguese" = cat( "Metadata$Vehicles é:\n"),
         "english" = cat( "Metadata$Vehicles is:\n"),
-        "chinese" = cat( "Metadata$Vehicles 是:\n"),
         "spanish" = cat( "Metadata$Vehicles es:\n"))
 
 # cat( "Metadata$Vehicles é:\n")
@@ -34,9 +33,6 @@ if(!length(intersect(metadata$vehicles, names(mileage))) == length(metadata$vehi
           "english" = stop("You need to add column ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " in `mileage`"),
-          "chinese" = stop("您需要添加列 ",
-                           setdiff(metadata$vehicles, names(mileage)),
-                           " 在 `mileage`"),
           "spanish" = stop("Necesitas agregar la columna ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " en `mileage`"))
@@ -52,9 +48,6 @@ if(!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles
           "english" = stop("You need to add column ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " in `tfs`"),
-          "chinese" = stop("您需要添加列 ",
-                           setdiff(metadata$vehicles, names(mileage)),
-                           " 在 `tfs`"),
           "spanish" = stop("Necesitas agregar la columna ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " en `tfs`"))
@@ -69,9 +62,6 @@ if(!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles
           "english" = stop("You need to add column ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " in `veh`"),
-          "chinese" = stop("您需要添加列 ",
-                           setdiff(metadata$vehicles, names(mileage)),
-                           " 在 `veh`"),
           "spanish" = stop("Necesitas agregar la columna ",
                            setdiff(metadata$vehicles, names(mileage)),
                            " en `veh`"))
@@ -82,7 +72,6 @@ if(!"Year" %in% names(veh)){
   switch (language,
           "portuguese" = stop("Não estou enxergando a coluna 'Year' em `veh`"),
           "english" = stop("I'm not seeing column 'Year' in `veh`"),
-          "chinese" = stop("我没有在 `veh`中看到“ Year”列"),
           "spanish" = stop("No estoy viendo la columna 'Year' in `veh`"))
   
 } 
@@ -90,7 +79,6 @@ if(!"Year" %in% names(mileage)) {
   switch (language,
           "portuguese" = stop("Não estou enxergando a coluna 'Year' em `mileage`"),
           "english" = stop("I'm not seeing column 'Year' in `mileage`"),
-          "chinese" = stop("我没有在 `mileage`中看到“ Year”列"),
           "spanish" = stop("No estoy viendo la columna 'Year' in `mileage`"))
   
 }
@@ -100,7 +88,6 @@ if(veh$Year[1] != year) {
   switch (language,
           "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `veh` é ", veh$Year[1])),
           "english" = stop(paste0("The base year is ", year, " but the first year in `veh` is ", veh$Year[1])),
-          "chinese" = stop("基准年是", year, "，但是`veh`的第一年是", veh$Year[1]),
           "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `veh` es ", veh$Year[1])))
   
 }
@@ -108,7 +95,6 @@ if(mileage$Year[1] != year) {
   switch (language,
           "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `mileage` é ", mileage$Year[1])),
           "english" = stop(paste0("The base year is ", year, " but the first year in `mileage` is ", veh$Year[1])),
-          "chinese" = stop("基准年是", year, "，但是`mileage`的第一年是", veh$Year[1]),
           "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `mileage` es ", mileage$Year[1])))
   
 }
@@ -117,7 +103,6 @@ if(mileage$Year[1] != year) {
 switch (language,
         "portuguese" = message("Arquivos em: ", getwd(), "/config/*\n"),
         "english" = message("Files in: ", getwd(), "/config/*\n"),
-        "chinese" = message("文件位于: ", getwd(), "/config/*\n"),
         "spanish" = message("Archivos en: ", getwd(), "/config/*\n"))
 
 saveRDS(metadata, "config/metadata.rds")
@@ -154,19 +139,7 @@ if(delete_directories){
       unlink("post", recursive = T)
       unlink("veh", recursive = T)
     } 
-    
-  } else if (language == "chinese") {
-    # choice <- utils::menu(c("是的", "没有"), title="删除文件夹 `csv`, `emi`, `images`, `notes`, `post`, `veh`??")
-    if(choice == 1){
-      message("删除文件夹 `emi`, `images`, `notes`, `post`, `veh`")
-      unlink("csv", recursive = T)
-      unlink("emi", recursive = T)
-      unlink("images", recursive = T)
-      unlink("notes", recursive = T)
-      unlink("post", recursive = T)
-      unlink("veh", recursive = T)
-    } 
-    
+        
   } else if(language == "spanish"){
     # choice <- utils::menu(c("Si", "No"), title="Borrar carpetas `csv`, `emi`, `images`, `notes`, `post` y `veh`??")
     if(choice == 1){
@@ -200,7 +173,6 @@ po <- list.dirs("post", full.names = T, recursive = T)
 switch (language,
         "portuguese" = message("Novas pastas:"),
         "english" = message("New folders:"),
-        "chinese" = message("文件位于: ", getwd(), "/config/*\n"),
         "spanish" = message("Nuevas carpetas"))
 
 message("csv\n")
@@ -220,12 +192,24 @@ n_veh <- list(PC = n_PC,
               TRUCKS = n_TRUCKS, 
               BUS = n_BUS, 
               MC = n_MC)
+#Fuel ####
+switch (language,
+        "portuguese" = cat("Plotando combustivel \n"),
+        "english" = cat("Plotting fuel \n"),
+        "spanish" = cat("Plotando combustible \n"))
+
+png("images/FUEL.png", width = 1500, height = 2000, units = "px",res = 300)
+barplot(height = fuel$consumption_lt, 
+        names.arg = fuel$fuel,        xlab = "Fuel",
+        ylab = "lt",
+        main = "Fuel")
+dev.off()
+
 
 # Fleet ####
 switch (language,
         "portuguese" = cat("Plotando frota \n"),
         "english" = cat("Plotting fleet \n"),
-        "chinese" = cat("密谋舰队 \n"),
         "spanish" = cat("Plotando flota \n"))
 
 for(i in seq_along(n_veh)) {
@@ -239,7 +223,7 @@ for(i in seq_along(n_veh)) {
           cols = n_veh[[i]],
           xlab = "Age",
           ylab = "veh/h",
-          main = names(n_veh)[i],
+          main = paste0("Fleet ", names(n_veh)[i]) ,
           type = "l",
           pch = NULL,
           lwd =1,
@@ -253,7 +237,6 @@ for(i in seq_along(n_veh)) {
 switch (language,
         "portuguese" = cat("Plotando perfis `tfs`\n"),
         "english" = cat("Plotting profiles `tfs`\n"),
-        "chinese" = cat("绘制轮廓 `tfs`\n"),
         "spanish" = cat("Plotando perfiles `tfs`\n"))
 
 for(i in seq_along(n_veh)) {
@@ -282,7 +265,6 @@ for(i in seq_along(n_veh)) {
 switch (language,
         "portuguese" = cat("Plotando quilometragem \n"),
         "english" = cat("Plotting mileage `tfs`\n"),
-        "chinese" = cat("绘制里程 `tfs`\n"),
         "spanish" = cat("Plotando kilometraje `tfs`\n"))
 
 for(i in seq_along(n_veh)) {
@@ -349,7 +331,6 @@ for(i in seq_along(n_veh)) {
 switch (language,
         "portuguese" = cat("\nFazendo anotações\n"),
         "english" = cat("\nTaking some notes\n"),
-        "chinese" = cat("\n做笔记\n"),
         "spanish" = cat("\nEscribiendo notas\n"))
 
 vein_notes(notes = c("Default notes for vein::get_project"), 
@@ -368,7 +349,6 @@ vein_notes(notes = c("Default notes for vein::get_project"),
 switch (language,
         "portuguese" = message("\nArquivos em:"),
         "english" = message("\nFiles in:"),
-        "chinese" = message("\n文件位于:"),
         "spanish" = message("\nArchivos en:"))
 
 message("config/metadata.rds\n",
@@ -380,14 +360,12 @@ message("config/metadata.rds\n",
 switch (language,
         "portuguese" = message("\nFiguras em \n"),
         "english" = message("\nFigures in \n"),
-        "chinese" = message("\n在数字\n"),
         "spanish" = message("\nFiguras en \n"))
 message("/images")
 
 switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
-        "chinese" = message("清洁用品..."),
         "spanish" = message("Limpiando..."))
 
 

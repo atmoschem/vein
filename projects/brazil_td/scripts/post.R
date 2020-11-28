@@ -1,6 +1,11 @@
 
 # grade
 g                  <- st_transform(g, crs)
+# df
+years <- 2018
+a <- list.files(path = "emi", pattern = '.rds', full.names = T, recursive = T)
+df <- rbindlist(lapply(a, readRDS))
+unique(df$type_emi)
 
 # streets  ####
 cat("Aggregando emissões por rua...\n")
