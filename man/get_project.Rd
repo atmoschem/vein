@@ -4,7 +4,7 @@
 \alias{get_project}
 \title{Download vein project}
 \usage{
-get_project(directory, case = "brasil")
+get_project(directory, case = "brasil", url)
 }
 \arguments{
 \item{directory}{Character; Path to an existing or a new directory to be created.}
@@ -18,6 +18,8 @@ get_project(directory, case = "brasil")
   brazil_mech         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
   brazil_bu_cb05      \tab Bottom-up CB05\tab CETESB\tab  .rds       \cr
 }}
+
+\item{url}{String, with the URL to download VEIN project}
 }
 \description{
 \code{\link{get_project}} downloads a project for running vein.
