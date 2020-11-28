@@ -73,6 +73,7 @@
 #' e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
 #' e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
 #' argument is present, new values are used.
+#' @param verbose Logical to show more information
 #' @importFrom units as_units
 #' @importFrom sf st_as_sf st_set_geometry
 #' @return dataframe of speciation in grams or mols
@@ -129,8 +130,15 @@
 #' (dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
 #' (dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
 #' }
-speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
-                     list = FALSE, pmpar) {
+speciate <- function(x,
+                     spec = "bcom",
+                     veh,
+                     fuel,
+                     eu,
+                     show = FALSE,
+                     list = FALSE,
+                     pmpar,
+                     verbose = FALSE) {
   nvoc <- c(
     "e_eth", "e_hc3", "e_hc5", "e_hc8", "e_ol2", "e_olt", "e_oli",
     "e_iso", "e_tol", "e_xyl", "e_c2h5oh", "e_hcho", "e_ch3oh", "e_ket"
@@ -317,9 +325,9 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
     }
     # PM ####
   } else if (spec %in% c("pmiag", "pmneu", "pmneu2")) {
-    message("Input emissions must be in g/(km^2)/h\n")
-    message("Output flux will be  ug/(m^2)/s\n")
-    message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
+    if(verbose) message("Input emissions must be in g/(km^2)/h\n")
+    if(verbose) message("Output flux will be  ug/(m^2)/s\n")
+    if(verbose) message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
     if (class(x)[1] == "sf") {
       x <- sf::st_set_geometry(x, NULL)
     } else if (class(x) == "Spatial") {
@@ -348,8 +356,7 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
           e_orgi = 0.0304,
           e_orgj = 0.1296,
           e_eci = 0.056,
-          e_ecj = 0.024,
-          h2o = 0.277
+          e_ecj = 0.024#,h2o = 0.277
         )
       } else if (spec == "pmneu") {
         df <- data.frame(
@@ -362,8 +369,7 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
           e_orgi = 0,
           e_orgj = 0.0304 + 0.1296,
           e_eci = 0,
-          e_ecj = 0.056 + 0.024,
-          h2o = 0.277
+          e_ecj = 0.056 + 0.024#,h2o = 0.277
         )
       } else if (spec == "pmneu2") {
         df <- data.frame(
@@ -376,8 +382,7 @@ speciate <- function(x, spec = "bcom", veh, fuel, eu, show = FALSE,
           e_orgi = 0,
           e_orgj = 0.35,
           e_eci = 0,
-          e_ecj = 0.18,
-          h2o = 0.277
+          e_ecj = 0.18#,h2o = 0.277
         )
       }
     }

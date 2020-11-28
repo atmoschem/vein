@@ -1,9 +1,9 @@
-pandoc: 2.11.0.2
+pandoc: 2.11.2
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   basics: basics.html
-last_built: 2020-11-24T20:54Z
+last_built: 2020-11-28T01:42Z
 urls:
   reference: http://atmoschem.github.io/vein//reference
   article: http://atmoschem.github.io/vein//articles

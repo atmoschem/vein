@@ -7,8 +7,7 @@
 get_project(directory, case = "brasil")
 }
 \arguments{
-\item{directory}{Character; Path to an existing or a new directory to be created.
-It needs absolute path.}
+\item{directory}{Character; Path to an existing or a new directory to be created.}
 
 \item{case}{Character; One of  of the following:
 \tabular{llll}{
@@ -16,7 +15,7 @@ It needs absolute path.}
   brazil or brazil_bu or brasil or brasil_bu\tab Bottom-up \tab CETESB \tab  .rds       \cr
   emislacovid         \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
   brazil_bu_csvgz     \tab Bottom-up \tab CETESB \tab  .csv.gz    \cr
-  brazil_bu_csv       \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
+  brazil_mech         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
   brazil_bu_cb05      \tab Bottom-up CB05\tab CETESB\tab  .rds       \cr
 }}
 }

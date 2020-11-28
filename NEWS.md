@@ -18,6 +18,7 @@ NEWS
 - Add ef_emfac (2020-11-14)
 - speciate names upper and without point (e_pm2.55i -> E_PM25I) (2020-11-17)
 - Update scale tunnel in ef_cetesb (2020-11-23)
+- Update speciate (2020-11-27)
 
 ### vein 0.9.0.1 (Release date: 2020-10-13)
 - REMOVED OPENMP DUE TO MAC OS ISSUES ANd FORTRAN

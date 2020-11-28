@@ -49,7 +49,6 @@ ev <- c("DIURNAL","DIURNAL","DIURNAL",
 switch (language,
         "portuguese" = cat("Plotando EF\n"),
         "english" = cat("Plotting EF\n"),
-        "chinese" = cat("绘图 EF\n"),
         "spanish" = cat("Plotando EF\n"))
 
 for(i in seq_along(ns)) {
@@ -85,7 +84,6 @@ for(i in seq_along(ns)) {
 switch (language,
         "portuguese" = message("\nFiguras em /images\n"),
         "english" = message("\nFigures in /image\n"),
-        "chinese" = message("\n/图片中的数字\n"),
         "spanish" = message("\nFiguras en /images\n"))
 
 

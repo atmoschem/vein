@@ -4,7 +4,17 @@
 \alias{speciate}
 \title{Speciation of emissions}
 \usage{
-speciate(x, spec = "bcom", veh, fuel, eu, show = FALSE, list = FALSE, pmpar)
+speciate(
+  x,
+  spec = "bcom",
+  veh,
+  fuel,
+  eu,
+  show = FALSE,
+  list = FALSE,
+  pmpar,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{x}{Emissions estimation}
@@ -83,6 +93,8 @@ e_no3j = 0.01053,  e_pm25i = 0.1,  e_pm25j = 0.3,
 e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
 e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
 argument is present, new values are used.}
+
+\item{verbose}{Logical to show more information}
 }
 \value{
 dataframe of speciation in grams or mols

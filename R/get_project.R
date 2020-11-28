@@ -4,14 +4,13 @@
 #' The projects are available on Github.com/atmoschem/vein/projects
 #'
 #' @param directory Character; Path to an existing or a new directory to be created.
-#' It needs absolute path.
 #' @param case Character; One of  of the following:
 #' \tabular{llll}{
 #'   \strong{case}       \tab \strong{Description}\tab  \strong{EF} \tab \strong{Outputs}   \cr
 #'   brazil or brazil_bu or brasil or brasil_bu\tab Bottom-up \tab CETESB \tab  .rds       \cr
 #'   emislacovid         \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
 #'   brazil_bu_csvgz     \tab Bottom-up \tab CETESB \tab  .csv.gz    \cr
-#'   brazil_bu_csv       \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
+#'   brazil_mech         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
 #'   brazil_bu_cb05      \tab Bottom-up CB05\tab CETESB\tab  .rds       \cr
 #' }
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
@@ -40,7 +39,7 @@ get_project <- function(directory,
   } else if(case %in% c("brazil_bu_csv")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csv.tar.gz"
 
-  } else if(case %in% c("brazil_bu_cb05")){
+  } else if(case %in% c("brazil_bu_cb05", "brazil_mech")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_cb05.tar.gz"
 
   } else{
