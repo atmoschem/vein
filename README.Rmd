@@ -47,7 +47,7 @@ knitr::opts_chunk$set(
 
 - *REMOVED OpenMP because of MacOS issues. I hope in the version 1.0 of vein I can add this*
 - Add mechanisms neu_cb05, pmneu, pmneu2 (thanks to Daniel Schuch from Northeastern University)
-- Add top-down approach with wrf chem
+<!-- - Add top-down approach with wrf chem -->
 
 ### TODO
 

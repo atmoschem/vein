@@ -30,8 +30,10 @@ speciate(
 \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
 \item{"iag_racm"}{: ethanol emissions added in hc3.}
 \item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
+\item{"petroiag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
 \item{"iag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group .}
 \item{"neu_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
+\item{"petroiag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
 }}
 
 \item{veh}{Type of vehicle:
@@ -47,6 +49,8 @@ speciate(
 \item{"iag" or "iag_cb05"}{: veh accepts "veh" .}
 \item{"iag_cb05v2"}{: veh accepts "veh" .}
 \item{"neu_cb05"}{: veh accepts "veh" .}
+\item{"petroiag_cb05"}{: veh accepts "veh" .}
+\item{"petroiag_cb05v2"}{: veh accepts "veh" .}
 }}
 
 \item{fuel}{Fuel.
@@ -62,6 +66,8 @@ speciate(
 \item{"iag" or "iag_cb05"}{: "G", "E" or "D".}
 \item{"iag_cb05v2"}{: "G", "E" or "D".}
 \item{"neu_cb05"}{: "G", "E" or "D".}
+\item{"petroiag_cb05"}{: "G", "E" or "D".}
+\item{"petroiag_cb05v2"}{: "G", "E" or "D".}
 }}
 
 \item{eu}{Emission standard
@@ -80,6 +86,8 @@ fuel is "LPG"}
 \item{"iag" or "iag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
 \item{"iag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
 \item{"neu_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+\item{"petroiag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+\item{"petroiag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
 }}
 
 \item{show}{when TRUE shows row of table with respective speciation}
