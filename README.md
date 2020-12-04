@@ -44,10 +44,10 @@
     of vein I can add this*
 -   Add mechanisms neu\_cb05, pmneu, pmneu2 (thanks to Daniel Schuch
     from Northeastern University)
+-   Add top-down approach with wrf chem
 
 ### TODO
 
--   get\_project with top-down approaches
 -   get\_project with Europe and Chinese EF
 -   Add EF from EMFAC and MOVES
 -   Update ef\_ldv\* and ef\_hdv\* to EEA2019

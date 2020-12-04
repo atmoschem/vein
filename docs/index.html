@@ -127,13 +127,13 @@
 <ul>
 <li><em>REMOVED OpenMP because of MacOS issues. I hope in the version 1.0 of vein I can add this</em></li>
 <li>Add mechanisms neu_cb05, pmneu, pmneu2 (thanks to Daniel Schuch from Northeastern University)</li>
+<li>Add top-down approach with wrf chem</li>
 </ul>
 </div>
 <div id="todo" class="section level3">
 <h3 class="hasAnchor">
 <a href="#todo" class="anchor"></a>TODO</h3>
 <ul>
-<li>get_project with top-down approaches</li>
 <li>get_project with Europe and Chinese EF</li>
 <li>Add EF from EMFAC and MOVES</li>
 <li>Update ef_ldv* and ef_hdv* to EEA2019</li>
@@ -158,10 +158,10 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VEIN can be installed via CRAN or github</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"vein"</span><span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_gitlab.html">install_gitlab</a></span><span class="op">(</span><span class="st">"ibarraespinosa/vein"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"vein"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_gitlab.html">install_gitlab</a></span><span class="op">(</span><span class="st">"ibarraespinosa/vein"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="approaches" class="section level2">
@@ -177,10 +177,10 @@
 <li>choose a name, for instance, “awesome_city”</li>
 <li>and use it</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/ibarraespinosa/vein">vein</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/ibarraespinosa/vein">vein</a></span><span class="op">)</span>
 <span class="op">?</span><span class="va">get_project</span>
-<span class="fu"><a href="reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span></code></pre></div>
 <p>The structure of the new directory “awesome_city” is:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>awesome_city</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>├── config</span>
@@ -213,8 +213,8 @@
 <li>eixport (If you plan to generate WRF Chem emissions file)</li>
 </ul>
 <p>If you do not have them already, you can install:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="too-complicated-watch-a-youtube-video-in-portuguese" class="section level2">
@@ -227,9 +227,9 @@
 <h3 class="hasAnchor">
 <a href="#2-use-inventory-a-bit-not-so-easy" class="anchor"></a>2. Use inventory (a bit not so easy)</h3>
 <p>run the demo to see vein in action</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/ibarraespinosa/vein">vein</a></span><span class="op">)</span> 
-<span class="fu"><a href="https://rdrr.io/r/utils/demo.html">demo</a></span><span class="op">(</span><span class="va">VEIN</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/ibarraespinosa/vein">vein</a></span><span class="op">)</span> 
+<span class="fu"><a href="https://rdrr.io/r/utils/demo.html">demo</a></span><span class="op">(</span><span class="va">VEIN</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="how-does-it-work" class="section level2">
@@ -258,35 +258,35 @@
 <li>If you know the theoretical shape of the circulating fleet and you can use <a href="https://atmoschem.github.io/vein/reference/age_ldv.html">age_ldv</a>, <a href="https://atmoschem.github.io/vein/reference/age_hdv.html">age_hdv</a> or <a href="https://atmoschem.github.io/vein/reference/age_moto.html">age_moto</a>. For instance, you dont know the sales or registry of vehicles, but somehow you know the shape of this curve.</li>
 <li>You can use/merge/transform/adapt any of these functions.</li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span>
 <span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, name <span class="op">=</span> <span class="st">"PC_E25_1400"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400</span>, xlab <span class="op">=</span> <span class="st">"age of use"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400</span>, xlab <span class="op">=</span> <span class="st">"age of use"</span><span class="op">)</span></code></pre></div>
 <p><img src="https://atmoschem.github.io/vein/reference/age_ldv-1.png"></p>
 <p>If you want to know the vehicles per street and by age of use, just add the net. Age functions now returns ‘sf’ objects if the net argument is present.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">PC_E25_1400net</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, name <span class="op">=</span> <span class="st">"PC_E25_1400"</span>, net <span class="op">=</span> <span class="va">net</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400net</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">PC_E25_1400net</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, name <span class="op">=</span> <span class="st">"PC_E25_1400"</span>, net <span class="op">=</span> <span class="va">net</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400net</span><span class="op">)</span></code></pre></div>
 <p><img src="https://atmoschem.github.io/vein/reference/age_ldv-2.png"></p>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/temp_fact.html">temp_fact</a></li>
 <li><a href="https://atmoschem.github.io/vein/reference/netspeed.html">netspeed</a></li>
 </ul>
 <p>temporal factors and netspeed</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"pc_profile"</span><span class="op">)</span>
 <span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">+</span><span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, <span class="va">pc_profile</span><span class="op">)</span>
 <span class="va">dfspeed</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, alpha <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dfspeed</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dfspeed</span><span class="op">)</span></code></pre></div>
 <p><img src="https://atmoschem.github.io/vein/reference/netspeed-1.png"></p>
 <p>If you want ot check the speed at different hours by street, just add net:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">dfspeednet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dfspeednet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,
                        alpha <span class="op">=</span> <span class="fl">1.5</span>, net <span class="op">=</span> <span class="va">net</span><span class="op">)</span>
 <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/spplot.html">spplot</a></span><span class="op">(</span><span class="fu">as</span><span class="op">(</span><span class="va">dfspeednet</span>, <span class="st">"Spatial"</span><span class="op">)</span>,
        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"S1"</span>, <span class="st">"S9"</span><span class="op">)</span>, scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Draw <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,
-       col.regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+       col.regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="https://i.imgur.com/qJUdMea.png"> ### 2) Emission Factors</p>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/ef_ldv_speed.html">ef_ldv_speed</a></li>
@@ -296,12 +296,12 @@
 <li><a href="https://atmoschem.github.io/vein/reference/EmissionFactors.html">EmissionFactors</a></li>
 <li><a href="https://atmoschem.github.io/vein/reference/EmissionFactorsList.html">EmissionFactorsList</a></li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">V</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>
 <span class="va">ef1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>,t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="st">"PRE"</span>,
 p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span>
 <span class="va">efs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EmissionFactors.html">EmissionFactors</a></span><span class="op">(</span><span class="fu">ef1</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, <span class="va">efs</span>, xlab <span class="op">=</span> <span class="st">"speed[km/h]"</span>, type <span class="op">=</span> <span class="st">"b"</span>, pch <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, <span class="va">efs</span>, xlab <span class="op">=</span> <span class="st">"speed[km/h]"</span>, type <span class="op">=</span> <span class="st">"b"</span>, pch <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></code></pre></div>
 <p><img src="https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png"></p>
 </div>
 <div id="3-estimation-of-emissions" class="section level3">
@@ -310,14 +310,14 @@ p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/emis.html">emis</a></li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="va">euro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"IV"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"III"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"II"</span>, <span class="fl">5</span><span class="op">)</span>,
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">euro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"IV"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"III"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"II"</span>, <span class="fl">5</span><span class="op">)</span>,
           <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"PRE"</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span>
 <span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
 <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>,
           eu <span class="op">=</span> <span class="va">euro</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, p <span class="op">=</span> <span class="st">"CO"</span>, show.equation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span>
 <span class="va">E_CO</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis.html">emis</a></span><span class="op">(</span>veh <span class="op">=</span> <span class="va">PC_E25_1400</span>, lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, ef <span class="op">=</span> <span class="va">lef</span>, speed <span class="op">=</span> <span class="va">dfspeed</span>,
-             profile <span class="op">=</span> <span class="va">pc_profile</span><span class="op">)</span></pre></div>
+             profile <span class="op">=</span> <span class="va">pc_profile</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="4-post-emissions" class="section level3">
 <h3 class="hasAnchor">
@@ -327,10 +327,10 @@ p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span
 <li>When the argument by = “veh” the emissions are aggregated by age and hour.</li>
 <li>When the argument by = “streets_wide”, aggregated the emissions by street. In this cae, if you add the argument net with the respective streets, it returns an spatial net with the hourly emissions.</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">E_CO_DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>,  veh <span class="op">=</span> <span class="st">"PC"</span>, size <span class="op">=</span> <span class="st">"&lt;1400"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>,
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">E_CO_DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>,  veh <span class="op">=</span> <span class="st">"PC"</span>, size <span class="op">=</span> <span class="st">"&lt;1400"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>,
 pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"veh"</span><span class="op">)</span>
-<span class="va">E_CO_STREETS</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>, pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"streets"</span><span class="op">)</span></pre></div>
+<span class="va">E_CO_STREETS</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>, pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"streets"</span><span class="op">)</span></code></pre></div>
 <div id="grids" class="section level4">
 <h4 class="hasAnchor">
 <a href="#grids" class="anchor"></a>Grids</h4>
@@ -342,15 +342,15 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <li>Create a grid using <code>make_grid</code>.The spobj is the spatial net. The size of the grid has the size of the net. You have to specify the grid spacing.</li>
 <li>Create a grid using a path to wrfinput file instead a net. The grid will have the size of the wrf_input. You don’t have to specify the grid spacing.</li>
 </ol>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>
 <span class="va">E_CO_STREETSnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>, pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"streets_wide"</span>,
                              net <span class="op">=</span> <span class="va">net</span><span class="op">)</span>
 <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_grid.html">make_grid</a></span><span class="op">(</span><span class="va">net</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">)</span>
 <span class="va">E_CO_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span>spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, g <span class="op">=</span> <span class="va">g</span>, sr<span class="op">=</span> <span class="fl">31983</span><span class="op">)</span>
 <span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span>
 <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/set_units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"1/h"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">E_CO_g</span><span class="op">[</span><span class="st">"V9"</span><span class="op">]</span>, axes <span class="op">=</span> <span class="cn">T</span>, pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">E_CO_g</span><span class="op">[</span><span class="st">"V9"</span><span class="op">]</span>, axes <span class="op">=</span> <span class="cn">T</span>, pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="https://i.imgur.com/Ydsvt8x.png"></p>
 </div>
 </div>
@@ -364,8 +364,8 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <li>Create a wrfchem input file <span class="math display"><em>e</em><em>i</em><em>x</em><em>p</em><em>o</em><em>r</em><em>t</em> :  : <em>w</em><em>r</em><em>f</em>_<em>c</em><em>r</em><em>e</em><em>a</em><em>t</em><em>e</em></span>(<a href="https://atmoschem.github.io/eixport/reference/wrf_create.html" class="uri">https://atmoschem.github.io/eixport/reference/wrf_create.html</a>.</li>
 <li>Put the <a href="https://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a> into the wrf chem input file using <a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">eixport::wrf_put</a>.</li>
 </ol>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://atmoschem.github.io/eixport/">eixport</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://atmoschem.github.io/eixport/">eixport</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_create.html">wrf_create</a></span><span class="op">(</span>wrfinput_dir         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"eixport"</span><span class="op">)</span>,
            wrfchemi_dir         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span>,
@@ -378,7 +378,7 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <span class="va">gwrf</span> <span class="op">&lt;-</span> <span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_grid.html">wrf_grid</a></span><span class="op">(</span><span class="va">path_to_wrfi</span><span class="op">)</span>
 <span class="va">E_CO_gwrf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span>spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, g <span class="op">=</span> <span class="va">gwrf</span><span class="op">)</span>
 <span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span><span class="op">(</span><span class="va">E_CO_gwrf</span>, rows <span class="op">=</span> <span class="fl">51</span>, cols <span class="op">=</span> <span class="fl">63</span>, times <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">wrf_put</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">path_to_wrfc</span>, name <span class="op">=</span> <span class="st">"E_CO"</span>, POL <span class="op">=</span> <span class="va">gr</span><span class="op">)</span></pre></div>
+<span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">wrf_put</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">path_to_wrfc</span>, name <span class="op">=</span> <span class="st">"E_CO"</span>, POL <span class="op">=</span> <span class="va">gr</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="creating-a-wrfchem-input-file-using-as4wrf" class="section level3">
 <h3 class="hasAnchor">

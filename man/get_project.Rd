@@ -15,8 +15,10 @@ get_project(directory, case = "brasil", url)
   brazil or brazil_bu or brasil or brasil_bu\tab Bottom-up \tab CETESB \tab  .rds       \cr
   emislacovid         \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
   brazil_bu_csvgz     \tab Bottom-up \tab CETESB \tab  .csv.gz    \cr
-  brazil_mech         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
-  brazil_bu_cb05      \tab Bottom-up CB05\tab CETESB\tab  .rds       \cr
+  brazil_csv         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
+  brazil_td_mech         \tab Topdown-up. Faster but heavier\tab CETESB\tab  .csv  \cr
+  brazil_td_chem      \tab Topdown-up with chemical mechanisms\tab CETESB\tab  .rds       \cr
+  brazil_bu_chem      \tab Bottom-up  chemical mechanisms\tab CETESB\tab  .rds       \cr
 }}
 
 \item{url}{String, with the URL to download VEIN project}

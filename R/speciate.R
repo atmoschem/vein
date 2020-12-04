@@ -202,7 +202,8 @@ speciate <- function(x,
       dfb <- as.list(dfb)
     }
     # iag ####
-  } else if (spec %in% c("iag", "iag_cb05", "iag_cb05v2", "neu_cb05", "iag_racm")) {
+  } else if (spec %in% c("iag", "iag_cb05", "iag_cb05v2", "neu_cb05", "iag_racm",
+                         "petroiag_cb05")) {
     iag <- sysdata$iag
 
     spec <- ifelse(spec == "iag", "iag_cb05", spec)
