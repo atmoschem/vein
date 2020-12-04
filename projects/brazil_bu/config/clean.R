@@ -10,8 +10,13 @@ unlink("post", recursive = T)
 unlink("wrf/wrfc*")
 unlink("veh", recursive = T)
 
-system("tar -caf brazil_bu.tar.gz .")
-system("cp brazil_bu.tar.gz brazil_bu_v2020-02-26.tar.gz")
-system("mv brazil_bu.tar.gz ../")
-system("mv brazil_bu_v2020-02-26.tar.gz ../")
+# system("tar -caf brazil_bu.tar.gz .")
+# system("cp brazil_bu.tar.gz brazil_bu_v2020-02-26.tar.gz")
+# system("mv brazil_bu.tar.gz ../")
+# system("mv brazil_bu_v2020-02-26.tar.gz ../")
+
+
+system(paste0("tar -caf ", basename(getwd()), ".tar.gz ."))
+system(paste0("mv ", basename(getwd()), ".tar.gz ../"))
+file.remove(".Rhistory")
 file.remove(".Rhistory")
