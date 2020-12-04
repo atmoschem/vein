@@ -16,8 +16,10 @@
 #' \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
 #' \item{"iag_racm"}{: ethanol emissions added in hc3.}
 #' \item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
+#' \item{"petroiag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
 #' \item{"iag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group .}
 #' \item{"neu_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
+#' \item{"petroiag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
 #' }
 #' @param veh Type of vehicle:
 #' \itemize{
@@ -32,6 +34,8 @@
 #' \item{"iag" or "iag_cb05"}{: veh accepts "veh" .}
 #' \item{"iag_cb05v2"}{: veh accepts "veh" .}
 #' \item{"neu_cb05"}{: veh accepts "veh" .}
+#' \item{"petroiag_cb05"}{: veh accepts "veh" .}
+#' \item{"petroiag_cb05v2"}{: veh accepts "veh" .}
 #' }
 #' @param fuel Fuel.
 #' \itemize{
@@ -46,6 +50,8 @@
 #' \item{"iag" or "iag_cb05"}{: "G", "E" or "D".}
 #' \item{"iag_cb05v2"}{: "G", "E" or "D".}
 #' \item{"neu_cb05"}{: "G", "E" or "D".}
+#' \item{"petroiag_cb05"}{: "G", "E" or "D".}
+#' \item{"petroiag_cb05v2"}{: "G", "E" or "D".}
 #' }
 #' @param eu Emission standard
 #' \itemize{
@@ -63,6 +69,8 @@
 #' \item{"iag" or "iag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
 #' \item{"iag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
 #' \item{"neu_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+#' \item{"petroiag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
+#' \item{"petroiag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
 #' }
 #' @param show when TRUE shows row of table with respective speciation
 #' @param list when TRUE returns a list with number of elements of the list as
@@ -203,7 +211,7 @@ speciate <- function(x,
     }
     # iag ####
   } else if (spec %in% c("iag", "iag_cb05", "iag_cb05v2", "neu_cb05", "iag_racm",
-                         "petroiag_cb05")) {
+                         "petroiag_cb05", "petroiag_cb05v2")) {
     iag <- sysdata$iag
 
     spec <- ifelse(spec == "iag", "iag_cb05", spec)
