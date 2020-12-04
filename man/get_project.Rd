@@ -16,7 +16,7 @@ get_project(directory, case = "brasil", url)
   emislacovid         \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
   brazil_bu_csvgz     \tab Bottom-up \tab CETESB \tab  .csv.gz    \cr
   brazil_csv         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
-  brazil_td_chem      \tab Top-down with chemical mechanisms\tab CETESB\tab  .rds       \cr
+  brazil_td_chem      \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds       \cr
   brazil_bu_chem      \tab Bottom-up  chemical mechanisms\tab CETESB\tab  .rds       \cr
 }}
 
