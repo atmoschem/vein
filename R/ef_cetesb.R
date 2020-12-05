@@ -164,16 +164,10 @@ ef_cetesb <- function(p,
                       verbose = FALSE,
                       csv){
   ef <- sysdata$cetesb
-  ef$PC_ELEC <- ef$PC_G*0
-  ef$LCV_ELEC <- ef$LCV_G*0
-  ef$BUS_ELEC <- ef$BUS_URBAN_D*0
-  ef$MC_ELEC_150 <- ef$MC_150_G*0
-  ef$MC_ELEC_150_500 <- ef$MC_150_500_G*0
-  ef$MC_ELEC_500 <- ef$MC_500_G*0
 
-  # tunel
   if(scale == "tunnel") {
     ef <- sysdata$cetesb
+
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
              grep(pattern = "MC_", x = names(ef), value = TRUE))
@@ -189,7 +183,11 @@ ef_cetesb <- function(p,
     ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*4.123004
     ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.750847
 
-    # NONO2 NOx
+    # CO2
+    ef[ef$Pollutant %in% "CO2", LDV] <- ef[ef$Pollutant %in% COHC, LDV]*0.9623089
+    ef[ef$Pollutant %in% "CO2", HDV] <- ef[ef$Pollutant %in% COHC, HDV]*0.8961876
+
+    # NONO2NOx
     NONO<- c("NOx", "NO2", "NO", "NOx_0km", "NO2_0km", "NO_0km")
     ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.109799
     ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.382359
@@ -212,8 +210,7 @@ ef_cetesb <- function(p,
     efHCHO[, HDV] <- efHCHO[, HDV]*0.07377323
     ef <- rbind(ef, efHCHO)
 
-  }
-  if(scale == "tunnel2018") {
+  } else if(scale == "tunnel2018") {
     ef <- sysdata$cetesb
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
@@ -264,6 +261,13 @@ ef_cetesb <- function(p,
     ef <- rbind(ef, efHCHO)
 
   }
+
+  ef$PC_ELEC <- ef$PC_G*0
+  ef$LCV_ELEC <- ef$LCV_G*0
+  ef$BUS_ELEC <- ef$BUS_URBAN_D*0
+  ef$MC_ELEC_150 <- ef$MC_150_G*0
+  ef$MC_ELEC_150_500 <- ef$MC_150_500_G*0
+  ef$MC_ELEC_500 <- ef$MC_500_G*0
   ef[is.na(ef)] <- 0
 
   oldt <- c("SLT", "LT", "MT", "SHT", "HT",
