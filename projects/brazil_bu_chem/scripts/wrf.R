@@ -3,7 +3,34 @@ sep <- ifelse(Sys.info()[["sysname"]] == "Windows","00%3A", ":")
 
 #tempos
 ti <- wrf_get(file = wrfi,  name = "Times")
-cat("Primer tempo de WRF:", as.character(ti)[1], "\n")
+
+switch(language,
+       "portuguese" = cat("Primer tempo de WRF:", as.character(ti)[1], "\n"),
+       "english" = cat("First WRF time:", as.character(ti)[1], "\n"),
+       "spanish" = cat("Primer tiempo de WRF:", as.character(ti)[1], "\n"))
+
+
+
+# ltemissions, first monday 00:00 before ti
+timepos <- as.POSIXct(as.character(ti), format = "%Y-%m-%d_%H:%M:%S")
+oneweek <- timepos - 3600*24*7
+
+df_time <- data.frame(
+  times = seq.POSIXt(from = oneweek, to = timepos, by = "hour")
+)
+
+df_time$wday <- strftime(df_time$times, "%u")
+df_time$hour <- hour(df_time$times)10
+lt_emissions <- df_time[df_time$wday == 1 & df_time$hour == 0, ]$times[1]
+
+switch(
+  language,
+  "portuguese" = cat("Segunda-feira 00:00 anterior do primeiro tempo WRF:", 
+                     as.character(lt_emissions), "\n"),
+  "english" = cat("Monday 00:00, previous of first WRF time:", 
+                  as.character(lt_emissions), "\n"),
+  "spanish" = cat("Lunes 00:00 antes del primer tiempo WRF:", 
+                  as.character(lt_emissions), "\n"))
 
 wrfc <- paste0("wrfchemi_d0", domain, "_", as.character(ti))
 if(Sys.info()[["sysname"]] == "Windows") wrfc <- gsub("00:", sep, wrfc)

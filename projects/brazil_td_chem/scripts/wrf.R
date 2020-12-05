@@ -3,25 +3,34 @@ sep <- ifelse(Sys.info()[["sysname"]] == "Windows","00%3A", ":")
 
 #tempos
 ti <- wrf_get(file = wrfi,  name = "Times")
-cat("Primer tempo de WRF:", as.character(ti)[1], "\n")
 
-fmonth <- ifelse(nchar(months_subset) <2, 
-                 paste0("0", months_subset), 
-                 months_subset)
+switch(language,
+       "portuguese" = cat("Primer tempo de WRF:", as.character(ti)[1], "\n"),
+       "english" = cat("First WRF time:", as.character(ti)[1], "\n"),
+       "spanish" = cat("Primer tiempo de WRF:", as.character(ti)[1], "\n"))
 
-lmonth <- ifelse(nchar(months_subset+1) <2, 
-                 paste0("0", months_subset+1), 
-                 months_subset+1)
 
-# number of days
-fday = as.Date(paste0(year,fmonth, "01"), format = "%Y%m%d")
-lday = as.Date(paste0(year,lmonth, "01"), format = "%Y%m%d")
-days <- length(seq.Date(fday, lday, by = "day"))-1
 
-switch (language,
-        "portuguese" = cat(paste0("Detectando ",days, " dias \n")),
-        "english" = cat(paste0("Detecting ",days, " dias \n")),
-        "spanish" = cat(paste0("Detectando ",days, " dias \n")))
+# ltemissions, first monday 00:00 before ti
+timepos <- as.POSIXct(as.character(ti), format = "%Y-%m-%d_%H:%M:%S")
+oneweek <- timepos - 3600*24*7
+
+df_time <- data.frame(
+  times = seq.POSIXt(from = oneweek, to = timepos, by = "hour")
+)
+
+df_time$wday <- strftime(df_time$times, "%u")
+df_time$hour <- hour(df_time$times)10
+lt_emissions <- df_time[df_time$wday == 1 & df_time$hour == 0, ]$times[1]
+
+switch(
+  language,
+  "portuguese" = cat("Segunda-feira 00:00 anterior do primeiro tempo WRF:", 
+                     as.character(lt_emissions), "\n"),
+  "english" = cat("Monday 00:00, previous of first WRF time:", 
+                  as.character(lt_emissions), "\n"),
+  "spanish" = cat("Lunes 00:00 antes del primer tiempo WRF:", 
+                  as.character(lt_emissions), "\n"))
 
 
 wrfc <- paste0("wrfchemi_d0", domain, "_", as.character(ti))

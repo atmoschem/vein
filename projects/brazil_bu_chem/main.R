@@ -134,6 +134,7 @@ aer                 <- "pmneu2"          # pmiag, pmneu
 source('scripts/mech.R', encoding = 'UTF-8')
 
 # WRF CHEM
+language             <- "portuguese" # english spanish 
 net                 <- readRDS("network/net.rds")
 cols                <- 63
 rows                <- 51

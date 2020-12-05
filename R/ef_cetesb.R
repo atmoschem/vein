@@ -174,7 +174,6 @@ ef_cetesb <- function(p,
   # tunel
   if(scale == "tunnel") {
     ef <- sysdata$cetesb
-    names(ef)
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
              grep(pattern = "MC_", x = names(ef), value = TRUE))
@@ -182,7 +181,7 @@ ef_cetesb <- function(p,
     # Tunnel measurements of heavy trucks covered only big trucks
     HDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = TRUE))
 
-    # CO HC NMHC (add running losses)
+    # CO HC NMHC (including running losses)
 
     COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km",
               "R_0_15", "R_10_25", "R_0_25")
@@ -195,6 +194,57 @@ ef_cetesb <- function(p,
     ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.109799
     ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.382359
 
+    # PM
+    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.244528
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.235672
+
+    # ALD # ja tem NMHC incrementado
+    efALD <- ef[ef$Pollutant %in% "NMHC", ]
+    efALD$Pollutant <- "ALD"
+    efALD[, LDV] <- efALD[, LDV]*0.04949294
+    efALD[, HDV] <- efALD[, HDV]*0.07377323
+    ef <- rbind(ef, efALD)
+
+    # HCHO # ja tem NMHC incrementado
+    efHCHO <- ef[ef$Pollutant %in% "NMHC", ]
+    efHCHO$Pollutant <- "HCHO"
+    efHCHO[, LDV] <- efHCHO[, LDV]*0.03812294
+    efHCHO[, HDV] <- efHCHO[, HDV]*0.07377323
+    ef <- rbind(ef, efHCHO)
+
+  }
+  if(scale == "tunnel2018") {
+    ef <- sysdata$cetesb
+    LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
+             grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
+             grep(pattern = "MC_", x = names(ef), value = TRUE))
+
+    # Tunnel measurements of heavy trucks covered only big trucks
+    HDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = TRUE))
+
+    # CO HC NMHC (including running losses)
+    COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km",
+              "R_0_15", "R_10_25", "R_0_25")
+
+    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*2.618311
+    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*4.777128
+
+    # NOx
+    NOx <- c("NOx", "NOx_0km")
+    ef[ef$Pollutant %in% NOx, LDV] <- ef[ef$Pollutant %in% NOx, LDV]*0.7839094
+    ef[ef$Pollutant %in% NOx, HDV] <- ef[ef$Pollutant %in% NOx, HDV]*1.047166
+
+    # NO
+    NO <- c("NO", "NO_0km")
+    ef[ef$Pollutant %in% NO, LDV] <- ef[ef$Pollutant %in% NO, LDV]*0.5361807
+    ef[ef$Pollutant %in% NO, HDV] <- ef[ef$Pollutant %in% NO, HDV]*1.048273
+
+    # NO2
+    NO2 <- c("NO2", "NO2_0km")
+    ef[ef$Pollutant %in% NO2, LDV] <- ef[ef$Pollutant %in% NO2, LDV]*1.338307
+    ef[ef$Pollutant %in% NO2, HDV] <- ef[ef$Pollutant %in% NO2, HDV]*1.039307
+
+    # The following adjustments made for tunnel study for 2011
     # PM
     ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.244528
     ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.235672
