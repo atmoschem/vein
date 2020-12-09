@@ -7,7 +7,7 @@
 emis_chem2(df, mech)
 }
 \arguments{
-\item{df}{data.frame with emissions including "id".}
+\item{df}{data.frame with emissions including columns "id" and "pol".}
 
 \item{mech}{Character, "CB4", "CB05", soon: "S99", "S7", "S7T", "S11", "MOZT1"}
 }

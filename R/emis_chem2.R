@@ -3,7 +3,7 @@
 #' @description \code{\link{emis_chem2}} aggregates VOC emissions by chemical mechanism
 #' and convert grams to mol.
 #'
-#' @param df data.frame with emissions including "id".
+#' @param df data.frame with emissions including columns "id" and "pol".
 #' @param mech Character, "CB4", "CB05", soon: "S99", "S7", "S7T", "S11", "MOZT1"
 #' @return data.frame with lumped groups by chemical mechanism.
 #' @importFrom data.table setDF as.data.table setDT setorderv melt
@@ -17,6 +17,12 @@
 #' }
 emis_chem2 <- function(df, mech) {
   chem <- sysdata$chem
+  df$pol <- ifelse(df$pol == "isopentane", "2-methyl-butane",
+                         ifelse(df$pol == "ethanol", "ethyl alcohol",
+                                ifelse(
+                                  df$pol == "propene", "propylene",
+                                  df$pol)))
+
 
 data.table::setDT(chem)
 pol <- NULL
