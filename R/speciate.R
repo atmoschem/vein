@@ -72,7 +72,6 @@
 #' \item{"petroiag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
 #' \item{"petroiag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
 #' }
-#' @param show when TRUE shows row of table with respective speciation
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
 #' @param pmpar Numeric vector for PM speciation eg:
@@ -143,7 +142,6 @@ speciate <- function(x,
                      veh,
                      fuel,
                      eu,
-                     show = FALSE,
                      list = FALSE,
                      pmpar,
                      verbose = FALSE) {
@@ -165,9 +163,7 @@ speciate <- function(x,
       BC = x * df$BC / 100,
       OM = (df$OM / 100) * (x * df$BC / 100)
     ))
-    if (show == TRUE) {
-      print(df)
-    } else if (list == TRUE) {
+     if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # tyre ####
@@ -180,9 +176,7 @@ speciate <- function(x,
       PM10 = x * 0.6, PM2.5 = x * 0.42, PM1 = x * 0.06,
       PM0.1 = x * 0.048
     ))
-    if (show == TRUE) {
-      print(df)
-    } else if (list == TRUE) {
+    if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # brake ####
@@ -195,18 +189,14 @@ speciate <- function(x,
       PM10 = x * 0.98, PM2.5 = x * 0.39, PM1 = x * 0.1,
       PM0.1 = x * 0.08
     ))
-    if (show == TRUE) {
-      print(df)
-    } else if (list == TRUE) {
+   if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # road ####
   } else if (spec == "road") {
     df <- data.frame(PM10 = 0.5, PM2.5 = 0.27)
     dfb <- Emissions(data.frame(PM10 = x * 0.5, PM2.5 = x * 0.27))
-    if (show == TRUE) {
-      print(df)
-    } else if (list == TRUE) {
+     if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # iag ####
@@ -262,9 +252,7 @@ speciate <- function(x,
           dfb[[j]][, i] <- dfb[[j]][, i] * units::as_units("mol h-1")
         }
       }
-      if (show == TRUE) {
-        print(df)
-      }
+
     } else {
       dfx <- df[, 1:ncol(df)]
       dfb <- as.data.frame(lapply(1:ncol(dfx), function(i) {
@@ -275,50 +263,30 @@ speciate <- function(x,
 
     names(df) <- toupper(names(df))
 
-    if (show == TRUE) {
-      print(df)
-    }
-    # names IAG ####
-
     # nmhc ####
   } else if (spec == "nmhc") {
-    iag <- sysdata$nmhc
-    df <- iag[iag$VEH == veh & iag$FUEL == fuel & iag$STANDARD == eu, ]
-    if (is.data.frame(x)) {
-      for (i in 1:ncol(x)) {
-        x[, i] <- as.numeric(x[, i])
-      }
-    }
+    nmhc <- sysdata$nmhc
+    nmhc$group <- NULL
+
+    df <- nmhc[nmhc$veh == veh &
+                 nmhc$fuel == fuel &
+                 nmhc$eu == eu, ]
+
     if (list == T) {
-      dfx <- df[, 4:ncol(df)]
-      dfb <- lapply(1:ncol(dfx), function(i) {
-        dfx[, i] * x / 100 # percentage
+
+      dfb <- lapply(1:nrow(df), function(i) {
+        df[i, ]$x * x / 100
       })
-      names(dfb) <- names(dfx)
+      names(dfb) <- df$species
 
-      if (is.data.frame(x)) {
-        for (j in 1:length(dfb)) {
-          for (i in 1:ncol(x)) {
-            dfb[[j]][, i] <- dfb[[j]][, i] * units::as_units("g h-1")
-          }
-        }
-      } else {
-        dfb <- lapply(dfb, Emissions)
-      }
-
-      if (show == TRUE) {
-        print(df)
-      }
     } else {
-      dfx <- df[, 4:ncol(df)]
-      dfb <- as.data.frame(lapply(1:ncol(dfx), function(i) {
-        dfx[, i] * x / 100
+
+        dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
+        data.frame(x = df[i, ]$x * x / 100,
+                   pol = df$species[i])
       }))
-      names(dfb) <- names(dfx)
     }
-    if (show == TRUE) {
-      print(df)
-    }
+
     # nox ####
   } else if (spec == "nox") {
     bcom <- sysdata$nox
@@ -327,9 +295,7 @@ speciate <- function(x,
       NO2 = x * df$NO2,
       NO = x * df$NO
     ))
-    if (show == TRUE) {
-      print(df)
-    } else if (list == TRUE) {
+    if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # PM ####
@@ -414,9 +380,7 @@ names(df) <- toupper(names(df))
       #     dfb[[j]][ , i] <-   units::set_units(dfb[[j]][ , i], "g/m^2/s")
       #   }
       # }
-      if (show == TRUE) {
-        print(df)
-      }
+
     } else {
       dfx <- df
       dfb <- as.data.frame(lapply(1:ncol(dfx), function(i) {
@@ -427,9 +391,7 @@ names(df) <- toupper(names(df))
       #   dfb[ , i] <- dfb[ , i] * units::as_units("g m-2 s-1")
       # }
     }
-    if (show == TRUE) {
-      print(df)
-    }
+
   } else {
     stop("Selelect another `spec`")
   }
