@@ -107,7 +107,7 @@ emis_order <- function(x, # 24 hours or one week
   itz <- intersect(tz_lt, OlsonNames())
 
   if(length(itz) == 0){
-    choice <- utils::menu(OlsonNames(), title="Choose yout time zone")
+    choice <- utils::menu(OlsonNames(), title="Choose your time zone")
     tz_lt <- OlsonNames()[choice]
   }
   if(verbose) cat("Your local_tz is: ", tz_lt, "\n")

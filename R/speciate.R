@@ -266,11 +266,25 @@ speciate <- function(x,
     # nmhc ####
   } else if (spec == "nmhc") {
     nmhc <- sysdata$nmhc
-    nmhc$group <- NULL
 
-    df <- nmhc[nmhc$veh == veh &
-                 nmhc$fuel == fuel &
-                 nmhc$eu == eu, ]
+    if(!veh %in% unique(nmhc$veh)) {
+      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      veh <- unique(nmhc$veh)[choice]
+    }
+    nmhc <- nmhc[nmhc$veh == veh , ]
+
+    if(!fuel %in% unique(nmhc$fuel)) {
+      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      fuel <- unique(nmhc$fuel)[choice]
+    }
+    nmhc <- nmhc[nmhc$fuel == fuel , ]
+
+    if(!eu %in% unique(nmhc$eu)) {
+      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      eu <- unique(nmhc$eu)[choice]
+    }
+    df <- nmhc[nmhc$eu == eu , ]
+
 
     if (list == T) {
 
@@ -285,6 +299,7 @@ speciate <- function(x,
         data.frame(x = df[i, ]$x * x / 100,
                    pol = df$species[i])
       }))
+        if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
     }
 
     # nox ####
