@@ -4,12 +4,14 @@
 \alias{emis_chem2}
 \title{Aggregate emissions by lumped groups in chemical mechanism}
 \usage{
-emis_chem2(df, mech)
+emis_chem2(df, mech, nx)
 }
 \arguments{
 \item{df}{data.frame with emissions including columns "id" and "pol".}
 
 \item{mech}{Character, "CB4", "CB05", soon: "S99", "S7", "S7T", "S11", "MOZT1"}
+
+\item{nx}{Character, colnames for emissions data, for instance "V1", "V2"...}
 }
 \value{
 data.frame with lumped groups by chemical mechanism.

@@ -152,18 +152,22 @@ and convert grams to mol." />
 and convert grams to mol.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>emis_chem2</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>mech</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>emis_chem2</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>mech</span>, <span class='va'>nx</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>df</th>
-      <td><p>data.frame with emissions including "id".</p></td>
+      <td><p>data.frame with emissions including columns "id" and "pol".</p></td>
     </tr>
     <tr>
       <th>mech</th>
       <td><p>Character, "CB4", "CB05", soon: "S99", "S7", "S7T", "S11", "MOZT1"</p></td>
+    </tr>
+    <tr>
+      <th>nx</th>
+      <td><p>Character, colnames for emissions data, for instance "V1", "V2"...</p></td>
     </tr>
     </table>
 
