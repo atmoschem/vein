@@ -4,17 +4,7 @@
 \alias{speciate}
 \title{Speciation of emissions}
 \usage{
-speciate(
-  x,
-  spec = "bcom",
-  veh,
-  fuel,
-  eu,
-  show = FALSE,
-  list = FALSE,
-  pmpar,
-  verbose = FALSE
-)
+speciate(x, spec = "bcom", veh, fuel, eu, list = FALSE, pmpar, verbose = FALSE)
 }
 \arguments{
 \item{x}{Emissions estimation}
@@ -89,8 +79,6 @@ fuel is "LPG"}
 \item{"petroiag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
 \item{"petroiag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
 }}
-
-\item{show}{when TRUE shows row of table with respective speciation}
 
 \item{list}{when TRUE returns a list with number of elements of the list as
 the number species of pollutants}
