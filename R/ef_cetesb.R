@@ -263,12 +263,6 @@ ef_cetesb <- function(p,
 
   }
 
-  ef$PC_ELEC <- ef$PC_G*0
-  ef$LCV_ELEC <- ef$LCV_G*0
-  ef$BUS_ELEC <- ef$BUS_URBAN_D*0
-  ef$MC_ELEC_150 <- ef$MC_150_G*0
-  ef$MC_ELEC_150_500 <- ef$MC_150_500_G*0
-  ef$MC_ELEC_500 <- ef$MC_500_G*0
   ef[is.na(ef)] <- 0
 
   oldt <- c("SLT", "LT", "MT", "SHT", "HT",
