@@ -6,6 +6,7 @@
 ^\.travis\.yml$
 ^appveyor.yml$
 ^docs$
+^doc$
 ^_pkgdown\.yml$
 ^logovein_small.png$
 ^codecov\.yml$

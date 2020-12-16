@@ -14,7 +14,7 @@ NEWS
 ### vein 0.9.0.3 (Release date: 2020-12-05)
 - Update speciate (2020-11-27)
 - Add top-down approach with chemistry for WRF (2020-12-04)
-- Add top-down approach with chemistry for WRF (2020-12-04)
+- Update ef_cetesb with scale = "tunnel"
 
 ### vein 0.9.0.2 (Release date: 2020-10-07)
 
