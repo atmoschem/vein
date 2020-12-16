@@ -180,31 +180,31 @@ ef_cetesb <- function(p,
     COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km",
               "R_0_15", "R_10_25", "R_0_25")
 
-    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*4.123004
-    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.750847
+    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*4.168227
+    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.736068
 
 
     # NONO2NOx
     NONO<- c("NOx", "NO2", "NO", "NOx_0km", "NO2_0km", "NO_0km")
-    ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.109799
-    ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.382359
+    ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.125685
+    ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.376864
 
     # PM
-    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.244528
-    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.235672
+    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.256218
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.216421
 
     # ALD # ja tem NMHC incrementado
     efALD <- ef[ef$Pollutant %in% "NMHC", ]
     efALD$Pollutant <- "ALD"
-    efALD[, LDV] <- efALD[, LDV]*0.04949294
-    efALD[, HDV] <- efALD[, HDV]*0.07377323
+    efALD[, LDV] <- efALD[, LDV]*0.05013932
+    efALD[, HDV] <- efALD[, HDV]*0.07298411
     ef <- rbind(ef, efALD)
 
     # HCHO # ja tem NMHC incrementado
     efHCHO <- ef[ef$Pollutant %in% "NMHC", ]
     efHCHO$Pollutant <- "HCHO"
-    efHCHO[, LDV] <- efHCHO[, LDV]*0.03812294
-    efHCHO[, HDV] <- efHCHO[, HDV]*0.07377323
+    efHCHO[, LDV] <- efHCHO[, LDV]*0.03862083
+    efHCHO[, HDV] <- efHCHO[, HDV]*0.07298411
     ef <- rbind(ef, efHCHO)
 
   } else if(scale == "tunnel2018") {
@@ -243,24 +243,24 @@ ef_cetesb <- function(p,
     ef[ef$Pollutant %in% NO2, HDV] <- ef[ef$Pollutant %in% NO2, HDV]*1.039307
 
     # # The following adjustments made for tunnel study for 2011
-    # # PM
-    # ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.244528
-    # ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.235672
-    #
-    # # ALD # ja tem NMHC incrementado
-    # efALD <- ef[ef$Pollutant %in% "NMHC", ]
-    # efALD$Pollutant <- "ALD"
-    # efALD[, LDV] <- efALD[, LDV]*0.04949294
-    # efALD[, HDV] <- efALD[, HDV]*0.07377323
-    # ef <- rbind(ef, efALD)
-    #
-    # # HCHO # ja tem NMHC incrementado
-    # efHCHO <- ef[ef$Pollutant %in% "NMHC", ]
-    # efHCHO$Pollutant <- "HCHO"
-    # efHCHO[, LDV] <- efHCHO[, LDV]*0.03812294
-    # efHCHO[, HDV] <- efHCHO[, HDV]*0.07377323
-    # ef <- rbind(ef, efHCHO)
-
+    # PM
+    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.256218
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.216421
+    
+    # ALD # ja tem NMHC incrementado
+    efALD <- ef[ef$Pollutant %in% "NMHC", ]
+    efALD$Pollutant <- "ALD"
+    efALD[, LDV] <- efALD[, LDV]*0.05013932
+    efALD[, HDV] <- efALD[, HDV]*0.07298411
+    ef <- rbind(ef, efALD)
+    
+    # HCHO # ja tem NMHC incrementado
+    efHCHO <- ef[ef$Pollutant %in% "NMHC", ]
+    efHCHO$Pollutant <- "HCHO"
+    efHCHO[, LDV] <- efHCHO[, LDV]*0.03862083
+    efHCHO[, HDV] <- efHCHO[, HDV]*0.07298411
+    ef <- rbind(ef, efHCHO)
+    
   }
 
   ef[is.na(ef)] <- 0

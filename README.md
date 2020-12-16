@@ -41,19 +41,18 @@
 ### What is new?
 
 -   *REMOVED OpenMP because of MacOS issues. I hope in the version 1.0
-    of vein I can add this*
+    of vein I can add this* (I will be back)
 -   Add mechanisms neu\_cb05, pmneu, pmneu2 (thanks to Daniel Schuch
     from Northeastern University)
--   Add top-down approach with wrf chem
+    <!-- - Add top-down approach with wrf chem -->
 
 ### TODO
 
 -   get\_project with Europe and Chinese EF
--   Add EF from EMFAC and MOVES
+-   Add EF from MOVES
 -   Update ef\_ldv\* and ef\_hdv\* to EEA2019
 -   Include speed functions with Fortran and OpenMP
 -   Include several chemical mechanism
--   tidy the code
 -   Add EF from HBEFA?
 -   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
     [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
@@ -79,8 +78,16 @@ VEIN can be installed via CRAN or github
 install.packages("vein")
 ```
 
+gitlab (faster than github)
+
 ``` r
 remotes::install_gitlab("ibarraespinosa/vein")
+```
+
+github
+
+``` r
+remotes::install_gitlab("atmoschem/vein")
 ```
 
 ## Approaches
