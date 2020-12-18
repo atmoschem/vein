@@ -207,7 +207,9 @@ speciate <- function(x,
     spec <- ifelse(spec == "iag", "iag_cb05", spec)
 
     iag <- iag[iag$mech == spec, ]
+
     iag$VEH_FUEL_STANDARD <- paste(iag$VEH, iag$FUEL, iag$STANDARD, sep = "_")
+
     iag2 <- long_to_wide(
       df = iag,
       column_with_new_names = "groups",
@@ -230,6 +232,7 @@ speciate <- function(x,
     names(iag2)[ncol(iag2) - 2] <- "VEH"
     iag <- iag2
     iag$VEH_FUEL_STANDARD <- NULL
+
     df <- iag[iag$VEH == veh &
       iag$FUEL == fuel &
       iag$STANDARD == eu, ]
@@ -241,11 +244,15 @@ speciate <- function(x,
         x[, i] <- as.numeric(x[, i])
       }
     }
+
+
     if (list == T) {
       dfx <- df[, 1:ncol(df)]
+
       dfb <- lapply(1:ncol(dfx), function(i) {
         dfx[, i] * x / 100
       })
+
       names(dfb) <- names(dfx)
       for (j in 1:length(dfb)) {
         for (i in 1:ncol(x)) {
@@ -255,6 +262,8 @@ speciate <- function(x,
 
     } else {
       dfx <- df[, 1:ncol(df)]
+
+
       dfb <- as.data.frame(lapply(1:ncol(dfx), function(i) {
         dfx[, i] * x / 100
       }))
