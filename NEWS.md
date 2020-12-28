@@ -15,6 +15,8 @@ NEWS
 - Update speciate (2020-11-27)
 - Add top-down approach with chemistry for WRF (2020-12-04)
 - Update ef_cetesb with scale = "tunnel"
+- Update speciate for exhaust E100 and chem_vein (2020-12-28)
+- remove NMHC species form ef_hdv_speed because already available in speciate
 
 ### vein 0.9.0.2 (Release date: 2020-10-07)
 

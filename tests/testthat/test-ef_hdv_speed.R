@@ -52,11 +52,6 @@ test_that("ef_hdv_speed works", {
 
 test_that("ef_hdv_speed works", {
   expect_equal(round(ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
-                                  l = 0.5, p = "heptane", show.equation = FALSE)(30)), 0)
-})
-
-test_that("ef_hdv_speed works", {
-  expect_equal(round(ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
                                   l = 0.5, p = "N_rural", show.equation = FALSE)(30)), 3.19e+14)
 })
 
@@ -182,3 +177,4 @@ test_that("ef_hdv_speed stops", {
                             speed = Speed(0))$V1[1]),
                EmissionFactors(0))
 })
+
