@@ -44,29 +44,8 @@
 #' \strong{Dioxins and furans (g equivalent toxicity / km)}: "PCDD", "PCDF" and "PCB".
 #'
 #' \strong{Metals (g/km)}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
-#' \strong{NMHC (g/km)}:
 #'
-#' \emph{ALKANES (g/km)}: "ethane", "propane", "butane", "isobutane", "pentane",
-#' "isopentane", "heptane", "octane", "2-methylhexane", "nonane",
-#' "2-methylheptane", "2-methylhexane", "decane", "3-methylheptane",
-#' "alkanes_C10_C12"
-#'
-#' \emph{CYCLOALKANES (g/km)}: "cycloalkanes".
-#'
-#' \emph{ALKENES (g/km)}: "ethylene", "propylene", "isobutene", "2-butene", "1,3-butadiene"
-#'
-#' \emph{ALKYNES (g/km)}: "acetylene".
-#'
-#' \emph{ALDEHYDES (g/km)}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
-#' "crotonaldehyde", "methacrolein", "butyraldehyde",
-#' "propionaldehyde", "i-valeraldehyde"
-#'
-#' \emph{KETONES (g/km)}: "acetone"
-#'
-#' \emph{AROMATICS (g/km)}: "toluene", "ethylbenzene",
-#'  "m-xylene",  "p-xylene", "o-xylene",
-#' "1,2,3-trimethylbenzene", "1,2,4-trimethylbenzene",
-#' "1,3,5-trimethylbenzene", "styrene", "benzene", "C9".
+#' \strong{NMHC (g/km)}: \code{\link{speciate}}
 #'
 #' \emph{Active Surface (cm2/km) (gr = 0 and l = 0.5)}: "AS_urban", "AS_rural", "AS_highway"
 #'
