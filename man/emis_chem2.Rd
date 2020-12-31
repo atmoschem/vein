@@ -9,7 +9,8 @@ emis_chem2(df, mech, nx, na.rm = FALSE)
 \arguments{
 \item{df}{data.frame with emissions including columns "id" and "pol".}
 
-\item{mech}{Character, "CB4", "CB05", soon: "S99", "S7", "S7T", "S11", "MOZT1"}
+\item{mech}{Character, "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11",
+"S11D","S16C","S18B","RADM2", "RACM2","MOZT1"}
 
 \item{nx}{Character, colnames for emissions data, for instance "V1", "V2"...}
 

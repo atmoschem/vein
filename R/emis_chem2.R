@@ -4,7 +4,8 @@
 #' and convert grams to mol.
 #'
 #' @param df data.frame with emissions including columns "id" and "pol".
-#' @param mech Character, "CB4", "CB05", soon: "S99", "S7", "S7T", "S11", "MOZT1"
+#' @param mech Character, "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11",
+#' "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
 #' @param nx Character, colnames for emissions data, for instance "V1", "V2"...
 #' @param na.rm Logical, to remove lines with NA from group
 #' @return data.frame with lumped groups by chemical mechanism.

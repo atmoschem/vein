@@ -20,7 +20,7 @@ df_time <- data.frame(
 )
 
 df_time$wday <- strftime(df_time$times, "%u")
-df_time$hour <- hour(df_time$times)10
+df_time$hour <- hour(df_time$times)
 lt_emissions <- df_time[df_time$wday == 1 & df_time$hour == 0, ]$times[1]
 
 switch(
@@ -85,7 +85,7 @@ for(i in 1:length(na)){
                    start_utc_time = ti,
                    desired_length = wrf_times,
                    tz_lt = Sys.timezone(), 
-                   seconds = hours*3600,
+                   seconds = offset_hours*3600,
                    verbose = TRUE)
   
   # 0-12
