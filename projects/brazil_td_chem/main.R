@@ -82,9 +82,9 @@ net               <- readRDS("network/net.rds")
 roads             <- readRDS("network/roads.rds") # I already included OSM
 months_subset     <- 8           #10:11 for instance
 g                 <- eixport::wrf_grid(
-    paste0(system.file("extdata",
-                       package = "eixport"),
-           "/wrfinput_d01"))
+  paste0(system.file("extdata",
+                     package = "eixport"),
+         "/wrfinput_d01"))
 # Number of lat points 99
 # Number of lon points 149
 crs               <- 4326
@@ -106,14 +106,20 @@ source("scripts/plots.R", encoding = "UTF-8")
 
 # MECH ####
 language          <- "portuguese" # english spanish 
-months_subset     <- 8   #only one month each time
-g                 <- eixport::wrf_grid(
-    paste0(system.file("extdata",
-                       package = "eixport"),
-           "/wrfinput_d01"))
-mech              <- "iag"        # iag_cb05v2, neu_cb05, iag_racm
-aer               <- "pmneu2"          # pmiag, pmneu
+months_subset     <- "08"   #only one month each time
+g                 <- eixport::wrf_grid(paste0(system.file("extdata",
+                                                          package = "eixport"),
+                                              "/wrfinput_d01"))
+aer               <- "pmneu2"          # "pmiag", "pmneu"
+#  option 1 (if cb05-=> ecb05_opt1)
+mech              <- "iag_cb05"        # "iag_cb05v2", "neu_cb05", "iag_racm"
 source('scripts/mech.R', encoding = 'UTF-8')
+#  option 2 (if cb05-=> ecb05_opt2)
+# mech              <- "CB05"        # "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
+# source('scripts/mech2.R', encoding = 'UTF-8')
+
+# remove some pollutant?
+file.remove("post/spec_grid/E_BENZENE.rds")
 
 
 # WRF CHEM
@@ -121,8 +127,9 @@ language          <- "portuguese" # english spanish
 # hourly distribution for NOx with HDV
 # hourly distribution for other than NOX with PC
 tfs               <- readRDS("config/tfs.rds")
+remove_pol        <- "E"
 year              <- 2018
-months_subset     <- 8   #only one month each time
+days              <- 30   #days of month
 cols              <- 99 # da grade
 rows              <- 149 # da grade
 wrf_times         <- 24 # ?
@@ -135,8 +142,7 @@ pasta_wrfchemi    <- "wrf"
 wrfi              <- paste0(system.file("extdata",
                                         package = "eixport"),
                             "/wrfinput_d01")
-domain           <- 1
-wrf_times        <- 24
-hours            <- 0
-lt_emissions     <- "2011-07-25 00:00:00"
+domain            <- 1
+wrf_times         <- 24
+offset_hours      <- 0
 source("scripts/wrf.R", encoding = "UTF-8")
