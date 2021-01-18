@@ -23,7 +23,7 @@ ef_cetesb(
 Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2",
 "RCHO" (aldehydes + formaldehyde), "ETOH",
 "PM", "N2O", "KML", "FC", "NO2", "NO",
-"gD/KWH", "gCO2/KWH", "RCHO_0km" (aldehydes + formaldehyde),
+"gD/KWH", "gCO2/KWH", "RCHO_0km" (aldehydes + formaldehyde), "PM25RES", "PM10RES",
 "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 "RCHO_0km" and "ETOH_0km", "FS" (fuel sales) (g/km). If scale = "tunnel" is
 used, there is also "ALD" for aldehydes and "HCHO" for  formaldehydes
@@ -47,7 +47,7 @@ If project is 'constant' values above 2017 and below 1980 will be repeated}
 
 \item{agemax}{Integer; age of oldest vehicles for that category}
 
-\item{scale}{Character; values "default" or "tunnel". If "tunnel", emission
+\item{scale}{Character; values "default","tunnel" o  "tunnel2018". If "tunnel", emission
 factors are scaled to represent EF measurements in tunnels in Sao Paulo}
 
 \item{sppm}{Numeric, sulfur (sulphur) in ppm in fuel.}
@@ -142,13 +142,13 @@ it will show a warning
 Currently, 2020, there are not any system for recovery of fuel vapors in Brazil. Hence,
 the FS takes into account the vapour that comes from the fuel tank inside the car and
 released into the atmosphere when injecting new fuel. There are discussions about
-incrementing implementing stage I and II and/or ORVR thesedays. The ef FS is calculated
+increasing implementing stage I and II and/or ORVR these days. The ef FS is calculated
 by transforming g FC/km into  (L/KM)*g/L with g/L 1.14 fgor gasoline and 0.37
 for ethanol (CETESB, 2016). The density considered is 0.75425 for gasoline and
 0.809 for ethanol (t/m^3)
 
 CETESB emission factors did not cover evaporative emissions from motorcycles,
-which occure. Therefore, in the abscence of better data, it was assumed the
+which occur. Therefore, in the absence of better data, it was assumed the
 same ratio from passenger cars.
 
 Li, Lan, et al. "Exhaust and evaporative emissions from motorcycles fueled
@@ -165,7 +165,13 @@ Environmental Science and Technology, 11(8), 2155-2168.
  de Carvalho, L. R. F. (2015). On-road emissions of carbonyls
  from vehicles powered by biofuel blends in traffic tunnels in the
  Metropolitan Area of Sao Paulo, Brazil. Atmospheric Environment, 108, 88-97.
+\item Nogueira, T., et al (2021). In preparation (for tunnel 2018)
 }
+
+Emission factors for resuspension applies \strong{only} with top-down approach
+as a experimental feature. Units are g/streets/day. These values were
+derived form a bottom-up resuspension emissions from metropolitan area
+of Sao Paulo 2018, assuming 50000 streets
 }
 \examples{
 \dontrun{
