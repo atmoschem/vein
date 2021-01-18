@@ -6,7 +6,7 @@
 #' Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2",
 #' "RCHO" (aldehydes + formaldehyde), "ETOH",
 #' "PM", "N2O", "KML", "FC", "NO2", "NO",
-#' "gD/KWH", "gCO2/KWH", "RCHO_0km" (aldehydes + formaldehyde),
+#' "gD/KWH", "gCO2/KWH", "RCHO_0km" (aldehydes + formaldehyde), "PM25RES", "PM10RES",
 #' "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 #' "RCHO_0km" and "ETOH_0km", "FS" (fuel sales) (g/km). If scale = "tunnel" is
 #' used, there is also "ALD" for aldehydes and "HCHO" for  formaldehydes
@@ -26,7 +26,7 @@
 #' @param year Numeric; Filter the emission factor to start from a specific base year.
 #' If project is 'constant' values above 2017 and below 1980 will be repeated
 #' @param agemax Integer; age of oldest vehicles for that category
-#' @param scale Character; values "default" or "tunnel". If "tunnel", emission
+#' @param scale Character; values "default","tunnel" o  "tunnel2018". If "tunnel", emission
 #' factors are scaled to represent EF measurements in tunnels in Sao Paulo
 #' @param sppm Numeric, sulfur (sulphur) in ppm in fuel.
 #' @param full Logical; To return a data.frame instead or a vector adding
@@ -112,13 +112,13 @@
 #' @note Currently, 2020, there are not any system for recovery of fuel vapors in Brazil. Hence,
 #' the FS takes into account the vapour that comes from the fuel tank inside the car and
 #' released into the atmosphere when injecting new fuel. There are discussions about
-#' incrementing implementing stage I and II and/or ORVR thesedays. The ef FS is calculated
+#' increasing implementing stage I and II and/or ORVR these days. The ef FS is calculated
 #' by transforming g FC/km into  (L/KM)*g/L with g/L 1.14 fgor gasoline and 0.37
 #' for ethanol (CETESB, 2016). The density considered is 0.75425 for gasoline and
 #' 0.809 for ethanol (t/m^3)
 #'
 #' CETESB emission factors did not cover evaporative emissions from motorcycles,
-#' which occure. Therefore, in the abscence of better data, it was assumed the
+#' which occur. Therefore, in the absence of better data, it was assumed the
 #' same ratio from passenger cars.
 #'
 #' Li, Lan, et al. "Exhaust and evaporative emissions from motorcycles fueled
@@ -135,8 +135,13 @@
 #'  de Carvalho, L. R. F. (2015). On-road emissions of carbonyls
 #'  from vehicles powered by biofuel blends in traffic tunnels in the
 #'  Metropolitan Area of Sao Paulo, Brazil. Atmospheric Environment, 108, 88-97.
+#' \item Nogueira, T., et al (2021). In preparation (for tunnel 2018)
 #'}
 #'
+#' Emission factors for resuspension applies \strong{only} with top-down approach
+#' as a experimental feature. Units are g/streets/day. These values were
+#' derived form a bottom-up resuspension emissions from metropolitan area
+#' of Sao Paulo 2018, assuming 50000 streets
 #'
 #' @export
 #' @examples \dontrun{
@@ -165,8 +170,59 @@ ef_cetesb <- function(p,
                       csv){
   ef <- sysdata$cetesb
 
+  # adding PMRES
+  if(p %in% c("PM25RES", "PM10RES")) {
+    message("Use only with top-down approach. Units: g/streets/day")
+  }
+  # asume que una calle tiene un flujo medio con 50000 calles
+  # Luego, las emisiones diarias fueron calculadas para MASP 2018
+  # silt de CENMA 2013
+  # solo debe ser usado con TOP-DOWN!
+  nLDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
+            grep(pattern = "LCV_", x = names(ef), value = TRUE),
+            "GNV", "G_BEFORE_GNV", "G_AFTER_GNV")
+  nHDV <- c(grep(pattern = "TRUCKS_", x = names(ef), value = TRUE))
+  nBUS <- c(grep(pattern = "BUS_", x = names(ef), value = TRUE))
+  nMC <- c(grep(pattern = "MC_", x = names(ef), value = TRUE),
+           "CICLOMOTOR")
+
+  pmveh <-  c("BUS", "LDV", "MC", "TRUCKS", "BUS", "LDV", "MC", "TRUCKS")
+  pmpol <- c("PM", "PM", "PM", "PM", "PM10", "PM10", "PM10", "PM10")
+  pmg <- c(16.97520,  658.93943, 121.35852, 258.92251,
+           70.16417, 2723.61630, 501.61524, 1070.21304)
+  pmdf <- data.frame(veh = pmveh, pol = pmpol, gst = pmg)
+  pmef10 <-  pmef2 <-  ef[ef$Pollutant == "CO", ]
+  pmef2$Pollutant <- "PM25RES"
+  pmef2[, nLDV] <- ifelse(pmef2[, nLDV]>0,
+                          1*pmdf[pmdf$pol == "PM" & pmdf$veh == "LDV", ]$gst,
+                          NA)
+  pmef2[, nHDV] <- ifelse(pmef2[, nHDV]>0,
+                          1*pmdf[pmdf$pol == "PM" & pmdf$veh == "HDV", ]$gst,
+                          NA)
+  pmef2[, nBUS] <- ifelse(pmef2[, nBUS]>0,
+                          1*pmdf[pmdf$pol == "PM" & pmdf$veh == "BUS", ]$gst,
+                          NA)
+  pmef2[, nMC] <- ifelse(pmef2[, nMC]>0,
+                          1*pmdf[pmdf$pol == "PM" & pmdf$veh == "MC", ]$gst,
+                          NA)
+
+  pmef10$Pollutant <- "PM10RES"
+  pmef10[, nLDV] <- ifelse(pmef10[, nLDV]>0,
+                          1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "LDV", ]$gst,
+                          NA)
+  pmef10[, nHDV] <- ifelse(pmef10[, nHDV]>0,
+                          1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "HDV", ]$gst,
+                          NA)
+  pmef10[, nBUS] <- ifelse(pmef10[, nBUS]>0,
+                          1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "BUS", ]$gst,
+                          NA)
+  pmef10[, nMC] <- ifelse(pmef10[, nMC]>0,
+                         1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "MC", ]$gst,
+                         NA)
+
+
   if(scale == "tunnel") {
-    ef <- sysdata$cetesb
+    # ef <- sysdata$cetesb
 
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
@@ -208,7 +264,7 @@ ef_cetesb <- function(p,
     ef <- rbind(ef, efHCHO)
 
   } else if(scale == "tunnel2018") {
-    ef <- sysdata$cetesb
+    # ef <- sysdata$cetesb
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
              grep(pattern = "MC_", x = names(ef), value = TRUE))
@@ -246,21 +302,21 @@ ef_cetesb <- function(p,
     # PM
     ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.256218
     ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.216421
-    
+
     # ALD # ja tem NMHC incrementado
     efALD <- ef[ef$Pollutant %in% "NMHC", ]
     efALD$Pollutant <- "ALD"
     efALD[, LDV] <- efALD[, LDV]*0.05013932
     efALD[, HDV] <- efALD[, HDV]*0.07298411
     ef <- rbind(ef, efALD)
-    
+
     # HCHO # ja tem NMHC incrementado
     efHCHO <- ef[ef$Pollutant %in% "NMHC", ]
     efHCHO$Pollutant <- "HCHO"
     efHCHO[, LDV] <- efHCHO[, LDV]*0.03862083
     efHCHO[, HDV] <- efHCHO[, HDV]*0.07298411
     ef <- rbind(ef, efHCHO)
-    
+
   }
 
   ef[is.na(ef)] <- 0
