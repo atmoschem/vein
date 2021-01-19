@@ -97,7 +97,7 @@
 #' If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
 #' it will show a warning
 #'
-#' \strong{Emission factor for vehicles older than the reported by CETESB were filled as the moving average of 2:}
+#' \strong{Emission factor for vehicles older than the reported by CETESB were filled with las highest EF}
 #'
 #' \itemize{
 #' \item Range EF from PC and LCV otto: 2018 - 1982. EF for 1981 and older as moving average.

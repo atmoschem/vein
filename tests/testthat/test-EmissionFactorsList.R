@@ -15,14 +15,14 @@ print(a, default = T)
 summary(a)
 
 test_that("EmissionFactorsList works", {
-  expect_equal(EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G")))[[1]](),
-               0.21)
+  expect_equal(EmissionFactorsList(as.numeric(ef_cetesb("CO_0km", "PC_G")))[[1]](),
+               0.141)
   expect_output(print(EmissionFactorsList(as.numeric(ef_cetesb("CO", "PC_G")))),
                 ".?")
 
-  expect_equal(EmissionFactorsList(ef_cetesb("CO", c("PC_G", "LCV_G"))
+  expect_equal(EmissionFactorsList(ef_cetesb("CO_0km", c("PC_G", "LCV_G"))
   )[[1]][[1]](),
-  EmissionFactors(0.21))
+  EmissionFactors(0.141))
 
   expect_output(print(EmissionFactorsList(ef_cetesb("CO", c("PC_G", "LCV_G")))),
   ".?")

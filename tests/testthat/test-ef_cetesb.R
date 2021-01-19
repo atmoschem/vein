@@ -1,7 +1,7 @@
 context("ef_cetesb")
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO", "PC_G")[1]), 0.21)
+  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G")[1]), 0.141)
 })
 
 test_that("ef_cetesb works", {
@@ -44,7 +44,7 @@ test_that("ef_cetesb stops", {
 
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO", "PC_G", full = TRUE)$CO[1]), 0.21)
+  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G", full = TRUE)$CO[1]), 0.141)
 })
 
 test_that("ef_cetesb works", {
@@ -55,17 +55,17 @@ test_that("ef_cetesb works", {
 })
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
+  expect_equal(as.numeric(ef_cetesb("CO_0km",
                                     "PC_G",
                                     full = TRUE)$CO[1]),
-               0.21)
+               0.141)
 })
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
+  expect_equal(round(as.numeric(ef_cetesb("CO_0km",
                                     "PC_G",
-                                    year = 2020)[1]),
-               0.19)
+                                    year = 2020)[1])),
+               0)
 })
 
 test_that("ef_cetesb works", {
@@ -76,20 +76,20 @@ test_that("ef_cetesb works", {
 })
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
+  expect_equal(round(as.numeric(ef_cetesb("CO_0km",
                                     c("PC_G", "LCV_G"),
                                     year = 2020,
-                                    agemax = 10)[1,1]),
-               0.19)
+                                    agemax = 10)[1,1])),
+               0)
 })
 
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
+  expect_equal(round(as.numeric(ef_cetesb("CO_0km",
                                     c("PC_G"),
                                     year = 2020,
-                                    agemax = 100)[1]),
-               0.19)
+                                    agemax = 100)[1])),
+               0)
 })
 
 
