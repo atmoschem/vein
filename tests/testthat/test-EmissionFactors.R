@@ -1,8 +1,8 @@
 context("EmissionFactors")
 
 test_that("EmissionFactors works", {
-  expect_equal(EmissionFactors(as.numeric(ef_cetesb("CO", "PC_G")))[[1]],
-               0.21 )
+  expect_equal(EmissionFactors(as.numeric(ef_cetesb("CO_0km", "PC_G", year = 2017)))[[1]],
+               0.141 )
 })
 
 test_that("EmissionFactors works", {
