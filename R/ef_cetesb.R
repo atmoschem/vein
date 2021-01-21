@@ -175,7 +175,7 @@ ef_cetesb <- function(p,
 
   # adding PMRES
   if(p %in% c("PM25RES", "PM10RES")) {
-    message("Use only with top-down approach. Units: g/streets/day")
+    message("Experimental: Use only with top-down approach. Units: g/veh/day")
   }
   # asume que una calle tiene un flujo medio con 50000 calles
   # Luego, las emisiones diarias fueron calculadas para MASP 2018
@@ -191,8 +191,8 @@ ef_cetesb <- function(p,
 
   pmveh <-  c("BUS", "LDV", "MC", "TRUCKS", "BUS", "LDV", "MC", "TRUCKS")
   pmpol <- c("PM", "PM", "PM", "PM", "PM10", "PM10", "PM10", "PM10")
-  pmg <- c(8.043771,  2.701687, 2.408317, 29.734170,
-           33.247586, 11.166972, 9.954375, 122.901236)
+  pmg <- c(0.006148492,  0.002065113, 0.001840867, 0.022728183,
+           0.025413765, 0.008535802, 0.007608918, 0.093943155)
   pmdf <- data.frame(veh = pmveh, pol = pmpol, gst = pmg)
   pmef10 <-  pmef2 <-  ef[ef$Pollutant == "CO", ]
   pmef2$Pollutant <- "PM25RES"
