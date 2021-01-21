@@ -285,7 +285,9 @@ letter 'd' internally to not break older code.</p>
 they are internally changed to the new convention:
 "SLT", "LT", "MT", "SHT","HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150",
 "M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
-"M_FE_150", "M_FE_150_500","M_FE_500",</p>
+"M_FE_150", "M_FE_150_500","M_FE_500",
+PC_ELEC, LCV_ELEC, TRUCKS_ELEC, BUS_ELEC,
+MC_150_ELEC, MC_150_500_ELEC, MC_500_ELEC</p>
 <p>If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
 it will show a warning</p>
 <p><strong>Emission factor for vehicles older than the reported by CETESB were filled with las highest EF</strong></p>
@@ -323,7 +325,7 @@ Environmental Science and Technology, 11(8), 2155-2168.</p></li>
 </ul>
 
 <p>Emission factors for resuspension applies <strong>only</strong> with top-down approach
-as a experimental feature. Units are g/streets/day. These values were
+as a experimental feature. Units are g/(streets*veh)/day. These values were
 derived form a bottom-up resuspension emissions from metropolitan area
 of Sao Paulo 2018, assuming 50000 streets</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -344,7 +346,8 @@ url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.</p>
 <span class='fu'>ef_cetesb</span><span class='op'>(</span>p <span class='op'>=</span> <span class='st'>"SO2"</span>, veh <span class='op'>=</span> <span class='st'>"PC_FE"</span>, year <span class='op'>=</span> <span class='fl'>2030</span>, agemax <span class='op'>=</span> <span class='fl'>40</span>, sppm <span class='op'>=</span> <span class='fl'>300</span><span class='op'>)</span>
 <span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_cetesb</span><span class='op'>(</span>p <span class='op'>=</span> <span class='st'>"NMHC"</span>, veh <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"PC_G"</span>, <span class='st'>"PC_FG"</span>, <span class='st'>"PC_FE"</span>, <span class='st'>"PC_E"</span><span class='op'>)</span>, year <span class='op'>=</span> <span class='fl'>2018</span>, agemax <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
 <span class='fu'><a href='colplot.html'>colplot</a></span><span class='op'>(</span><span class='va'>a</span>, main <span class='op'>=</span> <span class='st'>"NMHC EF"</span>, ylab <span class='op'>=</span> <span class='st'>"[g/km]"</span>, xlab <span class='op'>=</span> <span class='st'>"Years of use"</span><span class='op'>)</span>
-<span class='fu'>ef_cetesb</span><span class='op'>(</span>p <span class='op'>=</span> <span class='st'>"CO"</span>, veh <span class='op'>=</span> <span class='st'>"PC_ELEC"</span>, year <span class='op'>=</span> <span class='fl'>1970</span>, agemax <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span>
+<span class='fu'>ef_cetesb</span><span class='op'>(</span>p <span class='op'>=</span> <span class='st'>"PM25RES"</span>, veh <span class='op'>=</span> <span class='st'>"PC_ELEC"</span>, year <span class='op'>=</span> <span class='fl'>1970</span>, agemax <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span>
+<span class='fu'>ef_cetesb</span><span class='op'>(</span>p <span class='op'>=</span> <span class='st'>"PM25RES"</span>, veh <span class='op'>=</span> <span class='st'>"BUS_ELEC"</span>, year <span class='op'>=</span> <span class='fl'>1970</span>, agemax <span class='op'>=</span> <span class='fl'>40</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

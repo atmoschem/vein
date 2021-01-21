@@ -125,6 +125,8 @@ they are internally changed to the new convention:
 "SLT", "LT", "MT", "SHT","HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150",
 "M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
 "M_FE_150", "M_FE_150_500","M_FE_500",
+PC_ELEC, LCV_ELEC, TRUCKS_ELEC, BUS_ELEC,
+MC_150_ELEC, MC_150_500_ELEC, MC_500_ELEC
 
 If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
 it will show a warning
@@ -169,7 +171,7 @@ Environmental Science and Technology, 11(8), 2155-2168.
 }
 
 Emission factors for resuspension applies \strong{only} with top-down approach
-as a experimental feature. Units are g/streets/day. These values were
+as a experimental feature. Units are g/(streets*veh)/day. These values were
 derived form a bottom-up resuspension emissions from metropolitan area
 of Sao Paulo 2018, assuming 50000 streets
 }
@@ -186,7 +188,8 @@ ef_cetesb(p = "SO2", veh = "PC_G", year = 2030, agemax = 40, sppm = 300)
 ef_cetesb(p = "SO2", veh = "PC_FE", year = 2030, agemax = 40, sppm = 300)
 a <- ef_cetesb(p = "NMHC", veh = c("PC_G", "PC_FG", "PC_FE", "PC_E"), year = 2018, agemax = 20)
 colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
-ef_cetesb(p = "CO", veh = "PC_ELEC", year = 1970, agemax = 40)
+ef_cetesb(p = "PM25RES", veh = "PC_ELEC", year = 1970, agemax = 40)
+ef_cetesb(p = "PM25RES", veh = "BUS_ELEC", year = 1970, agemax = 40)
 }
 }
 \references{

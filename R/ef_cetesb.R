@@ -93,6 +93,8 @@
 #' "SLT", "LT", "MT", "SHT","HT", "UB", "SUB", "COACH", "ARTIC", "M_G_150",
 #' "M_G_150_500", "M_G_500", "M_FG_150", "M_FG_150_500", "M_FG_500",
 #' "M_FE_150", "M_FE_150_500","M_FE_500",
+#' PC_ELEC, LCV_ELEC, TRUCKS_ELEC, BUS_ELEC,
+#' MC_150_ELEC, MC_150_500_ELEC, MC_500_ELEC
 #'
 #' If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
 #' it will show a warning
@@ -139,7 +141,7 @@
 #'}
 #'
 #' Emission factors for resuspension applies \strong{only} with top-down approach
-#' as a experimental feature. Units are g/streets/day. These values were
+#' as a experimental feature. Units are g/(streets*veh)/day. These values were
 #' derived form a bottom-up resuspension emissions from metropolitan area
 #' of Sao Paulo 2018, assuming 50000 streets
 #'
@@ -156,7 +158,8 @@
 #' ef_cetesb(p = "SO2", veh = "PC_FE", year = 2030, agemax = 40, sppm = 300)
 #' a <- ef_cetesb(p = "NMHC", veh = c("PC_G", "PC_FG", "PC_FE", "PC_E"), year = 2018, agemax = 20)
 #' colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
-#' ef_cetesb(p = "CO", veh = "PC_ELEC", year = 1970, agemax = 40)
+#' ef_cetesb(p = "PM25RES", veh = "PC_ELEC", year = 1970, agemax = 40)
+#' ef_cetesb(p = "PM25RES", veh = "BUS_ELEC", year = 1970, agemax = 40)
 #' }
 ef_cetesb <- function(p,
                       veh,
@@ -188,8 +191,8 @@ ef_cetesb <- function(p,
 
   pmveh <-  c("BUS", "LDV", "MC", "TRUCKS", "BUS", "LDV", "MC", "TRUCKS")
   pmpol <- c("PM", "PM", "PM", "PM", "PM10", "PM10", "PM10", "PM10")
-  pmg <- c(16.97520,  658.93943, 121.35852, 258.92251,
-           70.16417, 2723.61630, 501.61524, 1070.21304)
+  pmg <- c(8.043771,  2.701687, 2.408317, 29.734170,
+           33.247586, 11.166972, 9.954375, 122.901236)
   pmdf <- data.frame(veh = pmveh, pol = pmpol, gst = pmg)
   pmef10 <-  pmef2 <-  ef[ef$Pollutant == "CO", ]
   pmef2$Pollutant <- "PM25RES"
@@ -219,7 +222,19 @@ ef_cetesb <- function(p,
   pmef10[, nMC] <- ifelse(pmef10[, nMC]>0,
                          1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "MC", ]$gst,
                          NA)
+  pmef2$PC_ELEC <-  pmef2$PC_G
+  pmef2$LCV_ELEC <-  pmef2$LCV_G
+  pmef2$TRUCKS_ELEC <-  pmef2$TRUCKS_SL_D
+  pmef2$BUS_ELEC <-  pmef2$BUS_URBAN_D
+  pmef2$MC_150_ELEC <- pmef2$MC_150_500_ELEC <- pmef2$MC_500_ELEC <- pmef2$MC_150_G
 
+  pmef10$PC_ELEC <-  pmef10$PC_G
+  pmef10$LCV_ELEC <-  pmef10$LCV_G
+  pmef10$TRUCKS_ELEC <-  pmef10$TRUCKS_SL_D
+  pmef10$BUS_ELEC <-  pmef10$BUS_URBAN_D
+  pmef10$MC_150_ELEC <- pmef10$MC_150_500_ELEC <- pmef10$MC_500_ELEC <- pmef10$MC_150_G
+
+    ef <- rbind(ef, pmef2, pmef10)
 
   if(scale == "tunnel") {
     # ef <- sysdata$cetesb
