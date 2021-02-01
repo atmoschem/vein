@@ -81,3 +81,32 @@ ENDDO
 RETURN
 END ! # nocov end
 
+!------------------------------------------------------------------
+SUBROUTINE emis2dfpar (nrowv, ncolv, veh, lkm, ef, nt, emis) ! # nocov start
+!$ USE OMP_LIB
+
+IMPLICIT none
+
+INTEGER nrowv
+INTEGER ncolv
+DOUBLE PRECISION :: veh(nrowv, ncolv)
+DOUBLE PRECISION :: lkm(nrowv)
+DOUBLE PRECISION :: ef(ncolv)
+DOUBLE PRECISION :: emis(nrowv, ncolv)
+
+INTEGER i, j, nt
+
+!$ CALL OMP_SET_DYNAMIC(.TRUE.)
+emis = 0.0
+!$OMP PARALLEL DO PRIVATE(i, j) DEFAULT(shared) NUM_THREADS(nt)
+
+DO i = 1, nrowv
+   DO j = 1, ncolv
+       emis(i, j) = veh(i,j) * lkm(i) * ef(j)
+   ENDDO
+ENDDO
+
+!$OMP END PARALLEL
+
+RETURN
+END  ! # nocov end
