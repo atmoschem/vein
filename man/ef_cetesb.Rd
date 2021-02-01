@@ -178,6 +178,7 @@ of Sao Paulo 2018, assuming 50000 streets
 \examples{
 \dontrun{
 a <- ef_cetesb(p = "CO", veh = "PC_G")
+a <- ef_cetesb(p = "NOx", veh = "TRUCKS_M_D")
 a <- ef_cetesb("R_10_25", "PC_G")
 a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
 ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
