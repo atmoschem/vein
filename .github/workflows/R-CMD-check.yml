@@ -42,8 +42,8 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Install GFortran macOS
-      if: contains(matrix.os, 'macos')
-      run: brew install gcc@${GCC_V} || brew upgrade gcc@${GCC_V} || true
+        if: contains(matrix.os, 'macos')
+        run: brew install gcc@${GCC_V} || brew upgrade gcc@${GCC_V} || true
 
       - name: Query dependencies
         run: |
