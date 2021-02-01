@@ -71,10 +71,10 @@ jobs:
           Rscript -e 'pak::local_system_requirements(execute = TRUE)'
           sudo apt-get install libgit2-dev
 
-      - name: Install X11
+      - name: Install gfortran
         if: runner.os == 'macOS'
         run: |
-          brew install --cask xquartz
+          brew install --cask gfortran
 
       - name: Install dependencies
         run: |
