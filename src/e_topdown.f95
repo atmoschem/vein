@@ -372,7 +372,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -417,7 +417,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -451,7 +451,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -487,7 +487,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -526,7 +526,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -560,7 +560,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -596,7 +596,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -630,7 +630,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -666,7 +666,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -700,7 +700,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -736,7 +736,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end
@@ -766,7 +766,7 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
+
 
 RETURN
 END ! # nocov end

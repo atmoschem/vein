@@ -165,7 +165,8 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
   fortran <span class='op'>=</span> <span class='cn'>FALSE</span>,
   hour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>profile</span><span class='op'>)</span>,
   day <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>profile</span><span class='op'>)</span>,
-  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  nt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='check_nt.html'>check_nt</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fu'><a href='check_nt.html'>check_nt</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -223,6 +224,11 @@ of rows of argument profile</p></td>
     <tr>
       <th>verbose</th>
       <td><p>Logical; To show more information</p></td>
+    </tr>
+    <tr>
+      <th>nt</th>
+      <td><p>Integer; Number of threads wich must be lower than max available.
+See <code><a href='check_nt.html'>check_nt</a></code>. Only when fortran = TRUE</p></td>
     </tr>
     </table>
 
