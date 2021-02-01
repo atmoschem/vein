@@ -372,6 +372,8 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
+!$OMP END PARALLEL
+
 RETURN
 END ! # nocov end
 
@@ -415,6 +417,8 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
+!$OMP END PARALLEL
+
 RETURN
 END ! # nocov end
 
@@ -446,6 +450,8 @@ DO i = 1, nrowv
       emis(i, j) = beta(i) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j)
    ENDDO
 ENDDO
+
+!$OMP END PARALLEL
 
 RETURN
 END ! # nocov end
@@ -480,6 +486,8 @@ DO i = 1, nrowv
       ENDDO
    ENDDO
 ENDDO
+
+!$OMP END PARALLEL
 
 RETURN
 END ! # nocov end
@@ -518,6 +526,8 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
+!$OMP END PARALLEL
+
 RETURN
 END ! # nocov end
 
@@ -549,6 +559,8 @@ DO i = 1, nrowv
       ENDDO
    ENDDO
 ENDDO
+
+!$OMP END PARALLEL
 
 RETURN
 END ! # nocov end
@@ -584,6 +596,8 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
+!$OMP END PARALLEL
+
 RETURN
 END ! # nocov end
 
@@ -615,6 +629,8 @@ DO i = 1, nrowv
       ENDDO
    ENDDO
 ENDDO
+
+!$OMP END PARALLEL
 
 RETURN
 END ! # nocov end
@@ -650,6 +666,8 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
+!$OMP END PARALLEL
+
 RETURN
 END ! # nocov end
 
@@ -681,6 +699,8 @@ DO i = 1, nrowv
       ENDDO
    ENDDO
 ENDDO
+
+!$OMP END PARALLEL
 
 RETURN
 END ! # nocov end
@@ -716,6 +736,8 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
+!$OMP END PARALLEL
+
 RETURN
 END ! # nocov end
 
@@ -743,6 +765,8 @@ DO i = 1, nrowv
        emis(i, j) = veh(i,j) * lkm(j) * ef(j)
    ENDDO
 ENDDO
+
+!$OMP END PARALLEL
 
 RETURN
 END ! # nocov end
