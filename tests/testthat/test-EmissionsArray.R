@@ -18,7 +18,7 @@ test_that("EmissionsArray works", {
                                ef = lef,
                                profile = pc_profile[1, ],
                                speed = Speed(34))[1,1,1,1])),
-               1)
+               0)
 
   expect_error(EmissionsArray(1),
                "C.?")
@@ -35,14 +35,14 @@ test_that("EmissionsArray works", {
                           ef = lef,
                           profile = pc_profile[1, ],
                           speed = Speed(34))[1]),
-               1)
+               0)
 
   expect_equal(summary(emis(veh = pc1[1:5, ],
                             lkm = net$lkm[1:5],
                             ef = lef,
                             profile = pc_profile[1, ],
                             speed = Speed(34)))[[1]],
-               0.004)
+               0.002)
 
   expect_output(print(summary(emis(veh = pc1[1:5, ],
                                    lkm = net$lkm[1:5],

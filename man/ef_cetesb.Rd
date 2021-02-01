@@ -2,7 +2,7 @@
 % Please edit documentation in R/ef_cetesb.R
 \name{ef_cetesb}
 \alias{ef_cetesb}
-\title{Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB) 2017}
+\title{Emissions factors for Environment Company of Sao Paulo, Brazil (CETESB)}
 \usage{
 ef_cetesb(
   p,
@@ -12,7 +12,7 @@ ef_cetesb(
   scale = "default",
   sppm,
   full = FALSE,
-  project = "constant",
+  efinput,
   verbose = FALSE,
   csv
 )
@@ -30,7 +30,7 @@ used, there is also "ALD" for aldehydes and "HCHO" for  formaldehydes
 Evaporative emissions at average temperature ranges:
 "D_20_35", "S_20_35", "R_20_35", "D_10_25", "S_10_25", "R_10_25", "D_0_15",
 "S_0_15" and "R_0_15" where D means diurnal (g/day), S hot/warm soak (g/trip)
-and R hot/warm running losses (g/trip).}
+and R hot/warm running losses (g/trip). THe deteriorated emission factors are calculated inside this function.}
 
 \item{veh}{Character; Vehicle categories:
 "PC_G", "PC_FG", "PC_FE", "PC_E",
@@ -55,8 +55,8 @@ factors are scaled to represent EF measurements in tunnels in Sao Paulo}
 \item{full}{Logical; To return a data.frame instead or a vector adding
 Age, Year, Brazilian emissions standards and its euro equivalents.}
 
-\item{project}{Character showing the method for projecting emission factors in
-future. Currently the only value is "constant"}
+\item{efinput}{data.frame with efinput structure of sysdata cetesb. Allow
+apply deterioration for future emission factors}
 
 \item{verbose}{Logical; To show more information}
 
@@ -177,15 +177,12 @@ of Sao Paulo 2018, assuming 50000 streets
 }
 \examples{
 \dontrun{
-a <- ef_cetesb("CO", "PC_G")
+a <- ef_cetesb(p = "CO", veh = "PC_G")
 a <- ef_cetesb("R_10_25", "PC_G")
 a <- ef_cetesb("CO", c("PC_G", "PC_FE"))
 ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
-ef_cetesb(p = "CO", veh = "PC_G", year = 2030, agemax = 40)
 ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
-ef_cetesb(p = "SO2", veh = "PC_G", year = 2030, agemax = 40, sppm = 300)
-ef_cetesb(p = "SO2", veh = "PC_FE", year = 2030, agemax = 40, sppm = 300)
 a <- ef_cetesb(p = "NMHC", veh = c("PC_G", "PC_FG", "PC_FE", "PC_E"), year = 2018, agemax = 20)
 colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
 ef_cetesb(p = "PM25RES", veh = "PC_ELEC", year = 1970, agemax = 40)

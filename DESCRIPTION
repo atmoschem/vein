@@ -2,7 +2,7 @@ Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
 Version: 0.9.1
-Date: 2020-12-05
+Date: 2021-01-31
 Authors@R: c( 
   person(given = "Sergio", family = "Ibarra-Espinosa",
          role = c("aut", "cre", "wdc"),
@@ -20,7 +20,7 @@ URL: https://gitlab.com/ibarraespinosa/vein
 BugReports: https://gitlab.com/ibarraespinosa/vein/-/issues
 LazyData: no
 Depends: R (>= 3.5.0)
-Imports: sf, data.table, units, graphics, stats
+Imports: sf, data.table, units, graphics, stats, dotCall64
 Suggests: knitr, rmarkdown, testthat, covr, lwgeom, cptcity
 RoxygenNote: 7.1.1
 Encoding: UTF-8

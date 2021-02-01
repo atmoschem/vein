@@ -1,3 +1,7 @@
+!------------------------------------------------------------------
+! Fortran subroutines for bottom-up approach
+! Todo: Improve documentation
+
 SUBROUTINE emis2df (nrowv, ncolv, veh, lkm, ef, emis) ! # nocov start
 
 IMPLICIT none
@@ -20,7 +24,7 @@ ENDDO
 RETURN
 END  ! # nocov end
 
-
+!------------------------------------------------------------------
 SUBROUTINE emis3df ( nrowv, ncolv, prok, veh, lkm, ef, pro, emis ) ! # nocov start
 
 IMPLICIT none
@@ -47,7 +51,7 @@ ENDDO
 RETURN
 END ! # nocov end
 
-
+!------------------------------------------------------------------
 SUBROUTINE emis4df ( nrowv, ncolv, proh, prod, veh, lkm, ef, pro, emis ) ! # nocov start
 
 IMPLICIT none
@@ -76,5 +80,4 @@ ENDDO
 
 RETURN
 END ! # nocov end
-
 

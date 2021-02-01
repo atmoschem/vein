@@ -3,15 +3,17 @@ NEWS
 
 ## TODO
 
-- get_project with top-down approaches
 - get_project with Europe and Chinese EF
-- Add EF MOVES
 - Add EF from HBEFA
 - Update ef_ldv* and ef_hdv* to EEA2019
-- Include speed functions with OpenMP
+- Include speed with Fortran?
 - Reduce size of sysdata
 
-### vein 0.9.0.3 (Release date: 2020-12-05)
+### vein 0.9.1 (Release date: 2020-01-31)
+- Add deterioration factors in ef_cetesb
+- Add OpenMP again and dotCall64
+
+### vein 0.9.1 (Release date: 2020-12-05)
 - Update speciate (2020-11-27)
 - Add top-down approach with chemistry for WRF (2020-12-04)
 - Update ef_cetesb with scale = "tunnel"

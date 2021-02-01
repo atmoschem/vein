@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check the number of threads — check_nt • vein</title>
+<title>Check the max number of threads — check_nt • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Check the number of threads — check_nt" />
-<meta property="og:description" content="check_nt check the number of threads in this machine" />
+<meta property="og:title" content="Check the max number of threads — check_nt" />
+<meta property="og:description" content="get_threads check the number of threads in this machine" />
 <meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 
 
@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
       </span>
     </div>
 
@@ -141,26 +141,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check the number of threads</h1>
-    <small class="dont-index">Source: <a href='https://gitlab.com/ibarraespinosa/vein/blob/master/R/check_nt.R'><code>R/check_nt.R</code></a></small>
+    <h1>Check the max number of threads</h1>
+    <small class="dont-index">Source: <a href='https://gitlab.com/ibarraespinosa/vein/blob/master/R/threads.R'><code>R/threads.R</code></a></small>
     <div class="hidden name"><code>check_nt.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>check_nt</code> check the number of threads in this machine</p>
+    <p><code>get_threads</code> check the number of threads in this machine</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_nt</span>()</pre>
+    <pre class="usage"><span class='fu'>check_nt</span><span class='op'>(</span><span class='op'>)</span></pre>
 
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Integer with the maxnumber of threads</p>
+    <p>Integer with the max number of threads</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
-<span class='fu'>check_nt</span>()
-}</div><div class='output co'>#&gt; [1] 12</div></pre>
+    <pre class="examples"><div class='input'><span class='op'>{</span>
+  <span class='fu'>check_nt</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; [1] 12</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -176,7 +177,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
