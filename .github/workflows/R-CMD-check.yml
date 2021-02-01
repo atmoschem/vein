@@ -60,12 +60,17 @@ jobs:
       - name: Install system dependencies
         if: runner.os == 'Linux'
         run: |
-          alias gfortran='gfortran-10'
           while read -r cmd
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
 
+        if: runner.os == 'macOS-latest'
+        run: |
+          alias gfortran='gfortran-10'
+          F77 = gfortran
+          FC = gfortran
+          FLIBS = -L/usr/local/gfortran/lib
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
