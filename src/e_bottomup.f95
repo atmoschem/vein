@@ -106,7 +106,72 @@ DO i = 1, nrowv
    ENDDO
 ENDDO
 
-!$OMP END PARALLEL
-
 RETURN
 END  ! # nocov end
+
+!------------------------------------------------------------------
+SUBROUTINE emis3dfpar ( nrowv, ncolv, prok, veh, lkm, ef, pro, nt, emis ) ! # nocov start
+!$ USE OMP_LIB
+
+IMPLICIT none
+
+INTEGER nrowv
+INTEGER ncolv
+INTEGER prok
+DOUBLE PRECISION :: veh(nrowv,ncolv)
+DOUBLE PRECISION :: lkm(nrowv)
+DOUBLE PRECISION :: ef(ncolv)
+DOUBLE PRECISION :: pro(prok)
+DOUBLE PRECISION :: emis(nrowv,ncolv,prok)
+
+INTEGER i, j, k, nt
+
+!$ CALL OMP_SET_DYNAMIC(.TRUE.)
+emis = 0.0
+!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+
+DO i = 1, nrowv
+   DO j = 1, ncolv
+      DO k = 1, prok
+        emis(i, j, k) = veh(i,j) * lkm(i) * ef(j)*pro(k)
+      ENDDO
+   ENDDO
+ENDDO
+
+RETURN
+END ! # nocov end
+
+!------------------------------------------------------------------
+SUBROUTINE emis4dfpar ( nrowv, ncolv, proh, prod, veh, lkm, ef, pro, emis ) ! # nocov start
+!$ USE OMP_LIB
+
+IMPLICIT none
+
+INTEGER nrowv
+INTEGER ncolv
+INTEGER proh
+INTEGER prod
+DOUBLE PRECISION :: veh(nrowv,ncolv)
+DOUBLE PRECISION :: lkm(nrowv)
+DOUBLE PRECISION :: ef(ncolv)
+DOUBLE PRECISION :: pro(proh,prod)
+DOUBLE PRECISION :: emis(nrowv,ncolv,proh, prod)
+
+INTEGER i, j, k, l, nt
+
+!$ CALL OMP_SET_DYNAMIC(.TRUE.)
+emis = 0.0
+!$OMP PARALLEL DO PRIVATE(i, j, k, l) DEFAULT(shared) NUM_THREADS(nt)
+
+DO i = 1, nrowv
+   DO j = 1, ncolv
+      DO k = 1, proh
+         DO l = 1, prod
+           emis(i, j, k, l) = veh(i,j) * lkm(i) * ef(j)*pro(k,l)
+         ENDDO
+      ENDDO
+   ENDDO
+ENDDO
+
+RETURN
+END ! # nocov end
