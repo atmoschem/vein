@@ -183,6 +183,8 @@ ef_cetesb <- function(p,
 
   if(year < 1949) stop("Choose a newer year at least in 1949")
 
+  if(length(p) > 1) stop("One pollutant each time please")
+
 
   #extend ef until 120 years in past ####
   # rep nrow ef
@@ -425,7 +427,7 @@ ef_cetesb <- function(p,
   if(p %in% c("PM25RES", "PM10RES")) {
     if(verbose) message("Experimental: Use only with top-down approach. Units: g/km")
   }
- # tunnel ####
+  # tunnel ####
   if(scale == "tunnel") {
     # ef <- sysdata$cetesb
 
@@ -525,7 +527,7 @@ ef_cetesb <- function(p,
   }
 
   ef[is.na(ef)] <- 0
- # vehicle category ####
+  # vehicle category ####
   oldt <- c("SLT", "LT", "MT", "SHT", "HT",
             "UB", "SUB", "COACH", "ARTIC",
             "M_G_150", "M_G_150_500", "M_G_500",
@@ -589,11 +591,10 @@ ef_cetesb <- function(p,
     stop(cat("Please, choose on of the following categories:\n", nveh, "\n"))
   }
 
-
-
   pol <- p
   k <- ifelse(p == "SO2", sppm*2*1e-06, 1)
   p <- ifelse(p == "SO2", "FC", p)
+
 
   if(full) {
     if(p %in% c(evapd, evap)){
@@ -617,6 +618,7 @@ ef_cetesb <- function(p,
                   EmissionFactors(ef[ef$Pollutant == p, veh]*k)  )
       names(df)[ncol(df)] <- p
     }
+
   } else {
     if(p %in% c(evapd, evap)){
       df <- ef[ef$Pollutant == p, veh]
@@ -633,6 +635,13 @@ ef_cetesb <- function(p,
       }
       df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh]*k)
     }
+  }
+
+  # agemax
+  if(is.data.frame(df)) {
+    if(!is.null(agemax)) df <- df[1:agemax, ]
+  } else {
+    if(!is.null(agemax)) df <- df[1:agemax]
 
   }
 
