@@ -61,9 +61,6 @@ jobs:
         if: runner.os == 'macOS-latest'
         run: |
           alias gfortran='gfortran-10'
-          F77 = gfortran
-          FC = gfortran
-          FLIBS = -L/usr/local/gfortran/lib
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
