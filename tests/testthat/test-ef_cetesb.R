@@ -1,7 +1,7 @@
 context("ef_cetesb")
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G")[1]), 0.141)
+  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G")[1]), 0.1612112)
 })
 
 test_that("ef_cetesb works", {
@@ -19,7 +19,7 @@ test_that("ef_cetesb works", {
 
 test_that("ef_cetesb stops", {
   expect_error(ef_cetesb("CO", "PC_G", year = 10),
-               "Choose.?\\(?")
+               ".?")
 })
 
 test_that("ef_cetesb stops", {
@@ -44,7 +44,7 @@ test_that("ef_cetesb stops", {
 
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G", full = TRUE)$CO[1]), 0.141)
+  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G", full = TRUE)$CO[1]), 0.1612112)
 })
 
 test_that("ef_cetesb works", {
@@ -58,47 +58,29 @@ test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO_0km",
                                     "PC_G",
                                     full = TRUE)$CO[1]),
-               0.141)
+               0.1612112)
 })
 
 test_that("ef_cetesb works", {
-  expect_equal(round(as.numeric(ef_cetesb("CO_0km",
+  expect_error(ef_cetesb("CO_0km",
                                     "PC_G",
-                                    year = 2020)[1])),
-               0)
+                                    year = 2020),
+               ".?")
 })
 
 test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO",
                                     "PC_G",
                                     year = 1980)[1]),
-               33.6)
+               33)
 })
-
-test_that("ef_cetesb works", {
-  expect_equal(round(as.numeric(ef_cetesb("CO_0km",
-                                    c("PC_G", "LCV_G"),
-                                    year = 2020,
-                                    agemax = 10)[1,1])),
-               0)
-})
-
-
-test_that("ef_cetesb works", {
-  expect_equal(round(as.numeric(ef_cetesb("CO_0km",
-                                    c("PC_G"),
-                                    year = 2020,
-                                    agemax = 100)[1])),
-               0)
-})
-
 
 test_that("ef_cetesb works", {
   expect_equal(as.numeric(ef_cetesb("CO",
                                     c("PC_G"),
                                     year = 1980,
                                     agemax = 100)[1]),
-               33.6)
+               33)
 })
 
 test_that("ef_cetesb works", {

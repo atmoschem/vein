@@ -24,6 +24,9 @@
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
 #' @param fortran Logical; to try the fortran calculation.
+#' @param nt Integer; Number of threads wich must be lower than max available. See \code{\link{check_nt}}.
+#' Only when fortran = TRUE
+#' @importFrom dotCall64 .C64 numeric_dc
 #' @return Emissions data.frame
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{ef_china}}
 #' @export
@@ -187,7 +190,8 @@ emis_hot_td <- function (veh,
                          pro_month,
                          params,
                          verbose = FALSE,
-                         fortran = FALSE) {
+                         fortran = FALSE,
+                         nt = ifelse(check_nt()==1, 1, check_nt()/2)) {
   # Checking sf
   if(any(class(veh) %in% "sf")){
     if(verbose) message("converting sf to data.frame")
@@ -287,16 +291,51 @@ emis_hot_td <- function (veh,
           month <- as.matrix(pro_month)
           # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(i, k)
 
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+            if(verbose) message("Calling emistd2fpar.f95")
+            a <- dotCall64::.C64(
+              .NAME = "emistd2fpar",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "integer", "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              nt = as.integer(nt),
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r","r", "r",
+                         "r","w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+
+          } else {
             if(verbose) message("Calling emistd2f.f95")
-            a <-   .Fortran("emistd2f",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth))$emis
+            a <- dotCall64::.C64(
+              .NAME = "emistd2f",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r","r",
+                         "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+          }
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
@@ -338,17 +377,52 @@ emis_hot_td <- function (veh,
 
           # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(k)
 
-            if(verbose) message("Calling emistd1f.f95")
-            a <-   .Fortran("emistd1f",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth))$emis
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+            if(verbose) message("Calling emistd1fpar.f95")
 
+            a <-   dotCall64::.C64(
+              .NAME = "emistd1fpar",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "integer", "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              nt = as.integer(nt),
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r","r", "r",
+                         "r","w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+
+          } else {
+            if(verbose) message("Calling emistd1f.f95")
+            a <-   dotCall64::.C64(
+              .NAME = "emistd1f",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r","r", "r",
+                         "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+          }
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)            # i
@@ -385,7 +459,7 @@ emis_hot_td <- function (veh,
         #
         #   if(verbose) message("Calling emistd1f.f95")
         #
-        #   a <-   .Fortran("emistd1f",
+        #   a <-   dotCall64::.C64("emistd1f",
         #                   nrowv = nrowv,
         #                   ncolv = ncolv,
         #                   pmonth = pmonth,
@@ -438,19 +512,55 @@ emis_hot_td <- function (veh,
           month <- as.matrix(pro_month)
 
           # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(i, k)
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
 
+            if(verbose) message("Calling emistd4fpar.f95")
+            a <-   dotCall64::.C64(
+              .NAME = "emistd4fpar",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double", "double",
+                            "integer", "double"),
+              nrowv = nrowv,
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef2,
+              month = month,
+              nt = as.integer(nt),
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r","r",
+                         "r","w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+          } else {
             if(verbose) message("Calling emistd4f.f95")
+            a <-   dotCall64::.C64(
+              .NAME = "emistd4f",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double", "double",
+                            "double"),
+              nrowv = nrowv,
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef2,
+              month = month,
+              nt = as.integer(nt),
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r","r",
+                         "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
 
-            a <-   .Fortran("emistd4f",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef2,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth))$emis
-
+          }
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)              # i
@@ -496,16 +606,51 @@ emis_hot_td <- function (veh,
           if(length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
           # emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(k)
 
-            a <-   .Fortran("emistd3f",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef2,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth))$emis
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
 
+
+            if(verbose) message("Calling emistd3fpar.f95")
+            a <-   dotCall64::.C64(
+              .NAME = "emistd3fpar",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "integer", "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef2,
+              month = month,
+              nt = as.integer(nt),
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r",
+                         "r", "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+          } else {
+            a <-   dotCall64::.C64(
+              .NAME = "emistd3f",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef2,
+              month = month,
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r",
+                         "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+          }
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh),  ncolv*pmonth)           # i
@@ -579,18 +724,52 @@ emis_hot_td <- function (veh,
 
           # emis(i, j, k) = veh(i,j) * lkm(j) * ef(j) * month(i, k)
 
-          if(verbose) message("Calling emistd6f.f95")
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
 
-            a <-   .Fortran("emistd6f",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth))$emis
+            if(verbose) message("Calling emistd6fpar.f95")
+            a <-   dotCall64::.C64(
+              .NAME = "emistd6fpar",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "integer", "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              nt = as.integer(nt),
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r",
+                         "r", "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
 
+          } else {
+            if(verbose) message("Calling emistd6f.f95")
+            a <-   dotCall64::.C64(
+              .NAME = "emistd6f",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r",
+                         "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+          }
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)   # i
@@ -633,18 +812,52 @@ emis_hot_td <- function (veh,
           if(length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
           # emis(i, j, k) = veh(i, j) * lkm(j) * ef(j) * month(k)
 
+          if(!missing(nt)) {
+            if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                      " threads and nt must be lower")
+
+            if(verbose) message("Calling emistd5fpar.f95")
+            a <-   dotCall64::.C64(
+              .NAME = "emistd5fpar",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "integer", "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              nt = as.integer(nt),
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r",
+                         "r", "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+
+          } else {
             if(verbose) message("Calling emistd5f.f95")
-
-            a <-   .Fortran("emistd5f",
-                            nrowv = nrowv,
-                            ncolv = ncolv,
-                            pmonth = pmonth,
-                            veh = as.matrix(veh),
-                            lkm = lkm,
-                            ef = ef,
-                            month = month,
-                            emis = numeric(nrowv*ncolv*pmonth))$emis
-
+            a <-   dotCall64::.C64(
+              .NAME = "emistd5f",
+              SIGNATURE = c("integer", "integer", "integer",
+                            "double", "double", "double", "double",
+                            "double"),
+              nrowv = nrowv,
+              ncolv = ncolv,
+              pmonth = pmonth,
+              veh = as.matrix(veh),
+              lkm = lkm,
+              ef = ef,
+              month = month,
+              emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
+              INTENT = c("r", "r","r",
+                         "r", "r", "r", "r",
+                         "w"),
+              PACKAGE = "vein",
+              VERBOSE = 1)$emis
+          }
           e <- data.frame(emissions = a)
           e <- Emissions(e)
           e$rows <- rep(row.names(veh), ncolv*pmonth)
@@ -702,17 +915,48 @@ emis_hot_td <- function (veh,
         if(length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
         # emis(i, j) = veh(i,j) * lkm(j) * ef(j)
 
+        if(!missing(nt)) {
+          if(nt >= check_nt()) stop("Your machine has ", check_nt(),
+                                    " threads and nt must be lower")
 
+          if(verbose) message("Calling emistd7fpar.f95")
+          a <-   dotCall64::.C64(
+            .NAME = "emistd7fpar",
+            SIGNATURE = c("integer", "integer",
+                          "double", "double", "double",
+                          "integer", "double"),
+            nrowv = nrowv,
+            ncolv = ncolv,
+            veh = as.matrix(veh),
+            lkm = lkm,
+            ef = ef,
+            nt = as.integer(nt),
+            emis = dotCall64::numeric_dc(nrowv*ncolv),
+            INTENT = c("r", "r",
+                       "r", "r", "r",
+                       "r", "w"),
+            PACKAGE = "vein",
+            VERBOSE = 1)$emis
+
+        } else {
           if(verbose) message("Calling emistd7f.f95")
-
-          a <-   .Fortran("emistd7f",
-                          nrowv = nrowv,
-                          ncolv = ncolv,
-                          veh = as.matrix(veh),
-                          lkm = lkm,
-                          ef = ef,
-                          emis = numeric(nrowv*ncolv))$emis
-
+          a <-   dotCall64::.C64(
+            .NAME = "emistd7f",
+            SIGNATURE = c("integer", "integer",
+                          "double", "double", "double",
+                          "double"),
+            nrowv = nrowv,
+            ncolv = ncolv,
+            veh = as.matrix(veh),
+            lkm = lkm,
+            ef = ef,
+            emis = dotCall64::numeric_dc(nrowv*ncolv),
+            INTENT = c("r", "r",
+                       "r", "r", "r",
+                       "w"),
+            PACKAGE = "vein",
+            VERBOSE = 1)$emis
+        }
         # fortran
         # do concurrent(i= 1:nrowv, j = 1:ncolv)
         # emis(i, j) = veh(i,j) * lkm(i) * ef(j)

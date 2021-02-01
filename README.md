@@ -49,9 +49,8 @@
 ### TODO
 
 -   get\_project with Europe and Chinese EF
--   Add EF from MOVES
 -   Update ef\_ldv\* and ef\_hdv\* to EEA2019
--   Include speed functions with Fortran and OpenMP
+-   Include speed functions with Fortran
 -   Include several chemical mechanism
 -   Add EF from HBEFA?
 -   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
@@ -149,12 +148,17 @@ If you do not have them already, you can install:
 install.packages(c("ggplot2", "readxl", "eixport"))
 ```
 
-## Too complicated? Watch a YouTube video in Portuguese:
+## Too complicated? Watch a YouTube
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tHSWIjg26vg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+
+[English](https://www.youtube.com/embed/tHSWIjg26vg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 
-[here](https://www.youtube.com/watch?v=6-07Y0Eimng)
+[Portuguese](https://www.youtube.com/watch?v=6-07Y0Eimng)
 
 ### 2. Use inventory (a bit not so easy)
 
