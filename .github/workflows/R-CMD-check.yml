@@ -28,7 +28,6 @@ jobs:
           - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
     env:
-      FC: gfortran-${{ matrix.gcc_v }}
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -41,6 +40,10 @@ jobs:
           r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Install GFortran macOS
+      if: contains(matrix.os, 'macos')
+      run: brew install gcc@${GCC_V} || brew upgrade gcc@${GCC_V} || true
 
       - name: Query dependencies
         run: |
