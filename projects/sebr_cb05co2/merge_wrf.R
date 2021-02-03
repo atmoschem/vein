@@ -7,10 +7,6 @@ st <- read_state()
 g <- st_as_sfc(st_bbox(wrf_grid("wrfinput_d01")))
 plot(st[st$abbrev_state %in% c("MG", "SP", "RJ"), "abbrev_state"], axes = T, reset = F)
 plot(g, add = T)
-# prepare data
-untar(tarfile = "MG.tar.gz", exdir = "MG")
-untar(tarfile = "SP.tar.gz", exdir = "SP")
-untar(tarfile = "RJ.tar.gz", exdir = "RJ")
 
 setwd("MG")
 source("main.R")
