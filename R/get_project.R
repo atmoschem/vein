@@ -99,7 +99,7 @@ get_project <- function(directory,
                          destfile =  paste0(directory, "/merge_wrf.R"))
 
    utils::download.file(url = "https://gitlab.com/ibarraespinosa/vein/-/raw/master/projects/sebr_cb05co2/sebr_cb05co2.Rproj",
-                        destfile =  paste0(directory, "/merge_wrf.R"))
+                        destfile =  paste0(directory, "/sebr_cb05co2.Rproj"))
 
    message("Your directory is in ", directory) #nocov end
   } else{
