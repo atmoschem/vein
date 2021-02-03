@@ -101,6 +101,10 @@ get_project <- function(directory,
    utils::download.file(url = "https://gitlab.com/ibarraespinosa/vein/-/raw/master/projects/sebr_cb05co2/sebr_cb05co2.Rproj",
                         destfile =  paste0(directory, "/sebr_cb05co2.Rproj"))
 
+   utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_wrfi.tar.gz",
+                        destfile =  paste0(directory, "/sebr_cb05co2_wrfi.tar.gz"))
+   utils::untar(tarfile = paste0(directory, "/sebr_cb05co2_wrfi.tar.gz"), exdir = directory)
+
    message("Your directory is in ", directory) #nocov end
   } else{
     stop("Other cases not supported yet")
