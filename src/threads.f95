@@ -5,6 +5,7 @@ IMPLICIT NONE
 
 INTEGER nt
 
+nt = 1
 !$ nt = OMP_GET_MAX_THREADS()
 
 RETURN
