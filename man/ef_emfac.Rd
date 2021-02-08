@@ -56,19 +56,15 @@ conditions. If the user enter speeds more emission factors are returned.
 See details.
 }
 \examples{
-{
-dfef <- ef_emfac()
-colplot(df = dfef,
-        x = dfef$Model_Year,
-        cols = "CO_RUNEX",
-        main = "EF from LDT1 with Gasoline on Winter")
-
+\dontrun{
+#do not run
 pols <- c("CO_RUNEX", "NOx_RUNEX")
 dfef2 <- ef_emfac(full = TRUE)
 colplot(df = dfef2,
         x = dfef2$Model_Year,
         cols = pols,
-        main = "EF from LDT1 with Gasoline on Winter")
+        main = "EF from LDT1 with Gasoline on Winter",
+        ylab = units(dfef2[[pols[1]]][1]))
 }
 }
 \references{

@@ -142,7 +142,7 @@ RETURN
 END ! # nocov end
 
 !------------------------------------------------------------------
-SUBROUTINE emis4dfpar ( nrowv, ncolv, proh, prod, veh, lkm, ef, pro, emis ) ! # nocov start
+SUBROUTINE emis4dfpar ( nrowv, ncolv, proh, prod, veh, lkm, ef, pro, nt, emis ) ! # nocov start
 !$ USE OMP_LIB
 
 IMPLICIT none
