@@ -8,8 +8,8 @@ fs <- list.files(path = "post/spec_grid",
 file.remove(fs)
 
 months_subset <- ifelse(nchar(months_subset) <2, 
-                 paste0("0", months_subset), 
-                 months_subset)
+                        paste0("0", months_subset), 
+                        months_subset)
 
 
 # Gasoline Exhaust
@@ -25,7 +25,6 @@ vocE25EX <- speciate(x = x,
                      veh = "veh", 
                      eu = "Exhaust",
                      list = T)
-
 
 # Gasoline Evap
 nx <- paste0("NMHC_G_EVA_", months_subset)
@@ -99,16 +98,14 @@ for(i in seq_along(names(voc))) {
   saveRDS(g_x, file = paste0("post/spec_grid/", names(voc)[i], ".rds"))
 }
 
-polu <- c("CO", "NO", "NO2", "SO2")
-nx <- paste0(polu, "_all_EXH_", months_subset)
-mol  <- c(12, 14+16, 14+16*2, 32+16*2)
+nx <- paste0(pol, "_all_EXH_", months_subset)
 for(j in seq_along(nx)) {
   x <- gx[nx[j]]
   x[is.na(x)] <- 0
   mm_x <- units::set_units(mol[j], "g/mol") # mm: massa molar
   x[[1]] <- x[[1]]* (mm_x)^-1 
   x <- st_sf(x, geometry = g$geometry)
-  saveRDS(x, paste0("post/spec_grid/E_", polu[j], ".rds"))
+  saveRDS(x, paste0("post/spec_grid/E_", pol[j], ".rds"))
 }
 
 
