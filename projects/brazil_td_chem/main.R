@@ -67,6 +67,12 @@ source("scripts/exhaust.R", encoding = "UTF-8")
 # Evaporative
 source("scripts/evaporatives.R", encoding = "UTF-8")
 
+# Paved Roads
+metadata           <- readRDS("config/metadata.rds")
+mileage            <- readRDS("config/mileage.rds")
+year               <- 2019
+pol               <- c("PM25RES", "PM10RES")
+source("scripts/ressuspensao.R", encoding = "UTF-8")
 # distribute emissions into OSM roads ####
 # To download OpenStreetMap data...
 # Read and edit the file osm.R
@@ -113,6 +119,8 @@ g                 <- eixport::wrf_grid(paste0(system.file("extdata",
 aer               <- "pmneu2"          # "pmiag", "pmneu"
 #  option 1 (if cb05-=> ecb05_opt1)
 mech              <- "iag_cb05"        # "iag_cb05v2", "neu_cb05", "iag_racm"
+pol               <- c("CO", "NO",   "NO2",   "SO2", "CO2")
+mol               <- c(12,  14+16, 14+16*2, 32+16*2, 12+16*2)
 source('scripts/mech.R', encoding = 'UTF-8')
 #  option 2 (if cb05-=> ecb05_opt2)
 # mech              <- "CB05"        # "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
