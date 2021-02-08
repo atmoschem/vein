@@ -36,19 +36,15 @@
 #' @references https://arb.ca.gov/emfac/emissions-inventory
 #' @importFrom data.table fifelse
 #' @export
-#' @examples {
-#' dfef <- ef_emfac()
-#' colplot(df = dfef,
-#'         x = dfef$Model_Year,
-#'         cols = "CO_RUNEX",
-#'         main = "EF from LDT1 with Gasoline on Winter")
-#'
+#' @examples \dontrun{
+#' #do not run
 #' pols <- c("CO_RUNEX", "NOx_RUNEX")
 #' dfef2 <- ef_emfac(full = TRUE)
 #' colplot(df = dfef2,
 #'         x = dfef2$Model_Year,
 #'         cols = pols,
-#'         main = "EF from LDT1 with Gasoline on Winter")
+#'         main = "EF from LDT1 with Gasoline on Winter",
+#'         ylab = units(dfef2[[pols[1]]][1]))
 #' }
 ef_emfac <- function(veh = "LDT1",
                      fuel = "Gasoline",
@@ -64,7 +60,7 @@ ef_emfac <- function(veh = "LDT1",
   Speed <- NULL
   Fuel <- NULL
   Season <- NULL
-  ..pol <- NULL
+  # pol <- NULL
 
   if(missing(mph)) {
     ef <-sysdata$emfac_agg
@@ -74,8 +70,9 @@ ef_emfac <- function(veh = "LDT1",
     if(full) {
       return(dt)
     } else {
-      return(cbind(dt[, c(1:9,52:54)],
-                   dt[, ..pol]))
+      x <- cbind(dt[, c(1:9,52:54)], dt[[pol]])
+      data.table::setnames(x, c(names(dt[, c(1:9,52:54)]), pol))
+      return(x)
     }
   } else {
     mph <- as.numeric(mph)
@@ -123,8 +120,10 @@ ef_emfac <- function(veh = "LDT1",
     if(full) {
       return(dt)
     } else {
-      return(cbind(dt[, c(1:7, 18:20)],
-                   dt[, ..pol]))
+      x <- cbind(dt[, c(1:7, 18:20)], x)
+      data.table::setnames(x, c(names(dt[, c(1:7,18:20)]), pol))
+      return(x)
+
     }
   }
 
