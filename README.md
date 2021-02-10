@@ -38,11 +38,19 @@
 
 ![](https://i.imgur.com/bsA6iDU.png)
 
+### Special thanks to all the contributors
+
+-   [Daniel Schuch](https://github.com/Schuch666)
+-   [Avraham Adler](https://github.com/aadler)
+-   [Pedro Andrade](https://github.com/pedro-andrade-inpe)
+-   [Edzer Pebesma](https://github.com/edzer)
+-   [Amanda Rehbein](https://github.com/salvatirehbein)
+
 ### What is new?
 
 -   *Added OpenMP AGAIN and also, imported dotCall64 to avoid copying*
--   New VEIN project, sebr\_cb05co2 covers SP, MG, RJ with CB05+CO2 for
-    2019
+-   New VEIN project: sebr\_cb05co2 covers SP, MG, RJ with CB05+CO2 for
+    2019 and amazon2014.
 
 ### TODO
 

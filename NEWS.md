@@ -11,7 +11,7 @@ NEWS
 
 ### vein 0.9.1 (Release date: 2020-01-31)
 - Add deterioration factors in ef_cetesb
-- Add OpenMP again and dotCall64
+- Add OpenMP again and dotCall64. Thanks to Avraham Adler @aadler
 - Add project sebr_cb05co2
 
 ### vein 0.9.1 (Release date: 2020-12-05)
