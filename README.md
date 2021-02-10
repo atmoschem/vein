@@ -38,29 +38,11 @@
 
 ![](https://i.imgur.com/bsA6iDU.png)
 
-### Special thanks to all the contributors
-
--   [Daniel Schuch](https://github.com/Schuch666)
--   [Avraham Adler](https://github.com/aadler)
--   [Pedro Andrade](https://github.com/pedro-andrade-inpe)
--   [Edzer Pebesma](https://github.com/edzer)
--   [Amanda Rehbein](https://github.com/salvatirehbein)
-
 ### What is new?
 
 -   *Added OpenMP AGAIN and also, imported dotCall64 to avoid copying*
 -   New VEIN project: sebr\_cb05co2 covers SP, MG, RJ with CB05+CO2 for
     2019 and amazon2014.
-
-### TODO
-
--   get\_project with Europe and Chinese EF
--   Update ef\_ldv\* and ef\_hdv\* to EEA2019
--   Include speed functions with Fortran
--   Include CB6
--   Add EF from HBEFA?
--   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
-    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
 ## New in VEIN?
 
@@ -411,6 +393,24 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
     url = {https://gmd.copernicus.org/articles/11/2209/2018/},
     doi = {10.5194/gmd-11-2209-2018}
     }
+
+## Special thanks to all the contributors
+
+-   [Daniel Schuch](https://github.com/Schuch666)
+-   [Avraham Adler](https://github.com/aadler)
+-   [Pedro Andrade](https://github.com/pedro-andrade-inpe)
+-   [Edzer Pebesma](https://github.com/edzer)
+-   [Amanda Rehbein](https://github.com/salvatirehbein)
+
+## TODO
+
+-   get\_project with Europe and Chinese EF
+-   Update ef\_ldv\* and ef\_hdv\* to EEA2019
+-   Include speed functions with Fortran
+-   Include CB6
+-   Add EF from HBEFA?
+-   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
+    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
 ## Communications, doubts etc
 
