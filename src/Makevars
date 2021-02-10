@@ -1,5 +1,5 @@
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
-PKG_LIBS = $(SHLIB_OPENMP_FFLAGS)
+PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
 C_OBJS = init.o
 FT_OBJS = e_bottomup.o e_topdown.o

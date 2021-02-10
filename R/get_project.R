@@ -7,13 +7,14 @@
 #' @param case Character; One of  of the following:
 #' \tabular{llll}{
 #'   \strong{case}       \tab \strong{Description}\tab  \strong{EF} \tab \strong{Outputs}   \cr
-#'   brazil or brazil_bu or brasil or brasil_bu\tab Bottom-up \tab CETESB \tab  .rds       \cr
+#'   brazil or brazil_bu or brasil or brasil_bu\tab Bottom-up \tab CETESB \tab  .rds\cr
 #'   emislacovid         \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
-#'   brazil_bu_csvgz     \tab Bottom-up \tab CETESB+tunnel \tab  .csv.gz    \cr
-#'   brazil_csv         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv  \cr
-#'   brazil_td_chem      \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds       \cr
-#'   brazil_bu_chem      \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds       \cr
-#'   sebr_cb05co2      \tab Top-down SP, MG and RJ, CB05+CO2\tab CETESB+tunnel\tab  .rds       \cr
+#'   brazil_bu_csvgz     \tab Bottom-up \tab CETESB+tunnel \tab  .csv.gz\cr
+#'   brazil_csv         \tab Bottom-up. Faster but heavier\tab CETESB\tab  .csv\cr
+#'   brazil_td_chem      \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
+#'   brazil_bu_chem      \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
+#'   sebr_cb05co2      \tab Top-down SP, MG and RJ, CB05+CO2\tab CETESB+tunnel\tab  .rds\cr
+#'   amazon2014      \tab Top-down Amazon, Mozart\tab CETESB+tunnel\tab  csv and.rds\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
@@ -74,6 +75,14 @@ get_project <- function(directory,
 
   } else if(case %in% c("brazil_td_chem")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_td_chem.tar.gz"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  tf)
+    utils::untar(tarfile = tf, exdir = directory)
+    message("Your directory is in ", directory)
+
+  } else if(case %in% c("amazon2014")){
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/amazonas2014.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
