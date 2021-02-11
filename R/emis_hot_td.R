@@ -517,12 +517,12 @@ emis_hot_td <- function (veh,
                                       " threads and nt must be lower")
 
             if(verbose) message("Calling emistd4fpar.f95")
+
             a <-   dotCall64::.C64(
               .NAME = "emistd4fpar",
               SIGNATURE = c("integer", "integer", "integer",
-                            "double", "double", "double", "double", "double",
+                            "double", "double", "double", "double",
                             "integer", "double"),
-              nrowv = nrowv,
               nrowv = nrowv,
               ncolv = ncolv,
               pmonth = pmonth,
@@ -533,7 +533,7 @@ emis_hot_td <- function (veh,
               nt = as.integer(nt),
               emis = dotCall64::numeric_dc(nrowv*ncolv*pmonth),
               INTENT = c("r", "r","r",
-                         "r", "r", "r", "r","r",
+                         "r", "r", "r", "r",
                          "r","w"),
               PACKAGE = "vein",
               VERBOSE = 1)$emis
