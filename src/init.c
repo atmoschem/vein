@@ -27,12 +27,12 @@ extern void F77_NAME(emistd3fpar)(void *, void *, void *, void *, void *, void *
 extern void F77_NAME(emistd4coldf)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd4coldfpar)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd4f)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-extern void F77_NAME(emistd4fpar)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+extern void F77_NAME(emistd4fpar)(void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd5coldf)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd5coldfpar)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd5f)(void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd5fpar)(void *, void *, void *, void *, void *, void *, void *, void *, void *);
-extern void F77_NAME(emistd6coldf)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+extern void F77_NAME(emistd6coldf)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd6coldfpar)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd6f)(void *, void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(emistd6fpar)(void *, void *, void *, void *, void *, void *, void *, void *, void *);
@@ -60,12 +60,12 @@ static const R_FortranMethodDef FortranEntries[] = {
   {"emistd4coldf",    (DL_FUNC) &F77_NAME(emistd4coldf),    10},
   {"emistd4coldfpar", (DL_FUNC) &F77_NAME(emistd4coldfpar), 11},
   {"emistd4f",        (DL_FUNC) &F77_NAME(emistd4f),        10},
-  {"emistd4fpar",     (DL_FUNC) &F77_NAME(emistd4fpar),     10},
+  {"emistd4fpar",     (DL_FUNC) &F77_NAME(emistd4fpar),     9},
   {"emistd5coldf",    (DL_FUNC) &F77_NAME(emistd5coldf),    10},
   {"emistd5coldfpar", (DL_FUNC) &F77_NAME(emistd5coldfpar), 14},
   {"emistd5f",        (DL_FUNC) &F77_NAME(emistd5f),        8},
   {"emistd5fpar",     (DL_FUNC) &F77_NAME(emistd5fpar),     9},
-  {"emistd6coldf",    (DL_FUNC) &F77_NAME(emistd6coldf),    11},
+  {"emistd6coldf",    (DL_FUNC) &F77_NAME(emistd6coldf),    10},
   {"emistd6coldfpar", (DL_FUNC) &F77_NAME(emistd6coldfpar), 11},
   {"emistd6f",        (DL_FUNC) &F77_NAME(emistd6f),        8},
   {"emistd6fpar",     (DL_FUNC) &F77_NAME(emistd6fpar),     9},
