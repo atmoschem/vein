@@ -9,10 +9,11 @@ NEWS
 - Include speed with Fortran?
 - Reduce size of sysdata
 
-### vein 0.9.1 (Release date: 2020-01-31)
+### vein 0.9.1-0.9.1.2 (Release date: 2020-0s-15)
 - Add deterioration factors in ef_cetesb
 - Add OpenMP again and dotCall64. Thanks to Avraham Adler @aadler
 - Add project sebr_cb05co2
+- Fix and resubmit to cran to fix init.c
 
 ### vein 0.9.1 (Release date: 2020-12-05)
 - Update speciate (2020-11-27)
