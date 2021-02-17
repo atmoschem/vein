@@ -92,7 +92,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.1.3</span>
       </span>
     </div>
 
@@ -250,85 +250,110 @@ matrix.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>profiles</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>fe2015</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>fkm</span><span class='op'>)</span>
-<span class='va'>PC_G</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>33491</span>,<span class='fl'>22340</span>,<span class='fl'>24818</span>,<span class='fl'>31808</span>,<span class='fl'>46458</span>,<span class='fl'>28574</span>,<span class='fl'>24856</span>,<span class='fl'>28972</span>,<span class='fl'>37818</span>,<span class='fl'>49050</span>,<span class='fl'>87923</span>,
-          <span class='fl'>133833</span>,<span class='fl'>138441</span>,<span class='fl'>142682</span>,<span class='fl'>171029</span>,<span class='fl'>151048</span>,<span class='fl'>115228</span>,<span class='fl'>98664</span>,<span class='fl'>126444</span>,<span class='fl'>101027</span>,
-          <span class='fl'>84771</span>,<span class='fl'>55864</span>,<span class='fl'>36306</span>,<span class='fl'>21079</span>,<span class='fl'>20138</span>,<span class='fl'>17439</span>, <span class='fl'>7854</span>,<span class='fl'>2215</span>,<span class='fl'>656</span>,<span class='fl'>1262</span>,<span class='fl'>476</span>,<span class='fl'>512</span>,
-          <span class='fl'>1181</span>, <span class='fl'>4991</span>, <span class='fl'>3711</span>, <span class='fl'>5653</span>, <span class='fl'>7039</span>, <span class='fl'>5839</span>, <span class='fl'>4257</span>,<span class='fl'>3824</span>, <span class='fl'>3068</span><span class='op'>)</span>
+<span class='va'>PC_G</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+  <span class='fl'>33491</span>, <span class='fl'>22340</span>, <span class='fl'>24818</span>, <span class='fl'>31808</span>, <span class='fl'>46458</span>, <span class='fl'>28574</span>, <span class='fl'>24856</span>, <span class='fl'>28972</span>, <span class='fl'>37818</span>, <span class='fl'>49050</span>, <span class='fl'>87923</span>,
+  <span class='fl'>133833</span>, <span class='fl'>138441</span>, <span class='fl'>142682</span>, <span class='fl'>171029</span>, <span class='fl'>151048</span>, <span class='fl'>115228</span>, <span class='fl'>98664</span>, <span class='fl'>126444</span>, <span class='fl'>101027</span>,
+  <span class='fl'>84771</span>, <span class='fl'>55864</span>, <span class='fl'>36306</span>, <span class='fl'>21079</span>, <span class='fl'>20138</span>, <span class='fl'>17439</span>, <span class='fl'>7854</span>, <span class='fl'>2215</span>, <span class='fl'>656</span>, <span class='fl'>1262</span>, <span class='fl'>476</span>, <span class='fl'>512</span>,
+  <span class='fl'>1181</span>, <span class='fl'>4991</span>, <span class='fl'>3711</span>, <span class='fl'>5653</span>, <span class='fl'>7039</span>, <span class='fl'>5839</span>, <span class='fl'>4257</span>, <span class='fl'>3824</span>, <span class='fl'>3068</span>
+<span class='op'>)</span>
 <span class='va'>pc1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='my_age.html'>my_age</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span>, y <span class='op'>=</span> <span class='va'>PC_G</span>, name <span class='op'>=</span> <span class='st'>"PC"</span><span class='op'>)</span>
 
 <span class='co'># Estimation for morning rush hour and local emission factors and speed</span>
 <span class='va'>speed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>S8 <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span><span class='op'>)</span>
 <span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='EmissionFactorsList.html'>EmissionFactorsList</a></span><span class='op'>(</span><span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>, agemax <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>pc1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, speed <span class='op'>=</span> <span class='va'>speed</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, speed <span class='op'>=</span> <span class='va'>speed</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>, lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, speed <span class='op'>=</span> <span class='va'>speed</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>, lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, speed <span class='op'>=</span> <span class='va'>speed</span>, simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>E_CO</span>, <span class='va'>E_CO_2</span><span class='op'>)</span>
 
 <span class='co'># Estimation for morning rush hour and local emission factors without speed</span>
 <span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>, agemax <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>pc1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, fortran <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>, lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span><span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>, lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, fortran <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>E_CO</span>, <span class='va'>E_CO_2</span><span class='op'>)</span>
 
 <span class='co'># Estimation for 168 hour and local factors and speed</span>
-<span class='va'>pcw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>+</span><span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>pcw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span> <span class='op'>+</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
 <span class='va'>speed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span><span class='op'>(</span><span class='va'>pcw</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='EmissionFactorsList.html'>EmissionFactorsList</a></span><span class='op'>(</span><span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>, agemax <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>pc1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-<span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,
-             lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
-             ef <span class='op'>=</span> <span class='va'>lef</span>,
-             speed <span class='op'>=</span> <span class='va'>speed</span>,
-             profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>
+    veh <span class='op'>=</span> <span class='va'>pc1</span>,
+    lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
+    ef <span class='op'>=</span> <span class='va'>lef</span>,
+    speed <span class='op'>=</span> <span class='va'>speed</span>,
+    profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-<span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,
-             lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
-             ef <span class='op'>=</span> <span class='va'>lef</span>,
-             speed <span class='op'>=</span> <span class='va'>speed</span>,
-             profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
-             simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>
+    veh <span class='op'>=</span> <span class='va'>pc1</span>,
+    lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
+    ef <span class='op'>=</span> <span class='va'>lef</span>,
+    speed <span class='op'>=</span> <span class='va'>speed</span>,
+    profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
+    simplify <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># Estimation for 168 hour and local factors and without speed</span>
 <span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>, agemax <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>pc1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-<span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,
-             lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
-             ef <span class='op'>=</span> <span class='va'>lef</span>,
-             profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span><span class='op'>)</span><span class='op'>)</span> ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
+  <span class='va'>E_CO</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>
+    veh <span class='op'>=</span> <span class='va'>pc1</span>,
+    lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
+    ef <span class='op'>=</span> <span class='va'>lef</span>,
+    profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-<span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,
-             lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
-             ef <span class='op'>=</span> <span class='va'>lef</span>,
-             profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
-             fortran <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
+  <span class='va'>E_CO_2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>
+    veh <span class='op'>=</span> <span class='va'>pc1</span>,
+    lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
+    ef <span class='op'>=</span> <span class='va'>lef</span>,
+    profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
+    fortran <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-<span class='va'>E_CO_3</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,
-             lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
-             ef <span class='op'>=</span> <span class='va'>lef</span>,
-             profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
-             simplify <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
+  <span class='va'>E_CO_3</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>
+    veh <span class='op'>=</span> <span class='va'>pc1</span>,
+    lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
+    ef <span class='op'>=</span> <span class='va'>lef</span>,
+    profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
+    simplify <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
-<span class='va'>E_CO_4</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>pc1</span>,
-             lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
-             ef <span class='op'>=</span> <span class='va'>lef</span>,
-             profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
-             simplify <span class='op'>=</span> <span class='cn'>TRUE</span>,
-             fortran <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> ; <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
+  <span class='va'>E_CO_4</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>
+    veh <span class='op'>=</span> <span class='va'>pc1</span>,
+    lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>,
+    ef <span class='op'>=</span> <span class='va'>lef</span>,
+    profile <span class='op'>=</span> <span class='va'>profiles</span><span class='op'>$</span><span class='va'>PC_JUNE_2014</span>,
+    simplify <span class='op'>=</span> <span class='cn'>TRUE</span>,
+    fortran <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>E_CO</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO_2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO_3</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO_4</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO_3</span><span class='op'>[</span>,,<span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO_4</span><span class='op'>[</span>,,<span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO_3</span><span class='op'>[</span>, , <span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>E_CO_4</span><span class='op'>[</span>, , <span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>E_CO_3</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>E_CO_4</span><span class='op'>)</span>
 <span class='co'># but</span>
-<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>41</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span><span class='op'>{</span>
-           <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>168</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>j</span><span class='op'>)</span> <span class='op'>{</span>
-           <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>E_CO_3</span><span class='op'>[</span>, <span class='va'>i</span>, <span class='va'>j</span><span class='op'>]</span>, <span class='va'>E_CO_4</span><span class='op'>[</span>, <span class='va'>i</span>, <span class='va'>j</span><span class='op'>]</span><span class='op'>)</span>
-           <span class='op'>}</span><span class='op'>)</span><span class='op'>)</span><span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>41</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>i</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>168</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>j</span><span class='op'>)</span> <span class='op'>{</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span><span class='op'>(</span><span class='va'>E_CO_3</span><span class='op'>[</span>, <span class='va'>i</span>, <span class='va'>j</span><span class='op'>]</span>, <span class='va'>E_CO_4</span><span class='op'>[</span>, <span class='va'>i</span>, <span class='va'>j</span><span class='op'>]</span><span class='op'>)</span>
+  <span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>a</span><span class='op'>)</span>
 
-<span class='co'>#Estimation with list of vehicles</span>
+<span class='co'># Estimation with list of vehicles</span>
 <span class='va'>lpc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>pc1</span>, <span class='va'>pc1</span><span class='op'>)</span>
 <span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='EmissionFactorsList.html'>EmissionFactorsList</a></span><span class='op'>(</span><span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"CO"</span>, <span class='st'>"PC_G"</span>, agemax <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>pc1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>E_COv2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>lpc</span>,lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, speed <span class='op'>=</span> <span class='va'>speed</span><span class='op'>)</span>
+<span class='va'>E_COv2</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>lpc</span>, lkm <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>lef</span>, speed <span class='op'>=</span> <span class='va'>speed</span><span class='op'>)</span>
 
 <span class='co'># top down</span>
 <span class='va'>veh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, name <span class='op'>=</span> <span class='st'>"PC_E25_1400"</span>, agemax <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
@@ -338,19 +363,21 @@ matrix.</p>
 
 <span class='co'># group online</span>
 <span class='va'>bus1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='age_hdv.html'>age_hdv</a></span><span class='op'>(</span><span class='fl'>30</span>, agemax <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>veh</span> <span class='op'>=</span> <span class='va'>bus1</span>
-<span class='va'>lkm</span> <span class='op'>=</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>400</span>, <span class='st'>"km"</span><span class='op'>)</span>
-<span class='va'>speed</span> <span class='op'>=</span> <span class='fl'>40</span>
+<span class='va'>veh</span> <span class='op'>&lt;-</span> <span class='va'>bus1</span>
+<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>400</span>, <span class='st'>"km"</span><span class='op'>)</span>
+<span class='va'>speed</span> <span class='op'>&lt;-</span> <span class='fl'>40</span>
 <span class='va'>efco</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"COd"</span>, <span class='st'>"UB"</span>, agemax <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-<span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_hdv_scaled.html'>ef_hdv_scaled</a></span><span class='op'>(</span>dfcol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>efco</span><span class='op'>)</span>,
-                     v <span class='op'>=</span> <span class='st'>"Ubus"</span>,
-                     t <span class='op'>=</span> <span class='st'>"Std"</span>,
-                     g <span class='op'>=</span> <span class='st'>"&gt;15 &amp; &lt;=18"</span>,
-                     eu <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"IV"</span>, <span class='fl'>4</span><span class='op'>)</span>,
-                     gr <span class='op'>=</span> <span class='fl'>0</span>,
-                     l <span class='op'>=</span> <span class='fl'>0.5</span>,
-                     p <span class='op'>=</span> <span class='st'>"CO"</span><span class='op'>)</span>
-<span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>lef</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>lef</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_hdv_scaled.html'>ef_hdv_scaled</a></span><span class='op'>(</span>
+  dfcol <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>efco</span><span class='op'>)</span>,
+  v <span class='op'>=</span> <span class='st'>"Ubus"</span>,
+  t <span class='op'>=</span> <span class='st'>"Std"</span>,
+  g <span class='op'>=</span> <span class='st'>"&gt;15 &amp; &lt;=18"</span>,
+  eu <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"IV"</span>, <span class='fl'>4</span><span class='op'>)</span>,
+  gr <span class='op'>=</span> <span class='fl'>0</span>,
+  l <span class='op'>=</span> <span class='fl'>0.5</span>,
+  p <span class='op'>=</span> <span class='st'>"CO"</span>
+<span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>lef</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>lef</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>bus1</span>, lkm <span class='op'>=</span> <span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>efco</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>emis</span><span class='op'>(</span>veh <span class='op'>=</span> <span class='va'>bus1</span>, lkm <span class='op'>=</span> <span class='va'>lkm</span>, ef <span class='op'>=</span> <span class='va'>efco</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, fortran <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
