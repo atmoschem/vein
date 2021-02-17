@@ -34,7 +34,7 @@
 #' matrix.
 #' @export
 #' @importFrom sf st_set_geometry
-#' @importFrom dotCall64 .C64 numeric_dc
+#' @importFrom dotCall64 .C64 vector_dc
 #' @examples
 #' \dontrun{
 #' # Do not run
@@ -261,7 +261,7 @@ emis <- function(veh,
             lkm = lkm,
             ef = ef,
             nt = as.integer(nt),
-            emis = dotCall64::numeric_dc(nrowv * ncolv),
+            emis = dotCall64::vector_dc("double",nrowv * ncolv),
             INTENT = c(
               "r", "r",
               "r", "r", "r",
@@ -283,7 +283,7 @@ emis <- function(veh,
             veh = veh,
             lkm = lkm,
             ef = ef,
-            emis = dotCall64::numeric_dc(nrowv * ncolv),
+            emis = dotCall64::vector_dc("double",nrowv * ncolv),
             INTENT = c(
               "r", "r",
               "r", "r", "r",
@@ -451,7 +451,7 @@ emis <- function(veh,
               ef = ef,
               pro = profile,
               nt = as.integer(nt),
-              emis = dotCall64::numeric_dc(nrowv * ncolv * prok),
+              emis = dotCall64::vector_dc("double",nrowv * ncolv * prok),
               INTENT = c(
                 "r", "r", "r",
                 "r", "r", "r", "r",
@@ -475,7 +475,7 @@ emis <- function(veh,
               lkm = lkm,
               ef = ef,
               pro = profile,
-              emis = numeric(nrowv * ncolv * prok),
+              emis = dotCall64::vector_dc("double",nrowv * ncolv * prok),
               INTENT = c(
                 "r", "r", "r",
                 "r", "r", "r", "r",
@@ -538,7 +538,7 @@ emis <- function(veh,
               ef = ef,
               pro = profile,
               nt = as.integer(nt),
-              emis = dotCall64::numeric_dc(nrowv * ncolv * proh * prod),
+              emis = dotCall64::vector_dc("double",nrowv * ncolv * proh * prod),
               INTENT = c(
                 "r", "r", "r", "r",
                 "r", "r", "r", "r",
@@ -563,7 +563,7 @@ emis <- function(veh,
               lkm = lkm,
               ef = ef,
               pro = profile,
-              emis = dotCall64::numeric_dc(nrowv * ncolv * proh * prod),
+              emis = dotCall64::vector_dc("double",nrowv * ncolv * proh * prod),
               INTENT = c(
                 "r", "r", "r", "r",
                 "r", "r", "r", "r",
