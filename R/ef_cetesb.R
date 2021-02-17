@@ -352,7 +352,7 @@ ef_cetesb <- function(p,
   efhcd$Pollutant <-  "HC_0km"
   for(i in seq_along(ve4s)) efhcd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "HC", ]$efd
 
-  efrchod <- efrcho <- ef[ef$Pollutant == "NOx", ]
+  efrchod <- efrcho <- ef[ef$Pollutant == "RCHO", ]
   efrcho$Pollutant <-  "RCHO_0km"
   for(i in seq_along(ve4s)) efrchod[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "RCHO", ]$efd
 
