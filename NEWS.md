@@ -3,13 +3,17 @@ NEWS
 
 ## TODO
 
-- get_project with Europe and Chinese EF
+- get_project with Europe, Chinese and MOVES EF
 - Add EF from HBEFA
 - Update ef_ldv* and ef_hdv* to EEA2019
-- Include speed with Fortran?
 - Reduce size of sysdata
 
-### vein 0.9.1-0.9.1.2 (Release date: 2020-0s-15)
+### vein 0.9.3 (Release date: 2020-02-17)
+- Fix RCHO in ef_cetesb
+- Note, aparently, the implementation of dotCall64 still copy the objects.
+This will be fixed in the following releases
+
+### vein 0.9.1-0.9.1.2 (Release date: 2020-02-15)
 - Add deterioration factors in ef_cetesb
 - Add OpenMP again and dotCall64. Thanks to Avraham Adler @aadler
 - Add project sebr_cb05co2
