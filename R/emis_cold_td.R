@@ -28,6 +28,7 @@
 #' @param nt Integer; Number of threads wich must be lower than max available.
 #' See \code{\link{check_nt}}. Only when fortran = TRUE
 #' @return Emissions data.frame
+#' @importFrom dotCall64 .C64 vector_dc
 #' @seealso \code{\link{ef_ldv_cold}}
 #' @export
 #' @examples
@@ -264,7 +265,7 @@ emis_cold_td <- function(veh,
               beta = beta,
               month = month,
               nt = as.integer(nt),
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 10), "w"
               ),
@@ -288,7 +289,7 @@ emis_cold_td <- function(veh,
               efcold = efcold,
               beta = beta,
               month = month,
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 9), "w"
               ),
@@ -365,7 +366,7 @@ emis_cold_td <- function(veh,
               beta = beta,
               month = month,
               nt = as.integer(nt),
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 10), "w"
               ),
@@ -389,7 +390,7 @@ emis_cold_td <- function(veh,
               ef = efcold,
               beta = beta,
               month = month,
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 9), "w"
               ),
@@ -489,7 +490,7 @@ emis_cold_td <- function(veh,
               beta = beta,
               month = month,
               nt = as.integer(nt),
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 10), "w"
               ),
@@ -513,7 +514,7 @@ emis_cold_td <- function(veh,
               ef = efcold,
               beta = beta,
               month = month,
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 9), "w"
               ),
@@ -588,7 +589,7 @@ emis_cold_td <- function(veh,
               beta = beta,
               month = month,
               nt = as.integer(nt),
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 10), "w"
               ),
@@ -612,7 +613,7 @@ emis_cold_td <- function(veh,
               ef = efcold,
               beta = beta,
               month = month,
-              emis = dotCall64::numeric_dc(nrowv * ncolv * pmonth),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * pmonth),
               INTENT = c(
                 rep("r", 9), "w"
               ),
@@ -697,7 +698,7 @@ emis_cold_td <- function(veh,
           ef = efcold,
           beta = beta,
           nt = as.integer(nt),
-          emis = dotCall64::numeric_dc(nrowv * ncolv),
+          emis = dotCall64::vector_dc("double", nrowv * ncolv),
           INTENT = c(
             rep("r", 8), "w"
           ),
@@ -719,7 +720,7 @@ emis_cold_td <- function(veh,
           ef = ef,
           ef = efcold,
           beta = beta,
-          emis = dotCall64::numeric_dc(nrowv * ncolv),
+          emis = dotCall64::vector_dc("double", nrowv * ncolv),
           INTENT = c(
             rep("r", 7), "w"
           ),

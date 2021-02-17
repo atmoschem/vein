@@ -10,8 +10,7 @@ NEWS
 
 ### vein 0.9.3 (Release date: 2020-02-17)
 - Fix RCHO in ef_cetesb
-- Note, aparently, the implementation of dotCall64 still copy the objects.
-This will be fixed in the following releases
+- Change numeric_dc to vector_dv to avoid copying (dotCall64)
 
 ### vein 0.9.1-0.9.1.2 (Release date: 2020-02-15)
 - Add deterioration factors in ef_cetesb
