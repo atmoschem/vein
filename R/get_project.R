@@ -92,22 +92,23 @@ get_project <- function(directory,
   } else if(case %in% c("sebr_cb05co2")){
     dir.create(directory)
     tf <- paste0(tempfile(), ".tar.gz")
-    utils::download.file(url = "https://gitlab.com/ibarraespinosa/vein/-/raw/master/projects/sebr_cb05co2/MG.tar.gz",
+
+    utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/MG.tar.gz",
                          destfile =  tf)
     utils::untar(tarfile = tf, exdir = paste0(directory, "/MG"))
 
-    utils::download.file(url = "https://gitlab.com/ibarraespinosa/vein/-/raw/master/projects/sebr_cb05co2/SP.tar.gz",
+    utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/SP.tar.gz",
                          destfile =  tf)
     utils::untar(tarfile = tf, exdir = paste0(directory, "/SP"))
 
-    utils::download.file(url = "https://gitlab.com/ibarraespinosa/vein/-/raw/master/projects/sebr_cb05co2/RJ.tar.gz",
+    utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/RJ.tar.gz",
                          destfile =  tf)
     utils::untar(tarfile = tf, exdir = paste0(directory, "/RJ"))
 
-   utils::download.file(url = "https://gitlab.com/ibarraespinosa/vein/-/raw/master/projects/sebr_cb05co2/merge_wrf.R",
+   utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/merge_wrf.R",
                          destfile =  paste0(directory, "/merge_wrf.R"))
 
-   utils::download.file(url = "https://gitlab.com/ibarraespinosa/vein/-/raw/master/projects/sebr_cb05co2/sebr_cb05co2.Rproj",
+   utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/sebr_cb05co2.Rproj",
                         destfile =  paste0(directory, "/sebr_cb05co2.Rproj"))
 
    utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_wrfi.tar.gz",

@@ -89,8 +89,8 @@ for (i in 1:length(na)) {
   # 0-12
   gx <- GriddedEmissionsArray(
     x = xx[, 1:12],
-    cols = cols,
-    rows = rows,
+    cols = rows, # if towdown, cols
+    rows = cols, # if towdown, rows
     times = 12,
     rotate = "cols"
   )
@@ -103,8 +103,8 @@ for (i in 1:length(na)) {
   # 12-0
   gx <- GriddedEmissionsArray(
     x = xx[, 13:24],
-    cols = cols,
-    rows = rows,
+    cols = rows, # if towdown, cols
+    rows = cols, # if towdown, rows
     times = 12,
     rotate = "cols"
   )
