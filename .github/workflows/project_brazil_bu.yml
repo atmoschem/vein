@@ -78,7 +78,7 @@ jobs:
           install.packages(c("ggplot2", "readxl", "remotes"))
           remotes::install_github("atmoschem/vein")
           library(vein)
-          get_project("tetste", "brazil_bu")
+          get_project("teste", "brazil_bu")
           setwd("teste")
           source("main.R")
 
