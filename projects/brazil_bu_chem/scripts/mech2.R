@@ -9,127 +9,72 @@ file.remove(fs)
 
 # Gasoline Exhaust
 x <- st_set_geometry(readRDS("post/grids/G_NMHC.rds"), NULL)
-id <- x$id
-x$id <- NULL
 x[is.na(x)] <- 0
-nx <- names(x)
-
-dx <- speciate(
-  x = x, 
-  spec = "nmhc", 
-  fuel = "E25", 
-  veh = "LDV", 
-  eu = "Exhaust")
-
-dx$id <- rep(id, length(unique(dx$pol)))
-
-dx$pol <- ifelse(dx$pol == "benzene", "toluene", dx$pol)
-
-vocE25EX <- emis_chem2(
-  df = dx, 
-  mech = "CB05", 
-  nx = nx
-)
+x$id<- NULL
+vocE25EX <- speciate(x = x, 
+                     spec = mech, 
+                     fuel = "G", 
+                     veh = "veh", 
+                     eu = "Exhaust",
+                     list = T)
 
 
 # Gasoline Evap
 x <- st_set_geometry(readRDS(paste0("post/grids/", evap[1], ".rds")), NULL)
-x$id <- NULL
 x[is.na(x)] <- 0
-
-dx <- speciate(
-  x = x, 
-  spec = "nmhc", 
-  fuel = "E25", 
-  veh = "LDV", 
-  eu = "Evaporative")
-
-dx$id <- rep(id, length(unique(dx$pol)))
-
-
-vocE25EV <- emis_chem2(
-  df = dx, 
-  mech = "CB05", 
-  nx = nx,
-  na.rm = TRUE
-)
-
+x$id <- NULL
+vocE25EV <- speciate(x = x, 
+                     spec = mech, 
+                     fuel = "G", 
+                     veh = "veh", 
+                     eu = "Evaporative",  
+                     list = T)
 # Etanol Exhaust
 x <- st_set_geometry(readRDS("post/grids/E_NMHC.rds"), NULL)
 x[is.na(x)] <- 0
 x$id <- NULL
-dx <- speciate(
-  x = x, 
-  spec = "nmhc", 
-  fuel = "E100", 
-  veh = "LDV", 
-  eu = "Exhaust")
-
-dx$id <- rep(id, length(unique(dx$pol)))
-
-dx$pol <- ifelse(dx$pol == "benzene", "toluene", dx$pol)
-
-vocE100EX <- emis_chem2(
-  df = dx, 
-  mech = "CB05", 
-  nx = nx,
-  na.rm = TRUE
-)
+vocE100EX <- speciate(x = x, 
+                      spec = mech, 
+                      fuel = "E", 
+                      veh = "veh", 
+                      eu = "Exhaust",
+                      list = T)
 
 # Etanol Evap
 x <- st_set_geometry(readRDS(paste0("post/grids/", evap[1], ".rds")), NULL)
 x[is.na(x)] <- 0
 x$id <- NULL
-dx <- speciate(
-  x = x, 
-  spec = "nmhc", 
-  fuel = "E100", 
-  veh = "LDV", 
-  eu = "Evaporative")
-
-dx$id <- rep(id, length(unique(dx$pol)))
-
-vocE100EV <- emis_chem2(
-  df = dx, 
-  mech = "CB05", 
-  nx = nx
-)
+vocE100EV <- speciate(x = x, 
+                      spec = mech, 
+                      fuel = "E", 
+                      veh = "veh", 
+                      eu = "Evaporative",
+                      list = T)
 
 # Diesel Exhaust
 x <- st_set_geometry(readRDS("post/grids/D_NMHC.rds"), NULL)
 x[is.na(x)] <- 0
 x$id <- NULL
-dx <- speciate(
-  x = x, 
-  spec = "nmhc", 
-  fuel = "D", 
-  veh = "HDV", 
-  eu = "all")
+vocB5EX <- speciate(x = x, 
+                    spec = mech, 
+                    fuel = "D", 
+                    veh = "veh", 
+                    eu = "Exhaust",
+                    list = T)
 
-dx$id <- rep(id, length(unique(dx$pol)))
 
-dx$pol <- ifelse(dx$pol == "benzene", "toluene", dx$pol)
 
-vocB5EX <- emis_chem2(
-  df = dx, 
-  mech = "CB05", 
-  nx = nx,
-  na.rm = TRUE
-)
+voc <- lapply(1:length(vocE25EX), function(i) {
+  vocE25EX[[i]] + vocE25EV[[i]] +
+    vocE100EX[[i]] + vocE100EV[[i]] + 
+    vocB5EX[[i]] 
+})
 
-voc <- rbind(vocB5EX,
-             vocE100EV,
-             vocE100EX,
-             vocE25EV,
-             vocE25EX)
-dfvoc <- voc[, 
-    lapply(.SD, sum,na.rm = T),
-    .SDcols = nx,
-    by = .(id, group)]
+names(voc) <- toupper(names(vocE25EX))
 
-voc <- split(dfvoc, dfvoc$group)
-
-names(voc) <- paste0("E_", toupper(names(voc)))
+for (i in 1:length(voc) ) {
+  voc[[i]]$id <- 1:nrow(voc[[i]]) 
+}
 
 # saving VOC ####
 voc[is.na(voc)] <- 0
@@ -142,15 +87,13 @@ for(i in seq_along(names(voc))) {
   saveRDS(g_x, file = paste0("post/spec_grid/", names(voc)[i], ".rds"))
 }
 
-polu <- c("CO", "NO", "NO2", "SO2")
-mol  <- c(12, 14+16, 14+16*2, 32+16*2)
-for(j in seq_along(polu)) {
-  x <- st_set_geometry(readRDS(paste0("post/grids/", polu[j], ".rds")), NULL)
+for(j in seq_along(pol)) {
+  x <- st_set_geometry(readRDS(paste0("post/grids/", pol[j], ".rds")), NULL)
   x[is.na(x)] <- 0
   mm_x <- units::set_units(mol[j], "g/mol") # mm: massa molar
   for (i in 2:ncol(x))   x[, i] <- x[, i]* (mm_x)^-1 
   x <- st_sf(x, geometry = g$geometry)
-  saveRDS(x, paste0("post/spec_grid/E_", polu[j], ".rds"))
+  saveRDS(x, paste0("post/spec_grid/E_", pol[j], ".rds"))
 }
 
 
@@ -171,13 +114,11 @@ names(gPM10)
 gPM10$id <- NULL
 for(i in 1:ncol(gPM10)) gPM10[, i] <- units::set_units(gPM10[, i], "ug/m^2/s")
 
-
 # gPM2510 are in g/km/h
 # need to change units to ug/m2/s
 gPM2510 <- gPM10 -  gPM
 gPM2510 <- st_sf(gPM2510, geometry = g$g)
 saveRDS(gPM2510, "post/spec_grid/E_PM_10.rds")
-
 
 switch (language,
         "portuguese" = message("\npost/spec_grid"),
@@ -187,5 +128,3 @@ ls()
 suppressWarnings(
   rm("g", "gPM", "gPM1", "gPM10", "gPM2510", "gPMx", "i", "pol")
 )
-
-file.remove("post/spec_grid/E_BENZENE.rds")
