@@ -35,7 +35,7 @@
 ### Projects
 
 [![R build
-status](https://github.com/atmoschem/vein/workflows/project_brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
+status](https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 

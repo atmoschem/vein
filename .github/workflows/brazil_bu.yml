@@ -14,7 +14,7 @@ on:
       - main
       - master
 
-name: project_brazil_bu
+name: brazil_bu
 
 jobs:
   R-CMD-check:
