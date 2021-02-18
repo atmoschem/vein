@@ -32,6 +32,11 @@
     [![R build
     status](https://github.com/atmoschem/vein/workflows/R-CMD-check/badge.svg)](https://github.com/atmoschem/vein/actions)
 
+### Projects
+
+[![R build
+status](https://github.com/atmoschem/vein/workflows/project_brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
+
 <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
 # **V**ehicular **E**missions **IN**ventories (VEIN)
