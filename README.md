@@ -32,11 +32,6 @@
     [![R build
     status](https://github.com/atmoschem/vein/workflows/R-CMD-check/badge.svg)](https://github.com/atmoschem/vein/actions)
 
-### Projects
-
-[![R build
-status](https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
-
 <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
 # **V**ehicular **E**missions **IN**ventories (VEIN)
@@ -86,11 +81,27 @@ remotes::install_github("atmoschem/vein")
 
 ### 1. get a project (easier)
 
--   Load vein
--   read the documentation of the function
-    [get\_project](https://atmoschem.github.io/vein/reference/get_project.html)
--   choose a name, for instance, “awesome\_city”
--   and use it
+At the moment, most of the projects covers Brazilian regions, but I will
+include China, Europe or USA approaches as soon as I can.
+
+Use the function
+[get\_project](https://atmoschem.github.io/vein/reference/get_project.html)
+and read the documentation.
+
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/brazil_bu_csvgz/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/brazil_csv/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/brazil_td_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/amazon2014/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 ``` r
 library(vein)
