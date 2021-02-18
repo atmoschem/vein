@@ -70,32 +70,16 @@ jobs:
           pak::pkg_install("rcmdcheck")
         shell: Rscript {0}
 
-      - name: Session info
+      - name: Run project brazil_bu
         run: |
           options(width = 100)
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
+          install.packages(c("ggplot2", "readxl", "remotes")
           remotes::install_github("atmoschem/vein")
-          install.packages(c("ggplot2", "readxl"))
-          setwd("projects/brazil_bu")
+          library(vein)
+          get_project("brazil_bu", "teste")
+          setwd("teste")
           source("main.R")
 
         shell: Rscript {0}
-
-      - name: Check
-        env:
-          _R_CHECK_CRAN_INCOMING_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
-
-      - name: Show testthat output
-        if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
-        shell: bash
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check
