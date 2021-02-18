@@ -144,7 +144,7 @@ for (i in seq_along(veh_ev)) {
                         ef = ef,
                         profile = tfs[[veh_ev[i]]],
                         fortran = TRUE,
-                        nt = check_nt(),
+                        nt = check_nt() / 2,
                         simplify = TRUE,
                         verbose = verbose
                 )
