@@ -81,6 +81,6 @@ jobs:
           library(vein)
           get_project("teste", "sebr_cb05co2")
           setwd("teste")
-          source("main.R")
+          source("merge_wrf.R")
 
         shell: Rscript {0}
