@@ -126,8 +126,8 @@ source('scripts/mech.R', encoding = 'UTF-8')
 # mech              <- "CB05"        # "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
 # source('scripts/mech2.R', encoding = 'UTF-8')
 
-# remove some pollutant?
-file.remove("post/spec_grid/E_BENZENE.rds")
+# # remove some pollutant?
+# file.remove("post/spec_grid/E_BENZENE.rds")
 
 
 # WRF CHEM
@@ -142,8 +142,7 @@ cols              <- 99 # da grade
 rows              <- 149 # da grade
 wrf_times         <- 24 # ?
 data("emis_opt")# names(emis_opt)
-emis_option       <- emis_opt$ecb05_opt1
-emis_option[length(emis_option)]<- "E_PM_10"
+emis_option       <- gsub(".rds", "", list.files(path = "post/spec_grid"))
 pasta_wrfinput    <- system.file("extdata",
                                  package = "eixport")
 pasta_wrfchemi    <- "wrf"
