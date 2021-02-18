@@ -1,5 +1,4 @@
 library(geofabrik) # Downloads OSM data from geofabrik
-
 # customize this script
 # Check all geofabrick links
 dir.create("OSM")
@@ -15,8 +14,10 @@ if (download_osm) {
   get_osm(region = OSM_region, file = file_down)
 
   unzip(
-    zipfile = paste0(gsub(" ", "", file_down), 
-                     ".shp.zip"),
+    zipfile = paste0(
+      gsub(" ", "", file_down),
+      ".shp.zip"
+    ),
     exdir = "network"
   )
 
