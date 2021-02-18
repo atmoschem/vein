@@ -22,7 +22,6 @@ switch(language,
   "spanish" = cat("Metadata$Vehicles es:\n")
 )
 
-
 # cat( "Metadata$Vehicles é:\n")
 print(metadata$vehicles)
 

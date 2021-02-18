@@ -9,7 +9,6 @@ fs <- list.files(
 )
 file.remove(fs)
 
-
 # Gasoline Exhaust
 x <- st_set_geometry(readRDS("post/grids/G_NMHC.rds"), NULL)
 x[is.na(x)] <- 0

@@ -93,7 +93,7 @@ and read the documentation.
 -   [![R build
     status](https://github.com/atmoschem/vein/workflows/brazil_bu_csvgz/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_csv/badge.svg)](https://github.com/atmoschem/vein/actions)
+    status](https://github.com/atmoschem/vein/workflows/brazil_bu_csv/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
     status](https://github.com/atmoschem/vein/workflows/brazil_td_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build

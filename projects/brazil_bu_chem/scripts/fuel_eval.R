@@ -3,7 +3,6 @@
 # tfs
 tfs <- as.data.frame(tfs)
 
-
 # Escapamento ####
 for(i in seq_along(metadata$vehicles)) {
   
@@ -28,6 +27,7 @@ for(i in seq_along(metadata$vehicles)) {
                     ef = ef, 
                     profile = tfs[[metadata$vehicles[i]]], 
                     fortran = TRUE,
+                    nt = check_nt()/2
                     simplify = TRUE,
                     verbose = verbose)
     

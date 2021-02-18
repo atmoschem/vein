@@ -10,8 +10,6 @@ switch(language,
   "spanish" = cat("Primer tiempo de WRF:", as.character(ti)[1], "\n")
 )
 
-
-
 # ltemissions, first monday 00:00 before ti
 timepos <- as.POSIXct(as.character(ti), format = "%Y-%m-%d_%H:%M:%S")
 oneweek <- timepos - 3600 * 24 * 7
