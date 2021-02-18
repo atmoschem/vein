@@ -145,7 +145,7 @@ for (i in seq_along(veh_ev)) {
                         profile = tfs[[veh_ev[i]]],
                         fortran = TRUE,
                         simplify = TRUE,
-                        nt = ckeck_nt() / 2,
+                        nt = check_nt() / 2,
                         verbose = verbose
                 )
 
@@ -232,7 +232,7 @@ for (i in seq_along(veh_ev)) {
                         profile = tfs[[veh_ev[i]]],
                         fortran = TRUE,
                         simplify = TRUE,
-                        nt = ckeck_nt() / 2,
+                        nt = check_nt() / 2,
                         verbose = verbose
                 )
 
@@ -318,7 +318,7 @@ for (i in seq_along(veh_ev)) {
                         profile = tfs[[veh_ev[i]]],
                         fortran = TRUE,
                         simplify = TRUE,
-                        nt = ckeck_nt() / 2,
+                        nt = check_nt() / 2,
                         verbose = verbose
                 )
 
