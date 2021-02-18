@@ -75,6 +75,7 @@ jobs:
           options(width = 100)
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
+          remotes::install_github("atmoschem/vein")
           install.packages(c("ggplot2", "readxl"))
           setwd("projects/brazil_bu")
           source("main.R")
