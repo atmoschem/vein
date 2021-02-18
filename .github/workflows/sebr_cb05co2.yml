@@ -78,6 +78,7 @@ jobs:
           install.packages(c("ggplot2", "readxl", "remotes"))
           install.packages("eixport")
           install.packages("geobr")
+          install.packages("ncmeta")
           install.packages("stars")
           remotes::install_github("atmoschem/vein")
           library(vein)
