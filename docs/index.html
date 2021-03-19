@@ -127,6 +127,7 @@
 <ul>
 <li><em>Added OpenMP AGAIN and also, imported dotCall64 to avoid copying</em></li>
 <li>New VEIN project: sebr_cb05co2 covers SP, MG, RJ with CB05+CO2 for 2019 and amazon2014.</li>
+<li>NH3 in ef_cetesb</li>
 </ul>
 </div>
 <div id="new-in-vein" class="section level2">
@@ -158,12 +159,16 @@
 <div id="1-get-a-project-easier" class="section level3">
 <h3 class="hasAnchor">
 <a href="#1-get-a-project-easier" class="anchor"></a>1. get a project (easier)</h3>
+<p>At the moment, most of the projects covers Brazilian regions, but I will include China, Europe or USA approaches as soon as I can.</p>
+<p>Use the function <a href="https://atmoschem.github.io/vein/reference/get_project.html">get_project</a> and read the documentation.</p>
 <ul>
-<li>Load vein</li>
-<li>read the documentation of the function <a href="https://atmoschem.github.io/vein/reference/get_project.html">get_project</a>
-</li>
-<li>choose a name, for instance, “awesome_city”</li>
-<li>and use it</li>
+<li><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/brazil_bu_csvgz/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/brazil_bu_csv/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/brazil_td_chem/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/brazil_bu_chem/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/sebr_cb05co2/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/atmoschem/vein/actions"><img src="https://github.com/atmoschem/vein/workflows/amazon2014/badge.svg" alt="R build status"></a></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/ibarraespinosa/vein">vein</a></span><span class="op">)</span>

@@ -5,7 +5,7 @@
 #'
 #' Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2",
 #' "RCHO" (aldehydes + formaldehyde), "ETOH",
-#' "PM", "N2O", "KML", "FC", "NO2", "NO",
+#' "PM", "N2O", "KML", "FC", "NO2", "NO", "NH3",
 #' "gD/KWH", "gCO2/KWH", "RCHO_0km" (aldehydes + formaldehyde), "PM25RES", "PM10RES",
 #' "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 #' "RCHO_0km" and "ETOH_0km", "FS" (fuel sales) (g/km). If scale = "tunnel" is
@@ -146,6 +146,8 @@
 #' derived form a bottom-up resuspension emissions from metropolitan area
 #' of Sao Paulo 2018, assuming 50000 streets
 #'
+#' NH3 from EEA Tier 2
+#'
 #' @export
 #' @examples \dontrun{
 #' a <- ef_cetesb(p = "CO", veh = "PC_G")
@@ -202,7 +204,7 @@ ef_cetesb <- function(p,
 
   Age <- Year <- .N <- Pollutant <- NULL
   ef[, Age := 1:.N, by= Pollutant]
-  ef[, Year := 2019:(2019-max(ef$Age) + 1), by= Pollutant]
+  ef[, Year := max(ef$Year):(max(ef$Year)-max(ef$Age) + 1), by= Pollutant]
 
   # deterioration ####
   ef <- ef[ef$Year <= year, ]
