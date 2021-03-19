@@ -22,7 +22,7 @@ ef_cetesb(
 
 Pollutants: "CO", "HC", "NMHC", "CH4", "NOx", "CO2",
 "RCHO" (aldehydes + formaldehyde), "ETOH",
-"PM", "N2O", "KML", "FC", "NO2", "NO",
+"PM", "N2O", "KML", "FC", "NO2", "NO", "NH3",
 "gD/KWH", "gCO2/KWH", "RCHO_0km" (aldehydes + formaldehyde), "PM25RES", "PM10RES",
 "CO_0km", "HC_0km", "NMHC_0km", "NOx_0km", "NO2_0km" ,"NO_0km",
 "RCHO_0km" and "ETOH_0km", "FS" (fuel sales) (g/km). If scale = "tunnel" is
@@ -174,6 +174,8 @@ Emission factors for resuspension applies \strong{only} with top-down approach
 as a experimental feature. Units are g/(streets*veh)/day. These values were
 derived form a bottom-up resuspension emissions from metropolitan area
 of Sao Paulo 2018, assuming 50000 streets
+
+NH3 from EEA Tier 2
 }
 \examples{
 \dontrun{

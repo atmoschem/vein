@@ -43,6 +43,7 @@
 -   *Added OpenMP AGAIN and also, imported dotCall64 to avoid copying*
 -   New VEIN project: sebr\_cb05co2 covers SP, MG, RJ with CB05+CO2 for
     2019 and amazon2014.
+-   NH3 in ef\_cetesb
 
 ## New in VEIN?
 
