@@ -12,6 +12,8 @@ NEWS
 - Fix RCHO in ef_cetesb
 - Change numeric_dc to vector_dv to avoid copying (dotCall64)
 - update gitlab link for veinextras in get_project
+- fix ef_cetesb #211 project ef_cetesb
+- fix #207 NH3 in ef_cetesb
 
 ### vein 0.9.1-0.9.1.2 (Release date: 2020-02-15)
 - Add deterioration factors in ef_cetesb
