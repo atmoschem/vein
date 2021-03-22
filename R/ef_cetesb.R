@@ -574,12 +574,11 @@ ef_cetesb <- function(p,
   }
 
   # Selecting
-
   evapd <- c("D_20_35","D_10_25","D_0_15")
   evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
   pols <- as.character(unique(ef$Pollutant))
 
-  if(!p %in% c(pols, "SO2")){
+    if(!p %in% c(pols, "SO2")){
     stop(cat("Please, choose one of the following pollutants:\n", pols, "\n"))
   }
 
