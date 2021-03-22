@@ -100,7 +100,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -126,7 +126,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://gitlab.com/ibarraespinosa/vein/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -359,12 +359,12 @@ matrix.</p>
 <span class='va'>veh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, name <span class='op'>=</span> <span class='st'>"PC_E25_1400"</span>, agemax <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>mil</span> <span class='op'>&lt;-</span> <span class='va'>fkm</span><span class='op'>$</span><span class='fu'>KM_PC_E25</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>ef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"COd"</span>, <span class='st'>"PC_G"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>
-<span class='fu'>emis</span><span class='op'>(</span><span class='va'>veh</span>, <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='va'>mil</span>, <span class='st'>"km"</span><span class='op'>)</span>, <span class='va'>ef</span><span class='op'>)</span>
+<span class='fu'>emis</span><span class='op'>(</span><span class='va'>veh</span>, <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='va'>mil</span>, <span class='st'>"km"</span><span class='op'>)</span>, <span class='va'>ef</span><span class='op'>)</span>
 
 <span class='co'># group online</span>
 <span class='va'>bus1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='age_hdv.html'>age_hdv</a></span><span class='op'>(</span><span class='fl'>30</span>, agemax <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>veh</span> <span class='op'>&lt;-</span> <span class='va'>bus1</span>
-<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>400</span>, <span class='st'>"km"</span><span class='op'>)</span>
+<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>400</span>, <span class='st'>"km"</span><span class='op'>)</span>
 <span class='va'>speed</span> <span class='op'>&lt;-</span> <span class='fl'>40</span>
 <span class='va'>efco</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_cetesb.html'>ef_cetesb</a></span><span class='op'>(</span><span class='st'>"COd"</span>, <span class='st'>"UB"</span>, agemax <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 <span class='va'>lef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ef_hdv_scaled.html'>ef_hdv_scaled</a></span><span class='op'>(</span>

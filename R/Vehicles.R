@@ -28,7 +28,7 @@
 #' }
 #' @export
 Vehicles <- function(x, ..., time) {
-  units::install_symbolic_unit("veh", warn = F)
+ # units::install_symbolic_unit("veh", warn = F)
 
   if(inherits(x, "sf")) {
 
