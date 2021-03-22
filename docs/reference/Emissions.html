@@ -101,7 +101,7 @@ dataframe." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -127,7 +127,7 @@ dataframe." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://gitlab.com/ibarraespinosa/vein/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -206,7 +206,7 @@ dataframe.</p>
 <span class='va'>pc1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='my_age.html'>my_age</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span>, y <span class='op'>=</span> <span class='va'>PC_G</span>, name <span class='op'>=</span> <span class='st'>"PC"</span><span class='op'>)</span>
 <span class='va'>pcw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>+</span><span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
 <span class='va'>speed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span><span class='op'>(</span><span class='va'>pcw</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>pckm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/as_units.html'>as_units</a></span><span class='op'>(</span><span class='va'>fkm</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>24</span><span class='op'>)</span>, <span class='st'>"km"</span><span class='op'>)</span>; <span class='va'>pckma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span><span class='op'>(</span><span class='va'>pckm</span><span class='op'>)</span>
+<span class='va'>pckm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>as_units</a></span><span class='op'>(</span><span class='va'>fkm</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>24</span><span class='op'>)</span>, <span class='st'>"km"</span><span class='op'>)</span>; <span class='va'>pckma</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cumsum.html'>cumsum</a></span><span class='op'>(</span><span class='va'>pckm</span><span class='op'>)</span>
 <span class='va'>cod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='fl'>1000</span>, eu <span class='op'>=</span> <span class='st'>"III"</span>, km <span class='op'>=</span> <span class='va'>pckma</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>11</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>cod2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='emis_det.html'>emis_det</a></span><span class='op'>(</span>po <span class='op'>=</span> <span class='st'>"CO"</span>, cc <span class='op'>=</span> <span class='fl'>1000</span>, eu <span class='op'>=</span> <span class='st'>"I"</span>, km <span class='op'>=</span> <span class='va'>pckma</span><span class='op'>[</span><span class='fl'>12</span><span class='op'>:</span><span class='fl'>24</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'>#vehicles newer than pre-euro</span>

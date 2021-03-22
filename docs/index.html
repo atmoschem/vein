@@ -58,7 +58,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -84,7 +84,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://gitlab.com/ibarraespinosa/vein/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -345,7 +345,7 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_grid.html">make_grid</a></span><span class="op">(</span><span class="va">net</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">102.47</span><span class="op">)</span>
 <span class="va">E_CO_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span>spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, g <span class="op">=</span> <span class="va">g</span>, sr<span class="op">=</span> <span class="fl">31983</span><span class="op">)</span>
 <span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/set_units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"1/h"</span><span class="op">)</span>
+<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"1/h"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">E_CO_g</span><span class="op">[</span><span class="st">"V9"</span><span class="op">]</span>, axes <span class="op">=</span> <span class="cn">T</span>, pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="https://i.imgur.com/Ydsvt8x.png"></p>
 </div>

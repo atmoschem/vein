@@ -105,7 +105,7 @@ providing flexibility to the user." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -131,7 +131,7 @@ providing flexibility to the user." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://gitlab.com/ibarraespinosa/vein/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -249,7 +249,7 @@ Only when fortran = TRUE</p></td>
   v <span class='op'>=</span> <span class='st'>"PC"</span>, t <span class='op'>=</span> <span class='st'>"4S"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, f <span class='op'>=</span> <span class='st'>"G"</span>,
   eu <span class='op'>=</span> <span class='va'>euros</span>, p <span class='op'>=</span> <span class='st'>"CO"</span>, speed <span class='op'>=</span> <span class='fu'><a href='Speed.html'>Speed</a></span><span class='op'>(</span><span class='fl'>34</span><span class='op'>)</span>
 <span class='op'>)</span>
-<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/as_units.html'>as_units</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span><span class='op'>:</span><span class='fl'>13</span><span class='op'>)</span>, <span class='st'>"km"</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1000</span>
+<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>as_units</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span><span class='op'>:</span><span class='fl'>13</span><span class='op'>)</span>, <span class='st'>"km"</span><span class='op'>)</span> <span class='op'>*</span> <span class='fl'>1000</span>
 <span class='va'>veh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='age_ldv.html'>age_ldv</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, agemax <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span><span class='op'>(</span>
   <span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>emis_hot_td</span><span class='op'>(</span>
@@ -375,7 +375,7 @@ Only when fortran = TRUE</p></td>
   dt <span class='op'>=</span> <span class='va'>dftemp</span>,
   show <span class='op'>=</span> <span class='cn'>F</span>,
   ca <span class='op'>=</span> <span class='st'>"small"</span>,
-  ltrip <span class='op'>=</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>km</span><span class='op'>)</span>,
+  ltrip <span class='op'>=</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>km</span><span class='op'>)</span>,
   pollutant <span class='op'>=</span> <span class='st'>"NMHC"</span>
 <span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>dfef</span><span class='op'>)</span> <span class='co'># 120 rows and 9 columns, 8 ef (g/km) and 1 for month</span>
