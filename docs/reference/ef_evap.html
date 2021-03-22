@@ -99,7 +99,7 @@ from EMEP/EEA emisison guidelines" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -125,7 +125,7 @@ from EMEP/EEA emisison guidelines" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://gitlab.com/ibarraespinosa/vein/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -272,7 +272,7 @@ show <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</s
 <span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='celsius.html'>celsius</a></span><span class='op'>(</span><span class='va'>dt</span><span class='op'>)</span>
 <span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span><span class='st'>"erhotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>,
 dt <span class='op'>=</span> <span class='va'>dt</span>, ca <span class='op'>=</span> <span class='st'>"no"</span><span class='op'>)</span>
-<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>km</span><span class='op'>)</span>
+<span class='va'>lkm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='va'>km</span><span class='op'>)</span>
 <span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'>ef_evap</span><span class='op'>(</span>ef <span class='op'>=</span><span class='st'>"erhotc"</span>, v <span class='op'>=</span> <span class='st'>"PC"</span>, cc <span class='op'>=</span> <span class='st'>"&lt;=1400"</span>, ltrip <span class='op'>=</span> <span class='va'>lkm</span>,
 dt <span class='op'>=</span> <span class='va'>dt</span>, ca <span class='op'>=</span> <span class='st'>"no"</span><span class='op'>)</span>
 <span class='op'>}</span>

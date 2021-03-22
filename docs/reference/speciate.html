@@ -100,7 +100,7 @@ will be added more speciations" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -126,7 +126,7 @@ will be added more speciations" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://gitlab.com/ibarraespinosa/vein/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -310,7 +310,7 @@ Environment Canada, September 26, 2006.</p>
 <span class='op'>(</span><span class='va'>dfa</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"iag"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"iag_cb05v2"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"neu_cb05"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>pm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/set_units.html'>set_units</a></span><span class='op'>(</span><span class='va'>pm</span>, <span class='st'>"g/km^2/h"</span><span class='op'>)</span>
+<span class='va'>pm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='va'>pm</span>, <span class='st'>"g/km^2/h"</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmiag"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmneu"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmneu2"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
