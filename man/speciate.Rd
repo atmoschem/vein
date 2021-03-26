@@ -111,6 +111,10 @@ Parana, 2015.
 specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
 from Northeastern University
 
+Speciation with fuels \strong{"E25", "E100" and "B5"} made by Prof. Leila Martins (UTFPR),
+represents BRAZILIAN fuel
+
+
 pmiag2 pass the mass only on j fraction
 }
 \examples{
