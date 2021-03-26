@@ -14,7 +14,8 @@ NEWS
 - update gitlab link for veinextras in get_project
 - fix ef_cetesb #211 project ef_cetesb
 - fix #207 NH3 in ef_cetesb
-- Fiz warning units "veh", defining "veh" with .onLoad and removing with .onULoad
+- Fix warning units "veh", defining "veh" with .onLoad and removing with .onULoad
+- update NMHC for BRAZIL. implies that ethanol from exhaust must be estimated separatly
 
 ### vein 0.9.1-0.9.1.2 (Release date: 2020-02-15)
 - Add deterioration factors in ef_cetesb

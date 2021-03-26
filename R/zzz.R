@@ -5,7 +5,7 @@
   # details > https://jangorecki.gitlab.io/data.cube/library/data.table/html/datatable-optimize.html
   options(datatable.optimize = Inf) # nocov
 
-units::install_unit("veh")
+units::install_unit("veh")  #nocov
 }
 
 
