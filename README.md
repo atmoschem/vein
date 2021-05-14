@@ -4,9 +4,7 @@
 
 # VEIN <img src="man/figures/logo.png" align="right" alt="" width="220" />
 
--   build: [![Travis-CI Build
-    Status](https://travis-ci.org/atmoschem/vein.svg?branch=master)](https://travis-ci.org/atmoschem/vein)
-    [![AppVeyor Build
+-   build: [![AppVeyor Build
     Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
     [![Coverage
     Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
@@ -100,6 +98,8 @@ and read the documentation.
     status](https://github.com/atmoschem/vein/workflows/brazil_td_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
     status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
     status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
