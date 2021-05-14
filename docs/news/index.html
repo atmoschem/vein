@@ -122,7 +122,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://gitlab.com/ibarraespinosa/vein/">
+  <a href="https://github.com/atmoschem/vein/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -141,7 +141,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://gitlab.com/ibarraespinosa/vein/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <small>Source: <a href='https://github.com/atmoschem/vein/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="vein-076-release-date-2019-05-08" class="section level1">
@@ -173,8 +173,8 @@
 <ul>
 <li>add speciation in evaporative emission factors.</li>
 <li>improve emis_chem</li>
-<li>Splits m,p-xylene in m-xylene and p-xylene fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/176'>#176</a></li>
-<li>Deprecated emis_wrf in favou of eixport::to_as4wrf #fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/174'>#174</a></li>
+<li>Splits m,p-xylene in m-xylene and p-xylene fix <a href='https://github.com/atmoschem/vein/issues/176'>#176</a></li>
+<li>Deprecated emis_wrf in favou of eixport::to_as4wrf #fix <a href='https://github.com/atmoschem/vein/issues/174'>#174</a></li>
 </ul>
 </div>
 <div id="vein-072-release-date-2019-04-26" class="section level3">
@@ -208,8 +208,8 @@
 <h3 class="hasAnchor">
 <a href="#vein-0612-release-date-2019-03-25" class="anchor"></a>vein 0.6.12 (Release date: 2019-03-25)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/168'>#168</a> update ef cetesb 2017.</li>
-<li>fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/169'>#169</a>. Adds function age, which incorporated survival functions: Gompertz, Weibull, logistic, including literature references. This function aims to replace age_ldv, age_moto and age_hdv.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/168'>#168</a> update ef cetesb 2017.</li>
+<li>fix <a href='https://github.com/atmoschem/vein/issues/169'>#169</a>. Adds function age, which incorporated survival functions: Gompertz, Weibull, logistic, including literature references. This function aims to replace age_ldv, age_moto and age_hdv.</li>
 <li>Improves documentation age*</li>
 </ul>
 </div>
@@ -232,8 +232,8 @@
 <h3 class="hasAnchor">
 <a href="#vein-069-release-date-2019-02-25" class="anchor"></a>vein 0.6.9 (Release date: 2019-02-25)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/157'>#157</a>. age_ldv(1, agemax = 1) now returns 1 [veh]</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/158'>#158</a>, new argument namerows to change row.names oin age* functions.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/157'>#157</a>. age_ldv(1, agemax = 1) now returns 1 [veh]</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/158'>#158</a>, new argument namerows to change row.names oin age* functions.</li>
 <li>Change argument message to verbose in all age* functions default = FALSE.</li>
 <li>Add emission factors of hybrid vehicles. EMEP/EEA air pollutant emission inventory guidebook 2016 (Leonidas Ntziachristos, Zissis Samaras, 2016), only publish factors for Euro IV technology. In order to have a complete data base I projected these factors to euro V, VI and VIc with the same values as IV. When new literature is available this will be updated.</li>
 </ul>
@@ -242,7 +242,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-068-release-date-2019-02-21" class="anchor"></a>vein 0.6.8 (Release date: 2019-02-21)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/152'>#152</a>. Adds emis_hot_td hot exhaust estimation with top-down approach.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/152'>#152</a>. Adds emis_hot_td hot exhaust estimation with top-down approach.</li>
 <li>Improve documentation.</li>
 <li>Allow pro_month varies across each simple feature or row os Vehicle data.frame.</li>
 <li>Fix minor bugs.</li>
@@ -252,7 +252,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-067-release-date-2019-02-18" class="anchor"></a>vein 0.6.7 (Release date: 2019-02-18)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/150'>#150</a>. Add options to emis_cold_td and emis_evap to add columns to output.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/150'>#150</a>. Add options to emis_cold_td and emis_evap to add columns to output.</li>
 <li>Add verbose argument in emis_cold_td and emis_evap.</li>
 <li>Add message in emis. hour and day will be deprecated.</li>
 <li>Add warnings in ef_evap, and now has options for months and accepts several ef.</li>
@@ -263,7 +263,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-066-release-date-2019-02-14" class="anchor"></a>vein 0.6.6 (Release date: 2019-02-14)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/146'>#146</a>. now dt of ef_evap accept numeric or character vectors.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/146'>#146</a>. now dt of ef_evap accept numeric or character vectors.</li>
 <li>Other arguments of ef_evap can be several.</li>
 <li>Add stop message on ef_evap.</li>
 <li>Add argument of ltrip to convert g/trip in g/km and kmday to convert g/day to g/km</li>
@@ -275,8 +275,8 @@
 <h3 class="hasAnchor">
 <a href="#vein-065-release-date-2019-02-12" class="anchor"></a>vein 0.6.5 (Release date: 2019-02-12)</h3>
 <ul>
-<li>Created function emis_cold_td for top-down approach. Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/142'>#142</a></li>
-<li>no more time units,fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/118'>#118</a></li>
+<li>Created function emis_cold_td for top-down approach. Fix <a href='https://github.com/atmoschem/vein/issues/142'>#142</a></li>
+<li>no more time units,fix <a href='https://github.com/atmoschem/vein/issues/118'>#118</a></li>
 <li>Add new unit ‘veh’, for vehicles, dimensionless.</li>
 <li>Deprecates classes Evaporative and EmissionsList.</li>
 </ul>
@@ -285,7 +285,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-064-release-date-2019-02-11" class="anchor"></a>vein 0.6.4 (Release date: 2019-02-11)</h3>
 <ul>
-<li>Adds support for top-down estimation in emis_cold. Fix ##<a href='https://gitlab.com/ibarraespinosa/vein/issues/142'>#142</a>.] This is, it returns a data-frame when profile is missing. What would happen if annaul activity is used when profile? WHat happen if this profile are normalized projections for future? The result would be an EmissionsArray with emissions projections. However, the emission factors would be contant, which would be incorrect due to emissions degradations. Thusm it would be a good idea start to think in a dedicated function for top-down estimations, which ideally, would cover cold start and evaporative cases. Also, what happens for automatic monthly estimation? Perhaps, 0.7.</li>
+<li>Adds support for top-down estimation in emis_cold. Fix ##<a href='https://github.com/atmoschem/vein/issues/142'>#142</a>.] This is, it returns a data-frame when profile is missing. What would happen if annaul activity is used when profile? WHat happen if this profile are normalized projections for future? The result would be an EmissionsArray with emissions projections. However, the emission factors would be contant, which would be incorrect due to emissions degradations. Thusm it would be a good idea start to think in a dedicated function for top-down estimations, which ideally, would cover cold start and evaporative cases. Also, what happens for automatic monthly estimation? Perhaps, 0.7.</li>
 <li>Adds cold_mileage depending on length of trip and temperature, from EMEP/EEA air pollutant emission inventory guidebook, p60.</li>
 </ul>
 </div>
@@ -293,11 +293,11 @@
 <h3 class="hasAnchor">
 <a href="#vein-063-release-date-2019-02-07" class="anchor"></a>vein 0.6.3 (Release date: 2019-02-07)</h3>
 <ul>
-<li>Fix milage equation of fkm$KM_LDV_GNV. Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/137'>#137</a>.</li>
-<li>Fix “V”, “VI”, “VIc”. Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/138'>#138</a></li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/139'>#139</a></li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/140'>#140</a>. Add base year in ef_cetesb.</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/141'>#141</a></li>
+<li>Fix milage equation of fkm$KM_LDV_GNV. Fix <a href='https://github.com/atmoschem/vein/issues/137'>#137</a>.</li>
+<li>Fix “V”, “VI”, “VIc”. Fix <a href='https://github.com/atmoschem/vein/issues/138'>#138</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/139'>#139</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/140'>#140</a>. Add base year in ef_cetesb.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/141'>#141</a></li>
 </ul>
 </div>
 <div id="vein-062-release-date-2019-01-29" class="section level3">
@@ -312,7 +312,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-061-release-date-2019-01-11" class="anchor"></a>vein 0.6.1 (Release date: 2019-01-11)</h3>
 <ul>
-<li>Adds split_emis. Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/135'>#135</a></li>
+<li>Adds split_emis. Fix <a href='https://github.com/atmoschem/vein/issues/135'>#135</a></li>
 </ul>
 </div>
 <div id="vein-060-release-date-2019-01-11-changchung" class="section level3">
@@ -328,24 +328,24 @@
 <h3 class="hasAnchor">
 <a href="#vein-059-release-date-2019-01-11" class="anchor"></a>vein 0.5.9 (Release date: 2019-01-11)</h3>
 <ul>
-<li>fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/134'>#134</a>.</li>
+<li>fix <a href='https://github.com/atmoschem/vein/issues/134'>#134</a>.</li>
 </ul>
 </div>
 <div id="vein-058-release-date-2018-12-29" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-058-release-date-2018-12-29" class="anchor"></a>vein 0.5.8 (Release date: 2018-12-29)</h3>
 <ul>
-<li>Fix EF of metals fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/91'>#91</a>.</li>
+<li>Fix EF of metals fix <a href='https://github.com/atmoschem/vein/issues/91'>#91</a>.</li>
 </ul>
 </div>
 <div id="vein-057-release-date-2018-11-29" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-057-release-date-2018-11-29" class="anchor"></a>vein 0.5.7 (Release date: 2018-11-29)</h3>
 <ul>
-<li>Opens main.R in inventory(, fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/132'>#132</a>.</li>
-<li>Adds matvect in any age* by row, fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/130'>#130</a>.</li>
-<li>emis can read vehicles as ‘sf’ objects setting geometry to NULL, fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/116'>#116</a>.</li>
-<li>Fix message on age* function when there is a NA in traffic, fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/131'>#131</a>.</li>
+<li>Opens main.R in inventory(, fix <a href='https://github.com/atmoschem/vein/issues/132'>#132</a>.</li>
+<li>Adds matvect in any age* by row, fix <a href='https://github.com/atmoschem/vein/issues/130'>#130</a>.</li>
+<li>emis can read vehicles as ‘sf’ objects setting geometry to NULL, fix <a href='https://github.com/atmoschem/vein/issues/116'>#116</a>.</li>
+<li>Fix message on age* function when there is a NA in traffic, fix <a href='https://github.com/atmoschem/vein/issues/131'>#131</a>.</li>
 <li>Enhance inventory.</li>
 </ul>
 </div>
@@ -420,7 +420,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-045-release-date-2018-09-05" class="anchor"></a>vein 0.4.5 (Release date: 2018-09-05)</h3>
 <ul>
-<li>enhances emis_order. Now covers GriddedEmissionsArray, sf, data.frame, matrix, or any Spatial. Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/110'>#110</a>.</li>
+<li>enhances emis_order. Now covers GriddedEmissionsArray, sf, data.frame, matrix, or any Spatial. Fix <a href='https://github.com/atmoschem/vein/issues/110'>#110</a>.</li>
 </ul>
 </div>
 <div id="vein-044-release-date-2018-09-02" class="section level3">
@@ -428,16 +428,16 @@
 <a href="#vein-044-release-date-2018-09-02" class="anchor"></a>vein 0.4.4 (Release date: 2018-09-02)</h3>
 <ul>
 <li>add function vein_notes.</li>
-<li>add ef_cetesb <a href='https://gitlab.com/ibarraespinosa/vein/issues/90'>#90</a>.</li>
+<li>add ef_cetesb <a href='https://github.com/atmoschem/vein/issues/90'>#90</a>.</li>
 </ul>
 </div>
 <div id="vein-043-release-date-2018-08-29" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-043-release-date-2018-08-29" class="anchor"></a>vein 0.4.3 (Release date: 2018-08-29)</h3>
 <ul>
-<li>add function ef_fun <a href='https://gitlab.com/ibarraespinosa/vein/issues/106'>#106</a>.</li>
-<li>Fix missing isopentane <a href='https://gitlab.com/ibarraespinosa/vein/issues/92'>#92</a>.</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/107'>#107</a>.</li>
+<li>add function ef_fun <a href='https://github.com/atmoschem/vein/issues/106'>#106</a>.</li>
+<li>Fix missing isopentane <a href='https://github.com/atmoschem/vein/issues/92'>#92</a>.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/107'>#107</a>.</li>
 <li>included more options to emis_merge</li>
 </ul>
 </div>
@@ -445,7 +445,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-042-release-date-2018-08-18" class="anchor"></a>vein 0.4.2 (Release date: 2018-08-18)</h3>
 <ul>
-<li>add function ef_fun <a href='https://gitlab.com/ibarraespinosa/vein/issues/103'>#103</a>.</li>
+<li>add function ef_fun <a href='https://github.com/atmoschem/vein/issues/103'>#103</a>.</li>
 </ul>
 </div>
 <div id="vein-041-release-date-2018-08-07" class="section level3">
@@ -494,7 +494,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-0331-release-date-2018-06-01" class="anchor"></a>vein 0.3.31 (Release date: 2018-06-01)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/69'>#69</a>. Now make_grid prints the number of Longitude and Latitude cells (points). when spobj is “character”, it is a path to wrfinput file and then runs eixport::wrf_grid to create a grid based on a wrf_input file.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/69'>#69</a>. Now make_grid prints the number of Longitude and Latitude cells (points). when spobj is “character”, it is a path to wrfinput file and then runs eixport::wrf_grid to create a grid based on a wrf_input file.</li>
 </ul>
 </div>
 <div id="vein-0330-release-date-2018-05-26" class="section level3">
@@ -533,7 +533,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-0326-release-date-2018-05-20" class="anchor"></a>vein 0.3.26 (Release date: 2018-05-20)</h3>
 <ul>
-<li>fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/87'>#87</a> and <a href='https://gitlab.com/ibarraespinosa/vein/issues/88'>#88</a></li>
+<li>fix <a href='https://github.com/atmoschem/vein/issues/87'>#87</a> and <a href='https://github.com/atmoschem/vein/issues/88'>#88</a></li>
 </ul>
 </div>
 <div id="vein-0325-release-date-2018-05-19" class="section level3">
@@ -570,14 +570,14 @@
 <h3 class="hasAnchor">
 <a href="#vein-0321-release-date-2018-05-14" class="anchor"></a>vein 0.3.21 (Release date: 2018-05-14)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/84'>#84</a>, <a href='https://gitlab.com/ibarraespinosa/vein/issues/75'>#75</a>, and <a href='https://gitlab.com/ibarraespinosa/vein/issues/44'>#44</a>. Add emission factors of CO2, SO2, NMHC and CH4.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/84'>#84</a>, <a href='https://github.com/atmoschem/vein/issues/75'>#75</a>, and <a href='https://github.com/atmoschem/vein/issues/44'>#44</a>. Add emission factors of CO2, SO2, NMHC and CH4.</li>
 </ul>
 </div>
 <div id="vein-0320-release-date-2018-05-13" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0320-release-date-2018-05-13" class="anchor"></a>vein 0.3.20 (Release date: 2018-05-13)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/85'>#85</a>. Add corrections in emis_wear.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/85'>#85</a>. Add corrections in emis_wear.</li>
 <li>Add test for emis_wear.</li>
 </ul>
 </div>
@@ -585,21 +585,21 @@
 <h3 class="hasAnchor">
 <a href="#vein-0319-release-date-2018-05-05" class="anchor"></a>vein 0.3.19 (Release date: 2018-05-05)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/82'>#82</a>.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/82'>#82</a>.</li>
 </ul>
 </div>
 <div id="vein-0318-release-date-2018-05-01" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0318-release-date-2018-05-01" class="anchor"></a>vein 0.3.18 (Release date: 2018-05-01)</h3>
 <ul>
-<li>add fuel_corr function <a href='https://gitlab.com/ibarraespinosa/vein/issues/65'>#65</a>.</li>
+<li>add fuel_corr function <a href='https://github.com/atmoschem/vein/issues/65'>#65</a>.</li>
 </ul>
 </div>
 <div id="vein-0317-release-date-2018-04-22" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-0317-release-date-2018-04-22" class="anchor"></a>vein 0.3.17 (Release date: 2018-04-22)</h3>
 <ul>
-<li>add net argument in temp_fact, netspeed and emis_post <a href='https://gitlab.com/ibarraespinosa/vein/issues/70'>#70</a>.</li>
+<li>add net argument in temp_fact, netspeed and emis_post <a href='https://github.com/atmoschem/vein/issues/70'>#70</a>.</li>
 </ul>
 </div>
 <div id="vein-0316-release-date-2018-04-09" class="section level3">
@@ -636,7 +636,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-0312-release-date-2018-03-25" class="anchor"></a>vein 0.3.12 (Release date: 2018-03-25)</h3>
 <ul>
-<li>Change default values of hour and day in emis* functions (fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/76'>#76</a>).</li>
+<li>Change default values of hour and day in emis* functions (fix <a href='https://github.com/atmoschem/vein/issues/76'>#76</a>).</li>
 <li>Add tests.</li>
 <li>emis_post now derives hours and days from EmissionsArray.</li>
 <li>Inventory includes argument rush.hour for creating a template for estimations of only rush hour.</li>
@@ -650,7 +650,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-0310-release-date-2018-03-09" class="anchor"></a>vein 0.3.10 (Release date: 2018-03-09)</h3>
 <ul>
-<li>fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/74'>#74</a>.</li>
+<li>fix <a href='https://github.com/atmoschem/vein/issues/74'>#74</a>.</li>
 <li>Add tests.</li>
 </ul>
 </div>
@@ -659,7 +659,7 @@
 <a href="#vein-0310-release-date-2018-03-03" class="anchor"></a>vein 0.3.10 (Release date: 2018-03-03)</h3>
 <ul>
 <li>Improve inventory.</li>
-<li>fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/72'>#72</a>.</li>
+<li>fix <a href='https://github.com/atmoschem/vein/issues/72'>#72</a>.</li>
 </ul>
 </div>
 <div id="vein-039-release-date-2018-03-01" class="section level3">
@@ -696,7 +696,7 @@
 <h3 class="hasAnchor">
 <a href="#vein-036-release-date-2018-02-22" class="anchor"></a>vein 0.3.6 (Release date: 2018-02-22)</h3>
 <ul>
-<li>fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/67'>#67</a>.</li>
+<li>fix <a href='https://github.com/atmoschem/vein/issues/67'>#67</a>.</li>
 <li>make_grid now uses sf::st_make_grid</li>
 </ul>
 <div id="vein-035-release-date-2018-02-22" class="section level4">
@@ -719,20 +719,20 @@
 <h3 class="hasAnchor">
 <a href="#vein-033-release-date-2018-02-08" class="anchor"></a>vein 0.3.3 (Release date: 2018-02-08)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/62'>#62</a>.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/62'>#62</a>.</li>
 </ul>
 </div>
 <div id="vein-032-release-date-2018-02-08" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-032-release-date-2018-02-08" class="anchor"></a>vein 0.3.2 (Release date: 2018-02-08)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/60'>#60</a> and <a href='https://gitlab.com/ibarraespinosa/vein/issues/61'>#61</a>.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/60'>#60</a> and <a href='https://github.com/atmoschem/vein/issues/61'>#61</a>.</li>
 </ul>
 <div id="vein-031-release-date-2018-02-07" class="section level4">
 <h4 class="hasAnchor">
 <a href="#vein-031-release-date-2018-02-07" class="anchor"></a>vein 0.3.1 (Release date: 2018-02-07)</h4>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/57'>#57</a>, <a href='https://gitlab.com/ibarraespinosa/vein/issues/58'>#58</a> and <a href='https://gitlab.com/ibarraespinosa/vein/issues/59'>#59</a>.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/57'>#57</a>, <a href='https://github.com/atmoschem/vein/issues/58'>#58</a> and <a href='https://github.com/atmoschem/vein/issues/59'>#59</a>.</li>
 <li>GriddedEmissionsInventory corrected orientation.</li>
 </ul>
 </div>
@@ -741,13 +741,13 @@
 <h3 class="hasAnchor">
 <a href="#vein-030-release-date-2018-02-05" class="anchor"></a>vein 0.3.0 (Release date: 2018-02-05)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/49'>#49</a>: Documentation in inventory est</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/50'>#50</a>: Fix repetition of x_DF</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/51'>#51</a>: deparse text</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/52'>#52</a>: separate objects in rm with ‘,’</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/49'>#49</a>: Documentation in inventory est</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/50'>#50</a>: Fix repetition of x_DF</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/51'>#51</a>: deparse text</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/52'>#52</a>: separate objects in rm with ‘,’</li>
 <li>Add class GriddedEmissionsArray</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/28'>#28</a>, data.table imported in emis_grd. Now very fast!</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/55'>#55</a>.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/28'>#28</a>, data.table imported in emis_grd. Now very fast!</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/55'>#55</a>.</li>
 <li>Minor fix on demo(VEIN).</li>
 <li>emis and emis_cold adjust length of ef by length of columns of first element of the list of data-frames.</li>
 <li>Revised all examples.</li>
@@ -764,11 +764,11 @@
 <h3 class="hasAnchor">
 <a href="#vein-023-release-date-2018-01-23-fernanda" class="anchor"></a>vein 0.2.3 (Release date: 2018-01-23) (Fernanda)</h3>
 <ul>
-<li>sp now imported instead of Depend <a href='https://gitlab.com/ibarraespinosa/vein/issues/47'>#47</a>.</li>
+<li>sp now imported instead of Depend <a href='https://github.com/atmoschem/vein/issues/47'>#47</a>.</li>
 <li>Improved Documentation</li>
 <li>Minor fix</li>
 <li>emis and emis_cold adjust the length of ef to match ncol of veh.</li>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/42'>#42</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/42'>#42</a></li>
 </ul>
 </div>
 <div id="vein-022-30-release-date-2018-01-10" class="section level3">
@@ -782,42 +782,42 @@
 <h3 class="hasAnchor">
 <a href="#vein-022-29-release-date-2017-12-27" class="anchor"></a>vein 0.2.2-29 (Release date: 2017-12-27)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/43'>#43</a>: ADT</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/43'>#43</a>: ADT</li>
 </ul>
 </div>
 <div id="vein-022-28-release-date-2017-12-22" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-28-release-date-2017-12-22" class="anchor"></a>vein 0.2.2-28 (Release date: 2017-12-22)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/4'>#4</a>: list of data-frames not needed so far! vkm needs a numeric as veh</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/4'>#4</a>: list of data-frames not needed so far! vkm needs a numeric as veh</li>
 </ul>
 </div>
 <div id="vein-022-27-release-date-2017-12-18" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-27-release-date-2017-12-18" class="anchor"></a>vein 0.2.2-27 (Release date: 2017-12-18)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/2'>#2</a>: Documentation of ef_nitro.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/2'>#2</a>: Documentation of ef_nitro.</li>
 </ul>
 </div>
 <div id="vein-022-26-release-date-2017-10-08" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-26-release-date-2017-10-08" class="anchor"></a>vein 0.2.2-26 (Release date: 2017-10-08)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/35'>#35</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/35'>#35</a></li>
 </ul>
 </div>
 <div id="vein-022-25-release-date-2017-09-28" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-25-release-date-2017-09-28" class="anchor"></a>vein 0.2.2-25 (Release date: 2017-09-28)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/32'>#32</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/32'>#32</a></li>
 </ul>
 </div>
 <div id="vein-022-24-release-date-2017-09-19" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-24-release-date-2017-09-19" class="anchor"></a>vein 0.2.2-24 (Release date: 2017-09-19)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/31'>#31</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/31'>#31</a></li>
 <li>Updated speciation of paintings for CBMZ</li>
 <li>Update message in emis</li>
 </ul>
@@ -826,28 +826,28 @@
 <h3 class="hasAnchor">
 <a href="#vein-022-23-release-date-2017-09-18" class="anchor"></a>vein 0.2.2-23 (Release date: 2017-09-18)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/29'>#29</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/29'>#29</a></li>
 </ul>
 </div>
 <div id="vein-022-22-release-date-2017-09-18viva-chile" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-22-release-date-2017-09-18viva-chile" class="anchor"></a>vein 0.2.2-22 (Release date: 2017-09-18)(Viva Chile)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/27'>#27</a>.</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/27'>#27</a>.</li>
 </ul>
 </div>
 <div id="vein-022-21-release-date-2017-09-18" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-21-release-date-2017-09-18" class="anchor"></a>vein 0.2.2-21 (Release date: 2017-09-18)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/11'>#11</a> (reopen). Now prints in kg</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/11'>#11</a> (reopen). Now prints in kg</li>
 </ul>
 </div>
 <div id="vein-022-20-release-date-2017-09-16" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-20-release-date-2017-09-16" class="anchor"></a>vein 0.2.2-20 (Release date: 2017-09-16)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/26'>#26</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/26'>#26</a></li>
 </ul>
 <div id="vein-022-19-release-date-2017-09-15" class="section level4">
 <h4 class="hasAnchor">
@@ -861,91 +861,91 @@
 <h3 class="hasAnchor">
 <a href="#vein-022-18-release-date-2017-09-11" class="anchor"></a>vein 0.2.2-18 (Release date: 2017-09-11)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/25'>#25</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/25'>#25</a></li>
 </ul>
 </div>
 <div id="vein-022-17-release-date-2017-09-10" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-17-release-date-2017-09-10" class="anchor"></a>vein 0.2.2-17 (Release date: 2017-09-10)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/24'>#24</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/24'>#24</a></li>
 </ul>
 </div>
 <div id="vein-022-16-release-date-2017-09-09" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-16-release-date-2017-09-09" class="anchor"></a>vein 0.2.2-16 (Release date: 2017-09-09)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/23'>#23</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/23'>#23</a></li>
 </ul>
 </div>
 <div id="vein-022-15-release-date-2017-09-09" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-15-release-date-2017-09-09" class="anchor"></a>vein 0.2.2-15 (Release date: 2017-09-09)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/22'>#22</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/22'>#22</a></li>
 </ul>
 </div>
 <div id="vein-022-14-release-date-2017-09-09" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-14-release-date-2017-09-09" class="anchor"></a>vein 0.2.2-14 (Release date: 2017-09-09)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/11'>#11</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/11'>#11</a></li>
 </ul>
 </div>
 <div id="vein-022-13-release-date-2017-09-09" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-13-release-date-2017-09-09" class="anchor"></a>vein 0.2.2-13 (Release date: 2017-09-09)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/7'>#7</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/7'>#7</a></li>
 </ul>
 </div>
 <div id="vein-022-12-release-date-2017-09-09" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-12-release-date-2017-09-09" class="anchor"></a>vein 0.2.2-12 (Release date: 2017-09-09)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/21'>#21</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/21'>#21</a></li>
 </ul>
 </div>
 <div id="vein-022-11-release-date-2017-09-09" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-11-release-date-2017-09-09" class="anchor"></a>vein 0.2.2-11 (Release date: 2017-09-09)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/20'>#20</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/20'>#20</a></li>
 </ul>
 </div>
 <div id="vein-022-10-release-date-2017-09-04" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-10-release-date-2017-09-04" class="anchor"></a>vein 0.2.2-10 (Release date: 2017-09-04)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/10'>#10</a>, <a href='https://gitlab.com/ibarraespinosa/vein/issues/17'>#17</a> and <a href='https://gitlab.com/ibarraespinosa/vein/issues/18'>#18</a> and demo</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/10'>#10</a>, <a href='https://github.com/atmoschem/vein/issues/17'>#17</a> and <a href='https://github.com/atmoschem/vein/issues/18'>#18</a> and demo</li>
 </ul>
 </div>
 <div id="vein-022-9-release-date-2017-09-02" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-9-release-date-2017-09-02" class="anchor"></a>vein 0.2.2-9 (Release date: 2017-09-02)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/3'>#3</a> and <a href='https://gitlab.com/ibarraespinosa/vein/issues/15'>#15</a></li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/3'>#3</a> and <a href='https://github.com/atmoschem/vein/issues/15'>#15</a></li>
 </ul>
 </div>
 <div id="vein-022-8-release-date-2017-09-01" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-8-release-date-2017-09-01" class="anchor"></a>vein 0.2.2-8 (Release date: 2017-09-01)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/14'>#14</a>, emis_wrf</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/14'>#14</a>, emis_wrf</li>
 </ul>
 </div>
 <div id="vein-022-7-release-date-2017-08-30" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-7-release-date-2017-08-30" class="anchor"></a>vein 0.2.2-7 (Release date: 2017-08-30)</h3>
 <ul>
-<li>Fix <a href='https://gitlab.com/ibarraespinosa/vein/issues/12'>#12</a>, speciate now returns mol/h when spec = iag</li>
+<li>Fix <a href='https://github.com/atmoschem/vein/issues/12'>#12</a>, speciate now returns mol/h when spec = iag</li>
 </ul>
 </div>
 <div id="vein-022-6-release-date-2017-08-23" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vein-022-6-release-date-2017-08-23" class="anchor"></a>vein 0.2.2-6 (Release date: 2017-08-23)</h3>
 <ul>
-<li>Minor update <a href='https://gitlab.com/ibarraespinosa/vein/issues/8'>#8</a>, to exclude na in veh of function my_age</li>
+<li>Minor update <a href='https://github.com/atmoschem/vein/issues/8'>#8</a>, to exclude na in veh of function my_age</li>
 </ul>
 </div>
 <div id="vein-022-5-release-date-2017-08-07" class="section level3">

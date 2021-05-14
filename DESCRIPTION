@@ -16,8 +16,8 @@ Description: Elaboration of vehicular emissions inventories,
     the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
     start with the project to download a template to create a structure of directories and scripts.
 License: MIT + file LICENSE
-URL: https://gitlab.com/ibarraespinosa/vein
-BugReports: https://gitlab.com/ibarraespinosa/vein/-/issues
+URL: https://github.com/atmoschem/vein
+BugReports: https://github.com/atmoschem/vein/issues
 LazyData: no
 Depends: R (>= 3.5.0)
 Imports: sf, data.table, units, graphics, stats, dotCall64
