@@ -97,21 +97,18 @@ for(j in seq_along(lpol)) {
 
 names(lmunich_pol) <- names(lpol)
 
-# 2 approach ####
+# 2 approach (experimental) ####
 # generates txt files of each hour, similar to EL.traf.2014100800
-# headers:
-# i idbrin typo xa ya xb yb CH4 NMHC CO NOx NO NO2 SO2 CO2 
-# PA FC SO2 CO2 BE EC OM NO2 
-# TSP PM10 PM25 PM1 IP BkF BbF BghiP Fl BaP Py BjF BaA Chr Phe Ant DahA BeP As Cd Cr Cu Hg Ni Pb Se Zn Al Ti Fe Ba Si
-# OS
-fi <- list.files(path = "post/spec_street/", full.names = T)
-ni <- list.files(path = "post/spec_street/", full.names = F)
-ni <- gsub(".rds", "", ni)
+ni <- c("E_ALD2", "E_ALDX", "E_BENZENE", "E_ETH", "E_ETHA", "E_ETOH", "E_FORM",
+          "E_IOLE", "E_ISOP", "E_OLE", "E_PAR",
+          "E_TOL","E_XYL")
+fi <- paste0("post/spec_street/", ni, ".rds")
 lapply(fi, readRDS) -> lvoc
 names(lvoc) <- ni
 names(lvoc)
 
 lmunich_voc <- list()
+vars <- paste0("V", 1:nrow(tfs))
 
 for(j in seq_along(lvoc)) {
   
@@ -119,7 +116,6 @@ for(j in seq_along(lvoc)) {
   
   df <- st_explode(x)
   lkm <- units::set_units(st_length(df), km)
-  
   
   for(i in seq_along(vars)) df[[vars[i]]] <- units::set_units(df[[vars[i]]], mol/h)
   
@@ -133,15 +129,11 @@ for(j in seq_along(lvoc)) {
 
 names(lmunich_voc) <- names(lvoc)
 
-lmunich_voc$E_ALD2$Emissions
-
-head(lmunich_voc$E_ALD2$Emissions)
 
 lx <- c(lmunich_pol, lmunich_voc)
 names(lx)
 base <- lmunich_voc$E_ALD2$Emissions[, 1:6]
 
-vars <- paste0("V", 1:nrow(tfs))
 # hora 1
 for(j in 1:nrow(tfs)) {
   for(i in seq_along(lx)) {
