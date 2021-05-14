@@ -19,8 +19,8 @@ Elaboration of vehicular emissions inventories,
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://gitlab.com/ibarraespinosa/vein}
-  \item Report bugs at \url{https://gitlab.com/ibarraespinosa/vein/-/issues}
+  \item \url{https://github.com/atmoschem/vein}
+  \item Report bugs at \url{https://github.com/atmoschem/vein/issues}
 }
 
 }
