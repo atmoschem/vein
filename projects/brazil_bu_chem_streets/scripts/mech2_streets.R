@@ -159,7 +159,7 @@ for (j in seq_along(pol)) {
   mm_x <- units::set_units(mol[j], "g/mol") # mm: massa molar
   for (i in 2:ncol(x)) x[, i] <- x[, i] * (mm_x)^-1
   x <- st_sf(x, geometry = st_geometry(g))
-  saveRDS(x, paste0("post/spec_grid/E_", pol[j], ".rds"))
+  saveRDS(x, paste0("post/spec_street/E_", pol[j], ".rds"))
 }
 # no PM especiation in the meantime
 # only PM2.5 and PM10
@@ -200,9 +200,9 @@ file.copy(from = "post/streets/PM10.rds",
 
 
 switch(language,
-  "portuguese" = message("\npost/spec_grid"),
-  "english" = message("\npost/spec_grid"),
-  "spanish" = message("\npost/spec_grid")
+  "portuguese" = message("\npost/spec_street"),
+  "english" = message("\npost/spec_street"),
+  "spanish" = message("\npost/spec_street")
 )
 ls()
 suppressWarnings(
