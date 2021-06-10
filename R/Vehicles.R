@@ -12,7 +12,7 @@
 #' @param ... ignored
 #' @param message message with average age
 #' @param time Character to be the time units as denominator, eg "1/h"
-#' @importFrom units as_units install_symbolic_unit
+#' @importFrom units as_units install_unit
 #'
 #' @rdname Vehicles
 #' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
@@ -28,7 +28,7 @@
 #' }
 #' @export
 Vehicles <- function(x, ..., time) {
- # units::install_symbolic_unit("veh", warn = F)
+ # units::install_unit("veh", warn = F)
 
   if(inherits(x, "sf")) {
 
@@ -111,7 +111,7 @@ print.Vehicles <- function(x, ...) {
 #' @method summary Vehicles
 #' @export
 summary.Vehicles <- function(object, ...) {
-  units::install_symbolic_unit("veh", warn = F)
+  # units::install_unit("veh")
   veh <- object
   avage <- sum(seq(1,ncol(veh))*colSums(veh)/sum(veh))
   cat("\nVehicles by columns in study area = \n")
@@ -128,7 +128,7 @@ summary.Vehicles <- function(object, ...) {
 #' @method plot Vehicles
 #' @export
 plot.Vehicles <- function(x,  ..., message = TRUE) {
-  units::install_symbolic_unit("veh", warn = F)
+  # units::install_unit("veh", warn = F)
   veh <- x
   if ( inherits(veh, "data.frame") ) {
     avage <- sum(seq(1,ncol(veh)) * colSums(veh)/sum(veh))

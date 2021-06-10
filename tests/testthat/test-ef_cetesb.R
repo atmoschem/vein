@@ -64,7 +64,7 @@ test_that("ef_cetesb works", {
 test_that("ef_cetesb works", {
   expect_error(ef_cetesb("CO_0km",
                                     "PC_G",
-                                    year = 2020),
+                                    year = 2150),
                ".?")
 })
 
@@ -86,7 +86,7 @@ test_that("ef_cetesb works", {
 test_that("ef_cetesb works", {
   expect_error(ef_cetesb("SO2",
                                     c("PC_G", "LCV_G"),
-                                    year = 2020,
+                                    year = 2500,
                                     agemax = 10, sppm = 300),
                "?")
 })

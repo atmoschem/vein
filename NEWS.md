@@ -8,7 +8,7 @@ NEWS
 - Update ef_ldv* and ef_hdv* to EEA2019
 - Reduce size of sysdata
 
-### vein 0.9.3 (Release date: 2021-02-17)
+### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
 - Change numeric_dc to vector_dv to avoid copying (dotCall64)
 - update gitlab link for veinextras in get_project
@@ -17,6 +17,7 @@ NEWS
 - Fix warning units "veh", defining "veh" with .onLoad and removing with .onULoad
 - update NMHC for BRAZIL. implies that ethanol from exhaust must be estimated separatly
 - Add project brazil_bu_chem_streets
+- Add 2020 EF for cetesb (provisional until new official EF, 09/06/2020)
 
 ### vein 0.9.1-0.9.1.2 (Release date: 2021-02-15)
 - Add deterioration factors in ef_cetesb
