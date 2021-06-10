@@ -54,18 +54,21 @@ age_moto <- function (x,
   # check na
   x[is.na(x)] <- 0
 
+  x <- as.numeric(x)
+
   # length k
   if(length(k)  > 1 & length(k) < length(x)){
     stop("length of 'k' must be 1 ore equal to length of 'x'")
   }
 
-  #check agemax
+  # check agemax
   if(agemax < 1) stop("Agemax should be bigger than 1")
 
+
   # bystreet = TRUE
-  if (bystreet == T){
+  if (bystreet == TRUE){
     if(length(x) != length(a)){
-      stop("Lengths of veh and a must be the same")
+      stop("Lengths of veh and age must be the same")
     }
     d <- suca <- list()
     for (i in seq_along(x)) {
@@ -77,8 +80,6 @@ age_moto <- function (x,
       d[[i]] <- d[[i]]*x[i]
     }
     df <- as.data.frame(matrix(0,ncol=length(anos), nrow=1))
-
-
     for (i in seq_along(x)) {
       df[i,] <- d[[i]]
     }
@@ -86,16 +87,13 @@ age_moto <- function (x,
     df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
                                                    nrow=length(x))), df))
 
-    names(df) <- paste(name, seq(1, agemax), sep="_")
-
+    names(df) <- paste(name,seq(1,agemax),sep="_")
 
     df <- df*k
 
-
     if(verbose){
-
       message(paste("Average age of",name, "is",
-                    round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
+                    round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                     sep=" "))
       message(paste("Number of",name, "is",
                     round(sum(df, na.rm = T), 3),
@@ -104,12 +102,15 @@ age_moto <- function (x,
       cat("\n")
     }
 
-
-    df <- Vehicles(df)
     if(!missing(namerows)) {
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
       row.names(df) <- namerows
     }
+
+
+
+    # replace NA and NaN
+    df[is.na(df)] <- 0
 
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
@@ -127,6 +128,7 @@ age_moto <- function (x,
       }
     }
 
+    #bystreet = FALSE
   } else {
     suca <- function (t) {1/(1 + exp(a*(t+b)))+1/(1 + exp(a*(t-b)))}
     anos <- seq(agemin,agemax)
@@ -136,26 +138,22 @@ age_moto <- function (x,
     df <- as.data.frame(as.matrix(x) %*%matrix(d,ncol=length(anos), nrow=1))
 
     df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
-                                                   nrow=length(x))),
-                              df))
+                                                   nrow=length(x))), df))
 
     names(df) <- paste(name,seq(1,agemax),sep="_")
 
     df <- df*k
 
-
-
     if(verbose){
       message(paste("Average age of",name, "is",
-                    round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
+                    round(sum(seq(1,agemax)*base::colSums(df)/sum(df)), 2),
                     sep=" "))
       message(paste("Number of",name, "is",
                     round(sum(df, na.rm = T)/1000, 2),
-                    "* 10^3 veh",
-                    sep=" ")
-      )
+                    "* 10^3 veh", sep=" "))
       cat("\n")
     }
+
     if(!missing(namerows)) {
       if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
       row.names(df) <- namerows
