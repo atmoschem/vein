@@ -54,6 +54,8 @@ age_hdv <- function (x,
   # check na
   x[is.na(x)] <- 0
 
+  x <- as.numeric(x)
+
   # length k
   if(length(k)  > 1 & length(k) < length(x)){
     stop("length of 'k' must be 1 ore equal to length of 'x'")
