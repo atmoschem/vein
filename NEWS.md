@@ -18,6 +18,7 @@ NEWS
 - update NMHC for BRAZIL. implies that ethanol from exhaust must be estimated separatly
 - Add project brazil_bu_chem_streets
 - Add 2020 EF for cetesb (provisional until new official EF, 09/06/2020)
+- Update import of sf (1.0)
 
 ### vein 0.9.1-0.9.1.2 (Release date: 2021-02-15)
 - Add deterioration factors in ef_cetesb
