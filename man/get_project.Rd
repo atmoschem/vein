@@ -21,6 +21,7 @@ get_project(directory, case = "brasil", url)
   brazil_bu_chem_streets      \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
   sebr_cb05co2      \tab Top-down SP, MG and RJ, CB05+CO2\tab CETESB+tunnel\tab  .rds\cr
   amazon2014      \tab Top-down Amazon, Mozart\tab CETESB+tunnel\tab  csv and.rds\cr
+  curitiba      \tab Bottom-down +GTFS, RADM2\tab CETESB+tunnel\tab  csv and.rds\cr
 }}
 
 \item{url}{String, with the URL to download VEIN project}

@@ -93,7 +93,7 @@ g                 <- eixport::wrf_grid(
          "/wrfinput_d01"))
 # Number of lat points 99
 # Number of lon points 149
-crs               <- 4326
+crs               <- 31983
 osm_name          <- "fclass"          #OSM column for type of road (motorway, trunk...)
 source("scripts/post.R", encoding = "UTF-8")
 
@@ -111,7 +111,7 @@ tit               <- "Emissões veiculares em São Paulo [t/ano]"
 source("scripts/plots.R", encoding = "UTF-8")
 
 # MECH ####
-language          <- "portuguese" # english spanish 
+language          <- "portuguese" # english spanish
 months_subset     <- "08"   #only one month each time
 g                 <- eixport::wrf_grid(paste0(system.file("extdata",
                                                           package = "eixport"),
@@ -131,7 +131,7 @@ source('scripts/mech.R', encoding = 'UTF-8')
 
 
 # WRF CHEM
-language          <- "portuguese" # english spanish 
+language          <- "portuguese" # english spanish
 # hourly distribution for NOx with HDV
 # hourly distribution for other than NOX with PC
 tfs               <- readRDS("config/tfs.rds")
