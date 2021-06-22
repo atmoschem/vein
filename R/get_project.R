@@ -16,6 +16,7 @@
 #'   brazil_bu_chem_streets      \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
 #'   sebr_cb05co2      \tab Top-down SP, MG and RJ, CB05+CO2\tab CETESB+tunnel\tab  .rds\cr
 #'   amazon2014      \tab Top-down Amazon, Mozart\tab CETESB+tunnel\tab  csv and.rds\cr
+#'   curitiba      \tab Bottom-down +GTFS, RADM2\tab CETESB+tunnel\tab  csv and.rds\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
@@ -98,7 +99,29 @@ get_project <- function(directory,
     utils::untar(tarfile = tf, exdir = directory)
     message("Your directory is in ", directory)
 
-  } else if(case %in% c("sebr_cb05co2")){
+  } else if(case %in% c("curitiba")){
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_2018.tar.gz"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  tf)
+    utils::untar(tarfile = tf, exdir = directory)
+    message("Your directory for vehicular emissions is in ", directory)
+
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/gtfs_cur.zip"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  paste0(directory, "/network"))
+
+    message("GTFS Curitba is in  ", paste0(directory, "/network"))
+
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_2018_industrial.tar.gz"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  tf)
+    utils::untar(tarfile = tf, exdir = paste0(directory, "_industry"))
+    message("Your directory for industrial emissions is in ", directory)
+
+    } else if(case %in% c("sebr_cb05co2")){
     dir.create(directory)
     tf <- paste0(tempfile(), ".tar.gz")
 
