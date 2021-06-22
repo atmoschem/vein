@@ -81,6 +81,6 @@ jobs:
           library(vein)
           get_project("teste", "brazil_td_chem")
           setwd("teste")
-          source("main.R")
+          source("main.R", echo = TRUE)
 
         shell: Rscript {0}
