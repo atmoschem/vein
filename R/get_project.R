@@ -110,7 +110,7 @@ get_project <- function(directory,
     URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/gtfs_cur.zip"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
-                         destfile =  paste0(directory, "/network"))
+                         destfile =  paste0(directory, "/network/gtfs_cur.zip"))
 
     message("GTFS Curitba is in  ", paste0(directory, "/network"))
 
