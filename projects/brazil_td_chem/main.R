@@ -85,12 +85,12 @@ source("scripts/ressuspensao.R", encoding = "UTF-8")
 # 4) Post-estimation ####
 language          <- "spanish" # english chinese spanish portuguese
 net               <- readRDS("network/net.rds")
-roads             <- readRDS("network/roads.rds") # I already included OSM
+roads             <- st_transform(readRDS("network/roads.rds"), 31983) # I already included OSM
 months_subset     <- 8           #10:11 for instance
-g                 <- eixport::wrf_grid(
+g                 <- st_transform(eixport::wrf_grid(
   paste0(system.file("extdata",
                      package = "eixport"),
-         "/wrfinput_d01"))
+         "/wrfinput_d01")), 31983)
 # Number of lat points 99
 # Number of lon points 149
 crs               <- 31983
