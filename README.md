@@ -38,18 +38,18 @@
 
 ### What is new?
 
--   *Added OpenMP AGAIN and also, imported dotCall64 to avoid copying*
--   New VEIN project: sebr\_cb05co2 covers SP, MG, RJ with CB05+CO2 for
-    2019 and amazon2014.
--   NH3 in ef\_cetesb
--   updated VOC speciation for Brazil
+-   add CBMZ into chem\_vein
+-   Coming soon: Projects for Latin America, Europe and USA
 
-## New in VEIN?
+### TODO
 
-No worries! Just install
-[R](https://www.google.com/search?q=install+R&oq=install+R&aqs=chrome..69i57j35i39l2j0l3j69i60l2.1308j0j7&sourceid=chrome&ie=UTF-8),
-[Rstudio](https://www.google.com/search?sxsrf=ALeKk00EtkaL-W834eJbAfWxSgAtHlzAuw%3A1600952042358&ei=6pZsX7G5FaS65OUP9NuOqAk&q=install+Rstudio&oq=install+Rstudio&gs_lcp=CgZwc3ktYWIQAzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywE6BAgAEEdQiaIBWJSoAWCPqgFoAHABeAGAAaMCiAGuB5IBBTAuNS4xmAEAoAEBqgEHZ3dzLXdpesgBCMABAQ&sclient=psy-ab&ved=0ahUKEwix1qWO64HsAhUkHbkGHfStA5UQ4dUDCA0&uact=5)
-and then
+-   get\_project with Europe and Chinese EF
+-   Update ef\_ldv\* and ef\_hdv\* to EEA2019
+-   Include speed functions with Fortran
+-   Include CB6
+-   Add EF from HBEFA?
+-   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
+    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
 ### System requirements
 
@@ -65,16 +65,17 @@ VEIN can be installed via CRAN or github
 install.packages("vein")
 ```
 
-gitlab (faster than github)
-
-``` r
-remotes::install_gitlab("ibarraespinosa/vein")
-```
-
 github
 
 ``` r
 remotes::install_github("atmoschem/vein")
+```
+
+and if you want, run the demo
+
+``` r
+library(vein) 
+demo(VEIN)
 ```
 
 ## Approaches
@@ -166,43 +167,17 @@ install.packages(c("ggplot2", "readxl", "eixport"))
 
 [Portuguese](https://www.youtube.com/watch?v=6-07Y0Eimng)
 
+Spanish coming soon!
+
 ### 2. Use inventory (a bit not so easy)
 
-run the demo to see vein in action
+Read the instruction of inventory
 
 ``` r
-library(vein) 
-demo(VEIN)
+?inventory
 ```
 
-## How does it work?
-
-VEIN consist of: "Elaboration of vehicular emissions inventories,
-consisting in four stages:
-
-1.  pre-processing activity data,
-2.  preparing emissions factors,
-3.  estimating the emissions and
-4.  post-processing of emissions in maps and databases."
-
-This implies the use of several functions in a coordinates ans
-structured way, therefore it is added the new function **inventory**
-which creates a structured set of directories and scripts to run VEIN.
-Please, open the file ‘main.R’ and run each line to understand VEIN.
-**Remember, if you have doubts with any function, just type ‘?’ with the
-name of the function. For intance: `?inventory`.**
-
-Using
-[inventory](https://atmoschem.github.io/vein/reference/inventory.html)
-**Inventory will experience some changes, please be patient and check
-<https://github.com/atmoschem/vein/projects/3>** Please, read the
-examples in the documentation of each function and run the demo.
-
-**Brazilian users, just use `get_project` and run a project read**
-
--   <https://ibarraespinosa.github.io/cursovein>
-
-### 1) Examples with traffic data:
+#### 1) Examples with traffic data:
 
 1.  If you know the distribution of the vehicles by age of use , use:
     [my\_age](https://atmoschem.github.io/vein/reference/my_age.html)
@@ -265,7 +240,7 @@ sp::spplot(as(dfspeednet, "Spatial"),
        col.regions = rev(cptcity::cpt()))
 ```
 
-![](https://i.imgur.com/qJUdMea.png) \#\#\# 2) Emission Factors
+![](https://i.imgur.com/qJUdMea.png) \#\#\#\# 2) Emission Factors
 
 -   [ef\_ldv\_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
 -   [ef\_hdv\_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
@@ -284,7 +259,7 @@ plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 
 ![](https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png)
 
-### 3) Estimation of emissions
+#### 3) Estimation of emissions
 
 -   [emis](https://atmoschem.github.io/vein/reference/emis.html)
 
@@ -298,7 +273,7 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
              profile = pc_profile)
 ```
 
-### 4) Post Emissions
+#### 4) Post Emissions
 
 -   [emis\_post](https://atmoschem.github.io/vein/reference/emis_post.html)
 -   When the argument by = “veh” the emissions are aggregated by age and
@@ -337,7 +312,7 @@ plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T))
 
 ![](https://i.imgur.com/Ydsvt8x.png)
 
-### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
+#### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
 
 1.  Create a grid using
     [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html)
@@ -371,7 +346,7 @@ gr <- GriddedEmissionsArray(E_CO_gwrf, rows = 51, cols = 63, times = 1)
 eixport::wrf_put(file = path_to_wrfc, name = "E_CO", POL = gr)
 ```
 
-### Creating a WRFChem Input file using AS4WRF
+#### Creating a WRFChem Input file using AS4WRF
 
 1.  Create a grid using
     [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html)
@@ -419,16 +394,6 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
 -   [Pedro Andrade](https://github.com/pedro-andrade-inpe)
 -   [Edzer Pebesma](https://github.com/edzer)
 -   [Amanda Rehbein](https://github.com/salvatirehbein)
-
-## TODO
-
--   get\_project with Europe and Chinese EF
--   Update ef\_ldv\* and ef\_hdv\* to EEA2019
--   Include speed functions with Fortran
--   Include CB6
--   Add EF from HBEFA?
--   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
-    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
 ## Communications, doubts etc
 
