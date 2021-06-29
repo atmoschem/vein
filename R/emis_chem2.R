@@ -5,7 +5,7 @@
 #'
 #' @param df data.frame with emissions including columns "id" and "pol".
 #' @param mech Character, "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11",
-#' "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
+#' "S11D","S16C","S18B","RADM2", "RACM2","MOZT1", "CBMZ"
 #' @param nx Character, colnames for emissions data, for instance "V1", "V2"...
 #' @param na.rm Logical, to remove lines with NA from group
 #' @return data.frame with lumped groups by chemical mechanism.
@@ -27,30 +27,15 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
   if(missing(nx)) stop("Add colnames of emissions data")
   data.table::setDT(chem)
   pol <- mol<- NULL
-  if(mech == "CB05") {
+  if(mech %in% c("CB05", "CB4", "CBMZ")) {
     cheml <- suppressWarnings(
       data.table::melt(
         data = chem[pol %in% unique(df[["pol"]])],
         id.vars = c("ID", "pol", "Mwt"),
-        measure.vars = grep(pattern = "CB05",
+        measure.vars = grep(pattern = mech,
                             x = names(chem),
                             value = TRUE),
         variable.name = "CB05",
-        value.name = "mol",
-        na.rm = TRUE,
-        verbose = FALSE
-      ))
-    cheml <- cheml[mol > 0]
-
-  } else if(mech == "CB4"){
-    cheml <- suppressWarnings(
-      data.table::melt(
-        data = chem[pol %in% unique(df[["pol"]])],
-        id.vars = c("ID", "pol", "Mwt"),
-        measure.vars = grep(pattern = "CB4",
-                            x = names(chem),
-                            value = TRUE),
-        variable.name = "CB4",
         value.name = "mol",
         na.rm = TRUE,
         verbose = FALSE

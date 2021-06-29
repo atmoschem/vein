@@ -8,6 +8,9 @@ NEWS
 - Update ef_ldv* and ef_hdv* to EEA2019
 - Reduce size of sysdata
 
+### vein 0.9.3 (Release date: 2021-06-28)
+- add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015
+
 ### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
 - Change numeric_dc to vector_dv to avoid copying (dotCall64)
