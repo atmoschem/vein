@@ -50,7 +50,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3</span>
       </span>
     </div>
 
@@ -125,16 +125,23 @@
 <h3 class="hasAnchor">
 <a href="#what-is-new" class="anchor"></a>What is new?</h3>
 <ul>
-<li><em>Added OpenMP AGAIN and also, imported dotCall64 to avoid copying</em></li>
-<li>New VEIN project: sebr_cb05co2 covers SP, MG, RJ with CB05+CO2 for 2019 and amazon2014.</li>
-<li>NH3 in ef_cetesb</li>
-<li>updated VOC speciation for Brazil</li>
+<li>add CBMZ into chem_vein</li>
+<li>Coming soon: Projects for Latin America, Europe and USA</li>
 </ul>
 </div>
-<div id="new-in-vein" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-in-vein" class="anchor"></a>New in VEIN?</h2>
-<p>No worries! Just install <a href="https://www.google.com/search?q=install+R&amp;oq=install+R&amp;aqs=chrome..69i57j35i39l2j0l3j69i60l2.1308j0j7&amp;sourceid=chrome&amp;ie=UTF-8">R</a>, <a href="https://www.google.com/search?sxsrf=ALeKk00EtkaL-W834eJbAfWxSgAtHlzAuw%3A1600952042358&amp;ei=6pZsX7G5FaS65OUP9NuOqAk&amp;q=install+Rstudio&amp;oq=install+Rstudio&amp;gs_lcp=CgZwc3ktYWIQAzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywE6BAgAEEdQiaIBWJSoAWCPqgFoAHABeAGAAaMCiAGuB5IBBTAuNS4xmAEAoAEBqgEHZ3dzLXdpesgBCMABAQ&amp;sclient=psy-ab&amp;ved=0ahUKEwix1qWO64HsAhUkHbkGHfStA5UQ4dUDCA0&amp;uact=5">Rstudio</a> and then</p>
+<div id="todo" class="section level3">
+<h3 class="hasAnchor">
+<a href="#todo" class="anchor"></a>TODO</h3>
+<ul>
+<li>get_project with Europe and Chinese EF</li>
+<li>Update ef_ldv* and ef_hdv* to EEA2019</li>
+<li>Include speed functions with Fortran</li>
+<li>Include CB6</li>
+<li>Add EF from HBEFA?</li>
+<li>See issues <a href="https://github.com/atmoschem/vein/issues">GitHub</a> and <a href="https://gitlab.com/ibarraespinosa/vein/-/issues">GitLab</a>
+</li>
+</ul>
+</div>
 <div id="system-requirements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#system-requirements" class="anchor"></a>System requirements</h3>
@@ -146,13 +153,13 @@
 <p>VEIN can be installed via CRAN or github</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"vein"</span><span class="op">)</span></code></pre></div>
-<p>gitlab (faster than github)</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_gitlab.html">install_gitlab</a></span><span class="op">(</span><span class="st">"ibarraespinosa/vein"</span><span class="op">)</span></code></pre></div>
 <p>github</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"atmoschem/vein"</span><span class="op">)</span></code></pre></div>
-</div>
+<p>and if you want, run the demo</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein">vein</a></span><span class="op">)</span> 
+<span class="fu"><a href="https://rdrr.io/r/utils/demo.html">demo</a></span><span class="op">(</span><span class="va">VEIN</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="approaches" class="section level2">
 <h2 class="hasAnchor">
@@ -221,34 +228,16 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p><a href="https://www.youtube.com/watch?v=6-07Y0Eimng">Portuguese</a></p>
+<p>Spanish coming soon!</p>
 <div id="2-use-inventory-a-bit-not-so-easy" class="section level3">
 <h3 class="hasAnchor">
 <a href="#2-use-inventory-a-bit-not-so-easy" class="anchor"></a>2. Use inventory (a bit not so easy)</h3>
-<p>run the demo to see vein in action</p>
+<p>Read the instruction of inventory</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein">vein</a></span><span class="op">)</span> 
-<span class="fu"><a href="https://rdrr.io/r/utils/demo.html">demo</a></span><span class="op">(</span><span class="va">VEIN</span><span class="op">)</span></code></pre></div>
-</div>
-</div>
-<div id="how-does-it-work" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-does-it-work" class="anchor"></a>How does it work?</h2>
-<p>VEIN consist of: "Elaboration of vehicular emissions inventories, consisting in four stages:</p>
-<ol>
-<li>pre-processing activity data,</li>
-<li>preparing emissions factors,</li>
-<li>estimating the emissions and</li>
-<li>post-processing of emissions in maps and databases."</li>
-</ol>
-<p>This implies the use of several functions in a coordinates ans structured way, therefore it is added the new function <strong>inventory</strong> which creates a structured set of directories and scripts to run VEIN. Please, open the file ‘main.R’ and run each line to understand VEIN. <strong>Remember, if you have doubts with any function, just type ‘?’ with the name of the function. For intance: <code><a href="reference/inventory.html">?inventory</a></code>.</strong></p>
-<p>Using <a href="https://atmoschem.github.io/vein/reference/inventory.html">inventory</a> <strong>Inventory will experience some changes, please be patient and check <a href="https://github.com/atmoschem/vein/projects/3" class="uri">https://github.com/atmoschem/vein/projects/3</a></strong> Please, read the examples in the documentation of each function and run the demo.</p>
-<p><strong>Brazilian users, just use <code>get_project</code> and run a project read</strong></p>
-<ul>
-<li><a href="https://ibarraespinosa.github.io/cursovein" class="uri">https://ibarraespinosa.github.io/cursovein</a></li>
-</ul>
-<div id="1-examples-with-traffic-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#1-examples-with-traffic-data" class="anchor"></a>1) Examples with traffic data:</h3>
+<code class="sourceCode R"><span class="op">?</span><span class="va">inventory</span></code></pre></div>
+<div id="1-examples-with-traffic-data" class="section level4">
+<h4 class="hasAnchor">
+<a href="#1-examples-with-traffic-data" class="anchor"></a>1) Examples with traffic data:</h4>
 <ol>
 <li>If you know the distribution of the vehicles by age of use , use: <a href="https://atmoschem.github.io/vein/reference/my_age.html">my_age</a>
 </li>
@@ -285,7 +274,7 @@
 <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/spplot.html">spplot</a></span><span class="op">(</span><span class="fu">as</span><span class="op">(</span><span class="va">dfspeednet</span>, <span class="st">"Spatial"</span><span class="op">)</span>,
        <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"S1"</span>, <span class="st">"S9"</span><span class="op">)</span>, scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>Draw <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,
        col.regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="https://i.imgur.com/qJUdMea.png"> ### 2) Emission Factors</p>
+<p><img src="https://i.imgur.com/qJUdMea.png"> #### 2) Emission Factors</p>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/ef_ldv_speed.html">ef_ldv_speed</a></li>
 <li><a href="https://atmoschem.github.io/vein/reference/ef_hdv_speed.html">ef_hdv_speed</a></li>
@@ -302,9 +291,9 @@ p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, <span class="va">efs</span>, xlab <span class="op">=</span> <span class="st">"speed[km/h]"</span>, type <span class="op">=</span> <span class="st">"b"</span>, pch <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></code></pre></div>
 <p><img src="https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png"></p>
 </div>
-<div id="3-estimation-of-emissions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#3-estimation-of-emissions" class="anchor"></a>3) Estimation of emissions</h3>
+<div id="3-estimation-of-emissions" class="section level4">
+<h4 class="hasAnchor">
+<a href="#3-estimation-of-emissions" class="anchor"></a>3) Estimation of emissions</h4>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/emis.html">emis</a></li>
 </ul>
@@ -317,9 +306,9 @@ p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span
 <span class="va">E_CO</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis.html">emis</a></span><span class="op">(</span>veh <span class="op">=</span> <span class="va">PC_E25_1400</span>, lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, ef <span class="op">=</span> <span class="va">lef</span>, speed <span class="op">=</span> <span class="va">dfspeed</span>,
              profile <span class="op">=</span> <span class="va">pc_profile</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="4-post-emissions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#4-post-emissions" class="anchor"></a>4) Post Emissions</h3>
+<div id="4-post-emissions" class="section level4">
+<h4 class="hasAnchor">
+<a href="#4-post-emissions" class="anchor"></a>4) Post Emissions</h4>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/emis_post.html">emis_post</a></li>
 <li>When the argument by = “veh” the emissions are aggregated by age and hour.</li>
@@ -329,6 +318,7 @@ p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span
 <code class="sourceCode R"><span class="va">E_CO_DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>,  veh <span class="op">=</span> <span class="st">"PC"</span>, size <span class="op">=</span> <span class="st">"&lt;1400"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>,
 pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"veh"</span><span class="op">)</span>
 <span class="va">E_CO_STREETS</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>arra <span class="op">=</span> <span class="va">E_CO</span>, pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class="op">=</span> <span class="st">"streets"</span><span class="op">)</span></code></pre></div>
+</div>
 <div id="grids" class="section level4">
 <h4 class="hasAnchor">
 <a href="#grids" class="anchor"></a>Grids</h4>
@@ -351,10 +341,9 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">E_CO_g</span><span class="op">[</span><span class="st">"V9"</span><span class="op">]</span>, axes <span class="op">=</span> <span class="cn">T</span>, pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="https://i.imgur.com/Ydsvt8x.png"></p>
 </div>
-</div>
-<div id="creating-a-wrfchem-input-file-using-eixport" class="section level3">
-<h3 class="hasAnchor">
-<a href="#creating-a-wrfchem-input-file-using-eixport" class="anchor"></a>Creating a WRFChem Input file using <a href="https://atmoschem.github.io/eixport/">eixport</a>:</h3>
+<div id="creating-a-wrfchem-input-file-using-eixport" class="section level4">
+<h4 class="hasAnchor">
+<a href="#creating-a-wrfchem-input-file-using-eixport" class="anchor"></a>Creating a WRFChem Input file using <a href="https://atmoschem.github.io/eixport/">eixport</a>:</h4>
 <ol>
 <li>Create a grid using <a href="https://atmoschem.github.io/vein/reference/make_grid.html">make_grid</a> and a wrfinput file</li>
 <li>Run <a href="https://atmoschem.github.io/vein/reference/emis_grid.html">emis_grid</a> to grid your emissions.</li>
@@ -378,9 +367,9 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span><span class="op">(</span><span class="va">E_CO_gwrf</span>, rows <span class="op">=</span> <span class="fl">51</span>, cols <span class="op">=</span> <span class="fl">63</span>, times <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_put.html">wrf_put</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">path_to_wrfc</span>, name <span class="op">=</span> <span class="st">"E_CO"</span>, POL <span class="op">=</span> <span class="va">gr</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="creating-a-wrfchem-input-file-using-as4wrf" class="section level3">
-<h3 class="hasAnchor">
-<a href="#creating-a-wrfchem-input-file-using-as4wrf" class="anchor"></a>Creating a WRFChem Input file using AS4WRF</h3>
+<div id="creating-a-wrfchem-input-file-using-as4wrf" class="section level4">
+<h4 class="hasAnchor">
+<a href="#creating-a-wrfchem-input-file-using-as4wrf" class="anchor"></a>Creating a WRFChem Input file using AS4WRF</h4>
 <ol>
 <li>Create a grid using <a href="https://atmoschem.github.io/vein/reference/make_grid.html">make_grid</a> and your net.</li>
 <li>Run <a href="https://atmoschem.github.io/vein/reference/emis_grid.html">emis_grid</a> to grid your emissions.</li>
@@ -389,6 +378,7 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <li>Contact the developer of AS4WRF Angel Vara <a href="mailto:alvv1986@gmail.com" class="email">alvv1986@gmail.com</a> to get a copy and run AS4WRF.ncl.</li>
 </ol>
 <p>Thanks and enjoy VEIN!</p>
+</div>
 </div>
 </div>
 <div id="citation" class="section level2">
@@ -417,19 +407,6 @@ pollutant <span class="op">=</span> <span class="st">"CO"</span>, by <span class
 <li><a href="https://github.com/pedro-andrade-inpe">Pedro Andrade</a></li>
 <li><a href="https://github.com/edzer">Edzer Pebesma</a></li>
 <li><a href="https://github.com/salvatirehbein">Amanda Rehbein</a></li>
-</ul>
-</div>
-<div id="todo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#todo" class="anchor"></a>TODO</h2>
-<ul>
-<li>get_project with Europe and Chinese EF</li>
-<li>Update ef_ldv* and ef_hdv* to EEA2019</li>
-<li>Include speed functions with Fortran</li>
-<li>Include CB6</li>
-<li>Add EF from HBEFA?</li>
-<li>See issues <a href="https://github.com/atmoschem/vein/issues">GitHub</a> and <a href="https://gitlab.com/ibarraespinosa/vein/-/issues">GitLab</a>
-</li>
 </ul>
 </div>
 <div id="communications-doubts-etc" class="section level2">
