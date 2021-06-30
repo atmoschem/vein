@@ -6,7 +6,7 @@ x <- split_emis(netsf, g)
 dim(x)
 
 test_that("split_emis works", {
-  expect_equal(round(as.numeric(sum(x$ldv))), 5638228)
+  expect_equal(round(as.numeric(sum(x$ldv))), 1946955)
 })
 
 g$A <- rep(letters, length = 20)[1:nrow(g)]
@@ -17,7 +17,7 @@ test_that("split_emis works", {
   expect_equal(round(as.numeric(sum(split_emis(netsf,
                                          g,
                                          add_column = c("A", "B"))$ldv
-                              ))), 5638228)
+                              ))), 1946955)
 })
 
 
