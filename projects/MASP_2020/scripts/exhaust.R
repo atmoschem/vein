@@ -101,7 +101,7 @@ for (i in seq_along(metadata$vehicles)) {
                         ef = ef,
                         profile = tfs[[metadata$vehicles[i]]],
                         fortran = TRUE,
-                        nt = round(check_nt() *0.8),
+                        nt = check_nt() / 2,
                         simplify = TRUE,
                         verbose = verbose
                 )
