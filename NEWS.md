@@ -10,6 +10,7 @@ NEWS
 
 ### vein 0.9.3 (Release date: 2021-06-28)
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015
+- add projects `curitiba` and `masp2020`
 
 ### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
