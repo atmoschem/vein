@@ -105,8 +105,6 @@ and read the documentation.
     status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
     status](https://github.com/atmoschem/vein/workflows/amazon2014/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/curitiba/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 ``` r
 library(vein)
