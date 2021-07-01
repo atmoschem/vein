@@ -81,7 +81,7 @@ jobs:
           library(vein)
           get_project("teste", "curitiba")
           setwd("teste")
-          Rscript network/pre_net_no_buffer.R
+          source("network/pre_net_no_buffer.R")
           source("main.R")
           setwd("../teste_industry")
           source("main_industry.R")
