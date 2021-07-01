@@ -100,7 +100,7 @@ get_project <- function(directory,
     message("Your directory is in ", directory)
 
   } else if(case %in% c("curitiba")){
-    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_2018.tar.gz"
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
@@ -114,7 +114,7 @@ get_project <- function(directory,
 
     message("GTFS Curitba is in  ", paste0(directory, "/network"))
 
-    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_2018_industrial.tar.gz"
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_industrial.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
