@@ -79,7 +79,7 @@ jobs:
           install.packages("eixport")
           remotes::install_github("atmoschem/vein")
           library(vein)
-          get_project("teste", "curitiba   ")
+          get_project("teste", "curitiba")
           setwd("teste")
           Rscript network/pre_net_no_buffer.R
           source("main.R")
