@@ -8,9 +8,10 @@ NEWS
 - Update ef_ldv* and ef_hdv* to EEA2019
 - Reduce size of sysdata
 
-### vein 0.9.3 (Release date: 2021-06-28)
-- add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015
-- add projects `curitiba` and `masp2020`
+### vein 0.9.3
+- add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)
+- add projects `curitiba` and `masp2020`  (Release date: 2021-06-28)
+- fix chem_vein2 for CB4 and CBMZ  (Release date: 2021-07-08)
 
 ### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
