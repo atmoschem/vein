@@ -66,21 +66,35 @@ mentioned [here](https://www.github.com/r-spatial/sf).
 
 ### Installation
 
+#### CRAN
+
 VEIN can be installed via CRAN or github
 ```r
 install.packages("vein")
 ```
 
-github
+#### GitHub
+
 ```r
 remotes::install_github("atmoschem/vein")
 ```
 
-and if you want, run the demo
+or if you have a **32 bits** machine
+
+```r
+install_github("atmoschem/vein",
+               INSTALL_opts = "--no-multiarch")
+```
+---
+
+#### demo
+
+Then, if you want, run the demo
 ```r
 library(vein) 
 demo(VEIN)
 ```
+###
 
 ## Approaches
 
