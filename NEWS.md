@@ -7,6 +7,7 @@ NEWS
 - Add EF from HBEFA
 - Update ef_ldv* and ef_hdv* to EEA2019
 - Reduce size of sysdata
+# add CB05opt2 into emis_chem2
 
 ### vein 0.9.3
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)
