@@ -45,6 +45,9 @@ It is
 
 \strong{3) In order to check the sum of the emissions, you must calculate the grid-area}
 \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
+
+
+\strong{4) If FN = "sum", is mass conservative!. }
 }
 \examples{
 \dontrun{
