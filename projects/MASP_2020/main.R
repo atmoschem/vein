@@ -158,7 +158,7 @@ for (z in seq_along(mechs)) {
     net <- readRDS("network/net.rds")
     cols <- 48
     rows <- 60
-    dir_wrfinput <- "../wrfinputs/"
+    dir_wrfinput <- "wrf"
     dir_wrfchemi <- "wrf"
     domain <- 2
     hours <- 0
