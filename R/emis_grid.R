@@ -56,7 +56,7 @@ emis_grid <- function (spobj = net,
                        k = 1){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
-  # add as.data.frame qhen net comes from data.table
+  # add as.data.frame when net comes from data.table
   netdata <- as.data.frame(sf::st_set_geometry(net, NULL))
 
   if(is.null(attributes(netdata[[1]])) ) {
@@ -110,25 +110,29 @@ emis_grid <- function (spobj = net,
                by = "id",
                .SDcols = namesnet]
 
-    id <- dfm$id
+    if(FN == "sum") {
+      
+       id <- dfm$id
 
-    dfm$id <- NULL
+       dfm$id <- NULL
+      
+       area <- sf::st_area(g)
 
-    area <- sf::st_area(g)
+       area <- units::set_units(area, "km^2")
 
-    area <- units::set_units(area, "km^2")
+       for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
 
-    for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
-
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
-
-    dfm$id <- id
-
+       dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+      
+       dfm$id <- id
+    }
+   
     gx <- data.frame(id = g$id)
 
     gx <- merge(gx, dfm, by = "id", all = TRUE)
 
     gx[is.na(gx)] <- 0
+    
 
     if(flux) {
       for(i in seq_along(namesnet)) {
