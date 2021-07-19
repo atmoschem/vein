@@ -32,6 +32,9 @@
 #'
 #' \strong{3) In order to check the sum of the emissions, you must calculate the grid-area}
 #' \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
+#'
+#'
+#' \strong{4) If FN = "sum", is mass conservative!. }
 #' @examples \dontrun{
 #' data(net)
 #' g <- make_grid(net, 1/102.47/2) #500m in degrees
@@ -83,6 +86,7 @@ emis_grid <- function (spobj = net,
     net <- sf::st_transform(net, sr)
     g <- sf::st_transform(g, sr)
   }
+  #lines ####
   if (type %in% c("lines", "line")) {
     net <- net[, grep(pattern = TRUE, x = sapply(net, is.numeric))]
 
@@ -110,29 +114,27 @@ emis_grid <- function (spobj = net,
                by = "id",
                .SDcols = namesnet]
 
-    if(FN == "sum") {
-      
+
        id <- dfm$id
 
        dfm$id <- NULL
-      
+
        area <- sf::st_area(g)
 
        area <- units::set_units(area, "km^2")
 
        for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
 
-       dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
-      
+       if(FN == "sum") dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+
        dfm$id <- id
-    }
-   
+
     gx <- data.frame(id = g$id)
 
     gx <- merge(gx, dfm, by = "id", all = TRUE)
 
     gx[is.na(gx)] <- 0
-    
+
 
     if(flux) {
       for(i in seq_along(namesnet)) {
@@ -153,6 +155,7 @@ emis_grid <- function (spobj = net,
       gx <- suppressMessages(suppressWarnings(sf::st_centroid(gx)))
       return(gx)
     }
+    #points####
   } else if (type %in% c("points", "point")) {
 
     netdf <- sf::st_set_geometry(net, NULL)
@@ -180,7 +183,7 @@ emis_grid <- function (spobj = net,
 
     for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
 
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+    if(FN == "sum") dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
 
     dfm$id <- id
 
@@ -210,6 +213,7 @@ emis_grid <- function (spobj = net,
       gx <- suppressMessages(suppressWarnings(sf::st_centroid(gx)))
       return(gx)
     }
+    #polygons ####
   } else if(type %in% c("polygons", "polygon", "area")){
     netdf <- sf::st_set_geometry(net, NULL)
     snetdf <- sum(netdf, na.rm = TRUE)
@@ -232,7 +236,7 @@ emis_grid <- function (spobj = net,
 
     for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
 
-    dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
+    if(FN == "sum") dfm <- dfm * snetdf/sum(dfm, na.rm = TRUE)
 
     cat(paste0("Sum of gridded emissions ", round(sum(dfm,
                                                       na.rm = T), 2), "\n"))

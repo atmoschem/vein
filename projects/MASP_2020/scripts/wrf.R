@@ -1,5 +1,4 @@
 
-wrf_times <- nrow(tfs)
 
 # OS
 sep <- ifelse(Sys.info()[["sysname"]] == "Windows", "00%3A", ":")
@@ -27,8 +26,7 @@ df_time$wday <- strftime(df_time$times, "%u")
 df_time$hour <- hour(df_time$times)
 lt_emissions <- df_time[df_time$wday == 1 & df_time$hour == 0, ]$times[1]
 
-switch(
-  language,
+switch(language,
   "portuguese" = cat(
     "Segunda-feira 00:00 anterior do primeiro tempo WRF:",
     as.character(lt_emissions), "\n"
@@ -46,15 +44,26 @@ switch(
 
 ti <- as.POSIXct(ti)
 
-# emis_opt from spec_grid
+dir_mech <- paste0("post/", mech)
+
+# creating directory wrf/mech
+dir_wrfchemi <- paste0(dir_wrfchemi, "/", mech)
+dir.create(path = dir_wrfchemi)
+
 # Grades
-lf <- list.files(path = "post/spec_grid", pattern = ".rds", full.names = TRUE)
-na <- list.files(path = "post/spec_grid", pattern = ".rds", full.names = F)
+lf <- list.files(path = dir_mech, pattern = ".rds", full.names = TRUE)
+na <- list.files(path = dir_mech, pattern = ".rds", full.names = F)
 emis_option <- na <- gsub(".rds", "", na)
 
-if(io_style_emissions == 1) {
+
+if (mech %in% c("MOZT1", "CBMZ", )) {
+  emis_option <- ifelse(emis_option == "E_ETOH", "E_C2H5OH", emis_option)
+  na <- ifelse(na == "E_ETOH", "E_C2H5OH", na)
+}
+
+if (io_style_emissions == 1) {
   # emissions on 00z / 12z style, create the 12z ####
-wrfc <- eixport::wrf_create(
+  wrfc <- eixport::wrf_create(
     wrfinput_dir = dir_wrfinput,
     wrfchemi_dir = dir_wrfchemi,
     domains = domain,
@@ -65,8 +74,8 @@ wrfc <- eixport::wrf_create(
     n_aero = n_aero,
     return_fn = TRUE
   )
-  
-wrfc <-   eixport::wrf_create(
+
+  wrfc <- eixport::wrf_create(
     wrfinput_dir = dir_wrfinput,
     wrfchemi_dir = dir_wrfchemi,
     domains = domain,
@@ -77,11 +86,11 @@ wrfc <-   eixport::wrf_create(
     n_aero = n_aero,
     return_fn = TRUE
   )
-  
+
   for (i in 1:length(na)) {
     print(na[i])
     x <- readRDS(lf[i])
-    
+
     xx <- emis_order(
       x = x,
       lt_emissions = lt_emissions,
@@ -91,7 +100,7 @@ wrfc <-   eixport::wrf_create(
       seconds = hours * 3600,
       verbose = TRUE
     )
-    
+
     # 0-12
     gx <- GriddedEmissionsArray(
       x = xx[, 1:12],
@@ -105,7 +114,7 @@ wrfc <-   eixport::wrf_create(
       name = na[i],
       POL = gx
     )
-    
+
     # 12-0
     gx <- GriddedEmissionsArray(
       x = xx[, 13:24],
@@ -120,13 +129,12 @@ wrfc <-   eixport::wrf_create(
       POL = gx
     )
   }
-  
-} else if(io_style_emissions == 2) {
+} else if (io_style_emissions == 2) {
   # emissions for all hours ####
-  
+
   wrfc <- wrf_create(
     wrfinput_dir = dir_wrfinput,
-    wrfchemi_dir = dir_wrfchemi,
+    wrfchemi_dir = paste0("wrf/", mech),
     io_style_emissions = io_style_emissions,
     domains = domain,
     frames_per_auxinput5 = wrf_times,
@@ -136,12 +144,12 @@ wrfc <-   eixport::wrf_create(
     verbose = TRUE,
     return_fn = TRUE
   )
-  
-  
+
+
   for (i in 1:length(na)) {
     print(na[i])
     x <- readRDS(lf[i])
-    
+
     xx <- emis_order(
       x = x,
       lt_emissions = lt_emissions,
@@ -159,14 +167,11 @@ wrfc <-   eixport::wrf_create(
       rotate = rotate,
     )
     wrf_put(
-      file =  wrfc,
+      file = wrfc,
       name = na[i],
       POL = gx
-    ) 
-  
+    )
   }
-  
-  
 } else {
   stop("io_style_emissions can have values 1 (0-12z files) or 2 (all hours file)")
 }
