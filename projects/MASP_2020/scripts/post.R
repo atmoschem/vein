@@ -3,20 +3,20 @@ names(met)
 year
 year <- met$Year
 month <- met$Month
-date <- as.Date(ISOdate(year, month, 1,0,0))
+date <- as.Date(ISOdate(year, month, 1, 0, 0))
 
 numberOfDays <- function(date) {
-        m <- format(date, format="%m")
-        
-        while (format(date, format="%m") == m) {
+        m <- format(date, format = "%m")
+
+        while (format(date, format = "%m") == m) {
                 date <- date + 1
         }
-        return(as.integer(format(date - 1, format="%d")))
+        return(as.integer(format(date - 1, format = "%d")))
 }
 
 factor_emi <- numberOfDays(date = date) # daily to month
 
-# 
+#
 # factor_emi <- 365 / (nrow(tfs) / 24) # daily to annual
 
 
@@ -29,10 +29,12 @@ switch(language,
 
 for (i in seq_along(pol)) {
         pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-        x <- emis_merge(pol = pols, 
-                        path = "emi", 
-                        net = net, 
-                        k = units::set_units(1, "1/h"))
+        x <- emis_merge(
+                pol = pols,
+                path = "emi",
+                net = net,
+                k = units::set_units(1, "1/h")
+        )
         saveRDS(x, paste0(
                 "post/streets/",
                 ifelse(pols == "_HC", "HC", pols), ".rds"
@@ -44,9 +46,9 @@ g <- st_transform(g, crs)
 
 # grids ####
 switch(language,
-       "portuguese" = message("\nAgregando emissões por grade\n"),
-       "english" = message("\nAgregating emissions by grid...\n"),
-       "spanish" = message("\nAgregando emisiones por grilla...\n")
+        "portuguese" = message("\nAgregando emissões por grade\n"),
+        "english" = message("\nAgregating emissions by grid...\n"),
+        "spanish" = message("\nAgregando emisiones por grilla...\n")
 )
 
 lf <- list.files(path = "post/streets", pattern = ".rds", full.names = TRUE)
@@ -61,13 +63,15 @@ for (i in seq_along(lf)) {
 
 # datatable ####
 switch(language,
-       "portuguese" = message("\nAgregando emissões em data.table\n"),
-       "english" = message("\nAgregating emissions in data.table...\n"),
-       "spanish" = message("\nAgregando emisiones en data.table...\n")
+        "portuguese" = message("\nAgregando emissões em data.table\n"),
+        "english" = message("\nAgregating emissions in data.table...\n"),
+        "spanish" = message("\nAgregando emisiones en data.table...\n")
 )
-dt <- rbind(fread("emi/table_exhaust.csv"),
-            fread("emi/table_evaporatives.csv"),
-            fread("emi/table_ressuspension.csv"))
+dt <- rbind(
+        fread("emi/table_exhaust.csv"),
+        fread("emi/table_evaporatives.csv"),
+        fread("emi/table_ressuspension.csv")
+)
 dt$pollutant <- as.character(dt$pollutant)
 dt$g <- units::set_units(dt$g, g)
 dt$t <- units::set_units(dt$g, t)
@@ -97,16 +101,16 @@ saveRDS(df3, "post/datatable/emissions_by_age.rds")
 data.table::fwrite(df3, "csv/emissions_by_age.csv", row.names = FALSE)
 
 switch(language,
-       "portuguese" = message("\n\nArquivos em: /post/*:"),
-       "english" = message("\nFiles in: /post/*"),
-       "spanish" = message("\nArchivos en: /post/*")
+        "portuguese" = message("\n\nArquivos em: /post/*:"),
+        "english" = message("\nFiles in: /post/*"),
+        "spanish" = message("\nArchivos en: /post/*")
 )
 
 
 switch(language,
-       "portuguese" = message("Limpando..."),
-       "english" = message("Cleaning..."),
-       "spanish" = message("Limpiando...")
+        "portuguese" = message("Limpando..."),
+        "english" = message("Cleaning..."),
+        "spanish" = message("Limpiando...")
 )
 
 suppressWarnings(
@@ -115,4 +119,3 @@ suppressWarnings(
                 "g", "gx", "i", "lf", "na", "net", "pol", "pols", "x", "crs"
         )
 )
-

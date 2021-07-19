@@ -156,6 +156,8 @@ head(base)
 # generate CO.bin and other
 # in development
 
+# It needs the initial and ending time for the simulation
+
 ls()
 suppressWarnings(
   rm(
