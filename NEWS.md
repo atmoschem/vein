@@ -3,16 +3,17 @@ NEWS
 
 ## TODO
 
-- get_project with Europe, Chinese and MOVES EF
+- get_project with *Europe*, Chinese and MOVES EF
 - Add EF from HBEFA
 - Update ef_ldv* and ef_hdv* to EEA2019
 - Reduce size of sysdata
-# add CB05opt2 into emis_chem2
 
 ### vein 0.9.3
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)
 - add projects `curitiba` and `masp2020`  (Release date: 2021-06-28)
 - fix chem_vein2 for CB4 and CBMZ  (Release date: 2021-07-08)
+- add CB05opt2 into emis_chem2
+- fix fe ETOH on cetesb
 
 ### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
