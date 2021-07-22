@@ -56,7 +56,7 @@ na <- list.files(path = dir_mech, pattern = ".rds", full.names = F)
 emis_option <- na <- gsub(".rds", "", na)
 
 
-if (mech %in% c("MOZT1", "CBMZ", )) {
+if (mech %in% c("MOZT1", "CBMZ")) {
   emis_option <- ifelse(emis_option == "E_ETOH", "E_C2H5OH", emis_option)
   na <- ifelse(na == "E_ETOH", "E_C2H5OH", na)
 }
