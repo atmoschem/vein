@@ -139,7 +139,6 @@ for (z in seq_along(mechs)) {
     # Number of lon points 60
     pol <- c("CO", "NO", "NO2", "SO2", "CO2", "NH3", "CH4", "N2O")
     mol <- c(12, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 12 + 16 * 2, 14 + 3, 14 * 2 + 16, 12 + 4)
-    1
     aer <- "pmneu2" # pmiag, pmneu
     # mech <- "iag" # iag_cb05v2, neu_cb05, iag_racm
     # source("scripts/mech.R", encoding = "UTF-8")
