@@ -109,25 +109,25 @@ get_project <- function(directory,
     message("Your directory is in ", directory)
 
   } else if(case %in% c("curitiba")){
-    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba.tar.gz"
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/curitiba.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
     utils::untar(tarfile = tf, exdir = directory)
     message("Your directory for vehicular emissions is in ", directory)
 
-    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/gtfs_cur.zip"
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/gtfs_cur.zip"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  paste0(directory, "/network/gtfs_cur.zip"))
 
     message("GTFS Curitba is in  ", paste0(directory, "/network"))
 
-    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_industrial.tar.gz"
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/curitiba_industrial.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
-    utils::untar(tarfile = tf, exdir = paste0(directory, "_industry"))
+    utils::untar(tarfile = tf, exdir = paste0(directory, "/industry"))
     message("Your directory for industrial emissions is in ", directory)
 
     } else if(case %in% c("sebr_cb05co2")){
