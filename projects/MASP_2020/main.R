@@ -127,7 +127,8 @@ source("scripts/plots.R")
 
 # MECH ####
 # Needs post/grids/ETOH.rds
-mechs <- c("CBMZ", "CB05", "S99", "RADM2")
+# mechs <- c("CBMZ", "CB05", "S99", "RADM2")
+mechs <- c("CBMZ")
 for (z in seq_along(mechs)) {
     print(mechs[z])
     language <- "english" # english spanish
@@ -147,7 +148,8 @@ for (z in seq_along(mechs)) {
 }
 
 # WRF CHEM ####
-mechs <- c("CBMZ", "S99", "RADM2", "CB05")
+# mechs <- c("CBMZ", "S99", "RADM2", "CB05")
+mechs <- c("CBMZ")
 
 for (z in seq_along(mechs)) {
     print(mechs[z])
@@ -174,6 +176,7 @@ for (z in seq_along(mechs)) {
 
 # if domain 1 is available
 # mechs <- c("CBMZ", "S99", "RADM2", "CB05")
+# mechs <- c("CBMZ")
 # for (z in seq_along(mechs)) {
 #     print(mechs[z])
 #     mech <- mechs[z]
@@ -187,13 +190,13 @@ for (z in seq_along(mechs)) {
 #     lf <- list.files(path = dir_mech, pattern = ".rds", full.names = TRUE)
 #     na <- list.files(path = dir_mech, pattern = ".rds", full.names = F)
 #     emis_option <- na <- gsub(".rds", "", na)
-# 
-# 
+#
+#
 #     if (mech %in% c("MOZT1", "CBMZ")) {
 #         emis_option <- ifelse(emis_option == "E_ETOH", "E_C2H5OH", emis_option)
 #         na <- ifelse(na == "E_ETOH", "E_C2H5OH", na)
 #     }
-# 
+#
 #     wrfc <- wrf_create(
 #         wrfinput_dir = dir_wrfinput,
 #         wrfchemi_dir = paste0("wrf/", mechs[z]),
