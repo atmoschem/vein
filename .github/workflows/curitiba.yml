@@ -26,8 +26,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-#          - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          #          - {os: windows-latest, r: 'release'}
+          - {
+              os: ubuntu-20.04,
+              r: "devel",
+              rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest",
+            }
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -76,7 +80,7 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           install.packages(c("ggplot2", "readxl", "remotes"))
-          install.packages("eixport")
+          remotes::install_github("atmoschem/eixport")
           remotes::install_github("atmoschem/vein")
           library(vein)
           get_project("teste", "curitiba")
@@ -84,6 +88,5 @@ jobs:
           source("main.R", echo = TRUE)
           setwd("industry")
           source("main_industry.R", echo = TRUE)
-
 
         shell: Rscript {0}
