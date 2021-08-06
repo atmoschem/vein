@@ -30,11 +30,13 @@ net <- sf::st_read("network/net.gpkg")
 crs <- 4326
 tit <- "Fluxo veicular [veh/h] em São Paulo"
 categories <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
-source("scripts/net.R", encoding = "UTF-8")
+# source("scripts/net.R", encoding = "UTF-8")
+source("scripts/net_github_actions.R", encoding = "UTF-8")
 
 # 2) Traffic ####
+# to improve your inventory, improve your input data
 language <- "portuguese" # english spanish
-net <- readRDS("network/net.rds")
+net <- st_read("network/net.gpkg")
 metadata <- readRDS("config/metadata.rds")
 categories <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
 veh <- readRDS("config/fleet_age.rds")
@@ -65,9 +67,15 @@ source("scripts/fuel_eval.R", encoding = "UTF-8")
 # Exhaust
 language <- "english" # english spanish
 pol <- c(
-    "ETOH", "CO", "HC", "NMHC", "NOx", "CO2",
-    "PM", "NO2", "NO", "SO2", "CH4", "NH3", "CH4", "N2O"
+    "ETOH", "CO", "NMHC",
+    "PM", "NO2", "NO", "SO2", "NH3"
 )
+# for a comprehensive estimation, uncomment the following lines
+# pol <- c(
+#    "ETOH", "CO", "HC", "NMHC", "NOx", "CO2",
+#    "PM", "NO2", "NO", "SO2", "CH4", "NH3", "CH4", "N2O"
+# )
+
 scale <- "tunnel2018"
 source("scripts/exhaust.R", encoding = "UTF-8")
 
@@ -97,15 +105,25 @@ source("scripts/pavedroads.R", encoding = "UTF-8")
 language <- "portuguese" # english spanish
 net <- readRDS("network/net.rds")
 tfs <- readRDS("config/tfs.rds")
+# pol <- c(
+#    "ETOH",
+#    "CO", "HC", "NOx", "CO2", "SO2",
+#    "N2O", "CH4", "NH3",
+#    "PM", "PM10",
+#    "NO2", "NO",
+#    "D_NMHC", "G_NMHC", "E_NMHC",
+#    "G_EVAP_01", "E_EVAP_01"
+# )
 pol <- c(
     "ETOH",
-    "CO", "HC", "NOx", "CO2", "SO2",
-    "N2O", "CH4", "NH3",
+    "CO", "SO2",
+    "NH3",
     "PM", "PM10",
     "NO2", "NO",
     "D_NMHC", "G_NMHC", "E_NMHC",
     "G_EVAP_01", "E_EVAP_01"
-) # Month October
+)
+# Month October
 g <- eixport::wrf_grid("wrf/wrfinput_d02")
 # Number of lat points 48
 # Number of lon points 60
@@ -117,7 +135,7 @@ language <- "portuguese" # english spanish
 metadata <- readRDS("config/metadata.rds")
 tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
-pol <- c("CO", "HC", "NOx", "CO2", "PM", "NH3")
+pol <- c("CO", "NO")
 hours <- 8
 bg <- "white"
 pal <- "mpl_viridis" # procura mais paletas com ?cptcity::find_cpt
@@ -137,8 +155,8 @@ for (z in seq_along(mechs)) {
     g <- eixport::wrf_grid("wrf/wrfinput_d02")
     # Number of lat points 51
     # Number of lon points 60
-    pol <- c("CO", "NO", "NO2", "SO2", "CO2", "NH3", "CH4", "N2O")
-    mol <- c(12, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 12 + 16 * 2, 14 + 3, 14 * 2 + 16, 12 + 4)
+    pol <- c("CO", "NO", "NO2", "SO2", "NH3")
+    mol <- c(12, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
     aer <- "pmneu2" # pmiag, pmneu
     # mech <- "iag" # iag_cb05v2, neu_cb05, iag_racm
     # source("scripts/mech.R", encoding = "UTF-8")
@@ -157,8 +175,8 @@ for (z in seq_along(mechs)) {
     tfs <- readRDS("config/tfs.rds")
     wrf_times <- 673 # nrow(tfs)
     net <- readRDS("network/net.rds")
-    cols <- 48
-    rows <- 60
+    cols <- 51
+    rows <- 63
     dir_wrfinput <- "wrf"
     dir_wrfchemi <- "wrf"
     domain <- 2
