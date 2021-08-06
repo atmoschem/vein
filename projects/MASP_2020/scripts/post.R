@@ -76,7 +76,7 @@ dt$pollutant <- as.character(dt$pollutant)
 dt$g <- units::set_units(dt$g, g)
 dt$t <- units::set_units(dt$g, t)
 saveRDS(dt, "post/datatable/emissions.rds")
-data.table::fwrite(dt, "csv/emissions.csv", row.names = FALSE)
+# data.table::fwrite(dt, "csv/emissions.csv", row.names = FALSE)
 
 dt0 <- dt[, round(sum(t) * factor_emi, 2), by = .(pollutant)]
 print(dt0)
