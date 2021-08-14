@@ -14,6 +14,8 @@ NEWS
 - fix chem_vein2 for CB4 and CBMZ  (Release date: 2021-07-08)
 - add CB05opt2 into emis_chem2
 - fix fe ETOH on cetesb
+- add add_miles and family add distance
+
 
 ### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
