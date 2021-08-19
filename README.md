@@ -215,12 +215,16 @@ Read the instruction of inventory
 4.  You can use/merge/transform/adapt any of these functions.
 
 ``` r
+library(vein)
 data("net")
 PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
 ```
 
-![](https://atmoschem.github.io/vein/reference/age_ldv-1.png)
+![](man/figures/unnamed-chunk-3-1.png)<!-- -->
+
+    #> 
+    #> Average =  11.17
 
 If you want to know the vehicles per street and by age of use, just add
 the net. Age functions now returns ‘sf’ objects if the net argument is
@@ -228,10 +232,12 @@ present.
 
 ``` r
 PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
-plot(PC_E25_1400net)
+plot(PC_E25_1400net, key.pos = 4)
+#> Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot
+#> all
 ```
 
-![](https://atmoschem.github.io/vein/reference/age_ldv-2.png)
+![](man/figures/unnamed-chunk-4-1.png)<!-- -->
 
 -   [temp\_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
 -   [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
@@ -246,7 +252,7 @@ dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1.5
 plot(dfspeed)
 ```
 
-![](https://atmoschem.github.io/vein/reference/netspeed-1.png)
+![](man/figures/unnamed-chunk-5-1.png)<!-- -->
 
 If you want ot check the speed at different hours by street, just add
 net:
@@ -254,12 +260,11 @@ net:
 ``` r
 dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
                        alpha = 1.5, net = net)
-sp::spplot(as(dfspeednet, "Spatial"),
-       c("S1", "S9"), scales = list(Draw = T),
-       col.regions = rev(cptcity::cpt()))
+plot(dfspeednet[, c("S1", "S9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
 ```
 
-![](https://i.imgur.com/qJUdMea.png) \#\#\#\# 2) Emission Factors
+![](man/figures/unnamed-chunk-6-1.png)<!-- --> \#\#\#\# 2) Emission
+Factors
 
 -   [ef\_ldv\_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
 -   [ef\_hdv\_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
@@ -276,7 +281,7 @@ efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 ```
 
-![](https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png)
+![](man/figures/unnamed-chunk-7-1.png)<!-- -->
 
 #### 3) Estimation of emissions
 
@@ -303,9 +308,12 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
 
 ``` r
 E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
-pollutant = "CO", by = "veh")
-E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets")
+pollutant = "CO", by = "veh", type_emi = "exhaust")
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
+plot(E_CO_STREETS[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
 ```
+
+![](man/figures/unnamed-chunk-9-1.png)<!-- -->
 
 #### Grids
 
@@ -323,13 +331,20 @@ data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
 g <- make_grid(net, 1/102.47)
+#> Number of lon points: 12
+#> Number of lat points: 10
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
+#> Your units are:
+#> g
+#> Transforming spatial objects to 'sr'
+#> Sum of street emissions 148791715.29
+#> Sum of gridded emissions 148791715.29
 na <- paste0("V", 1:168)
 for(i in 1:168) E_CO_g[[na[i]]] <- E_CO_g[[na[i]]] * units::set_units(1, "1/h")
-plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T))
+plot(E_CO_g[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
 ```
 
-![](https://i.imgur.com/Ydsvt8x.png)
+![](man/figures/unnamed-chunk-10-1.png)<!-- -->
 
 #### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
 

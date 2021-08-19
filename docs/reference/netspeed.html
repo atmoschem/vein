@@ -152,7 +152,18 @@ and each link based on morning rush traffic data" />
 and each link based on morning rush traffic data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>netspeed</span><span class='op'>(</span>q <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>ps</span>, <span class='va'>ffs</span>, <span class='va'>cap</span>, <span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>0.15</span>, beta <span class='op'>=</span> <span class='fl'>4</span>, <span class='va'>net</span>, scheme <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>netspeed</span><span class='op'>(</span>
+  q <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>ps</span>,
+  <span class='va'>ffs</span>,
+  <span class='va'>cap</span>,
+  <span class='va'>lkm</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.15</span>,
+  beta <span class='op'>=</span> <span class='fl'>4</span>,
+  <span class='va'>net</span>,
+  scheme <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>dist</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,7 +203,12 @@ and each link based on morning rush traffic data</p>
     <tr>
       <th>scheme</th>
       <td><p>Logical to create a Speed data-frame with 24 hours and a
-default  profile. It needs ffs and ps:</p><table class='table'>
+default  profile. It needs ffs and ps:</p></td>
+    </tr>
+    <tr>
+      <th>dist</th>
+      <td><p>String indicating the units of the resulting distance in speed.
+Default is units from peak speed `ps`</p><table class='table'>
 <tr><td>00:00-06:00</td><td>ffs</td></tr>
 <tr><td>06:00-07:00</td><td>average between ffs and ps</td></tr>
 <tr><td>07:00-10:00</td><td>ps</td></tr>
@@ -214,6 +230,11 @@ default  profile. It needs ffs and ps:</p><table class='table'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pc_profile</span><span class='op'>)</span>
 <span class='va'>pc_week</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>+</span><span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>netspeed</span><span class='op'>(</span><span class='va'>pc_week</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='co'>#plot of the average speed at each hour, +- sd</span>
+<span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='st'>"miles/h"</span><span class='op'>)</span>
+<span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='st'>"miles/h"</span><span class='op'>)</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'>netspeed</span><span class='op'>(</span><span class='va'>pc_week</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, alpha <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='co'>#plot of the average speed at each hour, +- sd</span>

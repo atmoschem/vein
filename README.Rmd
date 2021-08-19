@@ -199,28 +199,29 @@ For instance, you dont know the sales or registry of vehicles, but somehow you k
 the shape of this curve.
 4. You can use/merge/transform/adapt any of these functions.
 
-```r
+
+```{r, fig.height=4, fig.width=6}
+library(vein)
 data("net")
 PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400, xlab = "age of use")
 ```
-![](https://atmoschem.github.io/vein/reference/age_ldv-1.png)
+
 
 If you want to know the vehicles per street and by age of use, just
 add the net. Age functions now returns 'sf' objects if the net argument is present.
 
-```r
+```{r, fig.height=4, fig.width=6}
 PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
-plot(PC_E25_1400net)
+plot(PC_E25_1400net, key.pos = 4)
 ```
-![](https://atmoschem.github.io/vein/reference/age_ldv-2.png)
 
 - [temp_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
 - [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
 
 temporal factors and netspeed
 
-```r
+```{r, fig.height=4, fig.width=6}
 data("net")
 data("pc_profile")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -228,18 +229,14 @@ dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1.5
 plot(dfspeed)
 
 ```
-![](https://atmoschem.github.io/vein/reference/netspeed-1.png)
 
 If you want ot check the speed at different hours by street, just add net:
 
-```r
+```{r, fig.height=4, fig.width=6}
 dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
                        alpha = 1.5, net = net)
-sp::spplot(as(dfspeednet, "Spatial"),
-       c("S1", "S9"), scales = list(Draw = T),
-       col.regions = rev(cptcity::cpt()))
+plot(dfspeednet[, c("S1", "S9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
 ```
-![](https://i.imgur.com/qJUdMea.png)
 #### 2) Emission Factors
 
 - [ef_ldv_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
@@ -249,20 +246,19 @@ sp::spplot(as(dfspeednet, "Spatial"),
 - [EmissionFactors](https://atmoschem.github.io/vein/reference/EmissionFactors.html)
 - [EmissionFactorsList](https://atmoschem.github.io/vein/reference/EmissionFactorsList.html)
 
-```r
+```{r, fig.height=4, fig.width=6}
 V <- 0:150
 ef1 <- ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
 p = "CO")
 efs <- EmissionFactors(ef1(1:150))
 plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 ```
-![](https://atmoschem.github.io/vein/reference/ef_ldv_speed-1.png)
 
 #### 3) Estimation of emissions
 
 - [emis](https://atmoschem.github.io/vein/reference/emis.html)
 
-```r
+```{r, fig.height=4, fig.width=6}
 euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
           rep("I", 5), rep("PRE", 15))
 lef <- lapply(1:40, function(i) {
@@ -281,10 +277,12 @@ hour.
 by street. In this cae, if you add the argument net with the respective streets,
 it returns an spatial net with the hourly emissions.
 
-```r
+```{r, fig.height=4, fig.width=6}
 E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
-pollutant = "CO", by = "veh")
-E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets")
+pollutant = "CO", by = "veh", type_emi = "exhaust")
+E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
+plot(E_CO_STREETS[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
+
 ```
 
 #### Grids
@@ -297,7 +295,7 @@ the grid has the size of the net. You have to specify the grid spacing.
 2) Create a grid using a path to wrfinput file instead a net. The grid will have
 the size of the wrf_input. You don't have to specify the grid spacing.
 
-```r
+```{r, fig.height=4, fig.width=6}
 data(net)
 E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
                              net = net)
@@ -305,9 +303,8 @@ g <- make_grid(net, 1/102.47)
 E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
 na <- paste0("V", 1:168)
 for(i in 1:168) E_CO_g[[na[i]]] <- E_CO_g[[na[i]]] * units::set_units(1, "1/h")
-plot(E_CO_g["V9"], axes = T, pal = cptcity::cpt(colorRampPalette = T, rev = T))
+plot(E_CO_g[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
 ```
-![](https://i.imgur.com/Ydsvt8x.png)
 
 
 #### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
