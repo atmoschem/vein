@@ -4,7 +4,18 @@
 \alias{netspeed}
 \title{Calculate speeds of traffic network}
 \usage{
-netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, net, scheme = FALSE)
+netspeed(
+  q = 1,
+  ps,
+  ffs,
+  cap,
+  lkm,
+  alpha = 0.15,
+  beta = 4,
+  net,
+  scheme = FALSE,
+  dist
+)
 }
 \arguments{
 \item{q}{Data-frame of traffic flow to each hour (veh/h)}
@@ -24,7 +35,10 @@ netspeed(q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4, net, scheme = FALSE)
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
 \item{scheme}{Logical to create a Speed data-frame with 24 hours and a
-default  profile. It needs ffs and ps:
+default  profile. It needs ffs and ps:}
+
+\item{dist}{String indicating the units of the resulting distance in speed.
+Default is units from peak speed `ps`
 \tabular{rl}{
   00:00-06:00 \tab ffs\cr
   06:00-07:00 \tab average between ffs and ps\cr
@@ -47,6 +61,11 @@ and each link based on morning rush traffic data
 data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+class(df)
+plot(df) #plot of the average speed at each hour, +- sd
+net$ps <- units::set_units(net$ps, "miles/h")
+net$ffs <- units::set_units(net$ffs, "miles/h")
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 class(df)
 plot(df) #plot of the average speed at each hour, +- sd

@@ -16,7 +16,7 @@ test_that("Speed works", {
 
 test_that("Speed works", {
   expect_message(Speed(1*units::as_units("km h-1")),
-                 "C.?")
+                 ".?")
 })
 
 

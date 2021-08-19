@@ -13,6 +13,8 @@
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param scheme Logical to create a Speed data-frame with 24 hours and a
 #' default  profile. It needs ffs and ps:
+#' @param dist String indicating the units of the resulting distance in speed.
+#' Default is units from peak speed `ps`
 #' \tabular{rl}{
 #'   00:00-06:00 \tab ffs\cr
 #'   06:00-07:00 \tab average between ffs and ps\cr
@@ -32,6 +34,11 @@
 #' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 #' class(df)
 #' plot(df) #plot of the average speed at each hour, +- sd
+#' net$ps <- units::set_units(net$ps, "miles/h")
+#' net$ffs <- units::set_units(net$ffs, "miles/h")
+#' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+#' class(df)
+#' plot(df) #plot of the average speed at each hour, +- sd
 #' df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)
 #' class(df)
 #' plot(df) #plot of the average speed at each hour, +- sd
@@ -41,7 +48,10 @@
 #' plot(dfsf) #plot of the average speed at each hour, +- sd
 #' }
 netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
-                      net, scheme = FALSE){
+                      net, scheme = FALSE, dist){
+  if(missing(dist)) {
+    dist <- units(ps)$numerator
+  }
   if (scheme == FALSE & missing(q)){
     stop("No vehicles on 'q'")
   } else if (scheme == FALSE){
@@ -57,7 +67,7 @@ netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
       lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
     }))))
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
-    df_scheme <- Speed(dfv)
+    df_scheme <- Speed(dfv, dist = dist)
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
       df_schemesf <- sf::st_sf(df_scheme, geometry = sf::st_geometry(netsf))

@@ -15,6 +15,7 @@ NEWS
 - add CB05opt2 into emis_chem2
 - fix fe ETOH on cetesb
 - add add_miles and family add distance
+- add dist argument into Speed to obtain miles/h
 
 
 ### vein 0.9.2 (Release date: 2021-06-09)

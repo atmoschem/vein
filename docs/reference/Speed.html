@@ -158,7 +158,7 @@
  is applied to numeric vectors it add class "units".</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Speed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>Speed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, dist <span class='op'>=</span> <span class='st'>"km"</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Speed</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -179,6 +179,11 @@
     <tr>
       <th>...</th>
       <td><p>ignored</p></td>
+    </tr>
+    <tr>
+      <th>dist</th>
+      <td><p>String indicating the units of the resulting distance in speed.
+Default is units is "km"</p></td>
     </tr>
     <tr>
       <th>object</th>

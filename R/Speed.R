@@ -11,6 +11,8 @@
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object Object with class "Speed"
 #' @param ... ignored
+#' @param dist String indicating the units of the resulting distance in speed.
+#' Default is units is "km"
 #' @importFrom units as_units
 #' @seealso \code{\link{units}}
 #'
@@ -27,17 +29,17 @@
 #' summary(df)
 #' }
 #' @export
-Speed <- function(x, ...) {
+Speed <- function(x, ..., dist = "km") {
   if  ( is.matrix(x) ) {
     spd <- as.data.frame(x)
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i]*units::as_units("km h-1")
+      spd[,i] <- spd[,i]*units::as_units(paste0(dist, " h-1"))
     }
     class(spd) <- c("Speed", "data.frame")
   } else if ( is.data.frame(x) ) {
     spd <- x
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i]*units::as_units("km h-1")
+      spd[,i] <- spd[,i]*units::as_units(paste0(dist, " h-1"))
     }
     class(spd) <- c("Speed",class(x))
   } else if ( is.list(x) ) {
@@ -45,9 +47,10 @@ Speed <- function(x, ...) {
     #SpeedList?
   } else if ( class(x) == "units" ) {
     spd <- x
-    message("Check units are km/h")
+    message("x has the following units which wont be changed here")
+   print(units(spd))
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
-    spd <- x*units::as_units("km h-1")
+    spd <- x*units::as_units(paste0(dist, " h-1"))
   }
   return(spd)
 }
@@ -87,7 +90,8 @@ summary.Speed <- function(object,  ...) {
 #' @export
 plot.Speed <- function(x, ...) {
   spd <- x
-    Velocity <- Speed(colMeans(spd))
+    Velocity <- colMeans(spd)
+    units(Velocity) <- units(spd[[1]])
     VelocitySD <- Speed(unlist(lapply(spd,stats::sd)))
     smin <- Velocity - VelocitySD
     smax <- Velocity + VelocitySD
