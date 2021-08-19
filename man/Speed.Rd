@@ -7,7 +7,7 @@
 \alias{plot.Speed}
 \title{Construction function for class "Speed"}
 \usage{
-Speed(x, ...)
+Speed(x, ..., dist = "km")
 
 \method{print}{Speed}(x, ...)
 
@@ -19,6 +19,9 @@ Speed(x, ...)
 \item{x}{Object with class "data.frame", "matrix" or "numeric"}
 
 \item{...}{ignored}
+
+\item{dist}{String indicating the units of the resulting distance in speed.
+Default is units is "km"}
 
 \item{object}{Object with class "Speed"}
 }
