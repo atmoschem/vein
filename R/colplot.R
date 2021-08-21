@@ -46,11 +46,21 @@
 #' #colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
 #' #colplot(df = a, ylab = "CO [g/km]", theme = "clean")
 #' }
-colplot <- function (df, x, cols = names(df), xlab = "", ylab = "",
-                     main = NULL, theme = "black", col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4],
-                                                                      n = length(names(df))), type = "b", lwd = 2, pch = 1:ncol(df),
-                     familyfont = "", spl = 5, all_values = FALSE)
-{
+colplot <- function (df,
+                     x,
+                     cols = names(df),
+                     xlab = "",
+                     ylab = "",
+                     main = NULL,
+                     theme = "black",
+                     col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4],
+                                                                      n = length(names(df))),
+                     type = "b",
+                     lwd = 2,
+                     pch = 1:ncol(df),
+                     familyfont = "",
+                     spl = 5,
+                     all_values = FALSE){
   oldpar <- par(no.readonly = TRUE)       # code line i
   on.exit(par(oldpar))                    # code line i + 1
 

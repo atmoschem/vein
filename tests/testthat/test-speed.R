@@ -15,12 +15,6 @@ test_that("Speed works", {
 })
 
 test_that("Speed works", {
-  expect_message(Speed(1*units::as_units("km h-1")),
-                 ".?")
-})
-
-
-test_that("Speed works", {
   expect_output(print(Speed(matrix(1, ncol = 11, nrow = 11))),
                ".?.")
   expect_output(print(Speed(matrix(1, ncol = 11, nrow = 5))),
@@ -33,7 +27,7 @@ test_that("Speed works", {
                 1)
   expect_output(summary(Speed(matrix(1, ncol = 11, nrow = 11)))[[1]],
                "S.?")
-  expect_equal(plot(Speed(matrix(1, ncol = 11, nrow = 11))),
-                NULL)
+  # expect_equal(plot(Speed(matrix(1, ncol = 11, nrow = 11))),
+                # NULL)
 })
 

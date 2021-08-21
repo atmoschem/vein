@@ -13,17 +13,44 @@ Speed(x, ..., dist = "km")
 
 \method{summary}{Speed}(object, ...)
 
-\method{plot}{Speed}(x, ...)
+\method{plot}{Speed}(
+  x,
+  pal = "mpl_inferno",
+  rev = FALSE,
+  fig1 = c(0, 0.8, 0, 0.8),
+  fig2 = c(0, 0.8, 0.55, 1),
+  fig3 = c(0.7, 1, 0, 0.8),
+  mai1 = c(0.2, 0.82, 0.82, 0.42),
+  mai2 = c(1.3, 0.82, 0.82, 0.42),
+  mai3 = c(0.7, 0.62, 0.82, 0.42),
+  ...
+)
 }
 \arguments{
 \item{x}{Object with class "data.frame", "matrix" or "numeric"}
 
-\item{...}{ignored}
-
-\item{dist}{String indicating the units of the resulting distance in speed.
+\item{...}{ignored
 Default is units is "km"}
 
+\item{dist}{String indicating the units of the resulting distance in speed.}
+
 \item{object}{Object with class "Speed"}
+
+\item{pal}{Palette of colors available or the number of the position}
+
+\item{rev}{Logical; to internally revert order of rgb color vectors.}
+
+\item{fig1}{par parameters for fig, \code{\link{par}}.}
+
+\item{fig2}{par parameters for fig, \code{\link{par}}.}
+
+\item{fig3}{par parameters for fig, \code{\link{par}}.}
+
+\item{mai1}{par parameters for mai, \code{\link{par}}.}
+
+\item{mai2}{par parameters for mai, \code{\link{par}}.}
+
+\item{mai3}{par parameters for mai, \code{\link{par}}.}
 }
 \value{
 Constructor for class "Speed" or "units"
@@ -45,6 +72,7 @@ plot(speed, type = "l")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
 summary(df)
+plot(df)
 }
 }
 \seealso{
