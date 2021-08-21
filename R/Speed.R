@@ -135,7 +135,7 @@ plot.Speed <- function(x,
                   mai = mai2,
                   new=TRUE,
                   ...)
-    avage <- mean(unlist(x))
+    avage <- mean(unlist(x), na.rm = T)
     graphics::plot(colMeans(x, na.rm = T),
                    type="l",
                    ylab = paste0("Mean speed [",as.character(units(x[[1]])), "]"),

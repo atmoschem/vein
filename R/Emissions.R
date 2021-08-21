@@ -185,7 +185,7 @@ plot.Emissions <- function(x,
                   mai = mai2,
                   new=TRUE,
                   ...)
-    avage <- sum(seq(1,ncol(x)) * colSums(x)/sum(x))
+    avage <- sum(seq(1,ncol(x)) * colSums(x)/sum(x, na.rm = T))
     graphics::plot(colSums(x, na.rm = T),
                    type="l",
                    ylab = paste0("Emissions [",as.character(units(x[[1]])), "]"),
