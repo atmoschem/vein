@@ -223,7 +223,6 @@ PC_E25_1400 <- age_ldv(
 plot(
   PC_E25_1400
 )
-#> 
 #> Weighted mean =  11.17
 ```
 
@@ -273,7 +272,6 @@ dfspeed <- netspeed(
   alpha = 1.5
 )
 plot(dfspeed)
-#> 
 #> Weighted mean =  44.16
 ```
 

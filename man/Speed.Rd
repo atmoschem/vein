@@ -63,7 +63,7 @@ Constructor for class "Speed" or "units"
  is applied to numeric vectors it add class "units".
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 speed <- Speed(net$ps)
@@ -72,6 +72,12 @@ plot(speed, type = "l")
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
 summary(df)
+plot(df)
+# changing to miles
+net$ps <- units::set_units(net$ps, "miles/h")
+net$ffs <- units::set_units(net$ffs, "miles/h")
+net$lkm <- units::set_units(net$lkm, "miles")
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, dist = "miles")
 plot(df)
 }
 }

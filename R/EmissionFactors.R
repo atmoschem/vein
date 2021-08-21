@@ -129,7 +129,7 @@ plot.EmissionFactors <- function(x,
       xaxt = "n",
       z =t(as.matrix(x))[, nrow(x):1],
       xlab = "",
-      ylab = "streets",
+      ylab = paste0("EF by streets [",as.character(units(x[[1]])), "]"),
       col = cptcity::cpt(pal = pal, rev = rev), horizontal = TRUE)
 
     graphics::par(fig=fig2,
@@ -139,21 +139,22 @@ plot.EmissionFactors <- function(x,
     avage <- mean(unlist(x))
     graphics::plot(colMeans(x, na.rm = T),
                    type="l",
-                   ylab = "mean",
+                   ylab = paste0("Mean EF [",as.character(units(x[[1]])), "]"),
                    xlab = "",
                    frame = FALSE,
                    xaxt = 'n')
     graphics::axis(3)
 
     graphics::abline(h = avage, col="red")
-    cat("\nWeighted mean = ",round(avage,2))
+    cat("Weighted mean = ",round(avage,2), "\n")
 
     graphics::par(fig=fig3, new=TRUE,
                   mai = mai3,
                   ...)
     graphics::plot(x = rowMeans(x, na.rm = T), y = nrow(x):1,
                    type = "l", frame = FALSE, yaxt = "n", xlab = '',
-                   ylab = '')
+                   ylab = paste0("Mean EF [",as.character(units(x[[1]])), "]")
+    )
     graphics::abline(v = avage, col="red")
 
   } else {

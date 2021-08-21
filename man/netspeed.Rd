@@ -14,7 +14,7 @@ netspeed(
   beta = 4,
   net,
   scheme = FALSE,
-  dist
+  dist = "km"
 )
 }
 \arguments{
@@ -75,6 +75,6 @@ plot(df) #plot of the average speed at each hour, +- sd
 dfsf <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)
 class(dfsf)
 head(dfsf)
-plot(dfsf) #plot of the average speed at each hour, +- sd
+plot(dfsf, pal = cptcity::lucky(colorRampPalette = T, rev = T), key.pos = T) #plot of the average speed at each hour, +- sd
 }
 }
