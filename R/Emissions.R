@@ -9,9 +9,19 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object object with class "Emissions"
+#' @param pal Palette of colors available or the number of the position
+#' @param rev Logical; to internally revert order of rgb color vectors.
 #' @param time Character to be the time units as denominator, eg "1/h"
+#' @param fig1 par parameters for fig, \code{\link{par}}.
+#' @param mai1 par parameters for mai, \code{\link{par}}.
+#' @param fig2 par parameters for fig, \code{\link{par}}.
+#' @param mai2 par parameters for mai, \code{\link{par}}.
+#' @param fig3 par parameters for fig, \code{\link{par}}.
+#' @param mai3 par parameters for mai, \code{\link{par}}.
 #' @param ... ignored
 #' @importFrom units as_units as_units
+#' @importFrom graphics par plot abline
+#' @importFrom fields image.plot
 #'
 #' @rdname Emissions
 #' @aliases Emissions print.Emissions summary.Emissions plot.Emissions
@@ -144,11 +154,58 @@ summary.Emissions <- function(object, ...) {
 #' @rdname Emissions
 #' @method plot Emissions
 #' @export
-plot.Emissions <- function(x,  ...) {
-  e <- x
-  avage <- sum(seq(1,ncol(e)) * colSums(e)/sum(e))
-  Emission <- Emissions(colSums(e))
-  graphics::plot(Emission, type="l", ...)
-  graphics::abline(v = avage, col="red")
-  cat("\nAverage = ",round(avage,2))
+plot.Emissions <- function(x,
+                           pal = "colo_angelafaye_Coloured_sky_in",
+                           rev = FALSE,
+                           fig1 = c(0,0.8,0,0.8),
+                           fig2 = c(0,0.8,0.55,1),
+                           fig3 = c(0.7,1,0,0.8),
+                           mai1 = c(0.2, 0.82, 0.82, 0.42),
+                           mai2 = c(1.3, 0.82, 0.82, 0.42),
+                           mai3 = c(0.7, 0.72, 0.82, 0.42),
+                           ...) {
+  oldpar <- par(no.readonly = TRUE)       # code line i
+  on.exit(par(oldpar))                    # code line i + 1
+  # e <- x
+  #
+  if(ncol(x) > 1) {
+    graphics::par(fig=fig1, #new=TRUE,
+                  mai = mai1,
+                  ...)
+
+    fields::image.plot(
+      x = 1:ncol(x),
+      xaxt = "n",
+      z =t(as.matrix(x))[, nrow(x):1],
+      xlab = "",
+      ylab = "streets",
+      col = cptcity::cpt(pal = pal, rev = rev), horizontal = TRUE)
+
+    graphics::par(fig=fig2,
+                  mai = mai2,
+                  new=TRUE,
+                  ...)
+    avage <- sum(seq(1,ncol(x)) * colSums(x)/sum(x))
+    graphics::plot(colSums(x, na.rm = T),
+                   type="l",
+                   ylab = "sum",
+                   xlab = "",
+                   frame = FALSE,
+                   xaxt = 'n')
+    graphics::axis(3)
+
+    graphics::abline(v = avage, col="red")
+    cat("\nWeighted mean = ",round(avage,2))
+
+    graphics::par(fig=fig3, new=TRUE,
+                  mai = mai3,
+                  ...)
+    graphics::plot(x = rowSums(x, na.rm = T), y = nrow(x):1,
+                   type = "l", frame = FALSE, yaxt = "n", xlab = '',
+                   ylab = '')
+    graphics::abline(v = avage, col="red")
+
+  } else {
+    graphics::plot(unlist(x), type = "l", main = "1 column data")
+  }
 }
