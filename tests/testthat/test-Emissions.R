@@ -42,8 +42,8 @@ test_that("Emissions prints", {
 
 
 test_that("Emissions works", {
-  expect_equal(plot(Emissions(data.frame(a = 1:5)))$mfrow[1],
+  expect_equal(plot(Emissions(data.frame(a = 1:5)))$mfrow,
                NULL)
-  expect_output(plot(Emissions(data.frame(a = 1:5)))$mfrow[1],
-                "Av.?")
+  # expect_output(plot(Emissions(data.frame(a = 1:5)))$mfrow,
+                # ".?")
 })

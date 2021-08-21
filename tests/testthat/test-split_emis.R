@@ -1,6 +1,7 @@
 context("split_emis")
 data(net)
-g <- make_grid(net, 1/102.47/2) #500m in degrees
+net <- sf::st_transform(net, 31983)
+g <- make_grid(net, 500) #500m in degrees
 netsf <- sf::st_as_sf(net)[, "ldv"]
 x <- split_emis(netsf, g)
 dim(x)
@@ -22,7 +23,7 @@ test_that("split_emis works", {
 
 
 test_that("split_emis message", {
-  expect_equal(as.numeric(split_emis(netsf, 1, verbose = TRUE)$ldv[1]),
-                 4350)
+  expect_equal(round(as.numeric(split_emis(net = netsf, distance = 1000, verbose = TRUE)$ldv[1])),
+                 1603)
 })
 

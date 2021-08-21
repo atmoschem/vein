@@ -7,6 +7,8 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object object with class "EmissionsArray'
+#' @param pal Palette of colors available or the number of the position
+#' @param rev Logical; to internally revert order of rgb color vectors.
 #' @param ... ignored
 #' @importFrom  stats median quantile sd
 #' @rdname EmissionsArray
@@ -98,7 +100,7 @@ summary.EmissionsArray <- function(object, ...) {
   #' @rdname EmissionsArray
   #' @method plot EmissionsArray
   #' @export
-  plot.EmissionsArray <- function(x, ...) {
+  plot.EmissionsArray <- function(x, pal = "imagej_split_blrd_warmmetal", rev = TRUE, ...) {
     e <- x
     if (length(dim(e)) == 4 ) {
       df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))

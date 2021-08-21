@@ -214,6 +214,8 @@ summary.GriddedEmissionsArray <- function(object, ...) {
 #' @method plot GriddedEmissionsArray
 #' @export
 plot.GriddedEmissionsArray <- function(x, ..., times = 1) {
+  oldpar <- par(no.readonly = TRUE)       # code line i
+  on.exit(par(oldpar))                    # code line i + 1
   e <- x
   graphics::image(e[ , , times], ...)
 }

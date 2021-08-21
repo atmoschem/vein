@@ -77,7 +77,7 @@ or if you have a **32 bits** machine
 
 ``` r
 install_github("atmoschem/vein",
-               INSTALL_opts = "--no-multiarch")
+INSTALL_opts = "--no-multiarch")
 ```
 
 ------------------------------------------------------------------------
@@ -217,22 +217,35 @@ Read the instruction of inventory
 ``` r
 library(vein)
 data("net")
-PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
-plot(PC_E25_1400, xlab = "age of use")
+PC_E25_1400 <- age_ldv(
+  x = net$ldv
+)
+plot(
+  PC_E25_1400
+)
+#> 
+#> Weighted mean =  11.17
 ```
 
 ![](man/figures/unnamed-chunk-3-1.png)<!-- -->
-
-    #> 
-    #> Average =  11.17
 
 If you want to know the vehicles per street and by age of use, just add
 the net. Age functions now returns ‘sf’ objects if the net argument is
 present.
 
 ``` r
-PC_E25_1400net <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
-plot(PC_E25_1400net, key.pos = 4)
+PC_E25_1400net <- age_ldv(
+  x = net$ldv, 
+  net = net
+)
+plot(
+  PC_E25_1400net, 
+  key.pos = 4, 
+  pal = cptcity::cpt(
+    colorRampPalette = T, 
+    rev = T
+  )
+)
 #> Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot
 #> all
 ```
@@ -247,9 +260,21 @@ temporal factors and netspeed
 ``` r
 data("net")
 data("pc_profile")
-pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
-dfspeed <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1.5)
+pc_week <- temp_fact(
+  net$ldv + net$hdv, 
+  pc_profile
+)
+dfspeed <- netspeed(
+  q = pc_week, 
+  ps = net$ps, 
+  ffs = net$ffs, 
+  cap = net$capacity, 
+  lkm = net$lkm, 
+  alpha = 1.5
+)
 plot(dfspeed)
+#> 
+#> Weighted mean =  44.16
 ```
 
 ![](man/figures/unnamed-chunk-5-1.png)<!-- -->
@@ -258,9 +283,22 @@ If you want ot check the speed at different hours by street, just add
 net:
 
 ``` r
-dfspeednet <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm,
-                       alpha = 1.5, net = net)
-plot(dfspeednet[, c("S1", "S9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
+dfspeednet <- netspeed(
+  q = pc_week, 
+  ps = net$ps, 
+  ffs = net$ffs, 
+  cap = net$capacity, 
+  lkm = net$lkm,
+  alpha = 1.5, 
+  net = net
+)
+plot(
+  dfspeednet[, c("S1", "S9")], 
+  key.pos = 4, 
+  pal = cptcity::cpt(colorRampPalette = T, 
+                     rev = T), 
+  axes = T
+)
 ```
 
 ![](man/figures/unnamed-chunk-6-1.png)<!-- --> \#\#\#\# 2) Emission
@@ -275,10 +313,22 @@ Factors
 
 ``` r
 V <- 0:150
-ef1 <- ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
-p = "CO")
+ef1 <- ef_ldv_speed(
+  v = "PC",
+  t = "4S", 
+  cc = "<=1400", 
+  f = "G",
+  eu = "PRE",
+  p = "CO"
+)
 efs <- EmissionFactors(ef1(1:150))
-plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
+plot(
+  Speed(1:150), 
+  efs, 
+  xlab = "speed[km/h]", 
+  type = "b", 
+  pch = 16
+)
 ```
 
 ![](man/figures/unnamed-chunk-7-1.png)<!-- -->
@@ -288,13 +338,32 @@ plot(Speed(1:150), efs, xlab = "speed[km/h]", type = "b", pch = 16)
 -   [emis](https://atmoschem.github.io/vein/reference/emis.html)
 
 ``` r
-euro <- c(rep("V", 5), rep("IV", 5), rep("III", 5), rep("II", 5),
-          rep("I", 5), rep("PRE", 15))
+euro <- c(
+  rep("V", 5), 
+  rep("IV", 5), 
+  rep("III", 5), 
+  rep("II", 5),
+  rep("I", 5), 
+  rep("PRE", 15)
+)
 lef <- lapply(1:40, function(i) {
-ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
-          eu = euro[i], p = "CO", show.equation = FALSE) })
-E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
-             profile = pc_profile)
+  ef_ldv_speed(
+    v = "PC", 
+    t = "4S",
+    cc = "<=1400", 
+    f = "G",
+    eu = euro[i], 
+    p = "CO", 
+    show.equation = FALSE
+  ) 
+})
+E_CO <- emis(
+  veh = PC_E25_1400, 
+  lkm = net$lkm, 
+  ef = lef, 
+  speed = dfspeed,
+  profile = pc_profile
+)
 ```
 
 #### 4) Post Emissions
@@ -307,10 +376,27 @@ E_CO <- emis(veh = PC_E25_1400, lkm = net$lkm, ef = lef, speed = dfspeed,
     streets, it returns an spatial net with the hourly emissions.
 
 ``` r
-E_CO_DF <- emis_post(arra = E_CO,  veh = "PC", size = "<1400", fuel = "G",
-pollutant = "CO", by = "veh", type_emi = "exhaust")
-E_CO_STREETS <- emis_post(arra = E_CO, pollutant = "CO", by = "streets", net = net)
-plot(E_CO_STREETS[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
+E_CO_DF <- emis_post(
+  arra = E_CO,  
+  veh = "PC", 
+  size = "<1400", 
+  fuel = "G",
+  pollutant = "CO", 
+  by = "veh", 
+  type_emi = "exhaust"
+)
+E_CO_STREETS <- emis_post(
+  arra = E_CO, 
+  pollutant = "CO", 
+  by = "streets", 
+  net = net
+)
+plot(
+  E_CO_STREETS[, c("V1", "V9")], 
+  key.pos = 4, 
+  pal = cptcity::cpt(colorRampPalette = T, 
+                     rev = T), 
+  axes = T)
 ```
 
 ![](man/figures/unnamed-chunk-9-1.png)<!-- -->
@@ -328,12 +414,23 @@ plot(E_CO_STREETS[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPal
 
 ``` r
 data(net)
-E_CO_STREETSnet <- emis_post(arra = E_CO, pollutant = "CO", by = "streets_wide",
-                             net = net)
-g <- make_grid(net, 1/102.47)
+E_CO_STREETSnet <- emis_post(
+  arra = E_CO, 
+  pollutant = "CO",
+  by = "streets_wide",
+  net = net
+)
+g <- make_grid(
+  spobj = net, 
+  width = 1/102.47
+)
 #> Number of lon points: 12
 #> Number of lat points: 10
-E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
+E_CO_g <- emis_grid(
+  spobj = E_CO_STREETSnet, 
+  g = g, 
+  sr= 31983
+)
 #> Your units are:
 #> g
 #> Transforming spatial objects to 'sr'
@@ -341,7 +438,15 @@ E_CO_g <- emis_grid(spobj = E_CO_STREETSnet, g = g, sr= 31983)
 #> Sum of gridded emissions 148791715.29
 na <- paste0("V", 1:168)
 for(i in 1:168) E_CO_g[[na[i]]] <- E_CO_g[[na[i]]] * units::set_units(1, "1/h")
-plot(E_CO_g[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette = T, rev = T), axes = T)
+plot(
+  E_CO_g[, c("V1", "V9")], 
+  key.pos = 4, 
+  pal = cptcity::cpt(colorRampPalette = T, 
+                     rev = T,
+                     pal = "mpl_viridis"), 
+  axes = T, 
+  lty = 0
+)
 ```
 
 ![](man/figures/unnamed-chunk-10-1.png)<!-- -->
@@ -367,11 +472,11 @@ plot(E_CO_g[, c("V1", "V9")], key.pos = 4, pal = cptcity::cpt(colorRampPalette =
 library(eixport)
 dir.create(file.path(tempdir(), "EMISS"))
 wrf_create(wrfinput_dir         = system.file("extdata", package = "eixport"),
-           wrfchemi_dir         = file.path(tempdir(), "EMISS"),
-           domains              = 2,
-           frames_per_auxinput5 = 1, #hours
-           auxinput5_interval_m = 60,
-           verbose              = TRUE)
+wrfchemi_dir         = file.path(tempdir(), "EMISS"),
+domains              = 2,
+frames_per_auxinput5 = 1, #hours
+auxinput5_interval_m = 60,
+verbose              = TRUE)
 path_to_wrfi <- paste0(system.file("extdata", package = "eixport"), "/wrfinput_d02")
 path_to_wrfc <- list.files(file.path(tempdir(), "EMISS"), full.names = TRUE)[1]
 gwrf <- eixport::wrf_grid(path_to_wrfi)
@@ -431,6 +536,8 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
 
 ## Communications, doubts etc
 
+-   Earth-Sciences on Stackoverflow, tag
+    [vein-r-package](https://earthscience.stackexchange.com/questions/tagged/vein-r-package)
 -   Drop me an email <sergio.ibarra@usp.br> or
     <zergioibarra@hotmail.com> (你好中国朋友 - Hello Chinese friends!)
 -   Check the group on GoogleGroups
@@ -470,12 +577,5 @@ added this variable into the .bashrc
 More details on
 [StackOverflow](https://stackoverflow.com/questions/13575180/how-to-change-language-settings-in-r)
 
-You can learn more about VEIN reading the documentation in
-[PDF](https://cran.r-project.org/web/packages/vein/vein.pdf),
-[online](https://atmoschem.github.io/vein/), reading the book
-[online](https://ibarraespinosa.github.io/VEINBOOK/), or buy it in
-[Kindle](https://www.amazon.com/VEINBOOK-Estimating-vehicular-emissions-package-ebook-dp-B07L7XRFKC/dp/B07L7XRFKC/ref=mt_kindle?_encoding=UTF8&me=&qid=)
-or
-[Paperback](https://www.amazon.com/gp/product/1791571158?pf_rd_p=1581d9f4-062f-453c-b69e-0f3e00ba2652&pf_rd_r=EMDPZM3G7BWCHAD9F4QP)
-
-![](https://i.imgur.com/RcfNmDm.jpg)
+<!-- You can learn more about VEIN reading the documentation in [PDF](https://cran.r-project.org/web/packages/vein/vein.pdf), [online](https://atmoschem.github.io/vein/), reading the book [online](https://ibarraespinosa.github.io/VEINBOOK/), or buy it in  [Kindle](https://www.amazon.com/VEINBOOK-Estimating-vehicular-emissions-package-ebook-dp-B07L7XRFKC/dp/B07L7XRFKC/ref=mt_kindle?_encoding=UTF8&me=&qid=) or  [Paperback](https://www.amazon.com/gp/product/1791571158?pf_rd_p=1581d9f4-062f-453c-b69e-0f3e00ba2652&pf_rd_r=EMDPZM3G7BWCHAD9F4QP) -->
+<!-- ![](https://i.imgur.com/RcfNmDm.jpg) -->

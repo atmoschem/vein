@@ -13,7 +13,19 @@ Vehicles(x, ..., time)
 
 \method{summary}{Vehicles}(object, ...)
 
-\method{plot}{Vehicles}(x, ..., message = TRUE)
+\method{plot}{Vehicles}(
+  x,
+  pal = "colo_lightningmccarl_into_the_night",
+  rev = TRUE,
+  bk = NULL,
+  fig1 = c(0, 0.8, 0, 0.8),
+  fig2 = c(0, 0.8, 0.55, 1),
+  fig3 = c(0.7, 1, 0, 0.8),
+  mai1 = c(0.2, 0.82, 0.82, 0.42),
+  mai2 = c(1.3, 0.82, 0.82, 0.42),
+  mai3 = c(0.7, 0.62, 0.82, 0.42),
+  ...
+)
 }
 \arguments{
 \item{x}{Object with class "Vehicles"}
@@ -24,7 +36,23 @@ Vehicles(x, ..., time)
 
 \item{object}{Object with class "Vehicles"}
 
-\item{message}{message with average age}
+\item{pal}{Palette of colors available or the number of the position}
+
+\item{rev}{Logical; to internally revert order of rgb color vectors.}
+
+\item{bk}{Break points in sorted order to indicate the intervals for assigning the colors.}
+
+\item{fig1}{par parameters for fig, \code{\link{par}}.}
+
+\item{fig2}{par parameters for fig, \code{\link{par}}.}
+
+\item{fig3}{par parameters for fig, \code{\link{par}}.}
+
+\item{mai1}{par parameters for mai, \code{\link{par}}.}
+
+\item{mai2}{par parameters for mai, \code{\link{par}}.}
+
+\item{mai3}{par parameters for mai, \code{\link{par}}.}
 }
 \value{
 Objects of class "Vehicles" or "units"

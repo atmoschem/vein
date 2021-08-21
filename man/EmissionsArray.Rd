@@ -13,7 +13,7 @@ EmissionsArray(x, ...)
 
 \method{summary}{EmissionsArray}(object, ...)
 
-\method{plot}{EmissionsArray}(x, ...)
+\method{plot}{EmissionsArray}(x, pal = "imagej_split_blrd_warmmetal", rev = TRUE, ...)
 }
 \arguments{
 \item{x}{Object with class "data.frame", "matrix" or "numeric"}
@@ -21,6 +21,10 @@ EmissionsArray(x, ...)
 \item{...}{ignored}
 
 \item{object}{object with class "EmissionsArray'}
+
+\item{pal}{Palette of colors available or the number of the position}
+
+\item{rev}{Logical; to internally revert order of rgb color vectors.}
 }
 \value{
 Objects of class "EmissionsArray"

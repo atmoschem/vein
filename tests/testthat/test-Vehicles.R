@@ -21,12 +21,6 @@ test_that("Vehicles works", {
                NULL)
   expect_equal(plot(Vehicles(data.frame(a = 1:11, b = 1:11))),
                NULL)
-  expect_equal(plot(Vehicles(matrix(1, ncol = 4))),
-               NULL)
-  expect_equal(plot(Vehicles(matrix(1, ncol = 6))),
-               NULL)
-  expect_equal(plot(Vehicles(matrix(1, ncol = 8))),
-               NULL)
   expect_equal(Vehicles(nett)$ldv,
                Vehicles(4350))
 })

@@ -16,6 +16,8 @@ NEWS
 - fix fe ETOH on cetesb
 - add add_miles and family add distance
 - add dist argument into Speed to obtain miles/h
+- add function speed_moves to return speed bins used by MOVES
+- changes plots of vein classes, now imports fields::image.plot
 
 
 ### vein 0.9.2 (Release date: 2021-06-09)
