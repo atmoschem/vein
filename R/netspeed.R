@@ -27,7 +27,7 @@
 #' @return dataframe speeds with units or sf.
 #' @importFrom sf st_sf st_as_sf
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
@@ -45,13 +45,10 @@
 #' dfsf <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)
 #' class(dfsf)
 #' head(dfsf)
-#' plot(dfsf) #plot of the average speed at each hour, +- sd
+#' plot(dfsf, pal = cptcity::lucky(colorRampPalette = T, rev = T), key.pos = T) #plot of the average speed at each hour, +- sd
 #' }
 netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
-                      net, scheme = FALSE, dist){
-  if(missing(dist)) {
-    dist <- units(ps)$numerator
-  }
+                      net, scheme = FALSE, dist = "km"){
   if (scheme == FALSE & missing(q)){
     stop("No vehicles on 'q'")
   } else if (scheme == FALSE){
@@ -67,31 +64,27 @@ netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
       lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
     }))))
     names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
-    df_scheme <- Speed(dfv, dist = dist)
+
+    df_speed <- Speed(dfv, dist = dist)
+
+    } else {
+      ps <- as.numeric(ps)
+      ffs <- as.numeric(ffs)
+      dfv <- cbind(replicate(5, ffs), replicate(1, 0.5*(ps + ffs) ),
+                   replicate(3, ps), replicate(7, 0.5*(ps + ffs)),
+                   replicate(3, ps), replicate(2, 0.5*(ps + ffs)),
+                   replicate(3, ffs))
+      names(dfv) <- c(rep("FSS",5), "AS", rep("PS", 3), rep("AS", 7),
+                      rep("PS", 3), rep("AS", 2),rep("FSS",3))
+
+      df_speed <- Speed(as.data.frame(dfv), dist = dist)
+
+    }
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
-      df_schemesf <- sf::st_sf(df_scheme, geometry = sf::st_geometry(netsf))
-      return(df_schemesf)
+      df_speedsf <- sf::st_sf(df_speed, geometry = sf::st_geometry(netsf))
+      return(df_speedsf)
     } else {
-      return(df_scheme)
+      return(df_speed)
     }
-  } else {
-    ps <- as.numeric(ps)
-    ffs <- as.numeric(ffs)
-    dfv <- cbind(replicate(5, ffs), replicate(1, 0.5*(ps + ffs) ),
-                 replicate(3, ps), replicate(7, 0.5*(ps + ffs)),
-                 replicate(3, ps), replicate(2, 0.5*(ps + ffs)),
-                 replicate(3, ffs))
-    names(dfv) <- c(rep("FSS",5), "AS", rep("PS", 3), rep("AS", 7),
-                    rep("PS", 3), rep("AS", 2),rep("FSS",3))
-    df_speed <- Speed(as.data.frame(dfv))
-
-  if(!missing(net)){
-    netsf <- sf::st_as_sf(net)
-    df_speedsf <- sf::st_sf(df_speed, geometry = sf::st_geometry(netsf))
-    return(df_speedsf)
-  } else {
-    return(df_speed)
   }
-  }
-}

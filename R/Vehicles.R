@@ -173,7 +173,7 @@ plot.Vehicles <- function(x,
       xaxt = "n",
       z =t(as.matrix(x))[, nrow(x):1],
       xlab = "",
-      ylab = "streets",
+      ylab = paste0("Vehicles by streets [",as.character(units(x[[1]])), "]"),
       breaks = bk,
       col = cptcity::cpt(pal = pal, rev = rev), horizontal = TRUE)
 
@@ -184,21 +184,22 @@ plot.Vehicles <- function(x,
     avage <- sum(seq(1,ncol(x)) * colSums(x)/sum(x))
     graphics::plot(colSums(x, na.rm = T),
                    type="l",
-                   ylab = "sum",
+                   ylab = paste0("Sum vehicles [",as.character(units(x[[1]])), "]"),
                    xlab = "",
                    frame = FALSE,
                    xaxt = 'n')
     graphics::axis(3)
 
     graphics::abline(v = avage, col="red")
-    cat("\nWeighted mean = ",round(avage,2))
+    cat("Weighted mean = ",round(avage,2), "\n")
 
     graphics::par(fig=fig3, new=TRUE,
                   mai = mai3,
                   ...)
     graphics::plot(x = rowSums(x, na.rm = T), y = nrow(x):1,
                    type = "l", frame = FALSE, yaxt = "n", xlab = '',
-                   ylab = '')
+                   ylab = paste0("Sum vehicles [",as.character(units(x[[1]])), "]")
+    )
     graphics::abline(v = mean(rowSums(x, na.rm = T), na.rm = T), col="red")
 
   } else {

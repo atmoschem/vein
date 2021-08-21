@@ -27,7 +27,7 @@
 #'
 #' @rdname Speed
 #' @aliases Speed print.Speed summary.Speed plot.Speed
-#' @examples \dontrun{
+#' @examples {
 #' data(net)
 #' data(pc_profile)
 #' speed <- Speed(net$ps)
@@ -36,6 +36,12 @@
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 #' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
 #' summary(df)
+#' plot(df)
+#' # changing to miles
+#' net$ps <- units::set_units(net$ps, "miles/h")
+#' net$ffs <- units::set_units(net$ffs, "miles/h")
+#' net$lkm <- units::set_units(net$lkm, "miles")
+#' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, dist = "miles")
 #' plot(df)
 #' }
 #' @export
@@ -57,8 +63,8 @@ Speed <- function(x, ..., dist = "km") {
     #SpeedList?
   } else if ( class(x) == "units" ) {
     spd <- x
-    # message("x has the following units which wont be changed here")
-    spd <- spd*units::set_units(paste0(dist, " h-1"))
+    message("x has the following units which wont be changed here")
+    # spd <- spd*units::set_units(paste0(dist, " h-1"))
 
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
     spd <- x*units::as_units(paste0(dist, " h-1"))
@@ -122,7 +128,7 @@ plot.Speed <- function(x,
       xaxt = "n",
       z =t(as.matrix(x))[, nrow(x):1],
       xlab = "",
-      ylab = "streets",
+      ylab = paste0("Speed by streets [",as.character(units(x[[1]])), "]"),
       col = cptcity::cpt(pal = pal, rev = rev), horizontal = TRUE)
 
     graphics::par(fig=fig2,
@@ -132,21 +138,22 @@ plot.Speed <- function(x,
     avage <- mean(unlist(x))
     graphics::plot(colMeans(x, na.rm = T),
                    type="l",
-                   ylab = "mean",
+                   ylab = paste0("Mean speed [",as.character(units(x[[1]])), "]"),
                    xlab = "",
                    frame = FALSE,
                    xaxt = 'n')
     graphics::axis(3)
 
     graphics::abline(h = avage, col="red")
-    cat("\nWeighted mean = ",round(avage,2))
+    cat("Weighted mean = ",round(avage,2), "\n")
 
     graphics::par(fig=fig3, new=TRUE,
                   mai = mai3,
                   ...)
     graphics::plot(x = rowMeans(x, na.rm = T), y = nrow(x):1,
                    type = "l", frame = FALSE, yaxt = "n", xlab = '',
-                   ylab = '')
+                   ylab = paste0("Mean speed [",as.character(units(x[[1]])), "]")
+    )
     graphics::abline(v = avage, col="red")
 
   } else {
