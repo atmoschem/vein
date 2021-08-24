@@ -24,7 +24,7 @@
 #' @param verbose Logical; To show more information. Not implemented yet
 #' @return a list with emissions at each street and data.base aggregated by categories. See \code{link{emis_post}}
 #' @export
-#' @importFrom data.table rbindlist as.data.table data.table dcast.data.table melt.data.table
+#' @importFrom data.table rbindlist as.data.table data.table dcast.data.table melt.data.table setDT
 #' @note `decoder` shows a decoder for MOVES to identify
 #' @examples {
 #' data(decoder)
@@ -47,10 +47,10 @@ moves_exhaust <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[
                            verbose = FALSE) {
 
   dec <- sysdata$decoder
-
+  data.table::setDT(dec)
   profile$Hour <- NULL
 
-  ll <- ifelse(is.data.frame(veh), 1, seq_along(veh))
+  ll <- if(is.data.frame(veh)) 1 else seq_along(veh)
 
   agemax <- ifelse(
     is.data.frame(veh),
@@ -95,7 +95,7 @@ moves_exhaust <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[
                              by = "avgSpeedBinID",
                              all.x = T)
 
-          if(pollutantID == 91) {
+          if(pollutant_id == 91) {
             df_net_ef$ef <- df_net_ef$ratePerDistance*1/df_net_ef$energyContent*1/df_net_ef$fuelDensity
             df_net_ef$ef <- units::set_units(df_net_ef$ef, "gallons/miles/veh")
           } else {
@@ -172,6 +172,10 @@ moves_exhaust <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[
   data.table::melt.data.table(data = by_veh,
                               id.vars = names(by_veh)[1:7],
                               measure.vars = paste0("age_", 1:agemax)) -> veh
+
+    variable <- NULL
+    veh[, age := as.numeric(gsub("age_", "", variable))]
+
 
   rm(lxspeed)
   invisible(gc())
