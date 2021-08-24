@@ -6,6 +6,8 @@
 #' @return Objects of class "EmissionFactors" or "units"
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
+#' @param mass Character to be the time units as numerator, default "g" for grams
+#' @param dist String indicating the units of the resulting distance in speed.
 #' @param pal Palette of colors available or the number of the position
 #' @param object object with class "EmissionFactors'
 #' @param rev Logical; to internally revert order of rgb color vectors.
@@ -20,6 +22,7 @@
 #' @importFrom graphics par plot abline
 #' @importFrom fields image.plot
 #' @importFrom cptcity cpt
+#' @importFrom grDevices rgb colorRamp
 #' @rdname EmissionFactors
 #' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors
 #' plot.EmissionFactors
@@ -35,25 +38,33 @@
 #' print(ef1)
 #' }
 #' @export
-EmissionFactors <- function(x, ...) {
+EmissionFactors <- function(x, mass = "g", dist = "km", ...) {
   if ( is.matrix(x) ) {
     ef <- as.data.frame(x)
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i]*units::as_units("g km-1")
+      ef[,i] <- ef[,i]*units::as_units(paste0(mass, " ", dist, "-1"))
     }
     class(ef) <- c("EmissionFactors",class(ef))
     efx <- ef
   } else if ( is.data.frame(x) ) {
     ef <- x
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i]*units::as_units("g km-1")
+      ef[,i] <- ef[,i]*units::as_units(paste0(mass, " ", dist, "-1"))
     }
     class(ef) <- c("EmissionFactors",class(ef))
   } else if ( class(x) == "units" ) {
     ef <- x
-    warning("Check units are g/km")
+
+    ef <- x
+    if(as.character(units(ef)) != paste0(mass, "/", dist) ){
+      message("Converting ", as.character(units(ef)), " to ", mass, "/", dist)
+      spd <- units::as_units(ef, paste0(mass, " ", dist, "-1"))
+    } else {
+      message("Units are the same and no cerversions will be made")
+    }
+
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
-    ef <- x*units::as_units("g km-1")
+    ef <- x*units::as_units(paste0(mass, " ", dist, "-1"))
   }
   return(ef)
 }
@@ -124,13 +135,17 @@ plot.EmissionFactors <- function(x,
                   mai = mai1,
                   ...)
 
+    col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
+                                               bias = 2)(seq(0, 1,0.01)),
+                          maxColorValue = 255)
+
     fields::image.plot(
       x = 1:ncol(x),
       xaxt = "n",
       z =t(as.matrix(x))[, nrow(x):1],
       xlab = "",
       ylab = paste0("EF by streets [",as.character(units(x[[1]])), "]"),
-      col = cptcity::cpt(pal = pal, rev = rev), horizontal = TRUE)
+      col = col, horizontal = TRUE)
 
     graphics::par(fig=fig2,
                   mai = mai2,
@@ -152,8 +167,8 @@ plot.EmissionFactors <- function(x,
                   mai = mai3,
                   ...)
     graphics::plot(x = rowMeans(x, na.rm = T), y = nrow(x):1,
-                   type = "l", frame = FALSE, yaxt = "n", xlab = '',
-                   ylab = paste0("Mean EF [",as.character(units(x[[1]])), "]")
+                   type = "l", frame = FALSE, yaxt = "n",
+                   ylab = NULL, xlab = NULL
     )
     graphics::abline(v = avage, col="red")
 

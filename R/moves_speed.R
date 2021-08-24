@@ -6,49 +6,51 @@
 #' @param x Object with class, "sf",  "data.frame", "matrix" or "numeric" with speeds
 #' in miles/h (mph)
 #' @param net optional  spatial dataframe of class "sf".
-#' it is transformed to "sf".#' @importFrom sf st_sf st_set_geometry st_geometry
+#' it is transformed to "sf".
+#' @importFrom sf st_sf st_set_geometry st_geometry
+#' @importFrom data.table fifelse
 #' @export
 #' @examples {
 #' data(net)
 #' net$mph <- units::set_units(net$ps, "miles/h")
-#' net$speed_bins <- speed_moves(net$mph)
+#' net$speed_bins <- moves_speed(net$mph)
 #' head(net)
-#' speed_moves(net["ps"])
+#' moves_speed(net["ps"])
 #' }
-speed_moves <- function(x, net) {
+moves_speed <- function(x, net) {
   x <- remove_units(x)
   fx <- function(sp) {
-    ifelse(
+    data.table::fifelse(
       sp <= 0.1, 0,
-      ifelse(
+      data.table::fifelse(
         sp > 0.1 & sp <= 2.5, 1,
-        ifelse(
+        data.table::fifelse(
           sp > 2.5 & sp <= 7.5, 2,
-          ifelse(
+          data.table::fifelse(
             sp >= 7.5 & sp <= 12.5, 3,
-            ifelse(
+            data.table::fifelse(
               sp >= 12.5 & sp <= 17.5, 4,
-              ifelse(
+              data.table::fifelse(
                 sp >= 17.5 & sp <= 22.5, 5,
-                ifelse(
+                data.table::fifelse(
                   sp >= 22.5 & sp <= 27.5, 6,
-                  ifelse(
+                  data.table::fifelse(
                     sp >= 27.5 & sp <= 32.5, 7,
-                    ifelse(
+                    data.table::fifelse(
                       sp >= 32.5 & sp <= 37.5, 8,
-                      ifelse(
+                      data.table::fifelse(
                         sp >= 37.5 & sp <= 42.5, 9,
-                        ifelse(
+                        data.table::fifelse(
                           sp >= 42.5 & sp <= 47.5, 10,
-                          ifelse(
+                          data.table::fifelse(
                             sp >= 47.5 & sp <= 52.5, 11,
-                            ifelse(
+                            data.table::fifelse(
                               sp >= 52.5 & sp <= 57.5, 12,
-                              ifelse(
+                              data.table::fifelse(
                                 sp >= 57.5 & sp <= 62.5, 13,
-                                ifelse(
+                                data.table::fifelse(
                                   sp >= 62.5 & sp <= 67.5, 14,
-                                  ifelse(
+                                  data.table::fifelse(
                                     sp >= 67.5 & sp <= 72.5, 15,
                                     16))))))))))))))))
 

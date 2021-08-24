@@ -17,8 +17,8 @@ test_that("Emissions works", {
 })
 
 test_that("Emissions stops", {
-  expect_error(Emissions(units::set_units(1, "km")),
-               "units.?")
+  expect_error(Emissions(units::set_units(1, "km")), # miss time
+               ".")
 })
 
 test_that("Emissions prints", {

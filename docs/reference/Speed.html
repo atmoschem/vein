@@ -158,7 +158,7 @@
  is applied to numeric vectors it add class "units".</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Speed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, dist <span class='op'>=</span> <span class='st'>"km"</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>Speed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, dist <span class='op'>=</span> <span class='st'>"km"</span>, time <span class='op'>=</span> <span class='st'>"h"</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Speed</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -195,6 +195,10 @@ Default is units is "km"</p></td>
     <tr>
       <th>dist</th>
       <td><p>String indicating the units of the resulting distance in speed.</p></td>
+    </tr>
+    <tr>
+      <th>time</th>
+      <td><p>Character to be the time units as denominator, default is "h"</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -237,6 +241,9 @@ Default is units is "km"</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Constructor for class "Speed" or "units"</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>default time unit for speed is hour</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/difftime.html'>units</a></code></p></div>
@@ -259,7 +266,7 @@ Default is units is "km"</p></td>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='netspeed.html'>netspeed</a></span><span class='op'>(</span><span class='va'>pc_week</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>capacity</span>, <span class='va'>net</span><span class='op'>$</span><span class='va'>lkm</span>, dist <span class='op'>=</span> <span class='st'>"miles"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>x has the following units which wont be changed here</span></div><div class='img'><img src='Speed-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Speeds by columns and street in study area = 
+</div><div class='output co'>#&gt; <span class='message'>Units are the same and no cerversions will be made</span></div><div class='img'><img src='Speed-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Speeds by columns and street in study area = 
 #&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;   3.929  39.667  40.000  49.142  59.985 100.000 </div><div class='output co'>#&gt; Weighted mean =  49.14 </div><div class='img'><img src='Speed-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Weighted mean =  30.54 </div><div class='img'><img src='Speed-3.png' alt='' width='700' height='433' /></div></pre>
   </div>

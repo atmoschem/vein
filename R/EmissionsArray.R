@@ -7,8 +7,7 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param object object with class "EmissionsArray'
-#' @param pal Palette of colors available or the number of the position
-#' @param rev Logical; to internally revert order of rgb color vectors.
+#' @param main Title for plot
 #' @param ... ignored
 #' @importFrom  stats median quantile sd
 #' @rdname EmissionsArray
@@ -100,7 +99,7 @@ summary.EmissionsArray <- function(object, ...) {
   #' @rdname EmissionsArray
   #' @method plot EmissionsArray
   #' @export
-  plot.EmissionsArray <- function(x, pal = "imagej_split_blrd_warmmetal", rev = TRUE, ...) {
+  plot.EmissionsArray <- function(x, main = "average emissions", ...) {
     e <- x
     if (length(dim(e)) == 4 ) {
       df <- Emissions(t(apply(e, c(3, 4), sum, na.rm=T)))
@@ -112,7 +111,7 @@ summary.EmissionsArray <- function(object, ...) {
       graphics::plot(y = dfx$Mean, x = 1:nrow(dfx),
                      ylim = c(min(dfx$Min), max(dfx$Max)),
                      col = "red", type = "l",
-                     main = "average emissions",
+                     main = main,
                      ...)
       graphics::lines(dfx$Mean+dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
       graphics::lines(dfx$Mean-dfx$SD, ylim = c(min(dfx$Min), max(dfx$Max)))
@@ -121,7 +120,7 @@ summary.EmissionsArray <- function(object, ...) {
     } else {
       df <- Emissions(apply(e, c(1, 3), mean, na.rm=T))
       graphics::plot(df,
-                     main = "average emissions",
+                     main = main,
                      ...)
     }
   }

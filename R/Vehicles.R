@@ -9,6 +9,7 @@
 #'
 #' @param x Object with class "Vehicles"
 #' @param object Object with class "Vehicles"
+#' @param time Character to be the time units as denominator, default is NULL
 #' @param pal Palette of colors available or the number of the position
 #' @param rev Logical; to internally revert order of rgb color vectors.
 #' @param bk Break points in sorted order to indicate the intervals for assigning the colors.
@@ -23,6 +24,7 @@
 #' @importFrom units as_units install_unit
 #' @importFrom graphics par plot abline
 #' @importFrom fields image.plot
+#' @importFrom grDevices rgb colorRamp
 #'
 #' @rdname Vehicles
 #' @aliases Vehicles print.Vehicles summary.Vehicles plot.Vehicles
@@ -37,7 +39,7 @@
 #' plot(LT_B5)
 #' }
 #' @export
-Vehicles <- function(x, ..., time) {
+Vehicles <- function(x, ..., time=NULL) {
  # units::install_unit("veh")
 
   if(inherits(x, "sf")) {
@@ -168,6 +170,11 @@ plot.Vehicles <- function(x,
                   mai = mai1,
                   ...)
 
+    col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
+                                               bias = 2)(seq(0, 1,0.01)),
+                          maxColorValue = 255)
+
+
     fields::image.plot(
       x = 1:ncol(x),
       xaxt = "n",
@@ -175,7 +182,7 @@ plot.Vehicles <- function(x,
       xlab = "",
       ylab = paste0("Vehicles by streets [",as.character(units(x[[1]])), "]"),
       breaks = bk,
-      col = cptcity::cpt(pal = pal, rev = rev), horizontal = TRUE)
+      col = col, horizontal = TRUE)
 
     graphics::par(fig=fig2,
                   mai = mai2,
@@ -197,8 +204,8 @@ plot.Vehicles <- function(x,
                   mai = mai3,
                   ...)
     graphics::plot(x = rowSums(x, na.rm = T), y = nrow(x):1,
-                   type = "l", frame = FALSE, yaxt = "n", xlab = '',
-                   ylab = paste0("Sum vehicles [",as.character(units(x[[1]])), "]")
+                   type = "l", frame = FALSE, yaxt = "n",
+                   ylab = NULL, xlab = NULL
     )
     graphics::abline(v = mean(rowSums(x, na.rm = T), na.rm = T), col="red")
 
