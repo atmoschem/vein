@@ -23,6 +23,7 @@ EmissionFactors(x, mass = "g", dist = "km", ...)
   mai1 = c(0.2, 0.82, 0.82, 0.42),
   mai2 = c(1.3, 0.82, 0.82, 0.42),
   mai3 = c(0.7, 0.62, 0.82, 0.42),
+  bias = 1.5,
   ...
 )
 }
@@ -52,6 +53,8 @@ EmissionFactors(x, mass = "g", dist = "km", ...)
 \item{mai2}{par parameters for mai, \code{\link{par}}.}
 
 \item{mai3}{par parameters for mai, \code{\link{par}}.}
+
+\item{bias}{positive number. Higher values give more widely spaced colors at the high end.}
 }
 \value{
 Objects of class "EmissionFactors" or "units"

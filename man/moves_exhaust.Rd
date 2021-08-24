@@ -8,10 +8,10 @@ moves_exhaust(
   veh,
   lkm,
   ef,
-  sourceTypeID = 21,
-  fuelTypeID = 1,
-  pollutantID = 91,
-  roadTypeID = 5,
+  source_type_id = 21,
+  fuel_type_id = 1,
+  pollutant_id = 91,
+  road_type_id = 5,
   fuel_type,
   speed_bin,
   profile,
@@ -31,13 +31,13 @@ The number of rows is equal to the number of streets link.}
 
 \item{ef}{emission factors from EmissionRates_running exported from MOVES}
 
-\item{sourceTypeID}{Number to identify type of vehicle as defined by MOVES.}
+\item{source_type_id}{Number to identify type of vehicle as defined by MOVES.}
 
-\item{fuelTypeID}{Number to identify type of fuel as defined by MOVES.}
+\item{fuel_type_id}{Number to identify type of fuel as defined by MOVES.}
 
-\item{pollutantID}{Number to identify type of pollutant as defined by MOVES.}
+\item{pollutant_id}{Number to identify type of pollutant as defined by MOVES.}
 
-\item{roadTypeID}{Number to identify type of road as defined by MOVES.}
+\item{road_type_id}{Number to identify type of road as defined by MOVES.}
 
 \item{fuel_type}{Data.frame of fuelSubtypeID exported by MOVES.}
 
@@ -61,15 +61,14 @@ is usually too heavy.}
 a list with emissions at each street and data.base aggregated by categories. See \code{link{emis_post}}
 }
 \description{
-\code{\link{moves_exhaust}} estimates vehicular emissions as the product of the
-vehicles on a road, length of the road, emission factor avaliated at the
-respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
+\code{\link{moves_exhaust}} estimates running exhaust emissions
+using MOVES emission factors.
 }
 \note{
 `decoder` shows a decoder for MOVES to identify
 }
 \examples{
-\dontrun{
+{
 data(decoder)
 decoder
 }
