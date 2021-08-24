@@ -39,7 +39,7 @@ for (i in seq_along(pols)) {
                 .SDcols = na
         ]
         setDF(dfm)
-        x <- st_sf(Emissions(dfm, time = "1/h"), geometry = geo)
+        x <- st_sf(Emissions(dfm, time = "h"), geometry = geo)
         saveRDS(x, paste0("post/streets/", pols[i], ".rds"))
 
         gx <- emis_grid(spobj = x, g = g)
