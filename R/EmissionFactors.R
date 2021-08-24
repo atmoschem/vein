@@ -17,6 +17,7 @@
 #' @param mai2 par parameters for mai, \code{\link{par}}.
 #' @param fig3 par parameters for fig, \code{\link{par}}.
 #' @param mai3 par parameters for mai, \code{\link{par}}.
+#' @param bias  positive number. Higher values give more widely spaced colors at the high end.
 #' @param ... ignored
 #' @importFrom units as_units
 #' @importFrom graphics par plot abline
@@ -107,6 +108,7 @@ plot.EmissionFactors <- function(x,
                                  mai1 = c(0.2, 0.82, 0.82, 0.42),
                                  mai2 = c(1.3, 0.82, 0.82, 0.42),
                                  mai3 = c(0.7, 0.62, 0.82, 0.42),
+                                 bias = 1.5,
                                  ...) {
   # ef <- x
   # if (ncol(ef) >= 1 & ncol(ef) <= 3) {
@@ -136,7 +138,7 @@ plot.EmissionFactors <- function(x,
                   ...)
 
     col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
-                                               bias = 2)(seq(0, 1,0.01)),
+                                               bias = bias)(seq(0, 1,0.01)),
                           maxColorValue = 255)
 
     fields::image.plot(

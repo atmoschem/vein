@@ -47,9 +47,8 @@
 
 
 <meta property="og:title" content="Estimation of exhaust emissions using MOVES — moves_exhaust" />
-<meta property="og:description" content="moves_exhaust estimates vehicular emissions as the product of the
-vehicles on a road, length of the road, emission factor avaliated at the
-respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
+<meta property="og:description" content="moves_exhaust estimates running exhaust emissions
+using MOVES emission factors." />
 <meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 
 
@@ -149,19 +148,18 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)" />
     </div>
 
     <div class="ref-description">
-    <p><code>moves_exhaust</code> estimates vehicular emissions as the product of the
-vehicles on a road, length of the road, emission factor avaliated at the
-respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
+    <p><code>moves_exhaust</code> estimates running exhaust emissions
+using MOVES emission factors.</p>
     </div>
 
     <pre class="usage"><span class='fu'>moves_exhaust</span><span class='op'>(</span>
   <span class='va'>veh</span>,
   <span class='va'>lkm</span>,
   <span class='va'>ef</span>,
-  sourceTypeID <span class='op'>=</span> <span class='fl'>21</span>,
-  fuelTypeID <span class='op'>=</span> <span class='fl'>1</span>,
-  pollutantID <span class='op'>=</span> <span class='fl'>91</span>,
-  roadTypeID <span class='op'>=</span> <span class='fl'>5</span>,
+  source_type_id <span class='op'>=</span> <span class='fl'>21</span>,
+  fuel_type_id <span class='op'>=</span> <span class='fl'>1</span>,
+  pollutant_id <span class='op'>=</span> <span class='fl'>91</span>,
+  road_type_id <span class='op'>=</span> <span class='fl'>5</span>,
   <span class='va'>fuel_type</span>,
   <span class='va'>speed_bin</span>,
   <span class='va'>profile</span>,
@@ -190,19 +188,19 @@ The number of rows is equal to the number of streets link.</p></td>
       <td><p>emission factors from EmissionRates_running exported from MOVES</p></td>
     </tr>
     <tr>
-      <th>sourceTypeID</th>
+      <th>source_type_id</th>
       <td><p>Number to identify type of vehicle as defined by MOVES.</p></td>
     </tr>
     <tr>
-      <th>fuelTypeID</th>
+      <th>fuel_type_id</th>
       <td><p>Number to identify type of fuel as defined by MOVES.</p></td>
     </tr>
     <tr>
-      <th>pollutantID</th>
+      <th>pollutant_id</th>
       <td><p>Number to identify type of pollutant as defined by MOVES.</p></td>
     </tr>
     <tr>
-      <th>roadTypeID</th>
+      <th>road_type_id</th>
       <td><p>Number to identify type of road as defined by MOVES.</p></td>
     </tr>
     <tr>
@@ -249,11 +247,150 @@ is usually too heavy.</p></td>
     <p>`decoder` shows a decoder for MOVES to identify</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='op'>{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>decoder</span><span class='op'>)</span>
 <span class='va'>decoder</span>
 <span class='op'>}</span>
-</div></pre>
+</div><div class='output co'>#&gt;    CategoryField pollutantID                            Description
+#&gt; 1          dayID           5                                Weekday
+#&gt; 2          dayID           2                                Weekend
+#&gt; 3   sourceTypeID          11                             Motorcycle
+#&gt; 4   sourceTypeID          21                          Passenger Car
+#&gt; 5   sourceTypeID          31                        Passenger Truck
+#&gt; 6   sourceTypeID          32                 Light Commercial Truck
+#&gt; 7   sourceTypeID          41                            Other Buses
+#&gt; 8   sourceTypeID          42                            Transit Bus
+#&gt; 9   sourceTypeID          43                             School Bus
+#&gt; 10  sourceTypeID          51                           Refuse Truck
+#&gt; 11  sourceTypeID          52           Single Unit Short-haul Truck
+#&gt; 12  sourceTypeID          53            Single Unit Long-haul Truck
+#&gt; 13  sourceTypeID          54                             Motor Home
+#&gt; 14  sourceTypeID          61           Combination Short-haul Truck
+#&gt; 15  sourceTypeID          62            Combination Long-haul Truck
+#&gt; 16    roadTypeID           1                            Off-Network
+#&gt; 17    roadTypeID           2                Rural Restricted Access
+#&gt; 18    roadTypeID           3              Rural Unrestricted Access
+#&gt; 19    roadTypeID           4                Urban Restricted Access
+#&gt; 20    roadTypeID           5              Urban Unrestricted Access
+#&gt; 21    fuelTypeID           1                               Gasoline
+#&gt; 22    fuelTypeID           2                            Diesel Fuel
+#&gt; 23    fuelTypeID           3           Compressed Natural Gas (CNG)
+#&gt; 24    fuelTypeID           5                         Ethanol (E-85)
+#&gt; 25   pollutantID           1             Total Gaseous Hydrocarbons
+#&gt; 26   pollutantID           2                        Carbon Monoxide
+#&gt; 27   pollutantID           3                     Oxides of Nitrogen
+#&gt; 28   pollutantID           5                                Methane
+#&gt; 29   pollutantID           6                          Nitrous Oxide
+#&gt; 30   pollutantID          20                                Benzene
+#&gt; 31   pollutantID          21                                Ethanol
+#&gt; 32   pollutantID          30                                Ammonia
+#&gt; 33   pollutantID          31                        Sulfure Dioxide
+#&gt; 34   pollutantID          32                         Nitrogen Oxide
+#&gt; 35   pollutantID          33                       Nitrogen Dioxide
+#&gt; 36   pollutantID          34                           Nitrous Acid
+#&gt; 37   pollutantID          79               Non-Methane Hydrocarbons
+#&gt; 38   pollutantID          86                    Total Organic Gases
+#&gt; 39   pollutantID          87             Volatile Organic Compounds
+#&gt; 40   pollutantID          90                        Atmospheric CO2
+#&gt; 41   pollutantID          91               Total Energy Consumption
+#&gt; 42   pollutantID          92           Petroleum Energy Consumption
+#&gt; 43   pollutantID          93         Fossil Fuel Energy Consumption
+#&gt; 44   pollutantID          98                         CO2 Equivalent
+#&gt; 45   pollutantID         100           Primary Exhaust PM10 - Total
+#&gt; 46   pollutantID         101          Primary PM10 - Organic Carbon
+#&gt; 47   pollutantID         102        Primary PM10 - Elemental Carbon
+#&gt; 48   pollutantID         105     Primary PM10 - Sulfate Particulate
+#&gt; 49   pollutantID         106  Primary PM10 -  Brakewear Particulate
+#&gt; 50   pollutantID         107   Primary PM10 -  Tirewear Particulate
+#&gt; 51   pollutantID         110          Primary Exhaust PM2.5 - Total
+#&gt; 52   pollutantID         111         Primary PM2.5 - Organic Carbon
+#&gt; 53   pollutantID         112       Primary PM2.5 - Elemental Carbon
+#&gt; 54   pollutantID         115    Primary PM2.5 - Sulfate Particulate
+#&gt; 55   pollutantID         116 Primary PM2.5 -  Brakewear Particulate
+#&gt; 56   pollutantID         117  Primary PM2.5 -  Tirewear Particulate
+#&gt; 57     processID           1                        Running Exhaust
+#&gt; 58     processID           2                          Start Exhaust
+#&gt; 59     processID          15                      Crank Run Exhaust
+#&gt; 60     processID          16                    Crank Start Exhaust
+#&gt; 61     processID          17                 Crank Ext Idle Exhaust
+#&gt; 62     processID          90                       Ext Idle Exhaust
+#&gt; 63     processID          11                        Evap Permeation
+#&gt; 64     processID          12                  Evaporative Fuel Vent
+#&gt; 65     processID          13                  Evaporative Fuel Leak
+#&gt; 66     processID          18                        Refuel Disp Vap
+#&gt; 67     processID          19                        Refuel Spillage
+#&gt; 68     processID           9                              Brakewear
+#&gt; 69     processID          10                               Tirewear
+#&gt;              V4
+#&gt; 1              
+#&gt; 2              
+#&gt; 3              
+#&gt; 4              
+#&gt; 5              
+#&gt; 6              
+#&gt; 7              
+#&gt; 8              
+#&gt; 9              
+#&gt; 10             
+#&gt; 11             
+#&gt; 12             
+#&gt; 13             
+#&gt; 14             
+#&gt; 15             
+#&gt; 16             
+#&gt; 17             
+#&gt; 18             
+#&gt; 19             
+#&gt; 20             
+#&gt; 21             
+#&gt; 22             
+#&gt; 23             
+#&gt; 24             
+#&gt; 25           HC
+#&gt; 26           CO
+#&gt; 27          NOx
+#&gt; 28          CH4
+#&gt; 29          N2O
+#&gt; 30             
+#&gt; 31             
+#&gt; 32          NH3
+#&gt; 33          SO2
+#&gt; 34          NOx
+#&gt; 35          NO2
+#&gt; 36         HONO
+#&gt; 37         NMHC
+#&gt; 38          TOG
+#&gt; 39          VOC
+#&gt; 40       AT CO2
+#&gt; 41    TotEnergy
+#&gt; 42    PetEnergy
+#&gt; 43 FossilEnergy
+#&gt; 44        CO2EQ
+#&gt; 45   PM10TotExh
+#&gt; 46       PM10OC
+#&gt; 47       PM10EC
+#&gt; 48  PM10Sulfate
+#&gt; 49    PM10Brake
+#&gt; 50     PM10Tire
+#&gt; 51  PM2.5TotExh
+#&gt; 52      PM2.5OC
+#&gt; 53      PM2.5EC
+#&gt; 54 PM2.5Sulfate
+#&gt; 55   PM2.5Brake
+#&gt; 56    PM2.5Tire
+#&gt; 57             
+#&gt; 58             
+#&gt; 59             
+#&gt; 60             
+#&gt; 61             
+#&gt; 62             
+#&gt; 63             
+#&gt; 64             
+#&gt; 65             
+#&gt; 66             
+#&gt; 67             
+#&gt; 68             
+#&gt; 69             </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
