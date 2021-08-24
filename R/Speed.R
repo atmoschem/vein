@@ -10,6 +10,7 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param dist String indicating the units of the resulting distance in speed.
+#' @param time Character to be the time units as denominator, default is "h"
 #' @param object Object with class "Speed"
 #' @param pal Palette of colors available or the number of the position
 #' @param rev Logical; to internally revert order of rgb color vectors.
@@ -23,10 +24,12 @@
 #' Default is units is "km"
 #' @importFrom units as_units
 #' @importFrom fields image.plot
+#' @importFrom grDevices rgb colorRamp
 #' @seealso \code{\link{units}}
 #'
 #' @rdname Speed
 #' @aliases Speed print.Speed summary.Speed plot.Speed
+#' @note default time unit for speed is hour
 #' @examples {
 #' data(net)
 #' data(pc_profile)
@@ -45,17 +48,17 @@
 #' plot(df)
 #' }
 #' @export
-Speed <- function(x, ..., dist = "km") {
+Speed <- function(x, ..., dist = "km", time = "h") {
   if  ( is.matrix(x) ) {
     spd <- as.data.frame(x)
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i]*units::as_units(paste0(dist, " h-1"))
+      spd[,i] <- spd[,i]*units::as_units(paste0(dist, " ", time, "-1"))
     }
     class(spd) <- c("Speed", "data.frame")
   } else if ( is.data.frame(x) ) {
     spd <- x
     for(i in 1:ncol(spd)){
-      spd[,i] <- spd[,i]*units::as_units(paste0(dist, " h-1"))
+      spd[,i] <- spd[,i]*units::as_units(paste0(dist, " ", time, "-1"))
     }
     class(spd) <- c("Speed",class(x))
   } else if ( is.list(x) ) {
@@ -63,11 +66,16 @@ Speed <- function(x, ..., dist = "km") {
     #SpeedList?
   } else if ( class(x) == "units" ) {
     spd <- x
-    message("x has the following units which wont be changed here")
-    # spd <- spd*units::set_units(paste0(dist, " h-1"))
+    if(as.character(units(spd)) != paste0(dist, "/", time) ){
+      message("Converting ", as.character(units(spd)), " to ", dist, "/", time)
+      spd <- units::as_units(spd, paste0(dist, " ", time, "-1"))
+    } else {
+     message("Units are the same and no cerversions will be made")
+    }
+
 
   } else if( class(x) == "numeric" | class(x) == "integer" ) {
-    spd <- x*units::as_units(paste0(dist, " h-1"))
+    spd <- x*units::as_units(paste0(dist, " ", time, "-1"))
   }
   return(spd)
 }
@@ -123,13 +131,18 @@ plot.Speed <- function(x,
                   mai = mai1,
                   ...)
 
+    col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
+                                               bias = 2)(seq(0, 1,0.01)),
+                          maxColorValue = 255)
+
+
     fields::image.plot(
       x = 1:ncol(x),
       xaxt = "n",
       z =t(as.matrix(x))[, nrow(x):1],
       xlab = "",
       ylab = paste0("Speed by streets [",as.character(units(x[[1]])), "]"),
-      col = cptcity::cpt(pal = pal, rev = rev), horizontal = TRUE)
+      col = col, horizontal = TRUE)
 
     graphics::par(fig=fig2,
                   mai = mai2,
@@ -151,8 +164,8 @@ plot.Speed <- function(x,
                   mai = mai3,
                   ...)
     graphics::plot(x = rowMeans(x, na.rm = T), y = nrow(x):1,
-                   type = "l", frame = FALSE, yaxt = "n", xlab = '',
-                   ylab = paste0("Mean speed [",as.character(units(x[[1]])), "]")
+                   type = "l", frame = FALSE, yaxt = "n",
+                   ylab = NULL, xlab = NULL
     )
     graphics::abline(v = avage, col="red")
 

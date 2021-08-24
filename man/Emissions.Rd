@@ -7,7 +7,7 @@
 \alias{plot.Emissions}
 \title{Construction function for class "Emissions"}
 \usage{
-Emissions(x, time, ...)
+Emissions(x, mass = "g", time, ...)
 
 \method{print}{Emissions}(x, ...)
 
@@ -23,13 +23,16 @@ Emissions(x, time, ...)
   mai1 = c(0.2, 0.82, 0.82, 0.42),
   mai2 = c(1.3, 0.82, 0.82, 0.42),
   mai3 = c(0.7, 0.72, 0.82, 0.42),
+  main = NULL,
   ...
 )
 }
 \arguments{
 \item{x}{Object with class "data.frame", "matrix" or "numeric"}
 
-\item{time}{Character to be the time units as denominator, eg "1/h"}
+\item{mass}{Character to be the time units as numerator, default "g" for grams}
+
+\item{time}{Character to be the time units as denominator, eg "h"}
 
 \item{...}{ignored}
 
@@ -50,6 +53,8 @@ Emissions(x, time, ...)
 \item{mai2}{par parameters for mai, \code{\link{par}}.}
 
 \item{mai3}{par parameters for mai, \code{\link{par}}.}
+
+\item{main}{title of plot}
 }
 \value{
 Objects of class "Emissions" or "units"
@@ -88,6 +93,7 @@ dim(E_CO) # streets x vehicle categories x hours x days
 class(E_CO)
 plot(E_CO)
 ####
-Emissions(1, time = "1/h")
+Emissions(1)
+Emissions(1, time = "h")
 }
 }
