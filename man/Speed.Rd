@@ -7,7 +7,7 @@
 \alias{plot.Speed}
 \title{Construction function for class "Speed"}
 \usage{
-Speed(x, ..., dist = "km")
+Speed(x, ..., dist = "km", time = "h")
 
 \method{print}{Speed}(x, ...)
 
@@ -33,6 +33,8 @@ Speed(x, ..., dist = "km")
 Default is units is "km"}
 
 \item{dist}{String indicating the units of the resulting distance in speed.}
+
+\item{time}{Character to be the time units as denominator, default is "h"}
 
 \item{object}{Object with class "Speed"}
 
@@ -61,6 +63,9 @@ Constructor for class "Speed" or "units"
  it is posibel to change the units of the speed to "m" to "s" for example.
  This function returns a dataframe with units for speed. When this function
  is applied to numeric vectors it add class "units".
+}
+\note{
+default time unit for speed is hour
 }
 \examples{
 {

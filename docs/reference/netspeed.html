@@ -226,7 +226,7 @@ Default is units from peak speed `ps`</p><table class='table'>
     <p>dataframe speeds with units or sf.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='op'>{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>pc_profile</span><span class='op'>)</span>
 <span class='va'>pc_week</span> <span class='op'>&lt;-</span> <span class='fu'><a href='temp_fact.html'>temp_fact</a></span><span class='op'>(</span><span class='va'>net</span><span class='op'>$</span><span class='va'>ldv</span><span class='op'>+</span><span class='va'>net</span><span class='op'>$</span><span class='va'>hdv</span>, <span class='va'>pc_profile</span><span class='op'>)</span>
@@ -244,9 +244,10 @@ Default is units from peak speed `ps`</p><table class='table'>
 <span class='va'>dfsf</span> <span class='op'>&lt;-</span> <span class='fu'>netspeed</span><span class='op'>(</span>ps <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ps</span>, ffs <span class='op'>=</span> <span class='va'>net</span><span class='op'>$</span><span class='va'>ffs</span>, scheme <span class='op'>=</span> <span class='cn'>TRUE</span>, net <span class='op'>=</span> <span class='va'>net</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>dfsf</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dfsf</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dfsf</span>, pal <span class='op'>=</span> <span class='fu'>cptcity</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/lucky.html'>lucky</a></span><span class='op'>(</span>colorRampPalette <span class='op'>=</span> <span class='cn'>T</span>, rev <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>, key.pos <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='co'>#plot of the average speed at each hour, +- sd</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dfsf</span>, pal <span class='op'>=</span> <span class='fu'>cptcity</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cptcity/man/lucky.html'>lucky</a></span><span class='op'>(</span>colorRampPalette <span class='op'>=</span> <span class='cn'>TRUE</span>, rev <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+ key.pos <span class='op'>=</span> <span class='fl'>1</span>, max.plot <span class='op'>=</span> <span class='fl'>9</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div></pre>
+</div><div class='output co'>#&gt; Weighted mean =  45.39 </div><div class='img'><img src='netspeed-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Weighted mean =  28.21 </div><div class='img'><img src='netspeed-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Weighted mean =  25.89 </div><div class='img'><img src='netspeed-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Colour gradient: cmocean_gray, number: 577 </div><div class='img'><img src='netspeed-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,8 +6,8 @@ test_that("EmissionFactors works", {
 })
 
 test_that("EmissionFactors works", {
-  expect_warning(EmissionFactors(units::set_units(1, "g")),
-                 "Check.?\\(?")
+  expect_message(EmissionFactors(units::set_units(1, "g/km")),
+                 ".")
 })
 
 test_that("EmissionFactors prints", {

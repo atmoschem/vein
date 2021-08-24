@@ -152,7 +152,7 @@
 "EmissionFactors" and units g/km.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>EmissionFactors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>EmissionFactors</span><span class='op'>(</span><span class='va'>x</span>, mass <span class='op'>=</span> <span class='st'>"g"</span>, dist <span class='op'>=</span> <span class='st'>"km"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for EmissionFactors</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -180,6 +180,14 @@
     <tr>
       <th>x</th>
       <td><p>Object with class "data.frame", "matrix" or "numeric"</p></td>
+    </tr>
+    <tr>
+      <th>mass</th>
+      <td><p>Character to be the time units as numerator, default "g" for grams</p></td>
+    </tr>
+    <tr>
+      <th>dist</th>
+      <td><p>String indicating the units of the resulting distance in speed.</p></td>
     </tr>
     <tr>
       <th>...</th>

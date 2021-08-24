@@ -7,7 +7,7 @@
 \alias{plot.EmissionFactors}
 \title{Construction function for class "EmissionFactors"}
 \usage{
-EmissionFactors(x, ...)
+EmissionFactors(x, mass = "g", dist = "km", ...)
 
 \method{print}{EmissionFactors}(x, ...)
 
@@ -28,6 +28,10 @@ EmissionFactors(x, ...)
 }
 \arguments{
 \item{x}{Object with class "data.frame", "matrix" or "numeric"}
+
+\item{mass}{Character to be the time units as numerator, default "g" for grams}
+
+\item{dist}{String indicating the units of the resulting distance in speed.}
 
 \item{...}{ignored}
 

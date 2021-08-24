@@ -7,7 +7,7 @@
 \alias{plot.Vehicles}
 \title{Construction function for class "Vehicles"}
 \usage{
-Vehicles(x, ..., time)
+Vehicles(x, ..., time = NULL)
 
 \method{print}{Vehicles}(x, ...)
 

@@ -45,7 +45,8 @@
 #' dfsf <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)
 #' class(dfsf)
 #' head(dfsf)
-#' plot(dfsf, pal = cptcity::lucky(colorRampPalette = T, rev = T), key.pos = T) #plot of the average speed at each hour, +- sd
+#' plot(dfsf, pal = cptcity::lucky(colorRampPalette = TRUE, rev = TRUE),
+#'  key.pos = 1, max.plot = 9)
 #' }
 netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
                       net, scheme = FALSE, dist = "km"){

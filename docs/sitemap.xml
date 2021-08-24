@@ -64,6 +64,9 @@
     <loc>http://atmoschem.github.io/vein//reference/colplot.html</loc>
   </url>
   <url>
+    <loc>http://atmoschem.github.io/vein//reference/decoder.html</loc>
+  </url>
+  <url>
     <loc>http://atmoschem.github.io/vein//reference/ef_cetesb.html</loc>
   </url>
   <url>
@@ -196,6 +199,12 @@
     <loc>http://atmoschem.github.io/vein//reference/make_grid.html</loc>
   </url>
   <url>
+    <loc>http://atmoschem.github.io/vein//reference/moves_exhaust.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/moves_speed.html</loc>
+  </url>
+  <url>
     <loc>http://atmoschem.github.io/vein//reference/my_age.html</loc>
   </url>
   <url>
@@ -224,9 +233,6 @@
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein//reference/speciate.html</loc>
-  </url>
-  <url>
-    <loc>http://atmoschem.github.io/vein//reference/speed_moves.html</loc>
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein//reference/split_emis.html</loc>
