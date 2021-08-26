@@ -19,6 +19,7 @@
 #' @param vehicle Character, type of vehicle
 #' @param vehicle_type Character, subtype of vehicle
 #' @param fuel_subtype Character, subtype of vehicle
+#' @param net Road network class sf
 #' @param path_all Character to export whole estimation. It is not recommended since it
 #' is usually too heavy.
 #' @param verbose Logical; To show more information. Not implemented yet
@@ -43,6 +44,7 @@ moves_exhaust <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[
                            vehicle = NULL,
                            vehicle_type = NULL,
                            fuel_subtype = NULL,
+                           net,
                            path_all, #path to save RDS
                            verbose = FALSE) {
 
@@ -96,7 +98,7 @@ moves_exhaust <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[
                              all.x = T)
 
           if(pollutant_id == 91) {
-            df_net_ef$ef <- df_net_ef$ratePerDistance*1/df_net_ef$energyContent*1/df_net_ef$fuelDensity
+            df_net_ef$ef <- df_net_ef$ratePerDistance/1000*1/df_net_ef$energyContent*1/df_net_ef$fuelDensity
             df_net_ef$ef <- units::set_units(df_net_ef$ef, "gallons/miles/veh")
           } else {
             df_net_ef$ef <- df_net_ef$ratePerDistance
@@ -161,6 +163,10 @@ moves_exhaust <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[
 
 
   data.table::dcast.data.table(by_street2, formula = id~hour, value.var = "V1") -> streets
+  names(streets)[2:ncol(streets)] <- paste0("H", names(streets)[2:ncol(streets)])
+  if(!missing(net)) {
+    streets <- cbind(net, streets)
+  }
 
   names(lxspeed)
   veh <- veh_type <- fuel <- pollutant <- type_emi <-  sourceTypeID <- NULL

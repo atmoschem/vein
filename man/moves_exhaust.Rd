@@ -18,6 +18,7 @@ moves_exhaust(
   vehicle = NULL,
   vehicle_type = NULL,
   fuel_subtype = NULL,
+  net,
   path_all,
   verbose = FALSE
 )
@@ -51,6 +52,8 @@ the week}
 \item{vehicle_type}{Character, subtype of vehicle}
 
 \item{fuel_subtype}{Character, subtype of vehicle}
+
+\item{net}{Road network class sf}
 
 \item{path_all}{Character to export whole estimation. It is not recommended since it
 is usually too heavy.}
