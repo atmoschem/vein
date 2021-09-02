@@ -1,6 +1,6 @@
-#' Estimation of exhaust emissions using MOVES
+#' MOVES estimation of using rates per distance
 #'
-#' @description \code{\link{moves_exhaust}} estimates running exhaust emissions
+#' @description \code{\link{moves_rpd}} estimates running exhaust emissions
 #' using MOVES emission factors.
 #'
 #' @param veh "Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
@@ -26,12 +26,12 @@
 #' @return a list with emissions at each street and data.base aggregated by categories. See \code{link{emis_post}}
 #' @export
 #' @importFrom data.table rbindlist as.data.table data.table dcast.data.table melt.data.table setDT
-#' @note `decoder` shows a decoder for MOVES to identify
+#' @note `decoder` shows a decoder for MOVES
 #' @examples {
 #' data(decoder)
 #' decoder
 #' }
-moves_exhaust <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
+moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
                            lkm,
                            ef,
                            source_type_id = 21, #Passenger car

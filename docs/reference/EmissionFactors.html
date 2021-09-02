@@ -49,7 +49,6 @@
 <meta property="og:title" content="Construction function for class "EmissionFactors" — EmissionFactors" />
 <meta property="og:description" content="EmissionFactors returns a tranformed object with class
 &quot;EmissionFactors&quot; and units g/km." />
-<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 
 
 
@@ -171,6 +170,7 @@
   mai1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.2</span>, <span class='fl'>0.82</span>, <span class='fl'>0.82</span>, <span class='fl'>0.42</span><span class='op'>)</span>,
   mai2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.3</span>, <span class='fl'>0.82</span>, <span class='fl'>0.82</span>, <span class='fl'>0.42</span><span class='op'>)</span>,
   mai3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.7</span>, <span class='fl'>0.62</span>, <span class='fl'>0.82</span>, <span class='fl'>0.42</span><span class='op'>)</span>,
+  bias <span class='op'>=</span> <span class='fl'>1.5</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -228,6 +228,10 @@
     <tr>
       <th>mai3</th>
       <td><p>par parameters for mai, <code><a href='https://rdrr.io/r/graphics/par.html'>par</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>bias</th>
+      <td><p>positive number. Higher values give more widely spaced colors at the high end.</p></td>
     </tr>
     </table>
 
