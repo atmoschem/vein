@@ -51,7 +51,6 @@
 The type of objects supported are of classes &quot;matrix&quot;, &quot;data.frame&quot; and
 &quot;numeric&quot;. If the class of the object is &quot;matrix&quot; this function returns a
 dataframe." />
-<meta property="og:image" content="http://atmoschem.github.io/vein/logo.png" />
 
 
 
@@ -176,6 +175,7 @@ dataframe.</p>
   mai2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.3</span>, <span class='fl'>0.82</span>, <span class='fl'>0.82</span>, <span class='fl'>0.42</span><span class='op'>)</span>,
   mai3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.7</span>, <span class='fl'>0.72</span>, <span class='fl'>0.82</span>, <span class='fl'>0.42</span><span class='op'>)</span>,
   main <span class='op'>=</span> <span class='cn'>NULL</span>,
+  bias <span class='op'>=</span> <span class='fl'>1.5</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -237,6 +237,10 @@ dataframe.</p>
     <tr>
       <th>main</th>
       <td><p>title of plot</p></td>
+    </tr>
+    <tr>
+      <th>bias</th>
+      <td><p>positive number. Higher values give more widely spaced colors at the high end.</p></td>
     </tr>
     </table>
 
