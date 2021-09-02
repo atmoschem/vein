@@ -32,21 +32,21 @@
 #' decoder
 #' }
 moves_rpdy <- function (veh,
-                                     lkm,
-                                     ef,
-                                     source_type_id = 21,
-                                     fuel_type_id = 1,
-                                     pollutant_id = 91,
-                                     road_type_id = 5,
-                                     fuel_type,
-                                     speed_bin,
-                                     profile,
-                                     vehicle = NULL,
-                                     vehicle_type = NULL,
-                                     fuel_subtype = NULL,
-                                     net,
-                                     path_all,
-                                     verbose = FALSE) {
+                        lkm,
+                        ef,
+                        source_type_id = 21,
+                        fuel_type_id = 1,
+                        pollutant_id = 91,
+                        road_type_id = 5,
+                        fuel_type,
+                        speed_bin,
+                        profile,
+                        vehicle = NULL,
+                        vehicle_type = NULL,
+                        fuel_subtype = NULL,
+                        net,
+                        path_all,
+                        verbose = FALSE) {
   dec <- sysdata$decoder
   data.table::setDT(dec)
 
@@ -137,7 +137,7 @@ moves_rpdy <- function (veh,
         EF <- EmissionFactors(x = as.data.frame(EF), mass = "g", dist = "miles")
 
         for(kk in 1:ncol(EF)) {
-          EF[[kk]] <- units::set_units(EF[[kk]],"g/miles/veh")
+          EF[[kk]] <- EF[[kk]]*units::set_units(1,"1/veh")
         }
       }
 
