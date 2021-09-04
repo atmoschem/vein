@@ -44,6 +44,7 @@ moves_rpdy <- function (veh,
                         vehicle = NULL,
                         vehicle_type = NULL,
                         fuel_subtype = NULL,
+                        process_id = NULL,
                         net,
                         path_all,
                         verbose = FALSE) {
