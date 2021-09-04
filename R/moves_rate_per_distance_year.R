@@ -19,13 +19,14 @@
 #' @param vehicle Character, type of vehicle
 #' @param vehicle_type Character, subtype of vehicle
 #' @param fuel_subtype Character, subtype of vehicle
+#' @param process_id Character, processID
 #' @param net Road network class sf
 #' @param path_all Character to export whole estimation. It is not recommended since it
 #' is usually too heavy.
 #' @param verbose Logical; To show more information. Not implemented yet
 #' @return a list with emissions at each street and data.base aggregated by categories. See \code{link{emis_post}}
 #' @export
-#' @importFrom data.table rbindlist as.data.table data.table dcast.data.table melt.data.table setDT
+#' @importFrom data.table rbindlist as.data.table data.table dcast.data.table melt.data.table
 #' @note `decoder` shows a decoder for MOVES
 #' @examples {
 #' data(decoder)
@@ -48,8 +49,6 @@ moves_rpdy <- function (veh,
                         net,
                         path_all,
                         verbose = FALSE) {
-  dec <- sysdata$decoder
-  data.table::setDT(dec)
 
   profile$Hour <- NULL
 
@@ -189,9 +188,7 @@ moves_rpdy <- function (veh,
       emi$fuel <- fuel_subtype[i]
       emi$pollutant <- pollutant_id
       CategoryField <- Description <- NULL
-      emi$type_emi <- dec[CategoryField == "processID" &
-                            pollutantID == pollutant_id,
-                          Description]
+      emi$type_emi <- process_id
       emi$sourceTypeID <- source_type_id[i]
       emi
     }))
