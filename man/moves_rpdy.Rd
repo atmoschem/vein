@@ -18,6 +18,7 @@ moves_rpdy(
   vehicle = NULL,
   vehicle_type = NULL,
   fuel_subtype = NULL,
+  process_id = NULL,
   net,
   path_all,
   verbose = FALSE
@@ -52,6 +53,8 @@ the week}
 \item{vehicle_type}{Character, subtype of vehicle}
 
 \item{fuel_subtype}{Character, subtype of vehicle}
+
+\item{process_id}{Character, processID}
 
 \item{net}{Road network class sf}
 
