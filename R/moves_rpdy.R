@@ -62,10 +62,11 @@ moves_rpdy <- function (veh,
                     source_type_id[i], "and fuelTypeID",  fuel_type_id[i], "\n")
 
     data.table::rbindlist(lapply(1:ncol(speed_bin), function(j) {
+      seq_horas <- rep(1:24, ncol(speed_bin)/24)
 
       hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
 
-      def <- ef[hourID == j &
+      def <- ef[hourID == seq_horas[j] &
                   pollutantID == pollutant_id &
                   sourceTypeID == source_type_id[i] &
                   fuelTypeID == fuel_type_id[i],]

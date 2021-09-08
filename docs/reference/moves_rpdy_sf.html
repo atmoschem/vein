@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MOVES estimation of using rates per distance by model year — moves_rpdy • vein</title>
+<title>MOVES estimation of using rates per distance by model year — moves_rpdy_sf • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="MOVES estimation of using rates per distance by model year — moves_rpdy" />
-<meta property="og:description" content="moves_rpdy estimates running exhaust emissions
+<meta property="og:title" content="MOVES estimation of using rates per distance by model year — moves_rpdy_sf" />
+<meta property="og:description" content="moves_rpdy_sf estimates running exhaust emissions
 using MOVES emission factors." />
 
 
@@ -142,30 +142,25 @@ using MOVES emission factors." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>MOVES estimation of using rates per distance by model year</h1>
-    <small class="dont-index">Source: <a href='https://github.com/atmoschem/vein/blob/master/R/moves_rpdy.R'><code>R/moves_rpdy.R</code></a></small>
-    <div class="hidden name"><code>moves_rpdy.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/atmoschem/vein/blob/master/R/moves_rpdy_source.R'><code>R/moves_rpdy_source.R</code></a></small>
+    <div class="hidden name"><code>moves_rpdy_sf.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>moves_rpdy</code> estimates running exhaust emissions
+    <p><code>moves_rpdy_sf</code> estimates running exhaust emissions
 using MOVES emission factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>moves_rpdy</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>moves_rpdy_sf</span><span class='op'>(</span>
   <span class='va'>veh</span>,
   <span class='va'>lkm</span>,
   <span class='va'>ef</span>,
-  source_type_id <span class='op'>=</span> <span class='fl'>21</span>,
-  fuel_type_id <span class='op'>=</span> <span class='fl'>1</span>,
-  pollutant_id <span class='op'>=</span> <span class='fl'>91</span>,
-  road_type_id <span class='op'>=</span> <span class='fl'>5</span>,
-  <span class='va'>fuel_type</span>,
   <span class='va'>speed_bin</span>,
   <span class='va'>profile</span>,
+  source_type_id <span class='op'>=</span> <span class='fl'>21</span>,
   vehicle <span class='op'>=</span> <span class='cn'>NULL</span>,
   vehicle_type <span class='op'>=</span> <span class='cn'>NULL</span>,
   fuel_subtype <span class='op'>=</span> <span class='cn'>NULL</span>,
-  process_id <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>net</span>,
   <span class='va'>path_all</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
@@ -186,27 +181,8 @@ The number of rows is equal to the number of streets link.</p></td>
     </tr>
     <tr>
       <th>ef</th>
-      <td><p>emission factors from EmissionRates_running exported from MOVES</p></td>
-    </tr>
-    <tr>
-      <th>source_type_id</th>
-      <td><p>Number to identify type of vehicle as defined by MOVES.</p></td>
-    </tr>
-    <tr>
-      <th>fuel_type_id</th>
-      <td><p>Number to identify type of fuel as defined by MOVES.</p></td>
-    </tr>
-    <tr>
-      <th>pollutant_id</th>
-      <td><p>Number to identify type of pollutant as defined by MOVES.</p></td>
-    </tr>
-    <tr>
-      <th>road_type_id</th>
-      <td><p>Number to identify type of road as defined by MOVES.</p></td>
-    </tr>
-    <tr>
-      <th>fuel_type</th>
-      <td><p>Data.frame of fuelSubtypeID exported by MOVES.</p></td>
+      <td><p>emission factors from EmissionRates_running exported from MOVES
+filtered by sourceTypeID and fuelTypeID.</p></td>
     </tr>
     <tr>
       <th>speed_bin</th>
@@ -214,8 +190,11 @@ The number of rows is equal to the number of streets link.</p></td>
     </tr>
     <tr>
       <th>profile</th>
-      <td><p>Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-the week</p></td>
+      <td><p>numeric vector  of normalized traffic for the morning rush hour</p></td>
+    </tr>
+    <tr>
+      <th>source_type_id</th>
+      <td><p>Number to identify type of vehicle as defined by MOVES.</p></td>
     </tr>
     <tr>
       <th>vehicle</th>
@@ -228,10 +207,6 @@ the week</p></td>
     <tr>
       <th>fuel_subtype</th>
       <td><p>Character, subtype of vehicle</p></td>
-    </tr>
-    <tr>
-      <th>process_id</th>
-      <td><p>Character, processID</p></td>
     </tr>
     <tr>
       <th>net</th>
