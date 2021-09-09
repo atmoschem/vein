@@ -99,7 +99,7 @@ moves_rpsy_sf <- function (veh,
                                            function(ll) {
                                              data.table::data.table(
                                                emi = EF[[ll]] * veh[[ll]] * lkm * unlist(profile)[i],
-                                               id = 1:nrow(EF),
+                                               id = 1:nrow(veh),
                                                age = ll,
                                                hour = i)
                                            }))
