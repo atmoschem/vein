@@ -10,6 +10,7 @@
 #' @param speed_bin Data.frame or vector of avgSpeedBinID as defined by MOVES.
 #' @param profile Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
 #' the week
+#' @param agemax Integer; max age for the fleet, assuming the same for all vehicles.
 #' @param net Road network class sf
 #' @param simplify Logical, to return the whole object or processed by streets and veh
 #' @param verbose Logical; To show more information. Not implemented yet
@@ -28,16 +29,16 @@ moves_rpdy_meta <- function(metadata,
                             fuel_type,
                             speed_bin,
                             profile,
+                            agemax = 31,
                             net,
                             simplify = FALSE,
-                            verbose = FALSE
-){
+                            verbose = FALSE){
 
   profile$Hour <- NULL
 
   `:` <- NULL
 
-  agemax <- age_total <- NULL
+age_total <- NULL
 
   data.table::rbindlist(lapply(1:ncol(speed_bin), function(i) {
 
@@ -149,11 +150,11 @@ moves_rpdy_meta <- function(metadata,
 
             veh <- readRDS(paste0("veh/", nveh, ".rds"))
 
-            agemax <- ncol(veh)
 
             if (uni_pol[j] == 91) {
               if(missing(fuel_type)) stop("Please, add `fuel_type` data.frame from MOVES")
 
+              vehicles <- NULL
               df_fuel <- data.table::as.data.table(fuel_type)[fuelTypeID == metadata[vehicles == nveh]$fuelTypeID,
                                                               lapply(.SD, mean, na.rm = T),
                                                               .SDcols = c("carbonContent",
