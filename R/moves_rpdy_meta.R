@@ -31,7 +31,7 @@ moves_rpdy_meta <- function(metadata,
                             profile,
                             agemax = 31,
                             net,
-                            simplify = FALSE,
+                            simplify = TRUE,
                             verbose = FALSE){
 
   profile$Hour <- NULL
@@ -229,13 +229,9 @@ age_total <- NULL
   lxspeed$age_total <- rowSums(lxspeed[, paste0("age_", 1:agemax), with = F], na.rm = T)
 
   if (!simplify) {
-    if (verbose)
-      message("The table has size ", format(object.size(lxspeed),
-                                            units = "Mb"))
+      message("The table has size ", format(object.size(lxspeed), units = "Mb"))
     return(lxspeed)
-  }
-
-
+  } else {
 
   # To obtain NMHC by processID, fuelTypeID and sourceTypeID, !simplify must be used
 
@@ -280,5 +276,6 @@ age_total <- NULL
   invisible(gc())
 
   return(list(streets = streets, veh = veh))
+  }
 
 }
