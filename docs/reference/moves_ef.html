@@ -211,146 +211,293 @@ data.frame of emission factors.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>decoder</span><span class='op'>)</span>
 <span class='va'>decoder</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;    CategoryField pollutantID                            Description
-#&gt; 1          dayID           5                                Weekday
-#&gt; 2          dayID           2                                Weekend
-#&gt; 3   sourceTypeID          11                             Motorcycle
-#&gt; 4   sourceTypeID          21                          Passenger Car
-#&gt; 5   sourceTypeID          31                        Passenger Truck
-#&gt; 6   sourceTypeID          32                 Light Commercial Truck
-#&gt; 7   sourceTypeID          41                            Other Buses
-#&gt; 8   sourceTypeID          42                            Transit Bus
-#&gt; 9   sourceTypeID          43                             School Bus
-#&gt; 10  sourceTypeID          51                           Refuse Truck
-#&gt; 11  sourceTypeID          52           Single Unit Short-haul Truck
-#&gt; 12  sourceTypeID          53            Single Unit Long-haul Truck
-#&gt; 13  sourceTypeID          54                             Motor Home
-#&gt; 14  sourceTypeID          61           Combination Short-haul Truck
-#&gt; 15  sourceTypeID          62            Combination Long-haul Truck
-#&gt; 16    roadTypeID           1                            Off-Network
-#&gt; 17    roadTypeID           2                Rural Restricted Access
-#&gt; 18    roadTypeID           3              Rural Unrestricted Access
-#&gt; 19    roadTypeID           4                Urban Restricted Access
-#&gt; 20    roadTypeID           5              Urban Unrestricted Access
-#&gt; 21    fuelTypeID           1                               Gasoline
-#&gt; 22    fuelTypeID           2                            Diesel Fuel
-#&gt; 23    fuelTypeID           3           Compressed Natural Gas (CNG)
-#&gt; 24    fuelTypeID           5                         Ethanol (E-85)
-#&gt; 25   pollutantID           1             Total Gaseous Hydrocarbons
-#&gt; 26   pollutantID           2                        Carbon Monoxide
-#&gt; 27   pollutantID           3                     Oxides of Nitrogen
-#&gt; 28   pollutantID           5                                Methane
-#&gt; 29   pollutantID           6                          Nitrous Oxide
-#&gt; 30   pollutantID          20                                Benzene
-#&gt; 31   pollutantID          21                                Ethanol
-#&gt; 32   pollutantID          30                                Ammonia
-#&gt; 33   pollutantID          31                        Sulfure Dioxide
-#&gt; 34   pollutantID          32                         Nitrogen Oxide
-#&gt; 35   pollutantID          33                       Nitrogen Dioxide
-#&gt; 36   pollutantID          34                           Nitrous Acid
-#&gt; 37   pollutantID          79               Non-Methane Hydrocarbons
-#&gt; 38   pollutantID          86                    Total Organic Gases
-#&gt; 39   pollutantID          87             Volatile Organic Compounds
-#&gt; 40   pollutantID          90                        Atmospheric CO2
-#&gt; 41   pollutantID          91               Total Energy Consumption
-#&gt; 42   pollutantID          92           Petroleum Energy Consumption
-#&gt; 43   pollutantID          93         Fossil Fuel Energy Consumption
-#&gt; 44   pollutantID          98                         CO2 Equivalent
-#&gt; 45   pollutantID         100           Primary Exhaust PM10 - Total
-#&gt; 46   pollutantID         101          Primary PM10 - Organic Carbon
-#&gt; 47   pollutantID         102        Primary PM10 - Elemental Carbon
-#&gt; 48   pollutantID         105     Primary PM10 - Sulfate Particulate
-#&gt; 49   pollutantID         106  Primary PM10 -  Brakewear Particulate
-#&gt; 50   pollutantID         107   Primary PM10 -  Tirewear Particulate
-#&gt; 51   pollutantID         110          Primary Exhaust PM2.5 - Total
-#&gt; 52   pollutantID         111         Primary PM2.5 - Organic Carbon
-#&gt; 53   pollutantID         112       Primary PM2.5 - Elemental Carbon
-#&gt; 54   pollutantID         115    Primary PM2.5 - Sulfate Particulate
-#&gt; 55   pollutantID         116 Primary PM2.5 -  Brakewear Particulate
-#&gt; 56   pollutantID         117  Primary PM2.5 -  Tirewear Particulate
-#&gt; 57     processID           1                        Running Exhaust
-#&gt; 58     processID           2                          Start Exhaust
-#&gt; 59     processID          15                      Crank Run Exhaust
-#&gt; 60     processID          16                    Crank Start Exhaust
-#&gt; 61     processID          17                 Crank Ext Idle Exhaust
-#&gt; 62     processID          90                       Ext Idle Exhaust
-#&gt; 63     processID          11                        Evap Permeation
-#&gt; 64     processID          12                  Evaporative Fuel Vent
-#&gt; 65     processID          13                  Evaporative Fuel Leak
-#&gt; 66     processID          18                        Refuel Disp Vap
-#&gt; 67     processID          19                        Refuel Spillage
-#&gt; 68     processID           9                              Brakewear
-#&gt; 69     processID          10                               Tirewear
-#&gt;              V4
-#&gt; 1              
-#&gt; 2              
-#&gt; 3              
-#&gt; 4              
-#&gt; 5              
-#&gt; 6              
-#&gt; 7              
-#&gt; 8              
-#&gt; 9              
-#&gt; 10             
-#&gt; 11             
-#&gt; 12             
-#&gt; 13             
-#&gt; 14             
-#&gt; 15             
-#&gt; 16             
-#&gt; 17             
-#&gt; 18             
-#&gt; 19             
-#&gt; 20             
-#&gt; 21             
-#&gt; 22             
-#&gt; 23             
-#&gt; 24             
-#&gt; 25           HC
-#&gt; 26           CO
-#&gt; 27          NOx
-#&gt; 28          CH4
-#&gt; 29          N2O
-#&gt; 30      BENZENE
-#&gt; 31         ETOH
-#&gt; 32          NH3
-#&gt; 33          SO2
-#&gt; 34          NOx
-#&gt; 35          NO2
-#&gt; 36         HONO
-#&gt; 37         NMHC
-#&gt; 38          TOG
-#&gt; 39          VOC
-#&gt; 40       AT CO2
-#&gt; 41    TotEnergy
-#&gt; 42    PetEnergy
-#&gt; 43 FossilEnergy
-#&gt; 44        CO2EQ
-#&gt; 45   PM10TotExh
-#&gt; 46       PM10OC
-#&gt; 47       PM10EC
-#&gt; 48  PM10Sulfate
-#&gt; 49    PM10Brake
-#&gt; 50     PM10Tire
-#&gt; 51  PM2.5TotExh
-#&gt; 52      PM2.5OC
-#&gt; 53      PM2.5EC
-#&gt; 54 PM2.5Sulfate
-#&gt; 55   PM2.5Brake
-#&gt; 56    PM2.5Tire
-#&gt; 57             
-#&gt; 58             
-#&gt; 59             
-#&gt; 60             
-#&gt; 61             
-#&gt; 62             
-#&gt; 63             
-#&gt; 64             
-#&gt; 65             
-#&gt; 66             
-#&gt; 67             
-#&gt; 68             
-#&gt; 69             </div></pre>
+</div><div class='output co'>#&gt; $regulatory_class
+#&gt;   ID reClassName                                          regClassDesc
+#&gt; 1 10          MC                                           Motorcycles
+#&gt; 2 20         LDV                                   Light Duty Vehicles
+#&gt; 3 30         LDT                                     Light Duty Trucks
+#&gt; 4 41      LHD2b3 Class 2b and 3 Trucks (8,500 lbs &lt; GVWR ≤ 14,000 lbs)
+#&gt; 5 42       LHD45 Class 4 and 5 Trucks (14,000 lbs &lt; GVWR ≤ 19,500 lbs)
+#&gt; 6 46       MHD67 Class 6 and 7 Trucks (19,500 lbs &lt; GVWR ≤ 33,000 lbs)
+#&gt; 7 47        HHD8            Class 8a and 8b Trucks (GVWR &gt; 33,000 lbs)
+#&gt; 8 48   Urban Bus                      Urban Bus (see CFR Sec 86.091_2)
+#&gt; 9 49     Gliders                Glider Vehicles (see EPA-420-F-15-904)
+#&gt; 
+#&gt; $activity_type
+#&gt;    ID              activityType
+#&gt; 1   1         Distance traveled
+#&gt; 2   2              Source Hours
+#&gt; 3   3       Extended Idle Hours
+#&gt; 4   4    Source Hours Operating
+#&gt; 5   5       Source Hours Parked
+#&gt; 6   6                Population
+#&gt; 7   7                    Starts
+#&gt; 8  13      Hotelling Diesel Aux
+#&gt; 9  14   Hotelling Battery or AC
+#&gt; 10 15 Hotelling All Engines Off
+#&gt; 
+#&gt; $emission_process
+#&gt;    ID                         processID
+#&gt; 1   1                   Running Exhaust
+#&gt; 2   2                     Start Exhaust
+#&gt; 3   9                         Brakewear
+#&gt; 4  10                          Tirewear
+#&gt; 5  11                   Evap Permeation
+#&gt; 6  12           Evap Fuel Vapor Venting
+#&gt; 7  13                   Evap Fuel Leaks
+#&gt; 8  15         Crankcase Running Exhaust
+#&gt; 9  16           Crankcase Start Exhaust
+#&gt; 10 17   Crankcase Extended Idle Exhaust
+#&gt; 11 18 Refueling Displacement Vapor Loss
+#&gt; 12 19           Refueling Spillage Loss
+#&gt; 13 90             Extended Idle Exhaust
+#&gt; 14 91           Auxiliary Power Exhaust
+#&gt; 
+#&gt; $source_type
+#&gt;    ID HPMSType               sourceTypeName
+#&gt; 1  11       10                   Motorcycle
+#&gt; 2  21       25                Passenger Car
+#&gt; 3  31       25              Passenger Truck
+#&gt; 4  32       25       Light Commercial Truck
+#&gt; 5  41       40                  Other Buses
+#&gt; 6  42       40                  Transit Bus
+#&gt; 7  43       40                   School Bus
+#&gt; 8  51       50                 Refuse Truck
+#&gt; 9  52       50 Single Unit Short-haul Truck
+#&gt; 10 53       50  Single Unit Long-haul Truck
+#&gt; 11 54       50                   Motor Home
+#&gt; 12 61       60 Combination Short-haul Truck
+#&gt; 13 62       60  Combination Long-haul Truck
+#&gt; 
+#&gt; $fuel_type
+#&gt;   ID    fuelType
+#&gt; 1  1    Gasoline
+#&gt; 2  2      Diesel
+#&gt; 3  3         CNG
+#&gt; 4  4         LPG
+#&gt; 5  5         E85
+#&gt; 6  9 Electricity
+#&gt; 
+#&gt; $road_type
+#&gt;   ID                  roadType
+#&gt; 1  1               Off-Network
+#&gt; 2  2   Rural Restricted Access
+#&gt; 3  3 Rural Unrestricted Access
+#&gt; 4  4   Urban Restricted Access
+#&gt; 5  5 Urban Unrestricted Access
+#&gt; 
+#&gt; $day_id
+#&gt;   ID dayName
+#&gt; 1  2 Weekend
+#&gt; 2  5 Weekday
+#&gt; 
+#&gt; $speed_bin
+#&gt;    ID lower_speed_limit upper_speed_limit
+#&gt; 1   1               0.0               2.5
+#&gt; 2   2               2.5               7.5
+#&gt; 3   3               7.5              12.5
+#&gt; 4   4              12.5              17.5
+#&gt; 5   5              17.5              22.5
+#&gt; 6   6              22.5              27.5
+#&gt; 7   7              27.5              32.5
+#&gt; 8   8              32.5              37.5
+#&gt; 9   9              37.5              42.5
+#&gt; 10 10              42.5              47.5
+#&gt; 11 11              47.5              52.5
+#&gt; 12 12              52.5              57.5
+#&gt; 13 13              57.5              62.5
+#&gt; 14 14              62.5              67.5
+#&gt; 15 15              67.5              72.5
+#&gt; 16 16              72.5              75.0
+#&gt; 
+#&gt; $running_mode
+#&gt;     ID                    name VSP_lower  VSP VSP_higher speed_lower    speed
+#&gt; 1    0                 Braking      &lt;NA&gt; &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;     &lt;NA&gt;
+#&gt; 2    1                  Idling      &lt;NA&gt; &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;     &lt;NA&gt;
+#&gt; 3   11      Low Speed Coasting      &lt;NA&gt;  VSP        &lt; 0     1 mph ≤    Speed
+#&gt; 4   12   Cruise / Acceleration       0 ≤  VSP        &lt; 3     1 mph ≤    Speed
+#&gt; 5   13   Cruise / Acceleration       3 ≤  VSP        &lt; 6     1 mph ≤    Speed
+#&gt; 6   14   Cruise / Acceleration       6 ≤  VSP        &lt; 9     1 mph ≤    Speed
+#&gt; 7   15   Cruise / Acceleration       9 ≤  VSP       &lt; 12     1 mph ≤    Speed
+#&gt; 8   16   Cruise / Acceleration      12 ≤  VSP    1 mph ≤       Speed &lt; 25 mph
+#&gt; 9   21 Moderate Speed Coasting       VSP  &lt; 0   25 mph ≤       Speed &lt; 50 mph
+#&gt; 10  22   Cruise / Acceleration       0 ≤  VSP        &lt; 3    25 mph ≤    Speed
+#&gt; 11  23   Cruise / Acceleration       3 ≤  VSP        &lt; 6    25 mph ≤    Speed
+#&gt; 12  24   Cruise / Acceleration       6 ≤  VSP        &lt; 9    25 mph ≤    Speed
+#&gt; 13  25   Cruise / Acceleration       9 ≤  VSP       &lt; 12    25 mph ≤    Speed
+#&gt; 14  27   Cruise / Acceleration      12 ≤  VSP       &lt; 18    25 mph ≤    Speed
+#&gt; 15  28   Cruise / Acceleration      18 ≤  VSP       &lt; 24    25 mph ≤    Speed
+#&gt; 16  29   Cruise / Acceleration      24 ≤  VSP       &lt; 30    25 mph ≤    Speed
+#&gt; 17  30   Cruise / Acceleration      30 ≤  VSP   25 mph ≤       Speed &lt; 50 mph
+#&gt; 18  33   Cruise / Acceleration       VSP  &lt; 6   50 mph ≤       Speed     &lt;NA&gt;
+#&gt; 19  35   Cruise / Acceleration       6 ≤  VSP       &lt; 12    50 mph ≤    Speed
+#&gt; 20  37   Cruise / Acceleration      12 ≤  VSP       &lt; 18    50 mph ≤    Speed
+#&gt; 21  38   Cruise / Acceleration      18 ≤  VSP       &lt; 24    50 mph ≤    Speed
+#&gt; 22  39   Cruise / Acceleration      24 ≤  VSP       &lt; 30    50 mph ≤    Speed
+#&gt; 23  40   Cruise / Acceleration      30 ≤  VSP   50 mph ≤       Speed     &lt;NA&gt;
+#&gt; 24 501     Brakewear ; stopped      &lt;NA&gt; &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;     &lt;NA&gt;
+#&gt;    speed_higher
+#&gt; 1          &lt;NA&gt;
+#&gt; 2          &lt;NA&gt;
+#&gt; 3      &lt; 25 mph
+#&gt; 4      &lt; 25 mph
+#&gt; 5      &lt; 25 mph
+#&gt; 6      &lt; 25 mph
+#&gt; 7      &lt; 25 mph
+#&gt; 8          &lt;NA&gt;
+#&gt; 9          &lt;NA&gt;
+#&gt; 10     &lt; 50 mph
+#&gt; 11     &lt; 50 mph
+#&gt; 12     &lt; 50 mph
+#&gt; 13     &lt; 50 mph
+#&gt; 14     &lt; 50 mph
+#&gt; 15     &lt; 50 mph
+#&gt; 16     &lt; 50 mph
+#&gt; 17         &lt;NA&gt;
+#&gt; 18         &lt;NA&gt;
+#&gt; 19         &lt;NA&gt;
+#&gt; 20         &lt;NA&gt;
+#&gt; 21         &lt;NA&gt;
+#&gt; 22         &lt;NA&gt;
+#&gt; 23         &lt;NA&gt;
+#&gt; 24         &lt;NA&gt;
+#&gt; 
+#&gt; $starts_mode
+#&gt;    ID   soak_time_i soak_time   soak_time_j
+#&gt; 1 101          &lt;NA&gt; Soak Time   &lt; 6 minutes
+#&gt; 2 102   6 minutes ≤ Soak Time  &lt; 30 minutes
+#&gt; 3 103  30 minutes ≤ Soak Time  &lt; 60 minutes
+#&gt; 4 104  60 minutes ≤ Soak Time  &lt; 90 minutes
+#&gt; 5 105  90 minutes ≤ Soak Time &lt; 120 minutes
+#&gt; 6 106 120 minutes ≤ Soak Time &lt; 360 minutes
+#&gt; 7 107 360 minutes ≤ Soak Time &lt; 720 minutes
+#&gt; 8 108 720 minutes ≤ Soak Time          &lt;NA&gt;
+#&gt; 
+#&gt; $hotelling_mode
+#&gt;    ID                 hotelling
+#&gt; 1 200           Extended Idling
+#&gt; 2 201 Auxiliary Power Units Use
+#&gt; 3 202             Battery Power
+#&gt; 4 204                Engine off
+#&gt; 
+#&gt; $pollutants
+#&gt;      ID                                 pollutant short_name
+#&gt; 1     1                             pollutantname        THC
+#&gt; 2     2                           Carbon Monoxide         CO
+#&gt; 3     3                        Oxides of Nitrogen        NOx
+#&gt; 4     5                                   Methane        CH4
+#&gt; 5     6                             Nitrous Oxide        N2O
+#&gt; 6    20                                   Benzene        BEN
+#&gt; 7    21                                   Ethanol       ETHO
+#&gt; 8    23                      Naphthalene particle       NAPH
+#&gt; 9    24                             1,3-Butadiene     1,3BUT
+#&gt; 10   25                              Formaldehyde       HCHO
+#&gt; 11   26                              Acetaldehyde        ALD
+#&gt; 12   27                                  Acrolein       ACRO
+#&gt; 13   30                                   Ammonia        NH3
+#&gt; 14   31                            Sulfur Dioxide        SO2
+#&gt; 15   32                            Nitrogen Oxide         NO
+#&gt; 16   33                          Nitrogen Dioxide        NO2
+#&gt; 17   34                              Nitrous Acid       HONO
+#&gt; 18   35                                   Nitrate        NO3
+#&gt; 19   36                                  Ammonium        NH4
+#&gt; 20   40                    2,2,4-Trimethylpentane       &lt;NA&gt;
+#&gt; 21   41                             Ethyl Benzene       &lt;NA&gt;
+#&gt; 22   42                                    Hexane       &lt;NA&gt;
+#&gt; 23   43                           Propionaldehyde       &lt;NA&gt;
+#&gt; 24   44                                   Styrene       &lt;NA&gt;
+#&gt; 25   45                                   Toluene       &lt;NA&gt;
+#&gt; 26   46                                    Xylene       &lt;NA&gt;
+#&gt; 27   51                                  Chloride       &lt;NA&gt;
+#&gt; 28   52                                    Sodium       &lt;NA&gt;
+#&gt; 29   53                                 Potassium       &lt;NA&gt;
+#&gt; 30   54                                 Magnesium       &lt;NA&gt;
+#&gt; 31   55                                   Calcium       &lt;NA&gt;
+#&gt; 32   56                                  Titanium       &lt;NA&gt;
+#&gt; 33   57                                   Silicon       &lt;NA&gt;
+#&gt; 34   58                                  Aluminum       &lt;NA&gt;
+#&gt; 35   59                                      Iron       &lt;NA&gt;
+#&gt; 36   60                 Mercury Elemental Gaseous       &lt;NA&gt;
+#&gt; 37   61                  Mercury Divalent Gaseous       &lt;NA&gt;
+#&gt; 38   62                       Mercury Particulate       &lt;NA&gt;
+#&gt; 39   63                         Arsenic Compounds       &lt;NA&gt;
+#&gt; 40   65                               Chromium 6+       &lt;NA&gt;
+#&gt; 41   66                       Manganese Compounds       &lt;NA&gt;
+#&gt; 42   67                          Nickel Compounds       &lt;NA&gt;
+#&gt; 43   68           Dibenzo(a,h)anthracene particle       &lt;NA&gt;
+#&gt; 44   69                     Fluoranthene particle       &lt;NA&gt;
+#&gt; 45   70                     Acenaphthene particle       &lt;NA&gt;
+#&gt; 46   71                   Acenaphthylene particle       &lt;NA&gt;
+#&gt; 47   72                       Anthracene particle       &lt;NA&gt;
+#&gt; 48   73                Benz(a)anthracene particle       &lt;NA&gt;
+#&gt; 49   74                   Benzo(a)pyrene particle       &lt;NA&gt;
+#&gt; 50   75             Benzo(b)fluoranthene particle       &lt;NA&gt;
+#&gt; 51   76             Benzo(g,h,i)perylene particle       &lt;NA&gt;
+#&gt; 52   77             Benzo(k)fluoranthene particle       &lt;NA&gt;
+#&gt; 53   78                         Chrysene particle       &lt;NA&gt;
+#&gt; 54   79                  Non-Methane Hydrocarbons       NMHC
+#&gt; 55   80                 Non-Methane Organic Gases       NMOG
+#&gt; 56   81                         Fluorene particle       &lt;NA&gt;
+#&gt; 57   82          Indeno(1,2,3,c,d)pyrene particle       &lt;NA&gt;
+#&gt; 58   83                     Phenanthrene particle       &lt;NA&gt;
+#&gt; 59   84                           Pyrene particle       &lt;NA&gt;
+#&gt; 60   86                       Total Organic Gases        TOG
+#&gt; 61   87                Volatile Organic Compounds        VOC
+#&gt; 62   88                                 NonHAPTOG       &lt;NA&gt;
+#&gt; 63   90                           Atmospheric CO2        CO2
+#&gt; 64   91                  Total Energy Consumption        TEC
+#&gt; 65   92              Petroleum Energy Consumption        PEC
+#&gt; 66   93            Fossil Fuel Energy Consumption       FFEC
+#&gt; 67   98                            CO2 Equivalent       CO2E
+#&gt; 68   99    Brake Specific Fuel Consumption (BSFC)       &lt;NA&gt;
+#&gt; 69  100              Primary Exhaust PM10 - Total       PM10
+#&gt; 70  106      Primary PM10 - Brakewear Particulate     PM10BW
+#&gt; 71  107       Primary PM10 - Tirewear Particulate     PM10TW
+#&gt; 72  110             Primary Exhaust PM2.5 - Total      PM2.5
+#&gt; 73  111                            Organic Carbon         OC
+#&gt; 74  112                          Elemental Carbon         EC
+#&gt; 75  115                       Sulfate Particulate       &lt;NA&gt;
+#&gt; 76  116     Primary PM2.5 - Brakewear Particulate    PM2.5BW
+#&gt; 77  117      Primary PM2.5 - Tirewear Particulate    PM2.5TW
+#&gt; 78  118                       Composite - NonECPM       &lt;NA&gt;
+#&gt; 79  119                             H2O (aerosol)       &lt;NA&gt;
+#&gt; 80  120             Primary PM2.5 - NonECNonSO4PM       &lt;NA&gt;
+#&gt; 81  121              CMAQ5.0 Unspeciated (PMOTHR)       &lt;NA&gt;
+#&gt; 82  122          Non-carbon Organic Matter (NCOM)       &lt;NA&gt;
+#&gt; 83  130    1,2,3,7,8,9-Hexachlorodibenzo-p-Dioxin       &lt;NA&gt;
+#&gt; 84  131                Octachlorodibenzo-p-dioxin       &lt;NA&gt;
+#&gt; 85  132 1,2,3,4,6,7,8-Heptachlorodibenzo-p-Dioxin       &lt;NA&gt;
+#&gt; 86  133                    Octachlorodibenzofuran       &lt;NA&gt;
+#&gt; 87  134    1,2,3,4,7,8-Hexachlorodibenzo-p-Dioxin       &lt;NA&gt;
+#&gt; 88  135     1,2,3,7,8-Pentachlorodibenzo-p-Dioxin       &lt;NA&gt;
+#&gt; 89  136           2,3,7,8-Tetrachlorodibenzofuran       &lt;NA&gt;
+#&gt; 90  137     1,2,3,4,7,8,9-Heptachlorodibenzofuran       &lt;NA&gt;
+#&gt; 91  138         2,3,4,7,8-Pentachlorodibenzofuran       &lt;NA&gt;
+#&gt; 92  139         1,2,3,7,8-Pentachlorodibenzofuran       &lt;NA&gt;
+#&gt; 93  140        1,2,3,6,7,8-Hexachlorodibenzofuran       &lt;NA&gt;
+#&gt; 94  141    1,2,3,6,7,8-Hexachlorodibenzo-p-Dioxin       &lt;NA&gt;
+#&gt; 95  142       2,3,7,8-Tetrachlorodibenzo-p-Dioxin       &lt;NA&gt;
+#&gt; 96  143        2,3,4,6,7,8-Hexachlorodibenzofuran       &lt;NA&gt;
+#&gt; 97  144     1,2,3,4,6,7,8-Heptachlorodibenzofuran       &lt;NA&gt;
+#&gt; 98  145        1,2,3,4,7,8-Hexachlorodibenzofuran       &lt;NA&gt;
+#&gt; 99  146        1,2,3,7,8,9-Hexachlorodibenzofuran       &lt;NA&gt;
+#&gt; 100 168                Dibenzo(a,h)anthracene gas       &lt;NA&gt;
+#&gt; 101 169                          Fluoranthene gas       &lt;NA&gt;
+#&gt; 102 170                          Acenaphthene gas       &lt;NA&gt;
+#&gt; 103 171                        Acenaphthylene gas       &lt;NA&gt;
+#&gt; 104 172                            Anthracene gas       &lt;NA&gt;
+#&gt; 105 173                     Benz(a)anthracene gas       &lt;NA&gt;
+#&gt; 106 174                        Benzo(a)pyrene gas       &lt;NA&gt;
+#&gt; 107 175                  Benzo(b)fluoranthene gas       &lt;NA&gt;
+#&gt; 108 176                  Benzo(g,h,i)perylene gas       &lt;NA&gt;
+#&gt; 109 177                  Benzo(k)fluoranthene gas       &lt;NA&gt;
+#&gt; 110 178                              Chrysene gas       &lt;NA&gt;
+#&gt; 111 181                              Fluorene gas       &lt;NA&gt;
+#&gt; 112 182               Indeno(1,2,3,c,d)pyrene gas       &lt;NA&gt;
+#&gt; 113 183                          Phenanthrene gas       &lt;NA&gt;
+#&gt; 114 184                                Pyrene gas       &lt;NA&gt;
+#&gt; 115 185                           Naphthalene gas       &lt;NA&gt;
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

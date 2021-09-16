@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MOVES estimation of using rates per distance by model year — moves_rpdy_sf • vein</title>
+<title>MOVES estimation of using rates per distance by model year — moves_rpdy_meta • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="MOVES estimation of using rates per distance by model year — moves_rpdy_sf" />
-<meta property="og:description" content="moves_rpdy_sf estimates running exhaust emissions
+<meta property="og:title" content="MOVES estimation of using rates per distance by model year — moves_rpdy_meta" />
+<meta property="og:description" content="moves_rpdy_meta estimates running exhaust emissions
 using MOVES emission factors." />
 
 
@@ -142,27 +142,24 @@ using MOVES emission factors." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>MOVES estimation of using rates per distance by model year</h1>
-    <small class="dont-index">Source: <a href='https://github.com/atmoschem/vein/blob/master/R/moves_rpdy_source.R'><code>R/moves_rpdy_source.R</code></a></small>
-    <div class="hidden name"><code>moves_rpdy_sf.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/atmoschem/vein/blob/master/R/moves_rpdy_meta.R'><code>R/moves_rpdy_meta.R</code></a></small>
+    <div class="hidden name"><code>moves_rpdy_meta.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>moves_rpdy_sf</code> estimates running exhaust emissions
+    <p><code>moves_rpdy_meta</code> estimates running exhaust emissions
 using MOVES emission factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>moves_rpdy_sf</span><span class='op'>(</span>
-  <span class='va'>veh</span>,
+    <pre class="usage"><span class='fu'>moves_rpdy_meta</span><span class='op'>(</span>
+  <span class='va'>metadata</span>,
   <span class='va'>lkm</span>,
   <span class='va'>ef</span>,
+  <span class='va'>fuel_type</span>,
   <span class='va'>speed_bin</span>,
   <span class='va'>profile</span>,
-  source_type_id <span class='op'>=</span> <span class='fl'>21</span>,
-  vehicle <span class='op'>=</span> <span class='cn'>NULL</span>,
-  vehicle_type <span class='op'>=</span> <span class='cn'>NULL</span>,
-  fuel_subtype <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>net</span>,
-  <span class='va'>path_all</span>,
+  simplify <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -170,10 +167,8 @@ using MOVES emission factors.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>veh</th>
-      <td><p>"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
-as number of columns matching the age distribution of that ype of vehicle.
-The number of rows is equal to the number of streets link.</p></td>
+      <th>metadata</th>
+      <td><p>data.frame with the metadata for a vein project for MOVES.</p></td>
     </tr>
     <tr>
       <th>lkm</th>
@@ -181,8 +176,11 @@ The number of rows is equal to the number of streets link.</p></td>
     </tr>
     <tr>
       <th>ef</th>
-      <td><p>emission factors from EmissionRates_running exported from MOVES
-filtered by sourceTypeID and fuelTypeID.</p></td>
+      <td><p>emission factors from EmissionRates_running exported from MOVES</p></td>
+    </tr>
+    <tr>
+      <th>fuel_type</th>
+      <td><p>Data.frame of fuelSubtypeID exported by MOVES.</p></td>
     </tr>
     <tr>
       <th>speed_bin</th>
@@ -190,32 +188,16 @@ filtered by sourceTypeID and fuelTypeID.</p></td>
     </tr>
     <tr>
       <th>profile</th>
-      <td><p>numeric vector  of normalized traffic for the morning rush hour</p></td>
-    </tr>
-    <tr>
-      <th>source_type_id</th>
-      <td><p>Number to identify type of vehicle as defined by MOVES.</p></td>
-    </tr>
-    <tr>
-      <th>vehicle</th>
-      <td><p>Character, type of vehicle</p></td>
-    </tr>
-    <tr>
-      <th>vehicle_type</th>
-      <td><p>Character, subtype of vehicle</p></td>
-    </tr>
-    <tr>
-      <th>fuel_subtype</th>
-      <td><p>Character, subtype of vehicle</p></td>
+      <td><p>Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
+the week</p></td>
     </tr>
     <tr>
       <th>net</th>
       <td><p>Road network class sf</p></td>
     </tr>
     <tr>
-      <th>path_all</th>
-      <td><p>Character to export whole estimation. It is not recommended since it
-is usually too heavy.</p></td>
+      <th>simplify</th>
+      <td><p>Logical, to return the whole object or processed by streets and veh</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -228,7 +210,7 @@ is usually too heavy.</p></td>
     <p>a list with emissions at each street and data.base aggregated by categories. See <code>link{emis_post}</code></p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>`decoder` shows a decoder for MOVES</p>
+    <p>The idea is the user enter with emissions factors by pollutant</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='op'>{</span>
