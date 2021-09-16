@@ -23,7 +23,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Sergio Ibarra-Espinosa \email{sergio.ibarra@usp.br} (\href{https://orcid.org/0000-0002-3162-1905}{ORCID}) [woodcutter]
+\strong{Maintainer}: Sergio Ibarra-Espinosa \email{sergio.ibarra@usp.br} (\href{https://orcid.org/0000-0002-3162-1905}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Joao Bazzo \email{joao.bazzo@gmail.com} (\href{https://orcid.org/0000-0003-4536-5006}{ORCID}) [contributor]
+}
 
 }
 \keyword{internal}
