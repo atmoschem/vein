@@ -8,14 +8,15 @@
 #' The number of rows is equal to the number of streets link.
 #' @param lkm Length of each link in miles
 #' @param ef emission factors from EmissionRates_running exported from MOVES
-#' @param source_type_id Number to identify type of vehicle as defined by MOVES.
-#' @param fuel_type_id Number to identify type of fuel as defined by MOVES.
-#' @param pollutant_id  Number to identify type of pollutant as defined by MOVES.
-#' @param road_type_id  Number to identify type of road as defined by MOVES.
 #' @param fuel_type Data.frame of fuelSubtypeID exported by MOVES.
 #' @param speed_bin Data.frame or vector of avgSpeedBinID as defined by MOVES.
 #' @param profile Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
 #' the week
+#' @param source_type_id Number to identify type of vehicle as defined by MOVES.
+#' @param fuel_type_id Number to identify type of fuel as defined by MOVES.
+#' @param pollutant_id  Number to identify type of pollutant as defined by MOVES.
+#' @param process_id  Number to identify type of pollutant as defined by MOVES.
+#' @param road_type_id  Number to identify type of road as defined by MOVES.
 #' @param vehicle Character, type of vehicle
 #' @param vehicle_type Character, subtype of vehicle
 #' @param fuel_subtype Character, subtype of vehicle
@@ -32,24 +33,23 @@
 #' decoder
 #' }
 moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
-                           lkm,
-                           ef,
-                           source_type_id = 21, #Passenger car
-                           fuel_type_id = 1, # Gasoline
-                           pollutant_id = 91, # Total Energy Consumption
-                           road_type_id = 5, # Urban Unrestricted Access
-                           fuel_type,  # data.frame from moves
-                           speed_bin,
-                           profile,
-                           vehicle = NULL,
-                           vehicle_type = NULL,
-                           fuel_subtype = NULL,
-                           net,
-                           path_all, #path to save RDS
-                           verbose = FALSE) {
+                      lkm,
+                      ef,
+                      fuel_type,  # data.frame from moves
+                      speed_bin,
+                      profile,
+                      source_type_id = 21, #Passenger car
+                      fuel_type_id = 1, # Gasoline
+                      pollutant_id = 91, # Total Energy Consumption
+                      road_type_id = 5, # Urban Unrestricted Access
+                      process_id = 1,
+                      vehicle = NULL,
+                      vehicle_type = NULL,
+                      fuel_subtype = NULL,
+                      net,
+                      path_all, #path to save RDS
+                      verbose = FALSE) {
 
-  dec <- sysdata$decoder
-  data.table::setDT(dec)
   profile$Hour <- NULL
 
   ll <- if(is.data.frame(veh)) 1 else seq_along(veh)
@@ -58,7 +58,7 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
     is.data.frame(veh),
     ncol(veh),
     ncol(veh[[1]])
-    )
+  )
 
   data.table::rbindlist(
     lapply(ll, function(i){
@@ -69,7 +69,7 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
           hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
           def <- ef[hourID == j &
                       pollutantID == pollutant_id &
-                      processID == 1 &
+                      processID == process_id &
                       sourceTypeID == source_type_id[i] &
                       fuelTypeID == fuel_type_id[i] &
                       roadTypeID == road_type_id, ]
@@ -128,12 +128,12 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
           names(emi)[3:ncol(emi)] <- paste0("age_", names(emi)[3:ncol(emi)])
           emi$veh <- vehicle[i]
           emi$veh_type <- vehicle_type[i]
-          emi$fuel <- fuel_subtype[i]
-          emi$pollutant <- pollutant_id
+          emi$fuelTypeID <- fuel_subtype[i]
+          emi$pollutantID <- pollutant_id
 
           CategoryField <- Description <- NULL
 
-          emi$type_emi <- dec[CategoryField == "processID" & pollutantID == 1, Description]
+          emi$processID <- process_id
           emi$sourceTypeID <- source_type_id[i]
           emi
         })
@@ -162,25 +162,36 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
                           by = .(id, hour)]
 
 
-  data.table::dcast.data.table(by_street2, formula = id~hour, value.var = "V1") -> streets
+  data.table::dcast.data.table(by_street2,
+                               formula = id~hour,
+                               value.var = "V1") -> streets
+
   names(streets)[2:ncol(streets)] <- paste0("H", names(streets)[2:ncol(streets)])
   if(!missing(net)) {
     streets <- cbind(net, streets)
   }
 
   names(lxspeed)
-  veh <- veh_type <- fuel <- pollutant <- type_emi <-  sourceTypeID <- NULL
+  veh <- veh_type <- fuelTypeID <- pollutantID <- processID <-  sourceTypeID <- NULL
+
   by_veh <- lxspeed[, -"id"][,
                              lapply(.SD, sum, na.rm = T),
                              .SDcols = 2:32,
-                             by = .(hour, veh, veh_type, fuel, pollutant, type_emi, sourceTypeID)]
+                             by = .(hour,
+                                    veh,
+                                    veh_type,
+                                    fuelTypeID,
+                                    pollutantID,
+                                    processID,
+                                    sourceTypeID)
+  ]
 
   data.table::melt.data.table(data = by_veh,
                               id.vars = names(by_veh)[1:7],
                               measure.vars = paste0("age_", 1:agemax)) -> veh
 
-    variable <- NULL
-    veh[, age := as.numeric(gsub("age_", "", variable))]
+  variable <- NULL
+  veh[, age := as.numeric(gsub("age_", "", variable))]
 
 
   rm(lxspeed)
