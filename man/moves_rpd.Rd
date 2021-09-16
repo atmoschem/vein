@@ -8,13 +8,14 @@ moves_rpd(
   veh,
   lkm,
   ef,
+  fuel_type,
+  speed_bin,
+  profile,
   source_type_id = 21,
   fuel_type_id = 1,
   pollutant_id = 91,
   road_type_id = 5,
-  fuel_type,
-  speed_bin,
-  profile,
+  process_id = 1,
   vehicle = NULL,
   vehicle_type = NULL,
   fuel_subtype = NULL,
@@ -32,6 +33,13 @@ The number of rows is equal to the number of streets link.}
 
 \item{ef}{emission factors from EmissionRates_running exported from MOVES}
 
+\item{fuel_type}{Data.frame of fuelSubtypeID exported by MOVES.}
+
+\item{speed_bin}{Data.frame or vector of avgSpeedBinID as defined by MOVES.}
+
+\item{profile}{Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
+the week}
+
 \item{source_type_id}{Number to identify type of vehicle as defined by MOVES.}
 
 \item{fuel_type_id}{Number to identify type of fuel as defined by MOVES.}
@@ -40,12 +48,7 @@ The number of rows is equal to the number of streets link.}
 
 \item{road_type_id}{Number to identify type of road as defined by MOVES.}
 
-\item{fuel_type}{Data.frame of fuelSubtypeID exported by MOVES.}
-
-\item{speed_bin}{Data.frame or vector of avgSpeedBinID as defined by MOVES.}
-
-\item{profile}{Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-the week}
+\item{process_id}{Number to identify type of pollutant as defined by MOVES.}
 
 \item{vehicle}{Character, type of vehicle}
 
