@@ -141,9 +141,9 @@ moves_rpdy_sf <- function (veh,
         names(emi)[3:ncol(emi)] <- paste0("age_", names(emi)[3:ncol(emi)])
         emi$veh <- vehicle
         emi$veh_type <- vehicle_type
-        emi$fuel <- fuel_subtype
-        emi$pollutant <- pols[j]
-        emi$type_emi <- pros[k]
+        emi$fuelTypeID <- fuel_subtype
+        emi$pollutantID <- pols[j]
+        emi$processID <- pros[k]
         emi$sourceTypeID <- source_type_id
         emi
       }))
@@ -158,37 +158,57 @@ moves_rpdy_sf <- function (veh,
                                             units = "Mb"))
     saveRDS(lxspeed, paste0(path_all, ".rds"))
   }
+  return(lxspeed)
   id <- hour <- . <- NULL
-  by_street <- lxspeed[
-    , lapply(.SD, sum, na.rm = T),
-    .SDcols = paste0("age_", 1:agemax),
-    by = .(id, pollutant, hour)
+
+  by_street <- lxspeed[,
+                       lapply(.SD, sum, na.rm = T),
+                       .SDcols = paste0("age_", 1:agemax),
+                       by = .(id,
+                              pollutantID,
+                              hour,
+                              processID)
   ]
+
   by_street$age_total <- rowSums(by_street[, 4:(agemax + 3)])
+
   age_total <- NULL
+
   by_street2 <- by_street[,
                           sum(age_total, na.rm = T),
-                          by = .(id, pollutant, hour)
+                          by = .(id,
+                                 pollutantID,
+                                 hour,
+                                 processID)
   ]
   streets <- data.table::dcast.data.table(by_street2,
-                                          formula = id + pollutant ~ hour,
+                                          formula = id + pollutantID + processID~ hour,
                                           value.var = "V1")
-  names(streets)[3:ncol(streets)] <- paste0("H", names(streets)[3:ncol(streets)])
+
+  names(streets)[4:ncol(streets)] <- paste0("H", names(streets)[4:ncol(streets)])
 
   if (!missing(net)) {
     streets <- cbind(net, streets)
   }
 
-  veh <- veh_type <- fuel <- pollutant <- type_emi <- sourceTypeID <- NULL
-  by_veh <- lxspeed[, -"id"][, lapply(.SD, sum, na.rm = T),
-                             .SDcols = 2:32,
-                             by = .(hour, veh, veh_type, fuel, pollutant,
-                                    type_emi, sourceTypeID)]
+  veh <- veh_type <- fuelTypeID <- pollutantID <- processID <- sourceTypeID <- NULL
 
-  veh <- data.table::melt.data.table(data = by_veh, id.vars = names(by_veh)[1:7],
+  by_veh <- lxspeed[, -"id"][,
+                             lapply(.SD, sum, na.rm = T),
+                             .SDcols = 2:32,
+                             by = .(hour,
+                                    veh,
+                                    veh_type,
+                                    fuelTypeID,
+                                    pollutantID,
+                                    processID,
+                                    sourceTypeID)]
+
+  veh <- data.table::melt.data.table(data = by_veh,
+                                     id.vars = names(by_veh)[1:7],
                                      measure.vars = paste0("age_", 1:agemax))
   variable <- NULL
-  veh[, `:=`(age, as.numeric(gsub("age_", "", variable)))]
+  veh[, age := as.numeric(gsub("age_", "", variable))]
 
   rm(lxspeed)
   invisible(gc())
