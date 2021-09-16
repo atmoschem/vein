@@ -4,6 +4,27 @@
     <loc>http://atmoschem.github.io/vein//index.html</loc>
   </url>
   <url>
+    <loc>http://atmoschem.github.io/vein//reference/EmissionFactors.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/EmissionFactorsList.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/Emissions.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/EmissionsArray.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/GriddedEmissionsArray.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/Speed.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/Vehicles.html</loc>
+  </url>
+  <url>
     <loc>http://atmoschem.github.io/vein//reference/add_lkm.html</loc>
   </url>
   <url>
@@ -100,18 +121,6 @@
     <loc>http://atmoschem.github.io/vein//reference/emis.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/EmissionFactors.html</loc>
-  </url>
-  <url>
-    <loc>http://atmoschem.github.io/vein//reference/EmissionFactorsList.html</loc>
-  </url>
-  <url>
-    <loc>http://atmoschem.github.io/vein//reference/Emissions.html</loc>
-  </url>
-  <url>
-    <loc>http://atmoschem.github.io/vein//reference/EmissionsArray.html</loc>
-  </url>
-  <url>
     <loc>http://atmoschem.github.io/vein//reference/emis_chem.html</loc>
   </url>
   <url>
@@ -175,9 +184,6 @@
     <loc>http://atmoschem.github.io/vein//reference/get_project.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/GriddedEmissionsArray.html</loc>
-  </url>
-  <url>
     <loc>http://atmoschem.github.io/vein//reference/grid_emis.html</loc>
   </url>
   <url>
@@ -200,6 +206,9 @@
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein//reference/moves_rpdy.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein//reference/moves_rpdy_meta.html</loc>
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein//reference/moves_rpdy_sf.html</loc>
@@ -241,9 +250,6 @@
     <loc>http://atmoschem.github.io/vein//reference/speciate.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/Speed.html</loc>
-  </url>
-  <url>
     <loc>http://atmoschem.github.io/vein//reference/split_emis.html</loc>
   </url>
   <url>
@@ -251,9 +257,6 @@
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein//reference/to_latex.html</loc>
-  </url>
-  <url>
-    <loc>http://atmoschem.github.io/vein//reference/Vehicles.html</loc>
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein//reference/vein-deprecated.html</loc>
