@@ -158,8 +158,9 @@ using MOVES emission factors.</p>
   <span class='va'>fuel_type</span>,
   <span class='va'>speed_bin</span>,
   <span class='va'>profile</span>,
+  agemax <span class='op'>=</span> <span class='fl'>31</span>,
   <span class='va'>net</span>,
-  simplify <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  simplify <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -190,6 +191,10 @@ using MOVES emission factors.</p>
       <th>profile</th>
       <td><p>Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
 the week</p></td>
+    </tr>
+    <tr>
+      <th>agemax</th>
+      <td><p>Integer; max age for the fleet, assuming the same for all vehicles.</p></td>
     </tr>
     <tr>
       <th>net</th>

@@ -13,7 +13,7 @@ moves_rpdy_meta(
   profile,
   agemax = 31,
   net,
-  simplify = FALSE,
+  simplify = TRUE,
   verbose = FALSE
 )
 }
