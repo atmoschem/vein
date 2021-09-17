@@ -14,7 +14,8 @@
 #' @param net Road network class sf
 #' @param simplify Logical, to return the whole object or processed by streets and veh
 #' @param verbose Logical; To show more information. Not implemented yet
-#' @return a list with emissions at each street and data.base aggregated by categories. See \code{link{emis_post}}
+#' @param k Character identifying a column in 'metadata' to multiply the emission factor
+#' @return a list with emissions at each street and data.base aggregated by categories.
 #' @export
 #' @importFrom data.table rbindlist as.data.table data.table dcast.data.table melt.data.table
 #' @note The idea is the user enter with emissions factors by pollutant
@@ -32,7 +33,8 @@ moves_rpdy_meta <- function(metadata,
                             agemax = 31,
                             net,
                             simplify = TRUE,
-                            verbose = FALSE){
+                            verbose = FALSE,
+                            k){
 
   profile$Hour <- NULL
 
@@ -146,6 +148,13 @@ age_total <- NULL
 
             nveh <- metadata[fuelTypeID == uni_fuel[k] & sourceTypeID == uni_source[m]]$vehicles
 
+            if(!missing(k)){
+              # to convert starts (trips) to km (EF g/start * start/km => g/km)
+              # in metadata k should be "km_trip"
+              nk <- metadata[fuelTypeID == uni_fuel[k] & sourceTypeID == uni_source[m]][[k]]
+              EF <- EF/nk
+            }
+
             if(verbose) cat(paste0("Reading: veh/", nveh, ".rds\n"))
 
             veh <- readRDS(paste0("veh/", nveh, ".rds"))
@@ -155,6 +164,7 @@ age_total <- NULL
               if(missing(fuel_type)) stop("Please, add `fuel_type` data.frame from MOVES")
 
               vehicles <- NULL
+
               df_fuel <- data.table::as.data.table(fuel_type)[fuelTypeID == metadata[vehicles == nveh]$fuelTypeID,
                                                               lapply(.SD, mean, na.rm = T),
                                                               .SDcols = c("carbonContent",
