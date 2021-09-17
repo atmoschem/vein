@@ -15,7 +15,6 @@
 #' @param vehicle Character, type of vehicle
 #' @param vehicle_type Character, subtype of vehicle
 #' @param fuel_subtype Character, subtype of vehicle
-#' @param net Road network class sf
 #' @param path_all Character to export whole estimation. It is not recommended since it
 #' is usually too heavy.
 #' @param verbose Logical; To show more information. Not implemented yet
@@ -36,7 +35,7 @@ moves_rpdy_sf <- function (veh,
                            vehicle = NULL,
                            vehicle_type = NULL,
                            fuel_subtype = NULL,
-                           net,
+                           # net,
                            path_all,
                            verbose = FALSE) {
 
@@ -158,7 +157,7 @@ moves_rpdy_sf <- function (veh,
                                             units = "Mb"))
     saveRDS(lxspeed, paste0(path_all, ".rds"))
   }
-  return(lxspeed)
+  # return(lxspeed)
   id <- hour <- . <- NULL
 
   by_street <- lxspeed[,
@@ -187,9 +186,9 @@ moves_rpdy_sf <- function (veh,
 
   names(streets)[4:ncol(streets)] <- paste0("H", names(streets)[4:ncol(streets)])
 
-  if (!missing(net)) {
-    streets <- cbind(net, streets)
-  }
+  # if (!missing(net)) {
+  #   streets <- cbind(net, streets)
+  # }
 
   veh <- veh_type <- fuelTypeID <- pollutantID <- processID <- sourceTypeID <- NULL
 
