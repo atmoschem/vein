@@ -229,7 +229,6 @@ age_total <- lxstart <- NULL
 
   lxspeed$age_total <- rowSums(lxspeed[, paste0("age_", 1:agemax), with = F], na.rm = T)
 
-  lxstart[, paste0("age_", 1:agemax):=NULL]
 
   if (!simplify) {
       message("The table has size ", format(object.size(lxspeed), units = "Mb"))
