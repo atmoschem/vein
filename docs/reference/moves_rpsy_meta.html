@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MOVES estimation of using rates per distance by model year — moves_rpdy_meta • vein</title>
+<title>MOVES estimation of using rates per start by model year — moves_rpsy_meta • vein</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="MOVES estimation of using rates per distance by model year — moves_rpdy_meta" />
-<meta property="og:description" content="moves_rpdy_meta estimates running exhaust emissions
+<meta property="og:title" content="MOVES estimation of using rates per start by model year — moves_rpsy_meta" />
+<meta property="og:description" content="moves_rpsy_meta estimates running exhaust emissions
 using MOVES emission factors." />
 
 
@@ -141,28 +141,28 @@ using MOVES emission factors." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>MOVES estimation of using rates per distance by model year</h1>
-    <small class="dont-index">Source: <a href='https://github.com/atmoschem/vein/blob/master/R/moves_rpdy_meta.R'><code>R/moves_rpdy_meta.R</code></a></small>
-    <div class="hidden name"><code>moves_rpdy_meta.Rd</code></div>
+    <h1>MOVES estimation of using rates per start by model year</h1>
+    <small class="dont-index">Source: <a href='https://github.com/atmoschem/vein/blob/master/R/moves_rpsy_meta.R'><code>R/moves_rpsy_meta.R</code></a></small>
+    <div class="hidden name"><code>moves_rpsy_meta.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>moves_rpdy_meta</code> estimates running exhaust emissions
+    <p><code>moves_rpsy_meta</code> estimates running exhaust emissions
 using MOVES emission factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>moves_rpdy_meta</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>moves_rpsy_meta</span><span class='op'>(</span>
   <span class='va'>metadata</span>,
   <span class='va'>lkm</span>,
   <span class='va'>ef</span>,
   <span class='va'>fuel_type</span>,
-  <span class='va'>speed_bin</span>,
   <span class='va'>profile</span>,
   agemax <span class='op'>=</span> <span class='fl'>31</span>,
   <span class='va'>net</span>,
   simplify <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>k</span>
+  <span class='va'>colk</span>,
+  colkt <span class='op'>=</span> <span class='cn'>F</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -183,10 +183,6 @@ using MOVES emission factors.</p>
     <tr>
       <th>fuel_type</th>
       <td><p>Data.frame of fuelSubtypeID exported by MOVES.</p></td>
-    </tr>
-    <tr>
-      <th>speed_bin</th>
-      <td><p>Data.frame or vector of avgSpeedBinID as defined by MOVES.</p></td>
     </tr>
     <tr>
       <th>profile</th>
@@ -210,8 +206,12 @@ the week</p></td>
       <td><p>Logical; To show more information. Not implemented yet</p></td>
     </tr>
     <tr>
-      <th>k</th>
+      <th>colk</th>
       <td><p>Character identifying a column in 'metadata' to multiply the emission factor</p></td>
+    </tr>
+    <tr>
+      <th>colkt</th>
+      <td><p>Logical, TRUE if `colk` is used</p></td>
     </tr>
     </table>
 

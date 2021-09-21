@@ -14,7 +14,6 @@ moves_rpdy_sf(
   vehicle = NULL,
   vehicle_type = NULL,
   fuel_subtype = NULL,
-  net,
   path_all,
   verbose = FALSE
 )
@@ -40,8 +39,6 @@ filtered by sourceTypeID and fuelTypeID.}
 \item{vehicle_type}{Character, subtype of vehicle}
 
 \item{fuel_subtype}{Character, subtype of vehicle}
-
-\item{net}{Road network class sf}
 
 \item{path_all}{Character to export whole estimation. It is not recommended since it
 is usually too heavy.}

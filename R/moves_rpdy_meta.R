@@ -40,7 +40,7 @@ moves_rpdy_meta <- function(metadata,
 
   `:` <- NULL
 
-age_total <- NULL
+age_total <- lxstart <- NULL
 
   data.table::rbindlist(lapply(1:ncol(speed_bin), function(i) {
 
@@ -203,7 +203,7 @@ age_total <- NULL
             lx <- data.table::rbindlist(
               lapply(1:agemax,
                      function(n) {
-                       data.table::data.table(emi = EF[[n]] * veh[[n]] *  lkm * profile[i, n],
+                       data.table::data.table(emi = EF[[n]] * veh[[n]] *  lkm * profile[i, nveh],
                                               id = 1:nrow(df_net_ef),
                                               age = n,
                                               hour = i)
@@ -237,6 +237,8 @@ age_total <- NULL
   })) -> lxspeed
 
   lxspeed$age_total <- rowSums(lxspeed[, paste0("age_", 1:agemax), with = F], na.rm = T)
+
+  lxstart[, paste0("age_", 1:agemax):=NULL]
 
   if (!simplify) {
       message("The table has size ", format(object.size(lxspeed), units = "Mb"))
