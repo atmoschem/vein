@@ -220,7 +220,6 @@ moves_rpsy_meta <- function(metadata,
 
   lxstart$age_total <- rowSums(lxstart[, paste0("age_", 1:agemax), with = F], na.rm = T)
 
-  # lxstart[, paste0("age_", 1:agemax):=NULL]
 
   if (!simplify) {
     message("The table has size ", format(object.size(lxstart), units = "Mb"))
