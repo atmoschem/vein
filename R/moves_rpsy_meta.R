@@ -50,7 +50,6 @@ moves_rpsy_meta <- function(metadata,
 
     def <- ef[sourceTypeID == uni_source[m]]
 
-
     # 2 filter by fuelTypeID k
     uni_fuel <- unique(def$fuelTypeID)
 
@@ -135,9 +134,6 @@ moves_rpsy_meta <- function(metadata,
                             expr = def_veh[, 2:ncol(def_veh)],
                             simplify = F)
             EF <- data.table::rbindlist(la)
-
-
-
 
             if(colkt){
               # to convert starts (trips) to km (EF g/start * start/km => g/km)
@@ -224,7 +220,7 @@ moves_rpsy_meta <- function(metadata,
 
   lxstart$age_total <- rowSums(lxstart[, paste0("age_", 1:agemax), with = F], na.rm = T)
 
-  lxstart[, paste0("age_", 1:agemax):=NULL]
+  # lxstart[, paste0("age_", 1:agemax):=NULL]
 
   if (!simplify) {
     message("The table has size ", format(object.size(lxstart), units = "Mb"))

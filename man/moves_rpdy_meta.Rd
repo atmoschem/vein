@@ -14,8 +14,7 @@ moves_rpdy_meta(
   agemax = 31,
   net,
   simplify = TRUE,
-  verbose = FALSE,
-  k
+  verbose = FALSE
 )
 }
 \arguments{
@@ -39,8 +38,6 @@ the week}
 \item{simplify}{Logical, to return the whole object or processed by streets and veh}
 
 \item{verbose}{Logical; To show more information. Not implemented yet}
-
-\item{k}{Character identifying a column in 'metadata' to multiply the emission factor}
 }
 \value{
 a list with emissions at each street and data.base aggregated by categories.

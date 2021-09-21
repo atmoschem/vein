@@ -14,7 +14,6 @@
 #' @param net Road network class sf
 #' @param simplify Logical, to return the whole object or processed by streets and veh
 #' @param verbose Logical; To show more information. Not implemented yet
-#' @param k Character identifying a column in 'metadata' to multiply the emission factor
 #' @return a list with emissions at each street and data.base aggregated by categories.
 #' @export
 #' @importFrom data.table rbindlist as.data.table data.table dcast.data.table melt.data.table
@@ -33,8 +32,7 @@ moves_rpdy_meta <- function(metadata,
                             agemax = 31,
                             net,
                             simplify = TRUE,
-                            verbose = FALSE,
-                            k){
+                            verbose = FALSE){
 
   profile$Hour <- NULL
 
@@ -147,13 +145,6 @@ age_total <- lxstart <- NULL
             # read vehicles
 
             nveh <- metadata[fuelTypeID == uni_fuel[k] & sourceTypeID == uni_source[m]]$vehicles
-
-            if(!missing(k)){
-              # to convert starts (trips) to km (EF g/start * start/km => g/km)
-              # in metadata k should be "km_trip"
-              nk <- metadata[fuelTypeID == uni_fuel[k] & sourceTypeID == uni_source[m]][[k]]
-              EF <- EF/nk
-            }
 
             if(verbose) cat(paste0("Reading: veh/", nveh, ".rds\n"))
 
