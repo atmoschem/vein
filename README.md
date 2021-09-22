@@ -10,7 +10,7 @@
     Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
 -   cran:
     [![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
-    [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein)
+    [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein)
     [![CRAN
     Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
     [![Package
@@ -38,13 +38,12 @@
 
 ### What is new?
 
--   add CBMZ into chem\_vein
+-   add CBMZ into chem_vein
 -   Coming soon: Projects for Latin America, Europe and USA
 
 ### TODO
 
--   get\_project with Europe and Chinese EF
--   Update ef\_ldv\* and ef\_hdv\* to EEA2019
+-   get_project with Europe and Chinese EF
 -   Include speed functions with Fortran
 -   Include CB6
 -   Add EF from HBEFA?
@@ -101,7 +100,7 @@ At the moment, most of the projects covers Brazilian regions, but I will
 include China, Europe or USA approaches as soon as I can.
 
 Use the function
-[get\_project](https://atmoschem.github.io/vein/reference/get_project.html)
+[get_project](https://atmoschem.github.io/vein/reference/get_project.html)
 and read the documentation.
 
 -   [![R build
@@ -131,7 +130,7 @@ library(vein)
 get_project(directory = "awesome_city")
 ```
 
-The structure of the new directory “awesome\_city” is:
+The structure of the new directory “awesome_city” is:
 
 ``` r
 awesome_city
@@ -199,17 +198,17 @@ Read the instruction of inventory
 #### 1) Examples with traffic data:
 
 1.  If you know the distribution of the vehicles by age of use , use:
-    [my\_age](https://atmoschem.github.io/vein/reference/my_age.html)
+    [my_age](https://atmoschem.github.io/vein/reference/my_age.html)
 2.  If you know the sales of vehicles or better the registry of new
     vehicles, use
     [age](https://atmoschem.github.io/vein/reference/age.html) to apply
     a survival function.
 3.  If you know the theoretical shape of the circulating fleet and you
     can use
-    [age\_ldv](https://atmoschem.github.io/vein/reference/age_ldv.html),
-    [age\_hdv](https://atmoschem.github.io/vein/reference/age_hdv.html)
+    [age_ldv](https://atmoschem.github.io/vein/reference/age_ldv.html),
+    [age_hdv](https://atmoschem.github.io/vein/reference/age_hdv.html)
     or
-    [age\_moto](https://atmoschem.github.io/vein/reference/age_moto.html).
+    [age_moto](https://atmoschem.github.io/vein/reference/age_moto.html).
     For instance, you dont know the sales or registry of vehicles, but
     somehow you know the shape of this curve.
 4.  You can use/merge/transform/adapt any of these functions.
@@ -251,7 +250,7 @@ plot(
 
 ![](man/figures/unnamed-chunk-4-1.png)<!-- -->
 
--   [temp\_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
+-   [temp_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
 -   [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
 
 temporal factors and netspeed
@@ -299,13 +298,12 @@ plot(
 )
 ```
 
-![](man/figures/unnamed-chunk-6-1.png)<!-- --> \#\#\#\# 2) Emission
-Factors
+![](man/figures/unnamed-chunk-6-1.png)<!-- --> #### 2) Emission Factors
 
--   [ef\_ldv\_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
--   [ef\_hdv\_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
--   [ef\_ldv\_scaled](https://atmoschem.github.io/vein/reference/ef_ldv_scaled.html)
--   [ef\_hdv\_scaled](https://atmoschem.github.io/vein/reference/ef_hdv_scaled.html)
+-   [ef_ldv_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
+-   [ef_hdv_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
+-   [ef_ldv_scaled](https://atmoschem.github.io/vein/reference/ef_ldv_scaled.html)
+-   [ef_hdv_scaled](https://atmoschem.github.io/vein/reference/ef_hdv_scaled.html)
 -   [EmissionFactors](https://atmoschem.github.io/vein/reference/EmissionFactors.html)
 -   [EmissionFactorsList](https://atmoschem.github.io/vein/reference/EmissionFactorsList.html)
 
@@ -366,10 +364,10 @@ E_CO <- emis(
 
 #### 4) Post Emissions
 
--   [emis\_post](https://atmoschem.github.io/vein/reference/emis_post.html)
+-   [emis_post](https://atmoschem.github.io/vein/reference/emis_post.html)
 -   When the argument by = “veh” the emissions are aggregated by age and
     hour.
--   When the argument by = “streets\_wide”, aggregated the emissions by
+-   When the argument by = “streets_wide”, aggregated the emissions by
     street. In this cae, if you add the argument net with the respective
     streets, it returns an spatial net with the hourly emissions.
 
@@ -401,13 +399,13 @@ plot(
 
 #### Grids
 
--   [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
+-   [make_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
 
 1.  Create a grid using `make_grid`.The spobj is the spatial net. The
     size of the grid has the size of the net. You have to specify the
     grid spacing.
 2.  Create a grid using a path to wrfinput file instead a net. The grid
-    will have the size of the wrf\_input. You don’t have to specify the
+    will have the size of the wrf_input. You don’t have to specify the
     grid spacing.
 
 ``` r
@@ -452,19 +450,19 @@ plot(
 #### Creating a WRFChem Input file using [eixport](https://atmoschem.github.io/eixport/):
 
 1.  Create a grid using
-    [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html)
+    [make_grid](https://atmoschem.github.io/vein/reference/make_grid.html)
     and a wrfinput file
 2.  Run
-    [emis\_grid](https://atmoschem.github.io/vein/reference/emis_grid.html)
+    [emis_grid](https://atmoschem.github.io/vein/reference/emis_grid.html)
     to grid your emissions.
 3.  Create a
     [GriddedEmissionsArray](https://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html).
 4.  Create a wrfchem input file
-    \[eixport::wrf\_create\](<https://atmoschem.github.io/eixport/reference/wrf_create.html>.
+    \[eixport::wrf_create\](<https://atmoschem.github.io/eixport/reference/wrf_create.html>.
 5.  Put the
     [GriddedEmissionsArray](https://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html)
     into the wrf chem input file using
-    [eixport::wrf\_put](https://atmoschem.github.io/eixport/reference/wrf_put.html).
+    [eixport::wrf_put](https://atmoschem.github.io/eixport/reference/wrf_put.html).
 
 ``` r
 library(eixport)
@@ -486,13 +484,13 @@ eixport::wrf_put(file = path_to_wrfc, name = "E_CO", POL = gr)
 #### Creating a WRFChem Input file using AS4WRF
 
 1.  Create a grid using
-    [make\_grid](https://atmoschem.github.io/vein/reference/make_grid.html)
+    [make_grid](https://atmoschem.github.io/vein/reference/make_grid.html)
     and your net.
 2.  Run
-    [emis\_grid](https://atmoschem.github.io/vein/reference/emis_grid.html)
+    [emis_grid](https://atmoschem.github.io/vein/reference/emis_grid.html)
     to grid your emissions.
 3.  Run
-    [eixport::to\_as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
+    [eixport::to_as4wrf](https://atmoschem.github.io/eixport/reference/to_as4wrf.html)
     to create a data.frame the specifications for AS4WRF.ncl.
 4.  Export data.frame to a text.file. Recall that AS4WRF requires all
     the lumped species.
@@ -531,6 +529,7 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
 -   [Pedro Andrade](https://github.com/pedro-andrade-inpe)
 -   [Edzer Pebesma](https://github.com/edzer)
 -   [Amanda Rehbein](https://github.com/salvatirehbein)
+-   [Joao Bazzo](https://github.com/joaobazzo)
 
 ## Communications, doubts etc
 
