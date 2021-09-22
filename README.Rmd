@@ -51,7 +51,6 @@ knitr::opts_chunk$set(
 ### TODO
 
 - get_project with Europe and Chinese EF
-- Update ef_ldv* and ef_hdv* to EEA2019
 - Include speed functions with Fortran
 - Include CB6
 - Add EF from HBEFA?
