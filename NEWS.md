@@ -5,7 +5,6 @@ NEWS
 
 - get_project with *Europe*, Chinese and MOVES EF
 - Add EF from HBEFA
-- Update ef_ldv* and ef_hdv* to EEA2019
 - Reduce size of sysdata
 
 ### vein 0.9.3
@@ -19,7 +18,8 @@ NEWS
 - add function moves_speed to return speed bins used by MOVES
 - changes plots of vein classes, now imports fields::image.plot
 - add moves_exhaust
-- adde data(decoder) for MOVES
+- add data(decoder) for MOVES
+- add ef_eea, updated european emission factors
 
 ### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb

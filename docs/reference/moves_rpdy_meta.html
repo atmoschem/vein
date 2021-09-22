@@ -227,9 +227,9 @@ the week</p></td>
 #&gt; 1 10          MC                                           Motorcycles
 #&gt; 2 20         LDV                                   Light Duty Vehicles
 #&gt; 3 30         LDT                                     Light Duty Trucks
-#&gt; 4 41      LHD2b3 Class 2b and 3 Trucks (8,500 lbs &lt; GVWR = 14,000 lbs)
-#&gt; 5 42       LHD45 Class 4 and 5 Trucks (14,000 lbs &lt; GVWR = 19,500 lbs)
-#&gt; 6 46       MHD67 Class 6 and 7 Trucks (19,500 lbs &lt; GVWR = 33,000 lbs)
+#&gt; 4 41      LHD2b3 Class 2b and 3 Trucks (8,500 lbs &lt; GVWR ≤ 14,000 lbs)
+#&gt; 5 42       LHD45 Class 4 and 5 Trucks (14,000 lbs &lt; GVWR ≤ 19,500 lbs)
+#&gt; 6 46       MHD67 Class 6 and 7 Trucks (19,500 lbs &lt; GVWR ≤ 33,000 lbs)
 #&gt; 7 47        HHD8            Class 8a and 8b Trucks (GVWR &gt; 33,000 lbs)
 #&gt; 8 48   Urban Bus                      Urban Bus (see CFR Sec 86.091_2)
 #&gt; 9 49     Gliders                Glider Vehicles (see EPA-420-F-15-904)
@@ -325,27 +325,27 @@ the week</p></td>
 #&gt;     ID                    name VSP_lower  VSP VSP_higher speed_lower    speed
 #&gt; 1    0                 Braking      &lt;NA&gt; &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;     &lt;NA&gt;
 #&gt; 2    1                  Idling      &lt;NA&gt; &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;     &lt;NA&gt;
-#&gt; 3   11      Low Speed Coasting      &lt;NA&gt;  VSP        &lt; 0     1 mph =    Speed
-#&gt; 4   12   Cruise / Acceleration       0 =  VSP        &lt; 3     1 mph =    Speed
-#&gt; 5   13   Cruise / Acceleration       3 =  VSP        &lt; 6     1 mph =    Speed
-#&gt; 6   14   Cruise / Acceleration       6 =  VSP        &lt; 9     1 mph =    Speed
-#&gt; 7   15   Cruise / Acceleration       9 =  VSP       &lt; 12     1 mph =    Speed
-#&gt; 8   16   Cruise / Acceleration      12 =  VSP    1 mph =       Speed &lt; 25 mph
-#&gt; 9   21 Moderate Speed Coasting       VSP  &lt; 0   25 mph =       Speed &lt; 50 mph
-#&gt; 10  22   Cruise / Acceleration       0 =  VSP        &lt; 3    25 mph =    Speed
-#&gt; 11  23   Cruise / Acceleration       3 =  VSP        &lt; 6    25 mph =    Speed
-#&gt; 12  24   Cruise / Acceleration       6 =  VSP        &lt; 9    25 mph =    Speed
-#&gt; 13  25   Cruise / Acceleration       9 =  VSP       &lt; 12    25 mph =    Speed
-#&gt; 14  27   Cruise / Acceleration      12 =  VSP       &lt; 18    25 mph =    Speed
-#&gt; 15  28   Cruise / Acceleration      18 =  VSP       &lt; 24    25 mph =    Speed
-#&gt; 16  29   Cruise / Acceleration      24 =  VSP       &lt; 30    25 mph =    Speed
-#&gt; 17  30   Cruise / Acceleration      30 =  VSP   25 mph =       Speed &lt; 50 mph
-#&gt; 18  33   Cruise / Acceleration       VSP  &lt; 6   50 mph =       Speed     &lt;NA&gt;
-#&gt; 19  35   Cruise / Acceleration       6 =  VSP       &lt; 12    50 mph =    Speed
-#&gt; 20  37   Cruise / Acceleration      12 =  VSP       &lt; 18    50 mph =    Speed
-#&gt; 21  38   Cruise / Acceleration      18 =  VSP       &lt; 24    50 mph =    Speed
-#&gt; 22  39   Cruise / Acceleration      24 =  VSP       &lt; 30    50 mph =    Speed
-#&gt; 23  40   Cruise / Acceleration      30 =  VSP   50 mph =       Speed     &lt;NA&gt;
+#&gt; 3   11      Low Speed Coasting      &lt;NA&gt;  VSP        &lt; 0     1 mph ≤    Speed
+#&gt; 4   12   Cruise / Acceleration       0 ≤  VSP        &lt; 3     1 mph ≤    Speed
+#&gt; 5   13   Cruise / Acceleration       3 ≤  VSP        &lt; 6     1 mph ≤    Speed
+#&gt; 6   14   Cruise / Acceleration       6 ≤  VSP        &lt; 9     1 mph ≤    Speed
+#&gt; 7   15   Cruise / Acceleration       9 ≤  VSP       &lt; 12     1 mph ≤    Speed
+#&gt; 8   16   Cruise / Acceleration      12 ≤  VSP    1 mph ≤       Speed &lt; 25 mph
+#&gt; 9   21 Moderate Speed Coasting       VSP  &lt; 0   25 mph ≤       Speed &lt; 50 mph
+#&gt; 10  22   Cruise / Acceleration       0 ≤  VSP        &lt; 3    25 mph ≤    Speed
+#&gt; 11  23   Cruise / Acceleration       3 ≤  VSP        &lt; 6    25 mph ≤    Speed
+#&gt; 12  24   Cruise / Acceleration       6 ≤  VSP        &lt; 9    25 mph ≤    Speed
+#&gt; 13  25   Cruise / Acceleration       9 ≤  VSP       &lt; 12    25 mph ≤    Speed
+#&gt; 14  27   Cruise / Acceleration      12 ≤  VSP       &lt; 18    25 mph ≤    Speed
+#&gt; 15  28   Cruise / Acceleration      18 ≤  VSP       &lt; 24    25 mph ≤    Speed
+#&gt; 16  29   Cruise / Acceleration      24 ≤  VSP       &lt; 30    25 mph ≤    Speed
+#&gt; 17  30   Cruise / Acceleration      30 ≤  VSP   25 mph ≤       Speed &lt; 50 mph
+#&gt; 18  33   Cruise / Acceleration       VSP  &lt; 6   50 mph ≤       Speed     &lt;NA&gt;
+#&gt; 19  35   Cruise / Acceleration       6 ≤  VSP       &lt; 12    50 mph ≤    Speed
+#&gt; 20  37   Cruise / Acceleration      12 ≤  VSP       &lt; 18    50 mph ≤    Speed
+#&gt; 21  38   Cruise / Acceleration      18 ≤  VSP       &lt; 24    50 mph ≤    Speed
+#&gt; 22  39   Cruise / Acceleration      24 ≤  VSP       &lt; 30    50 mph ≤    Speed
+#&gt; 23  40   Cruise / Acceleration      30 ≤  VSP   50 mph ≤       Speed     &lt;NA&gt;
 #&gt; 24 501     Brakewear ; stopped      &lt;NA&gt; &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;     &lt;NA&gt;
 #&gt;    speed_higher
 #&gt; 1          &lt;NA&gt;
@@ -376,13 +376,13 @@ the week</p></td>
 #&gt; $starts_mode
 #&gt;    ID   soak_time_i soak_time   soak_time_j
 #&gt; 1 101          &lt;NA&gt; Soak Time   &lt; 6 minutes
-#&gt; 2 102   6 minutes = Soak Time  &lt; 30 minutes
-#&gt; 3 103  30 minutes = Soak Time  &lt; 60 minutes
-#&gt; 4 104  60 minutes = Soak Time  &lt; 90 minutes
-#&gt; 5 105  90 minutes = Soak Time &lt; 120 minutes
-#&gt; 6 106 120 minutes = Soak Time &lt; 360 minutes
-#&gt; 7 107 360 minutes = Soak Time &lt; 720 minutes
-#&gt; 8 108 720 minutes = Soak Time          &lt;NA&gt;
+#&gt; 2 102   6 minutes ≤ Soak Time  &lt; 30 minutes
+#&gt; 3 103  30 minutes ≤ Soak Time  &lt; 60 minutes
+#&gt; 4 104  60 minutes ≤ Soak Time  &lt; 90 minutes
+#&gt; 5 105  90 minutes ≤ Soak Time &lt; 120 minutes
+#&gt; 6 106 120 minutes ≤ Soak Time &lt; 360 minutes
+#&gt; 7 107 360 minutes ≤ Soak Time &lt; 720 minutes
+#&gt; 8 108 720 minutes ≤ Soak Time          &lt;NA&gt;
 #&gt; 
 #&gt; $hotelling_mode
 #&gt;    ID                 hotelling
