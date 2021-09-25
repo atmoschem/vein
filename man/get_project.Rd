@@ -23,6 +23,7 @@ get_project(directory, case = "brasil", url)
   amazon2014      \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
   curitiba      \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
   masp2020      \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
+  ecuador_td_hot      \tab Top-down\tab EEA\tab  csv and.rds\cr
 }}
 
 \item{url}{String, with the URL to download VEIN project}
