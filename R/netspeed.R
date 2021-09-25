@@ -34,19 +34,19 @@
 #' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 #' class(df)
 #' plot(df) #plot of the average speed at each hour, +- sd
-#' net$ps <- units::set_units(net$ps, "miles/h")
-#' net$ffs <- units::set_units(net$ffs, "miles/h")
-#' df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
-#' class(df)
-#' plot(df) #plot of the average speed at each hour, +- sd
-#' df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)
-#' class(df)
-#' plot(df) #plot of the average speed at each hour, +- sd
-#' dfsf <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)
-#' class(dfsf)
-#' head(dfsf)
-#' plot(dfsf, pal = cptcity::lucky(colorRampPalette = TRUE, rev = TRUE),
-#'  key.pos = 1, max.plot = 9)
+#' # net$ps <- units::set_units(net$ps, "miles/h")
+#' # net$ffs <- units::set_units(net$ffs, "miles/h")
+#' # df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+#' # class(df)
+#' # plot(df) #plot of the average speed at each hour, +- sd
+#' # df <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)
+#' # class(df)
+#' # plot(df) #plot of the average speed at each hour, +- sd
+#' # dfsf <- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)
+#' # class(dfsf)
+#' # head(dfsf)
+#' # plot(dfsf, pal = cptcity::lucky(colorRampPalette = TRUE, rev = TRUE),
+#' # key.pos = 1, max.plot = 9)
 #' }
 netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
                       net, scheme = FALSE, dist = "km"){
