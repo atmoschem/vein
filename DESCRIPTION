@@ -2,11 +2,11 @@ Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
 Version: 0.9.3
-Date: 2021-08-23
+Date: 2021-09-25
 Authors@R: c( 
   person(given = "Sergio", family = "Ibarra-Espinosa",
          role = c("aut", "cre"),
-         email = "sergio.ibarra@usp.br",
+         email = "zergioibarra@gmail.com",
          comment = c(ORCID = "0000-0002-3162-1905")),
          person(given="Joao", family="Bazzo", 
          role="ctb", 
