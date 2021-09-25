@@ -18,3 +18,4 @@
 ^pkgdown$
 ^projects$
 ^\.github$
+^CRAN-RELEASE$
