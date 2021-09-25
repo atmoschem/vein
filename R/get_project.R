@@ -19,6 +19,7 @@
 #'   curitiba      \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   masp2020      \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   ecuador_td_hot      \tab Top-down\tab EEA\tab  csv and.rds\cr
+#'   moves_bu      \tab Bottom-down\tab US/EPA MOVES \tab  csv and.rds (requires MOVES on Windows)\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
@@ -44,6 +45,15 @@ get_project <- function(directory,
                          destfile =  tf)
     utils::untar(tarfile = tf, exdir = directory)
     message("Your directory is in ", directory)
+
+  } else if(case == "moves_bu"){
+    message("coming soon")
+    # URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/emislacovid.tar.gz"
+    # tf <- paste0(tempfile(), ".tar.gz")
+    # utils::download.file(url = URL,
+    #                      destfile =  tf)
+    # utils::untar(tarfile = tf, exdir = directory)
+    # message("Your directory is in ", directory)
 
   } else if(case == "emislacovid"){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/emislacovid.tar.gz"
