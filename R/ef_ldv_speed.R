@@ -229,6 +229,17 @@ ef_ldv_speed <- function(v,
   xas <-  c("AS_urban", "AS_rural", "AS_highway")
   npm <- c("N_urban", "N_rural", "N_highway",
            "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway")
+
+
+
+  # try to solve error of negative values present in EEA guidelines
+  if(v == "LCV" && eu == "V") {
+    warning("When `v` is 'LCV' and `eu` is 'V', replaces `v` by 'PC' and `cc` by >'2000' see issue #204")
+    v <- "PC"
+    cc <- ">2000"
+  }
+
+
   #Check eu
   if(is.matrix(eu) | is.data.frame(eu)){
     eu <- as.data.frame(eu)
@@ -269,13 +280,6 @@ ef_ldv_speed <- function(v,
     } else if (p %in% npm){
       cat("Units of Number of Particles: n/km\n")
     }
-  }
-
-  # try to solve error of negative values present in EEA guidelines
-  if(v == "LCV" && eu == "V") {
-    warning("When `v` is 'LCV' and `eu` is 'V', replaces `v` by 'PC' and `cc` by >'2000' see issue #204")
-    v <- "PC"
-    cc <- ">2000"
   }
 
     # fun starts
