@@ -20,6 +20,7 @@ NEWS
 - add moves_exhaust
 - add data(decoder) for MOVES
 - add ef_eea, updated european emission factors
+- add fuel E85 exhaust-evaporative and CNG-exhaust in NMHC speciation
 
 ### vein 0.9.2 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
