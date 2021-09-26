@@ -7,7 +7,7 @@ NEWS
 - Add EF from HBEFA
 - Reduce size of sysdata
 
-### vein 0.9.3
+### vein 0.9.4
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)
 - add projects `curitiba` and `masp2020`  (Release date: 2021-06-28)
 - fix chem_vein2 for CB4 and CBMZ  (Release date: 2021-07-08)
@@ -24,7 +24,7 @@ NEWS
 - add Ecuador
 - Foe MOVES contributions, added Joao Bazzo
 
-### vein 0.9.2 (Release date: 2021-06-09)
+### vein 0.9.4 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
 - Change numeric_dc to vector_dv to avoid copying (dotCall64)
 - update gitlab link for veinextras in get_project

@@ -120,7 +120,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
   p_met <- as.character(unique(sysdata$hdv_metals$POLLUTANT))
   p_ghg <- as.character(unique(sysdata$hdv_ghg$POLLUTANT))
   p_pah <- as.character(unique(sysdata$hdv_pah$POLLUTANT))
-  p_nmhc <- as.character(unique(sysdata$hdv_nmhc$POLLUTANT))
+  # p_nmhc <- as.character(unique(sysdata$hdv_nmhc$POLLUTANT))
   p_pm <- as.character(unique(sysdata$hdv_pm$POLLUTANT))
   xas <-  c("AS_urban", "AS_rural", "AS_highway")
   npm <- c("N_urban", "N_rural", "N_highway",
@@ -141,8 +141,8 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
     ef_hdv <- sysdata$hdv_ghg
   } else if(p %in% p_pah){
     ef_hdv <- sysdata$hdv_pah
-  } else if(p %in% p_nmhc){
-    ef_hdv <- sysdata$hdv_nmhc
+  # } else if(p %in% p_nmhc){
+    # ef_hdv <- sysdata$hdv_nmhc
   } else if(p %in% p_pm){
     ef_hdv <- sysdata$hdv_pm
   }

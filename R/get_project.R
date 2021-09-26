@@ -19,6 +19,7 @@
 #'   curitiba      \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   masp2020      \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   ecuador_td_hot      \tab Top-down\tab EEA\tab  csv and.rds\cr
+#'   ecuador_td_hot_month      \tab Top-down\tab EEA\tab  csv and.rds\cr
 #'   moves_bu      \tab Bottom-down\tab US/EPA MOVES \tab  csv and.rds (requires MOVES on Windows)\cr
 #' }
 #' @param url String, with the URL to download VEIN project
@@ -113,6 +114,14 @@ get_project <- function(directory,
 
   } else if(case %in% c("ecuador_td_hot")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td_hot.tar.gz"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  tf)
+    utils::untar(tarfile = tf, exdir = directory)
+    message("Your directory is in ", directory)
+
+  } else if(case %in% c("ecuador_td_hot_month")){
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td_hot_month.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
