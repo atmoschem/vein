@@ -22,7 +22,8 @@ NEWS
 - add ef_eea, updated european emission factors
 - add fuel E85 exhaust-evaporative and CNG-exhaust in NMHC speciation
 - add Ecuador
-- Foe MOVES contributions, added Joao Bazzo
+- For MOVES contributions, added Joao Bazzo
+- reduced size for ef_hdv_speed. Speciation use `speciate`.
 
 ### vein 0.9.4 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
