@@ -14,6 +14,9 @@
 #' \item{"nox"}{: Splits NOx in NO and NO2.}
 #' \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
 #' \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
+#' }
+#' The following still available but they will be removed soon:
+#' \itemize{
 #' \item{"iag_racm"}{: ethanol emissions added in hc3.}
 #' \item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
 #' \item{"petroiag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
@@ -30,6 +33,9 @@
 #' \item{"nox"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
 #' \item{"nmhc"}{: veh can be "LDV", "HDV" or "LPG".}
 #' \item{""pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+#' }
+#' #' The following still available but they will be removed soon:
+#' \itemize{
 #' \item{"iag_racm"}{: veh accepts "veh".}
 #' \item{"iag" or "iag_cb05"}{: veh accepts "veh" .}
 #' \item{"iag_cb05v2"}{: veh accepts "veh" .}
@@ -46,6 +52,9 @@
 #' \item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
 #' \item{"nmhc"}{: "G", "D" or "LPG".}
 #' \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+#' }
+#' #' The following still available but they will be removed soon:
+#' \itemize{
 #' \item{"iag_racm"}{: "G", "E" or "D".}
 #' \item{"iag" or "iag_cb05"}{: "G", "E" or "D".}
 #' \item{"iag_cb05v2"}{: "G", "E" or "D".}
@@ -65,6 +74,9 @@
 #' "IV-ADFP","V-ADFP" or "OPEN_LOOP". eu can be "ALL" if spec is "nmhc" and
 #' fuel is "LPG"}
 #' \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+#' }
+#' #' The following still available but they will be removed soon:
+#' \itemize{
 #' \item{"iag_racm"}{: "Exhaust", "Evaporative" or "Liquid".}
 #' \item{"iag" or "iag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
 #' \item{"iag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
@@ -315,7 +327,167 @@ speciate <- function(x,
         if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
     }
 
-    # nox ####
+    # pah ####
+  } else if (spec == "pah") {
+    nmhc <- sysdata$pah
+
+    if(!veh %in% unique(nmhc$veh)) {
+      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      veh <- unique(nmhc$veh)[choice]
+    }
+    nmhc <- nmhc[nmhc$veh == veh , ]
+
+    if(!fuel %in% unique(nmhc$fuel)) {
+      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      fuel <- unique(nmhc$fuel)[choice]
+    }
+    nmhc <- nmhc[nmhc$fuel == fuel , ]
+
+    if(!eu %in% unique(nmhc$eu)) {
+      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      eu <- unique(nmhc$eu)[choice]
+    }
+    df <- nmhc[nmhc$eu == eu , ]
+
+
+    if (list == T) {
+
+      dfb <- lapply(1:nrow(df), function(i) {
+        df[i, ]$x
+      })
+      names(dfb) <- df$species
+
+    } else {
+
+      dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
+        data.frame(x = df[i, ]$x,
+                   pol = df$species[i])
+      }))
+      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
+    }
+
+    # pcdd ####
+  } else if (spec == "pcdd") {
+    nmhc <- sysdata$pcdd
+    nmhc$x <- nmhc$x*1e-12
+
+    if(!veh %in% unique(nmhc$veh)) {
+      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      veh <- unique(nmhc$veh)[choice]
+    }
+    nmhc <- nmhc[nmhc$veh == veh , ]
+
+    if(!fuel %in% unique(nmhc$fuel)) {
+      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      fuel <- unique(nmhc$fuel)[choice]
+    }
+    nmhc <- nmhc[nmhc$fuel == fuel , ]
+
+    if(!eu %in% unique(nmhc$eu)) {
+      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      eu <- unique(nmhc$eu)[choice]
+    }
+    df <- nmhc[nmhc$eu == eu , ]
+
+
+    if (list == T) {
+
+      dfb <- lapply(1:nrow(df), function(i) {
+        df[i, ]$x
+      })
+      names(dfb) <- df$species
+
+    } else {
+
+      dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
+        data.frame(x = df[i, ]$x,
+                   pol = df$species[i])
+      }))
+      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
+    }
+
+    # metals ####
+  } else if (spec %in% c("metal", "metals")) {
+    message("multiplies fuel consumption (g/km)")
+    nmhc <- sysdata$metals
+
+    if(!veh %in% unique(nmhc$veh)) {
+      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      veh <- unique(nmhc$veh)[choice]
+    }
+    nmhc <- nmhc[nmhc$veh == veh , ]
+
+    if(!fuel %in% unique(nmhc$fuel)) {
+      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      fuel <- unique(nmhc$fuel)[choice]
+    }
+    nmhc <- nmhc[nmhc$fuel == fuel , ]
+
+    if(!eu %in% unique(nmhc$eu)) {
+      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      eu <- unique(nmhc$eu)[choice]
+    }
+    df <- nmhc[nmhc$eu == eu , ]
+
+
+    if (list == T) {
+
+      dfb <- lapply(1:nrow(df), function(i) {
+        df[i, ]$x
+      })
+      names(dfb) <- df$species
+
+    } else {
+
+      dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
+        data.frame(x = df[i, ]$x*x,
+                   pol = df$species[i])
+      }))
+      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
+    }
+
+
+    # pmchar ####
+  } else if (spec %in% c("pmchar")) {
+    message("multiplies fuel consumption (g/km)")
+    nmhc <- sysdata$pmchar
+
+    if(!veh %in% unique(nmhc$veh)) {
+      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      veh <- unique(nmhc$veh)[choice]
+    }
+    nmhc <- nmhc[nmhc$veh == veh , ]
+
+    if(!fuel %in% unique(nmhc$fuel)) {
+      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      fuel <- unique(nmhc$fuel)[choice]
+    }
+    nmhc <- nmhc[nmhc$fuel == fuel , ]
+
+    if(!eu %in% unique(nmhc$eu)) {
+      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      eu <- unique(nmhc$eu)[choice]
+    }
+    df <- nmhc[nmhc$eu == eu , ]
+
+
+    if (list == T) {
+
+      dfb <- lapply(1:nrow(df), function(i) {
+        df[i, ]$x
+      })
+      names(dfb) <- df$species
+
+    } else {
+
+      dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
+        data.frame(x = df[i, ]$x*x,
+                   pol = df$species[i])
+      }))
+      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
+    }
+
+        # nox ####
   } else if (spec == "nox") {
     bcom <- sysdata$nox
     df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ]

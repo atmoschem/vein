@@ -50,49 +50,15 @@
 #'
 #' \strong{Black Carbon and Organic Matter (g/km)}: "BC", "OM"
 #'
-#' \strong{PAH and POP (g/km)}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
-#' "benzo(b)fluoranthene", "benzo(ghi)perylene", "fluoranthene",
-#' "benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
-#' "benzo(e)pyrene", "triphenylene", "benzo(j)fluoranthene",
-#' "dibenzo(a,j)anthacene", "dibenzo(a,l)pyrene", "3,6-dimethyl-phenanthrene",
-#' "benzo(a)anthracene", "acenaphthylene", "acenapthene",
-#' "chrysene", "phenanthrene", "napthalene",  "anthracene", "coronene",
-#' "dibenzo(ah)anthracene".
+#' \strong{PAH and POP (g/km)}:  \code{\link{speciate}}
+#' \strong{Dioxins and furans(g equivalent toxicity / km)}:  \code{\link{speciate}}
+#' \strong{Metals (g/km)}:  \code{\link{speciate}}
 #'
-#' \strong{Dioxins and furans(g equivalent toxicity / km)}: "PCDD", "PCDF" and "PCB".
+#' \strong{NMHC (g/km)}: \code{\link{speciate}}
 #'
-#' \strong{Metals (g/km)}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn".
+#' \emph{Active Surface (cm2/km)}:  \code{\link{speciate}}"AS_urban", "AS_rural", "AS_highway"
 #'
-#' \strong{NMHC (g/km)}:
-#'
-#' \emph{ALKANES (g/km)}: "ethane", "propane", "butane", "isobutane", "pentane",
-#' "isopentane", "hexane", "heptane", "octane", "2-methylhexane", "nonane",
-#' "2-methylheptane", "3-methylhexane", "decane", "3-methylheptane",
-#' "alkanes_C10_C12", "alkanes_C13".
-#'
-#' \emph{CYCLOALKANES (g/km)}: "cycloalkanes".
-#'
-#' \emph{ALKENES (g/km)}: "ethylene", "propylene", "propadiene", "1-butene",
-#' "isobutene", "2-butene", "1,3-butadiene", "1-pentene", "2-pentene",
-#' "1-hexene", "dimethylhexene".
-#'
-#' \emph{ALKYNES (g/km)}:"1-butyne", "propyne", "acetylene".
-#'
-#' \emph{ALDEHYDES (g/km)}: "formaldehyde", "acetaldehyde", "acrolein", "benzaldehyde",
-#' "crotonaldehyde", "methacrolein", "butyraldehyde", "isobutanaldehyde",
-#' "propionaldehyde", "hexanal", "i-valeraldehyde", "valeraldehyde",
-#' "o-tolualdehyde", "m-tolualdehyde", "p-tolualdehyde".
-#'
-#' \emph{KETONES (g/km)}: "acetone", "methylethlketone".
-#'
-#' \emph{AROMATICS (g/km)}: "toluene", "ethylbenzene",
-#'  "m-xylene",  "p-xylene", "o-xylene",
-#' "1,2,3-trimethylbenzene", "1,2,4-trimethylbenzene",
-#' "1,3,5-trimethylbenzene", "styrene", "benzene", "C9", "C10", "C13".
-#'
-#' \emph{Active Surface (cm2/km)}: "AS_urban", "AS_rural", "AS_highway"
-#'
-#' \emph{Total Number of particles (N/km)}: "N_urban", "N_rural", "N_highway",
+#' \emph{Total Number of particles (N/km)}: \code{\link{speciate}} "N_urban", "N_rural", "N_highway",
 #' "N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
 #'
 #' The available standards for Active Surface or number of particles are Euro I,
