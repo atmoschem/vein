@@ -18,6 +18,9 @@ speciate(x, spec = "bcom", veh, fuel, eu, list = FALSE, pmpar, verbose = FALSE)
 \item{"nox"}{: Splits NOx in NO and NO2.}
 \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
 \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
+}
+The following still available but they will be removed soon:
+\itemize{
 \item{"iag_racm"}{: ethanol emissions added in hc3.}
 \item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
 \item{"petroiag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
@@ -35,6 +38,9 @@ speciate(x, spec = "bcom", veh, fuel, eu, list = FALSE, pmpar, verbose = FALSE)
 \item{"nox"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
 \item{"nmhc"}{: veh can be "LDV", "HDV" or "LPG".}
 \item{""pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+}
+#' The following still available but they will be removed soon:
+\itemize{
 \item{"iag_racm"}{: veh accepts "veh".}
 \item{"iag" or "iag_cb05"}{: veh accepts "veh" .}
 \item{"iag_cb05v2"}{: veh accepts "veh" .}
@@ -52,6 +58,9 @@ speciate(x, spec = "bcom", veh, fuel, eu, list = FALSE, pmpar, verbose = FALSE)
 \item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
 \item{"nmhc"}{: "G", "D" or "LPG".}
 \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+}
+#' The following still available but they will be removed soon:
+\itemize{
 \item{"iag_racm"}{: "G", "E" or "D".}
 \item{"iag" or "iag_cb05"}{: "G", "E" or "D".}
 \item{"iag_cb05v2"}{: "G", "E" or "D".}
@@ -72,6 +81,9 @@ speciate(x, spec = "bcom", veh, fuel, eu, list = FALSE, pmpar, verbose = FALSE)
 "IV-ADFP","V-ADFP" or "OPEN_LOOP". eu can be "ALL" if spec is "nmhc" and
 fuel is "LPG"}
 \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+}
+#' The following still available but they will be removed soon:
+\itemize{
 \item{"iag_racm"}{: "Exhaust", "Evaporative" or "Liquid".}
 \item{"iag" or "iag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
 \item{"iag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}

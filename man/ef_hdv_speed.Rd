@@ -40,9 +40,7 @@ Number of particles and Active Surface.}
 \item{l}{Load of the vehicle: 0.0, 0.5 or 1.0}
 
 \item{p}{Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
-"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
-polycyclic aromatic hydrocarbons (PAHs), persistent organi pollutants (POPs),
-and Number of particles and Active Surface.}
+"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. See notes.}
 
 \item{k}{Multiplication factor}
 
@@ -69,22 +67,14 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
 
 \strong{Black Carbon and Organic Matter (g/km)}: "BC", "OM"
 
-\strong{PAH and POP (g/km)}: "indeno(1,2,3-cd)pyrene", "benzo(k)fluoranthene",
-"benzo(ghi)perylene", "fluoranthene",
-"benzo(a)pyrene", "pyrene", "perylene",  "anthanthrene", "benzo(b)fluorene",
-"benzo(e)pyrene", "triphenylene", "3,6-dimethyl-phenanthrene",
-"benzo(a)anthracene",  "phenanthrene", "napthalene",  "anthracene"
+\strong{PAH and POP (g/km)}:  See  \code{\link{speciate}}
+\strong{Dioxins and furans (g equivalent toxicity / km)}: See  \code{\link{speciate}}
 
-\strong{Dioxins and furans (g equivalent toxicity / km)}: "PCDD", "PCDF" and "PCB".
+\strong{Metals (g/km)}: See  \code{\link{speciate}}
 
-\strong{Metals (g/km)}: "As", "Cd", "Cr", "Cu", "Hg", "Ni", "Pb", "Se", "Zn" (g/km).
+\emph{Active Surface (cm2/km)} See  \code{\link{speciate}}
 
-\strong{NMHC (g/km)}: \code{\link{speciate}}
-
-\emph{Active Surface (cm2/km) (gr = 0 and l = 0.5)}: "AS_urban", "AS_rural", "AS_highway"
-
-\emph{Total Number of particles (N/km) (gr = 0 and l = 0.5)}: "N_urban", "N_rural", "N_highway",
-"N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway".
+\emph{Total Number of particles (N/km)}: See  \code{\link{speciate}}
 
 The available standards for Active Surface or number of particles are:
 Euro II and III
@@ -99,29 +89,13 @@ The categories euro IV and euro V were assigned with euro III + SCR
 \examples{
 \dontrun{
 # Quick view
-pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2",
-"AS_urban", "AS_rural", "AS_highway",
-"N_urban", "N_rural", "N_highway",
-"N_50nm_urban", "N_50_100nm_rural", "N_100_1000nm_highway")
+pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "SO2")
 f <- sapply(1:length(pol), function(i){
 print(pol[i])
 ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
 l = 0.5, p = pol[i], x = 10)(30)
 })
 f
-# PAH POP
-ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
-l = 0.5, p = "napthalene", x = 10)(30)
-ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
-l = 0.5, p = "fluoranthene", x = 10)(30)
-
-# Dioxins and Furans
-ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
-l = 0.5, p = "PCB", x = 10)(30)
-
-# NMHC
-ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
-l = 0.5, p = "heptane", x = 10)(30)
 
 V <- 0:130
 ef1 <- ef_hdv_speed(v = "Trucks",t = "RT", g = "<=7.5", e = "II", gr = 0,
@@ -148,7 +122,7 @@ eu = rbind(euro, euro), l = 0.5, p = "NOx", speed = Speed(0:125))
 }
 }
 \seealso{
-\code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}
+\code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}  \code{\link{speciate}}
 }
 \keyword{emission}
 \keyword{factors}
