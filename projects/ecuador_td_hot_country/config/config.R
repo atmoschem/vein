@@ -129,8 +129,7 @@ if (!"region" %in% names(fuel)) {
 }
 
 setDT(fuel)
-fuel <- fuel[region == toupper(provincia) & 
-               Year == year] #all the months!
+fuel <- fuel[Year == year] #all the months! and all the provinces
 
 saveRDS(metadata, "config/metadata.rds")
 saveRDS(mileage, "config/mileage.rds")
@@ -217,14 +216,17 @@ switch(language,
 png("images/FUEL.png", width = 2000, height = 1000, units = "px", res = 300)
 ggplot(fuel, 
        aes(x = Month, 
-           y = consumption_lt, 
+           y = consumption_lt/1000000, 
            colour = fuel,
            shape = fuel)) +
   geom_line() +
+  facet_wrap(.~region, 
+             scale = "free_y" # comenta esta linea para comparar provincias
+             )+
   geom_point(size = 3) +
   scale_x_continuous(breaks = 1:12)+
-  labs(title = provincia)+
-  theme_grey() -> p
+  labs(title = "Ecuador")+
+  theme_bw() -> p
 print(p)
 dev.off()
 

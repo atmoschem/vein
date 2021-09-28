@@ -24,7 +24,6 @@ tech <- readxl::read_xlsx(path = path, sheet = "tech")
 year <- 2019
 month <- 6
 agemax <- 40
-provincia <- "Imbabura"
 scale = "none"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
@@ -44,9 +43,10 @@ veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
 year <- 2019
 theme <- "black" # dark clean ink
+id_region <- "DPA_DESPRO"
 k_D <- 1
 k_G <- 1
-source("scripts/traffic_month.R", encoding = "UTF-8")
+source("scripts/traffic_year.R", encoding = "UTF-8")
 
 # 3) Estimation ####
 language <- "spanish" # english spanish portuguese
@@ -65,8 +65,9 @@ year <- 2019
 # fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
-provincia <- "Imbabura"
-source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
+id_region <- "DPA_DESPRO"
+source("scripts/fuel_eval_eea_year.R", encoding = "UTF-8")
+
 rm(list = ls())
 gc()
 
