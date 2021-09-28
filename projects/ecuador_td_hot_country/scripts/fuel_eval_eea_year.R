@@ -95,28 +95,28 @@ dt$pollutant <- as.character(dt$pollutant)
 dt$g <- units::set_units(dt$emissions, "g")
 dt$t <- units::set_units(dt$g, t)
 
-dt$fuel_month <- paste0(dt$fuel, "_", dt$month)
+dt$fuel_month_region <- paste0(dt$fuel, "_", dt$month, "_", dt$region)
 
 dt0 <- dt[pollutant == "FC",
   round(sum(t), 2),
-  by = .(fuel_month)
+  by = .(fuel_month_region)
 ]
-data.table::setkey(dt0, "fuel_month")
+data.table::setkey(dt0, "fuel_month_region")
 
-fuel$fuel_month <- paste0(fuel$fuel, "_", fuel$Month)
+fuel$fuel_month_region <- paste0(fuel$fuel, "_", fuel$Month,"_", fuel$region)
 
 names(dt0)[2] <- "estimation_t"
 
-dtf <- merge(dt0, fuel, by = "fuel_month")
+dtf <- merge(dt0, fuel, by = "fuel_month_region")
 
-setorderv(dtf, cols = c("fuel", "Month"))
+setorderv(dtf, cols = c("region", "fuel", "Month"))
 
 dtf$density_tm3 <- units::set_units(dtf$density_tm3, "t/m^3")
 dtf$consumption_lt <- units::set_units(dtf$consumption_lt, "l")
 dtf$consumption_m3 <- units::set_units(dtf$consumption_lt, "m^3")
 dtf$consumption_t <- dtf$consumption_m3 * dtf$density_tm3
 dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
-print(dtf[, c("Month", "fuel", "estimation_t", "consumption_t", "estimation_consumption")])
+print(dtf[, c("region", "Month", "fuel", "estimation_t", "consumption_t", "estimation_consumption")])
 
 # calibrate k ####
 k_D <- as.numeric(1/dtf[fuel == "D"]$estimation_consumption)
@@ -231,24 +231,28 @@ dt$pollutant <- as.character(dt$pollutant)
 dt$g <- units::set_units(dt$emissions, "g")
 dt$t <- units::set_units(dt$g, t)
 
-dt$fuel_month <- paste0(dt$fuel, "_", dt$month)
+dt$fuel_month_region <- paste0(dt$fuel, "_", dt$month, "_", dt$region)
 
 dt0 <- dt[pollutant == "FC",
           round(sum(t), 2),
-          by = .(fuel_month)
+          by = .(fuel_month_region)
 ]
-data.table::setkey(dt0, "fuel_month")
+data.table::setkey(dt0, "fuel_month_region")
 
-fuel$fuel_month <- paste0(fuel$fuel, "_", fuel$Month)
+fuel$fuel_month_region <- paste0(fuel$fuel, "_", fuel$Month,"_", fuel$region)
 
 names(dt0)[2] <- "estimation_t"
-dtf <- merge(dt0, fuel, by = "fuel_month")
+
+dtf <- merge(dt0, fuel, by = "fuel_month_region")
+
+setorderv(dtf, cols = c("region", "fuel", "Month"))
+
 dtf$density_tm3 <- units::set_units(dtf$density_tm3, "t/m^3")
 dtf$consumption_lt <- units::set_units(dtf$consumption_lt, "l")
 dtf$consumption_m3 <- units::set_units(dtf$consumption_lt, "m^3")
 dtf$consumption_t <- dtf$consumption_m3 * dtf$density_tm3
 dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
-print(dtf[, c("Month", "fuel", "estimation_t", "consumption_t", "estimation_consumption")])
+print(dtf[, c("region", "Month", "fuel", "estimation_t", "consumption_t", "estimation_consumption")])
 
 switch(language,
   "portuguese" = message("Limpando..."),

@@ -101,7 +101,7 @@ for (i in seq_along(n_PC)) {
     }))-> x
   x <- Vehicles(x*kf[[i]])
   saveRDS(x, paste0("veh/", n_PC[i], ".rds"))
-  x$month <- 1:12
+  x$month <- rep(1:12, nrow(net))
   l_PC[[i]] <- x
 }
 # dfpc <- as.data.frame(do.call("cbind", l_PC))
@@ -139,7 +139,7 @@ for (i in seq_along(n_LCV)) {
           }))-> x
   x <- Vehicles(x*kf[[i]])
   saveRDS(x, paste0("veh/", n_LCV[i], ".rds"))
-  x$month <- 1:12
+  x$month <- rep(1:12, nrow(net))
   l_LCV[[i]] <- x
 }
 # dflcv <- as.data.frame(do.call("cbind", l_LCV))
@@ -180,7 +180,7 @@ for (i in seq_along(n_TRUCKS)) {
           }))-> x
   x <- Vehicles(x*kf[[i]])
   saveRDS(x, paste0("veh/", n_TRUCKS[i], ".rds"))
-  x$month <- 1:12
+  x$month <- rep(1:12, nrow(net))
   l_TRUCKS[[i]] <- x
 }
 # dft <- as.data.frame(do.call("cbind", l_TRUCKS))
@@ -218,7 +218,7 @@ for (i in seq_along(n_BUS)) {
           }))-> x
   x <- Vehicles(x*kf[[i]])
   saveRDS(x, paste0("veh/", n_BUS[i], ".rds"))
-  x$month <- 1:12
+  x$month <- rep(1:12, nrow(net))
   l_BUS[[i]] <- x
 }
 # dfb <- as.data.frame(do.call("cbind", l_BUS))
@@ -255,7 +255,7 @@ for (i in seq_along(n_MC)) {
           }))-> x
   x <- Vehicles(x*kf[[i]])
   saveRDS(x, paste0("veh/", n_MC[i], ".rds"))
-  x$month <- 1:12
+  x$month <- rep(1:12, nrow(net))
   l_MC[[i]] <- x
 }
 # m <- as.data.frame(do.call("cbind", l_MC))
