@@ -4,7 +4,16 @@
 \alias{speciate}
 \title{Speciation of emissions}
 \usage{
-speciate(x, spec = "bcom", veh, fuel, eu, list = FALSE, pmpar, verbose = FALSE)
+speciate(
+  x = 1,
+  spec = "bcom",
+  veh,
+  fuel,
+  eu,
+  list = FALSE,
+  pmpar,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{x}{Emissions estimation}
@@ -139,9 +148,14 @@ pm <- rnorm(n = 100, mean = 400, sd = 2)
 (dfb <- speciate(pm, spec = "iag_cb05v2", veh = "veh", fuel = "G", eu = "Exhaust"))
 (dfb <- speciate(pm, spec = "neu_cb05", veh = "veh", fuel = "G", eu = "Exhaust"))
 pm <- units::set_units(pm, "g/km^2/h")
-(dfb <- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))
-(dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
-(dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
+#(dfb <- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))
+#(dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
+#(dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
+# new
+(pah <- speciate(spec = "pah", veh = "LDV", fuel = "G", eu = "I"))
+(xs <- speciate(spec = "pcdd", veh = "LDV", fuel = "G", eu = "I"))
+(xs <- speciate(spec = "pmchar", veh = "LDV", fuel = "G", eu = "I"))
+(xs <- speciate(spec = "metals", veh = "LDV", fuel = "G", eu = "all"))
 }
 }
 \references{
