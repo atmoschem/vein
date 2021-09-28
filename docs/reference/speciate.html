@@ -154,7 +154,16 @@ It covers black carbon and organic matter from particulate matter. Soon it
 will be added more speciations</p>
     </div>
 
-    <pre class="usage"><span class='fu'>speciate</span><span class='op'>(</span><span class='va'>x</span>, spec <span class='op'>=</span> <span class='st'>"bcom"</span>, <span class='va'>veh</span>, <span class='va'>fuel</span>, <span class='va'>eu</span>, list <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>pmpar</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>speciate</span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fl'>1</span>,
+  spec <span class='op'>=</span> <span class='st'>"bcom"</span>,
+  <span class='va'>veh</span>,
+  <span class='va'>fuel</span>,
+  <span class='va'>eu</span>,
+  list <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>pmpar</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -318,9 +327,14 @@ Environment Canada, September 26, 2006.</p>
 <span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"iag_cb05v2"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='va'>pm</span>, spec <span class='op'>=</span> <span class='st'>"neu_cb05"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>pm</span> <span class='op'>&lt;-</span> <span class='fu'>units</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/units/man/units.html'>set_units</a></span><span class='op'>(</span><span class='va'>pm</span>, <span class='st'>"g/km^2/h"</span><span class='op'>)</span>
-<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmiag"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmneu"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>(</span><span class='va'>dfb</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>pm</span><span class='op'>)</span>, spec <span class='op'>=</span> <span class='st'>"pmneu2"</span>, veh <span class='op'>=</span> <span class='st'>"veh"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"Exhaust"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'>#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))</span>
+<span class='co'>#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))</span>
+<span class='co'>#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))</span>
+<span class='co'># new</span>
+<span class='op'>(</span><span class='va'>pah</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span>spec <span class='op'>=</span> <span class='st'>"pah"</span>, veh <span class='op'>=</span> <span class='st'>"LDV"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"I"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>xs</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span>spec <span class='op'>=</span> <span class='st'>"pcdd"</span>, veh <span class='op'>=</span> <span class='st'>"LDV"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"I"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>xs</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span>spec <span class='op'>=</span> <span class='st'>"pmchar"</span>, veh <span class='op'>=</span> <span class='st'>"LDV"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"I"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>xs</span> <span class='op'>&lt;-</span> <span class='fu'>speciate</span><span class='op'>(</span>spec <span class='op'>=</span> <span class='st'>"metals"</span>, veh <span class='op'>=</span> <span class='st'>"LDV"</span>, fuel <span class='op'>=</span> <span class='st'>"G"</span>, eu <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

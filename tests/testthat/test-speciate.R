@@ -95,3 +95,26 @@ test_that("speciate works", {
 })
 #
 
+test_that("speciate works", {
+  x <- speciate(spec = "pah", veh = "HDV", fuel = "D", eu = "all")
+  expect_equal(round(x$x[1]), 0)
+
+  x <- speciate(spec = "pcdd", veh = "LDV", fuel = "G", eu = "I")
+  expect_equal(round(x$x[1]), 0)
+
+  x <- speciate(spec = "pmchar", veh = "LDV", fuel = "G", eu = "I")
+  expect_equal(round(x$x[1]), 6820)
+
+  x <- speciate(spec = "metals", veh = "LDV", fuel = "G", eu = "all")
+  expect_equal(round(x$x[1]), 0)
+
+  x <- speciate(spec = "metals", veh = "LDV", fuel = "G", eu = "all", list = T)
+  expect_equal(round(x[[1]][1]), 0)
+
+  })
+
+#' (pah <- speciate(spec = "pah", veh = "LDV", fuel = "G", eu = "I"))
+#' (xs <- speciate(spec = "pcdd", veh = "LDV", fuel = "G", eu = "I"))
+#' (xs <- speciate(spec = "pmchar", veh = "LDV", fuel = "G", eu = "I"))
+#' (xs <- speciate(spec = "metals", veh = "LDV", fuel = "G", eu = "all"))
+#'
