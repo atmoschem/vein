@@ -13,6 +13,7 @@
 #' den (density at 15 celcius degrees kg/m3), pah (%), cn (number), t95
 #' (Back end distillation in Celcius degrees) and s  (sulphur, ppm)
 #' @return A list with the correction of emission factors.
+#' @importFrom data.table rbindlist
 #' @note This function cannot be used to account for deterioration, therefore,
 #' it is restricted to values between 0 and 1.
 #' Parameters for gasoline (g):
@@ -59,6 +60,8 @@ fuel_corr <- function(euro,
                             t95 = 350,     # C
                             s = 400)       # ppm
 ){
+  if(length(euro) == 1) {
+
   # Pre Euro
   bg1996 <- c(e100 = 52, aro = 39, o2 = 0.4, e150 = 86, olefin = 10, s = 165)
   # Euro 3
@@ -446,7 +449,21 @@ fuel_corr <- function(euro,
                COV = list(fif(fcov_hdv)),
                NOx = list(fif(fnox_hdv)),
                PM = list(fif(fpm_hdv))))
-  return(dfl)
+    return(dfl)
 
+  } else {
+    data.table::rbindlist(lapply(seq_along(euro), function(i) {
+      fuel_corr(euro = euro[i]) -> fcorr
+      value <- unlist(fcorr)
+      names(value)
+      fcorr <- as.data.frame(value)
+      fcorr$vehpol <- names(value)
+      fcorr <- cbind(fcorr, do.call("rbind", strsplit(fcorr$vehpol, "\\.")))
+      fcorr$euro <- euro[i]
+      fcorr
+    })) -> fcorr
+    return(fcorr)
+
+  }
 }
 

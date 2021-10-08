@@ -37,7 +37,8 @@ ggplot(df, aes(x = x, y = pc, colour = as.factor(Age))) + geom_point(size=3)  +
   scale_color_discrete(name = "Average age")
 
 # 3 ####
-data(pc_profile)
+data("profiles")
+pc_profile <- profiles$PC_JUNE_2012
 df2 <- data.frame(TF = as.numeric(unlist(pc_profile)),
                   Hour = rep(1:24,7),
                   Day = c(rep("Monday",24),
@@ -60,8 +61,10 @@ ggplot(df2, aes(x = Hour, y = TF, colour = Day,
 
 
 # 5 ####
-data(net) ; net <- as_Spatial(net)
-data(pc_profile)
+data(net)
+net <- as_Spatial(net)
+data("profiles")
+pc_profile <- profiles$PC_JUNE_2012
 pcw <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pcw, net$ps,
                net$ffs, net$capacity, net$lkm, alpha = 1)
@@ -114,8 +117,11 @@ ggplot(df4, aes(x=Hour, y=speed, colour=Street)) +
   theme(legend.position = "bottom", legend.key.width  = unit(2,units="cm"))
 
 # 7 ####
-data(fe2015)
-data(pc_profile)
+fe2015 <- ef_cetesb(p = c("CO"), veh = "PC_G", full = T, agemax = 36)
+names(fe2015)[ncol(fe2015)] <- "PC_G"
+names(fe2015)[5] <- "Euro_LDV"
+data("profiles")
+pc_profile <- profiles$PC_JUNE_2012
 data(fkm)
 pckm <- fkm[[1]](1:24)
 pckma <- cumsum(pckm)
@@ -128,7 +134,9 @@ cod <- c(co1$PC_G[1:24] * c(cod1,cod2),
          co1$PC_G[25:nrow(co1)])
 
 # 8 ####
-data(fe2015)
+fe2015 <- ef_cetesb(p = c("CO"), veh = "PC_G", full = T, agemax = 36)
+names(fe2015)[ncol(fe2015)] <- "PC_G"
+names(fe2015)[5] <- "Euro_LDV"
 data(fkm)
 pckm <- fkm[[1]](1:24); pckma <- cumsum(pckm)
 cod1 <- emis_det(po = "CO", cc = 1000, eu = "III", km = kma)
@@ -142,7 +150,8 @@ lef <- ef_ldv_scaled(dfcol = cod, v = "PC", cc = "<=1400",
 #          lef[length(lef)],lef[length(lef)])
 
 # 9 ####
-data(pc_profile)
+data("profiles")
+pc_profile <- profiles$PC_JUNE_2012
 data(net) ; net <- as_Spatial(net)
 E_CO <- emis(veh = pc1,lkm = net$lkm, ef = lef, speed = speed, profile = pc_profile)
 E_CO_DF <- emis_post(arra = E_CO, veh = "PC", size = "1400", fuel = "Gasoline",
@@ -188,7 +197,7 @@ df3$t_CO <- df3$t_CO*52/1000000
 sum(df3$t_CO)
 sum(df3[20:36,]$t_CO)/ sum(df3$t_CO)
 
-dfco <- data.frame(co = c(co1$PC_G,rep(co1$PC_G[length(co1$PC_G)],5),
+dfco <- data.frame(co = c(co1$PC_G, rep(co1$PC_G[length(co1$PC_G)],5),
                           c(cod,rep(cod[length(cod)],5))),
                    EF = c(rep("0 km", 41),rep("Deteriorated", 41)),
                    Age = rep(1:41,2))

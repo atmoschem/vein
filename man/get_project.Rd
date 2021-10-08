@@ -23,9 +23,10 @@ get_project(directory, case = "brasil", url)
   amazon2014      \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
   curitiba      \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
   masp2020      \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
+  ecuador_td      \tab Top-down\tab EEA\tab  csv and.rds\cr
   ecuador_td_hot      \tab Top-down\tab EEA\tab  csv and.rds\cr
   ecuador_td_hot_month      \tab Top-down\tab EEA\tab  csv and.rds\cr
-  moves_bu      \tab Bottom-down\tab US/EPA MOVES \tab  csv and.rds (requires MOVES on Windows)\cr
+  moves      \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
 }}
 
 \item{url}{String, with the URL to download VEIN project}
@@ -37,6 +38,8 @@ The projects are available on Github.com/atmoschem/vein/projects
 \note{
 default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
 the same
+Projects for Ecuador are in development.
+In any case, if you find any error, please, send a pull request in github or gitlab.
 }
 \examples{
 \dontrun{

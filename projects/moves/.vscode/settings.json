@@ -1,0 +1,9 @@
+{
+    "workbench.settings.openDefaultKeybindings": true,
+    "terminal.integrated.commandsToSkipShell": [
+        "{   \"key\": \"alt+x\",    \"command\": \"workbench.action.terminal.sendSequence\",    \"args\": { \"text\": \"\\u001b[A\\u000d\" } },"
+    ],
+    "terminal.integrated.automationShell.windows": "",
+    "terminal.integrated.experimentalLinkProvider": false,
+    "terminal.integrated.sendKeybindingsToShell": true
+}
