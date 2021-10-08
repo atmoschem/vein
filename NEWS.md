@@ -5,9 +5,8 @@ NEWS
 
 - get_project with *Europe*, Chinese and MOVES EF
 - Add EF from HBEFA
-- Reduce size of sysdata
 
-### vein 0.9.4
+### vein 0.9.4 (5 years!!)
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)
 - add projects `curitiba` and `masp2020`  (Release date: 2021-06-28)
 - fix chem_vein2 for CB4 and CBMZ  (Release date: 2021-07-08)
@@ -24,8 +23,9 @@ NEWS
 - add Ecuador
 - For MOVES contributions, added Joao Bazzo
 - reduced size for ef_hdv_speed. Speciation use `speciate`.
+- Deprecated ef_emfac. I never used and it was too heavy.
 
-### vein 0.9.4 (Release date: 2021-06-09)
+### vein 0.9.3 (Release date: 2021-06-09)
 - Fix RCHO in ef_cetesb
 - Change numeric_dc to vector_dv to avoid copying (dotCall64)
 - update gitlab link for veinextras in get_project
