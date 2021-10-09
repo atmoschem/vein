@@ -6,31 +6,30 @@ head(urlgeo)
 names(urlgeo)
 # convert to data.table
 # search africa
-af <- grep("Africa", urlgeo$Subregion)
+af <- grep("Ecuador", urlgeo$Subregion)
 urlgeo[af, ]
 
-if (download_osm) {
-  file_down <- paste0("OSM/", OSM_region)
-  get_osm(region = OSM_region, file = file_down)
+download.file(url = "https://download.geofabrik.de/south-america/ecuador-210101-free.shp.zip", 
+              destfile = "OSM/ecuador.shp.zip")
 
-  unzip(
-    zipfile = paste0(
-      gsub(" ", "", file_down),
-      ".shp.zip"
-    ),
-    exdir = "network"
-  )
+unzip(
+  zipfile = paste0(
+    gsub(" ", "", file_down),
+    ".shp.zip"
+  ),
+  exdir = "network"
+)
 
-  # This approach may be faster with QGIS
-  # let us read
-  roads <- st_read("network/gis_osm_roads_free_1.shp")
-  # let us select the streets that we need
-  st <- c(
-    "motorway", "motorway_link", "trunk", "trunk_link",
-    "primary", "primary_link", "secondary", "secondary_link",
-    "tertiary", "tertiary_link"
-  )
-  roads <- roads[roads$fclass %in% st, ]
-  # save roads on network
-  saveRDS(roads, "network/roads.rds")
-}
+# This approach may be faster with QGIS
+# let us read
+roads <- st_read("network/gis_osm_roads_free_1.shp")
+# let us select the streets that we need
+st <- c(
+  "motorway", "motorway_link", "trunk", "trunk_link",
+  "primary", "primary_link", "secondary", "secondary_link",
+  "tertiary", "tertiary_link"
+)
+roads <- roads[roads$fclass %in% st, ]
+# save roads on network
+saveRDS(roads, "network/osm_roads.rds")
+
