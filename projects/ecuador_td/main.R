@@ -1,3 +1,9 @@
+###########################################################
+###                                                    ####
+###   ANNUAL EMISSIONS INVENTORY FOR ECUADOR PROVINCE  ####
+###                                                    ####
+###########################################################
+
 options(encoding = "UTF-8")
 library(vein) # vein
 library(sf) # spatial data
@@ -7,9 +13,11 @@ library(eixport) # create wrfchemi
 library(data.table) # faster data.frames
 sessionInfo()
 
+# for fun, install devtools::install_github('bbc/bbplot')
+# devtools::install_github('bbc/bbplot')
+
 # 0 Configuration
 language <- "spanish" # spanish portuguese english
-path_to_moves <- "../"
 path <- "config/inventory_ecuador.xlsx"
 readxl::excel_sheets(path)
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
@@ -17,13 +25,15 @@ mileage <- readxl::read_xlsx(path = path, sheet = "mileage")
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
 veh <- readxl::read_xlsx(path = path, sheet = "fleet_age")
 fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
-pmonth <- readxl::read_xlsx(path = path, sheet = "pmonth")
+fuel_spec <- readxl::read_xlsx(path = path, sheet = "fuel_spec")
+pmonth <- readxl::read_xlsx(path = path, sheet = "fuel_month")
 met <- readxl::read_xlsx(path = path, sheet = "met")
 euro <- readxl::read_xlsx(path = path, sheet = "euro")
 tech <- readxl::read_xlsx(path = path, sheet = "tech")
 year <- 2019
 month <- 6
 agemax <- 40
+provincia <- "Imbabura"
 scale = "none"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
@@ -43,10 +53,9 @@ veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
 year <- 2019
 theme <- "black" # dark clean ink
-id_region <- "DPA_DESPRO"
 k_D <- 1
 k_G <- 1
-source("scripts/traffic_year.R", encoding = "UTF-8")
+source("scripts/traffic.R", encoding = "UTF-8")
 
 # 3) Estimation ####
 language <- "spanish" # english spanish portuguese
@@ -65,9 +74,9 @@ year <- 2019
 # fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
-id_region <- "DPA_DESPRO"
-source("scripts/fuel_eval_eea_year.R", encoding = "UTF-8")
-
+provincia <- "Imbabura"
+nt <- 10#check_nt() / 2
+source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 
@@ -81,25 +90,61 @@ pmonth <- readRDS("config/pmonth.rds")
 met <- readRDS("config/met.rds")
 euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
-
+fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
+nt <- 10#check_nt() / 2
 
 pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
   "PM", "NO2", "NO"
 )
-provincia <- "Imbabura"
-source("scripts/exhaust_eea.R", encoding = "UTF-8")
+source("scripts/hot_exhaust_eea.R", encoding = "UTF-8")
+
+pol <- c(
+  "CO", "NOx", "NMHC", "HC", "NO2", "NO"
+)
+source("scripts/cold_start_eea.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
+
+# Evaporatives ####
+language <- "spanish" # english spanish portuguese
+metadata <- readRDS("config/metadata.rds")
+mileage <- readRDS("config/mileage.rds")
+veh <- readRDS("config/fleet_age.rds")
+net <- readRDS("network/net.rds")
+pmonth <- readRDS("config/pmonth.rds")
+met <- readRDS("config/met.rds")
+euro <- readRDS("config/euro.rds")
+tech <- readRDS("config/tech.rds")
+fuel_spec <- readRDS("config/fuel_spec.rds")
+verbose <- FALSE
+year <- 2019
+source("scripts/evaporatives_eea.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
+
+
+# Wear ####
+language <- "spanish" # english spanish portuguese
+metadata <- readRDS("config/metadata.rds")
+mileage <- readRDS("config/mileage.rds")
+veh <- readRDS("config/fleet_age.rds")
+net <- readRDS("network/net.rds")
+pmonth <- readRDS("config/pmonth.rds")
+met <- readRDS("config/met.rds")
+euro <- readRDS("config/euro.rds")
+tech <- readRDS("config/tech.rds")
+fuel_spec <- readRDS("config/fuel_spec.rds")
+verbose <- FALSE
+year <- 2019
+nt <- 10#check_nt() / 2
+source("scripts/wear_eea.R", encoding = "UTF-8")
 
 # plots
+language <- "spanish" # english spanish portuguese
 metadata <- readRDS("config/metadata.rds")
-tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
-pol <- c("CO", "HC", "NOx", "CO2", "PM", "NMHC")
 year <- 2019
-bg <- "white"
-pal <- "mpl_viridis" # procura mais paletas com ?cptcity::find_cpt
-breaks <- "quantile" # "sd" "quantile" "pretty"
-provincia <- "Imbabura"
 source("scripts/plots.R", encoding = "UTF-8")

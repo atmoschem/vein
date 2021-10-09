@@ -5,23 +5,21 @@ file.remove(a)
 # configuracao ####
 metadata <- as.data.frame(metadata)
 mileage <- as.data.frame(mileage)
-mileage[, metadata$vehicles] <- add_lkm(mileage[, metadata$vehicles])/12
-# Este proyecto es mensual, entonces hay que pasar quilometraje por ano a mes
+mileage[, metadata$vehicles] <- add_lkm(mileage[, metadata$vehicles])
 tfs <- as.data.frame(tfs)
 veh <- as.data.frame(veh)[1:agemax, ]
 
 fuel <- as.data.frame(fuel)
+fuel_spec <- as.data.frame(fuel_spec)
 met <- as.data.frame(met)
 pmonth <- as.data.frame(pmonth)
 euro <- as.data.frame(euro)
 tech <- as.data.frame(tech)
+fuel_spec <- as.data.frame(fuel_spec)
 
-# we have fuel for each month
-# It suppose that fuel by month is better than monthly profile
-# but I will leave this hear to check in the future
-for (i in 2:ncol(pmonth)) {
-        pmonth[[i]] <- 100 * pmonth[[i]] / sum(pmonth[[i]])
-}
+setDT(pmonth)
+provincia <- toupper(provincia)
+pmonth <- pmonth[region == provincia]
 
 # checkar metadata$vehicles ####
 switch(language,
@@ -129,18 +127,25 @@ if (!"region" %in% names(fuel)) {
 }
 
 setDT(fuel)
-fuel <- fuel[Year == year] #all the months! and all the provinces
-fuel$id <- 1:nrow(fuel)
+fuel <- fuel[region == toupper(provincia) & 
+               Year == year] #all the months!
+
+
+setDT(met)
+met <- met[region == toupper(provincia) & 
+               Year == year] #all the months!
 
 saveRDS(metadata, "config/metadata.rds")
 saveRDS(mileage, "config/mileage.rds")
 saveRDS(tfs, "config/tfs.rds")
 saveRDS(veh, "config/fleet_age.rds")
 saveRDS(fuel, "config/fuel.rds")
+saveRDS(fuel_spec, "config/fuel_spec.rds")
 saveRDS(met, "config/met.rds")
 saveRDS(pmonth, "config/pmonth.rds")
 saveRDS(euro, "config/euro.rds")
 saveRDS(tech, "config/tech.rds")
+saveRDS(fuel_spec, "config/fuel_spec.rds")
 
 # pastas
 if (delete_directories) {
@@ -216,20 +221,40 @@ switch(language,
 
 png("images/FUEL.png", width = 2000, height = 1000, units = "px", res = 300)
 ggplot(fuel, 
+       aes(x = FUEL, 
+           y = consumption_lt, 
+           fill = fuel)) +
+  geom_bar(stat = "identity") +
+  # geom_point(size = 3) +
+  # scale_x_continuous(breaks = 1:12)+
+  labs(title = provincia)+
+  theme_grey() -> p
+print(p)
+dev.off()
+
+
+# Pmonth ####
+switch(language,
+       "portuguese" = cat("Plotando perfil mensal \n"),
+       "english" = cat("Plotting monthly profile \n"),
+       "spanish" = cat("Plotando perfil mensual \n")
+)
+
+png("images/PMONTH.png", width = 2000, height = 1000, units = "px", res = 300)
+ggplot(pmonth, 
        aes(x = Month, 
-           y = consumption_lt/1000000, 
-           colour = fuel,
-           shape = fuel)) +
-  geom_line() +
-  facet_wrap(.~region, 
-             scale = "free_y" # comenta esta linea para comparar provincias
-             )+
+           y = FUEL_M3, 
+           colour = fuel)) +
+  # geom_bar(stat = "identity") +
   geom_point(size = 3) +
+  geom_line() +
   scale_x_continuous(breaks = 1:12)+
-  labs(title = "Ecuador")+
+  scale_y_continuous(limits  = c(0, NA))+
+  labs(title = provincia)+
   theme_bw() -> p
 print(p)
 dev.off()
+
 
 
 # Fleet ####
@@ -355,34 +380,6 @@ colplot(
 )
 dev.off()
 
-# month
-for (i in seq_along(n_veh)) {
-        df_x <- pmonth[, n_veh[[i]]]
-        png(
-                paste0(
-                        "images/PMONTH_",
-                        names(n_veh)[i],
-                        ".png"
-                ),
-                2000, 1500, "px",
-                res = 300
-        )
-        colplot(
-                df = df_x,
-                cols = n_veh[[i]],
-                xlab = "Month",
-                ylab = "%",
-                main = names(n_veh)[i],
-                type = "l",
-                pch = NULL,
-                lwd = 1,
-                theme = theme,
-                spl = 8
-        )
-        dev.off()
-}
-
-
 
 # Notes ####
 switch(language,
@@ -392,17 +389,20 @@ switch(language,
 )
 
 vein_notes(
-        notes = c("Default notes for vein::get_project"),
+        notes = c("Notas proyecto ecuador_td",
+                  "Para el perfil mensual fueron usada la hoja fuel_month de inventory.xlsx",
+                  "De esta forma, el programa filtra la provincia y el combustible y aplica el perfil mensual",
+                  "Para vehiculos a diesle, o gasolina para todos los otros."),
         file = "notes/README",
         title = paste0("Ecuador province ", year),
         approach = "Top-Down",
-        traffic = "Statistics",
+        traffic = "Flota",
         composition = "Ecuador",
         ef = "EEA, vehiculos pesados con gasolina, asumidos PC grandes. 
         Vehiculos hibridos asumidos PC Euro 4 (es el unico disponible en los EF).
         Es necesario colocar 0 en estos vehiculos donde no estaban en circulacion",
-        cold_start = "NO",
-        evaporative = "NO",
+        cold_start = "EEA",
+        evaporative = "EEA",
         standards = "Euro",
         mileage = "Bruni and Bales 2013, Brazil"
 )
