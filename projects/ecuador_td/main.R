@@ -1,9 +1,9 @@
+
 ###########################################################
 ###                                                    ####
 ###   ANNUAL EMISSIONS INVENTORY FOR ECUADOR PROVINCE  ####
 ###                                                    ####
 ###########################################################
-
 options(encoding = "UTF-8")
 library(vein) # vein
 library(sf) # spatial data
@@ -18,8 +18,9 @@ sessionInfo()
 
 # 0 Configuration
 language <- "spanish" # spanish portuguese english
-path <- "config/inventory_ecuador.xlsx"
+path <-  "config/inventory_ecuador.xlsx"
 readxl::excel_sheets(path)
+
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
 mileage <- readxl::read_xlsx(path = path, sheet = "mileage")
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
@@ -33,8 +34,10 @@ tech <- readxl::read_xlsx(path = path, sheet = "tech")
 year <- 2019
 month <- 6
 agemax <- 40
-provincia <- "Imbabura"
-scale = "none"
+provincia <- unique(fuel$region)[1]
+# provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
+col_region <- "region" # esta columna debe estar presente en fuel y met
+scale <- "none"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
 source("config/config.R", encoding = "UTF-8")
@@ -74,14 +77,16 @@ year <- 2019
 # fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
-provincia <- "Imbabura"
-nt <- 10#check_nt() / 2
+provincia <- unique(fuel$region)[1]
+# provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
+nt <- 10 # check_nt() / 2
 source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
-rm(list = ls())
-gc()
+# rm(list = ls())
+# gc()
 
 # Exhaust ####
 language <- "spanish" # english spanish portuguese
+provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
@@ -93,7 +98,7 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
-nt <- 10#check_nt() / 2
+nt <- 10 # check_nt() / 2
 
 pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
@@ -105,11 +110,13 @@ pol <- c(
   "CO", "NOx", "NMHC", "HC", "NO2", "NO"
 )
 source("scripts/cold_start_eea.R", encoding = "UTF-8")
-rm(list = ls())
-gc()
+# rm(list = ls())
+# gc()
 
 # Evaporatives ####
 language <- "spanish" # english spanish portuguese
+provincia <- unique(fuel$region)[1]
+# provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
@@ -122,12 +129,14 @@ fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
 source("scripts/evaporatives_eea.R", encoding = "UTF-8")
-rm(list = ls())
-gc()
+# rm(list = ls())
+# gc()
 
 
 # Wear ####
 language <- "spanish" # english spanish portuguese
+provincia <- unique(fuel$region)[1]
+# provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
@@ -139,11 +148,13 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
-nt <- 10#check_nt() / 2
+nt <- 10 # check_nt() / 2
 source("scripts/wear_eea.R", encoding = "UTF-8")
 
 # plots
 language <- "spanish" # english spanish portuguese
+provincia <- unique(fuel$region)[1]
+# provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
 veh <- readRDS("config/fleet_age.rds")
 year <- 2019
