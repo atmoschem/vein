@@ -17,9 +17,6 @@ euro <- as.data.frame(euro)
 tech <- as.data.frame(tech)
 fuel_spec <- as.data.frame(fuel_spec)
 
-setDT(pmonth)
-provincia <- toupper(provincia)
-pmonth <- pmonth[region == provincia]
 
 # checkar metadata$vehicles ####
 switch(language,
@@ -30,6 +27,50 @@ switch(language,
 
 # cat( "Metadata$Vehicles é:\n")
 print(metadata$vehicles)
+
+# checar col_region met fuel
+outersect <- function(x, y) {
+  sort(c(setdiff(x, y),
+         setdiff(y, x)))
+}
+
+outersect(
+  unique(fuel[[col_region]]),
+  unique(met[[col_region]])
+) -> os
+
+if(length(os) > 1){
+
+  names(os) <- c("fuel", "met") 
+  print(os)
+  switch(language,
+         "portuguese" = stop(
+           "fuel e met tem valores diferentes em `col_region`"),
+         "english" = stop(
+           "fuel and met have different values in `col_region`"),
+         "spanish" = stop(
+           "fuel y met tienen valores diferentes en `col_region`"))
+}
+
+
+# checar col_region pmonth fuel
+
+outersect(
+  unique(pmonth[[col_region]]),
+  unique(met[[col_region]])
+) -> os
+
+if(length(os) > 1){
+  names(os) <- c("pmonth", "met") 
+  print(os)
+  switch(language,
+         "portuguese" = stop(
+           "pmonth e met tem valores diferentes em `col_region`"),
+         "english" = stop(
+           "pmonth and met have different values in `col_region`"),
+         "spanish" = stop(
+           "pmonth y met tienen valores diferentes en `col_region`"))  
+}
 
 # checar nomes mileage ####
 if (!length(intersect(metadata$vehicles, names(mileage))) == length(metadata$vehicles)) {
@@ -125,6 +166,11 @@ if (!"region" %in% names(fuel)) {
                "spanish" = stop("No estoy viendo la columna 'region' in `fuel`")
         )
 }
+
+setDT(pmonth)
+provincia <- toupper(provincia)
+pmonth <- pmonth[region == provincia]
+
 
 setDT(fuel)
 fuel <- fuel[region == toupper(provincia) & 
