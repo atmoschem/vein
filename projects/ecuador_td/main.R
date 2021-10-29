@@ -79,7 +79,7 @@ fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
 provincia <- unique(fuel$region)[1]
 # provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
-nt <- 10 # check_nt() / 2
+nt <- 1 # check_nt() / 2
 source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
 # rm(list = ls())
 # gc()

@@ -103,7 +103,7 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
-nt <- 10 # check_nt() / 2
+nt <- 1 # check_nt() / 2
 
 IM <- TRUE
 im_ok <- readRDS("config/im_ok.rds")
