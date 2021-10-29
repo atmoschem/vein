@@ -18,7 +18,7 @@ sessionInfo()
 
 # 0 Configuration
 language <- "spanish" # spanish portuguese english
-path <-  "config/inventory_ecuador.xlsx"
+path <- "config/inventory_ecuador.xlsx"
 readxl::excel_sheets(path)
 
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
@@ -98,7 +98,7 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
-nt <- 10 # check_nt() / 2
+nt <- 1 # check_nt() / 2
 
 pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
@@ -148,7 +148,7 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
-nt <- 10 # check_nt() / 2
+nt <- 1 # check_nt() / 2
 source("scripts/wear_eea.R", encoding = "UTF-8")
 
 # plots
