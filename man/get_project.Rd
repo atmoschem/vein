@@ -24,6 +24,7 @@ get_project(directory, case = "brasil", url)
   curitiba      \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
   masp2020      \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
   ecuador_td      \tab Top-down\tab EEA\tab  csv and.rds\cr
+  ecuador_td_im      \tab Top-down\tab EEA\tab  csv and.rds\cr
   ecuador_td_hot      \tab Top-down\tab EEA\tab  csv and.rds\cr
   ecuador_td_hot_month      \tab Top-down\tab EEA\tab  csv and.rds\cr
   moves      \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr

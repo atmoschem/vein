@@ -6,6 +6,10 @@ NEWS
 - get_project with *Europe*, Chinese and MOVES EF
 - Add EF from HBEFA
 
+### vein 0.9.5
+
+- Add IM effect on Ecuador EF.
+
 ### vein 0.9.4 (5 years!!)
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)
 - add projects `curitiba` and `masp2020`  (Release date: 2021-06-28)
