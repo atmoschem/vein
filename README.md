@@ -127,6 +127,10 @@ and read the documentation.
     status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
     status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot_month/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/ecuador_td/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/ecuador_td_im/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 ``` r
 library(vein)
