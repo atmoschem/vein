@@ -18,11 +18,13 @@ for (i in seq_along(categories)) {
                 width = 2300, height = 1500, units = "px", pointsize = 12,
                 bg = "white", res = 300
         )
+  
         plot(net[categories[i]],
                 axes = T,
                 pal = cpt(colorRampPalette = T, rev = T),
                 main = paste0(tit, ": ", categories[i])
         )
+        
         dev.off()
 }
 
