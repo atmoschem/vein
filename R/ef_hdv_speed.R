@@ -175,7 +175,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
       }
 
     } else if(length(eu) > 1) {
-      if(missing(speed)) stop("if length(eu) > 1, 'speed' is needed")
+      # if(missing(speed)) stop("if length(eu) > 1, 'speed' is needed")
       dff <- do.call("cbind", lapply(1:length(eu), function(i){
         df <- ef_hdv[ef_hdv$VEH == v &
                        ef_hdv$TYPE == t &

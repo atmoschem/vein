@@ -545,7 +545,7 @@ png(
 print(p)
 dev.off()
 
-
+# speed ####
 if(speed) {
   
 
