@@ -75,7 +75,10 @@ dt <- data.table::rbindlist(
 dt$pollutant <- as.character(dt$pollutant)
 dt$t <- units::set_units(dt$g, t)
 
-dt0 <- dt[pollutant == "FC", round(sum(t) * factor_emi, 2), by = .(fuel)]
+dt0 <- dt[pollutant == "FC", 
+          round(sum(t) * factor_emi, 2), 
+          by = .(fuel)]
+
 data.table::setkey(dt0, "fuel")
 
 names(dt0)[2] <- "estimation_t"

@@ -9,6 +9,7 @@ NEWS
 ### vein 0.9.5
 
 - Add IM effect on Ecuador EF.
+- add project `manizales_bu`. TODO: add IM and EF EEA 2019. (2021-11-12)
 
 ### vein 0.9.4 (5 years!!)
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)
