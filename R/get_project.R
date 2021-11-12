@@ -23,6 +23,7 @@
 #'   ecuador_td_hot      \tab Top-down\tab EEA\tab  csv and.rds\cr
 #'   ecuador_td_hot_month      \tab Top-down\tab EEA\tab  csv and.rds\cr
 #'   moves      \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
+#'   manizales_bu      \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
@@ -85,6 +86,14 @@ get_project <- function(directory,
 
   } else if(case %in% c("brazil_bu_cb05", "brazil_mech", "brazil_bu_chem")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem.tar.gz"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  tf)
+    utils::untar(tarfile = tf, exdir = directory)
+    message("Your directory is in ", directory)
+
+  } else if(case %in% c("manizales_bu")){
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/manizales_bu.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
