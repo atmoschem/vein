@@ -1,0 +1,91 @@
+========================================
+Metropolitan Area of São Paulo (MASP) 2018
+========================================
+
+Directory: C:/Users/Sergio/Documents/vein/projects/brazil_td_chem_im
+
+Local Time: 2021-11-24 17:37:25
+Inventory compiler: Sergio
+========================================
+
+sysname = Windows
+release = 10 x64
+version = build 19043
+nodename = DESKTOP-CGINMEI
+machine = x86-64
+user = Sergio
+R version = 4.0.2
+nickname = Taking Off Again
+Memory used = 1616Mb 
+========================================
+
+VEIN version = 0.9.4
+========================================
+
+Traffic:
+Samples of travel demand models for MASP
+
+Approach:
+Top-Down
+
+Vehicular composition:
+CETESB
+
+Emission Factors:
+CETESB IM
+
+Cold starts:
+Not Applicable
+
+Evaporative:
+Running Losses, Diurnal and Hot Soak
+
+Traffic standards:
+PROCONVE, PROMOT
+
+Traffic mileage:
+Bruni and Bales 2013
+
+Notes:
+Default notes for vein::get_project
+========================================
+
+Session Info:
+R version 4.0.2 (2020-06-22)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19043)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=Portuguese_Brazil.1252  LC_CTYPE=Portuguese_Brazil.1252   
+[3] LC_MONETARY=Portuguese_Brazil.1252 LC_NUMERIC=C                      
+[5] LC_TIME=Portuguese_Brazil.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] data.table_1.14.2 eixport_0.5.0     ggplot2_3.3.5     cptcity_1.0.6     sf_1.0-2         
+[6] vein_0.9.4       
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.7         cellranger_1.1.0   pillar_1.6.4       compiler_4.0.2    
+ [5] viridis_0.6.1      class_7.3-17       tools_4.0.2        dotCall64_1.0-1   
+ [9] ncdf4_1.17         viridisLite_0.4.0  gtable_0.3.0       lifecycle_1.0.1   
+[13] tibble_3.1.5       lattice_0.20-41    pkgconfig_2.0.3    rlang_0.4.11      
+[17] rstudioapi_0.13    cli_3.0.1          DBI_1.1.1.9000     yaml_2.2.1        
+[21] parallel_4.0.2     spam_2.7-0         gridExtra_2.3      e1071_1.7-9       
+[25] withr_2.4.2        dplyr_1.0.7        raster_3.4-13      maps_3.4.0        
+[29] fields_12.5        generics_0.1.0     vctrs_0.3.8        classInt_0.4-3    
+[33] grid_4.0.2         tidyselect_1.1.1   glue_1.4.2         R6_2.5.1          
+[37] fansi_0.5.0        readxl_1.3.1       sp_1.4-5           purrr_0.3.4       
+[41] magrittr_2.0.1     scales_1.1.1       codetools_0.2-16   ellipsis_0.3.2    
+[45] units_0.7-2        assertthat_0.2.1   colorspace_2.0-2   utf8_1.2.2        
+[49] KernSmooth_2.23-17 proxy_0.4-26       munsell_0.5.0      crayon_1.4.1      
+
+========================================
+
+
+
+Thanks for using VEIN
