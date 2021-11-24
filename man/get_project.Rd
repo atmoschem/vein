@@ -19,6 +19,9 @@ get_project(directory, case = "brasil", url)
   brazil_td_chem      \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
   brazil_bu_chem      \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
   brazil_bu_chem_streets      \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
+  brazil_td_chem_im      \tab Top-down with chemical mechanisms+IM\tab CETESB\tab  .csv and .rds\cr
+  brazil_bu_chem_im      \tab Bottom-up  chemical mechanisms+IM\tab CETESB+tunnel\tab  .rds\cr
+  brazil_bu_chem_streets_im      \tab Bottom-up  chemical mechanisms for streets and MUNICH+IM\tab CETESB+tunnel\tab  .rds\cr
   sebr_cb05co2      \tab Top-down SP, MG and RJ\tab CETESB+tunnel\tab  .rds\cr
   amazon2014      \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
   curitiba      \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
@@ -40,8 +43,9 @@ The projects are available on Github.com/atmoschem/vein/projects
 \note{
 default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
 the same
-Projects for Ecuador are in development.
-In any case, if you find any error, please, send a pull request in github or gitlab.
+In any case, if you find any error, please, send a pull request in github.
+
+In Sao Paulo the IM programs was functioning until 2011. Since then,
 }
 \examples{
 \dontrun{
