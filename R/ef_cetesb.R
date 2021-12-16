@@ -19,9 +19,9 @@
 #' "LCV_G", "LCV_FG", "LCV_FE", "LCV_E", "LCV_D",
 #' "TRUCKS_SL", "TRUCKS_L", "TRUCKS_M", "TRUCKS_SH", "TRUCKS_H",
 #' "BUS_URBAN", "BUS_MICRO", "BUS_COACH", "BUS_ARTIC",
-#' "MC_G_150", "MC_G_150_500", "MC_G_500",
-#' "MC_FG_150", "MC_FG_150_500", "MC_FG_500",
-#' "MC_FE_150", "MC_FE_150_500", "MC_FE_500"
+#' "MC_150_G", "MC_150_500_G", "MC_500_G",
+#' "MC_150_FG", "MC_150_500_FG", "MC_500_FG",
+#' "MC_150_FE", "MC_150_500_FE", "MC_500_FE",
 #' "CICLOMOTOR", "GNV"
 #' @param year Numeric; Filter the emission factor to start from a specific base year.
 #' If project is 'constant' values above 2017 and below 1980 will be repeated
