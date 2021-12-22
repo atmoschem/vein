@@ -11,6 +11,7 @@ NEWS
 - Add IM effect on Ecuador EF.
 - add project `manizales_bu`. TODO: add IM and EF EEA 2019. (2021-11-12)
 - add IM projects for brazil (experimental). (2021-11-24)
+- add IM projects for sebrazil (experimental). (2021-12-22)
 
 ### vein 0.9.4 (5 years!!)
 - add CBMZ into chem_vein. Based on Yang Zhang Labs data and Carter 2015 (Release date: 2021-06-28)

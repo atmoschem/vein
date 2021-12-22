@@ -14,7 +14,7 @@ on:
       - main
       - master
 
-name: brazil_td_chem_im
+name: sebr_cb05co2_im
 
 jobs:
   R-CMD-check:
@@ -70,17 +70,21 @@ jobs:
           pak::pkg_install("rcmdcheck")
         shell: Rscript {0}
 
-      - name: Run project brazil_td_chem_im
+      - name: Run project sebr_cb05co2
         run: |
           options(width = 100)
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
+          print(sessionInfo())
           install.packages(c("ggplot2", "readxl", "remotes"))
           install.packages("eixport")
+          install.packages("geobr")
+          install.packages("ncmeta")
+          install.packages("stars")
           remotes::install_github("atmoschem/vein")
           library(vein)
-          get_project("teste", "brazil_td_chem_im")
+          get_project("teste", "sebr_cb05co2_im")
           setwd("teste")
-          source("main.R", echo = TRUE)
+          source("merge_wrf.R")
 
         shell: Rscript {0}
