@@ -27,6 +27,7 @@
 #'   ecuador_td_hot_month      \tab Top-down\tab EEA\tab  csv and.rds\cr
 #'   moves      \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
 #'   manizales_bu      \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
+#'   sebr_cb05co2_im  \tab Top-down SP, MG and RJ IM\tab CETESB+tunnel\tab  .rds\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
@@ -241,8 +242,35 @@ get_project <- function(directory,
    utils::untar(tarfile = paste0(directory, "/sebr_cb05co2_wrfi.tar.gz"), exdir = directory)
 
    message("Your directory is in ", directory) #nocov end
-  } else{
-    stop("Other cases not supported yet")
+    } else if(case %in% c("sebr_cb05co2_im")){
+      dir.create(directory)
+      tf <- paste0(tempfile(), ".tar.gz")
+
+      utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_im/MG.tar.gz",
+                           destfile =  tf)
+      utils::untar(tarfile = tf, exdir = paste0(directory, "/MG"))
+
+      utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_im/SP.tar.gz",
+                           destfile =  tf)
+      utils::untar(tarfile = tf, exdir = paste0(directory, "/SP"))
+
+      utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_im/RJ.tar.gz",
+                           destfile =  tf)
+      utils::untar(tarfile = tf, exdir = paste0(directory, "/RJ"))
+
+      utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_im/merge_wrf.R",
+                           destfile =  paste0(directory, "/merge_wrf.R"))
+
+      utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_im/sebr_cb05co2.Rproj",
+                           destfile =  paste0(directory, "/sebr_cb05co2.Rproj"))
+
+      utils::download.file(url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_wrfi.tar.gz",
+                           destfile =  paste0(directory, "/sebr_cb05co2_wrfi.tar.gz"))
+      utils::untar(tarfile = paste0(directory, "/sebr_cb05co2_wrfi.tar.gz"), exdir = directory)
+
+      message("Your directory is in ", directory) #nocov end
+    } else{
+      stop("Other cases not supported yet")
   }
   } else {
     URL <- url
