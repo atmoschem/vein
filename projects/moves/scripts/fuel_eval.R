@@ -287,7 +287,7 @@ bu_emiv$db <- "emissions_per_vehicle"
 emi <- rbind(bu_emi,
              bu_emiv[, names(bu_emi), with = F])
 
-fc <- emi$veh[, sum(value)*factor_emi, by = fuelTypeID]
+fc <- emi[, sum(value)*factor_emi, by = fuelTypeID]
 
 fuel <- fuel[, c("fuel", "gallons", "Year", "Month")]
 
