@@ -10,9 +10,10 @@ netg <- emis_grid(spobj = netsf[, c("CO")], g = g, sr= 31983)
 
 # lines
 test_that("emis_grid works", {
-  expect_equal(round(sum(emis_grid(spobj = netsf[, c("CO")],
-                         g = g,
-                         sr= 31983)$CO[1], na.rm = T)),
+  expect_equal(as.numeric(round(sum(emis_grid(spobj = netsf[, c("CO")],
+                                              g = g,
+                                              sr= 31983)$CO[1],
+                                    na.rm = T))),
                round(as.numeric(0)))
 })
 
@@ -20,9 +21,10 @@ test_that("emis_grid works", {
 # points
 sff2 <- suppressMessages(suppressWarnings(sf::st_centroid(netsf[, c("CO")])))
 test_that("emis_grid works", {
-  expect_equal(round(sum(emis_grid(spobj = sff2,
-                                   g = g,
-                                   type = "points")$CO[1], na.rm = T)),
+  expect_equal(as.numeric(round(sum(emis_grid(spobj = sff2,
+                                              g = g,
+                                              type = "points")$CO[1],
+                                    na.rm = T))),
                round(as.numeric(0)))
 })
 
@@ -30,37 +32,42 @@ test_that("emis_grid works", {
 test_that("emis_grid works", {
   buf <- sf::st_buffer(sf::st_centroid(sf::st_as_sfc(sf::st_bbox(g))), dist = 0.01)
   netp <- sf::st_sf(a = Emissions(1), geometry = buf)
-  expect_equal(round(sum(emis_grid(spobj = netp,
+  expect_equal(
+    as.numeric(round(sum(emis_grid(spobj = netp,
                                    g = g,
-                                   type = "polygon")$a[1], na.rm = T)),
-               0)
+                                   type = "polygon")$a[1],
+                         na.rm = T))),
+    0)
 })
 
 # flux FALSE
 test_that("emis_grid works", {
-  expect_equal(round(sum(emis_grid(spobj = netsf[, c("CO")],
-                                   g = g,
-                                   sr= "+init=epsg:4326",
-                                   flux = FALSE)$CO[1], na.rm = T)),
-               round(as.numeric(0)))
+  expect_equal(as.numeric(round(sum(emis_grid(spobj = netsf[, c("CO")],
+                                              g = g,
+                                              sr= "+init=epsg:4326",
+                                              flux = FALSE)$CO[1], na.rm = T))),
+               0)
 })
 
 sff2 <- suppressMessages(suppressWarnings(sf::st_centroid(netsf[, c("CO")])))
+
 test_that("emis_grid works", {
-  expect_equal(round(sum(emis_grid(spobj = sff2,
-                                   g = g,
-                                   type = "points",
-                                   flux = FALSE)$CO[1], na.rm = T)),
-               round(as.numeric(0)))
+  expect_equal(as.numeric(round(sum(emis_grid(spobj = sff2,
+                                              g = g,
+                                              type = "points",
+                                              flux = FALSE)$CO[1],
+                                    na.rm = T))),
+               0)
 })
 
 test_that("emis_grid works", {
   buf <- sf::st_buffer(sf::st_centroid(sf::st_as_sfc(sf::st_bbox(g))), dist = 0.01)
   netp <- sf::st_sf(a = Emissions(1), geometry = buf)
-  expect_equal(round(sum(emis_grid(spobj = netp,
-                                   g = g,
-                                   type = "polygon",
-                                   flux = FALSE)$a[1], na.rm = T)),
-               0)
+  expect_equal(as.numeric(round(sum(emis_grid(spobj = netp,
+                                              g = g,
+                                              type = "polygon",
+                                              flux = FALSE)$a[1],
+                                    na.rm = T))),
+                          0)
 })
 

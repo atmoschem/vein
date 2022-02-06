@@ -32,6 +32,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -44,18 +46,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.5</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -77,7 +73,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/atmoschem/vein/">
+  <a href="https://github.com/atmoschem/vein/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -92,13 +88,13 @@
 
       
 
-      </header><script src="basics_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Basics for running VEIN</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/atmoschem/vein/blob/master/vignettes/basics.Rmd"><code>vignettes/basics.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/atmoschem/vein/blob/HEAD/vignettes/basics.Rmd" class="external-link"><code>vignettes/basics.Rmd</code></a></small>
       <div class="hidden name"><code>basics.Rmd</code></div>
 
     </div>
@@ -109,28 +105,28 @@
 <p>## Install VEIN</p>
 <p>You can install VEIN with</p>
 <ul>
-<li>GitLab: <code><a href="https://remotes.r-lib.org/reference/install_gitlab.html">remotes::install_gitlab("ibarraespinosa/vein")</a></code>
+<li>GitLab: <code>remotes::install_gitlab("ibarraespinosa/vein")</code>
 </li>
-<li>GitHub: <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("atmoschem/vein")</a></code>
+<li>GitHub: <code>remotes::install_github("atmoschem/vein")</code>
 </li>
-<li>or CRAN: <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("vein")</a></code>
+<li>or CRAN: <code>install.packages("vein")</code>
 </li>
 </ul>
 <p>GitHub and GitLab are more updated</p>
 <p>Then, use vein</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein">vein</a></span><span class="op">)</span></code></pre></div>
-<div id="download-a-project" class="section level2">
-<h2 class="hasAnchor">
-<a href="#download-a-project" class="anchor"></a>Download a project</h2>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="download-a-project">Download a project<a class="anchor" aria-label="anchor" href="#download-a-project"></a>
+</h2>
 <p>Check the documentation of get_project</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">?</span><span class="va">get_project</span></code></pre></div>
-<p>or <a href="https://atmoschem.github.io/vein/reference/get_project.html">here</a></p>
+<p>or <a href="https://atmoschem.github.io/vein/reference/get_project.html" class="external-link">here</a></p>
 <p>Choose a name, for instance, “awesome_city”</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/system.html">system</a></span><span class="op">(</span><span class="st">"tree  awesome_city"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"tree  awesome_city"</span><span class="op">)</span></code></pre></div>
 <p>The structure is:</p>
 <pre><code>awesome_city
 ├── config
@@ -165,18 +161,18 @@
 </ul>
 <p>If you do not have them already, you can install:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="too-complicated-watch-a-youtube-video" class="section level2">
-<h2 class="hasAnchor">
-<a href="#too-complicated-watch-a-youtube-video" class="anchor"></a>Too complicated? Watch a YouTube video</h2>
+<div class="section level2">
+<h2 id="too-complicated-watch-a-youtube-video">Too complicated? Watch a YouTube video<a class="anchor" aria-label="anchor" href="#too-complicated-watch-a-youtube-video"></a>
+</h2>
 <p>in English:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tHSWIjg26vg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p>in Portuguese:</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
-<p><a href="https://youtu.be/6-07Y0Eimng">here</a></p>
+<p><a href="https://youtu.be/6-07Y0Eimng" class="external-link">here</a></p>
 </div>
   </div>
 
@@ -191,11 +187,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://ibarraespinosa.github.io">Sergio Ibarra-Espinosa</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://ibarraespinosa.github.io" class="external-link">Sergio Ibarra-Espinosa</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -203,6 +201,8 @@
 
   
 
+
+  
 
   </body>
 </html>

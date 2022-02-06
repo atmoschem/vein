@@ -10,7 +10,7 @@ test_that("my_age works", {
   expect_equal(round(my_age(x = net$ldv,
                             y = dpc,
                             name = "PC_E25_1400")[1,1]),
-               19)
+               Vehicles(19))
 })
 
 
@@ -76,7 +76,7 @@ test_that("my_age works", {
                             y = dpc,
                             name = "PC_E25_1400",
                             agemax = 5)[1,1]),
-               19)
+               Vehicles(19))
 })
 
 
@@ -94,3 +94,4 @@ test_that("my_age works", {
                       namerows = 1:nrow(net))[1,1]),
                Vehicles(19))
 })
+

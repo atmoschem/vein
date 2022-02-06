@@ -1,282 +1,351 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://atmoschem.github.io/vein//index.html</loc>
+    <loc>http://atmoschem.github.io/vein/404.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/EmissionFactors.html</loc>
+    <loc>http://atmoschem.github.io/vein/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/EmissionFactorsList.html</loc>
+    <loc>http://atmoschem.github.io/vein/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/Emissions.html</loc>
+    <loc>http://atmoschem.github.io/vein/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/EmissionsArray.html</loc>
+    <loc>http://atmoschem.github.io/vein/LICENSE.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/GriddedEmissionsArray.html</loc>
+    <loc>http://atmoschem.github.io/vein/articles/01_Traffic.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/Speed.html</loc>
+    <loc>http://atmoschem.github.io/vein/articles/basics.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/Vehicles.html</loc>
+    <loc>http://atmoschem.github.io/vein/articles/index.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/add_lkm.html</loc>
+    <loc>http://atmoschem.github.io/vein/authors.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/add_miles.html</loc>
+    <loc>http://atmoschem.github.io/vein/index.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/add_polid.html</loc>
+    <loc>http://atmoschem.github.io/vein/news/index.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/adt.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/EmissionFactors.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/age.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/EmissionFactorsList.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/age_hdv.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/Emissions.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/age_ldv.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/EmissionsArray.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/age_moto.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/EmissionsList.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/aw.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/Evaporative.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/celsius.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/check_nt.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/Speed.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/cold_mileage.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/Vehicles.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/colplot.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/add_lkm.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/decoder.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/add_miles.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_cetesb.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/add_polid.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_china.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/adt.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_eea.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/age.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_evap.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/age_hdv.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_fun.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/age_ldv.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_hdv_scaled.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/age_moto.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_hdv_speed.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/aw.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_im.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/celsius.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_ive.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/check_nt.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_ldv_cold.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/cold_mileage.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_ldv_cold_list.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/colplot.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_ldv_scaled.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/decoder.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_ldv_speed.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_cetesb.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_local.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_china.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_nitro.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_eea.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_wear.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_emfac.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/ef_whe.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_evap.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_fun.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_chem.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_hdv_scaled.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_chem2.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_hdv_speed.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_cold.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_im.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_cold_td.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_ive.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_det.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_ldv_cold.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_dist.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_ldv_cold_list.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_evap.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_ldv_scaled.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_evap2.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_ldv_speed.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_grid.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_local.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_hot_td.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_nitro.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_merge.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_wear.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_order.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/ef_whe.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_paved.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_post.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_chem.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_source.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_chem2.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_to_streets.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_cold.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/emis_wear.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_cold_td.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/fe2015.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_det.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/fkm.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_dist.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/fuel_corr.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_evap.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/get_project.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_evap2.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/grid_emis.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_grid.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/invcop.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_hot_td.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/inventory.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_merge.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/long_to_wide.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_order.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/make_grid.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_order2.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_ef.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_paved.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_rpd.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_post.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_rpdy.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_source.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_rpdy_meta.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_to_streets.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_rpdy_sf.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_wear.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_rpsy_meta.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_wrf-deprecated.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_rpsy_sf.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/emis_wrf.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/moves_speed.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/fe2015.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/my_age.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/fkm.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/net.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/fuel_corr.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/netspeed.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/get_project.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/pc_cold.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/grid_emis.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/pc_profile.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/hot_soak.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/pollutants.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/index.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/profiles.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/invcop.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/remove_units.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/inventory.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/running_losses-deprecated.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/long_to_wide.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/speciate.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/make_grid.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/split_emis.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/matvect.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/temp_fact.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_ef.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/to_latex.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_exhaust.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/vein-deprecated.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_rpd.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/vein-package.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_rpdy.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/vein_notes.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_rpdy_meta.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/vkm.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_rpdy_sf.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//reference/wide_to_long.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_rpsy_meta.html</loc>
   </url>
   <url>
-    <loc>http://atmoschem.github.io/vein//articles/basics.html</loc>
+    <loc>http://atmoschem.github.io/vein/reference/moves_rpsy_sf.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/moves_speed.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/my_age.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/net.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/netspeed.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/pc_cold.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/pc_profile.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/pollutants.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/profiles.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/remove_units.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/running_losses-deprecated.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/running_losses.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/speciate.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/speed_moves.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/split_emis.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/st_explode.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/temp_fact.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/to_latex.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/vein-deprecated.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/vein-package.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/vein.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/vein_notes.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/vkm.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/wide_to_long.html</loc>
   </url>
 </urlset>

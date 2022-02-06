@@ -101,7 +101,7 @@ demo(VEIN)
 
 At the moment, most of the projects covers Brazilian regions, but I will include China, Europe or USA approaches as soon as I can.
 
-Use the function [get_project](https://atmoschem.github.io/vein/reference/get_project.html) and read the documentation.
+Use the function [get_project](https://atmoschem.github.io/vein/reference/get_project.html) and read the documentation, there you can see more projects as well.
 
 - [![R build status](https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
 - [![R build status](https://github.com/atmoschem/vein/workflows/brazil_bu_csvgz/badge.svg)](https://github.com/atmoschem/vein/actions)
