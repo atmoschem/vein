@@ -9,7 +9,7 @@ ef_eea(category, fuel, segment, euro, tech, pol, mode, slope, load, speed)
 \arguments{
 \item{category}{String: "PC" (Passenger Cars), "LCV" (Light Commercial Vehicles),
 "HDV" (Heavy Duty Trucks),
-"BUS" (Buses) or "L" (L-Category).}
+"BUS" (Buses) or "MC" (Motorcycles or L-Category as in EEA 2019).}
 
 \item{fuel}{String;  "G", "G HY", "G PHEV G",
 "G PHEV ELEC",  "D", "D PHEV D",
