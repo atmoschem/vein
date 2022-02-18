@@ -3,8 +3,14 @@ NEWS
 
 ## TODO
 
-- get_project with *Europe*, Chinese and MOVES EF
 - Add EF from HBEFA
+
+### vein 0.9.6
+
+- Changes ef_eea from arabic number to roman and categories. 
+Now there is consistency between ef_eea and ef_*_speed .
+- get_project with *Europe*, Chinese and MOVES EF
+
 
 ### vein 0.9.5
 

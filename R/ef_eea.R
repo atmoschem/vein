@@ -1,16 +1,24 @@
 #' Emissions factors from European European Environment Agency
 #'
 #' \code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
-#' @param category String: "Passenger Cars", "Light Commercial Vehicles", "Heavy Duty Trucks",
-#' "Buses" or "L-Category".
-#' @param fuel String;  "Petrol", "Petrol Hybrid", "Petrol PHEV ~ Petrol",
-#' "Petrol PHEV ~ Electricity",  "Diesel", "Diesel PHEV ~ Diesel",
-#' "Diesel PHEV ~ Electricity", "LPG Bifuel ~ LPG", "LPG Bifuel ~ Petrol",
-#' "CNG Bifuel ~ CNG", "CNG Bifuel ~ Petrol", "Diesel Hybrid ~ Diesel",
-#' "Diesel Hybrid ~ Electricity", "CNG", "Biodiesel"
-#' @param segment String for type of vehicle.
-#' @param euro String; euro standard.
-#' @param tech String; technology.
+#' @param category String: "PC" (Passenger Cars), "LCV" (Light Commercial Vehicles),
+#' "HDV" (Heavy Duty Trucks),
+#' "BUS" (Buses) or "L" (L-Category).
+#' @param fuel String;  "G", "G HY", "G PHEV G",
+#' "G PHEV ELEC",  "D", "D PHEV D",
+#' "D PHEV ELEC", "LPG BIFUEL LPG", "LPG BIFUEL G",
+#' "CNG BIFUEL CNG", "CNG BIFUEL G", "D HY D",
+#' "D HY ELEC", "CNG", "BIO D"
+#' @param segment String for type of vehicle (try different, the function will show values).
+#' @param euro String; euro standard:
+#' "PRE", "IMPROVED CONVENTIONAL", "OPEN LOOP",
+#' "ECE 15/00-01", "ECE 15/02", "ECE 15/03", "ECE 15/04".
+#' "I", "II", "III", "IV", "V",
+#' "VI A/B/C", "VI D", "VI D-TEMP", "VI D/E",
+#' "EEV".
+#' @param tech String; technology:
+#' "DPF", "DPF With S/W Update", "DPF+SCR"
+#' "EGR", "GDI", "GDI+GPF", "LNT+DPF", "PFI", "SCR".
 #' @param pol String; "CO", "NOx", "VOC", "PM Exhaust", "EC", "CH4", "NH3", "N2O"
 #' @param mode String; "Urban Peak", "Urban Off Peak", "Rural", "Highway", NA.
 #' @param slope Numeric; 0.00, -0.06, -0.04, -0.02,  0.02,  0.04,  0.06, or NA
@@ -20,12 +28,12 @@
 #' @importFrom data.table setDT
 #' @keywords  emission factors
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # ef_eea(category = "I DONT KNOW")
-#' ef_eea(category = "Passenger Cars",
-#' fuel = "Petrol",
+#' ef_eea(category = "PC",
+#' fuel = "G",
 #' segment = "Small",
-#' euro = "Euro 1",
+#' euro = "I",
 #' tech = NA,
 #' pol = "CO",
 #' mode = NA,
