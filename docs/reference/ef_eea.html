@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.6</span>
       </span>
     </div>
 
@@ -75,20 +75,28 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>category</dt>
-<dd><p>String: "Passenger Cars", "Light Commercial Vehicles", "Heavy Duty Trucks",
-"Buses" or "L-Category".</p></dd>
+<dd><p>String: "PC" (Passenger Cars), "LCV" (Light Commercial Vehicles),
+"HDV" (Heavy Duty Trucks),
+"BUS" (Buses) or "L" (L-Category).</p></dd>
 <dt>fuel</dt>
-<dd><p>String;  "Petrol", "Petrol Hybrid", "Petrol PHEV ~ Petrol",
-"Petrol PHEV ~ Electricity",  "Diesel", "Diesel PHEV ~ Diesel",
-"Diesel PHEV ~ Electricity", "LPG Bifuel ~ LPG", "LPG Bifuel ~ Petrol",
-"CNG Bifuel ~ CNG", "CNG Bifuel ~ Petrol", "Diesel Hybrid ~ Diesel",
-"Diesel Hybrid ~ Electricity", "CNG", "Biodiesel"</p></dd>
+<dd><p>String;  "G", "G HY", "G PHEV G",
+"G PHEV ELEC",  "D", "D PHEV D",
+"D PHEV ELEC", "LPG BIFUEL LPG", "LPG BIFUEL G",
+"CNG BIFUEL CNG", "CNG BIFUEL G", "D HY D",
+"D HY ELEC", "CNG", "BIO D"</p></dd>
 <dt>segment</dt>
-<dd><p>String for type of vehicle.</p></dd>
+<dd><p>String for type of vehicle (try different, the function will show values).</p></dd>
 <dt>euro</dt>
-<dd><p>String; euro standard.</p></dd>
+<dd><p>String; euro standard:
+"PRE", "IMPROVED CONVENTIONAL", "OPEN LOOP",
+"ECE 15/00-01", "ECE 15/02", "ECE 15/03", "ECE 15/04".
+"I", "II", "III", "IV", "V",
+"VI A/B/C", "VI D", "VI D-TEMP", "VI D/E",
+"EEV".</p></dd>
 <dt>tech</dt>
-<dd><p>String; technology.</p></dd>
+<dd><p>String; technology:
+"DPF", "DPF With S/W Update", "DPF+SCR"
+"EGR", "GDI", "GDI+GPF", "LNT+DPF", "PFI", "SCR".</p></dd>
 <dt>pol</dt>
 <dd><p>String; "CO", "NOx", "VOC", "PM Exhaust", "EC", "CH4", "NH3", "N2O"</p></dd>
 <dt>mode</dt>
@@ -107,18 +115,19 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
 <span class="r-in"><span class="co"># ef_eea(category = "I DONT KNOW")</span></span>
-<span class="r-in"><span class="fu">ef_eea</span><span class="op">(</span>category <span class="op">=</span> <span class="st">"Passenger Cars"</span>,</span>
-<span class="r-in">fuel <span class="op">=</span> <span class="st">"Petrol"</span>,</span>
+<span class="r-in"><span class="fu">ef_eea</span><span class="op">(</span>category <span class="op">=</span> <span class="st">"PC"</span>,</span>
+<span class="r-in">fuel <span class="op">=</span> <span class="st">"G"</span>,</span>
 <span class="r-in">segment <span class="op">=</span> <span class="st">"Small"</span>,</span>
-<span class="r-in">euro <span class="op">=</span> <span class="st">"Euro 1"</span>,</span>
+<span class="r-in">euro <span class="op">=</span> <span class="st">"I"</span>,</span>
 <span class="r-in">tech <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span class="r-in">pol <span class="op">=</span> <span class="st">"CO"</span>,</span>
 <span class="r-in">mode <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span class="r-in">slope <span class="op">=</span> <span class="fl">0</span>,</span>
 <span class="r-in">load <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.655639</span>
 </code></pre></div>
     </div>
   </div>

@@ -43,14 +43,10 @@ knitr::opts_chunk$set(
 
 ![](https://i.imgur.com/stnHJQx.png)
 
-### What is new?
-
-- add CBMZ into chem_vein
-- Coming soon: Projects for Latin America, Europe and USA
 
 ### TODO
 
-- get_project with Europe and Chinese EF
+- get_project with Chinese EF
 - Include speed functions with Fortran
 - Include CB6
 - Add EF from HBEFA?
