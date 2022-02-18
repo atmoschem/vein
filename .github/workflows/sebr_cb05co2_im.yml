@@ -78,7 +78,7 @@ jobs:
           print(sessionInfo())
           install.packages(c("ggplot2", "readxl", "remotes"))
           install.packages("eixport")
-          install.packages("crul")
+          remotes::install_github("ipeaGIT/geobr", subdir = "r-package")
           install.packages("geobr")
           install.packages("ncmeta")
           install.packages("stars")
