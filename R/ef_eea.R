@@ -2,7 +2,7 @@
 #'
 #' \code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
 #' @param category String: "PC" (Passenger Cars), "LCV" (Light Commercial Vehicles),
-#' "HDV" (Heavy Duty Trucks),
+#' "TRUCKS" (Heavy Duty Trucks),
 #' "BUS" (Buses) or "MC" (Motorcycles or L-Category as in EEA 2019).
 #' @param fuel String;  "G", "G HY", "G PHEV G",
 #' "G PHEV ELEC",  "D", "D PHEV D",
