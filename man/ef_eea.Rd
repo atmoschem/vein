@@ -30,7 +30,7 @@ ef_eea(category, fuel, segment, euro, tech, pol, mode, slope, load, speed)
 "DPF", "DPF With S/W Update", "DPF+SCR"
 "EGR", "GDI", "GDI+GPF", "LNT+DPF", "PFI", "SCR".}
 
-\item{pol}{String; "CO", "NOx", "VOC", "PM Exhaust", "EC", "CH4", "NH3", "N2O"}
+\item{pol}{String; "CO", "NOx", "NMHC" (VOC), "PM" (PM Exhaust), "EC", "CH4", "NH3", "N2O"}
 
 \item{mode}{String; "Urban Peak", "Urban Off Peak", "Rural", "Highway", NA.}
 

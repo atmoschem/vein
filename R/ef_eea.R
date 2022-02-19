@@ -19,7 +19,7 @@
 #' @param tech String; technology:
 #' "DPF", "DPF With S/W Update", "DPF+SCR"
 #' "EGR", "GDI", "GDI+GPF", "LNT+DPF", "PFI", "SCR".
-#' @param pol String; "CO", "NOx", "VOC", "PM Exhaust", "EC", "CH4", "NH3", "N2O"
+#' @param pol String; "CO", "NOx", "NMHC" (VOC), "PM" (PM Exhaust), "EC", "CH4", "NH3", "N2O"
 #' @param mode String; "Urban Peak", "Urban Off Peak", "Rural", "Highway", NA.
 #' @param slope Numeric; 0.00, -0.06, -0.04, -0.02,  0.02,  0.04,  0.06, or NA
 #' @param load Numeric; 0.0,0.5, 1.0 or NA
