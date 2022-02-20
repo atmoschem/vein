@@ -117,6 +117,7 @@ Use the function [get_project](https://atmoschem.github.io/vein/reference/get_pr
 - [![R build status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets_im/badge.svg)](https://github.com/atmoschem/vein/actions)
 - [![R build status](https://github.com/atmoschem/vein/workflows/brazil_td_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
 - [![R build status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2_im/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build status](https://github.com/atmoschem/vein/workflows/eu_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 
 

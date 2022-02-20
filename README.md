@@ -132,6 +132,8 @@ and read the documentation, there you can see more projects as well.
     status](https://github.com/atmoschem/vein/workflows/brazil_td_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
 -   [![R build
     status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2_im/badge.svg)](https://github.com/atmoschem/vein/actions)
+-   [![R build
+    status](https://github.com/atmoschem/vein/workflows/eu_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 ``` r
 library(vein)

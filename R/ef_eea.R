@@ -24,6 +24,9 @@
 #' @param slope Numeric; 0.00, -0.06, -0.04, -0.02,  0.02,  0.04,  0.06, or NA
 #' @param load Numeric; 0.0,0.5, 1.0 or NA
 #' @param speed Numeric; optional numeric in km/h.
+#' @param fcorr Numeric; Correction by fuel properties by euro technology.
+#' See \code{\link{fuel_corr}}. The order from first to last is
+#' "PRE", "I", "II", "III", "IV", "V", "VI", "or other VI. Default is 1
 #' @return Return a function depending of speed or numeric (g/km)
 #' @importFrom data.table setDT
 #' @keywords  emission factors
@@ -50,8 +53,10 @@ ef_eea <- function(
   mode,
   slope,
   load,
-  speed
+  speed,
+  fcorr = rep(1, 8)
 ) {
+
 
   eea <- data.table::setDT(sysdata$eea)
 
@@ -60,6 +65,24 @@ ef_eea <- function(
 
   Category <- Fuel <- Segment <- EuroStandard <- Technology <- NULL
   Pollutant <- Mode <- RoadSlope <- Load <-  NULL
+
+
+  #Function to case when
+  lala <- function(x) {
+    ifelse(x == "PRE", fcorr[1],
+           ifelse(
+             x == "I", fcorr[2],
+             ifelse(
+               x == "II", fcorr[3],
+               ifelse(
+                 x == "III", fcorr[4],
+                 ifelse(
+                   x == "IV", fcorr[5],
+                   ifelse(
+                     x == "V", fcorr[6],
+                     ifelse(
+                       x == "VI", fcorr[7],
+                       fcorr[8])))))))}
 
   # category
   u_cat <- unique(eea$Category)
@@ -88,6 +111,8 @@ ef_eea <- function(
     stop("Select categories from:\n", paste(u_euro, collapse = "\n"))
   }
   ef <- ef[EuroStandard %in% euro]
+
+  k2 <- lala(euro) #requires length euro = 1
 
   # tech
   u_tech <- unique(ef$Technology)
