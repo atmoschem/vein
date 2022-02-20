@@ -9,7 +9,8 @@ NEWS
 
 - Changes ef_eea from arabic number to roman and categories. 
 Now there is consistency between ef_eea and ef_*_speed .
-- get_project with *Europe*, Chinese and MOVES EF
+- get_project with *Europe* "eu_bu_chem" (2022-02-20).
+- add workflow for project "eu_bu_chem" (2022-02-20)
 
 
 ### vein 0.9.5
