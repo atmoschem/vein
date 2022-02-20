@@ -180,17 +180,19 @@
 #' persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Euros",
 #' zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
 #' }
-ef_ldv_speed <- function(v,
-                         t  = "4S",
-                         cc,
-                         f,
-                         eu,
-                         p,
-                         x,
-                         k = 1,
-                         speed,
-                         show.equation = FALSE,
-                         fcorr = rep(1, 8)){
+ef_ldv_speed <- function(
+  v,
+  t  = "4S",
+  cc,
+  f,
+  eu,
+  p,
+  x,
+  k = 1,
+  speed,
+  show.equation = FALSE,
+  fcorr = rep(1, 8)){
+
   ef_ldv <- sysdata$ldv
   xas <-  c("AS_urban", "AS_rural", "AS_highway")
   npm <- c("N_urban", "N_rural", "N_highway",
@@ -219,7 +221,7 @@ ef_ldv_speed <- function(v,
     if(!class(speed)[1] %in% c("units", "Speed")){
       stop("speed neeeds to has class 'Speed' or 'units' in 'km/h'. Please, check package '?units::set_units'")
     }
-      speed <- remove_units(speed)
+    speed <- remove_units(speed)
   }
 
   #Function to case when
@@ -239,7 +241,7 @@ ef_ldv_speed <- function(v,
                        x == "VI", fcorr[7],
                        fcorr[8])))))))}
 
-# Message for units
+  # Message for units
   if(!missing(speed)){
     if( p %in% xas) {
       cat("Units of Active Surface: cm^2/km\n")
@@ -248,7 +250,7 @@ ef_ldv_speed <- function(v,
     }
   }
 
-    # fun starts
+  # fun starts
   if(!is.data.frame(eu)){
     if(length(eu) == 1){
 
@@ -280,7 +282,7 @@ ef_ldv_speed <- function(v,
         }
       }
 
-# check for speed as numeric or data.frame
+      # check for speed as numeric or data.frame
       if(!missing(speed)){
         if(is.numeric(speed)){
           f1 <- EmissionFactors(f1(speed))
@@ -289,9 +291,9 @@ ef_ldv_speed <- function(v,
           f1 <- EmissionFactors(sapply(speed, f1))
           return(f1)
         }
-        } else {
+      } else {
         return(f1)
-        }
+      }
 
 
     } else if(length(eu) > 1){
@@ -331,7 +333,7 @@ ef_ldv_speed <- function(v,
           names(dff) <- paste0(eu, 1:length(eu))
           dff$speed <- speed
           return(dff)
-          } else if (is.data.frame(speed)){}
+        } else if (is.data.frame(speed)){}
 
 
 

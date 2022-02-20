@@ -69,7 +69,19 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ef_eea</span><span class="op">(</span><span class="va">category</span>, <span class="va">fuel</span>, <span class="va">segment</span>, <span class="va">euro</span>, <span class="va">tech</span>, <span class="va">pol</span>, <span class="va">mode</span>, <span class="va">slope</span>, <span class="va">load</span>, <span class="va">speed</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ef_eea</span><span class="op">(</span>
+  <span class="va">category</span>,
+  <span class="va">fuel</span>,
+  <span class="va">segment</span>,
+  <span class="va">euro</span>,
+  <span class="va">tech</span>,
+  <span class="va">pol</span>,
+  <span class="va">mode</span>,
+  <span class="va">slope</span>,
+  <span class="va">load</span>,
+  <span class="va">speed</span>,
+  fcorr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -107,6 +119,10 @@
 <dd><p>Numeric; 0.0,0.5, 1.0 or NA</p></dd>
 <dt>speed</dt>
 <dd><p>Numeric; optional numeric in km/h.</p></dd>
+<dt>fcorr</dt>
+<dd><p>Numeric; Correction by fuel properties by euro technology.
+See <code><a href="fuel_corr.html">fuel_corr</a></code>. The order from first to last is
+"PRE", "I", "II", "III", "IV", "V", "VI", "or other VI. Default is 1</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

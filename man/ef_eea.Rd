@@ -4,7 +4,19 @@
 \alias{ef_eea}
 \title{Emissions factors from European European Environment Agency}
 \usage{
-ef_eea(category, fuel, segment, euro, tech, pol, mode, slope, load, speed)
+ef_eea(
+  category,
+  fuel,
+  segment,
+  euro,
+  tech,
+  pol,
+  mode,
+  slope,
+  load,
+  speed,
+  fcorr = rep(1, 8)
+)
 }
 \arguments{
 \item{category}{String: "PC" (Passenger Cars), "LCV" (Light Commercial Vehicles),
@@ -39,6 +51,10 @@ ef_eea(category, fuel, segment, euro, tech, pol, mode, slope, load, speed)
 \item{load}{Numeric; 0.0,0.5, 1.0 or NA}
 
 \item{speed}{Numeric; optional numeric in km/h.}
+
+\item{fcorr}{Numeric; Correction by fuel properties by euro technology.
+See \code{\link{fuel_corr}}. The order from first to last is
+"PRE", "I", "II", "III", "IV", "V", "VI", "or other VI. Default is 1}
 }
 \value{
 Return a function depending of speed or numeric (g/km)
