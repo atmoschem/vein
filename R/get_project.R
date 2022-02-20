@@ -28,13 +28,15 @@
 #'   moves      \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
 #'   manizales_bu      \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
 #'   sebr_cb05co2_im  \tab Top-down SP, MG and RJ IM\tab CETESB+tunnel\tab  .rds\cr
+#'   eu_bu_chem      \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
 #' the same
 #' In any case, if you find any error, please, send a pull request in github.
 #'
-#' In Sao Paulo the IM programs was functioning until 2011. Since then,
+#' In Sao Paulo the IM programs was functioning until 2011.
+#'
 #' @importFrom utils download.file untar
 #' @export
 #' @examples \dontrun{
@@ -192,6 +194,14 @@ get_project <- function(directory,
                          destfile =  tf)
     utils::untar(tarfile = tf, exdir = directory)
     message("Your directory is in ", directory)
+
+  } else if(case %in% c("eu_bu_chem")){
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/eu_bu_chem.tar.gz"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  tf)
+    utils::untar(tarfile = tf, exdir = directory)
+    message("Your directory for vehicular emissions is in ", directory)
 
   } else if(case %in% c("curitiba")){
     URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/curitiba.tar.gz"
