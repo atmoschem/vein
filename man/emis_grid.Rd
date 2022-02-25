@@ -27,8 +27,8 @@ as EDGAR provide data.}
 }
 \description{
 \code{\link{emis_grid}} allocates emissions proportionally to each grid
- cell. The process is performed by intersection between geometries and the grid.
-It means that requires "sr" according with your location for the projection.
+ cell. The process is performed by the intersection between geometries and the grid.
+It means that requires "sr" according to your location for the projection.
 It is assumed that spobj is a Spatial*DataFrame or an "sf" with the pollutants
 in data. This function returns an object of class "sf".
 

@@ -29,7 +29,7 @@ emis_evap2(
 )
 }
 \arguments{
-\item{veh}{Total number of vehicles by age of use. If is a lsit of 'Vehicles'
+\item{veh}{Total number of vehicles by age of use. If is a list of 'Vehicles'
 data-frames, it will sum the columns of the eight element of the list
 representing the 8th hour. It was chosen this hour because it is morning rush
 hour but the user can adapt the data to this function}
@@ -42,56 +42,56 @@ hour but the user can adapt the data to this function}
 
 \item{aged}{Age distribution vector. E.g.: 1:40}
 
-\item{nd4}{Number of days with temperature between 20 and 35 celcius degrees}
+\item{nd4}{Number of days with temperature between 20 and 35 Celsius degrees}
 
-\item{nd3}{Number of days with temperature between 10 and 25 celcius degrees}
+\item{nd3}{Number of days with temperature between 10 and 25 Celsius degrees}
 
-\item{nd2}{Number of days with temperature between 0 and 15 celcius degrees}
+\item{nd2}{Number of days with temperature between 0 and 15 Celsius degrees}
 
-\item{nd1}{Number of days with temperature between -5 and 10 celcius degrees}
+\item{nd1}{Number of days with temperature between -5 and 10 Celsius degrees}
 
 \item{hs_nd4}{average daily hot-soak evaporative emissions for days with
-temperature between 20 and 35 celcius degrees}
+temperature between 20 and 35 Celsius degrees}
 
 \item{hs_nd3}{average daily hot-soak evaporative emissions for days with
-temperature between 10 and 25 celcius degrees}
+temperature between 10 and 25 Celsius degrees}
 
 \item{hs_nd2}{average daily hot-soak evaporative emissions for days with
-temperature between 0 and 15 celcius degrees}
+temperature between 0 and 15 Celsius degrees}
 
 \item{hs_nd1}{average daily hot-soak evaporative emissions for days with
-temperature between -5 and 10 celcius degrees}
+temperature between -5 and 10 Celsius degrees}
 
 \item{rl_nd4}{average daily running losses evaporative emissions for days with
-temperature between 20 and 35 celcius degrees}
+temperature between 20 and 35 Celsius degrees}
 
 \item{rl_nd3}{average daily running losses evaporative emissions for days with
-temperature between 10 and 25 celcius degrees}
+temperature between 10 and 25 Celsius degrees}
 
 \item{rl_nd2}{average daily running losses evaporative emissions for days with
-temperature between 0 and 15 celcius degrees}
+temperature between 0 and 15 Celsius degrees}
 
 \item{rl_nd1}{average daily running losses evaporative emissions for days with
-temperature between -5 and 10 celcius degrees}
+temperature between -5 and 10 Celsius degrees}
 
 \item{d_nd4}{average daily diurnal evaporative emissions for days with
-temperature between 20 and 35 celcius degrees}
+temperature between 20 and 35 Celsius degrees}
 
 \item{d_nd3}{average daily diurnal evaporative emissions for days with
-temperature between 10 and 25 celcius degrees}
+temperature between 10 and 25 Celsius degrees}
 
 \item{d_nd2}{average daily diurnal evaporative emissions for days with
-temperature between 0 and 15 celcius degrees}
+temperature between 0 and 15 Celsius degrees}
 
 \item{d_nd1}{average daily diurnal evaporative emissions for days with
-temperature between -5 and 10 celcius degrees}
+temperature between -5 and 10 Celsius degrees}
 }
 \value{
 dataframe of emission estimation in grams/days
 }
 \description{
 \code{emis_evap} performs the estimation of evaporative emissions
-from EMEP/EEA emisison guidelines with Tier 2.
+from EMEP/EEA emission guidelines with Tier 2.
 }
 \examples{
 \dontrun{

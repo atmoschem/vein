@@ -19,8 +19,8 @@ e100(vol. %), aro (vol. %), o2 (wt. %), e150 (%), olefin vol. % and s
 (sulphur, ppm)}
 
 \item{d}{Numeric; vector with parameters for diesel with the names:
-den (density at 15 celcius degrees kg/m3), pah (%), cn (number), t95
-(Back end distillation in Celcius degrees) and s  (sulphur, ppm)}
+den (density at 15 Celsius degrees kg/m3), pah (%), cn (number), t95
+(Back end distillation in Celsius degrees) and s  (sulphur, ppm)}
 }
 \value{
 A list with the correction of emission factors.

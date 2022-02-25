@@ -20,8 +20,8 @@ emis_source(
 
 \item{pattern}{Character; extensions of R scripts. Default is ".R".}
 
-\item{ignore}{Character; caracter to be excluded. Default is "~". Sometimes,
-the OS creates automatic back-ups, for instance "run.R~", the ideia is to
+\item{ignore}{Character; character to be excluded. Default is "~". Sometimes,
+the OS creates automatic back-ups, for instance "run.R~", the idea is to
 avoid sourcing these files.}
 
 \item{first}{Character; first script.}
