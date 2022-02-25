@@ -1,7 +1,7 @@
 #' Construction function for class "EmissionsArray"
 #'
-#' @description \code{EmissionsArray} returns a tranformed object with class
-#' "EmissionsArray" with 4 dimensios.
+#' @description \code{EmissionsArray} returns a transformed object with class
+#' "EmissionsArray" with 4 dimensions.
 #'
 #' @return Objects of class "EmissionsArray"
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis_hot_td.R
 \name{emis_hot_td}
 \alias{emis_hot_td}
-\title{Estimation of hot exhaust emissions with top-down approach}
+\title{Estimation of hot exhaust emissions with a top-down approach}
 \usage{
 emis_hot_td(
   veh,
@@ -27,7 +27,7 @@ along 12 months. For instance, if you have 10 regions the number
 of rows of ef can also be 120 (10 * 120).
 when you have emission factors that varies with month, see \code{\link{ef_china}}.}
 
-\item{pro_month}{Numeric or data.frame; montly profile to distribuite annual mileage
+\item{pro_month}{Numeric or data.frame; monthly profile to distribute annual mileage
 in each month. When it is a data.frame, each region (row) can have a different
 monthly profile.}
 
@@ -37,21 +37,21 @@ monthly profile.}
 
 \item{fortran}{Logical; to try the fortran calculation.}
 
-\item{nt}{Integer; Number of threads wich must be lower than max available. See \code{\link{check_nt}}.
+\item{nt}{Integer; Number of threads which must be lower than max available. See \code{\link{check_nt}}.
 Only when fortran = TRUE}
 }
 \value{
 Emissions data.frame
 }
 \description{
-\code{\link{emis_hot_td}} estimates cld start emissions with
+\code{\link{emis_hot_td}} estimates cold start emissions with
 a top-down appraoch. This is, annual or monthly emissions or region.
-Especifically, the emissions are esitmated for row of the simple feature (row
+Especifically, the emissions are estimated for the row of the simple feature (row
 of the spatial feature).
 
 In general was designed so that each simple feature is a region with
 different average monthly temperature.
-This funcion, as other in this package, adapts to the class of the input data.
+This function, as others in this package, adapts to the class of the input data.
 providing flexibility to the user.
 }
 \details{

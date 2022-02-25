@@ -1,9 +1,9 @@
 #' Estimation of evaporative emissions 2
 #'
 #' @description \code{emis_evap} performs the estimation of evaporative emissions
-#' from EMEP/EEA emisison guidelines with Tier 2.
+#' from EMEP/EEA emission guidelines with Tier 2.
 #'
-#' @param veh Total number of vehicles by age of use. If is a lsit of 'Vehicles'
+#' @param veh Total number of vehicles by age of use. If is a list of 'Vehicles'
 #' data-frames, it will sum the columns of the eight element of the list
 #' representing the 8th hour. It was chosen this hour because it is morning rush
 #' hour but the user can adapt the data to this function
@@ -11,34 +11,34 @@
 #' @param size Character of size of vehicle
 #' @param fuel Character of fuel of vehicle
 #' @param aged Age distribution vector. E.g.: 1:40
-#' @param nd4 Number of days with temperature between 20 and 35 celcius degrees
-#' @param nd3 Number of days with temperature between 10 and 25 celcius degrees
-#' @param nd2 Number of days with temperature between 0 and 15 celcius degrees
-#' @param nd1 Number of days with temperature between -5 and 10 celcius degrees
+#' @param nd4 Number of days with temperature between 20 and 35 Celsius degrees
+#' @param nd3 Number of days with temperature between 10 and 25 Celsius degrees
+#' @param nd2 Number of days with temperature between 0 and 15 Celsius degrees
+#' @param nd1 Number of days with temperature between -5 and 10 Celsius degrees
 #' @param hs_nd4 average daily hot-soak evaporative emissions for days with
-#' temperature between 20 and 35 celcius degrees
+#' temperature between 20 and 35 Celsius degrees
 #' @param hs_nd3 average daily hot-soak evaporative emissions for days with
-#' temperature between 10 and 25 celcius degrees
+#' temperature between 10 and 25 Celsius degrees
 #' @param hs_nd2 average daily hot-soak evaporative emissions for days with
-#' temperature between 0 and 15 celcius degrees
+#' temperature between 0 and 15 Celsius degrees
 #' @param hs_nd1 average daily hot-soak evaporative emissions for days with
-#' temperature between -5 and 10 celcius degrees
+#' temperature between -5 and 10 Celsius degrees
 #' @param rl_nd4 average daily running losses evaporative emissions for days with
-#' temperature between 20 and 35 celcius degrees
+#' temperature between 20 and 35 Celsius degrees
 #' @param rl_nd3 average daily running losses evaporative emissions for days with
-#' temperature between 10 and 25 celcius degrees
+#' temperature between 10 and 25 Celsius degrees
 #' @param rl_nd2 average daily running losses evaporative emissions for days with
-#' temperature between 0 and 15 celcius degrees
+#' temperature between 0 and 15 Celsius degrees
 #' @param rl_nd1 average daily running losses evaporative emissions for days with
-#' temperature between -5 and 10 celcius degrees
+#' temperature between -5 and 10 Celsius degrees
 #' @param d_nd4 average daily diurnal evaporative emissions for days with
-#' temperature between 20 and 35 celcius degrees
+#' temperature between 20 and 35 Celsius degrees
 #' @param d_nd3 average daily diurnal evaporative emissions for days with
-#' temperature between 10 and 25 celcius degrees
+#' temperature between 10 and 25 Celsius degrees
 #' @param d_nd2 average daily diurnal evaporative emissions for days with
-#' temperature between 0 and 15 celcius degrees
+#' temperature between 0 and 15 Celsius degrees
 #' @param d_nd1 average daily diurnal evaporative emissions for days with
-#' temperature between -5 and 10 celcius degrees
+#' temperature between -5 and 10 Celsius degrees
 #' @return dataframe of emission estimation in grams/days
 #' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European

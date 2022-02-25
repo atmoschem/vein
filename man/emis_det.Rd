@@ -17,7 +17,7 @@ emis_det(
 \arguments{
 \item{po}{Character; Pollutant "CO", "NOx" or "HC"}
 
-\item{cc}{Character; Size of engine in cc converin "<=1400", "1400_2000" or ">2000"}
+\item{cc}{Character; Size of engine in cc covering "<=1400", "1400_2000" or ">2000"}
 
 \item{eu}{Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"}
 

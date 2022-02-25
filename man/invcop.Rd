@@ -20,7 +20,7 @@ invcop(
 \arguments{
 \item{in_name}{Character; Name of current project.}
 
-\item{out_name}{Character; Name of outtput project.}
+\item{out_name}{Character; Name of output project.}
 
 \item{all}{Logical; copy ALL (and for once) or not.}
 

@@ -7,7 +7,7 @@
 #' This function subset an internal database of emission factors with each argument
 #'
 #' @param po Character; Pollutant "CO", "NOx" or "HC"
-#' @param cc Character; Size of engine in cc converin "<=1400", "1400_2000" or ">2000"
+#' @param cc Character; Size of engine in cc covering "<=1400", "1400_2000" or ">2000"
 #' @param eu Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"
 #' @param speed Numeric; Speed to return Number of emission factor and not a function.
 #' It needs units in km/h

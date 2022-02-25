@@ -28,31 +28,31 @@ When ed is in g/day, x it is the number of days (without units).
 When hotfi, hotc or warmc are in g/trip, x it is the number of trips (without units).
 When hotfi, hotc or warmc are in g/proced, x it is the number of proced (without units).}
 
-\item{ed}{average daily evaporative emisisons. If x has units 'lkm', the units
+\item{ed}{average daily evaporative emissions. If x has units 'lkm', the units
 of ed must be 'g/km', other case, this are simply g/day (without units).}
 
 \item{hotfi}{average hot running losses or soak evaporative factor
 for vehicles with fuel injection and returnless fuel systems.
  If x has units 'lkm', the units of ed must be 'g/km',
- other case, this are simply g/trip or g/proced}
+ other case, this is simply g/trip or g/proced}
 
 \item{hotc}{average running losses or soak evaporative factor for vehicles with
-carburator or fuel return system
+carburetor or fuel return system
 for vehicles with fuel injection and returnless fuel systems.
  If x has units 'lkm', the units of ed must be 'g/km',}
 
 \item{warmc}{average cold and warm running losses or soak evaporative factor
-for vehicles with carburator or fuel return system
+for vehicles with carburetor or fuel return system
 for vehicles with fuel injection and returnless fuel systems.
  If x has units 'lkm', the units of ed must be 'g/km',}
 
-\item{carb}{fraction of gasoline vehicles with carburator or fuel return system.}
+\item{carb}{fraction of gasoline vehicles with carburetor or fuel return system.}
 
 \item{p}{Fraction of trips finished with hot engine}
 
 \item{params}{Character; Add columns with information to returning data.frame}
 
-\item{pro_month}{Numeric; montly profile to distribuite annual mileage in each month.}
+\item{pro_month}{Numeric; monthly profile to distribute annual mileage in each month.}
 
 \item{verbose}{Logical; To show more information}
 }
@@ -65,7 +65,7 @@ EMEP/EEA emisison guidelines
 }
 \note{
 When veh is a "Vehicles" data.frame, emission factors are evaluated till the
-number of columns of veh. For instance, if the length of the emision factor is 20
+number of columns of veh. For instance, if the length of the emission factor is 20
 but the number of columns of veh is 10, the 10 first emission factors are used.
 }
 \examples{

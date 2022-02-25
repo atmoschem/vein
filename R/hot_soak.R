@@ -4,10 +4,10 @@
 #' emisison guidelines
 #'
 #' @param x Mean number of trips per vehicle per day
-#' @param carb fraction of gasoline vehicles with carburator or fuel return system
+#' @param carb fraction of gasoline vehicles with carburetor or fuel return system
 #' @param p Fraction of trips finished with hot engine
 #' @param eshotc average daily hot-soak evaporative factor for vehicles with
-#' carburator or fuel return system
+#' carburetor or fuel return system
 #' @param eswarmc average daily cold-warm-soak evaporative factor for vehicles
 #' with carburator or fuel return system
 #' @param eshotfi average daily hot-soak evaporative factor for vehicles

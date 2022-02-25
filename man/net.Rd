@@ -23,7 +23,7 @@ A Spatial data.frame (sf) with 1796 rows and 1 variables:
 data(net)
 }
 \description{
-This dataset is a sf class object with roads
-from a traffic simulations made by CET Sao Paulo, Brazil
+This dataset is an sf class object with roads
+from a traffic simulation made by CET Sao Paulo, Brazil
 }
 \keyword{datasets}

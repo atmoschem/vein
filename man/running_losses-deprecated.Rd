@@ -5,7 +5,7 @@
 \title{Estimation of average daily  hot-soak evaporative emissions}
 \arguments{
 \item{eshotc}{average daily hot-soak evaporative factor for vehicles with
-carburator or fuel return system}
+carburetor or fuel return system}
 
 \item{eswarmc}{average daily cold-warm-soak evaporative factor for vehicles
 with carburator or fuel return system}
@@ -18,9 +18,9 @@ with fuel injection and returnless fuel systems}
 \item{erhotfi}{average daily hot running losses evaporative factor
 for vehicles with fuel injection and returnless fuel systems}
 
-\item{lkm}{Numeric with class untis and unit km.}
+\item{lkm}{Numeric with class units and unit km.}
 
-\item{carb}{fraction of gasoline vehicles with carburator or fuel return system.}
+\item{carb}{fraction of gasoline vehicles with carburetor or fuel return system.}
 
 \item{p}{Fraction of trips finished with hot engine}
 
@@ -28,7 +28,7 @@ for vehicles with fuel injection and returnless fuel systems}
 carburator or fuel return system}
 
 \item{erwarmc}{average daily cold and warm running losses evaporative factor
-for vehicles with carburator or fuel return system}
+for vehicles with carburetor or fuel return system}
 }
 \value{
 numeric vector of emission estimation in grams

@@ -1,6 +1,6 @@
 #' Construction function for class "Emissions"
 #'
-#' @description \code{Emissions} returns a tranformed object with class "Emissions".
+#' @description \code{Emissions} returns a transformed object with class "Emissions".
 #' The type of objects supported are of classes "matrix", "data.frame" and
 #' "numeric". If the class of the object is "matrix" this function returns a
 #' dataframe.

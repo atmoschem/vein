@@ -1,6 +1,6 @@
 #' Calculate speeds of traffic network
 #'
-#' @description \code{netspeed} Creates a dataframe of speeds fir diferent hours
+#' @description \code{netspeed} Creates a dataframe of speeds for different hours
 #' and each link based on morning rush traffic data
 #'
 #' @param q Data-frame of traffic flow to each hour (veh/h)

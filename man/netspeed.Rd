@@ -53,7 +53,7 @@ Default is units from peak speed `ps`
 dataframe speeds with units or sf.
 }
 \description{
-\code{netspeed} Creates a dataframe of speeds fir diferent hours
+\code{netspeed} Creates a dataframe of speeds for different hours
 and each link based on morning rush traffic data
 }
 \examples{
