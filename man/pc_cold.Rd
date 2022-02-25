@@ -14,7 +14,7 @@ A data frame with 24 rows and 1 variables:
 data(pc_cold)
 }
 \description{
-This dataset is a dataframe with percetage of hourly starts with a lapse
+This dataset is a dataframe with percentage of hourly starts with a lapse
 of 6 hours with engine turned off. Data source is:
 Lents J., Davis N., Nikkila N., Osses M. 2004. Sao Paulo vehicle activity
 study. ISSRC. www.issrc.org

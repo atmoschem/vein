@@ -27,7 +27,7 @@ emis_order(
 
 In all cases, columns are hourly emissions.}
 
-\item{lt_emissions}{Local time of the emissions at first hour. It must be
+\item{lt_emissions}{Local time of the emissions at the first hour. It must be
 the \strong{before}  time of start_utc_time. For instance, if
 start_utc_time is 2020-02-02 00:00, and your emissions starts monday at 00:00,
 your lt_emissions must be 2020-01-27 00:00. The argument tz_lt will detect your
@@ -55,14 +55,13 @@ you a menu to choose one of the 697 time zones available.}
 sf or data.frame
 }
 \description{
-Emissions are ususally estimated for a year, 24 hours or one week from monday to
-sunday (with 168 hours). This depends on the availability of traffic data.
+Emissions are usually estimated for a year, 24 hours, or one week from monday to sunday (with 168 hours). This depends on the availability of traffic data.
 When an air quality simulation is going to be done, they cover
-specific periods of time. For instance, WRF Chem emissions files supports periods of time,
+specific periods of time. For instance, WRF Chem emissions files support periods of time,
 or two emissions sets for a representative day (0-12z 12-0z). Also a WRF Chem simulation
 scan starts a thursday at 00:00 UTC, cover 271 hours of simulations, but hour emissions are in local
 time and cover only 168 hours starting on monday. This function tries to transform our emissions
-in local time to the desired utc time, by recycling the local emissions.
+in local time to the desired UTC time, by recycling the local emissions.
 }
 \examples{
 \dontrun{
