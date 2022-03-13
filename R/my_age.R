@@ -109,7 +109,7 @@ my_age <- function (x,
       names(df) <- paste(name, seq(1, length(df)), sep="_")
     }
     # check k
-      df <- df*k
+      df <- df*as.numeric(k)
 
     # verbose
     if(verbose){
