@@ -11,6 +11,7 @@ NEWS
 Now there is consistency between ef_eea and ef_*_speed .
 - get_project with *Europe* "eu_bu_chem" (2022-02-20).
 - add workflow for project "eu_bu_chem" (2022-02-20)
+- get_project with *Europe* "eu_bu_chem_simple" (2022-03-12).
 
 
 ### vein 0.9.5

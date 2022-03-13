@@ -14,7 +14,7 @@ on:
       - main
       - master
 
-name: eu_bu_chem
+name: eu_bu_chem_simple
 
 jobs:
   R-CMD-check:
@@ -70,7 +70,7 @@ jobs:
           pak::pkg_install("rcmdcheck")
         shell: Rscript {0}
 
-      - name: Run project brazil_bu_chems
+      - name: Run project eu_bu_chem_simple
         run: |
           options(width = 100)
           pkgs <- installed.packages()[, "Package"]
@@ -80,7 +80,7 @@ jobs:
           remotes::install_github("atmoschem/eixport")
           remotes::install_github("atmoschem/vein")
           library(vein)
-          get_project("teste", "eu_bu_chem")
+          get_project("teste", "eu_bu_chem_simple")
           setwd("teste")
           source("main.R")
 
