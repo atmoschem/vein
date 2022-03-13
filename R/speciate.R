@@ -96,8 +96,8 @@
 #' @importFrom units as_units
 #' @importFrom sf st_as_sf st_set_geometry
 #' @return dataframe of speciation in grams or mols
-#' @references "bcom": Ntziachristos and Zamaras. 2016. Passneger cars, light
-#' commercial trucks, heavy-duty vehicles including buses and motor cycles. In:
+#' @references "bcom": Ntziachristos and Zamaras. 2016. Passenger cars, light
+#' commercial trucks, heavy-duty vehicles including buses and motorcycles. In:
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2016
 #' @references "tyre", "brake" and "road": Ntziachristos and Boulter 2016.

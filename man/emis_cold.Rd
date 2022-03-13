@@ -23,7 +23,7 @@ emis_cold(
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
-as number of columns matching the age distribution of that ype of vehicle.
+as number of columns matching the age distribution of that type of vehicle.
 The number of rows is equal to the number of streets link}
 
 \item{lkm}{Length of each link}
@@ -32,7 +32,7 @@ The number of rows is equal to the number of streets link}
 
 \item{efcold}{List of functions of cold start emission factors of vehicular categories}
 
-\item{beta}{Datraframe with the hourly cold-start distribution to each day
+\item{beta}{Dataframe with the hourly cold-start distribution to each day
 of the period. Number of rows are hours and columns are days}
 
 \item{speed}{Speed data-frame with number of columns as hours}
@@ -62,8 +62,8 @@ EmissionsArray  g/h
 }
 \description{
 \code{emis_cold} emissions are estimated as the product of the
-vehicles on a road, length of the road, emission factor avaliated at the
-respective speed.The estimation considers beta parameter, the fraction of
+vehicles on a road, length of the road, emission factor evaluated at the
+respective speed. The estimation considers the beta parameter, the fraction of
 mileage driven
 }
 \examples{

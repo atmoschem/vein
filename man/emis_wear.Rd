@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis_wear.R
 \name{emis_wear}
 \alias{emis_wear}
-\title{Emission estimation from tyre, break and road surface wear}
+\title{Emission estimation from tyre, brake and road surface wear}
 \usage{
 emis_wear(
   veh,

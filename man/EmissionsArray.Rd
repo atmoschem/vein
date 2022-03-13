@@ -28,8 +28,8 @@ EmissionsArray(x, ...)
 Objects of class "EmissionsArray"
 }
 \description{
-\code{EmissionsArray} returns a tranformed object with class
-"EmissionsArray" with 4 dimensios.
+\code{EmissionsArray} returns a transformed object with class
+"EmissionsArray" with 4 dimensions.
 }
 \note{
 Future version of this function will return an Array of 3 dimensions.

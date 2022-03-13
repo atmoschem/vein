@@ -60,7 +60,7 @@ EmissionFactors(x, mass = "g", dist = "km", ...)
 Objects of class "EmissionFactors" or "units"
 }
 \description{
-\code{EmissionFactors} returns a tranformed object with class
+\code{EmissionFactors} returns a transformed object with class
 "EmissionFactors" and units g/km.
 }
 \examples{

@@ -21,9 +21,9 @@ my_age(
 
 \item{y}{Numeric or data.frame; when pro_street is not available, y must be
 'numeric', else, a 'data.frame'. The names of the columns of this data.frame
-must be the same of the elements of pro_street and each column must have a
+must be the same as the elements of pro_street and each column must have a
 profile of age of use of vehicle. When 'y' is 'numeric' the vehicles
-has the same age distribution to all street. When 'y' is a data.frame,
+has the same age distribution to all streets. When 'y' is a data.frame,
 the distribution by age of use varies the streets.}
 
 \item{agemax}{Integer; age of oldest vehicles for that category}
@@ -34,17 +34,17 @@ the distribution by age of use varies the streets.}
 
 \item{pro_street}{Character; each category of profile for each street.
 The length of this character vector must be equal to the length of 'x'. The
-names of the data.frame 'y' must be have the same content of 'pro_street'}
+names of the data.frame 'y' must have the same content of 'pro_street'}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
-\item{verbose}{Logical; message with average age and total numer of vehicles.}
+\item{verbose}{Logical; message with average age and total number of vehicles.}
 
-\item{namerows}{Any vector to be change row.names. For instance, name of
+\item{namerows}{Any vector to be change row.names. For instance, the name of
 regions or streets.}
 }
 \value{
-dataframe of age distrubution of vehicles.
+dataframe of age distribution of vehicles.
 }
 \description{
 \code{my_age} returns amount of vehicles at each age using a

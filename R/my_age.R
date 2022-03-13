@@ -6,21 +6,21 @@
 #' @param x Numeric; vehicles by street (or spatial feature).
 #' @param y Numeric or data.frame; when pro_street is not available, y must be
 #' 'numeric', else, a 'data.frame'. The names of the columns of this data.frame
-#' must be the same of the elements of pro_street and each column must have a
+#' must be the same as the elements of pro_street and each column must have a
 #' profile of age of use of vehicle. When 'y' is 'numeric' the vehicles
-#' has the same age distribution to all street. When 'y' is a data.frame,
+#' has the same age distribution to all streets. When 'y' is a data.frame,
 #' the distribution by age of use varies the streets.
 #' @param agemax Integer; age of oldest vehicles for that category
 #' @param name Character; of vehicle assigned to columns of dataframe.
 #' @param k Integer; multiplication factor. If its length is > 1, it must match the length of x
 #' @param pro_street Character; each category of profile for each street.
 #' The length of this character vector must be equal to the length of 'x'. The
-#' names of the data.frame 'y' must be have the same content of 'pro_street'
+#' names of the data.frame 'y' must have the same content of 'pro_street'
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
-#' @param verbose Logical; message with average age and total numer of vehicles.
-#' @param namerows Any vector to be change row.names. For instance, name of
+#' @param verbose Logical; message with average age and total number of vehicles.
+#' @param namerows Any vector to be change row.names. For instance, the name of
 #' regions or streets.
-#' @return dataframe of age distrubution of vehicles.
+#' @return dataframe of age distribution of vehicles.
 #' @importFrom sf st_sf st_as_sf
 #' @note
 #'

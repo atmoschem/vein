@@ -1,6 +1,6 @@
 #' Generates emissions dataframe to generate WRF-Chem inputs (DEPRECATED)
 #'
-#' \code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time
+#' \code{emis_wrf} returns a dataframe with columns lat, long, id, pollutants, local time
 #' and GMT time. This dataframe has the proper format to be used with WRF
 #' assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))
 #'

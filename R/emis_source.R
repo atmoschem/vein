@@ -3,8 +3,8 @@
 #' @description \code{\link{emis_source}} source vein scripts
 #'
 #' @param path Character; path to source scripts. Default is "est".
-#' @param ignore Character; caracter to be excluded. Default is "~". Sometimes,
-#' the OS creates automatic back-ups, for instance "run.R~", the ideia is to
+#' @param ignore Character; character to be excluded. Default is "~". Sometimes,
+#' the OS creates automatic back-ups, for instance "run.R~", the idea is to
 #' avoid sourcing these files.
 #' @param ask Logical; Check inputs or not. Default is "FALSE". It allows to
 #' stop inputs
