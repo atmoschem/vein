@@ -1,6 +1,6 @@
 #' Construction function for class "Evaporative"
 #'
-#' @description \code{Evaporative} returns a tranformed object with class "Evaporative" and
+#' @description \code{Evaporative} returns a transformed object with class "Evaporative" and
 #' units g. This class represents the daily emissions presented by
 #' Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 #' it will be incorporated the techniques of Tier 3.

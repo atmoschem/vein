@@ -4,7 +4,7 @@
 #' using MOVES emission factors.
 #'
 #' @param veh "Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
-#' as number of columns matching the age distribution of that ype of vehicle.
+#' as number of columns matching the age distribution of that type of vehicle.
 #' The number of rows is equal to the number of streets link.
 #' @param lkm Length of each link in miles
 #' @param ef emission factors from EmissionRates_running exported from MOVES

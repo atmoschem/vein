@@ -159,8 +159,8 @@ pm <- units::set_units(pm, "g/km^2/h")
 }
 }
 \references{
-"bcom": Ntziachristos and Zamaras. 2016. Passneger cars, light
-commercial trucks, heavy-duty vehicles including buses and motor cycles. In:
+"bcom": Ntziachristos and Zamaras. 2016. Passenger cars, light
+commercial trucks, heavy-duty vehicles including buses and motorcycles. In:
 EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 Environment Agency, Copenhagen, 2016
 

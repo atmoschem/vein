@@ -22,8 +22,8 @@ NO BLANK SPACES}
 
 \item{vehcomp}{Vehicular composition of the fleet. It is required a named
 numerical vector with the names "PC", "LCV", "HGV", "BUS" and "MC". In the
-case that tthere are no vehiles for one category of the composition, the name
-should be included with the number zero, for example PC = 0. The maximum
+case that there are no vehicles for one category of the composition, the name
+should be included with the number zero, for example, PC = 0. The maximum
 number allowed is 99 per category.}
 
 \item{show.main}{Logical; Do you want to see the new main.R file?}
@@ -42,15 +42,15 @@ another one.}
 \item{showWarnings}{Logical, showWarnings?}
 }
 \value{
-Structure of directories and scripts for automating compilation of
-vehicular emissions inventory. The structure can be used with other type of
+Structure of directories and scripts for automating the compilation of
+vehicular emissions inventory. The structure can be used with another type of
 sources of emissions. The structure of the directories is: daily, ef, emi,
 est, images, network and veh. This structure is a suggestion and the user can
 use another.
 '
 ef: it is for storing the emission factors data-frame, similar to data(fe2015)
 but including one column for each of the categories of the vehicular
-composition. For intance, if PC = 5, there should be 5 columns with emission
+composition. For instance, if PC = 5, there should be 5 columns with emission
 factors in this file. If LCV = 5, another 5 columns should be present, and
 so on.
 
@@ -63,7 +63,7 @@ storing the scripts named input.R.
 images: Directory for saving images.
 
 network: Directory for saving the road network with the required attributes.
-This file will includes the vehicular flow per street to be used by age*
+This file will include the vehicular flow per street to be used by age*
 functions.
 
 veh: Directory for storing the distribution by age of use of each category of
@@ -78,7 +78,7 @@ an R script to estimate all the emissions. It is important to note that the
 user must add the emission factors for other pollutants. Also, this function
 creates the scripts input.R where the user must specify the inputs for the
 estimation of emissions of each category. Also, there is a file called
-traffic.R to generates objects of class "Vehicles".
+traffic.R to generate objects of class "Vehicles".
 The user can rename these scripts.
 }
 \description{

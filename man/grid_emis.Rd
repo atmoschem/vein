@@ -11,16 +11,16 @@ grid_emis(spobj, g, top_down = FALSE, sr, pro, char, verbose = FALSE)
 it is transformed to "sf".}
 
 \item{g}{A grid with class "SpatialPolygonsDataFrame" or "sf". This grid
-includes the total emissions with the column "emission". If profile is going
+includes the total emissions with the column "emission". If the profile is going
 to be used, the column 'emission' must include the sum of the emissions
 for each profile. For instance, if profile covers the hourly emissions,
 the column 'emission' bust be the sum of the hourly emissions.}
 
 \item{top_down}{Logical; requires emissions named `emissions` and allows
-to apply profile factors. If your data is hourly emissions or a a spatial
+to apply profile factors. If your data is hourly emissions or a spatial
 grid with several emissions at different hours, being each hour a column,
 it is better to use top_down = FALSE. In this way all the hourly emissions
-are considered, however, eah hourly emissions has to have the name "V" and the
+are considered, however, each hourly emissions has to have the name "V" and the
 number of the hour like "V1"}
 
 \item{sr}{Spatial reference e.g: 31983. It is required if spobj and g are
@@ -29,7 +29,7 @@ not projected. Please, see http://spatialreference.org/.}
 \item{pro}{Numeric, Matrix or data-frame profiles, for instance, pc_profile.}
 
 \item{char}{Character, name of the first letter of hourly emissions. New variables in R
-start with letter "V", for your hourly emissions might start with letter "h". This option
+start with the letter "V", for your hourly emissions might start with the letter "h". This option
 applies when top_down is FALSE. For instance, if your hourly emissions are: "h1", "h2",
 "h3"... `char`` can be "h"}
 

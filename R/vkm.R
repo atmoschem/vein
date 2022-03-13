@@ -2,7 +2,7 @@
 #'
 #' @description \code{vkm} consists in the product of the number of vehicles and
 #' the distance driven by these vehicles in km. This function reads hourly
-#' vehiles and then extrapolates the vehicles
+#' vehicles and then extrapolates the vehicles
 #'
 #' @param veh Numeric vector with number of vehicles per street
 #' @param lkm Length of each link (km)
