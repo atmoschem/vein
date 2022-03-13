@@ -3,7 +3,7 @@
 #' This dataset is n a list of data-frames with traffic activity normalized
 #' monday 08:00-09:00. It comes from data of toll stations near Sao Paulo City.
 #' The source is ARTESP (www.artesp.com.br) for months January and June and
-#' years 2012, 2013 and 2014. The type of vehicles covered are PC, MC, MC and
+#' years 2012, 2013 and 2014. The type of vehicles covered are PC, LCV, MC and
 #' HGV.
 #'
 #' @format A list of data-frames with 24 rows and 7 variables:

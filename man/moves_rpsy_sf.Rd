@@ -20,7 +20,7 @@ moves_rpsy_sf(
 }
 \arguments{
 \item{veh}{"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
-as number of columns matching the age distribution of that ype of vehicle.
+as number of columns matching the age distribution of that type of vehicle.
 The number of rows is equal to the number of streets link.}
 
 \item{lkm}{Length of each link in miles}

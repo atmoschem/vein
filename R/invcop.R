@@ -3,7 +3,7 @@
 #' @description \code{invcop} help to copy and zip projects
 #'
 #' @param in_name Character; Name of current project.
-#' @param out_name Character; Name of outtput project.
+#' @param out_name Character; Name of output project.
 #' @param all Logical; copy ALL (and for once) or not.
 #' @param main Logical; copy or not.
 #' @param ef Logical; copy or not.

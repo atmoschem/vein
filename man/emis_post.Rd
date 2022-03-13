@@ -33,8 +33,8 @@ when by = 'streets_wide'}
 }
 \description{
 \code{emis_post} simplify emissions estimated as total per type category of
-vehicle or by street. It reads EmissionsArray and Emissions classes. It can return an dataframe
-with hourly emissions at each street, or a data base with emissions by vehicular
+vehicle or by street. It reads EmissionsArray and Emissions classes. It can return a dataframe
+with hourly emissions at each street, or a database with emissions by vehicular
 category, hour, including size, fuel and other characteristics.
 }
 \note{

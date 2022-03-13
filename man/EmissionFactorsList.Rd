@@ -29,7 +29,7 @@ prints messages with description of list}
 Objects of class "EmissionFactorsList"
 }
 \description{
-\code{EmissionFactorsList} returns a tranformed object with
+\code{EmissionFactorsList} returns a transformed object with
 class"EmissionsFactorsList".
 }
 \examples{

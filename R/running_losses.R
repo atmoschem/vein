@@ -6,13 +6,13 @@
 #' @param x Numeric or data.frame; Mean number of trips per vehicle per day or Vehicles.
 #' @param erhotfi average daily hot running losses evaporative factor
 #' for vehicles with fuel injection and returnless fuel systems
-#' @param lkm Numeric with class untis and unit km.
-#' @param carb fraction of gasoline vehicles with carburator or fuel return system.
+#' @param lkm Numeric with class units and unit km.
+#' @param carb fraction of gasoline vehicles with carburetor or fuel return system.
 #' @param p Fraction of trips finished with hot engine
 #' @param erhotc average daily running losses evaporative factor for vehicles with
 #' carburator or fuel return system
 #' @param erwarmc average daily cold and warm running losses evaporative factor
-#' for vehicles with carburator or fuel return system
+#' for vehicles with carburetor or fuel return system
 #' @return numeric vector of emission estimation in grams
 #' @name running_losses-deprecated
 #' @seealso \code{\link{vein-deprecated}}

@@ -73,9 +73,9 @@ Objects of class "Evaporative" or "units"
 data.table with emission factors.
 }
 \description{
-\code{EmissionsList} returns a tranformed object with class "EmissionsList".
+\code{EmissionsList} returns a transformed object with class "EmissionsList".
 
-\code{Evaporative} returns a tranformed object with class "Evaporative" and
+\code{Evaporative} returns a transformed object with class "Evaporative" and
 units g. This class represents the daily emissions presented by
 Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 it will be incorporated the techniques of Tier 3.
@@ -84,7 +84,7 @@ it will be incorporated the techniques of Tier 3.
 conditions. If the user enter speeds more emission factors are returned.
 See details.
 
-\code{emis_wrf} returns a dataframes with columns lat, long, id, pollutants, local time
+\code{emis_wrf} returns a dataframe with columns lat, long, id, pollutants, local time
 and GMT time. This dataframe has the proper format to be used with WRF
 assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))
 

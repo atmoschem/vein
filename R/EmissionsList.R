@@ -1,6 +1,6 @@
 #' DEPRECATED Construction function for class "EmissionsList"
 #'
-#' @description \code{EmissionsList} returns a tranformed object with class "EmissionsList".
+#' @description \code{EmissionsList} returns a transformed object with class "EmissionsList".
 #'
 #' @return Objects of class "EmissionsList" and numeric elements as "units"
 #'
