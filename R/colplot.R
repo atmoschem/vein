@@ -35,6 +35,7 @@
 #'  "sans", "mono" or more according device
 #' @param spl numer to control space for legend, default is 5.
 #' @param all_values logical, if FALSe shows only positive > 0 values
+#' @family helpers
 #' @return a nice plot
 #' @note This plot shows values > 0 by default. To plot all values, use all_values = TRUE
 #' @importFrom graphics legend par plot points

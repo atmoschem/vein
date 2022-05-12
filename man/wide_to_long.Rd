@@ -32,4 +32,10 @@ head(df)
 }
 \seealso{
 \code{\link{emis_hot_td}} \code{\link{emis_cold_td}}  \code{\link{long_to_wide}}
+
+Other helpers: 
+\code{\link{colplot}()},
+\code{\link{dmonth}()},
+\code{\link{to_latex}()}
 }
+\concept{helpers}
