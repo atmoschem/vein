@@ -7,6 +7,7 @@
 #' @param column_with_data Character column with data
 #' @param column_fixed Character,  column that will remain fixed
 #' @param geometry To return a sf
+#' @family helpers
 #' @return long data.frame.
 #' @importFrom sf st_sf
 #' @seealso \code{\link{emis_hot_td}} \code{\link{emis_cold_td}}  \code{\link{long_to_wide}}
@@ -21,6 +22,7 @@ wide_to_long <- function(df,
                          column_with_data = names(df),
                          column_fixed,
                          geometry) {
+  message("This function will be deprecated, use data.table::melt.data.table")
   a <- as.data.frame(df)
   if(!missing(column_fixed)){
     df2 <- data.frame(V1 = unlist(a[, column_with_data]))

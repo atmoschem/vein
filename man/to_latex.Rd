@@ -37,4 +37,10 @@ file = paste0(tempfile(), ".tex"))
 }
 \seealso{
 \code{\link{vein_notes}}  \code{\link{long_to_wide}}
+
+Other helpers: 
+\code{\link{colplot}()},
+\code{\link{dmonth}()},
+\code{\link{wide_to_long}()}
 }
+\concept{helpers}

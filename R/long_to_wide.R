@@ -25,6 +25,8 @@ long_to_wide <- function(df,
                          column_with_data = "emission",
                          column_fixed,
                          net) {
+  message("This function will be deprecated, use data.table::dcast.data.table")
+
   a <- as.data.frame(df)
   la <- split(a, a[[column_with_new_names]])
   if(missing(column_fixed)) {
