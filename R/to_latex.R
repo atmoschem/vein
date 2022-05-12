@@ -7,6 +7,7 @@
 #' @param file Character, name of new .tex file
 #' @param caption Character caption of table
 #' @param label Character,  label of table
+#' @family helpers
 #' @return a text file with extension .tex.
 #' @importFrom sf st_sf
 #' @seealso \code{\link{vein_notes}}  \code{\link{long_to_wide}}

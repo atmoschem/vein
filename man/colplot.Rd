@@ -89,4 +89,10 @@ colplot(df = a, ylab = "CO [g/km]", theme = "dark", pch = NULL, type = "l")
 }
 \seealso{
 \code{\link{par}}
+
+Other helpers: 
+\code{\link{dmonth}()},
+\code{\link{to_latex}()},
+\code{\link{wide_to_long}()}
 }
+\concept{helpers}
