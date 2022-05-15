@@ -178,7 +178,7 @@ ef_china <- function(v = "PV",
   }
 
   # Check speed
-  if(class(speed) != "units"){
+  if(!inherits(speed, "units")){
     stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
   }
   if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){
@@ -228,7 +228,7 @@ ef_china <- function(v = "PV",
       # Check to return only correction
       if(correction_only) df$EF <- 1
 
-      if(class(ta) != "units") stop("ta must be units in celsius, use celsius(ta)")
+      if(!inherits(ta, "units")) stop("ta must be units in celsius, use celsius(ta)")
       ta <- as.numeric(ta)
 
       # Check correction gasoline - ta
@@ -415,7 +415,7 @@ ef_china <- function(v = "PV",
         # Check to return only correction
         if(correction_only) df$EF <- 1
 
-        if(class(ta) != "units") stop("ta must be units in celsius, use celsius(ta)")
+        if(!inherits(ta, "units")) stop("ta must be units in celsius, use celsius(ta)")
         ta <- as.numeric(ta)
 
         if(length(ta) != nrow(standard)) stop("length of 'ta' must be the same as the number of rows of 'standard'")
@@ -617,7 +617,7 @@ ef_china <- function(v = "PV",
           if(correction_only) df$EF <- 1
           # Check correction gasoline - ta
           ta <- ta[j, k]
-          if(class(ta) != "units") stop("ta must be units in celsius, use celsius(ta)")
+          if(!inherits(ta, "units")) stop("ta must be units in celsius, use celsius(ta)")
           ta <- as.numeric(ta)
 
           humidity <- humidity[j, k]

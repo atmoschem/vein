@@ -27,7 +27,7 @@ add_lkm <- function(x) {
     for(i in 1:ncol(x)){
       e[,i] <- e[,i]*units::as_units("km")
     }
-  } else if( class(x) == "numeric" | class(x) == "integer") {
+  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
     e <- x*units::as_units("km")
   }
   return(e)
@@ -62,7 +62,7 @@ add_miles <- function(x) {
     for(i in 1:ncol(x)){
       e[,i] <- e[,i]*units::as_units("miles")
     }
-  } else if( class(x) == "numeric" | class(x) == "integer") {
+  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
     e <- x*units::as_units("miles")
   }
   return(e)

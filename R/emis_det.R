@@ -55,7 +55,7 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
   ldv_det <- sysdata$ldv_det
 
   # Check km
-  if(class(km) != "units"){
+  if(!inherits(km, "units")){
     stop("km neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
   if(units(km)$numerator == "m" ){
@@ -79,7 +79,7 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
     eu = as.character(eu)
   }
 
-  if(class(speed) != "units"){
+  if(!inherits(speed, "units")){
     stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
   }
   if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){

@@ -24,7 +24,7 @@ The projects are available on Github.com/atmoschem/vein/projects"><meta property
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.7</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ The projects are available on Github.com/atmoschem/vein/projects"><meta property
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +79,7 @@ The projects are available on Github.com/atmoschem/vein/projects</p>
     <dl><dt>directory</dt>
 <dd><p>Character; Path to an existing or a new directory to be created.</p></dd>
 <dt>case</dt>
-<dd><p>Character; One of  of the following:</p><table class="table table"><tr><td><strong>case</strong></td><td><strong>Description</strong></td><td><strong>EF</strong></td><td><strong>Outputs</strong></td></tr><tr><td>brazil or brazil_bu or brasil or brasil_bu</td><td>Bottom-up</td><td>CETESB</td><td>.rds</td></tr><tr><td>emislacovid</td><td>Bottom-up March 2020</td><td>CETESB</td><td>.rds</td></tr><tr><td>brazil_bu_csvgz</td><td>Bottom-up</td><td>CETESB+tunnel</td><td>.csv.gz</td></tr><tr><td>brazil_csv</td><td>Bottom-up. Faster but heavier</td><td>CETESB</td><td>.csv</td></tr><tr><td>brazil_td_chem</td><td>Top-down with chemical mechanisms</td><td>CETESB</td><td>.csv and .rds</td></tr><tr><td>brazil_bu_chem</td><td>Bottom-up  chemical mechanisms</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>brazil_bu_chem_streets</td><td>Bottom-up  chemical mechanisms for streets and MUNICH</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>brazil_td_chem_im</td><td>Top-down with chemical mechanisms+IM</td><td>CETESB</td><td>.csv and .rds</td></tr><tr><td>brazil_bu_chem_im</td><td>Bottom-up  chemical mechanisms+IM</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>brazil_bu_chem_streets_im</td><td>Bottom-up  chemical mechanisms for streets and MUNICH+IM</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>sebr_cb05co2</td><td>Top-down SP, MG and RJ</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>amazon2014</td><td>Top-down Amazon</td><td>CETESB+tunnel</td><td>csv and.rds</td></tr><tr><td>curitiba</td><td>Bottom-down +GTFS</td><td>CETESB+tunnel</td><td>csv and.rds</td></tr><tr><td>masp2020</td><td>Bottom-down</td><td>CETESB+tunnel</td><td>csv and.rds</td></tr><tr><td>ecuador_td</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>ecuador_td_im</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>ecuador_td_hot</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>ecuador_td_hot_month</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>moves_bu</td><td>Bottom-up</td><td>US/EPA MOVES</td><td>csv and.rds (requires MOVES &gt;=3.0 on Windows)</td></tr><tr><td>manizales_bu</td><td>Bottom-up  chemical mechanisms</td><td>EEA</td><td>csv, csv.gz, .rds</td></tr><tr><td>sebr_cb05co2_im</td><td>Top-down SP, MG and RJ IM</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>eu_bu_chem</td><td>Bottom-up  chemical mechanisms</td><td>EEA 2019</td><td>.rds</td></tr><tr><td>eu_bu_chem_simple</td><td>Bottom-up  chemical mechanisms 7 veh</td><td>EEA 2019</td><td>.rds</td></tr></table></dd>
+<dd><p>Character; One of  of the following:</p><table class="table table"><tr><td><strong>case</strong></td><td><strong>Description</strong></td><td><strong>EF</strong></td><td><strong>Outputs</strong></td></tr><tr><td>brazil or brazil_bu or brasil or brasil_bu</td><td>Bottom-up</td><td>CETESB</td><td>.rds</td></tr><tr><td>emislacovid</td><td>Bottom-up March 2020</td><td>CETESB</td><td>.rds</td></tr><tr><td>brazil_bu_csvgz</td><td>Bottom-up</td><td>CETESB+tunnel</td><td>.csv.gz</td></tr><tr><td>brazil_csv</td><td>Bottom-up. Faster but heavier</td><td>CETESB</td><td>.csv</td></tr><tr><td>brazil_td_chem</td><td>Top-down with chemical mechanisms</td><td>CETESB</td><td>.csv and .rds</td></tr><tr><td>brazil_bu_chem</td><td>Bottom-up  chemical mechanisms</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>brazil_bu_chem_streets</td><td>Bottom-up  chemical mechanisms for streets and MUNICH</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>brazil_td_chem_im</td><td>Top-down with chemical mechanisms+IM</td><td>CETESB</td><td>.csv and .rds</td></tr><tr><td>brazil_bu_chem_im</td><td>Bottom-up  chemical mechanisms+IM</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>brazil_bu_chem-month</td><td>Bottom-up  chemical mechanisms</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>brazil_bu_chem_streets_im</td><td>Bottom-up  chemical mechanisms for streets and MUNICH+IM</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>sebr_cb05co2</td><td>Top-down SP, MG and RJ</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>amazon2014</td><td>Top-down Amazon</td><td>CETESB+tunnel</td><td>csv and.rds</td></tr><tr><td>curitiba</td><td>Bottom-down +GTFS</td><td>CETESB+tunnel</td><td>csv and.rds</td></tr><tr><td>masp2020</td><td>Bottom-down</td><td>CETESB+tunnel</td><td>csv and.rds</td></tr><tr><td>ecuador_td</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>ecuador_td_im</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>ecuador_td_hot</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>ecuador_td_hot_month</td><td>Top-down</td><td>EEA</td><td>csv and.rds</td></tr><tr><td>moves_bu</td><td>Bottom-up</td><td>US/EPA MOVES</td><td>csv and.rds (requires MOVES &gt;=3.0 on Windows)</td></tr><tr><td>manizales_bu</td><td>Bottom-up  chemical mechanisms</td><td>EEA</td><td>csv, csv.gz, .rds</td></tr><tr><td>sebr_cb05co2_im</td><td>Top-down SP, MG and RJ IM</td><td>CETESB+tunnel</td><td>.rds</td></tr><tr><td>eu_bu_chem</td><td>Bottom-up  chemical mechanisms</td><td>EEA 2019</td><td>.rds</td></tr><tr><td>eu_bu_chem_simple</td><td>Bottom-up  chemical mechanisms 7 veh</td><td>EEA 2019</td><td>.rds</td></tr></table></dd>
 <dt>url</dt>
 <dd><p>String, with the URL to download VEIN project</p></dd>
 </dl></div>
@@ -112,7 +112,7 @@ In any case, if you find any error, please, send a pull request in github.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

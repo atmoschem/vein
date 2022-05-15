@@ -7,7 +7,7 @@ netsf <- sf::st_as_sf(net)
 netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
 
 test_that("emis_grid works", {
-  expect_equal(make_grid(net, 1/102.47/2)$id[1],
+  expect_equal(make_grid(spobj = net, width = 1/102.47/2)$id[1],
                1)
 })
 

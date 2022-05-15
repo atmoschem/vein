@@ -60,7 +60,7 @@ emis_chem <- function(dfe, mechanism, colby, long = FALSE) {
     stop("The column 'emission' is not present in 'dfe'")
   }
   # Check units
-  if(class(dfe$emission) != "units"){
+  if(!inherits(dfe$emission, "units")){
     stop("dfe$emission neeeds to has class 'units' in 'g'. Check '?units::set_units'")
   }
   # loading mechanisms data-base

@@ -99,7 +99,7 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
   net <- sf::st_sf(netdata, geometry = sf::st_geometry(net))
 
   if(!missing(sr)){
-    if(class(sr)[1] == "character"){
+    if(inherits(sr, "character")){
       sr <- as.numeric(substr(sr, 12, nchar(sr)))
     }
     if(verbose) message("Transforming spatial objects to 'sr' ") #nocov

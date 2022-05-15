@@ -90,7 +90,7 @@ emis_order <- function(x, # 24 hours or one week
   }
   if(verbose) cat("Transforming into data.frame\n")
 
-  if(class(x)[1] == "sf"){
+  if(inherits(x, "sf")){
     x <- sf::st_set_geometry(x, NULL)
   }
   # x <- remove_units(x)

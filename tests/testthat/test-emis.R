@@ -31,7 +31,7 @@ test_that("emis works", {
                           ef = lef,
                           speed = speed,
                           profile = profiles$PC_JUNE_2014)[1], 2),
-               "Units.?\\(?")
+               ".")
 })
 
 test_that("emis works", {
@@ -42,14 +42,6 @@ test_that("emis works", {
                "Add.?\\(?")
 })
 
-test_that("emis works", {
-  expect_error(round(emis(veh = pc1,
-                          lkm = net$lkm,
-                          ef = "le",
-                          speed = speed,
-                          profile = profiles$PC_JUNE_2014)[1], 2),
-               "ef.?\\(?")
-})
 
 netsf <- sf::st_as_sf(net)
 pc1sf <- sf::st_sf(pc1, geometry = netsf$geometry)

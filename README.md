@@ -367,7 +367,7 @@ plot(
 #> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
-![](man/figures/unnamed-chunk-6-1.png)<!-- --> #### 2) Emission Factors
+![](man/figures/unnamed-chunk-6-1.png)<!-- --> \#### 2) Emission Factors
 
 -   [ef_ldv_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
 -   [ef_hdv_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
@@ -486,10 +486,10 @@ plot(
 
 -   [make_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
 
-1.  Create a grid using `make_grid`.The spobj is the spatial net. The
+1)  Create a grid using `make_grid`.The spobj is the spatial net. The
     size of the grid has the size of the net. You have to specify the
     grid spacing.
-2.  Create a grid using a path to wrfinput file instead a net. The grid
+2)  Create a grid using a path to wrfinput file instead a net. The grid
     will have the size of the wrf_input. You don’t have to specify the
     grid spacing.
 
