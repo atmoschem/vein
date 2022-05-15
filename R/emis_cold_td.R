@@ -123,7 +123,7 @@ emis_cold_td <- function(veh,
                          fortran = FALSE,
                          nt = ifelse(check_nt() == 1, 1, check_nt() / 2)) {
   # Check units
-  if (class(lkm) != "units") {
+  if (!inherits(lkm,"units")) {
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
   if (units(lkm)$numerator == "m") {
@@ -136,7 +136,7 @@ emis_cold_td <- function(veh,
   # Checking ef
   if (is.matrix(ef) | is.data.frame(ef)) {
     ef <- as.data.frame(ef)
-    if (class(ef[, 1]) != "units") {
+    if (!inherits(ef[, 1], "units")) {
       stop("columns of ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
     if (units(ef[, 1])$numerator != "g" || units(ef[, 1])$denominator != "km") {
@@ -148,7 +148,7 @@ emis_cold_td <- function(veh,
       }
     }
   } else {
-    if (class(ef) != "units") {
+    if (!inherits(ef, "units")) {
       stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
     if (units(ef)$numerator != "g" || units(ef)$denominator != "km") {
@@ -160,7 +160,7 @@ emis_cold_td <- function(veh,
   }
 
   # Checking ef cold
-  if (class(efcold[, 1]) != "units") {
+  if (!inherits(efcold[, 1],  "units")) {
     stop("columns of efcold must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
   }
   if (units(efcold[, 1])$numerator != "g" || units(efcold[, 1])$denominator != "km") {
@@ -177,7 +177,7 @@ emis_cold_td <- function(veh,
   }
 
   # Checking sf
-  if (any(class(veh) %in% "sf")) {
+  if (inherits(veh, "sf")) {
     if (verbose) message("converting sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }

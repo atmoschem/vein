@@ -189,21 +189,22 @@ emis <- function(veh,
                  verbose = FALSE,
                  nt = ifelse(check_nt() == 1, 1, check_nt() / 2)) {
   # Check units
-  if (class(lkm) != "units") {
+  if (!inherits(lkm,  "units")) {
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
   if (units(lkm)$numerator == "m") {
     stop("Units of lkm is 'm'. Please, check package '?units::set_units'")
   }
   # At least, on e of these
-  if (any(!class(ef) %in% c(
-    "list", "units", "EmissionFactorsList",
-    "EmissionFactors", "data.frame"
-  ))) {
-    stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
-  }
+  # ommented because I need to evaluate withinherits and I will do it someday
+  # if (any(!class(ef) %in% c(
+  #   "list", "units", "EmissionFactorsList",
+  #   "EmissionFactors", "data.frame"
+  # ))) {
+  #   stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
+  # }
   # Checking sf
-  if (any(class(veh) %in% "sf")) {
+  if (inherits(veh, "sf")) {
     if (verbose) message("Converting sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }
@@ -305,7 +306,7 @@ emis <- function(veh,
       }
 
       # top down sin perfil, FE lista y con velocidad
-    } else if (missing(profile) & class(ef)[1] == "EmissionFactorsList") {
+    } else if (missing(profile) & inherits(ef, "EmissionFactorsList")) {
       # Check speed
       if (missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
       speed <- remove_units(speed)

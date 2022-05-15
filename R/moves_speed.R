@@ -75,7 +75,7 @@ moves_speed <- function(x, net) {
     for(i in 1:length(spd)){
       spd[[i]] <- fx(spd[[i]])
     }
-  } else if(class(x) == "units"){
+  } else if(inherits(x, "units")){
     message("Converting original units to mph")
   spd <- Speed(x, dist = "miles")
       spd <- fx(spd)

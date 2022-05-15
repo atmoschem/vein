@@ -76,7 +76,7 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           install.packages(c("ggplot2", "readxl", "remotes"))
-          install.packages("eixport")
+          remotes::install_github("atmoschem/eixport")
           remotes::install_github("atmoschem/vein")
           library(vein)
           get_project("teste", "brazil_td_chem")

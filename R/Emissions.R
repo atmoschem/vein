@@ -104,7 +104,7 @@ Emissions <- function(x, mass = "g", time, ...) {
 
     class(e) <- c("Emissions",class(x))
 
-  } else if ( class(x) == "units" ) {
+  } else if ( inherits(x, "units" )) {
 
     e <- x
 
@@ -116,7 +116,7 @@ Emissions <- function(x, mass = "g", time, ...) {
     }
 
 
-  } else if( class(x) == "numeric" | class(x) == "integer") {
+  } else if( inherits(x, "numeric") | inherits(x, "integer")) {
 
     e <- x*units::as_units("g")
 

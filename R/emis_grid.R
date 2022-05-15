@@ -79,7 +79,7 @@ emis_grid <- function (spobj = net,
   g$id <- 1:nrow(g)
   if (!missing(sr)) {
     "+init=epsg:31983"
-    if (class(sr)[1] == "character") {
+    if (inherits(sr, "character")) {
       sr <- as.numeric(substr(sr, 12, nchar(sr)))
     }
     message("Transforming spatial objects to 'sr' ")

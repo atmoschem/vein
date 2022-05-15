@@ -61,7 +61,7 @@ emis_evap <- function(veh,
     }
   }
   # Checking sf
-  if(any(class(veh) %in% "sf")){
+  if(inherits(veh, "sf")){
     if(verbose) message("converting sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }

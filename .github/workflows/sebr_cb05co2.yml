@@ -77,7 +77,7 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
           print(sessionInfo())
           install.packages(c("ggplot2", "readxl", "remotes"))
-          install.packages("eixport")
+          remotes::install_github("atmoschem/eixport")
           remotes::install_github("ipeaGIT/geobr", subdir = "r-package")
           install.packages("geobr")
           install.packages("ncmeta")
