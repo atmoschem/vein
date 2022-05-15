@@ -19,7 +19,7 @@
 #' }
 cold_mileage <- function(ltrip, ta){
   # Check units
-  if(class(ltrip) != "units"){
+  if(!inherits(ltrip, "units")){
     stop("ltrip neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
   if(units(ltrip)$numerator == "m" ){
@@ -30,7 +30,7 @@ cold_mileage <- function(ltrip, ta){
   }
 
   if(is.data.frame(ta) | is.matrix(ta)){
-    if(class(ta[, 1]) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
+    if(!inherits(ta[, 1], "units")) stop("ta must be units in celsius, use units::set_units(ta, degC)")
     ta <- as.data.frame(ta)
     for(i in 1:ncol(ta)) {
       ta[, i] <- as.numeric(ta[, i])
@@ -48,7 +48,7 @@ cold_mileage <- function(ltrip, ta){
       )
     )
   } else {
-    if(class(ta) != "units") stop("ta must be units in celsius, use units::set_units(ta, degC)")
+    if(!inherits(ta, "units")) stop("ta must be units in celsius, use units::set_units(ta, degC)")
     ta <- as.numeric(ta)
 
     clkm <- ifelse(

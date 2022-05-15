@@ -25,7 +25,7 @@ celsius <- function(x) {
     for(i in 1:ncol(x)){
       e[,i] <- e[,i]*units::as_units("degC")
     }
-  } else if( class(x) == "numeric" | class(x) == "integer") {
+  } else if( inherits(x, "numeric") | inherits(x, "integer")) {
     e <- x*units::as_units("degC")
   }
   return(e)

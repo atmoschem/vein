@@ -75,7 +75,7 @@ ef_ldv_cold <- function(v = "LDV",
   }
   # Check speed
   if(!missing(speed)){
-    if(class(speed) != "units"){
+    if(!inherits(speed, "units")){
       stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
     }
     if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){

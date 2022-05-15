@@ -83,7 +83,7 @@ my_age <- function (x,
     stop("Missing vehicles")
   } else {
     if(!missing(pro_street)){
-      if(class(y) != "data.frame"){
+      if(!inherits(y, "data.frame")){
         stop("'y' must be 'data.frame'")
       }
       for(i in 1:ncol(y)) y[, i] <-  y[, i]/sum( y[, i])

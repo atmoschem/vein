@@ -65,7 +65,7 @@ Speed <- function(x, ..., dist = "km", time = "h") {
   } else if ( is.list(x) ) {
     stop("List not supported")
     #SpeedList?
-  } else if ( class(x) == "units" ) {
+  } else if ( inherits(x, "units" )) {
     spd <- x
     if(as.character(units(spd)) != paste0(dist, "/", time) ){
       message("Converting ", as.character(units(spd)), " to ", dist, "/", time)
@@ -75,7 +75,7 @@ Speed <- function(x, ..., dist = "km", time = "h") {
     }
 
 
-  } else if( class(x) == "numeric" | class(x) == "integer" ) {
+  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
     spd <- x*units::as_units(paste0(dist, " ", time, "-1"))
   }
   return(spd)

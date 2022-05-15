@@ -29,7 +29,7 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   if(is.numeric(distance)){
     if(verbose) cat("Creating grid\n")
     g <- make_grid(spobj = net, width = distance)
-  } else if (class(distance)[1] == "sf") {
+  } else if (inherits(distance, "sf")) {
     g <- distance
   }
   net$id <- NULL

@@ -96,7 +96,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
                        array = TRUE,
                        verbose = FALSE) {
   # Check units
-  if(class(lkm) != "units"){
+  if(!inherits(lkm, "units")){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
   if(units(lkm)$numerator == "m" ){
@@ -110,7 +110,7 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
   }
 
   # Checking sf
-  if(any(class(veh) %in% "sf")){
+  if(inherits(veh, "sf")){
     if(verbose) message("Transforming sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }

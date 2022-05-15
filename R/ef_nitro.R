@@ -63,7 +63,7 @@ ef_nitro <- function(v,
 
   # Check cumileage
   if(!missing(cumileage)){
-    if(class(cumileage) != "units"){
+    if(!inherits(cumileage, "units")){
       stop("cumileage neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
     if(units(cumileage)$numerator != "km"){

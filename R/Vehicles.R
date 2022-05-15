@@ -86,13 +86,13 @@ Vehicles <- function(x, ..., time=NULL) {
 
     class(veh) <- c("Vehicles",class(x))
 
-  } else if ( class(x) == "units" ) {
+  } else if ( inherits(x, "units" )) {
 
     veh <- x
 
     if(units(x)$numerator != "veh") stop("units are not 'veh'")
 
-  } else if( class(x) == "numeric" | class(x) == "integer" ) {
+  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
 
     veh <- x*units::as_units("veh")
 

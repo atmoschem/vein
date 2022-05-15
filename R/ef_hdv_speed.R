@@ -108,7 +108,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
   }
   # Check speed
   if(!missing(speed)){
-    if(class(speed) != "units"){
+    if(!inherits(speed, "units")){
       stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
     }
     if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){

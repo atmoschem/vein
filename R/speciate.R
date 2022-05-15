@@ -512,9 +512,9 @@ speciate <- function(x = 1,
     if(verbose) message("Input emissions must be in g/(km^2)/h\n")
     if(verbose) message("Output flux will be  ug/(m^2)/s\n")
     if(verbose) message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
-    if (class(x)[1] == "sf") {
+    if (inherits(x, "sf")) {
       x <- sf::st_set_geometry(x, NULL)
-    } else if (class(x) == "Spatial") {
+    } else if (inherits(x, "Spatial")) {
       x <- sf::st_as_sf(x)
       x <- sf::st_set_geometry(x, NULL)
     }

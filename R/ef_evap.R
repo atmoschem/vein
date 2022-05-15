@@ -97,7 +97,7 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
   if(!missing(ltrip)){
     if(length(ltrip) > 1) stop("Please, enter one value of 'ltrip'")
     # Check units
-    if(class(ltrip) != "units"){
+    if(!inherits(ltrip, "units")){
       stop("ltrip neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
     if(units(ltrip)$numerator == "m" ){
@@ -112,7 +112,7 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
   if(!missing(kmday)){
     if(length(kmday) > 1) stop("Please, enter one value of 'kmday'")
     # Check units
-    if(class(kmday) != "units"){
+    if(!inherits(kmday, "units")){
       stop("kmday neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
     if(units(kmday)$numerator == "m" ){
