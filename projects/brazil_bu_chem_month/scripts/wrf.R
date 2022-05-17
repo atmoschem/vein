@@ -1,136 +1,198 @@
+
+
+pasta_wrfchemi <- paste0(pasta_wrfchemi, "/", mech)
+
+dir.create(pasta_wrfchemi, showWarnings = F)
+
+
 # OS
 sep <- ifelse(Sys.info()[["sysname"]] == "Windows", "00%3A", ":")
 
-
 # tempos
 ti <- wrf_get(file = wrfi, name = "Times")
-cat("Primer tempo de WRF:", as.character(ti)[1], "\n")
+
+switch(language,
+       "portuguese" = cat("Primer tempo de WRF:", as.character(ti)[1], "\n"),
+       "english" = cat("First WRF time:", as.character(ti)[1], "\n"),
+       "spanish" = cat("Primer tiempo de WRF:", as.character(ti)[1], "\n")
+)
+
+# ltemissions, first monday 00:00 before ti
+timepos <- as.POSIXct(as.character(ti), format = "%Y-%m-%d_%H:%M:%S")
+oneweek <- timepos - 3600 * 24 * 7
+
+df_time <- data.frame(
+  times = seq.POSIXt(from = oneweek, to = timepos, by = "hour")
+)
+
+df_time$wday <- strftime(df_time$times, "%u")
+df_time$hour <- hour(df_time$times)
+lt_emissions <- df_time[df_time$wday == 1 & df_time$hour == 0, ]$times[1]
+
+switch(
+  language,
+  "portuguese" = cat(
+    "Segunda-feira 00:00 anterior do primeiro tempo WRF:",
+    as.character(lt_emissions), "\n"
+  ),
+  "english" = cat(
+    "Monday 00:00, previous of first WRF time:",
+    as.character(lt_emissions), "\n"
+  ),
+  "spanish" = cat(
+    "Lunes 00:00 antes del primer tiempo WRF:",
+    as.character(lt_emissions), "\n"
+  )
+)
 
 wrfc <- paste0("wrfchemi_d0", domain, "_", as.character(ti))
 if (Sys.info()[["sysname"]] == "Windows") wrfc <- gsub("00:", sep, wrfc)
 
 ti <- as.POSIXct(ti)
 
-# emissions on 00z / 12z style, create the 12z
-eixport::wrf_create(
-    wrfinput_dir = pasta_wrfinput,
-    wrfchemi_dir = pasta_wrfchemi,
-    domains = domain,
-    io_style_emissions = 1,
-    day_offset = 0,
-    variables = emis_option,
-    verbose = TRUE
-)
-
-eixport::wrf_create(
-    wrfinput_dir = pasta_wrfinput,
-    wrfchemi_dir = pasta_wrfchemi,
-    domains = domain,
-    io_style_emissions = 1,
-    day_offset = 0.5,
-    variables = emis_option,
-    verbose = TRUE
-)
-
-# Emissiones for the whole period
-wrf_create(
-    wrfinput_dir = pasta_wrfinput,
-    wrfchemi_dir = pasta_wrfchemi,
-    domains = domain,
-    frames_per_auxinput5 = wrf_times,
-    auxinput5_interval_m = 60,
-    variables = emis_option,
-    verbose = TRUE
-)
-
-
 # Grades
-lf <- paste0("post/grids/", pol, ".rds")
+lf <- list.files(path = paste0("post/", month, 
+                               "/spec_grid/", mech), 
+                 pattern = ".rds", 
+                 full.names = TRUE)
 
-for (i in seq_along(pol)) {
-    x <- readRDS(lf[i])
+na <- list.files(path = paste0("post/", month,
+                               "/spec_grid/", mech), 
+                 pattern = ".rds", 
+                 full.names = F)
 
-    xx <- emis_order(
-        x = x,
-        lt_emissions = lt_emissions,
-        start_utc_time = ti,
-        desired_length = wrf_times,
-        tz_lt = Sys.timezone(),
-        verbose = TRUE
-    )
-
-    # 0-12
-    gx <- GriddedEmissionsArray(
-        x = xx[, 1:12],
-        cols = cols,
-        rows = rows,
-        times = 12
-    )
-    wrf_put(
-        file = "wrf/wrfchemi_00z_d02",
-        name = paste0("E_", pol[i]),
-        POL = gx * peso_molecular[i]
-    )
-
-    # 12-0
-    gx <- GriddedEmissionsArray(
-        x = xx[, 13:24],
-        cols = cols,
-        rows = rows,
-        times = 12
-    )
-    wrf_put(
-        file = "wrf/wrfchemi_12z_d02",
-        name = paste0("E_", pol[i]),
-        POL = gx * peso_molecular[i]
-    )
+na <- gsub(".rds", "", na)
 
 
-    # periodo
-    gx <- GriddedEmissionsArray(
-        x = xx,
-        cols = cols,
-        rows = rows,
-        times = wrf_times
-    )
-    wrf_put(
-        file = paste0("wrf/", wrfc),
-        name = paste0("E_", pol[i]),
-        POL = gx * peso_molecular[i]
-    )
+
+# emissions on 00z / 12z style, create the 12z
+
+eixport::wrf_create(
+  wrfinput_dir = pasta_wrfinput,
+  wrfchemi_dir = pasta_wrfchemi,
+  domains = 1:domain,
+  io_style_emissions = 1,
+  day_offset = 0,
+  variables = na,
+  verbose = TRUE,
+  n_aero = 15
+)
+
+eixport::wrf_create(
+  wrfinput_dir = pasta_wrfinput,
+  wrfchemi_dir = pasta_wrfchemi,
+  domains = 1:domain,
+  io_style_emissions = 1,
+  day_offset = 0.5,
+  variables = na,
+  verbose = TRUE,
+  n_aero = 15
+)
+
+
+# loop
+
+for (i in 1:length(na)) {
+  print(na[i])
+  x <- readRDS(lf[i])
+  
+  xx <- emis_order(
+    x = x,
+    lt_emissions = lt_emissions,
+    start_utc_time = ti,
+    desired_length = wrf_times,
+    tz_lt = Sys.timezone(),
+    seconds = hours * 3600,
+    verbose = TRUE
+  )
+  
+  # 0-12
+  gx <- GriddedEmissionsArray(
+    x = xx[, 1:12],
+    cols = rows, # if towdown, cols
+    rows = cols, # if towdown, rows
+    times = 12,
+    rotate = "cols"
+  )
+  
+  wrf_put(
+    file = paste0(pasta_wrfchemi, "/wrfchemi_00z_d0", domain),
+    name = na[i],
+    POL = gx
+  )
+  
+  # 12-0
+  gx <- GriddedEmissionsArray(
+    x = xx[, 13:24],
+    cols = rows, # if towdown, cols
+    rows = cols, # if towdown, rows
+    times = 12,
+    rotate = "cols"
+  )
+  wrf_put(
+    file = paste0(pasta_wrfchemi, "/wrfchemi_12z_d0", domain),
+    name = na[i],
+    POL = gx
+  )
 }
+
+message(paste0("WRFCHEMI in wrf/", wrfc))
+
+
 png(
-    filename = paste0("images/WRF_E_NO_00z.png"),
-    width = 2100, height = 1500, units = "px", pointsize = 12,
-    bg = "white", res = 300
+  filename = paste0("images/WRF_NO0.png"),
+  width = 2100, height = 1500, units = "px", pointsize = 12,
+  bg = "white", res = 300
 )
-wrf_plot("wrf/wrfchemi_00z_d02", "E_NO", col = cpt(n = 15))
+a <- wrf_get(paste0(pasta_wrfchemi, "/wrfchemi_00z_d0", domain), "E_NO", as_raster = T)
+a <- a[[1]]
+a[] <- ifelse(a[] <= 0, NA, a[])
+print(sp::spplot(a,
+                 col.regions = cpt(rev = T),
+                 main = names(a),
+                 scales = list(Draw = T)
+))
 dev.off()
 
 png(
-    filename = paste0("images/WRF_E_NO_12z.png"),
-    width = 2100, height = 1500, units = "px", pointsize = 12,
-    bg = "white", res = 300
+  filename = paste0("images/WRF_NO12.png"),
+  width = 2100, height = 1500, units = "px", pointsize = 12,
+  bg = "white", res = 300
 )
-wrf_plot("wrf/wrfchemi_12z_d02", "E_NO", col = cpt(n = 11))
+a <- wrf_get(paste0(pasta_wrfchemi, "/wrfchemi_12z_d0", domain), "E_NO", as_raster = T)
+a <- a[[1]]
+a[] <- ifelse(a[] <= 0, NA, a[])
+print(sp::spplot(a,
+                 col.regions = cpt(rev = T),
+                 main = names(a),
+                 scales = list(Draw = T)
+))
 dev.off()
 
 png(
-    filename = paste0("images/WRF_E_CO_.png"),
-    width = 2100, height = 1500, units = "px", pointsize = 12,
-    bg = "white", res = 300
+  filename = paste0("images/WRF_CO0.png"),
+  width = 2100, height = 1500, units = "px", pointsize = 12,
+  bg = "white", res = 300
 )
-wrf_plot(paste0("wrf/", wrfc), "E_CO", col = cpt(n = 22))
+a <- wrf_get(paste0(pasta_wrfchemi, "/wrfchemi_00z_d0", domain), "E_CO", as_raster = T)
+a <- a[[1]]
+a[] <- ifelse(a[] <= 0, NA, a[])
+print(sp::spplot(a,
+                 col.regions = cpt(rev = T),
+                 main = names(a),
+                 scales = list(Draw = T)
+))
 dev.off()
 
 ls()
 
 suppressWarnings(
-    rm(
-        "cols", "domain", "emis_opt", "emis_option", "gx", "i", "lf", "net",
-        "pasta_wrfchemi", "pasta_wrfinput", "peso_molecular", "pol", "rows",
-        "ti", "wrfi", "x", "xx",
-        "lt_emissions", "sep", "sL1", "sL2", "sL3", "sL4", "wrf_times"
-    )
+  rm(
+    "cols", "dfwrf", "domain", "dx", "emis_opt", "emis_option",
+    "fCO", "fHC", "firsthour", "fNOx", "fPM10", "fPM2.5", "g_ch3oh",
+    "g_eth", "g_hc3", "g_hc5", "g_hc8", "g_iso", "g_ket", "g_ol2", "g_oli",
+    "g_olt", "g_tol", "g_xyl", "grids", "i", "lasthour", "mm_no2", "mm_x",
+    "net", "no2_mol", "pasta_wrfchemi", "pasta_wrfinput", "polss", "rows", "ti",
+    "voc", "vocB5EX", "vocE100EV", "vocE100EX", "vocE25EV", "vocE25EX", "wrf_times", "wrfi", "x", "xx"
+  )
 )
-invisible(gc())
