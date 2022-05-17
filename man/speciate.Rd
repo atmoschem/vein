@@ -27,15 +27,6 @@ speciate(
 \item{"nox"}{: Splits NOx in NO and NO2.}
 \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
 \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
-}
-The following still available but they will be removed soon:
-\itemize{
-\item{"iag_racm"}{: ethanol emissions added in hc3.}
-\item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
-\item{"petroiag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
-\item{"iag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group .}
-\item{"neu_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
-\item{"petroiag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
 }}
 
 \item{veh}{Type of vehicle:
@@ -45,17 +36,8 @@ The following still available but they will be removed soon:
 \item{"brake"}{: not necessary.}
 \item{"road"}{: not necessary.}
 \item{"nox"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
-\item{"nmhc"}{: veh can be "LDV", "HDV" or "LPG".}
+\item{"nmhc"}{see below}
 \item{""pmiag", "pmneu",  "pmneu2"}{: not necessary.}
-}
-#' The following still available but they will be removed soon:
-\itemize{
-\item{"iag_racm"}{: veh accepts "veh".}
-\item{"iag" or "iag_cb05"}{: veh accepts "veh" .}
-\item{"iag_cb05v2"}{: veh accepts "veh" .}
-\item{"neu_cb05"}{: veh accepts "veh" .}
-\item{"petroiag_cb05"}{: veh accepts "veh" .}
-\item{"petroiag_cb05v2"}{: veh accepts "veh" .}
 }}
 
 \item{fuel}{Fuel.
@@ -65,17 +47,8 @@ The following still available but they will be removed soon:
 \item{"brake"}{: not necessary.}
 \item{"road"}{: not necessary.}
 \item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
-\item{"nmhc"}{: "G", "D" or "LPG".}
+\item{"nmhc"}{see below}
 \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
-}
-#' The following still available but they will be removed soon:
-\itemize{
-\item{"iag_racm"}{: "G", "E" or "D".}
-\item{"iag" or "iag_cb05"}{: "G", "E" or "D".}
-\item{"iag_cb05v2"}{: "G", "E" or "D".}
-\item{"neu_cb05"}{: "G", "E" or "D".}
-\item{"petroiag_cb05"}{: "G", "E" or "D".}
-\item{"petroiag_cb05v2"}{: "G", "E" or "D".}
 }}
 
 \item{eu}{Emission standard
@@ -85,20 +58,8 @@ The following still available but they will be removed soon:
 \item{"brake"}{: not necessary.}
 \item{"road"}{: not necessary.}
 \item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
-\item{"nmhc"}{: "PRE", "ECE_1501", "ECE_1502", "ECE_1503","I", "II",
-"III", "IV",  "V", "III-CDFP","IV-CDFP","V-CDFP", "III-ADFP",
-"IV-ADFP","V-ADFP" or "OPEN_LOOP". eu can be "ALL" if spec is "nmhc" and
-fuel is "LPG"}
+\item{"nmhc"}{see below}
 \item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
-}
-#' The following still available but they will be removed soon:
-\itemize{
-\item{"iag_racm"}{: "Exhaust", "Evaporative" or "Liquid".}
-\item{"iag" or "iag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
-\item{"iag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
-\item{"neu_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
-\item{"petroiag_cb05"}{: "Exhaust", "Evaporative" or "Liquid".}
-\item{"petroiag_cb05v2"}{: "Exhaust", "Evaporative" or "Liquid".}
 }}
 
 \item{list}{when TRUE returns a list with number of elements of the list as
@@ -122,6 +83,37 @@ It covers black carbon and organic matter from particulate matter. Soon it
 will be added more speciations
 }
 \note{
+options for spec "nmhc":
+\tabular{ccc}{
+   veh \tab fuel \tab eu          \cr
+   LDV \tab G    \tab PRE         \cr
+   LDV \tab G    \tab I           \cr
+   LDV \tab D    \tab all         \cr
+   HDV \tab D    \tab all         \cr
+   LDV \tab LPG  \tab all         \cr
+   LDV \tab G    \tab Evaporative \cr
+   LDV \tab E25  \tab Evaporative \cr
+   LDV \tab E100 \tab Evaporative \cr
+   LDV \tab E25  \tab Exhaust     \cr
+   LDV \tab E100 \tab Exhaust     \cr
+   HDV \tab B5   \tab Exhaust     \cr
+   LDV \tab E85  \tab Exhaust     \cr
+   LDV \tab E85  \tab Evaporative \cr
+   LDV \tab CNG  \tab Exhaust     \cr
+   LDV \tab E100 \tab Liquid      \cr
+   ALL \tab G    \tab Liquid      \cr
+   ALL \tab E25  \tab Liquid      \cr
+}
+# the following specs will be removed soon
+\itemize{
+\item{"iag_racm"}{: ethanol emissions added in hc3.}
+\item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
+\item{"petroiag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
+\item{"iag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group .}
+\item{"neu_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
+\item{"petroiag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
+}
+
 spec \strong{"pmiag"} speciate pm2.5 into e_so4i, e_so4j, e_no3i,
 e_no3j, e_mp2.5i, e_mp2.5j, e_orgi, e_orgj, e_eci, e_ecj and h2o. Reference:
 Rafee, S.: Estudo numerico do impacto das emissoes veiculares e fixas da

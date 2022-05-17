@@ -5,6 +5,11 @@ NEWS
 
 - Add EF from HBEFA
 
+### vein 0.9.7
+
+- add project brazil_bu_chem_month
+- add speciation for liquid fuels E25, E100 and G
+
 ### vein 0.9.6
 
 - Changes ef_eea from arabic number to roman and categories. 
