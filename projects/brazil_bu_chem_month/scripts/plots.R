@@ -15,10 +15,10 @@ switch (language,
         "spanish" = cat("\nPlotando calles\n"))
 for(i in seq_along(pol)) {
   for(j in seq_along(hours)) {
-    x <- readRDS(paste0("post/streets/", pol[i], ".rds"))
+    x <- readRDS(paste0("post/", month, "/streets/", pol[i], ".rds"))
     cn <- names(x)[hours + 1]
     
-    png(filename =  paste0("images/STREETS_", pol[i],"_", hh[j], ".png"),
+    png(filename =  paste0("images/STREETS_", month, "_", pol[i],"_", hh[j], ".png"),
         width = 2100, height = 1500, units = "px", pointsize = 12,
         bg = "white",  res = 300)
     par(bg = 'white')
@@ -37,12 +37,13 @@ switch (language,
         "portuguese" = cat("\nPlotando grades\n"),
         "english" = cat("\nPlotting grids\n"),
         "spanish" = cat("\nPlotando grillas\n"))
+
 for(i in seq_along(pol)) {
   for(j in seq_along(hours)) {
-    x <- readRDS(paste0("post/grids/", pol[i], ".rds"))
+    x <- readRDS(paste0("post/", month, "/grids/", pol[i], ".rds"))
     cn <- names(x)[hours + 1]
     
-    png(filename =  paste0("images/GRIDS_", pol[i],"_", hh[j], ".png"),
+    png(filename =  paste0("images/GRIDS_", month, "_", pol[i],"_", hh[j], ".png"),
         width = 2100, height = 1500, units = "px", pointsize = 12,
         bg = "white",  res = 300)
     par(bg = 'white')
@@ -59,7 +60,7 @@ for(i in seq_along(pol)) {
 
 
 # categoria
-dt <- readRDS("post/datatable/emissions.rds")
+dt <- readRDS(paste0("post/", month, "/datatable/emissions.rds"))
 dt0 <- dt[, round(sum(t)*factor_emi, 2), by = .(pollutant, type_emi)]
 
 
@@ -86,11 +87,13 @@ switch (language,
         "portuguese" = cat("\nPlotando categorias por total\n"),
         "english" = cat("\nPlotting categories by total\n"),
         "spanish" = cat("\nPlotando categorias por total\n"))
+
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
           by = .(pollutant, veh)]
 dt1$veh <- factor(x = dt1$veh, 
                   levels = metadata$vehicles)
+
 for(i in seq_along(pol)){
   p <- ggplot(dt1[pollutant == pol[i]], 
               aes(x = veh, y = V1, fill = V1)) + 
@@ -102,7 +105,7 @@ for(i in seq_along(pol)){
     theme_bw() +
     coord_flip()
   
-  png(filename =  paste0("images/TOTAL_", pol[i], ".png"),
+  png(filename =  paste0("images/TOTAL_", month, "_",pol[i], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white",  res = 300)
   print(p)
@@ -114,6 +117,7 @@ switch (language,
         "portuguese" = cat("\nPlotando categorias por type_emi\n"),
         "english" = cat("\nPlotting categories by type_emi\n"),
         "spanish" = cat("\nPlotando categorias por type_emi\n"))
+
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
           by = .(pollutant, veh, type_emi)]
@@ -133,7 +137,7 @@ for(i in seq_along(pole)){
     theme_bw() +
     coord_flip()
   
-  png(filename =  paste0("images/TOTAL_",pole[i], ".png"),
+  png(filename =  paste0("images/TOTAL_",month, "_", pole[i], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white",  res = 300)
   print(p)
@@ -160,7 +164,7 @@ for(i in seq_along(pol)){
     coord_flip()+
     theme_bw()
   
-  png(filename =  paste0("images/TOTAL_TYPE_", pol[i], ".png"),
+  png(filename =  paste0("images/TOTAL_TYPE_", month, "_", pol[i], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white",  res = 300)
   print(p)
@@ -173,6 +177,7 @@ switch (language,
         "portuguese" = cat("\nPlotando categorias por hora\n"),
         "english" = cat("\nPlotting categories by hour\n"),
         "spanish" = cat("\nPlotando categorias por hora\n"))
+
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
           by = .(pollutant, vehicles, hour)]
@@ -185,7 +190,7 @@ for(i in seq_along(pol)){
          title =  paste0(pol[i], ": ", tit)) +
     theme_bw()
   
-  png(filename =  paste0("images/HOUR_", pol[i], ".png"),
+  png(filename =  paste0("images/HOUR_", month, "_", pol[i], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white",  res = 300)
   print(p)
@@ -196,6 +201,7 @@ switch (language,
         "portuguese" = cat("\nPlotando categorias por hora e type_emi\n"),
         "english" = cat("\nPlotting categories by hour and type_emi\n"),
         "spanish" = cat("\nPlotando categorias por hora y type_emi\n"))
+
 dt1 <- dt[pollutant %in% pol, 
           as.numeric(sum(t))*factor_emi, 
           by = .(pollutant, vehicles, hour, type_emi)]
@@ -210,7 +216,7 @@ for(i in seq_along(pole)){
          title =  paste0(pol[i], ": ", tit)) +
     theme_bw()
   
-  png(filename =  paste0("images/HOUR_", pole[i], ".png"),
+  png(filename =  paste0("images/HOUR_", month, "_", pole[i], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white",  res = 300)
   print(p)
@@ -232,7 +238,7 @@ for(i in seq_along(pol)){
                          paste0(pol[i], ": ",tit))) +
     theme_bw()
   
-  png(filename =  paste0("images/AGE_", pol[i], ".png"),
+  png(filename =  paste0("images/AGE_", month, "_", pol[i], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white",  res = 300)
   print(p)

@@ -90,10 +90,6 @@ for(i in seq_along(metadata$vehicles)) {
                         adt = ADT, 
                         lkm = lkm,
                         k = k[j], 
-                        sL1 = sL1, 
-                        sL2 = sL2, 
-                        sL3 = sL3, 
-                        sL4 = sL4, 
                         W = W)
       saveRDS(emi, 
               file = paste0('emi/', 
