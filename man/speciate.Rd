@@ -100,7 +100,7 @@ options for spec "nmhc":
    LDV \tab E85  \tab Exhaust     \cr
    LDV \tab E85  \tab Evaporative \cr
    LDV \tab CNG  \tab Exhaust     \cr
-   LDV \tab E100 \tab Liquid      \cr
+   ALL \tab E100 \tab Liquid      \cr
    ALL \tab G    \tab Liquid      \cr
    ALL \tab E25  \tab Liquid      \cr
 }
