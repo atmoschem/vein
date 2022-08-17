@@ -11,8 +11,12 @@ emis_cold(
   efcold,
   beta,
   speed = 34,
-  agemax = if (!inherits(x = veh, what = "list")) {     ncol(veh) } else {    
-    ncol(veh[[1]]) },
+  agemax = if (!inherits(x = veh, what = "list")) {
+     ncol(veh)
+ } else {
+    
+    ncol(veh[[1]])
+ },
   profile,
   simplify = FALSE,
   hour = nrow(profile),
