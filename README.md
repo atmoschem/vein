@@ -613,12 +613,7 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
 
 ## Special thanks to all the contributors
 
--   [Daniel Schuch](https://github.com/Schuch666)
--   [Avraham Adler](https://github.com/aadler)
--   [Pedro Andrade](https://github.com/pedro-andrade-inpe)
--   [Edzer Pebesma](https://github.com/edzer)
--   [Amanda Rehbein](https://github.com/salvatirehbein)
--   [Joao Bazzo](https://github.com/joaobazzo)
+[![Contributors](https://contrib.rocks/image?repo=atmoschem/vein)](https://github.com/atmoschem/vein/graphs/contributors)
 
 ## Communications, doubts etc
 
