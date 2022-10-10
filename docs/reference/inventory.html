@@ -25,7 +25,7 @@ fleet."><meta property="og:image" content="http://atmoschem.github.io/vein/logo.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -91,31 +91,50 @@ fleet.</p>
     <dl><dt>name</dt>
 <dd><p>Character, path to new main directory for running vein.
 NO BLANK SPACES</p></dd>
+
+
 <dt>vehcomp</dt>
 <dd><p>Vehicular composition of the fleet. It is required a named
 numerical vector with the names "PC", "LCV", "HGV", "BUS" and "MC". In the
 case that there are no vehicles for one category of the composition, the name
 should be included with the number zero, for example, PC = 0. The maximum
 number allowed is 99 per category.</p></dd>
+
+
 <dt>show.main</dt>
 <dd><p>Logical; Do you want to see the new main.R file?</p></dd>
+
+
 <dt>scripts</dt>
 <dd><p>Logical Do you want to generate or no R scripts?</p></dd>
+
+
 <dt>show.dir</dt>
 <dd><p>Logical value for printing the created directories.</p></dd>
+
+
 <dt>show.scripts</dt>
 <dd><p>Logical value for printing the created scripts.</p></dd>
+
+
 <dt>clear</dt>
 <dd><p>Logical value for removing recursively the directory and create
 another one.</p></dd>
+
+
 <dt>rush.hour</dt>
 <dd><p>Logical, to create a template for morning rush hour.</p></dd>
+
+
 <dt>showWarnings</dt>
 <dd><p>Logical, showWarnings?</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Structure of directories and scripts for automating the compilation of
+    
+
+<p>Structure of directories and scripts for automating the compilation of
 vehicular emissions inventory. The structure can be used with another type of
 sources of emissions. The structure of the directories is: daily, ef, emi,
 est, images, network and veh. This structure is a suggestion and the user can
@@ -125,21 +144,33 @@ ef: it is for storing the emission factors data-frame, similar to data(fe2015)
 but including one column for each of the categories of the vehicular
 composition. For instance, if PC = 5, there should be 5 columns with emission
 factors in this file. If LCV = 5, another 5 columns should be present, and
-so on.
-emi: Directory for saving the estimates. It is suggested to use .rds
-extension instead of .rda.
-est: Directory with subdirectories matching the vehicular composition for
-storing the scripts named input.R.
-images: Directory for saving images.
-network: Directory for saving the road network with the required attributes.
+so on.</p>
+
+
+<p>emi: Directory for saving the estimates. It is suggested to use .rds
+extension instead of .rda.</p>
+
+
+<p>est: Directory with subdirectories matching the vehicular composition for
+storing the scripts named input.R.</p>
+
+
+<p>images: Directory for saving images.</p>
+
+
+<p>network: Directory for saving the road network with the required attributes.
 This file will include the vehicular flow per street to be used by age*
-functions.
-veh: Directory for storing the distribution by age of use of each category of
+functions.</p>
+
+
+<p>veh: Directory for storing the distribution by age of use of each category of
 the vehicular composition. Those are data-frames with number of columns with
 the age distribution and number of rows as the number of streets. The class
 of these objects is "Vehicles". Future versions of vein will generate
-Vehicles objects with the explicit spatial component.
-The name of the scripts and directories are based on the vehicular
+Vehicles objects with the explicit spatial component.</p>
+
+
+<p>The name of the scripts and directories are based on the vehicular
 composition, however, there is included a file named main.R which is just
 an R script to estimate all the emissions. It is important to note that the
 user must add the emission factors for other pollutants. Also, this function
@@ -170,7 +201,7 @@ The user can rename these scripts.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -89,33 +89,58 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Numeric; numerical vector of vehicles with length equal to lines features of road network</p></dd>
+
+
 <dt>name</dt>
 <dd><p>Character; of vehicle assigned to columns of dataframe</p></dd>
+
+
 <dt>a</dt>
 <dd><p>Numeric; parameter of survival equation</p></dd>
+
+
 <dt>b</dt>
 <dd><p>Numeric; parameter of survival equation</p></dd>
+
+
 <dt>agemin</dt>
 <dd><p>Integer; age of newest vehicles for that category</p></dd>
+
+
 <dt>agemax</dt>
 <dd><p>Integer; age of oldest vehicles for that category</p></dd>
+
+
 <dt>k</dt>
 <dd><p>Numeric; multiplication factor. If its length is &gt; 1, it must match the length of x</p></dd>
+
+
 <dt>bystreet</dt>
 <dd><p>Logical; when TRUE it is expecting that 'a' and 'b' are numeric vectors with length equal to x</p></dd>
+
+
 <dt>net</dt>
 <dd><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical;  message with average age and total numer of vehicles</p></dd>
+
+
 <dt>namerows</dt>
 <dd><p>Any vector to be change row.names. For instance, name of
 regions or streets.</p></dd>
+
+
 <dt>time</dt>
 <dd><p>Character to be the time units as denominator, eg "1/h"</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>dataframe of age distrubution of vehicles at each street</p>
+    
+
+<p>dataframe of age distrubution of vehicles at each street</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -161,7 +186,7 @@ the shape of this curve.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

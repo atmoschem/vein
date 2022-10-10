@@ -24,7 +24,7 @@ emission factor which at a speed of the driving cycle (SDC) gives a desired valu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -78,31 +78,50 @@ emission factor which at a speed of the driving cycle (SDC) gives a desired valu
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>deprecated</p></dd>
+
+
 <dt>dfcol</dt>
 <dd><p>Column of the dataframe with the local emission factors eg df$dfcol</p></dd>
+
+
 <dt>SDC</dt>
 <dd><p>Speed of the driving cycle</p></dd>
+
+
 <dt>v</dt>
 <dd><p>Category vehicle: "PC", "LCV", "Motorcycle" or "Moped</p></dd>
+
+
 <dt>t</dt>
 <dd><p>Sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
 "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
 "2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"</p></dd>
+
+
 <dt>cc</dt>
 <dd><p>Size of engine in cc:  PC: "&lt;=1400", "&gt;1400", "1400_2000", "&gt;2000",
 "&lt;=800", "&lt;=2000". Motorcycle:  "&gt;=50" (for "2S"), "&lt;=250", "250_750", "&gt;=750".
 Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></dd>
+
+
 <dt>f</dt>
 <dd><p>Type of fuel: "G", "D", "LPG" or "FH" (Full Hybrid: starts by electric motor)</p></dd>
+
+
 <dt>eu</dt>
 <dd><p>Euro standard: "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI", "VIc"</p></dd>
+
+
 <dt>p</dt>
 <dd><p>Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
 is based on fuel, use "FC", if it is based on "HC", use "HC".</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of scaled emission factors  g/km</p>
+    
+
+<p>A list of scaled emission factors  g/km</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -152,7 +171,7 @@ a specific type of vehicle. Thanks to Glauber Camponogara for the help.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -3,7 +3,14 @@ NEWS
 
 ## TODO
 
-- Add EF from HBEFA
+### vein 0.9.91
+
+- add hybrid gasoline and diesel to chinese EF
+- Preparing chinese bottom-up project
+
+### vein 0.9.9
+
+- CRAN release
 
 ### vein 0.9.7
 

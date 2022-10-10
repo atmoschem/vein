@@ -26,7 +26,7 @@ lapply. This function is in development and pull request are welcome."><meta pro
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -83,12 +83,16 @@ lapply. This function is in development and pull request are welcome.</p>
     <dl><dt>spobj</dt>
 <dd><p>A spatial dataframe of class "sp" or "sf". When class is "sp"
 it is transformed to "sf".</p></dd>
+
+
 <dt>g</dt>
 <dd><p>A grid with class "SpatialPolygonsDataFrame" or "sf". This grid
 includes the total emissions with the column "emission". If the profile is going
 to be used, the column 'emission' must include the sum of the emissions
 for each profile. For instance, if profile covers the hourly emissions,
 the column 'emission' bust be the sum of the hourly emissions.</p></dd>
+
+
 <dt>top_down</dt>
 <dd><p>Logical; requires emissions named `emissions` and allows
 to apply profile factors. If your data is hourly emissions or a spatial
@@ -96,18 +100,27 @@ grid with several emissions at different hours, being each hour a column,
 it is better to use top_down = FALSE. In this way all the hourly emissions
 are considered, however, each hourly emissions has to have the name "V" and the
 number of the hour like "V1"</p></dd>
+
+
 <dt>sr</dt>
 <dd><p>Spatial reference e.g: 31983. It is required if spobj and g are
 not projected. Please, see http://spatialreference.org/.</p></dd>
+
+
 <dt>pro</dt>
 <dd><p>Numeric, Matrix or data-frame profiles, for instance, pc_profile.</p></dd>
+
+
 <dt>char</dt>
 <dd><p>Character, name of the first letter of hourly emissions. New variables in R
 start with the letter "V", for your hourly emissions might start with the letter "h". This option
 applies when top_down is FALSE. For instance, if your hourly emissions are: "h1", "h2",
 "h3"... `char`` can be "h"</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; to show more info.</p></dd>
+
 </dl></div>
     <div id="note">
     <h2>Note</h2>
@@ -131,7 +144,7 @@ applies when top_down is FALSE. For instance, if your hourly emissions are: "h1"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

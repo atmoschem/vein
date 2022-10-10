@@ -26,7 +26,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -94,44 +94,67 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     <h2>Arguments</h2>
     <dl><dt>v</dt>
 <dd><p>Character; category vehicle: "PC", "LCV", "Motorcycle" or "Moped</p></dd>
+
+
 <dt>t</dt>
 <dd><p>Character; sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
 "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
 "2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"</p></dd>
+
+
 <dt>cc</dt>
 <dd><p>Character; size of engine in cc:  PC: "&lt;=1400", "&gt;1400", "1400_2000", "&gt;2000",
 "&lt;=800", "&lt;=2000". Motorcycle:  "&gt;=50" (for "2S"), "&lt;=250", "250_750", "&gt;=750".
 Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></dd>
+
+
 <dt>f</dt>
 <dd><p>Character; type of fuel: "G", "D", "LPG" or "FH" (Gasoline Full Hybrid).
 Full hybrid vehicles cannot be charged from the grid and recharge; only its own engine
 may recharge tis batteries.</p></dd>
+
+
 <dt>eu</dt>
 <dd><p>Character or data.frame of characters; euro standard:
  "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
 When the pollutan is active surface or number of particles, eu can also be "III+DISI"</p></dd>
+
+
 <dt>p</dt>
 <dd><p>Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
 polycyclic aromatic hydrocarbons (PAHs), persistent organi pollutants (POPs),
 and Number of particles and Active Surface.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 "Pb", Lead in fuel in ppm.</p></dd>
+
+
 <dt>k</dt>
 <dd><p>Numeric; multiplication factor</p></dd>
+
+
 <dt>speed</dt>
 <dd><p>Numeric; Speed to return Number of emission factor and not a function.</p></dd>
+
+
 <dt>show.equation</dt>
 <dd><p>Logical; option to see or not the equation parameters.</p></dd>
+
+
 <dt>fcorr</dt>
 <dd><p>Numeric; Correction by fuel properties by euro technology.
 See <code><a href="fuel_corr.html">fuel_corr</a></code>. The order from first to last is
 "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An emission factor function which depends of the average speed V  g/km</p>
+    
+
+<p>An emission factor function which depends of the average speed V  g/km</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -296,7 +319,7 @@ has the value of Euro I and  euro IV, V, VI and VIc the value of euro III.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

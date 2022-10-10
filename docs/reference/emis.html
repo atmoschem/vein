@@ -25,7 +25,7 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)"><meta property="og:image" conten
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -96,39 +96,64 @@ respective speed. \(E = VEH*LENGTH*EF(speed)\)</p>
 as number of columns matching the age distribution of that ype of vehicle.
 The number of rows is equal to the number of streets link. If this is a list,
 the length of the list is the vehicles for each hour.</p></dd>
+
+
 <dt>lkm</dt>
 <dd><p>Length of each link in km</p></dd>
+
+
 <dt>ef</dt>
 <dd><p>List of functions of emission factors</p></dd>
+
+
 <dt>speed</dt>
 <dd><p>Speed data-frame with number of columns as hours. The default value is 34km/h</p></dd>
+
+
 <dt>agemax</dt>
 <dd><p>Age of oldest vehicles for that category</p></dd>
+
+
 <dt>profile</dt>
 <dd><p>Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
 the week</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>Logical; to determine if EmissionsArray should les dimensions,
 being streets, vehicle categories and hours or default (streets, vehicle
 categories, hours and days). Default is FALSE to avoid break old code, but
 the recommendation is that new estimations use this parameter as TRUE</p></dd>
+
+
 <dt>fortran</dt>
 <dd><p>Logical; to try the fortran calculation when speed is not used.
 I will add fortran for EmissionFactorsList soon.</p></dd>
+
+
 <dt>hour</dt>
 <dd><p>Number of considered hours in estimation. Default value is number
 of rows of argument profile</p></dd>
+
+
 <dt>day</dt>
 <dd><p>Number of considered days in estimation</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information</p></dd>
+
+
 <dt>nt</dt>
 <dd><p>Integer; Number of threads wich must be lower than max available.
 See <code><a href="check_nt.html">check_nt</a></code>. Only when fortran = TRUE</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If the user applies a top-down approach, the resulting units will be
+    
+
+<p>If the user applies a top-down approach, the resulting units will be
 according its own data. For instance, if the vehicles are veh/day, the units
 of the emissions implicitly will be g/day.</p>
     </div>
@@ -292,7 +317,7 @@ matrix.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -24,7 +24,7 @@ EMEP/EEA emisison guidelines"><meta property="og:image" content="http://atmosche
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -90,6 +90,8 @@ EMEP/EEA emisison guidelines</p>
     <h2>Arguments</h2>
     <dl><dt>veh</dt>
 <dd><p>Numeric or data.frame of Vehicles with untis 'veh'.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Numeric which can be either, daily mileage by age of use
 with units 'lkm', number of trips or number of proc. When it
@@ -97,38 +99,59 @@ has units 'lkm', all the emission factors must be in 'g/km'.
 When ed is in g/day, x it is the number of days (without units).
 When hotfi, hotc or warmc are in g/trip, x it is the number of trips (without units).
 When hotfi, hotc or warmc are in g/proced, x it is the number of proced (without units).</p></dd>
+
+
 <dt>ed</dt>
 <dd><p>average daily evaporative emissions. If x has units 'lkm', the units
 of ed must be 'g/km', other case, this are simply g/day (without units).</p></dd>
+
+
 <dt>hotfi</dt>
 <dd><p>average hot running losses or soak evaporative factor
 for vehicles with fuel injection and returnless fuel systems.
  If x has units 'lkm', the units of ed must be 'g/km',
  other case, this is simply g/trip or g/proced</p></dd>
+
+
 <dt>hotc</dt>
 <dd><p>average running losses or soak evaporative factor for vehicles with
 carburetor or fuel return system
 for vehicles with fuel injection and returnless fuel systems.
  If x has units 'lkm', the units of ed must be 'g/km',</p></dd>
+
+
 <dt>warmc</dt>
 <dd><p>average cold and warm running losses or soak evaporative factor
 for vehicles with carburetor or fuel return system
 for vehicles with fuel injection and returnless fuel systems.
  If x has units 'lkm', the units of ed must be 'g/km',</p></dd>
+
+
 <dt>carb</dt>
 <dd><p>fraction of gasoline vehicles with carburetor or fuel return system.</p></dd>
+
+
 <dt>p</dt>
 <dd><p>Fraction of trips finished with hot engine</p></dd>
+
+
 <dt>params</dt>
 <dd><p>Character; Add columns with information to returning data.frame</p></dd>
+
+
 <dt>pro_month</dt>
 <dd><p>Numeric; monthly profile to distribute annual mileage in each month.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>numeric vector of emission estimation in grams</p>
+    
+
+<p>numeric vector of emission estimation in grams</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -169,7 +192,7 @@ Environment Agency, Copenhagen, 2009</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -25,7 +25,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -93,41 +93,66 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     <h2>Arguments</h2>
     <dl><dt>v</dt>
 <dd><p>Category vehicle: "Coach", "Trucks" or "Ubus"</p></dd>
+
+
 <dt>t</dt>
 <dd><p>Sub-category of of vehicle: "3Axes", "Artic", "Midi", "RT, "Std" and "TT"</p></dd>
+
+
 <dt>g</dt>
 <dd><p>Gross weight of each category: "&lt;=18", "&gt;18", "&lt;=15", "&gt;15 &amp; &lt;=18", "&lt;=7.5",
 "&gt;7.5 &amp; &lt;=12", "&gt;12 &amp; &lt;=14", "&gt;14 &amp; &lt;=20", "&gt;20 &amp; &lt;=26", "&gt;26 &amp; &lt;=28", "&gt;28 &amp; &lt;=32",
 "&gt;32", "&gt;20 &amp; &lt;=28", "&gt;28 &amp; &lt;=34", "&gt;34 &amp; &lt;=40", "&gt;40 &amp; &lt;=50" or "&gt;50 &amp; &lt;=60"</p></dd>
+
+
 <dt>eu</dt>
 <dd><p>Euro emission standard: "PRE", "I", "II", "III", "IV", "V". Also "II+CRDPF",
 "III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR" for pollutants
 Number of particles and Active Surface.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 "Pb", Lead in fuel in ppm.</p></dd>
+
+
 <dt>gr</dt>
 <dd><p>Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06</p></dd>
+
+
 <dt>l</dt>
 <dd><p>Load of the vehicle: 0.0, 0.5 or 1.0</p></dd>
+
+
 <dt>p</dt>
 <dd><p>Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. See notes.</p></dd>
+
+
 <dt>k</dt>
 <dd><p>Multiplication factor</p></dd>
+
+
 <dt>show.equation</dt>
 <dd><p>Option to see or not the equation parameters</p></dd>
+
+
 <dt>speed</dt>
 <dd><p>Numeric; Speed to return Number of emission factor and not a function.
 It needs units in km/h</p></dd>
+
+
 <dt>fcorr</dt>
 <dd><p>Numeric; Correction by fuel properties by euro technology.
 See <code><a href="fuel_corr.html">fuel_corr</a></code>. The order from first to last is
 "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an emission factor function which depends of the average speed V  g/km</p>
+    
+
+<p>an emission factor function which depends of the average speed V  g/km</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -202,7 +227,7 @@ The categories euro IV and euro V were assigned with euro III + SCR</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

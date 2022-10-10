@@ -25,7 +25,7 @@ criteria polluants specified in ef_ldv_speed and ef_hdv_speed."><meta property="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -82,18 +82,27 @@ criteria polluants specified in <code><a href="ef_ldv_speed.html">ef_ldv_speed</
 <dd><p>data.frame with column `emissions` in grams and `pollutant` in long format. It is supposed
 that each line is the pollution of some region. Then the `coldby` argument is for include the
 name of the region.</p></dd>
+
+
 <dt>mechanism</dt>
 <dd><p>Character, "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
 "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"</p></dd>
+
+
 <dt>colby</dt>
 <dd><p>Character indicating column name for aggregating extra column.
 For instance, region or province.</p></dd>
+
+
 <dt>long</dt>
 <dd><p>Logical. Do you want data in long format?</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>data.frame with lumped groups by chemical mechanism. It transform
+    
+
+<p>data.frame with lumped groups by chemical mechanism. It transform
 emissions in grams to mol.</p>
     </div>
     <div id="note">
@@ -149,7 +158,7 @@ TODO: Enter with wide data.frame, with each line as a each street, each column f
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

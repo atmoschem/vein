@@ -24,7 +24,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -91,41 +91,66 @@
     <h2>Arguments</h2>
     <dl><dt>pol</dt>
 <dd><p>Character. Pollutant.</p></dd>
+
+
 <dt>what</dt>
 <dd><p>Character. Word to search the emissions names, "STREETS", "DF" or
 whatever name. It is important to include the extension .'rds'. For instance,
 If you have several files "XX_CO_STREETS.rds", what should be "STREETS.rds"</p></dd>
+
+
 <dt>streets</dt>
 <dd><p>Logical. If true, <code>emis_merge</code> will read the street
 emissions created with <code><a href="emis_post.html">emis_post</a></code> by "streets_wide", returning an
 object with class 'sf'. If false, it will read the emissions data-frame and
 rbind them.</p></dd>
+
+
 <dt>net</dt>
 <dd><p>'Spatial feature' or 'SpatialLinesDataFrame' with the streets.
 It is expected #' that the number of rows is equal to the number of rows of
 street emissions. If #' not, the function will stop.</p></dd>
+
+
 <dt>FN</dt>
 <dd><p>Character indicating the function. Default is "sum"</p></dd>
+
+
 <dt>ignore</dt>
 <dd><p>Character; Which pollutants or other charavter would you like to remove?</p></dd>
+
+
 <dt>path</dt>
 <dd><p>Character. Path where emissions are located</p></dd>
+
+
 <dt>crs</dt>
 <dd><p>coordinate reference system in numeric format from
 http://spatialreference.org/ to transform/project spatial data using sf::st_transform</p></dd>
+
+
 <dt>under</dt>
 <dd><p>"Character"; "after" when you stored your pollutant x as 'X_'
 "before" when '_X' and "none" for merging directly the files.</p></dd>
+
+
 <dt>as_list</dt>
 <dd><p>"Logical"; for returning the results as list or not.</p></dd>
+
+
 <dt>k</dt>
 <dd><p>factor</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical to display more information or not. Default is TRUE</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>'Spatial feature' of lines or a dataframe of emissions</p>
+    
+
+<p>'Spatial feature' of lines or a dataframe of emissions</p>
     </div>
 
     <div id="ref-examples">
@@ -148,7 +173,7 @@ http://spatialreference.org/ to transform/project spatial data using sf::st_tran
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
