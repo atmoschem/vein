@@ -79,6 +79,8 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf
 Combination of vehicles:
 \tabular{ccc}{
   v    \tab t      \tab    f  \cr
+  PV   \tab Mini   \tab   G HY   \cr
+  PV   \tab Bus   \tab   D HY D   \cr
   PV   \tab Mini   \tab   G   \cr
   PV   \tab Small   \tab   G   \cr
   PV   \tab Medium   \tab   G   \cr

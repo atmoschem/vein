@@ -30,7 +30,7 @@ providing flexibility to the user."><meta property="og:image" content="http://at
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -100,31 +100,48 @@ providing flexibility to the user.</p>
     <dl><dt>veh</dt>
 <dd><p>"Vehicles" data-frame or spatial feature, where columns are the
 age distribution of that vehicle. and rows each simple feature or region.</p></dd>
+
+
 <dt>lkm</dt>
 <dd><p>Numeric; mileage by the age of use of each vehicle.</p></dd>
+
+
 <dt>ef</dt>
 <dd><p>Numeric or data.frame; emission factors. When it is a data.frame
 number of rows can be for each region, or also, each region repeated
 along 12 months. For instance, if you have 10 regions the number
 of rows of ef can also be 120 (10 * 120).
 when you have emission factors that varies with month, see <code><a href="ef_china.html">ef_china</a></code>.</p></dd>
+
+
 <dt>pro_month</dt>
 <dd><p>Numeric or data.frame; monthly profile to distribute annual mileage
 in each month. When it is a data.frame, each region (row) can have a different
 monthly profile.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>List of parameters; Add columns with information to returning data.frame</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information</p></dd>
+
+
 <dt>fortran</dt>
 <dd><p>Logical; to try the fortran calculation.</p></dd>
+
+
 <dt>nt</dt>
 <dd><p>Integer; Number of threads which must be lower than max available. See <code><a href="check_nt.html">check_nt</a></code>.
 Only when fortran = TRUE</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Emissions data.frame</p>
+    
+
+<p>Emissions data.frame</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -346,7 +363,7 @@ Only when fortran = TRUE</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

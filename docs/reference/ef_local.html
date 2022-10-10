@@ -25,7 +25,7 @@ and projections"><meta property="og:image" content="http://atmoschem.github.io/v
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -90,28 +90,45 @@ and projections</p>
     <dl><dt>p</dt>
 <dd><p>Character; pollutant delivered by the user. the name of the column of the data.frame must be
 <strong>Pollutant</strong>.</p></dd>
+
+
 <dt>veh</dt>
 <dd><p>Character; Vehicle categories available in the data.frame provided by the user</p></dd>
+
+
 <dt>year</dt>
 <dd><p>Numeric; Filter the emission factor to start from a specific base year.
 If project is 'constant' values above 2017 and below 1980 will be repeated</p></dd>
+
+
 <dt>agemax</dt>
 <dd><p>Integer; age of oldest vehicles for that category</p></dd>
+
+
 <dt>ef</dt>
 <dd><p>data.frame, for local the emission factors. The names of the ef must
 be `Age`    `Year`    `Pollutant` and all the vehicle categories...</p></dd>
+
+
 <dt>full</dt>
 <dd><p>Logical; To return a data.frame instead or a vector adding
 Age, Year, Brazilian emissions standards and its euro equivalents.</p></dd>
+
+
 <dt>project</dt>
 <dd><p>Character showing the method for projecting emission factors in
 future. Currently the only value is "constant"</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A vector of Emission Factor or a data.frame</p>
+    
+
+<p>A vector of Emission Factor or a data.frame</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -145,7 +162,7 @@ future. Currently the only value is "constant"</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

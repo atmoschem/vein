@@ -24,7 +24,7 @@ using MOVES emission factors."><meta property="og:image" content="http://atmosch
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -98,44 +98,81 @@ using MOVES emission factors.</p>
 <dd><p>"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 as number of columns matching the age distribution of that ype of vehicle.
 The number of rows is equal to the number of streets link.</p></dd>
+
+
 <dt>lkm</dt>
 <dd><p>Length of each link in miles</p></dd>
+
+
 <dt>ef</dt>
 <dd><p>emission factors from EmissionRates_running exported from MOVES</p></dd>
+
+
 <dt>source_type_id</dt>
 <dd><p>Number to identify type of vehicle as defined by MOVES.</p></dd>
+
+
 <dt>fuel_type_id</dt>
 <dd><p>Number to identify type of fuel as defined by MOVES.</p></dd>
+
+
 <dt>pollutant_id</dt>
 <dd><p>Number to identify type of pollutant as defined by MOVES.</p></dd>
+
+
 <dt>road_type_id</dt>
 <dd><p>Number to identify type of road as defined by MOVES.</p></dd>
+
+
 <dt>fuel_type</dt>
 <dd><p>Data.frame of fuelSubtypeID exported by MOVES.</p></dd>
+
+
 <dt>speed_bin</dt>
 <dd><p>Data.frame or vector of avgSpeedBinID as defined by MOVES.</p></dd>
+
+
 <dt>profile</dt>
 <dd><p>Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
 the week</p></dd>
+
+
 <dt>vehicle</dt>
 <dd><p>Character, type of vehicle</p></dd>
+
+
 <dt>vehicle_type</dt>
 <dd><p>Character, subtype of vehicle</p></dd>
+
+
 <dt>fuel_subtype</dt>
 <dd><p>Character, subtype of vehicle</p></dd>
+
+
 <dt>process_id</dt>
 <dd><p>Character, processID</p></dd>
+
+
 <dt>net</dt>
 <dd><p>Road network class sf</p></dd>
+
+
 <dt>path_all</dt>
 <dd><p>Character to export whole estimation. It is not recommended since it
 is usually too heavy.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information. Not implemented yet</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a list with emissions at each street and data.base aggregated by categories. See <code>link{emis_post}</code></p>
+    
+
+<p>a list with emissions at each street and data.base aggregated by categories. See <code>link{emis_post}</code></p>
+
+
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -449,7 +486,7 @@ is usually too heavy.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

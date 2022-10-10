@@ -24,7 +24,7 @@ and each link based on morning rush traffic data"><meta property="og:image" cont
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -89,30 +89,51 @@ and each link based on morning rush traffic data</p>
     <h2>Arguments</h2>
     <dl><dt>q</dt>
 <dd><p>Data-frame of traffic flow to each hour (veh/h)</p></dd>
+
+
 <dt>ps</dt>
 <dd><p>Peak speed (km/h)</p></dd>
+
+
 <dt>ffs</dt>
 <dd><p>Free flow speed (km/h)</p></dd>
+
+
 <dt>cap</dt>
 <dd><p>Capacity of link (veh/h)</p></dd>
+
+
 <dt>lkm</dt>
 <dd><p>Distance of link (km)</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>Parameter of BPR curves</p></dd>
+
+
 <dt>beta</dt>
 <dd><p>Parameter of BPR curves</p></dd>
+
+
 <dt>net</dt>
 <dd><p>SpatialLinesDataFrame or Spatial Feature of "LINESTRING"</p></dd>
+
+
 <dt>scheme</dt>
 <dd><p>Logical to create a Speed data-frame with 24 hours and a
 default  profile. It needs ffs and ps:</p></dd>
+
+
 <dt>dist</dt>
 <dd><p>String indicating the units of the resulting distance in speed.
 Default is units from peak speed `ps`</p><table class="table table"><tr><td>00:00-06:00</td><td>ffs</td></tr><tr><td>06:00-07:00</td><td>average between ffs and ps</td></tr><tr><td>07:00-10:00</td><td>ps</td></tr><tr><td>10:00-17:00</td><td>average between ffs and ps</td></tr><tr><td>17:00-20:00</td><td>ps</td></tr><tr><td>20:00-22:00</td><td>average between ffs and ps</td></tr><tr><td>22:00-00:00</td><td>ffs</td></tr></table></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>dataframe speeds with units or sf.</p>
+    
+
+<p>dataframe speeds with units or sf.</p>
     </div>
 
     <div id="ref-examples">
@@ -154,7 +175,7 @@ Default is units from peak speed `ps`</p><table class="table table"><tr><td>00:0
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -37,7 +37,7 @@ The functions listed below are deprecated and will be defunct in
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -114,45 +114,80 @@ assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))</
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Object with class "numeric"</p></dd>
+
+
 <dt>...</dt>
 <dd><p>ignored</p></dd>
+
+
 <dt>sdf</dt>
 <dd><p>Gridded emissions, which can be a SpatialPolygonsDataFrame, or a list
 of SpatialPolygonsDataFrame, or a sf object of "POLYGON". The user must enter
 a list with 36 SpatialPolygonsDataFrame with emissions for the mechanism CBMZ.</p></dd>
+
+
 <dt>nr</dt>
 <dd><p>Number of repetitions of the emissions period</p></dd>
+
+
 <dt>dmyhm</dt>
 <dd><p>String indicating Day Month Year Hour and Minute in the format
 "d-m-Y H:M" e.g.: "01-05-2014 00:00" It represents the time of the first
 hour of emissions in Local Time</p></dd>
+
+
 <dt>tz</dt>
 <dd><p>Time zone as required in for function <code><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></code></p></dd>
+
+
 <dt>crs</dt>
 <dd><p>Coordinate reference system, e.g: "+init=epsg:4326". Used to
 transform the coordinates of the output</p></dd>
+
+
 <dt>islist</dt>
 <dd><p>logical value to indicate if sdf is a list or not</p></dd>
+
+
 <dt>object</dt>
 <dd><p>Object with class "Evaporative"</p></dd>
+
+
 <dt>veh</dt>
 <dd><p>Character; "one of the 40 vehicle categories shown below.</p></dd>
+
+
 <dt>fuel</dt>
 <dd><p>Character; "Diesel", "Gasoline", "Electricity" or "Natural Gas"</p></dd>
+
+
 <dt>mph</dt>
 <dd><p>Numeric; Speed in miles per hour (optional).</p></dd>
+
+
 <dt>pol</dt>
 <dd><p>Character;</p></dd>
+
+
 <dt>season</dt>
 <dd><p>Character: "winter" or "summer".</p></dd>
+
+
 <dt>full</dt>
 <dd><p>Logical: To return the whole data.table or not.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Objects of class "EmissionsList" and numeric elements as "units"
-Objects of class "Evaporative" or "units"
-data.table with emission factors.</p>
+    
+
+<p>Objects of class "EmissionsList" and numeric elements as "units"</p>
+
+
+<p>Objects of class "Evaporative" or "units"</p>
+
+
+<p>data.table with emission factors.</p>
     </div>
     <div id="evaporative">
     <h2><code>Evaporative</code></h2>
@@ -222,7 +257,7 @@ Environment Agency, Copenhagen, 2009</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -24,7 +24,7 @@ using MOVES emission factors."><meta property="og:image" content="http://atmosch
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -90,31 +90,54 @@ using MOVES emission factors.</p>
     <h2>Arguments</h2>
     <dl><dt>metadata</dt>
 <dd><p>data.frame with the metadata for a vein project for MOVES.</p></dd>
+
+
 <dt>lkm</dt>
 <dd><p>Length of each link in miles</p></dd>
+
+
 <dt>ef</dt>
 <dd><p>emission factors from EmissionRates_running exported from MOVES</p></dd>
+
+
 <dt>fuel_type</dt>
 <dd><p>Data.frame of fuelSubtypeID exported by MOVES.</p></dd>
+
+
 <dt>profile</dt>
 <dd><p>Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
 the week</p></dd>
+
+
 <dt>agemax</dt>
 <dd><p>Integer; max age for the fleet, assuming the same for all vehicles.</p></dd>
+
+
 <dt>net</dt>
 <dd><p>Road network class sf</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>Logical, to return the whole object or processed by streets and veh</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information. Not implemented yet</p></dd>
+
+
 <dt>colk</dt>
 <dd><p>Character identifying a column in 'metadata' to multiply the emission factor</p></dd>
+
+
 <dt>colkt</dt>
 <dd><p>Logical, TRUE if `colk` is used</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a list with emissions at each street and data.base aggregated by categories.</p>
+    
+
+<p>a list with emissions at each street and data.base aggregated by categories.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -428,7 +451,7 @@ the week</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

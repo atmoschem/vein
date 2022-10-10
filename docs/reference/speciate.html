@@ -25,7 +25,7 @@ will be added more speciations"><meta property="og:image" content="http://atmosc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -89,6 +89,8 @@ will be added more speciations</p>
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Emissions estimation</p></dd>
+
+
 <dt>spec</dt>
 <dd><p>The speciations are:</p><ul><li><p>"bcom": Splits PM2.5 in black carbon and organic matter.</p></li>
 <li><p>"tyre" or "tire": Splits PM in PM10, PM2.5, PM1 and PM0.1.</p></li>
@@ -98,6 +100,8 @@ will be added more speciations</p>
 <li><p>"nmhc": Splits NMHC in compounds, see <code><a href="ef_ldv_speed.html">ef_ldv_speed</a></code>.</p></li>
 <li><p>"pmiag", "pmneu",  "pmneu2": Splits PM in groups, see note below.</p></li>
 </ul></dd>
+
+
 <dt>veh</dt>
 <dd><p>Type of vehicle:</p><ul><li><p>"bcom": veh can be "PC", "LCV", HDV" or "Motorcycle".</p></li>
 <li><p>"tyre" or "tire": not necessary.</p></li>
@@ -107,6 +111,8 @@ will be added more speciations</p>
 <li><p>"nmhc"see below</p></li>
 <li><p>""pmiag", "pmneu",  "pmneu2": not necessary.</p></li>
 </ul></dd>
+
+
 <dt>fuel</dt>
 <dd><p>Fuel.</p><ul><li><p>"bcom": "G" or "D".</p></li>
 <li><p>"tyre" or "tire": not necessary.</p></li>
@@ -116,6 +122,8 @@ will be added more speciations</p>
 <li><p>"nmhc"see below</p></li>
 <li><p>"pmiag", "pmneu",  "pmneu2": not necessary.</p></li>
 </ul></dd>
+
+
 <dt>eu</dt>
 <dd><p>Emission standard</p><ul><li><p>"bcom": "G" or "D".</p></li>
 <li><p>"tyre" or "tire": not necessary.</p></li>
@@ -125,9 +133,13 @@ will be added more speciations</p>
 <li><p>"nmhc"see below</p></li>
 <li><p>"pmiag", "pmneu",  "pmneu2": not necessary.</p></li>
 </ul></dd>
+
+
 <dt>list</dt>
 <dd><p>when TRUE returns a list with number of elements of the list as
 the number species of pollutants</p></dd>
+
+
 <dt>pmpar</dt>
 <dd><p>Numeric vector for PM speciation eg:
 c(e_so4i = 0.0077,  e_so4j = 0.0623,  e_no3i = 0.00247,
@@ -135,12 +147,17 @@ e_no3j = 0.01053,  e_pm25i = 0.1,  e_pm25j = 0.3,
 e_orgi = 0.0304,  e_orgj = 0.1296,  e_eci = 0.056,
 e_ecj = 0.024,  h2o = 0.277) These are default values. however, when this
 argument is present, new values are used.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical to show more information</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>dataframe of speciation in grams or mols</p>
+    
+
+<p>dataframe of speciation in grams or mols</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -227,7 +244,7 @@ Environment Canada, September 26, 2006.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
