@@ -26,7 +26,7 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -93,37 +93,58 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     <h2>Arguments</h2>
     <dl><dt>v</dt>
 <dd><p>Character; Category vehicle:  "LDV"</p></dd>
+
+
 <dt>ta</dt>
 <dd><p>Numeric vector or data.frame; Ambient temperature. Monthly mean can be used. When
 ta is a data.frame, one option is that the number of rows should be the number of
 rows of your  Vehicles data.frame. This is convenient for top-down approach
 when each simple feature can be a polygon, with a monthly average temperature for
 each simple feature. In this case, the number of columns can be the 12 months.</p></dd>
+
+
 <dt>cc</dt>
 <dd><p>Character; Size of engine in cc: "&lt;=1400",  "1400_2000" or "&gt;2000"</p></dd>
+
+
 <dt>f</dt>
 <dd><p>Character; Type of fuel: "G", "D" or "LPG"</p></dd>
+
+
 <dt>eu</dt>
 <dd><p>Character or data.frame of Characters; Euro standard: "PRE", "I",
 "II", "III",  "IV", "V", "VI" or "VIc". When 'eu' is a data.frame and
 'ta' is also a data.frame both has to have the same number of rows. For instance,
 When you want that each simple feature or region has a different emission standard.</p></dd>
+
+
 <dt>p</dt>
 <dd><p>Character; Pollutant: "CO", "FC", "NOx", "HC" or "PM"</p></dd>
+
+
 <dt>k</dt>
 <dd><p>Numeric; Multiplication factor</p></dd>
+
+
 <dt>show.equation</dt>
 <dd><p>Option to see or not the equation parameters</p></dd>
+
+
 <dt>speed</dt>
 <dd><p>Numeric; Speed to return Number of emission factor and not a function.</p></dd>
+
+
 <dt>fcorr</dt>
 <dd><p>Numeric; Correction by fuel properties by euro technology.
 See <code><a href="fuel_corr.html">fuel_corr</a></code>. The order from first to last is
 "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an emission factor function which depends of the average speed V
+    
+
+<p>an emission factor function which depends of the average speed V
 and ambient temperature. g/km</p>
     </div>
     <div id="see-also">
@@ -177,7 +198,7 @@ and ambient temperature. g/km</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

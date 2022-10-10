@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -90,14 +90,20 @@
 <dd><p>String: "PC" (Passenger Cars), "LCV" (Light Commercial Vehicles),
 "TRUCKS" (Heavy Duty Trucks),
 "BUS" (Buses) or "MC" (Motorcycles or L-Category as in EEA 2019).</p></dd>
+
+
 <dt>fuel</dt>
 <dd><p>String;  "G", "G HY", "G PHEV G",
 "G PHEV ELEC",  "D", "D PHEV D",
 "D PHEV ELEC", "LPG BIFUEL LPG", "LPG BIFUEL G",
 "CNG BIFUEL CNG", "CNG BIFUEL G", "D HY D",
 "D HY ELEC", "CNG", "BIO D"</p></dd>
+
+
 <dt>segment</dt>
 <dd><p>String for type of vehicle (try different, the function will show values).</p></dd>
+
+
 <dt>euro</dt>
 <dd><p>String; euro standard:
 "PRE", "IMPROVED CONVENTIONAL", "OPEN LOOP",
@@ -105,28 +111,45 @@
 "I", "II", "III", "IV", "V",
 "VI A/B/C", "VI D", "VI D-TEMP", "VI D/E",
 "EEV".</p></dd>
+
+
 <dt>tech</dt>
 <dd><p>String; technology:
 "DPF", "DPF With S/W Update", "DPF+SCR"
 "EGR", "GDI", "GDI+GPF", "LNT+DPF", "PFI", "SCR".</p></dd>
+
+
 <dt>pol</dt>
 <dd><p>String; "CO", "NOx", "NMHC" (VOC), "PM" (PM Exhaust), "EC", "CH4", "NH3", "N2O"</p></dd>
+
+
 <dt>mode</dt>
 <dd><p>String; "Urban Peak", "Urban Off Peak", "Rural", "Highway", NA.</p></dd>
+
+
 <dt>slope</dt>
 <dd><p>Numeric; 0.00, -0.06, -0.04, -0.02,  0.02,  0.04,  0.06, or NA</p></dd>
+
+
 <dt>load</dt>
 <dd><p>Numeric; 0.0,0.5, 1.0 or NA</p></dd>
+
+
 <dt>speed</dt>
 <dd><p>Numeric; optional numeric in km/h.</p></dd>
+
+
 <dt>fcorr</dt>
 <dd><p>Numeric; Correction by fuel properties by euro technology.
 See <code><a href="fuel_corr.html">fuel_corr</a></code>. The order from first to last is
 "PRE", "I", "II", "III", "IV", "V", "VI", "or other VI. Default is 1</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Return a function depending of speed or numeric (g/km)</p>
+    
+
+<p>Return a function depending of speed or numeric (g/km)</p>
     </div>
 
     <div id="ref-examples">
@@ -158,7 +181,7 @@ See <code><a href="fuel_corr.html">fuel_corr</a></code>. The order from first to
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

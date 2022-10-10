@@ -26,7 +26,7 @@ mileage driven"><meta property="og:image" content="http://atmoschem.github.io/ve
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -103,41 +103,68 @@ mileage driven</p>
 <dd><p>"Vehicles" data-frame or list of "Vehicles" data-frame. Each data-frame
 as number of columns matching the age distribution of that type of vehicle.
 The number of rows is equal to the number of streets link</p></dd>
+
+
 <dt>lkm</dt>
 <dd><p>Length of each link</p></dd>
+
+
 <dt>ef</dt>
 <dd><p>List of functions of emission factors of vehicular categories</p></dd>
+
+
 <dt>efcold</dt>
 <dd><p>List of functions of cold start emission factors of vehicular categories</p></dd>
+
+
 <dt>beta</dt>
 <dd><p>Dataframe with the hourly cold-start distribution to each day
 of the period. Number of rows are hours and columns are days</p></dd>
+
+
 <dt>speed</dt>
 <dd><p>Speed data-frame with number of columns as hours</p></dd>
+
+
 <dt>agemax</dt>
 <dd><p>Age of oldest vehicles for that category</p></dd>
+
+
 <dt>profile</dt>
 <dd><p>Numerical or dataframe with nrows equal to 24 and ncol 7 day
 of the week</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>Logical; to determine if EmissionsArray should les dimensions,
 being streets, vehicle categories and hours or default (streets, vehicle
 categories, hours and days). Default is FALSE to avoid break old code, but
 the recommendation is that new estimations use this parameter as TRUE</p></dd>
+
+
 <dt>hour</dt>
 <dd><p>Number of considered hours in estimation</p></dd>
+
+
 <dt>day</dt>
 <dd><p>Number of considered days in estimation</p></dd>
+
+
 <dt>array</dt>
 <dd><p>Deprecated! <code>emis_cold</code> returns only arrays.
 When TRUE and veh is not a list, expects a profile as a dataframe producing
 an array with dimensions (streets x columns x hours x days)</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>EmissionsArray  g/h</p>
+    
+
+<p>EmissionsArray  g/h</p>
     </div>
 
     <div id="ref-examples">
@@ -210,7 +237,7 @@ an array with dimensions (streets x columns x hours x days)</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

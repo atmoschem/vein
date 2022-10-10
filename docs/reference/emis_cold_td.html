@@ -30,7 +30,7 @@ providing flexibility to the user."><meta property="og:image" content="http://at
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -103,33 +103,54 @@ providing flexibility to the user.</p>
 <dd><p>"Vehicles" data-frame or spatial feature, wwhere columns are the
  age distribution of that vehicle. and rows each simple feature or region.
 The number of rows is equal to the number of streets link</p></dd>
+
+
 <dt>lkm</dt>
 <dd><p>Numeric; mileage by the age of use of each vehicle.</p></dd>
+
+
 <dt>ef</dt>
 <dd><p>Numeric; emission factor with</p></dd>
+
+
 <dt>efcold</dt>
 <dd><p>Data.frame. When it is a data.frame, each column is for each
 type of vehicle by age of use, rows are are each simple feature. When you have
 emission factors for each month, the order should a data.frame ina long format,
 as rurned by <code><a href="ef_ldv_cold.html">ef_ldv_cold</a></code>.</p></dd>
+
+
 <dt>beta</dt>
 <dd><p>Data.frame with the fraction of cold starts. The rows are the fraction
 for each spatial feature or subregion, the columns are the age of use of vehicle.</p></dd>
+
+
 <dt>pro_month</dt>
 <dd><p>Numeric; montly profile to distribuite annual mileage in each month.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>List of parameters; Add columns with information to returning data.frame</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical; To show more information</p></dd>
+
+
 <dt>fortran</dt>
 <dd><p>Logical; to try the fortran calculation.</p></dd>
+
+
 <dt>nt</dt>
 <dd><p>Integer; Number of threads wich must be lower than max available.
 See <code><a href="check_nt.html">check_nt</a></code>. Only when fortran = TRUE</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Emissions data.frame</p>
+    
+
+<p>Emissions data.frame</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -232,7 +253,7 @@ See <code><a href="check_nt.html">check_nt</a></code>. Only when fortran = TRUE<
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

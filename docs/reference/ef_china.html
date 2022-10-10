@@ -26,7 +26,7 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf"><meta pro
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
       </span>
     </div>
 
@@ -98,55 +98,86 @@ http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf</p>
     <h2>Arguments</h2>
     <dl><dt>v</dt>
 <dd><p>Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"</p></dd>
+
+
 <dt>t</dt>
 <dd><p>Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
 "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"</p></dd>
+
+
 <dt>f</dt>
 <dd><p>Character;fuel: "G", "D"</p></dd>
+
+
 <dt>standard</dt>
 <dd><p>Character or data.frame; "PRE", "I", "II", "III", "IV", "V". When
 it is a data.frame, it each row is a different region and ta, humidity,
 altitud, speed, sulphur and load_factor lengths have the same as the number of
 rows.</p></dd>
+
+
 <dt>p</dt>
 <dd><p>Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 or "Evaporative_parking"</p></dd>
+
+
 <dt>k</dt>
 <dd><p>Numeric; multiplication factor</p></dd>
+
+
 <dt>ta</dt>
 <dd><p>Numeric; temperature of ambient in celcius degrees. When standard is a
 data.frame, the length must be equal to the number of rows of standard.</p></dd>
+
+
 <dt>humidity</dt>
 <dd><p>Numeric; relative humidity. When standard is a
 data.frame, the length must be equal to the number of rows of standard.</p></dd>
+
+
 <dt>altitude</dt>
 <dd><p>Numeric; altitude in meters. When standard is a
 data.frame, the length must be equal to the number of rows of standard.</p></dd>
+
+
 <dt>speed</dt>
 <dd><p>Numeric; altitude in km/h When standard is a
 data.frame, the length must be equal to the number of rows of standard.</p></dd>
+
+
 <dt>baseyear_det</dt>
 <dd><p>Integer; any of 2014, 2015, 2016, 2017, 2018</p></dd>
+
+
 <dt>sulphur</dt>
 <dd><p>Numeric; sulphur in ppm. When standard is a
 data.frame, the length must be equal to the number of rows of standard.</p></dd>
+
+
 <dt>load_factor</dt>
 <dd><p>Numeric; When standard is a
 data.frame, the length must be equal to the number of rows of standard.</p></dd>
+
+
 <dt>details</dt>
 <dd><p>Logical; When TRUE, it shows a description of the vehicle in chinese
 and english. Only when length standard is 1.</p></dd>
+
+
 <dt>correction_only</dt>
 <dd><p>Logical; When TRUE, return only correction factors.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An emission factor</p>
+    
+
+<p>An emission factor</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>Combination of vehicles:</p><table class="table table"><tr><td>v</td><td>t</td><td>f</td></tr><tr><td>PV</td><td>Mini</td><td>G</td></tr><tr><td>PV</td><td>Small</td><td>G</td></tr><tr><td>PV</td><td>Medium</td><td>G</td></tr><tr><td>PV</td><td>Large</td><td>G</td></tr><tr><td>PV</td><td>Taxi</td><td>G</td></tr><tr><td>PV</td><td>Bus</td><td>G</td></tr><tr><td>PV</td><td>Motorcycles</td><td>G</td></tr><tr><td>PV</td><td>Moped</td><td>G</td></tr><tr><td>PV</td><td>Mini</td><td>D</td></tr><tr><td>PV</td><td>Small</td><td>D</td></tr><tr><td>PV</td><td>Mediumbus</td><td>D</td></tr><tr><td>PV</td><td>Largebus</td><td>D</td></tr><tr><td>PV</td><td>Bus</td><td>D</td></tr><tr><td>PV</td><td>3-Wheel</td><td>D</td></tr><tr><td>PV</td><td>Small</td><td>ALL</td></tr><tr><td>PV</td><td>Mediumbus</td><td>ALL</td></tr><tr><td>PV</td><td>Largebus</td><td>ALL</td></tr><tr><td>PV</td><td>Taxi</td><td>ALL</td></tr><tr><td>PV</td><td>Bus</td><td>ALL</td></tr><tr><td>Trucks</td><td>Bus</td><td>G</td></tr><tr><td>Trucks</td><td>Light</td><td>G</td></tr><tr><td>Trucks</td><td>Medium</td><td>G</td></tr><tr><td>Trucks</td><td>Heavy</td><td>G</td></tr><tr><td>Trucks</td><td>Light</td><td>D</td></tr><tr><td>Trucks</td><td>Medium</td><td>D</td></tr><tr><td>Trucks</td><td>Heavy</td><td>D</td></tr><tr><td>Trucks</td><td>Low Speed</td><td>D</td></tr><tr><td>Trucks</td><td>Mini</td><td>D</td></tr></table></div>
+    <p>Combination of vehicles:</p><table class="table table"><tr><td>v</td><td>t</td><td>f</td></tr><tr><td>PV</td><td>Mini</td><td>G HY</td></tr><tr><td>PV</td><td>Bus</td><td>D HY D</td></tr><tr><td>PV</td><td>Mini</td><td>G</td></tr><tr><td>PV</td><td>Small</td><td>G</td></tr><tr><td>PV</td><td>Medium</td><td>G</td></tr><tr><td>PV</td><td>Large</td><td>G</td></tr><tr><td>PV</td><td>Taxi</td><td>G</td></tr><tr><td>PV</td><td>Bus</td><td>G</td></tr><tr><td>PV</td><td>Motorcycles</td><td>G</td></tr><tr><td>PV</td><td>Moped</td><td>G</td></tr><tr><td>PV</td><td>Mini</td><td>D</td></tr><tr><td>PV</td><td>Small</td><td>D</td></tr><tr><td>PV</td><td>Mediumbus</td><td>D</td></tr><tr><td>PV</td><td>Largebus</td><td>D</td></tr><tr><td>PV</td><td>Bus</td><td>D</td></tr><tr><td>PV</td><td>3-Wheel</td><td>D</td></tr><tr><td>PV</td><td>Small</td><td>ALL</td></tr><tr><td>PV</td><td>Mediumbus</td><td>ALL</td></tr><tr><td>PV</td><td>Largebus</td><td>ALL</td></tr><tr><td>PV</td><td>Taxi</td><td>ALL</td></tr><tr><td>PV</td><td>Bus</td><td>ALL</td></tr><tr><td>Trucks</td><td>Bus</td><td>G</td></tr><tr><td>Trucks</td><td>Light</td><td>G</td></tr><tr><td>Trucks</td><td>Medium</td><td>G</td></tr><tr><td>Trucks</td><td>Heavy</td><td>G</td></tr><tr><td>Trucks</td><td>Light</td><td>D</td></tr><tr><td>Trucks</td><td>Medium</td><td>D</td></tr><tr><td>Trucks</td><td>Heavy</td><td>D</td></tr><tr><td>Trucks</td><td>Low Speed</td><td>D</td></tr><tr><td>Trucks</td><td>Mini</td><td>D</td></tr></table></div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="ef_ldv_speed.html">ef_ldv_speed</a></code> <code><a href="emis_hot_td.html">emis_hot_td</a></code></p></div>
@@ -236,7 +267,7 @@ and english. Only when length standard is 1.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
