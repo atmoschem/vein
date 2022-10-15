@@ -508,10 +508,10 @@ ef_cetesb <- function(p,
     ef[ef$Pollutant %in% NO2, LDV] <- ef[ef$Pollutant %in% NO2, LDV]*1.338307
     ef[ef$Pollutant %in% NO2, HDV] <- ef[ef$Pollutant %in% NO2, HDV]*1.039307
 
-    # # The following adjustments made for tunnel study for 2011
+    # # The following adjustments made for tunnel study for 2018 - MEGC
     # PM
-    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.256218
-    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.216421
+    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*5.005574
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.937589
 
     # ALD # ja tem NMHC incrementado
     efALD <- ef[ef$Pollutant %in% "NMHC", ]
