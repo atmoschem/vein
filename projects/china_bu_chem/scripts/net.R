@@ -12,6 +12,7 @@ net <- st_transform(net, crs)
 
 # The number of traffic flow vehicles can be the same from vehicular composition
 #
+categories <- metadata$vehicles
 for (i in seq_along(categories)) {
         png(
                 filename = paste0("images/NET_", categories[i], ".png"),
