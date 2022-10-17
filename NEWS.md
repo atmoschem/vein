@@ -7,6 +7,7 @@ NEWS
 
 - add hybrid gasoline and diesel to chinese EF
 - Preparing chinese bottom-up project
+- Mario added PM scale in ef_cetesb
 
 ### vein 0.9.9
 
