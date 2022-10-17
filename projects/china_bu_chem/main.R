@@ -17,6 +17,7 @@ tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
 veh <- readxl::read_xlsx(path = path, sheet = "fleet_age")
 fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
 met <- readxl::read_xlsx(path = path, sheet = "met")
+std <- readxl::read_xlsx(path = path, sheet = "std")
 year <- 2016
 theme <- "black" # dark clean ink
 delete_directories <- TRUE
@@ -24,6 +25,8 @@ source("config/config.R", encoding = "UTF-8")
 
 # 0.1 prenet ####
 language <- "english" # portuguese english spanish
+metadata <- readRDS("config/metadata.rds")
+veh <- readRDS("config/fleet_age.rds")
 source("scripts/prenet.R", encoding = "UTF-8")
 
 # 1) Network ####
@@ -31,55 +34,46 @@ language <- "english" # portuguese english spanish
 net <- sf::st_read("network/net.gpkg")
 crs <- 32648 # WGS 84 / UTM zone 48N
 tit <- "Vehicular volume [veh/h] in Beijing, China"
-categories <- c("PV_TAXI",
-                "PV_3W",
-                "PV_MINI",
-                "PV_SMALL",
-                "PV_MEDIUM",
-                "PV_LARGE",
-                "BUS_URBAN",
-                "BUS_COACH",
-                "TRUCKS_MINI",
-                "TRUCKS_LIGHT",
-                "TRUCKS_MEDIUM",
-                "TRUCKS_HEAVY",
-                "TRUCKS_LOWSPEED",
-                "MC_ORDINARY",
-                "MC_LIGHT")
+metadata <- readRDS("config/metadata.rds")
 source("scripts/net.R", encoding = "UTF-8")
 
+net <- readRDS("network/net.rds")
+tfs <- readRDS("config/tfs.rds")
+source("scripts/speed.R", encoding = "UTF-8")
+
 # 2) Traffic ####
-language <- "portuguese" # english spanish
+language <- "english" # portuguese english spanish
 net <- readRDS("network/net.rds")
 metadata <- readRDS("config/metadata.rds")
-categories <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
 veh <- readRDS("config/fleet_age.rds")
-k_D <- 1 / 0.5661912
-k_E <- 1 / 0.1764558
-k_G <- 1 / 0.2528435
 verbose <- FALSE
-year <- 2018
+year <- 2016
 theme <- "black" # dark clean ink
+  
+k_G <- k_CNG <- k_D <- 1 
 source("scripts/traffic.R", encoding = "UTF-8")
 
+
 # 3) Estimation ####
-language <- "portuguese" # english spanish
+language <- "english" # english spanish portuguese
+tfs <- readRDS("config/tfs.rds")
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
-tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
-met <- readRDS("config/met.rds")
 net <- readRDS("network/net.rds")
-lkm <- net$lkm
-scale <- "tunnel"
+met <- readRDS("config/met.rds")
+std <- readRDS("config/std.rds")
+speed <- readRDS("network/speed.rds")
 verbose <- FALSE
-year <- 2018
+year <- 2016
+verbose <- FALSE
+remove_fuel <- c("ELEC", "HY")
 
-# Fuel eval
-language <- "portuguese" # english spanish
+# fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
-factor_emi <- 365 / (nrow(tfs) / 24) # daily to annual
+# 30 is the number of days of the month of interest
+factor_emi <- 30 / (nrow(tfs) / 24) # days to month
 source("scripts/fuel_eval.R", encoding = "UTF-8")
 
 # Exhaust

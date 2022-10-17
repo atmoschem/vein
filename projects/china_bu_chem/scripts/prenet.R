@@ -9,9 +9,12 @@ switch(language,
 
 x <- fread("network/traffic_volume_3.csv", 
            encoding="UTF-8")
+
 x$id <- 1:nrow(x)
+
 geo <- x$coordinate
-head(geo)
+
+
 sgeo <- strsplit(x = geo, split = ";")
 sgeo[[1]]
 
@@ -70,22 +73,13 @@ net <- net[net$h == 9,
 
 # here we need to improve this characterization
 # based on traffic counts
-net$PV_TAXI <- net$traffic_volume*0.0029159
-net$PV_3W <- net$traffic_volume*0.0014580
-net$PV_MINI <- net$traffic_volume*0.0291591
-net$PV_SMALL <- net$traffic_volume*0.7839591
-net$PV_MEDIUM <- net$traffic_volume*0.0270321
-net$PV_LARGE <- net$traffic_volume*0.0264136
-net$BUS_URBAN <- net$traffic_volume*0.0264136
-net$BUS_COACH <- net$traffic_volume*0.0264136
-net$TRUCKS_MINI <- net$traffic_volume*0.0016935
-net$TRUCKS_LIGHT <- net$traffic_volume*0.0649532
-net$TRUCKS_MEDIUM <- net$traffic_volume*0.0195176
-net$TRUCKS_HEAVY <- net$traffic_volume*0.0315447
-net$TRUCKS_LOWSPEED <- net$traffic_volume*0.0315447
-net$MC_ORDINARY <- net$traffic_volume*0.0017495
-net$MC_LIGHT <- net$traffic_volume*0.0011664
+pveh <- data.frame(veh = sapply(veh[, 2:ncol(veh)], sum))
+pveh$names <- row.names(pveh)
+pveh$per <- pveh$veh / sum(pveh$veh)
 
+for(i in 1:nrow(pveh)){
+  net[[pveh$names[i]]] <- net$traffic_volume*pveh$per[i]
+}
 st_crs(net) <- 4326
 
 switch(language,

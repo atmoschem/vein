@@ -13,6 +13,7 @@ tfs <- as.data.frame(tfs)
 veh <- as.data.frame(veh)
 fuel <- as.data.frame(fuel)
 met <- as.data.frame(met)
+std <- as.data.frame(std)
 
 # checkar metadata$vehicles ####
 switch(language,
@@ -126,12 +127,14 @@ switch(language,
        "spanish" = message("Archivos en: ", getwd(), "/config/*\n")
 )
 
+# saving RDS ####
 saveRDS(metadata, "config/metadata.rds")
 saveRDS(mileage, "config/mileage.rds")
 saveRDS(tfs, "config/tfs.rds")
 saveRDS(veh, "config/fleet_age.rds")
 saveRDS(fuel, "config/fuel.rds")
 saveRDS(met, "config/met.rds")
+saveRDS(std, "config/std.rds")
 
 # pastas
 if (delete_directories) {
@@ -309,8 +312,8 @@ for (i in seq_along(n_veh)) {
 
 switch(language,
        "portuguese" = cat("Plotando quilometragem \n"),
-       "english" = cat("Plotting mileage `tfs`\n"),
-       "spanish" = cat("Plotando kilometraje `tfs`\n")
+       "english" = cat("Plotting mileage \n"),
+       "spanish" = cat("Plotando kilometraje \n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -341,6 +344,13 @@ for (i in seq_along(n_veh)) {
 
 
 # Temperature ####
+
+switch(language,
+       "portuguese" = cat("Plotando temperatura \n"),
+       "english" = cat("Plotting temperature \n"),
+       "spanish" = cat("Plotando temperatura \n")
+)
+
 units(celsius(1))$numerator
 png("images/Temperature.png",
     2000, 1500, "px",
@@ -359,6 +369,45 @@ colplot(
   spl = 8
 )
 dev.off()
+
+# Std ####
+switch(language,
+       "portuguese" = cat("Plotando padrões de emissões \n"),
+       "english" = cat("Plotting emission standards\n"),
+       "spanish" = cat("Plotando normas de emision\n")
+)
+
+for(i in 1:ncol(std)) {
+  std[[i]] <- suppressWarnings(as.numeric(as.roman(std[[i]])))
+}
+
+std[is.na(std)] <- 0
+
+library(data.table)
+suppressWarnings(
+  data.table::melt.data.table(data = as.data.table(std), 
+                              measure.vars = names(std)[2:ncol(std)], 
+                              )
+  ) -> x
+
+ggplot(x, aes(x = Year, y = variable, fill = value) ) +
+  geom_raster() +
+  scale_fill_gradient(low = "yellow", 
+                      high = "green") +
+  theme_bw() +
+  labs(x = NULL, 
+       y = NULL) +
+  theme(text = element_text(size = 16)) -> p
+  
+
+png("images/std.png", 
+    width = 2000, 
+    height = 2500, "px",
+    res = 300
+)
+print(p)
+dev.off()
+
 
 # Notes ####
 switch(language,
