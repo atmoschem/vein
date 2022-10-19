@@ -7,6 +7,8 @@ it will be incorporated the techniques of Tier 3.
 ef_emfac returns emission factors reflecting California, US,
 conditions. If the user enter speeds more emission factors are returned.
 See details.
+This function was deprecated. If the user want some UF-based EF, run MOVES
+and extract EF
 emis_wrf returns a dataframe with columns lat, long, id, pollutants, local time
 and GMT time. This dataframe has the proper format to be used with WRF
 assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))
@@ -37,7 +39,7 @@ The functions listed below are deprecated and will be defunct in
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.91</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.92</span>
       </span>
     </div>
 
@@ -74,7 +76,7 @@ The functions listed below are deprecated and will be defunct in
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>DEPRECATED Construction function for class "EmissionsList"</h1>
-    <small class="dont-index">Source: <a href="https://github.com/atmoschem/vein/blob/HEAD/R/EmissionsList.R" class="external-link"><code>R/EmissionsList.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/Evaporative.R" class="external-link"><code>R/Evaporative.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/ef_emfac.R" class="external-link"><code>R/ef_emfac.R</code></a>, and 4 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/atmoschem/vein/blob/HEAD/R/EmissionsList.R" class="external-link"><code>R/EmissionsList.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/Evaporative.R" class="external-link"><code>R/Evaporative.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/ef_emfac.R" class="external-link"><code>R/ef_emfac.R</code></a>, and 5 more</small>
     <div class="hidden name"><code>vein-deprecated.Rd</code></div>
     </div>
 
@@ -87,6 +89,8 @@ it will be incorporated the techniques of Tier 3.</p>
 <p><code>ef_emfac</code> returns emission factors reflecting California, US,
 conditions. If the user enter speeds more emission factors are returned.
 See details.</p>
+<p>This function was deprecated. If the user want some UF-based EF, run MOVES
+and extract EF</p>
 <p><code>emis_wrf</code> returns a dataframe with columns lat, long, id, pollutants, local time
 and GMT time. This dataframe has the proper format to be used with WRF
 assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))</p>
@@ -103,6 +107,18 @@ assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))</
 
 <span class="fu">ef_emfac</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
+<span class="fu">ef_ive</span><span class="op">(</span>
+  description <span class="op">=</span> <span class="st">"Auto/Sml Truck"</span>,
+  fuel <span class="op">=</span> <span class="st">"Petrol"</span>,
+  weight <span class="op">=</span> <span class="st">"Light"</span>,
+  air_fuel_control <span class="op">=</span> <span class="st">"Carburetor"</span>,
+  exhaust <span class="op">=</span> <span class="st">"None"</span>,
+  evaporative <span class="op">=</span> <span class="st">"PCV"</span>,
+  <span class="va">mileage</span>,
+  <span class="va">pol</span>,
+  details <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span>
+
 <span class="fu">emis_wrf</span><span class="op">(</span><span class="va">sdf</span>, nr <span class="op">=</span> <span class="fl">1</span>, <span class="va">dmyhm</span>, <span class="va">tz</span>, crs <span class="op">=</span> <span class="fl">4326</span>, <span class="va">islist</span><span class="op">)</span>
 
 <span class="fu">hot_soak</span><span class="op">(</span><span class="va">x</span>, <span class="va">carb</span>, <span class="va">p</span>, <span class="va">eshotc</span>, <span class="va">eswarmc</span>, <span class="va">eshotfi</span><span class="op">)</span>
@@ -118,6 +134,53 @@ assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))</
 
 <dt>...</dt>
 <dd><p>ignored</p></dd>
+
+
+<dt>description</dt>
+<dd><p>Character; "Auto/Sml Truck" "Truck/Bus" or"Sml Engine".</p></dd>
+
+
+<dt>fuel</dt>
+<dd><p>Character; "Petrol", "NG Retrofit", "Natural Gas", "Prop Retro.",
+"Propane", "EthOH Retrofit", "OEM Ethanol", "Diesel", "Ethanol" or "CNG/LPG".</p></dd>
+
+
+<dt>weight</dt>
+<dd><p>Character; "Light", "Medium", "Heavy", "Lt", "Med" or "Hvy"</p></dd>
+
+
+<dt>air_fuel_control</dt>
+<dd><p>Character; One of the following characters: "Carburetor",
+"Single-Pt FI", "Multi-Pt FI", "Carb/Mixer", "FI", "Pre-Chamber Inject.",
+"Direct Injection", "2-Cycle", "2-Cycle, FI", "4-Cycle, Carb", "4-Cycle, FI"
+"4-Cycle"</p></dd>
+
+
+<dt>exhaust</dt>
+<dd><p>Character: "None", "2-Way", "2-Way/EGR", "3-Way", "3-Way/EGR",
+"None/EGR", "LEV", "ULEV", "SULEV", "EuroI", "EuroII", "EuroIII", "EuroIV",
+"Hybrid", "Improved", "EGR+Improv", "Particulate", "Particulate/NOx",
+"EuroV", "High Tech" or "Catalyst"</p></dd>
+
+
+<dt>evaporative</dt>
+<dd><p>Character: "PCV", "PCV/Tank" or"None".</p></dd>
+
+
+<dt>mileage</dt>
+<dd><p>Numeric; mileage of vehicle by age of use km.</p></dd>
+
+
+<dt>pol</dt>
+<dd><p>Character; One of the following characters: "Carburetor",
+"Single-Pt FI", "Multi-Pt FI", "Carb/Mixer", "FI", "Pre-Chamber Inject.",
+"Direct Injection", "2-Cycle", "2-Cycle, FI", "4-Cycle, Carb", "4-Cycle, FI"
+"4-Cycle"
+#'</p><table class="table table"><tr><td>"VOC_gkm"</td><td>"CO_gkm"</td><td>"NOx_gkm"</td><td>"PM_gkm"</td></tr><tr><td>"Pb_gkm"</td><td>"SO2_gkm"</td><td>"NH3_gkm"</td><td>"1,3-butadiene_gkm"</td></tr><tr><td>"formaldehyde_gkm"</td><td>"acetaldehyde_gkm"</td><td>"benzene_gkm"</td><td>"EVAP_gkm"</td></tr><tr><td>"CO2_gkm"</td><td>"N20_gkm"</td><td>"CH4_gkm"</td><td>"VOC_gstart"</td></tr><tr><td>"CO_gstart"</td><td>"NOx_gstart"</td><td>"PM_gstart"</td><td>"Pb_gstart"</td></tr><tr><td>"SO2_gstart"</td><td>"NH3_gstart"</td><td>"1,3-butadiene_gstart"</td><td>"formaldehyde_gstart"</td></tr><tr><td>"acetaldehyde_gstart"</td><td>"benzene_gstart"</td><td>"EVAP_gstart"</td><td>"CO2_gstart"</td></tr><tr><td>"N20_gstart"</td><td>"CH4_gstart"</td><td></td><td></td></tr></table></dd>
+
+
+<dt>details</dt>
+<dd><p>Logical; option to see or not more information about vehicle.</p></dd>
 
 
 <dt>sdf</dt>
@@ -157,16 +220,8 @@ transform the coordinates of the output</p></dd>
 <dd><p>Character; "one of the 40 vehicle categories shown below.</p></dd>
 
 
-<dt>fuel</dt>
-<dd><p>Character; "Diesel", "Gasoline", "Electricity" or "Natural Gas"</p></dd>
-
-
 <dt>mph</dt>
 <dd><p>Numeric; Speed in miles per hour (optional).</p></dd>
-
-
-<dt>pol</dt>
-<dd><p>Character;</p></dd>
 
 
 <dt>season</dt>
@@ -188,6 +243,15 @@ transform the coordinates of the output</p></dd>
 
 
 <p>data.table with emission factors.</p>
+
+
+<p>An emission factor by annual mileage.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p><code>ef_ive</code> returns the base emission factors from the the IVE
+model. This function depend on vectorized mileage, which means your can
+enter with the mileage by age of use and the name of the pollutant.</p>
     </div>
     <div id="evaporative">
     <h2><code>Evaporative</code></h2>
@@ -202,6 +266,10 @@ transform the coordinates of the output</p></dd>
     <div id="references">
     <h2>References</h2>
     <p>https://arb.ca.gov/emfac/emissions-inventory</p>
+<p>Nicole Davis, James Lents, Mauricio Osses, Nick Nikkila,
+ Matthew Barth. 2005. Development and Application of an International
+ Vehicle Emissions Model. Transportation Research Board, 81st Annual Meeting,
+ January 2005, Washington, D.C.</p>
 <p>Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
 EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 Environment Agency, Copenhagen, 2009</p>
@@ -230,6 +298,15 @@ Environment Agency, Copenhagen, 2009</p>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># do not run</span></span>
 <span class="r-in"><span class="co"># DEPRECATED</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co"># Do not run</span></span>
+<span class="r-in"><span class="co"># Passenger Cars PC</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">fkm</span><span class="op">)</span></span>
+<span class="r-in"><span class="co"># cumulative mileage from 1 to 50 years of use, 40:50</span></span>
+<span class="r-in"><span class="va">mil</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">fkm</span><span class="op">$</span><span class="fu">KM_PC_E25</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">ef_ive</span><span class="op">(</span><span class="st">"Truck/Bus"</span>, mileage <span class="op">=</span> <span class="va">mil</span>, pol <span class="op">=</span> <span class="st">"CO_gkm"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">ef_ive</span><span class="op">(</span>mileage <span class="op">=</span> <span class="va">mil</span>, pol <span class="op">=</span> <span class="st">"CO_gkm"</span>, details <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># do not run</span></span>

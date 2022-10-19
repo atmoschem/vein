@@ -29,7 +29,7 @@ ef_china(
 "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"}
 
-\item{f}{Character;fuel: "G", "D"}
+\item{f}{Character;fuel: "G", "D", "CNG", "ALL"}
 
 \item{standard}{Character or data.frame; "PRE", "I", "II", "III", "IV", "V". When
 it is a data.frame, it each row is a different region and ta, humidity,
@@ -185,7 +185,13 @@ dim(a)
 }
 \seealso{
 \code{\link{ef_ldv_speed}} \code{\link{emis_hot_td}}
+
+Other China: 
+\code{\link{ef_china_det}()},
+\code{\link{ef_china_long}()},
+\code{\link{ef_china_speed}()}
 }
+\concept{China}
 \keyword{China}
 \keyword{ef_china}
 \keyword{emission}
