@@ -10,6 +10,8 @@ temp_veh(x, tfs, array = FALSE)
 \item{x}{Vehicles data.frame}
 
 \item{tfs}{temporal factor}
+
+\item{array}{Logical, to return an array}
 }
 \value{
 data.table

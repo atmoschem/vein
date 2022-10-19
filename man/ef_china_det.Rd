@@ -26,7 +26,7 @@ or "Evaporative_parking"}
 long data.frame
 }
 \description{
-Chinese emission factors in long format
+Correction of Chinese emission
 }
 \examples{
 {
@@ -35,8 +35,12 @@ ef_china_det(standard = "I", p = "CO")
 }
 \seealso{
 Other China: 
+\code{\link{ef_china_hu}()},
+\code{\link{ef_china_h}()},
 \code{\link{ef_china_long}()},
 \code{\link{ef_china_speed}()},
+\code{\link{ef_china_te}()},
+\code{\link{ef_china_th}()},
 \code{\link{ef_china}()}
 }
 \concept{China}
