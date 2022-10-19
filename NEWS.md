@@ -1,7 +1,10 @@
 NEWS
 ===========
 
-## TODO
+### vein 0.9.92
+
+- add more env chinese ef
+- remove ive. It is better to run MOVES and extract EF
 
 ### vein 0.9.91
 
