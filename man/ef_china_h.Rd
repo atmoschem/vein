@@ -4,7 +4,7 @@
 \alias{ef_china_h}
 \title{Correction of Chinese factors by altitude}
 \usage{
-ef_china_h(h, v = "PV", t = "Small", f = "G", standard, p)
+ef_china_h(h, v = "PV", t = "Small", f = "G", p)
 }
 \arguments{
 \item{h}{numeric aktitude}
@@ -17,8 +17,6 @@ ef_china_h(h, v = "PV", t = "Small", f = "G", standard, p)
 
 \item{f}{Character;fuel: "G", "D", "CNG"}
 
-\item{standard}{Character vector; "PRE", "I", "II", "III", "IV", "V".}
-
 \item{p}{Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 or "Evaporative_parking"}
 }
@@ -30,7 +28,7 @@ Correction of Chinese emission
 }
 \examples{
 {
-ef_china_h(h = 1600, standard = "I", p = "CO")
+ef_china_h(h = 1600, p = "CO")
 }
 }
 \seealso{
@@ -39,6 +37,7 @@ Other China:
 \code{\link{ef_china_hu}()},
 \code{\link{ef_china_long}()},
 \code{\link{ef_china_speed}()},
+\code{\link{ef_china_s}()},
 \code{\link{ef_china_te}()},
 \code{\link{ef_china_th}()},
 \code{\link{ef_china}()}

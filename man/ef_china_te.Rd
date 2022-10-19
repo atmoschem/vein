@@ -4,7 +4,7 @@
 \alias{ef_china_te}
 \title{Correction of Chinese emission factors by temperature}
 \usage{
-ef_china_te(te, v = "PV", t = "Small", f = "G", standard, p)
+ef_china_te(te, v = "PV", t = "Small", f = "G", p)
 }
 \arguments{
 \item{te}{numeric temperature in celsius}
@@ -16,8 +16,6 @@ ef_china_te(te, v = "PV", t = "Small", f = "G", standard, p)
  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"}
 
 \item{f}{Character;fuel: "G", "D", "CNG"}
-
-\item{standard}{Character vector; "PRE", "I", "II", "III", "IV", "V".}
 
 \item{p}{Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 or "Evaporative_parking"}
@@ -31,9 +29,8 @@ Correction of Chinese emission
 \examples{
 {
 data(net)
-head(ef_china_te(te = net$ps, standard = "I", p = "CO"))
+head(ef_china_te(te = net$ps,  p = "CO"))
 head(ef_china_te(te = net$ps,
-                 standard = c("II", "I"),
                  p = "NOx"))
 }
 }
@@ -44,6 +41,7 @@ Other China:
 \code{\link{ef_china_h}()},
 \code{\link{ef_china_long}()},
 \code{\link{ef_china_speed}()},
+\code{\link{ef_china_s}()},
 \code{\link{ef_china_th}()},
 \code{\link{ef_china}()}
 }
