@@ -5,6 +5,7 @@
 #'
 #' @param x Vehicles data.frame
 #' @param tfs temporal factor
+#' @param array Logical, to return an array
 #' @seealso \code{\link{temp_fact}}
 #' @return data.table
 #' @importFrom data.table rbindlist
