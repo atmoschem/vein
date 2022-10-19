@@ -5,6 +5,7 @@
 #' Chinese Ministry of Ecology and Environment
 #' http://www.mee.gov.cn/gkml/hbb/bgth/201407/W020140708387895271474.pdf
 #'
+#' @family China
 #' @param v Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"
 #' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
 #' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
@@ -13,7 +14,7 @@
 #' it is a data.frame, it each row is a different region and ta, humidity,
 #' altitud, speed, sulphur and load_factor lengths have the same as the number of
 #' rows.
-#' @param f Character;fuel: "G", "D"
+#' @param f Character;fuel: "G", "D", "CNG", "ALL"
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @param k Numeric; multiplication factor
@@ -800,7 +801,196 @@ ef_china <- function(v = "PV",
       dff$sulphur <- sulphur
       return(dff)
     }
-
   }
-
 }
+
+#' @title Chinese emission factors by emissions standard
+#' @family China
+#' @name ef_china_long
+#' @description Chinese emission factors in long format
+#' @param v Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"
+#' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
+#' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
+#'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
+#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
+#' @param f Character;fuel: "G", "D", "CNG", "ALL"
+#' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
+#' or "Evaporative_parking"
+#' @return long data.frame
+#' @importFrom data.table setDT
+#' @export
+#' @examples {
+#' \dontrun{
+#' # Do not run
+#' }
+#' }
+ef_china_long <- function(v = "PV",
+                          t = "Small",
+                          f = "G",
+                          standard,
+                          p){
+  chi <- sysdata$ef_china
+  data.table::setDT(chi)
+
+  chi[VEH == v &
+        TYPE == t &
+        FUEL == f &
+        POLLUTANT == p,
+      c("STANDARD", "EF")] -> base
+
+  efb <- EmissionFactors(unlist(lapply(seq_along(standard), function(i) {
+    base[STANDARD == standard[i]]$EF
+  })))
+
+  return(efb)
+}
+
+
+#' @title Correction of Chinese emission factors by speed
+#' @family China
+#' @name ef_china_long
+#' @description Chinese emission factors in long format
+#' @param v Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"
+#' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
+#' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
+#'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
+#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
+#' @param f Character;fuel: "G", "D", "CNG", "ALL"
+#' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
+#' or "Evaporative_parking"
+#' @return long data.frame
+#' @importFrom data.table setDT
+#' @export
+#' @examples {
+#' ef_china_long(standard = "I", p = "CO")
+#' }
+ef_china_long <- function(v = "PV",
+                          t = "Small",
+                          f = "G",
+                          standard,
+                          p){
+  chi <- sysdata$ef_china
+
+  data.table::setDT(chi)
+
+  chi[VEH == v &
+        TYPE == t &
+        FUEL == f &
+        POLLUTANT == p,
+      c("STANDARD", "EF")] -> base
+
+  efb <- EmissionFactors(unlist(lapply(seq_along(standard), function(i) {
+    base[STANDARD == standard[i]]$EF
+  })))
+
+  return(efb)
+}
+
+
+#' @title Correction of Chinese emission factors by deterioration
+#' @family China
+#' @name ef_china_det
+#' @description Chinese emission factors in long format
+#' @param v Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"
+#' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
+#' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
+#'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
+#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
+#' @param f Character;fuel: "G", "D", "CNG", "ALL"
+#' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
+#' or "Evaporative_parking"
+#' @param yeardet Integer; any of 2014, 2015, 2016, 2017, 2018
+#' @return long data.frame
+#' @importFrom data.table setDT
+#' @export
+#' @examples {
+#' ef_china_det(standard = "I", p = "CO")
+#' }
+ef_china_det <- function(v = "PV",
+                         t = "Small",
+                         f = "G",
+                         standard,
+                         yeardet = 2015,
+                         p){
+  det <- sysdata$det_china_long
+
+  data.table::setDT(det)
+  if(f == "G") {
+
+    det[VEH == v &
+          TYPE == t &
+          FUEL == f &
+          YEAR == yeardet &
+          POLLUTANT == p,
+        c("STANDARD",
+          "DET")] -> basedet
+
+
+    efs <- unlist(lapply(seq_along(standard), function(i) {
+      basedet[STANDARD == standard[i]]$DET
+    }))
+
+  } else {
+    efs <- rep(1, length(standard))
+  }
+  return(efs)
+}
+
+
+#' @title Correction of Chinese emission factors by speed
+#' @family China
+#' @name ef_china_speed
+#' @description Chinese emission factors in long format
+#' @param speed numeric speed km/h
+#' @param f Character;fuel: "G", "D", "CNG"
+#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
+#' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
+#' or "Evaporative_parking"
+#' @return long data.frame
+#' @importFrom data.table setDT
+#' @export
+#' @examples {
+#' data(net)
+#' head(ef_china_speed(speed = net$ps, standard = "I", p = "CO"))
+#' }
+ef_china_speed <- function(speed,
+                           f = "G",
+                         standard,
+                         p){
+  efsp <- sysdata$speed_china
+
+  cng <- efsp[efsp$FUEL == "G", ]
+  cng$FUEL <- "CNG"
+  efsp <- rbind(efsp, cng)
+
+  data.table::setDT(efsp)
+
+  sp <- as.numeric(speed)
+
+  efsp[FUEL == f &
+         POLLUTANT == p] -> basesp
+
+# FIX
+  efs <- lapply(seq_along(standard), function(i) {
+    sp_std <- basesp[STANDARD == standard[i]]
+
+    ifelse(
+      sp < 20, sp_std$S20,
+      ifelse(
+        sp >= 20 & sp < 30, sp_std$S20_30,
+        ifelse(
+          sp >= 30 & sp < 40, sp_std$S30_40,
+          ifelse(
+            sp >= 40 & sp < 80, sp_std$S40_80,
+            sp_std$S80
+          )
+        )
+
+      ))
+
+  })
+  efs <- as.data.frame(do.call("cbind", efs))
+
+  return(efs)
+}
+

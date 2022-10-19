@@ -112,6 +112,15 @@
     <loc>http://atmoschem.github.io/vein/reference/ef_china.html</loc>
   </url>
   <url>
+    <loc>http://atmoschem.github.io/vein/reference/ef_china_det.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/ef_china_long.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/ef_china_speed.html</loc>
+  </url>
+  <url>
     <loc>http://atmoschem.github.io/vein/reference/ef_eea.html</loc>
   </url>
   <url>
@@ -329,6 +338,9 @@
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein/reference/temp_fact.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/temp_veh.html</loc>
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein/reference/to_latex.html</loc>

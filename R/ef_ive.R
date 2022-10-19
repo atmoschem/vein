@@ -1,9 +1,14 @@
-#' Base emissions factors from International Vehicle Emissions (IVE) model
+#' DEPRECATED Base emissions factors from International Vehicle Emissions (IVE) model
+#'
+#'
+#' This function was deprecated. If the user want some UF-based EF, run MOVES
+#' and extract EF
 #'
 #' \code{\link{ef_ive}} returns the base emission factors from the the IVE
 #' model. This function depend on vectorized mileage, which means your can
 #' enter with the mileage by age of use and the name of the pollutant.
 #'
+#' @name vein-deprecated
 #' @param description Character; "Auto/Sml Truck" "Truck/Bus" or"Sml Engine".
 #' @param fuel Character; "Petrol", "NG Retrofit", "Natural Gas", "Prop Retro.",
 #' "Propane", "EthOH Retrofit", "OEM Ethanol", "Diesel", "Ethanol" or "CNG/LPG".
@@ -58,22 +63,25 @@ ef_ive <- function(description = "Auto/Sml Truck",
                    mileage,
                    pol,
                    details = FALSE){
-  ive <- sysdata$ive
-  a <- ive[ive$description == description &
-             ive$fuel == fuel &
-             ive$weight == weight &
-             ive$air_fuel_control == air_fuel_control &
-             ive$exhaust == exhaust &
-             ive$evaporative == evaporative, ]
-  if(nrow(a) == 0) stop("No data. Improve your selection")
-  if(details) print(a$veh[1])
-  FF <- a$f[[1]]
-  if(pol %in% names(ive)[10:24]){
-    ef <- vein::EmissionFactors(FF(mileage = mileage/1000, pol = pol, a = a))
-    return(ef)
-  } else if(pol %in% names(ive)[25:39]){
-    cat("units in g/start\n")
-    ef <- FF(mileage = mileage/1000, pol = pol, a = a)
-    return(ef)
-  }
+#   ive <- sysdata$ive
+#   a <- ive[ive$description == description &
+#              ive$fuel == fuel &
+#              ive$weight == weight &
+#              ive$air_fuel_control == air_fuel_control &
+#              ive$exhaust == exhaust &
+#              ive$evaporative == evaporative, ]
+#   if(nrow(a) == 0) stop("No data. Improve your selection")
+#   if(details) print(a$veh[1])
+#   FF <- a$f[[1]]
+#   if(pol %in% names(ive)[10:24]){
+#     ef <- vein::EmissionFactors(FF(mileage = mileage/1000, pol = pol, a = a))
+#     return(ef)
+#   } else if(pol %in% names(ive)[25:39]){
+#     cat("units in g/start\n")
+#     ef <- FF(mileage = mileage/1000, pol = pol, a = a)
+#     return(ef)
+#   }
+# }
+  .Deprecated("ef_ive")
+  "ef_ive"
 }
