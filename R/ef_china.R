@@ -891,6 +891,63 @@ ef_china_long <- function(v = "PV",
 }
 
 
+
+#' @title Correction of Chinese emission factors by sulfur
+#' @family China
+#' @name ef_china_s
+#' @description Correction of Chinese emission
+#' @param s Numeric sulfur content in ppm
+#' @param f Character;fuel: "G", "D", "CNG", "ALL"
+#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
+#' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
+#' or "Evaporative_parking"
+#' @return long data.frame
+#' @importFrom data.table setDT melt.data.table
+#' @export
+#' @examples {
+#' ef_china_s(s = 1000, standard = "I", p = "CO")
+#' }
+ef_china_s <- function(s,
+                       f = "G",
+                       standard,
+                       p){
+  chi <- sysdata$sulphur_china
+
+  data.table::setDT(chi)
+
+  VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
+
+  chi <-  data.table::melt.data.table(data = chi,
+                                      id.vars = c("FUEL",
+                                                  "STANDARD",
+                                                  "POLLUTANT"),
+                                      variable.name = "sulfur")
+  xs <- ifelse(
+    s >=800, "S800",
+    ifelse(
+      s < 800 & s >= 500, "S500",
+      ifelse(
+        s < 500 & s >= 350, "S350",
+        ifelse(
+          s < 350 & s >= 150, "S150",
+          ifelse(
+            s < 150 & s >= 50, "S50",
+            "S10")))))
+
+  sulfur <- NULL
+  chi[FUEL == f &
+        POLLUTANT == p &
+        sulfur == xs] -> base
+
+
+  efb <- unlist(lapply(seq_along(standard), function(i) {
+    base[STANDARD == standard[i]]$value
+  }))
+
+  return(efb)
+}
+
+
 #' @title Correction of Chinese emission factors by deterioration
 #' @family China
 #' @name ef_china_det
@@ -1016,7 +1073,6 @@ ef_china_speed <- function(speed,
 #' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
 #'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
 #' @param f Character;fuel: "G", "D", "CNG"
-#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
@@ -1024,16 +1080,14 @@ ef_china_speed <- function(speed,
 #' @export
 #' @examples {
 #' data(net)
-#' head(ef_china_te(te = net$ps, standard = "I", p = "CO"))
+#' head(ef_china_te(te = net$ps,  p = "CO"))
 #' head(ef_china_te(te = net$ps,
-#'                  standard = c("II", "I"),
 #'                  p = "NOx"))
 #' }
 ef_china_te <- function(te,
                         v = "PV",
                         t = "Small",
                         f = "G",
-                        standard,
                         p){
   efte <- sysdata$te_china
 
@@ -1124,21 +1178,19 @@ ef_china_hu <- function(hu,
 #' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
 #'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
 #' @param f Character;fuel: "G", "D", "CNG"
-#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
 #' @importFrom data.table setDT
 #' @export
 #' @examples {
-#' ef_china_th(hu = 60, te = 25, standard = "I", p = "CO")
+#' ef_china_th(hu = 60, te = 25,  p = "CO")
 #' }
 ef_china_th <- function(hu,
                         te,
                         v = "PV",
                         t = "Small",
                         f = "G",
-                        standard,
                         p){
   efth <- sysdata$tehu_china
 
@@ -1178,20 +1230,18 @@ ef_china_th <- function(hu,
 #' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
 #'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
 #' @param f Character;fuel: "G", "D", "CNG"
-#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
 #' @importFrom data.table setDT
 #' @export
 #' @examples {
-#' ef_china_h(h = 1600, standard = "I", p = "CO")
+#' ef_china_h(h = 1600, p = "CO")
 #' }
 ef_china_h <- function(h,
                        v = "PV",
                        t = "Small",
                        f = "G",
-                       standard,
                        p){
   efhi <- sysdata$h_china
 
