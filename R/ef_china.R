@@ -1030,9 +1030,7 @@ ef_china_speed <- function(speed,
                            p){
   efsp <- sysdata$speed_china
 
-  cng <- efsp[efsp$FUEL == "G", ]
-  cng$FUEL <- "CNG"
-  efsp <- rbind(efsp, cng)
+f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
 
   data.table::setDT(efsp)
 
@@ -1094,9 +1092,7 @@ ef_china_te <- function(te,
                         p){
   efte <- sysdata$te_china
 
-  cng <- efte[efte$FUEL == "G", ]
-  cng$FUEL <- "CNG"
-  efte <- rbind(efte, cng)
+  f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
 
   data.table::setDT(efte)
 
@@ -1146,9 +1142,7 @@ ef_china_hu <- function(hu,
                         p){
   efh <- sysdata$humidity_china
 
-  cng <- efh[efh$FUEL == "G", ]
-  cng$FUEL <- "CNG"
-  efh <- rbind(efh, cng)
+  f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
 
   data.table::setDT(efh)
 
@@ -1197,9 +1191,7 @@ ef_china_th <- function(hu,
                         p){
   efth <- sysdata$tehu_china
 
-  cng <- efth[efth$FUEL == "G", ]
-  cng$FUEL <- "CNG"
-  efth <- rbind(efth, cng)
+  f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
 
   data.table::setDT(efth)
 
@@ -1248,9 +1240,7 @@ ef_china_h <- function(h,
                        p){
   efhi <- sysdata$h_china
 
-  cng <- efhi[efhi$FUEL == "G", ]
-  cng$FUEL <- "CNG"
-  efhi <- rbind(efhi, cng)
+  f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
 
   data.table::setDT(efhi)
 
@@ -1326,7 +1316,7 @@ emis_china <- function(x,
   if(length(h) != nrow(x)) stop("length h and nrow x must have equal")
 
   # Vehicle
-  if(verbose) cat("]nProcessing Vehicles\n")
+  if(verbose) cat("\nProcessing Vehicles\n")
   nr <- nrow(x)
   nc <- ncol(x)
   x <- temp_veh(x = x, tfs = tfs)
