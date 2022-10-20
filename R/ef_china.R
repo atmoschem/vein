@@ -911,6 +911,9 @@ ef_china_s <- function(s,
                        f = "G",
                        standard,
                        p){
+
+  f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
+
   chi <- sysdata$sulphur_china
 
   data.table::setDT(chi)
