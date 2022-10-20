@@ -947,6 +947,8 @@ ef_china_s <- function(s,
     base[STANDARD == standard[i]]$value
   }))
 
+  if(nrow(base) == 0) efb <- rep(1, length(standard))
+
   return(efb)
 }
 
@@ -985,17 +987,17 @@ ef_china_det <- function(v = "PV",
 
   data.table::setDT(det)
 
-    VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
+  VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
 
-    det[VEH == v &
-          TYPE == t &
-          FUEL == f &
-          YEAR == yeardet &
-          POLLUTANT == p,
-        c("STANDARD",
-          "DET")] -> basedet
+  det[VEH == v &
+        TYPE == t &
+        FUEL == f &
+        YEAR == yeardet &
+        POLLUTANT == p,
+      c("STANDARD",
+        "DET")] -> basedet
 
-    if(nrow(basedet) > 0) {
+  if(nrow(basedet) > 0) {
 
     efs <- unlist(lapply(seq_along(standard), function(i) {
       basedet[STANDARD == standard[i]]$DET
@@ -1033,7 +1035,7 @@ ef_china_speed <- function(speed,
                            p){
   efsp <- sysdata$speed_china
 
-f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
+  f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", f)
 
   data.table::setDT(efsp)
 
