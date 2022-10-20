@@ -1,6 +1,6 @@
-#' @title Estimation with Chinese factors
+#' @title Estimation with long format
 #' @family China
-#' @name emis_china
+#' @name emis_long
 #' @description Emissions estimates
 #' @param x Vehicles data.frame. x repeats down for each hour
 #' @param lkm Length of each link in km. lkm repeats down for each hour

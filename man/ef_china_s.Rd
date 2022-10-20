@@ -37,6 +37,7 @@ Other China:
 \code{\link{ef_china_te}()},
 \code{\link{ef_china_th}()},
 \code{\link{ef_china}()},
-\code{\link{emis_china}()}
+\code{\link{emis_china}()},
+\code{\link{emis_long}()}
 }
 \concept{China}
