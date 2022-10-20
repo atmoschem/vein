@@ -1324,7 +1324,7 @@ emis_china <- function(x,
   nc <- ncol(x)
   x <- temp_veh(x = x, tfs = tfs)
 
-  if(verbose) cat("Estimationg Base EF\n")
+  if(verbose) cat("Estimating Base EF\n")
   # base
   std1 <- standard
   ef_base <- ef_china_long(v = v,
