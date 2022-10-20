@@ -7,7 +7,7 @@
 ef_china_h(h, v = "PV", t = "Small", f = "G", p)
 }
 \arguments{
-\item{h}{numeric aktitude}
+\item{h}{numeric altitude}
 
 \item{v}{Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"}
 
@@ -40,6 +40,7 @@ Other China:
 \code{\link{ef_china_s}()},
 \code{\link{ef_china_te}()},
 \code{\link{ef_china_th}()},
-\code{\link{ef_china}()}
+\code{\link{ef_china}()},
+\code{\link{emis_china}()}
 }
 \concept{China}
