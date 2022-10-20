@@ -966,6 +966,9 @@ ef_china_s <- function(s,
 #' @export
 #' @examples {
 #' ef_china_det(standard = "I", p = "CO")
+#' ef_china_det(standard = c("I", "III"),
+#'              p = "CO",
+#'              f = "D")
 #' }
 ef_china_det <- function(v = "PV",
                          t = "Small",
@@ -978,7 +981,6 @@ ef_china_det <- function(v = "PV",
   det <- sysdata$det_china_long
 
   data.table::setDT(det)
-  if(f == "G") {
 
     VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
 
@@ -990,6 +992,7 @@ ef_china_det <- function(v = "PV",
         c("STANDARD",
           "DET")] -> basedet
 
+    if(nrow(basedet) > 0) {
 
     efs <- unlist(lapply(seq_along(standard), function(i) {
       basedet[STANDARD == standard[i]]$DET
@@ -1296,7 +1299,7 @@ ef_china_h <- function(h,
 #' @examples {
 #' ef_china_h(h = 1600, p = "CO")
 #' }
-emis_china2 <- function(x,
+emis_china <- function(x,
                        lkm,
                        tfs,
                        v = "PV",
@@ -1323,7 +1326,7 @@ emis_china2 <- function(x,
   if(length(h) != nrow(x)) stop("length h and nrow x must have equal")
 
   # Vehicle
-  if(verbose) cat("Processing Vehicles\n")
+  if(verbose) cat("]nProcessing Vehicles\n")
   nr <- nrow(x)
   nc <- ncol(x)
   x <- temp_veh(x = x, tfs = tfs)
@@ -1380,7 +1383,7 @@ emis_china2 <- function(x,
                             f = f,
                             p = p)
 
-  if(verbose) cat("Correcting Base EF by humidity iff T > 24\n")
+  if(verbose) cat("Correcting Base EF by humidity if T > 24\n")
   # temperaturehumidity
   ef_base_th <- ef_china_th(hu = hu,
                             te = te,
@@ -1393,6 +1396,7 @@ emis_china2 <- function(x,
   # rep met each hour
   efmet <- rep(efmet, each = nc)
 
+  if(verbose) cat("Correcting Base EF by Altitude\n")
   # altitude
   ef_base_h <- ef_china_h(h = h,
                           v = v,

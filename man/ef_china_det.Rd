@@ -31,6 +31,9 @@ Correction of Chinese emission
 \examples{
 {
 ef_china_det(standard = "I", p = "CO")
+ef_china_det(standard = c("I", "III"),
+             p = "CO",
+             f = "D")
 }
 }
 \seealso{
@@ -43,6 +46,6 @@ Other China:
 \code{\link{ef_china_te}()},
 \code{\link{ef_china_th}()},
 \code{\link{ef_china}()},
-\code{\link{emis_china}}
+\code{\link{emis_china}()}
 }
 \concept{China}

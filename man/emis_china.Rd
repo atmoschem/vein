@@ -2,10 +2,9 @@
 % Please edit documentation in R/ef_china.R
 \name{emis_china}
 \alias{emis_china}
-\alias{emis_china2}
 \title{Estimation with Chinese factors}
 \usage{
-emis_china2(
+emis_china(
   x,
   lkm,
   tfs,
