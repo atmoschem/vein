@@ -1288,6 +1288,7 @@ ef_china_h <- function(h,
 #' @param yeardet Year, default 2016
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
+#' @param array Logical to return EmissionsArray or not
 #' @param verbose Logical to show more info
 #' @return long data.frame
 #' @importFrom data.table setDT
@@ -1295,7 +1296,7 @@ ef_china_h <- function(h,
 #' @examples {
 #' ef_china_h(h = 1600, p = "CO")
 #' }
-emis_china <- function(x,
+emis_china2 <- function(x,
                        lkm,
                        tfs,
                        v = "PV",
@@ -1309,16 +1310,17 @@ emis_china <- function(x,
                        h,
                        yeardet = 2016,
                        p,
-                       verbose = TRUE){
+                       verbose = TRUE,
+                       array = FALSE){
 
   # checks
   if(length(tfs) != length(te)) stop("tfs, te and hu must have equal length")
   if(length(tfs) != length(hu)) stop("tfs, te and hu must have equal length")
 
   speed <- as.data.frame(speed)
-  if(ncol(speed) != ncol(x)) stop("speed and x must have equal length of cols")
+  # if(ncol(speed) != ncol(x)) stop("speed and x must have equal length of cols")
 
-  if(length(h) != ncol(x)) stop("length h and nrow x must have equal")
+  if(length(h) != nrow(x)) stop("length h and nrow x must have equal")
 
   # Vehicle
   if(verbose) cat("Processing Vehicles\n")
@@ -1410,9 +1412,10 @@ emis_china <- function(x,
 
 
   if(verbose) cat("Estimating emissions\n")
-  E <- do.call("cbind", lapply(1:nc, function(i) {
-    ef_base_speedv2[, i] * x[, i] * rep(lkm, length(tfs))
-  }))
+  E <- Emissions(do.call("cbind", lapply(1:nc, function(i) {
+    as.data.frame(ef_base_speedv2)[, i] * as.data.frame(x)[, i] * rep(lkm, length(tfs))
+  })))
+  # return(E)
   E$Hour <- rep(seq_along(tfs), each = nr)
 
   if(array) {

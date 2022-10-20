@@ -2,9 +2,10 @@
 % Please edit documentation in R/ef_china.R
 \name{emis_china}
 \alias{emis_china}
+\alias{emis_china2}
 \title{Estimation with Chinese factors}
 \usage{
-emis_china(
+emis_china2(
   x,
   lkm,
   tfs,
@@ -19,7 +20,8 @@ emis_china(
   h,
   yeardet = 2016,
   p,
-  verbose = TRUE
+  verbose = TRUE,
+  array = FALSE
 )
 }
 \arguments{
@@ -55,6 +57,8 @@ emis_china(
 or "Evaporative_parking"}
 
 \item{verbose}{Logical to show more info}
+
+\item{array}{Logical to return EmissionsArray or not}
 }
 \value{
 long data.frame
