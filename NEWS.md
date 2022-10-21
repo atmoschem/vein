@@ -5,6 +5,7 @@ NEWS
 
 - add more env chinese ef
 - remove ive. It is better to run MOVES and extract EF
+- add project china_bu_chem
 
 ### vein 0.9.91
 

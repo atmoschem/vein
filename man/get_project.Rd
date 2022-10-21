@@ -36,6 +36,7 @@ get_project(directory, case = "brasil", url)
   sebr_cb05co2_im  \tab Top-down SP, MG and RJ IM\tab CETESB+tunnel\tab  .rds\cr
   eu_bu_chem      \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
   eu_bu_chem_simple \tab Bottom-up  chemical mechanisms 7 veh\tab EEA 2019\tab  .rds\cr
+  china_bu_chem      \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
 }}
 
 \item{url}{String, with the URL to download VEIN project}

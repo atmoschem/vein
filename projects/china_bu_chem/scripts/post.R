@@ -1,6 +1,4 @@
-# grade
-g <- st_transform(g, crs)
-
+file.remove(list.files(path = "post/", recursive = T, full.names = T))
 # streets  ####
 switch(language,
         "portuguese" = message("\nAgregando emissões por rua...\n"),
@@ -16,6 +14,70 @@ for (i in seq_along(pol)) {
                 ifelse(pols == "_HC", "HC", pols), ".rds"
         ))
 }
+
+switch(language,
+       "portuguese" = message("\nIdentificando NMHC manualmente\n"),
+       "english" = message("\nManually identifying NMHC\n"),
+       "spanish" = message("\nIdentificando NMHC manualmenten")
+)
+
+#Special for future speciation
+x <- emis_merge(pol = "_G", 
+                what = "HC_STREETS.rds",
+                path = "emi", 
+                net = net, 
+                k = units::set_units(1, "1/h")*0.95
+                ) # assumming 95% of HC is NMHC
+saveRDS(x, "post/streets/G_NMHC.rds")
+
+x <- emis_merge(pol = "_D", 
+                what = "HC_STREETS.rds",
+                path = "emi", 
+                net = net, 
+                k = units::set_units(1, "1/h")*0.95
+) # assumming 95% of HC is NMHC
+saveRDS(x, "post/streets/D_NMHC.rds")
+
+x <- emis_merge(pol = "_CNG", 
+                what = "HC_STREETS.rds",
+                path = "emi", 
+                net = net, 
+                k = units::set_units(1, "1/h")*0.95
+) # assumming 95% of HC is NMHC
+saveRDS(x, "post/streets/CNG_NMHC.rds")
+
+x <- emis_merge(pol = "Evaporative", 
+                what = "STREETS.rds",
+                path = "emi", 
+                net = net, 
+                k = units::set_units(1, "1/h")
+) # assumming 95% of HC is NMHC
+saveRDS(x, "post/streets/EVAP_G_NMHC.rds")
+
+switch(language,
+       "portuguese" = message("\nIdentificando NO and NO2 manualmente\n"),
+       "english" = message("\nManually identifying NO and NO2\n"),
+       "spanish" = message("\nIdentificando NO and NO2 manualmenten")
+)
+
+x <- emis_merge(pol = "NOx", 
+                what = "STREETS.rds",
+                path = "emi", 
+                net = net, 
+                k = units::set_units(1, "1/h")*0.9
+) # assumming 90% of NOx is NO
+saveRDS(x, "post/streets/NO.rds")
+
+
+x <- emis_merge(pol = "NOx", 
+                what = "STREETS.rds",
+                path = "emi", 
+                net = net, 
+                k = units::set_units(1, "1/h")*0.1
+) # assumming 10% of NOx is NO2
+saveRDS(x, "post/streets/NO2.rds")
+
+
 
 # grids ####
 switch(language,
@@ -40,35 +102,19 @@ switch(language,
         "english" = message("\nAgregating emissions in data.table...\n"),
         "spanish" = message("\nAgregando emisiones en data.table...\n")
 )
-for (i in seq_along(pol)) {
-        pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-        x <- emis_merge(pols, what = "DF.rds", FALSE)
-        saveRDS(x, paste0(
-                "post/datatable/",
-                ifelse(pols == "_HC", "HC", pols), ".rds"
-        ))
-}
 
-# Agregando emissões por categoria ####
-switch(language,
-        "portuguese" = message("\nAgregando emissões por categoria\n"),
-        "english" = message("\nAggregating emissions by category...\n"),
-        "spanish" = message("\nAgregando emisiones por categoria...\n")
+dt <- rbind(
+  fread("emi/DF_EXHAUST.csv"),
+  fread("emi/DF_EVAP.csv"),
+  fread("emi/DF_WEAR.csv")
 )
-
-dt <- data.table::rbindlist(
-        lapply(seq_along(pol), function(i) {
-                pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-                x <- emis_merge(pols, what = "DF.rds", FALSE)
-        })
-)
-dt$pollutant <- as.character(dt$pollutant)
-dt$t <- units::set_units(dt$g, t)
 saveRDS(dt, "post/datatable/emissions.rds")
-data.table::fwrite(dt, "csv/emissions.csv", row.names = FALSE)
 
-
-dt0 <- dt[, round(sum(t) * factor_emi, 2), by = .(pollutant)]
+dt$g <- units::set_units(dt$g, "g")
+dt$t <- units::set_units(dt$g, "t")
+dt0 <- dt[, 
+          round(sum(t) * factor_emi, 2), 
+          by = .(pollutant)]
 print(dt0)
 
 

@@ -56,7 +56,7 @@ emis_long <- function(x,
                       array = FALSE){
 
   # checks
-  if(nrow(x) != length(lkm)) stop("length lkm and nrow x must be equa")
+  if(nrow(x) != length(lkm)) stop("length lkm and nrow x must be equal")
   if(length(tfs) != ncol(speed)) stop("length tfs and ncol speed must be equal")
   if(ncol(ef) != ncol(x)) stop("ncol of ef and x must be equal")
   LKM <- rep(lkm, length(tfs))
