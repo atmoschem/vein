@@ -14,6 +14,7 @@ veh <- as.data.frame(veh)
 fuel <- as.data.frame(fuel)
 met <- as.data.frame(met)
 std <- as.data.frame(std)
+h <- as.data.frame(h)
 
 # checkar metadata$vehicles ####
 switch(language,
@@ -135,6 +136,7 @@ saveRDS(veh, "config/fleet_age.rds")
 saveRDS(fuel, "config/fuel.rds")
 saveRDS(met, "config/met.rds")
 saveRDS(std, "config/std.rds")
+saveRDS(h, "config/h.rds")
 
 # pastas
 if (delete_directories) {

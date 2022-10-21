@@ -15,13 +15,17 @@ switch(language,
   "english" = cat("\nPlotting streets\n"),
   "spanish" = cat("\nPlotando calles\n")
 )
+
+pol <- list.files(path = "post/streets/", full.names = T)
+na <- list.files(path = "post/streets/", full.names = F)
+
 for (i in seq_along(pol)) {
   for (j in seq_along(hours)) {
-    x <- readRDS(paste0("post/streets/", pol[i], ".rds"))
+    x <- readRDS(pol[i])
     cn <- names(x)[hours + 1]
 
     png(
-      filename = paste0("images/STREETS_", pol[i], "_", hh[j], ".png"),
+      filename = paste0("images/STREETS_", na[i], "_", hh[j], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white", res = 300
     )
@@ -29,7 +33,7 @@ for (i in seq_along(pol)) {
     plot(x[as.numeric(x[[cn[j]]]) > 0, ][cn[j]],
       axes = TRUE,
       bg = bg,
-      main = paste0(pol[i], ": ", tit, " [g/h] ", hh[j], " LT"),
+      main = paste0(na[i], ": ", tit, " [g/h] ", hh[j], " LT"),
       pal = cptcity::cpt(colorRampPalette = TRUE, rev = TRUE, pal = pal), lwd = 2
     )
     dev.off()
@@ -42,13 +46,17 @@ switch(language,
   "english" = cat("\nPlotting grids\n"),
   "spanish" = cat("\nPlotando grillas\n")
 )
+
+pol <- list.files(path = "post/grids/", full.names = T)
+na <- list.files(path = "post/grids/", full.names = F)
+
 for (i in seq_along(pol)) {
   for (j in seq_along(hours)) {
-    x <- readRDS(paste0("post/grids/", pol[i], ".rds"))
+    x <- readRDS(pol[i])
     cn <- names(x)[hours + 1]
 
     png(
-      filename = paste0("images/GRIDS_", pol[i], "_", hh[j], ".png"),
+      filename = paste0("images/GRIDS_", na[i], "_", hh[j], ".png"),
       width = 2100, height = 1500, units = "px", pointsize = 12,
       bg = "white", res = 300
     )
@@ -57,7 +65,7 @@ for (i in seq_along(pol)) {
       axes = TRUE,
       bg = bg,
       lty = 0.3,
-      main = paste0(pol[i], ": ", tit, " [g/km^2/h] ", hh[j], " LT"),
+      main = paste0(na[i], ": ", tit, " [g/km^2/h] ", hh[j], " LT"),
       pal = cptcity::cpt(colorRampPalette = TRUE, rev = TRUE, pal = pal)
     )
     dev.off()
@@ -65,11 +73,18 @@ for (i in seq_along(pol)) {
 }
 
 
+# emi
+switch(language,
+       "portuguese" = cat("\nPlotando emissoes\n"),
+       "english" = cat("\nPlotting emissions\n"),
+       "spanish" = cat("\nPlotando emisiones\n")
+)
 # categoria
 dt <- readRDS("post/datatable/emissions.rds")
+dt$g <- units::set_units(dt$g, "g")
+dt$t <- units::set_units(dt$g, "t")
+
 dt0 <- dt[, round(sum(t) * factor_emi, 2), by = .(pollutant, type_emi)]
-
-
 dt$veh <- as.character(dt$veh)
 uv <- unique(dt$veh)
 n_PC <- uv[grep(pattern = "PC", x = uv)]
@@ -99,7 +114,7 @@ switch(language,
   "english" = cat("\nPlotting categories by total\n"),
   "spanish" = cat("\nPlotando categorias por total\n")
 )
-dt1 <- dt[pollutant %in% pol,
+dt1 <- dt[,
   as.numeric(sum(t)) * factor_emi,
   by = .(pollutant, veh)
 ]
@@ -107,6 +122,7 @@ dt1$veh <- factor(
   x = dt1$veh,
   levels = metadata$vehicles
 )
+pol <- unique(dt1$pollutant)
 for (i in seq_along(pol)) {
   p <- ggplot(
     dt1[pollutant == pol[i]],
@@ -137,7 +153,7 @@ switch(language,
   "english" = cat("\nPlotting categories by type_emi\n"),
   "spanish" = cat("\nPlotando categorias por type_emi\n")
 )
-dt1 <- dt[pollutant %in% pol,
+dt1 <- dt[,
   as.numeric(sum(t)) * factor_emi,
   by = .(pollutant, veh, type_emi)
 ]
@@ -179,7 +195,7 @@ switch(language,
   "spanish" = cat("\nPlotando categorias por total y tipo\n")
 )
 
-dt1 <- dt[pollutant %in% pol,
+dt1 <- dt[,
   as.numeric(sum(t)) * factor_emi,
   by = .(pollutant, veh, type_emi)
 ]
@@ -214,7 +230,7 @@ switch(language,
   "english" = cat("\nPlotting categories by hour\n"),
   "spanish" = cat("\nPlotando categorias por hora\n")
 )
-dt1 <- dt[pollutant %in% pol,
+dt1 <- dt[,
   as.numeric(sum(t)) * factor_emi,
   by = .(pollutant, vehicles, hour)
 ]
@@ -245,7 +261,7 @@ switch(language,
   "english" = cat("\nPlotting categories by hour and type_emi\n"),
   "spanish" = cat("\nPlotando categorias por hora y type_emi\n")
 )
-dt1 <- dt[pollutant %in% pol,
+dt1 <- dt[,
   as.numeric(sum(t)) * factor_emi,
   by = .(pollutant, vehicles, hour, type_emi)
 ]
@@ -274,7 +290,7 @@ for (i in seq_along(pole)) {
 }
 
 # totais x age
-dt1 <- dt[pollutant %in% pol,
+dt1 <- dt[,
   as.numeric(sum(t)) * factor_emi,
   by = .(pollutant, vehicles, age)
 ]

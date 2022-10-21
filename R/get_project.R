@@ -31,6 +31,7 @@
 #'   sebr_cb05co2_im  \tab Top-down SP, MG and RJ IM\tab CETESB+tunnel\tab  .rds\cr
 #'   eu_bu_chem      \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
 #'   eu_bu_chem_simple \tab Bottom-up  chemical mechanisms 7 veh\tab EEA 2019\tab  .rds\cr
+#'   china_bu_chem      \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note default case can be any of "brasil", "brazil", "brazil_bu", "brasil_bu", they are
@@ -227,6 +228,15 @@ get_project <- function(directory,
     # eu_bu_chem_simple ####
   } else if(case %in% c("eu_bu_chem_simple")){
     URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/eu_bu_chem_simple.tar.gz"
+    tf <- paste0(tempfile(), ".tar.gz")
+    utils::download.file(url = URL,
+                         destfile =  tf)
+    utils::untar(tarfile = tf, exdir = directory)
+    message("Your directory for vehicular emissions is in ", directory)
+
+    # china_bu_chem ####
+  } else if(case %in% c("china_bu_chem")){
+    URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/china_bu_chem.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)

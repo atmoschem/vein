@@ -191,21 +191,21 @@ data.table::setkey(dt0, "fuel")
 
 names(dt0)[2] <- "estimation_t"
 
-dtf <- merge(dt0, fuel, by = "fuel")
+dtf <- merge(dt0, 
+             fuel[, c("fuel", 
+                      "consumption_t")], 
+             by = "fuel")
 
 setorderv(dtf, cols = c("fuel"))
 
-dtf$density_tm3 <- units::set_units(dtf$density_tm3, "t/m^3")
-dtf$consumption_lt <- units::set_units(dtf$consumption_lt, "l")
-dtf$consumption_m3 <- units::set_units(dtf$consumption_lt, "m^3")
-dtf$consumption_t <- dtf$consumption_m3 * dtf$density_tm3
+dtf$consumption_t <- units::set_units(dtf$consumption_t, "t")
 dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
 print(dtf[, c("fuel", "estimation_t", "consumption_t", "estimation_consumption")])
 
 # calibrate k ####
 k_D <- as.numeric(1/dtf[fuel == "D"]$estimation_consumption)
 k_G <- as.numeric(1/dtf[fuel == "G"]$estimation_consumption)
-k_CNG <- as.numeric(1/dtf[fuel == "G"]$estimation_consumption)
+k_CNG <- as.numeric(1/dtf[fuel == "CNG"]$estimation_consumption)
 
 # traffic ####
 language <- "english" # portuguese english spanish
@@ -410,14 +410,15 @@ data.table::setkey(dt0, "fuel")
 
 names(dt0)[2] <- "estimation_t"
 
-dtf <- merge(dt0, fuel, by = "fuel")
+
+dtf <- merge(dt0, 
+             fuel[, c("fuel", 
+                      "consumption_t")], 
+             by = "fuel")
 
 setorderv(dtf, cols = c("fuel"))
 
-dtf$density_tm3 <- units::set_units(dtf$density_tm3, "t/m^3")
-dtf$consumption_lt <- units::set_units(dtf$consumption_lt, "l")
-dtf$consumption_m3 <- units::set_units(dtf$consumption_lt, "m^3")
-dtf$consumption_t <- dtf$consumption_m3 * dtf$density_tm3
+dtf$consumption_t <- units::set_units(dtf$consumption_t, "t")
 dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
 print(dtf[, c("fuel", "estimation_t", "consumption_t", "estimation_consumption")])
 
