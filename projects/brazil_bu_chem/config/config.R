@@ -11,6 +11,7 @@ tfs <- as.data.frame(tfs)
 veh <- as.data.frame(veh)
 fuel <- as.data.frame(fuel)
 met <- as.data.frame(met)
+s <- as.data.frame(s)
 
 # checkar metadata$vehicles ####
 switch(language,
@@ -130,6 +131,7 @@ saveRDS(tfs, "config/tfs.rds")
 saveRDS(veh, "config/fleet_age.rds")
 saveRDS(fuel, "config/fuel.rds")
 saveRDS(met, "config/met.rds")
+saveRDS(s, "config/s.rds")
 
 # pastas
 if (delete_directories) {
@@ -328,6 +330,41 @@ for (i in seq_along(n_veh)) {
                 spl = 8
         )
         dev.off()
+}
+
+
+# sulphur/enxofre ####
+switch(language,
+       "portuguese" = cat("Plotando enxofre (ppm) \n"),
+       "english" = cat("Plotting sulfur (ppm) \n"),
+       "spanish" = cat("Plotando azufre (ppm) \n")
+)
+
+for (i in seq_along(n_veh)) {
+  df_x <- s[, n_veh[[i]]]
+  
+  png(
+    paste0(
+      "images/S_",
+      names(n_veh)[i],
+      ".png"
+    ),
+    2000, 1500, "px",
+    res = 300
+  )
+  colplot(
+    df = df_x,
+    cols = n_veh[[i]],
+    xlab = "Age",
+    ylab = "S (ppm)",
+    main = names(n_veh)[i],
+    type = "l",
+    pch = NULL,
+    lwd = 1,
+    theme = theme,
+    spl = 8
+  )
+  dev.off()
 }
 
 
