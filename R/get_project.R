@@ -48,7 +48,7 @@
 #' }
 #'
 get_project <- function(directory,
-                        case = "brasil",
+                        case = "brazil_bu_chem",
                         url){
 
   if(missing(directory)) stop("Please, add a path to a directory") #nocov start

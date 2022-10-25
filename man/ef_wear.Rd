@@ -9,7 +9,8 @@ ef_wear(wear, type, pol = "TSP", speed, load = 0.5, axle = 2)
 \arguments{
 \item{wear}{Character; type of wear: "tyre", "break" and "road"}
 
-\item{type}{Character; type of vehicle: "2W", "PC", "LCV", 'HDV"}
+\item{type}{Character; type of vehicle: "2W", "MC", "Motorcycle", "PC",
+"LCV", 'HDV", "BUS", "TRUCKS"}
 
 \item{pol}{Character; pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"}
 

@@ -27,8 +27,7 @@ for (i in seq_along(categories)) {
         
         dev.off()
 }
-
-net$lkm <- net$lkm * units::as_units("km")
+net$lkm <- units::set_units(st_length(net), km)
 
 saveRDS(net, "network/net.rds")
 
