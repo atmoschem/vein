@@ -82,7 +82,7 @@ vocE100EX <- emis_chem2(
 )
 
 # Etanol Evap
-x <- st_set_geometry(readRDS(paste0("post/grids/", evap[1], ".rds")), NULL)
+x <- st_set_geometry(readRDS(paste0("post/grids/", evap[2], ".rds")), NULL)
 x[is.na(x)] <- 0
 x$id <- NULL
 dx <- speciate(
