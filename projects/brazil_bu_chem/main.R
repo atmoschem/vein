@@ -17,6 +17,7 @@ tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
 veh <- readxl::read_xlsx(path = path, sheet = "fleet_age")
 fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
 met <- readxl::read_xlsx(path = path, sheet = "met")
+s <- readxl::read_xlsx(path = path, sheet = "s")
 year <- 2018
 theme <- "black" # dark clean ink
 scale <- "default"
@@ -57,6 +58,7 @@ lkm <- net$lkm
 scale <- "tunnel"
 verbose <- FALSE
 year <- 2018
+s <- readRDS("config/s.rds")
 
 # Fuel eval
 language <- "portuguese" # english spanish
@@ -68,33 +70,26 @@ source("scripts/fuel_eval.R", encoding = "UTF-8")
 # Exhaust
 language <- "portuguese" # english spanish
 pol <- c(
-    "CO", "HC", "NMHC", "NOx", "CO2", "RCHO", "SO2",
-    "PM", "NO2", "NO"
+    "CO", "HC", "NMHC", "NOx", "CO2", 
+    "PM", "NO2", "NO", "NH3", "SO2"
 )
-sppm <- 50
 source("scripts/exhaust.R", encoding = "UTF-8")
 
 # Evaporatives
 source("scripts/evaporatives.R", encoding = "UTF-8")
 
-# ressuspensao gera PM e PM10
-language <- "portuguese" # english spanish
+
+# Tyres, Breaks and Road
+language <- "english" #portuguese english spanish
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 tfs <- readRDS("config/tfs.rds")
 net <- readRDS("network/net.rds")
 veh <- readRDS("config/fleet_age.rds")
-lkm <- net$lkm
-tf_PC <- tfs$PC_G
-tf_LCV <- tfs$LCV_G
-tf_TRUCKS <- tfs$TRUCKS_L_D
-tf_BUS <- tfs$BUS_URBAN_D
-tf_MC <- tfs$MC_150_G
-sL1 <- 2.4 # silt [g/m^2] se ADT < 500 (CENMA CHILE) i
-sL2 <- 0.7 # silt [g/m^2] se 500 < ADT < 5000 (CENMA CHILE)
-sL3 <- 0.6 # silt [g/m^2] se 5000 < ADT < 10000 (CENMA CHILE)
-sL4 <- 0.3 # silt [g/m^2] se ADT > 10000 (CENMA CHILE)
-source("scripts/pavedroads.R", encoding = "UTF-8")
+pol <- c("PM2.5", "PM10")
+verbose <- FALSE
+source("scripts/wear.R", encoding = "UTF-8")
+
 
 # 4) Post-estimation ####
 language <- "portuguese" # english spanish

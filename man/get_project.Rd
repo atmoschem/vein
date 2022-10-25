@@ -4,7 +4,7 @@
 \alias{get_project}
 \title{Download vein project}
 \usage{
-get_project(directory, case = "brasil", url)
+get_project(directory, case = "brazil_bu_chem", url)
 }
 \arguments{
 \item{directory}{Character; Path to an existing or a new directory to be created.}
