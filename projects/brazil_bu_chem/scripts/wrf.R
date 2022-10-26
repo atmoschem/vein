@@ -1,3 +1,5 @@
+dir.create(paste0("wrf/", mech), showWarnings = FALSE)
+
 # OS
 sep <- ifelse(Sys.info()[["sysname"]] == "Windows", "00%3A", ":")
 
@@ -38,39 +40,46 @@ switch(
   )
 )
 
-wrfc <- paste0("wrfchemi_d0", domain, "_", as.character(ti))
-if (Sys.info()[["sysname"]] == "Windows") wrfc <- gsub("00:", sep, wrfc)
-
+# wrfc <- paste0("wrfchemi_d0", domain, "_", as.character(ti))
+# if (Sys.info()[["sysname"]] == "Windows") wrfc <- gsub("00:", sep, wrfc)
+# 
 ti <- as.POSIXct(ti)
+
+# Grades
+lf <- list.files(path = paste0("post/spec_grid/", mech),
+                 pattern = ".rds", 
+                 full.names = TRUE)
+
+na <- list.files(path = paste0("post/spec_grid/", mech), 
+                 pattern = ".rds", 
+                 full.names = F)
+na <- gsub(".rds", "", na)
 
 # emissions on 00z / 12z style, create the 12z
 eixport::wrf_create(
   wrfinput_dir = pasta_wrfinput,
-  wrfchemi_dir = pasta_wrfchemi,
+  wrfchemi_dir = paste0(pasta_wrfchemi, "/", mech),
   domains = domain,
   io_style_emissions = 1,
   day_offset = 0,
-  variables = emis_option,
+  variables = na,
   verbose = TRUE,
-  n_aero = 15
-)
+  n_aero = 15, 
+  return_fn = T
+) -> a1
 
 eixport::wrf_create(
   wrfinput_dir = pasta_wrfinput,
-  wrfchemi_dir = pasta_wrfchemi,
+  wrfchemi_dir = paste0(pasta_wrfchemi, "/", mech),
   domains = domain,
   io_style_emissions = 1,
   day_offset = 0.5,
-  variables = emis_option,
+  variables = na,
   verbose = TRUE,
-  n_aero = 15
-)
+  n_aero = n_aero,
+  return_fn = T
+) -> a2
 
-# Grades
-lf <- list.files(path = "post/spec_grid", pattern = ".rds", full.names = TRUE)
-na <- list.files(path = "post/spec_grid", pattern = ".rds", full.names = F)
-na <- gsub(".rds", "", na)
-ars <- intersect(na, emis_option)
 
 for (i in 1:length(na)) {
   print(na[i])
@@ -95,7 +104,7 @@ for (i in 1:length(na)) {
     rotate = "cols"
   )
   wrf_put(
-    file = paste0(pasta_wrfchemi, "/wrfchemi_00z_d0", domain),
+    file = a1,
     name = na[i],
     POL = gx
   )
@@ -109,13 +118,14 @@ for (i in 1:length(na)) {
     rotate = "cols"
   )
   wrf_put(
-    file = paste0(pasta_wrfchemi, "/wrfchemi_12z_d0", domain),
+    file = a2,
     name = na[i],
     POL = gx
   )
 }
 
-message(paste0("WRFCHEMI in wrf/", wrfc))
+cat("\nWRFCHEMI in \n")
+cat(paste(a1, a2, sep = "\n"))
 
 
 png(
@@ -123,7 +133,9 @@ png(
   width = 2100, height = 1500, units = "px", pointsize = 12,
   bg = "white", res = 300
 )
-a <- wrf_get(paste0(pasta_wrfchemi, "/wrfchemi_00z_d0", domain), "E_NO", as_raster = T)
+a <- wrf_get(paste0(pasta_wrfchemi, "/", mech,
+                    "/wrfchemi_00z_d0", domain), "E_NO", 
+             as_raster = T)
 a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
@@ -138,7 +150,9 @@ png(
   width = 2100, height = 1500, units = "px", pointsize = 12,
   bg = "white", res = 300
 )
-a <- wrf_get(paste0(pasta_wrfchemi, "/wrfchemi_12z_d0", domain), "E_NO", as_raster = T)
+a <- wrf_get(paste0(pasta_wrfchemi, "/", mech,
+                    "/wrfchemi_12z_d0", domain), "E_NO", 
+             as_raster = T)
 a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
@@ -153,7 +167,9 @@ png(
   width = 2100, height = 1500, units = "px", pointsize = 12,
   bg = "white", res = 300
 )
-a <- wrf_get(paste0(pasta_wrfchemi, "/wrfchemi_00z_d0", domain), "E_CO", as_raster = T)
+a <- wrf_get(paste0(pasta_wrfchemi, "/", mech,
+                    "/wrfchemi_00z_d0", domain), "E_CO", 
+             as_raster = T)
 a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,

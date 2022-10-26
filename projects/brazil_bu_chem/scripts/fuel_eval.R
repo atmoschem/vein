@@ -1,4 +1,5 @@
 # calibração combustivel http://dadosenergeticos.energia.sp.gov.br/portalcev2/intranet/PetroGas/index.html
+suppressWarnings(file.remove("emi/EXHAUST_FC.csv"))
 
 # tfs
 tfs <- as.data.frame(tfs)
@@ -46,15 +47,9 @@ for (i in seq_along(metadata$vehicles)) {
     )
 
 
-    saveRDS(x_DF,
-      file = paste0(
-        "emi/",
-        metadata$vehicles[i], "/",
-        metadata$vehicles[i], "_",
-        pol[j],
-        "_DF.rds"
-      )
-    )
+    fwrite(x_DF, 
+           "emi/EXHAUST_FC.csv", 
+           append = TRUE)
   }
   rm(array_x, ef, x, x_DF)
 }
@@ -66,13 +61,10 @@ switch(language,
 )
 
 # data.table ####
-dt <- data.table::rbindlist(
-  lapply(seq_along(pol), function(i) {
-    pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-    emis_merge(pols, what = "DF.rds", FALSE, verbose = FALSE)
-  })
-)
+
+dt <- fread("emi/EXHAUST_FC.csv")
 dt$pollutant <- as.character(dt$pollutant)
+dt$g <- units::set_units(dt$g, g)
 dt$t <- units::set_units(dt$g, t)
 
 dt0 <- dt[pollutant == "FC", 

@@ -1,3 +1,5 @@
+suppressWarnings(file.remove("emi/EXHAUST_DF.csv"))
+suppressWarnings(file.remove("emi/EXHAUST_STREETS.csv"))
 
 # plotting
 switch(language,
@@ -139,31 +141,26 @@ for (i in seq_along(metadata$vehicles)) {
       by = "veh"
     )
     
-    
-    saveRDS(x_DF,
-            file = paste0(
-              "emi/",
-              metadata$vehicles[i], "/",
-              metadata$vehicles[i], "_",
-              pol[j],
-              "_DF.rds"
-            )
-    )
-    
+    fwrite(x_DF, 
+           "emi/EXHAUST_DF.csv", 
+           append = TRUE)
+
     x_STREETS <- emis_post(
       arra = array_x,
       pollutant = pol[j],
       by = "streets"
     )
-    saveRDS(x_STREETS,
-            file = paste0(
-              "emi/",
-              metadata$vehicles[i], "/",
-              metadata$vehicles[i], "_",
-              pol[j],
-              "_STREETS.rds"
-            )
-    )
+    
+    x_STREETS$id <- 1:nrow(net)
+    x_STREETS$family <- metadata$family[i]
+    x_STREETS$vehicles <- metadata$vehicles[i]
+    x_STREETS$fuel <- metadata$fuel[i]
+    x_STREETS$pol <- pol[j]
+    
+    fwrite(x_STREETS, 
+           "emi/EXHAUST_STREETS.csv", 
+           append = TRUE)
+    
   }
   rm(array_x, ef, x, x_DF, x_STREETS)
 }

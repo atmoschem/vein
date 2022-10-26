@@ -7,6 +7,7 @@ NEWS
 - remove ive. It is better to run MOVES and extract EF
 - add project china_bu_chem
 - add more vehicles in ef_wear
+- update brazil_bu_chem
 
 ### vein 0.9.91
 

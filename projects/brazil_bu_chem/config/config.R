@@ -183,7 +183,7 @@ dir.create(path = "post/streets", showWarnings = FALSE)
 dir.create(path = "post/grids", showWarnings = FALSE)
 dir.create(path = "veh", showWarnings = FALSE)
 
-for (i in seq_along(metadata$vehicles)) dir.create(path = paste0("emi/", metadata$vehicles[i]))
+# for (i in seq_along(metadata$vehicles)) dir.create(path = paste0("emi/", metadata$vehicles[i]))
 
 
 pa <- list.dirs(path = "emi", full.names = T, recursive = T)
