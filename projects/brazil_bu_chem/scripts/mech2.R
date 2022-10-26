@@ -1,5 +1,5 @@
-# CMBZ ####
 dir.create("post/spec_grid", showWarnings = FALSE)
+dir.create(paste0("post/spec_grid/", mech[k]), showWarnings = FALSE)
 
 fs <- list.files(
   path = "post/spec_grid",
@@ -26,6 +26,14 @@ dx <- speciate(
   eu = "Exhaust"
 )
 
+# Gasoline Exhaust ETOH
+x <- st_set_geometry(readRDS("post/grids/ETOH.rds"), NULL)
+x[is.na(x)] <- 0
+id <- x$id
+x$id <- NULL
+x$pol <- "ethanol"
+dx <- rbind(dx, x)
+
 dx$id <- rep(id, length(unique(dx$pol)))
 
 vocE25EX <- emis_chem2(
@@ -36,12 +44,10 @@ vocE25EX <- emis_chem2(
 )
 
 # Gasoline Evap
-x <- st_set_geometry(readRDS(paste0("post/grids/", evap[1], ".rds")), NULL)
+x <- st_set_geometry(readRDS("post/grids/G_EVAP.rds"), NULL)
 x[is.na(x)] <- 0
 id <- x$id
 x$id <- NULL
-
-
 
 dx <- speciate(
   x = x,
@@ -82,7 +88,7 @@ vocE100EX <- emis_chem2(
 )
 
 # Etanol Evap
-x <- st_set_geometry(readRDS(paste0("post/grids/", evap[2], ".rds")), NULL)
+x <- st_set_geometry(readRDS("post/grids/E_EVAP.rds"), NULL)
 x[is.na(x)] <- 0
 x$id <- NULL
 dx <- speciate(
@@ -150,7 +156,9 @@ for (i in seq_along(names(voc))) {
   g_x <- merge(g, voc[[names(voc)[i]]], by = "id", all = T)
   g_x <- st_sf(g_x, geometry = g$geometry)
   g_x$group <- NULL
-  saveRDS(g_x, file = paste0("post/spec_grid/", names(voc)[i], ".rds"))
+  saveRDS(g_x, file = paste0("post/spec_grid/", 
+                             mech[k], "/", 
+                             names(voc)[i], ".rds"))
 }
 
 # other gases ####
@@ -160,18 +168,22 @@ for (j in seq_along(pol)) {
   mm_x <- units::set_units(mol[j], "g/mol") # mm: massa molar
   for (i in 2:ncol(x)) x[, i] <- x[, i] * (mm_x)^-1
   x <- st_sf(x, geometry = g$geometry)
-  saveRDS(x, paste0("post/spec_grid/E_", pol[j], ".rds"))
+  saveRDS(x, paste0("post/spec_grid/",
+                    mech[k],
+                    "/E_", pol[j], ".rds"))
 }
 
 # PM
-gPM <- st_set_geometry(readRDS("post/grids/PM.rds"), NULL)
+gPM <- st_set_geometry(readRDS("post/grids/PM2.5.rds"), NULL)
 names(gPM)
 gPM$id <- NULL
 gPM1 <- speciate(x = gPM, spec = aer, list = T)
 
 for (i in 1:length(names(gPM1))) {
   gPMx <- st_sf(gPM1[[i]], geometry = g$geometry)
-  saveRDS(gPMx, paste0("post/spec_grid/", toupper(names(gPM1))[i], ".rds"))
+  saveRDS(gPMx, paste0("post/spec_grid/", 
+                       mech[k], "/",
+                       toupper(names(gPM1))[i], ".rds"))
 }
 for (i in 1:ncol(gPM)) gPM[, i] <- units::set_units(gPM[, i], "ug/m^2/s")
 
@@ -183,15 +195,17 @@ for (i in 1:ncol(gPM10)) gPM10[, i] <- units::set_units(gPM10[, i], "ug/m^2/s")
 
 # gPM2510 are in g/km/h
 # need to change units to ug/m2/s
-gPM2510 <- gPM10 - gPM
+gPM2510 <- gPM10# - gPM
 gPM2510 <- st_sf(gPM2510, geometry = g$g)
-saveRDS(gPM2510, "post/spec_grid/E_PM_10.rds")
+saveRDS(gPM2510, paste0("post/spec_grid/",
+                        mech[k],
+                        "/E_PM_10.rds"))
 
 
 switch(language,
-  "portuguese" = message("\npost/spec_grid"),
-  "english" = message("\npost/spec_grid"),
-  "spanish" = message("\npost/spec_grid")
+  "portuguese" = message(paste0("\npost/spec_grid", mech[k])),
+  "english" = message(paste0("\npost/spec_grid", mech[k])),
+  "spanish" = message(paste0("\npost/spec_grid", mech[k]))
 )
 ls()
 suppressWarnings(
