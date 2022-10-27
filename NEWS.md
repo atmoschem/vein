@@ -8,6 +8,9 @@ NEWS
 - add project china_bu_chem
 - add more vehicles in ef_wear
 - update brazil_bu_chem
+- emis_chem2 now return al variables for chemical mechanisms,
+not only the matching pollutants. In this way, there will be
+more pollutants with 0 mass as a result of emis_chem2
 
 ### vein 0.9.91
 

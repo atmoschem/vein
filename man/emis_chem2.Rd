@@ -87,7 +87,9 @@ eu = "Exhaust"
 )
 dx$id <- rep(id, length(unique(dx$pol)))
 names(dx)
-vocE25EX <- emis_chem2(df = dx,mech = "CB05",nx = c("V1", "V2"))
+vocE25EX <- emis_chem2(df = dx,
+                       mech = "CB05",
+                       nx = c("V1", "V2"))
 }
 }
 \references{
