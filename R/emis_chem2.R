@@ -77,7 +77,9 @@
 #' )
 #' dx$id <- rep(id, length(unique(dx$pol)))
 #' names(dx)
-#' vocE25EX <- emis_chem2(df = dx,mech = "CB05",nx = c("V1", "V2"))
+#' vocE25EX <- emis_chem2(df = dx,
+#'                        mech = "CB05",
+#'                        nx = c("V1", "V2"))
 #' }
 emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     chem <- sysdata$chem
@@ -91,27 +93,35 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     if(mech %in% c("CB05", "CB4", "CBMZ","CB05opt2")) {
       cheml <- suppressWarnings(
         data.table::melt(
-          data = chem[pol %in% unique(df[["pol"]])],
+          data = chem,#[pol %in% unique(df[["pol"]])],
           id.vars = c("ID", "pol", "Mwt"),
           measure.vars = grep(pattern = paste0(mech, "_"),
                               x = names(chem),
                               value = TRUE),
-          variable.name = "CB05",
+          # variable.name = "CB05",
           value.name = "mol",
           na.rm = TRUE,
           verbose = FALSE
         ))
-      cheml <- cheml[mol > 0]
+      # cheml <- cheml[mol > 0]
 
-      names(cheml)[4] <- mech
+      names(cheml)[4] <- "mech"
+      names(cheml)[5] <- "factor"
 
       # if(verbose) print(head(cheml))
     } else {
-      ..nd <- NULL
-      nd <- c("ID", "pol", "Mwt", mech, paste0("F", mech))
-      cheml <- suppressWarnings(chem[pol %in% unique(df[["pol"]]), ..nd])
-      names(cheml)[length(cheml)] <- "mol"
-      cheml <- cheml[!is.na(cheml[[mech]])] #TODO Check
+      # ..nd <- NULL
+      # nd <- c("ID", "pol", "Mwt", mech, paste0("F", mech))
+      # cheml <- suppressWarnings(chem[pol %in% unique(df[["pol"]]), ..nd])
+      # names(cheml)[length(cheml)] <- "mol"
+      # cheml <- cheml[!is.na(cheml[[mech]])] #TODO Check
+
+      nd <- NULL
+      cheml <- chem[,
+                    nd,
+                    with = FALSE]
+      names(cheml)[length(cheml) -1] <- "mech"
+      names(cheml)[length(cheml) ] <- "factor"
     }
 
     # important
@@ -123,22 +133,22 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     y <- merge(x = df,
                y = cheml,
                by = "pol",
-               all.x = T)
+               all = T)
     # key!
     for(i in seq_along(nx)) {
-      y[[nx[i]]] <- y[[nx[i]]]/y$Mwt*y$mol
+      y[[nx[i]]] <- y[[nx[i]]]/y$Mwt*y$factor
     }
 
     data.table::setDT(y)
 
-    y[[mech]] <- gsub(pattern = mech, replacement = "", x = y[[mech]])
-    y[[mech]] <- gsub(pattern = "_", replacement = "", x = y[[mech]])
+    y[["mech"]] <- gsub(pattern = mech, replacement = "", x = y[["mech"]])
+    y[["mech"]] <- gsub(pattern = "_", replacement = "", x = y[["mech"]])
 
     id <-  NULL
     dy <- y[,
             lapply(.SD, sum, na.rm = T),
             .SDcols = nx,
-            by = list(id, group = get(mech))]
+            by = list(id, group = mech)]
     data.table::setorderv(dy, c("group", "id"))
 
     group <- NULL
