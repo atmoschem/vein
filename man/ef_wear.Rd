@@ -4,10 +4,20 @@
 \alias{ef_wear}
 \title{Emissions factors from tyre, break and road surface wear}
 \usage{
-ef_wear(wear, type, pol = "TSP", speed, load = 0.5, axle = 2)
+ef_wear(
+  wear,
+  type,
+  pol = "TSP",
+  speed,
+  load = 0.5,
+  axle = 2,
+  road = "urban",
+  verbose = FALSE
+)
 }
 \arguments{
-\item{wear}{Character; type of wear: "tyre", "break" and "road"}
+\item{wear}{Character; type of wear: "tyre" (or "tire"),
+"break" (or "brake") and "road"}
 
 \item{type}{Character; type of vehicle: "2W", "MC", "Motorcycle", "PC",
 "LCV", 'HDV", "BUS", "TRUCKS"}
@@ -19,6 +29,12 @@ ef_wear(wear, type, pol = "TSP", speed, load = 0.5, axle = 2)
 \item{load}{Load of the HDV}
 
 \item{axle}{Number of axle of the HDV}
+
+\item{road}{Type of road "urban", "rural", "motorway".
+Only applies when type is "E6DV" or "BEV"}
+
+\item{verbose}{Logical to show more information.
+Only applies when type is "E6DV" or "BEV"}
 }
 \value{
 emission factors grams/km
@@ -28,16 +44,33 @@ emission factors grams/km
 The sources are tyres, breaks and road surface.
 }
 \examples{
-\dontrun{
+{
 data(net)
 data(pc_profile)
 pc_week <- temp_fact(net$ldv+net$hdv, pc_profile)
 df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
 ef <- ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df)
+
+ef_wear(wear = "tyre",
+        type = c("E6DV"),
+        pol = "PM10",
+        verbose = TRUE)
+
+ef_wear(wear = "tyre",
+        type = c("E6DV"),
+        pol = "PM10",
+        verbose = FALSE)
+
 }
 }
 \references{
 Ntziachristos and Boulter 2016. Automobile tyre and break wear
 and road abrasion. In: EEA, EMEP. EEA air pollutant emission inventory
 guidebook-2009. European Environment Agency, Copenhagen, 2016
+
+When type is "E6DV" or "BEV":
+Tivey J., Davies H., Levine J., Zietsman J., Bartington S.,
+Ibarra-Espinosa S., Ropkins K. 2022. Meta Analysis as Early
+Evidence on the Particulate Emissions Impact of EURO VI to
+Battery Electric Bus Fleet Transitions. Paper under development.
 }
