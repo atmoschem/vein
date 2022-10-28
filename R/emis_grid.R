@@ -18,8 +18,6 @@
 #' @param flux Logical, if TRUE, it return flux (mass / area / time (implicit))
 #' in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 #' as EDGAR provide data.
-#' @param units_area Character for the area units, when flux = TRUE.
-#' Default is "km^2".
 #' @param k Numeric to multiply emissions
 #' @importFrom sf st_sf st_dimension st_transform st_length st_cast st_intersection st_area st_geometry
 #' @importFrom data.table data.table .SD
@@ -58,7 +56,6 @@ emis_grid <- function (spobj = net,
                        type = "lines",
                        FN = "sum",
                        flux = TRUE,
-                       units_area = "km^2",
                        k = 1){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
@@ -124,7 +121,7 @@ emis_grid <- function (spobj = net,
 
        area <- sf::st_area(g)
 
-       area <- units::set_units(area, units_area)
+       area <- units::set_units(area, "km^2")
 
        for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
 
@@ -182,7 +179,7 @@ emis_grid <- function (spobj = net,
 
     dfm$id <- NULL
 
-    area <- units::set_units(area, units_area)
+    area <- units::set_units(area, "km^2")
 
     for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
 
@@ -235,7 +232,7 @@ emis_grid <- function (spobj = net,
                .SDcols = namesnet]
     id <- dfm$id
     dfm$id <- NULL
-    area <- units::set_units(area, units_area)
+    area <- units::set_units(area, "km^2")
 
     for(i in 1:ncol(dfm)) dfm[[i]] <- dfm[[i]]*k
 
