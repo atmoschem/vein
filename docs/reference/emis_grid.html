@@ -79,16 +79,7 @@ in data. This function returns an object of class "sf".</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">emis_grid</span><span class="op">(</span>
-  spobj <span class="op">=</span> <span class="va">net</span>,
-  <span class="va">g</span>,
-  <span class="va">sr</span>,
-  type <span class="op">=</span> <span class="st">"lines"</span>,
-  FN <span class="op">=</span> <span class="st">"sum"</span>,
-  flux <span class="op">=</span> <span class="cn">TRUE</span>,
-  units_area <span class="op">=</span> <span class="st">"km^2"</span>,
-  k <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">emis_grid</span><span class="op">(</span>spobj <span class="op">=</span> <span class="va">net</span>, <span class="va">g</span>, <span class="va">sr</span>, type <span class="op">=</span> <span class="st">"lines"</span>, FN <span class="op">=</span> <span class="st">"sum"</span>, flux <span class="op">=</span> <span class="cn">TRUE</span>, k <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -119,11 +110,6 @@ not projected. Please, see http://spatialreference.org/.</p></dd>
 <dd><p>Logical, if TRUE, it return flux (mass / area / time (implicit))
 in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 as EDGAR provide data.</p></dd>
-
-
-<dt>units_area</dt>
-<dd><p>Character for the area units, when flux = TRUE.
-Default is "km^2".</p></dd>
 
 
 <dt>k</dt>
