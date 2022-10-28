@@ -11,6 +11,8 @@ NEWS
 - emis_chem2 now return al variables for chemical mechanisms,
 not only the matching pollutants. In this way, there will be
 more pollutants with 0 mass as a result of emis_chem2
+- add argument units_area into emis_grid, which allows to
+generate flux as mass / cm2 (for chimere) or other area unit.
 
 ### vein 0.9.91
 
