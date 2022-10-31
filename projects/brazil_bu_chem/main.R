@@ -138,7 +138,7 @@ for( k in seq_along(mech)) {
   language <- "english" # english spanish
   g <- eixport::wrf_grid("wrf/wrfinput_d02")
   pol <- c("CO", "NO", "NO2", "SO2", "NH3")
-  mol <- c(12, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
+  mol <- c(12 + 16, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
   aer <- "pmneu2" # pmiag, pmneu
   source("scripts/mech2.R", encoding = "UTF-8")
 }
