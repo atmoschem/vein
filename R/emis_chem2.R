@@ -111,10 +111,10 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
       # if(verbose) print(head(cheml))
     } else {
       # ..nd <- NULL
+      # nd <- c("ID", "pol", "Mwt", mech, paste0("F", mech))
       # cheml <- suppressWarnings(chem[pol %in% unique(df[["pol"]]), ..nd])
       # names(cheml)[length(cheml)] <- "mol"
       # cheml <- cheml[!is.na(cheml[[mech]])] #TODO Check
-
       nd <- c("ID", "pol", "Mwt", mech, paste0("F", mech))
       cheml <- chem[,
                     nd,
@@ -154,6 +154,5 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     if(na.rm) dy <- dy[!is.na(group)]
     # remove NA in id
     dy <- dy[!is.na(dy$id), ]
-
     return(dy)
   }

@@ -43,9 +43,12 @@ vocE25EX <- emis_chem2(
   na.rm = TRUE
 )
 
+<<<<<<< HEAD
 vocE25EX <- vocE25EX[!is.na(vocE25EX$id), ]
 
 
+=======
+>>>>>>> 44a900da52897e86413b2ae9910e05f583138913
 # Gasoline Evap
 x <- st_set_geometry(readRDS("post/grids/G_EVAP.rds"), NULL)
 x[is.na(x)] <- 0
@@ -59,6 +62,10 @@ dx <- speciate(
   veh = "LDV",
   eu = "Evaporative"
 )
+<<<<<<< HEAD
+=======
+
+>>>>>>> 44a900da52897e86413b2ae9910e05f583138913
 dx$id <- rep(id, length(unique(dx$pol)))
 
 vocE25EV <- emis_chem2(
@@ -68,8 +75,11 @@ vocE25EV <- emis_chem2(
   na.rm = TRUE
 )
 
+<<<<<<< HEAD
 vocE25EV <- vocE25EV[!is.na(vocE25EV$id), ]
 
+=======
+>>>>>>> 44a900da52897e86413b2ae9910e05f583138913
 # Etanol Exhaust
 x <- st_set_geometry(readRDS("post/grids/E_NMHC.rds"), NULL)
 x[is.na(x)] <- 0
@@ -90,7 +100,10 @@ vocE100EX <- emis_chem2(
   nx = nx,
   na.rm = TRUE
 )
+<<<<<<< HEAD
 vocE100EX <- vocE100EX[!is.na(vocE100EX$id), ]
+=======
+>>>>>>> 44a900da52897e86413b2ae9910e05f583138913
 
 # Etanol Evap
 x <- st_set_geometry(readRDS("post/grids/E_EVAP.rds"), NULL)
@@ -109,12 +122,18 @@ dx$id <- rep(id, length(unique(dx$pol)))
 vocE100EV <- emis_chem2(
   df = dx,
   mech = mech,
+<<<<<<< HEAD
   nx = nx,
   na.rm = TRUE
 )
 
 vocE100EV <- vocE100EV[!is.na(vocE100EV$id), ]
 
+=======
+  nx = nx
+)
+
+>>>>>>> 44a900da52897e86413b2ae9910e05f583138913
 # Diesel Exhaust
 x <- st_set_geometry(readRDS("post/grids/D_NMHC.rds"), NULL)
 x[is.na(x)] <- 0
@@ -137,8 +156,11 @@ vocB5EX <- emis_chem2(
   na.rm = TRUE
 )
 
+<<<<<<< HEAD
 vocB5EX <- vocB5EX[!is.na(vocB5EX$id), ]
 
+=======
+>>>>>>> 44a900da52897e86413b2ae9910e05f583138913
 voc <- rbind(vocB5EX,
   vocE100EV,
   vocE100EX,
@@ -213,9 +235,15 @@ saveRDS(gPM2510, paste0("post/spec_grid/",
 
 
 switch(language,
+<<<<<<< HEAD
   "portuguese" = message(paste0("\npost/spec_grid/", mech[k])),
   "english" = message(paste0("\npost/spec_grid/", mech[k])),
   "spanish" = message(paste0("\npost/spec_grid/", mech[k]))
+=======
+  "portuguese" = message(paste0("\npost/spec_grid", mech[k])),
+  "english" = message(paste0("\npost/spec_grid", mech[k])),
+  "spanish" = message(paste0("\npost/spec_grid", mech[k]))
+>>>>>>> 44a900da52897e86413b2ae9910e05f583138913
 )
 ls()
 suppressWarnings(
