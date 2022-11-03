@@ -152,5 +152,8 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
 
     group <- NULL
     if(na.rm) dy <- dy[!is.na(group)]
+    # remove NA in id
+    dy <- dy[!is.na(dy$id), ]
+
     return(dy)
   }
