@@ -138,14 +138,13 @@ for( k in seq_along(mech)) {
   language <- "english" # english spanish
   g <- eixport::wrf_grid("wrf/wrfinput_d02")
   pol <- c("CO", "NO", "NO2", "SO2", "NH3")
-  mol <- c(12, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
+  mol <- c(12 + 16, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
   aer <- "pmneu2" # pmiag, pmneu
   source("scripts/mech2.R", encoding = "UTF-8")
 }
 
 
 # WRF CHEM
-<<<<<<< HEAD
 mech <- "RADM2"
 for( k in seq_along(mech)) {
   language <- "portuguese" # english spanish
@@ -161,18 +160,4 @@ for( k in seq_along(mech)) {
   hours <- 0
   source("scripts/wrf.R", encoding = "UTF-8")
 }
-=======
-language <- "portuguese" # english spanish
-net <- readRDS("network/net.rds")
-cols <- 63
-rows <- 51
-n_aero <- 15
-wrf_times <- 24 # ?
-pasta_wrfinput <- "wrf"
-pasta_wrfchemi <- "wrf"
-wrfi <- "wrf/wrfinput_d02"
-mech <- "RADM2"
-domain <- 2
-hours <- 0
-source("scripts/wrf.R", encoding = "UTF-8")
->>>>>>> 44a900da52897e86413b2ae9910e05f583138913
+
