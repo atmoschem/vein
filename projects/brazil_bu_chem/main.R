@@ -18,6 +18,11 @@ veh <- readxl::read_xlsx(path = path, sheet = "fleet_age")
 fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
 met <- readxl::read_xlsx(path = path, sheet = "met")
 s <- readxl::read_xlsx(path = path, sheet = "s")
+im_ok <- readxl::read_xlsx(path = path, sheet = "im_ok")
+im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
+im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
+im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
+im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm")
 year <- 2018
 theme <- "black" # dark clean ink
 scale <- "default"
@@ -69,6 +74,7 @@ source("scripts/fuel_eval.R", encoding = "UTF-8")
 
 # Exhaust
 language <- "portuguese" # english spanish
+IM <- FALSE
 pol <- c(
     "CO", "HC", "NMHC", "NOx", "CO2", 
     "PM", "NO2", "NO", "NH3", "SO2", "ETOH"
@@ -136,7 +142,9 @@ source("scripts/plots.R")
 mech <- "RADM2" # CB05opt2 "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
 for( k in seq_along(mech)) {
   language <- "english" # english spanish
+  net <- readRDS("network/net.rds")
   g <- eixport::wrf_grid("wrf/wrfinput_d02")
+  type <- "grids" #streets
   pol <- c("CO", "NO", "NO2", "SO2", "NH3")
   mol <- c(12 + 16, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
   aer <- "pmneu2" # pmiag, pmneu
@@ -145,6 +153,7 @@ for( k in seq_along(mech)) {
 
 
 # WRF CHEM
+# type only grids
 mech <- "RADM2"
 for( k in seq_along(mech)) {
   language <- "portuguese" # english spanish
