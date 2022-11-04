@@ -2,11 +2,6 @@ suppressWarnings(file.remove("emi/EVAP_DF.csv"))
 suppressWarnings(file.remove("emi/EVAP_STREETS.csv"))
 
 
-if(nrow(met) == nrow(tfs)) {
-  cat("Detecting hourly temperatures\n
-      Sourcing: `scripts/evaporatives_hourly.R`")
-  source("scripts/evaporatives_hourly.R", encoding = "UTF-8")
-} 
 
 # temperature
 te <- met$Temperature
@@ -18,14 +13,7 @@ tem <- ifelse(
   te <= bb, "0_15",
   ifelse(
     te > bb & te <= cc, "10_25",
-    "20_35"
-  )
-)
-
-nmonth <- ifelse(nchar(seq_along(te)) < 2,
-                 paste0(0, seq_along(te)),
-                 seq_along(te)
-)
+    "20_35"))
 
 # filtrando veiculos otto
 meta_ev <- metadata[metadata$fuel != "D", ]
@@ -140,20 +128,21 @@ for (i in seq_along(veh_ev)) {
   
   cat(
     "\n", veh_ev[i],
-    rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i]))
+    rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i])),
+    "\n"
   )
   
   x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
   
   for (j in seq_along(te)) {
-    cat(nmonth[j], " ")
+    cat("\nhour ", j, " ")
     
     
     for(k in seq_along(evtype)) {
       cat(evtype[k], " ")
       
       if(evtype[k] == "Diurnal") {
-
+        
         ef <- ef_cetesb(
           p = ef_d[j],
           veh = veh_ev[i],
@@ -164,7 +153,7 @@ for (i in seq_along(veh_ev)) {
         ) / (mileage[[veh_ev[i]]] / 365) # mean daily mileage 
         
       } else if(evtype[k] == "Running Losses"){
-
+        
         ef <- ef_cetesb(
           p = ef_rl[j],
           veh = veh_ev[i],
@@ -175,7 +164,7 @@ for (i in seq_along(veh_ev)) {
         ) * meta_ev$trips_day[i] / (mileage[[veh_ev[i]]] / 365)
         
       } else {
-
+        
         ef <- ef_cetesb(
           p = ef_hs[j],
           veh = veh_ev[i],
@@ -189,12 +178,12 @@ for (i in seq_along(veh_ev)) {
       
       # muda NaNaN para 0
       ef[is.na(ef)] <- 0
-
+      
       array_x <- emis(
         veh = x,
         lkm = lkm,
         ef = ef,
-        profile = tfs[[veh_ev[i]]],
+        profile = tfs[[veh_ev[i]]][j],
         fortran = TRUE,
         nt = check_nt() / 2,
         simplify = TRUE,
@@ -210,6 +199,7 @@ for (i in seq_along(veh_ev)) {
         type_emi = evtype[k],
         by = "veh"
       )
+      x_DF$hour <- j
       
       fwrite(x_DF, 
              "emi/EVAP_DF.csv", 
@@ -228,14 +218,43 @@ for (i in seq_along(veh_ev)) {
       x_STREETS$vehicles <- meta_ev$vehicles[i]
       x_STREETS$fuel <- meta_ev$fuel[i]
       x_STREETS$pol <- evtype[k]
+      x_STREETS$hour <- j
       
       fwrite(x_STREETS, 
              "emi/EVAP_STREETS.csv", 
              append = TRUE)
       
-    }}
+    }# type of ev
+    
+    } #hourly temp
   rm(array_x, ef, x, x_DF, x_STREETS)
-}
+}  # 4 strokes veh
+
+
+
+x <- fread("emi/EVAP_STREETS.csv")
+
+x$hour <- paste0("V", x$hour)
+
+dcast.data.table(data = x, 
+                 formula = id + 
+                   family + 
+                   vehicles + 
+                   fuel + 
+                   pol ~ hour, 
+                 value.var = "V1") -> xx
+
+xxx <- xx[, 
+          c(paste0("V", 1:nrow(tfs)), 
+            "id",
+            "family",
+            "vehicles",
+            "fuel",
+            "pol" ), 
+          with = FALSE]
+
+fwrite(xxx, "emi/EVAP_STREETS.csv")
+
 
 switch(language,
        "portuguese" = message("\n\nArquivos em: /emi/*:"),
@@ -252,7 +271,8 @@ switch(language,
 
 suppressWarnings(rm(
   i, mileage, meta_ev, veh_ev, year,
-  diurnal_ef, hot_soak_ef, running_losses_ef
+  diurnal_ef, hot_soak_ef, running_losses_ef,
+  x, xx, xxx
 ))
 
 invisible(gc())
