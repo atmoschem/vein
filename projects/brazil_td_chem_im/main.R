@@ -58,7 +58,7 @@ net                <- readRDS("network/net.rds")
 pmonth             <- readRDS("config/pmonth.rds")
 met                <- readRDS("config/met.rds")
 verbose            <- FALSE
-year               <- 2018
+year               <- 2019
 
 im_ok <- readRDS("config/im_ok.rds")
 im_co <- readRDS("config/im_co.rds")

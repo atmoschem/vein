@@ -23,7 +23,7 @@ im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
 im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
 im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
 im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm")
-year <- 2018
+year <- 2019
 theme <- "black" # dark clean ink
 scale <- "default"
 delete_directories <- TRUE

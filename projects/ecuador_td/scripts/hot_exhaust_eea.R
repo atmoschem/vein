@@ -116,6 +116,30 @@ for (i in seq_along(metadata$vehicles)) {
                          fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr)
     }
     
+    if(IM) {
+      im_ok <- readRDS("config/im_ok.rds")
+      im_co <- readRDS("config/im_co.rds")
+      im_hc <- readRDS("config/im_hc.rds")
+      im_nox <- readRDS("config/im_nox.rds")
+      im_pm <- readRDS("config/im_pm.rds")
+      
+      ok <- im_ok[[metadata$vehicles[i]]][1:ncol(x)]
+      nok <- 1 - ok
+      
+      if(pol[j] == "CO")fim <- im_co[[metadata$vehicles[i]]][1:ncol(x)]
+      
+      if(pol[j] %in% c("HC", "NMHC")) fim <- im_hc[[metadata$vehicles[i]]][1:ncol(x)]
+      
+      if(pol[j] %in% c("NO", "NO2", "NOx")) fim <- im_nox[[metadata$vehicles[i]]][1:ncol(x)]
+      
+      if(pol[j] %in% c("PM")) fim <- im_pm[[metadata$vehicles[i]]][1:ncol(x)]
+      
+      # check that fim is only 1
+      
+      if(unique(fim) == 1) ok <- 1
+      ef <- EmissionFactors(matrix(as.numeric(ef)*ok + as.numeric(ef)*fim*nok, nrow = 1))
+    }
+    
     array_x <- emis_hot_td(
       veh = veh,
       lkm = mileage[[metadata$vehicles[i]]],
