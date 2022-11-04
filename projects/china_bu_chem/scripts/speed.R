@@ -6,9 +6,6 @@ switch(language,
         "spanish" = cat("\nNombres:\n ", names(net), "\n")
 )
 
-# A composição veicular da CETESB tem 28 tipos de categories
-# Em teoría, poderiamos ter 28 fluxos ou mais na rede net
-
 # The number of traffic flow vehicles can be the same from vehicular composition
 #
 
@@ -17,7 +14,9 @@ ls <- as.data.frame(do.call("cbind", lapply(1:nrow(tfs), function(i) {
 } )))
 names(ls) <-  paste0("S", 1:nrow(tfs))
 
-df <- netspeed(ps = net$speed, ffs = net$speed*1.5, scheme = TRUE)
+df <- netspeed(ps = net$speed, 
+               ffs = net$speed*1.5, 
+               scheme = TRUE)
 
 png(filename = paste0("images/NET_SPEED.png"),
     width = 2300, 

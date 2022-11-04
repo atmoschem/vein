@@ -118,6 +118,7 @@ for (i in seq_along(metadata$vehicles)) {
                         } 
                         
                         ef <- as.numeric(ef)*ok + as.numeric(ef)*fim*nok
+                        # use max ef in last 8 ef
                         ef[(length(ef)-8):length(ef)] <- max(ef[(length(ef)-8):length(ef)])
                         ef <- EmissionFactors(ef)
                         

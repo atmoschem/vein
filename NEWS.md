@@ -13,6 +13,7 @@ not only the matching pollutants. In this way, there will be
 more pollutants with 0 mass as a result of emis_chem2
 - add argument units_area into emis_grid, which allows to
 generate flux as mass / cm2 (for chimere) or other area unit.
+- merge several projects into brazil_bu_chem
 
 ### vein 0.9.91
 

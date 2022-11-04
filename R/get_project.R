@@ -55,8 +55,17 @@ get_project <- function(directory,
 
   if(missing(url)){
     # brazil ####
-  if(case %in% c("brasil", "brazil", "brazil_bu", "brasil_bu")) {
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu.tar.gz"
+  if(case %in% c("brasil",
+                 "brazil",
+                 "brazil_bu",
+                 "brasil_bu",
+                 "brazil_bu_chem",
+                 "brazil_bu_csvgz",
+                 "brazil_bu_csv",
+                 "brazil_bu_cb05",
+                 "brazil_mech",
+                 "brazil_bu_chem_month")) {
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
@@ -81,49 +90,19 @@ get_project <- function(directory,
     utils::untar(tarfile = tf, exdir = directory)
     message("Your directory is in ", directory)
 
-    # brazil_bu_csvgz ####
-  } else if(case %in% c("brazil_bu_csvgz")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csvgz.tar.gz"
-    tf <- paste0(tempfile(), ".tar.gz")
-    utils::download.file(url = URL,
-                         destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
-    message("Your directory is in ", directory)
-
-    # brazil_bu_csv ####
-  } else if(case %in% c("brazil_bu_csv")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_csv.tar.gz"
-    tf <- paste0(tempfile(), ".tar.gz")
-    utils::download.file(url = URL,
-                         destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
-    message("Your directory is in ", directory)
-
-    # brazil_bu_chem ####
-  } else if(case %in% c("brazil_bu_cb05", "brazil_mech", "brazil_bu_chem")){
+    # brazil_bu_chem_im ####
+  } else if(case %in% c("brazil_bu_chem_im")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
-    message("Your directory is in ", directory)
-
-    # brazil_bu_chem_month ####
-  } else if(case %in% c("brazil_bu_chem_month")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem_month.tar.gz"
-    tf <- paste0(tempfile(), ".tar.gz")
-    utils::download.file(url = URL,
-                         destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
-    message("Your directory is in ", directory)
-
-    # brazil_bu_chem_im ####
-  } else if(case %in% c("brazil_bu_chem_im")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem_im.tar.gz"
-    tf <- paste0(tempfile(), ".tar.gz")
-    utils::download.file(url = URL,
-                         destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
+    utils::untar(tarfile = tf,
+                 exdir = directory)
+    x <- readLines(paste0(directory, "/main.R"))
+    x <- gsub(pattern = "IM <- FALSE",
+              replacement = "IM <- TRUE",
+              x = x)
+    writeLines(x, paste0(directory, "/main.R"))
     message("Your directory is in ", directory)
 
     # manizales_bu ####
@@ -136,21 +115,19 @@ get_project <- function(directory,
     message("Your directory is in ", directory)
 
     # brazil_bu_chem_streets ####
-  } else if(case %in% c("brazil_bu_chem_streets")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem_streets.tar.gz"
+  } else if(case %in% c("brazil_bu_chem_streets",
+                        "brazil_bu_chem_streets_im")){
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
-    message("Your directory is in ", directory)
-
-    # brazil_bu_chem_streets_im ####
-  } else if(case %in% c("brazil_bu_chem_streets_im")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem_streets_im.tar.gz"
-    tf <- paste0(tempfile(), ".tar.gz")
-    utils::download.file(url = URL,
-                         destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
+    utils::untar(tarfile = tf,
+                 exdir = directory)
+    x <- readLines(paste0(directory, "/main.R"))[1:153]
+    x <- gsub(pattern = "type <- 'grids'",
+              replacement = "type <- 'streets'",
+              x = x)
+    writeLines(x, paste0(directory, "/main.R"))
     message("Your directory is in ", directory)
 
     # masp2020 ####

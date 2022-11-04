@@ -46,11 +46,11 @@ switch(
 ti <- as.POSIXct(ti)
 
 # Grades
-lf <- list.files(path = paste0("post/spec_grid/", mech),
+lf <- list.files(path = paste0("post/mech/", mech, "/grids"),
                  pattern = ".rds", 
                  full.names = TRUE)
 
-na <- list.files(path = paste0("post/spec_grid/", mech), 
+na <- list.files(path = paste0("post/mech/", mech, "/grids"), 
                  pattern = ".rds", 
                  full.names = F)
 na <- gsub(".rds", "", na)
