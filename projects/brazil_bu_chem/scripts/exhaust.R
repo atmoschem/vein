@@ -122,6 +122,12 @@ for (i in seq_along(metadata$vehicles)) {
     
     
     if(IM) {
+      im_ok <- readRDS("config/im_ok.rds")
+      im_co <- readRDS("config/im_co.rds")
+      im_hc <- readRDS("config/im_hc.rds")
+      im_nox <- readRDS("config/im_nox.rds")
+      im_pm <- readRDS("config/im_pm.rds")
+      
       #IM
       ok <- im_ok[[metadata$vehicles[i]]][1:ncol(x)]
       nok <- 1 - ok

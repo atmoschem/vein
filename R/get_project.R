@@ -98,11 +98,13 @@ get_project <- function(directory,
                          destfile =  tf)
     utils::untar(tarfile = tf,
                  exdir = directory)
+
     x <- readLines(paste0(directory, "/main.R"))
     x <- gsub(pattern = "IM <- FALSE",
               replacement = "IM <- TRUE",
               x = x)
     writeLines(x, paste0(directory, "/main.R"))
+
     message("Your directory is in ", directory)
 
     # manizales_bu ####
@@ -123,11 +125,13 @@ get_project <- function(directory,
                          destfile =  tf)
     utils::untar(tarfile = tf,
                  exdir = directory)
+
     x <- readLines(paste0(directory, "/main.R"))[1:153]
     x <- gsub(pattern = "type <- 'grids'",
               replacement = "type <- 'streets'",
               x = x)
     writeLines(x, paste0(directory, "/main.R"))
+
     message("Your directory is in ", directory)
 
     # masp2020 ####
@@ -158,7 +162,8 @@ get_project <- function(directory,
     message("Your directory is in ", directory)
 
     # ecuador_td ####
-  } else if(case %in% c("ecuador_td")){
+  } else if(case %in% c("ecuador_td",
+                        "ecuador_td_hot")){
     URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
@@ -168,20 +173,18 @@ get_project <- function(directory,
 
     # ecuador_td_im ####
   } else if(case %in% c("ecuador_td_im")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td_im.tar.gz"
+    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td.tar.gz"
     tf <- paste0(tempfile(), ".tar.gz")
     utils::download.file(url = URL,
                          destfile =  tf)
     utils::untar(tarfile = tf, exdir = directory)
-    message("Your directory is in ", directory)
 
-    # ecuador_td_hot ####
-  } else if(case %in% c("ecuador_td_hot")){
-    URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td_hot.tar.gz"
-    tf <- paste0(tempfile(), ".tar.gz")
-    utils::download.file(url = URL,
-                         destfile =  tf)
-    utils::untar(tarfile = tf, exdir = directory)
+    x <- readLines(paste0(directory, "/main.R"))
+    x <- gsub(pattern = "IM <- FALSE",
+              replacement = "IM <- TRUE",
+              x = x)
+    writeLines(x, paste0(directory, "/main.R"))
+
     message("Your directory is in ", directory)
 
     # ecuador_td_hot_month ####

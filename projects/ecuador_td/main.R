@@ -31,6 +31,11 @@ pmonth <- readxl::read_xlsx(path = path, sheet = "fuel_month")
 met <- readxl::read_xlsx(path = path, sheet = "met")
 euro <- readxl::read_xlsx(path = path, sheet = "euro")
 tech <- readxl::read_xlsx(path = path, sheet = "tech")
+im_ok <- readxl::read_xlsx(path = path, sheet = "im_ok")
+im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
+im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
+im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
+im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm")
 year <- 2019
 month <- 6
 agemax <- 40
@@ -104,6 +109,7 @@ pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
   "PM", "NO2", "NO"
 )
+IM <- FALSE
 source("scripts/hot_exhaust_eea.R", encoding = "UTF-8")
 
 pol <- c(
