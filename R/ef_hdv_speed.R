@@ -52,6 +52,7 @@
 #' The categories Pre Euro and Euro I were assigned with the factors of Euro II and Euro III
 #' The categories euro IV and euro V were assigned with euro III + SCR
 #'
+#' Fuel consumption for heavy VI comes from V
 #'
 #' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}  \code{\link{speciate}}
 #' @export

@@ -85,6 +85,8 @@ Euro V + SCR
 
 The categories Pre Euro and Euro I were assigned with the factors of Euro II and Euro III
 The categories euro IV and euro V were assigned with euro III + SCR
+
+Fuel consumption for heavy VI comes from V
 }
 \examples{
 \dontrun{
