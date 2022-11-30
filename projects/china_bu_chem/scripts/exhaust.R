@@ -23,25 +23,25 @@ for (i in seq_along(metadata$vehicles)) {
   if(metadata$f[i] == "ELEC") next
   if(metadata$f[i] == "G HY" & metadata$t[i] == "Bus") next
   
-
+  
   
   for (j in seq_along(pol)) {
     cat(pol[j], " ")
     
     array_x <- emis_china(x = x, 
-                           lkm = net$lkm, 
-                           tfs = pro, 
-                           v = metadata$v[i],
-                           t = metadata$t[i],
-                           f = metadata$f[i], 
-                           standard = std1, 
-                           s = metadata$sppm[i],
-                           speed = speed,
-                           te = met$Temperature,
-                           hu = met$Humidity,
-                           h = h$h,
-                           p = pol[j],
-                           array = T,
+                          lkm = net$lkm, 
+                          tfs = pro, 
+                          v = metadata$v[i],
+                          t = metadata$t[i],
+                          f = metadata$f[i], 
+                          standard = std1, 
+                          s = metadata$sppm[i],
+                          speed = speed,
+                          te = met$Temperature,
+                          hu = met$Humidity,
+                          h = h$h,
+                          p = pol[j],
+                          array = T,
                           verbose =verbose)
     
     x_DF <- emis_post(
@@ -89,24 +89,24 @@ for (i in seq_along(metadata$vehicles)) {
 
 
 switch(language,
-        "portuguese" = message("\n\nArquivos em: /emi/*:"),
-        "english" = message("\nFiles in: /emi/*"),
-        "spanish" = message("\nArchivos en: /emi/*")
+       "portuguese" = message("\n\nArquivos em: /emi/*:"),
+       "english" = message("\nFiles in: /emi/*"),
+       "spanish" = message("\nArchivos en: /emi/*")
 )
 
 
 switch(language,
-        "portuguese" = message("Limpando..."),
-        "english" = message("Cleaning..."),
-        "spanish" = message("Limpiando...")
+       "portuguese" = message("Limpando..."),
+       "english" = message("Cleaning..."),
+       "spanish" = message("Limpiando...")
 )
 
 suppressWarnings(
-        rm(
-                i, j, pol,
-                n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC,
-                ns, ln, p, df, dl, cores
-        )
+  rm(
+    i, j, pol,
+    n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC,
+    ns, ln, p, df, dl, cores
+  )
 )
 
 invisible(gc())

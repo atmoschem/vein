@@ -9,9 +9,10 @@ sessionInfo()
 
 # 0 Configuration
 language <- "english" # portuguese english spanish
-path <- "config/inventory_chn_bu.xlsx"
+path <- "config/inventory_chn_bu_v3.xlsx"
 readxl::excel_sheets(path) # For libre office, readODS::read_ods()
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
+metadata <- metadata[metadata$exist == "yes",]
 mileage <- readxl::read_xlsx(path = path, sheet = "mileage")
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
 veh <- readxl::read_xlsx(path = path, sheet = "fleet_age")
@@ -19,16 +20,18 @@ fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
 met <- readxl::read_xlsx(path = path, sheet = "met")
 std <- readxl::read_xlsx(path = path, sheet = "std")
 h <- readxl::read_xlsx(path = path, sheet = "h")
-year <- 2016
+year <- 2022
 theme <- "black" # dark clean ink
 delete_directories <- TRUE
 source("config/config.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # 0.1 prenet ####
 language <- "english" # portuguese english spanish
 metadata <- readRDS("config/metadata.rds")
 veh <- readRDS("config/fleet_age.rds")
 source("scripts/prenet.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # 1) Network ####
 language <- "english" # portuguese english spanish
@@ -37,10 +40,12 @@ crs <- 32648 # WGS 84 / UTM zone 48N
 tit <- "Vehicular volume [veh/h] in Beijing, China"
 metadata <- readRDS("config/metadata.rds")
 source("scripts/net.R", encoding = "UTF-8")
+beepr::beep(2)
 
 net <- readRDS("network/net.rds")
 tfs <- readRDS("config/tfs.rds")
 source("scripts/speed.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # 2) Traffic ####
 language <- "english" # portuguese english spanish
@@ -48,11 +53,12 @@ net <- readRDS("network/net.rds")
 metadata <- readRDS("config/metadata.rds")
 veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
-year <- 2016
+year <- 2022
 theme <- "black" # dark clean ink
   
 k_G <- k_CNG <- k_D <- 1 
 source("scripts/traffic.R", encoding = "UTF-8")
+beepr::beep(2)
 
 
 # 3) Estimation ####
@@ -67,7 +73,7 @@ h <- readRDS("config/h.rds")
 std <- readRDS("config/std.rds")
 speed <- readRDS("network/speed.rds")
 verbose <- FALSE
-year <- 2016
+year <- 2022
 verbose <- FALSE
 remove_fuel <- c("ELEC", "HY")
 
@@ -77,6 +83,7 @@ pol <- "FC"
 # 30 is the number of days of the month of interest
 factor_emi <- 30 / (nrow(tfs) / 24) # days to month
 source("scripts/fuel_eval.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # Exhaust
 language <- "english" # portuguese english spanish
@@ -85,12 +92,14 @@ pol <- c(
     "PM10","PM2.5"
 )
 source("scripts/exhaust.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # Evaporatives
 metadata <- readRDS("config/metadata.rds")
 pol <- c("Evaporative_driving",
          "Evaporative_parking")
 source("scripts/evaporatives.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # Tyres, Breaks and Road
 language <- "english" #portuguese english spanish
@@ -103,9 +112,10 @@ veh <- readRDS("config/fleet_age.rds")
 pol <- c("PM2.5", "PM10")
 verbose <- FALSE
 source("scripts/wear.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # 4) Post-estimation ####
-language <- "portuguese" # english spanish
+language <- "english" # portugueseenglish spanish
 net <- readRDS("network/net.rds")
 tfs <- readRDS("config/tfs.rds")
 pol <- c(
@@ -117,13 +127,14 @@ g <- make_grid(net, 100)
 crs <- 32648 # WGS 84 / UTM zone 48N
 factor_emi <- 365 / (nrow(tfs) / 24) # daily to annual
 source("scripts/post.R", encoding = "UTF-8")
+beepr::beep(2)
 
 # # plots
 language <- "english" #portuguese english spanish
 metadata <- readRDS("config/metadata.rds")
 tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
-year <- 2016
+year <- 2022
 factor_emi <- 365 # convertir estimativa diaria a anual
 hours <- 8
 bg <- "white"
@@ -131,20 +142,21 @@ pal <- "mpl_viridis" # procura mais paletas com ?cptcity::find_cpt
 breaks <- "quantile" # "sd" "quantile" "pretty"
 tit <- "Vehicular emissions Some Streets Beijing"
 source("scripts/plots.R")
+beepr::beep(2)
 
 # MECH ####
 language <- "english" # english spanish
 net <- readRDS("network/net.rds")
-evap <- c("EVAP_G_NMHC")
+evap <- c("Evaporative")
 g <- make_grid(net, 100)
 pol <- c("CO", "NO", "NO2")
-mol <- c(12, 14 + 16, 14 + 16 * 2)
+mol <- c(12 + 16, 14 + 16, 14 + 16 * 2)
+save_species <- TRUE
+type <- "streets" # "grids"
 aer <- "pmneu2" # pmiag, pmneu
-# mech <- "iag" # iag_cb05v2, neu_cb05, iag_racm
-# source("scripts/mech.R", encoding = "UTF-8")
 mech <- "CB05opt2" # "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
-# option 2 (if cb05-=> ecb05_opt2)
-source("scripts/mech2.R", encoding = "UTF-8")
+source("scripts/mech2.R", encoding = "UTF-8", echo = T)
+beepr::beep(2)
 
 
 # # WRF CHEM

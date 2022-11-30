@@ -2,12 +2,12 @@ library(sf)
 library(data.table)
 
 switch(language,
-       "portuguese" = cat("\nLendo: traffic_volume_3.csv\n"),
-       "english" = cat("Reading: traffic_volume_3.csv\n"),
-       "spanish" = cat("Leyendo: traffic_volume_3.csv\n")
+       "portuguese" = cat("\nLendo: traffic_volume_4.csv\n"),
+       "english" = cat("Reading: traffic_volume_4.csv\n"),
+       "spanish" = cat("Leyendo: traffic_volume_4.csv\n")
 )
 
-x <- fread("network/traffic_volume_3.csv", 
+x <- fread("network/traffic_volume_4.csv", 
            encoding="UTF-8")
 
 x$id <- 1:nrow(x)
@@ -43,8 +43,9 @@ net$time <- as.POSIXct(net$updatetime,
                        format = "%Y-%m-%d_%H:%M:%S",
                        tz = "UTC")
 net$h <- hour(net$time)
+summary(net$time)
 net <- net[net$h == 9, 
-            c("linkId", 
+            c("id", 
               "speed",
               "travelTime",
               "road_class",
