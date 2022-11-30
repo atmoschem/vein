@@ -72,6 +72,9 @@
 #'   Trucks   \tab Low Speed   \tab   D   \cr
 #'   Trucks   \tab Mini   \tab   D   \cr
 #' }
+#'
+#' standard VI is assumed as V
+#'
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{emis_hot_td}}
 #' @export
 #' @examples \dontrun{
