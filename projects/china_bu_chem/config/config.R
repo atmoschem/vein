@@ -11,10 +11,18 @@ mileage <- as.data.frame(mileage)
 mileage[, metadata$vehicles] <- add_lkm(mileage[, metadata$vehicles])
 tfs <- as.data.frame(tfs)
 veh <- as.data.frame(veh)
+std <- as.data.frame(std)
+
 fuel <- as.data.frame(fuel)
 met <- as.data.frame(met)
-std <- as.data.frame(std)
 h <- as.data.frame(h)
+
+# select only vehciles from metadata$vehicles
+mileage <- mileage[, c("Year", metadata$vehicles)]
+tfs <- tfs[, c("Hour", metadata$vehicles)]
+veh <- veh[, c("Year", metadata$vehicles)]
+std <- std[, c("Year", metadata$vehicles)]
+
 
 # checkar metadata$vehicles ####
 switch(language,
@@ -276,7 +284,6 @@ for (i in seq_along(n_veh)) {
 }
 
 # TFS ####
-
 switch(language,
        "portuguese" = cat("Plotando perfis `tfs`\n"),
        "english" = cat("Plotting profiles `tfs`\n"),
@@ -311,7 +318,6 @@ for (i in seq_along(n_veh)) {
 
 
 # Mileage ####
-
 switch(language,
        "portuguese" = cat("Plotando quilometragem \n"),
        "english" = cat("Plotting mileage \n"),
@@ -346,7 +352,6 @@ for (i in seq_along(n_veh)) {
 
 
 # Temperature ####
-
 switch(language,
        "portuguese" = cat("Plotando temperatura \n"),
        "english" = cat("Plotting temperature \n"),
@@ -394,7 +399,7 @@ suppressWarnings(
 
 ggplot(x, aes(x = Year, y = variable, fill = value) ) +
   geom_raster() +
-  scale_fill_gradient(low = "yellow", 
+  scale_fill_gradient(low = "grey", 
                       high = "green") +
   theme_bw() +
   labs(x = NULL, 
