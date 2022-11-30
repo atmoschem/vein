@@ -94,6 +94,7 @@ Combination of vehicles:
   PV   \tab Mini   \tab   D   \cr
   PV   \tab Small   \tab   D   \cr
   PV   \tab Mediumbus   \tab   D   \cr
+  PV   \tab Medium   \tab   D   \cr
   PV   \tab Largebus   \tab   D   \cr
   PV   \tab Bus   \tab   D   \cr
   PV   \tab 3-Wheel   \tab   D   \cr
