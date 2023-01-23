@@ -1,4 +1,4 @@
-#' Aggregate emissions by lumped groups in chemical mechanism
+#' (in development, needs checks) Aggregate emissions by lumped groups in chemical mechanism
 #'
 #' @description \code{\link{emis_chem}} aggregates emissions by chemical mechanism
 #' and convert grams to mol. This function reads all hydrocarbos and respective
@@ -7,8 +7,12 @@
 #' @param dfe data.frame with column `emissions` in grams and `pollutant` in long format. It is supposed
 #' that each line is the pollution of some region. Then the `coldby` argument is for include the
 #' name of the region.
-#' @param mechanism Character, "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
-#' "MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"
+#' @param mechanism Character,
+#' "SAPRC", "RACM", "RADM2", "CBMZ", "MOZART", "SAPRC99", "CB05",
+#' "CB06CMAQ", "CB05CMAQ", "RACM2CMAQ", "SAPRC99CMAQ", "SAPRC07CMAQ",
+#' "SAPRC07A", "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC",
+#' "GOCART_CPTEC", "MOZEM", "MOZCEM", "CAMMAM", "MOZMEM",
+#' "MOZC_T1_EM", "CB05_OPT1", "CB05_OPT2", "CRIMECH"
 #' @param colby Character indicating column name for aggregating extra column.
 #' For instance, region or province.
 #' @param long Logical. Do you want data in long format?
@@ -35,7 +39,7 @@
 #' # CO
 #' df <- data.frame(emission = Emissions(1:10))
 #' df$pollutant = "CO"
-#' emis_chem(df, "CBMZ_MOSAIC")
+#' emis_chem(dfe = df, "CBMZ_MOSAIC")
 #' # hexanal
 #' df$pollutant = "hexanal"
 #' emis_chem(df, "CBMZ_MOSAIC")
@@ -64,7 +68,7 @@ emis_chem <- function(dfe, mechanism, colby, long = FALSE) {
     stop("dfe$emission neeeds to has class 'units' in 'g'. Check '?units::set_units'")
   }
   # loading mechanisms data-base
-  df <- sysdata$mech
+  df <- sysdata$mechx
   df <- df[df$MECH == mechanism, ]
 
   # loading pollutants with g_mol

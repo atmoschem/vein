@@ -155,7 +155,10 @@ save_species <- TRUE
 type <- "streets" # "grids"
 aer <- "pmneu2" # pmiag, pmneu
 mech <- "CB05opt2" # "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1"
-source("scripts/mech2.R", encoding = "UTF-8", echo = T)
+remove_mech_files <- TRUE
+# source("scripts/mech2.R", encoding = "UTF-8", echo = T)
+# needs to test
+source("scripts/mech2_china.R", encoding = "UTF-8", echo = T)
 beepr::beep(2)
 
 

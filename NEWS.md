@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+### vein 0.9.94
+
+- add chinese voc profiles
+
 ### vein 0.9.92
 
 - add more env chinese ef

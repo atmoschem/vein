@@ -103,7 +103,39 @@ options for spec "nmhc":
    ALL \tab E100 \tab Liquid      \cr
    ALL \tab G    \tab Liquid      \cr
    ALL \tab E25  \tab Liquid      \cr
+   ALL \tab ALL  \tab OM          \cr
+   LDV \tab G    \tab OM-001      \cr
+   LDV \tab D    \tab OM-002      \cr
+   HDV \tab D    \tab OM-003      \cr
+   MC  \tab G    \tab OM-004      \cr
+   ALL  \tab LPG \tab OM-005      \cr
+   LDV \tab G    \tab OM-001-001  \cr
+   LDV \tab G    \tab OM-001-002  \cr
+   LDV \tab G    \tab OM-001-003  \cr
+   LDV \tab G    \tab OM-001-004  \cr
+   LDV \tab G    \tab OM-001-005  \cr
+   LDV \tab G    \tab OM-001-006  \cr
+   LDV \tab G    \tab OM-001-007  \cr
+   LDV \tab D    \tab OM-002-001  \cr
+   LDV \tab D    \tab OM-002-002  \cr
+   LDV \tab D    \tab OM-002-003  \cr
+   LDV \tab D    \tab OM-002-004  \cr
+   LDV \tab D    \tab OM-002-005  \cr
+   LDV \tab D    \tab OM-002-006  \cr
+   HDV \tab D    \tab OM-003-001  \cr
+   HDV \tab D    \tab OM-003-002  \cr
+   HDV \tab D    \tab OM-003-003  \cr
+   HDV \tab D    \tab OM-003-004  \cr
+   HDV \tab D    \tab OM-003-005  \cr
+   HDV \tab D    \tab OM-003-006  \cr
+   MC  \tab G    \tab OM-004-001  \cr
+   MC  \tab G    \tab OM-004-002  \cr
+   MC  \tab G    \tab OM-004-003  \cr
+   ALL  \tab ALL    \tab urban  \cr
+   ALL  \tab ALL    \tab highway  \cr
 }
+
+after eu = OM, all profiles are Chinese
 # the following specs will be removed soon
 \itemize{
 \item{"iag_racm"}{: ethanol emissions added in hc3.}

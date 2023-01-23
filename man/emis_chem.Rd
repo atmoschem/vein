@@ -2,7 +2,7 @@
 % Please edit documentation in R/emis_chem.R
 \name{emis_chem}
 \alias{emis_chem}
-\title{Aggregate emissions by lumped groups in chemical mechanism}
+\title{(in development, needs checks) Aggregate emissions by lumped groups in chemical mechanism}
 \usage{
 emis_chem(dfe, mechanism, colby, long = FALSE)
 }
@@ -11,8 +11,12 @@ emis_chem(dfe, mechanism, colby, long = FALSE)
 that each line is the pollution of some region. Then the `coldby` argument is for include the
 name of the region.}
 
-\item{mechanism}{Character, "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC", "GOCART_CPTEC", "MOZEM",
-"MOZCEM", "CAMMAM", "MOZMEM", "MOZC_T1_EM", "CB05_OPT1" or "CB05_OPT2"}
+\item{mechanism}{Character,
+"SAPRC", "RACM", "RADM2", "CBMZ", "MOZART", "SAPRC99", "CB05",
+"CB06CMAQ", "CB05CMAQ", "RACM2CMAQ", "SAPRC99CMAQ", "SAPRC07CMAQ",
+"SAPRC07A", "RADM2_SORG", "CBMZ_MOSAIC", "CPTEC",
+"GOCART_CPTEC", "MOZEM", "MOZCEM", "CAMMAM", "MOZMEM",
+"MOZC_T1_EM", "CB05_OPT1", "CB05_OPT2", "CRIMECH"}
 
 \item{colby}{Character indicating column name for aggregating extra column.
 For instance, region or province.}
@@ -47,7 +51,7 @@ TODO: Enter with wide data.frame, with each line as a each street, each column f
 # CO
 df <- data.frame(emission = Emissions(1:10))
 df$pollutant = "CO"
-emis_chem(df, "CBMZ_MOSAIC")
+emis_chem(dfe = df, "CBMZ_MOSAIC")
 # hexanal
 df$pollutant = "hexanal"
 emis_chem(df, "CBMZ_MOSAIC")

@@ -11,6 +11,11 @@ if(type == "streets") {
 } 
 
 g$id <- 1:nrow(g)
+
+if(remove_mech_files ){
+  
+mechdir <- paste0("post/mech/", mech[k])
+
 fs <- list.files(
   path = mechdir,
   pattern = ".rds",
@@ -18,6 +23,7 @@ fs <- list.files(
   recursive = TRUE
 )
 file.remove(fs)
+}
 
 # Gasoline Exhaust
 x <- st_set_geometry(readRDS(paste0("post/",
