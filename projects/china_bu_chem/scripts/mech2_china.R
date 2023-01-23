@@ -14,17 +14,16 @@ g$id <- 1:nrow(g)
 
 if(remove_mech_files ){
   
-mechdir <- paste0("post/mech/", mech[k])
-
-fs <- list.files(
-  path = mechdir,
-  pattern = ".rds",
-  full.names = TRUE,
-  recursive = TRUE
-)
-file.remove(fs)
+  mechdir <- paste0("post/mech/", mech[k])
+  
+  fs <- list.files(
+    path = mechdir,
+    pattern = ".rds",
+    full.names = TRUE,
+    recursive = TRUE
+  )
+  file.remove(fs)
 }
-
 # Gasoline Exhaust
 x <- st_set_geometry(readRDS(paste0("post/",
                                     type,
@@ -42,7 +41,7 @@ dx <- speciate(
   spec = "nmhc",
   fuel = "G",
   veh = "LDV",
-  eu = "I"
+  eu = "OM-001"
 )
 
 dx$id <- rep(id, length(unique(dx$pol)))
@@ -100,7 +99,7 @@ dx <- speciate(
   spec = "nmhc",
   fuel = "D",
   veh = "HDV",
-  eu = "all"
+  eu = "OM-003"
 )
 
 dx$id <- rep(id, length(unique(dx$pol)))
@@ -127,9 +126,9 @@ x$id <- NULL
 dx <- speciate(
   x = x,
   spec = "nmhc",
-  fuel = "E85",
-  veh = "LDV",
-  eu = "Exhaust"
+  fuel = "ALL",
+  veh = "LPG",
+  eu = "OM-005"
 )
 
 dx$id <- rep(id, length(unique(dx$pol)))
