@@ -1,18 +1,12 @@
 citHeader("To cite vein in publications use at least the first, if not both:")
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
    title          = "VEIN v0.2.2: an R package for bottom-up Vehicular Emissions Inventories",
    journal		    = "Geoscientific Model Development",
-   author         = personList(person("Sergio", "Ibarra-Espinosa"),
-                    person("Rita", "Ynoue"),
-                    person("Shane", "O'Sullivan"),
-                    person("Edzer", "Pebesma"),
-                    person("Maria de Fatima", "Andrade"),
-                    person("Mauricio", "Osses")),
-   year           = "2018",
+   author         = "Sergio Ibarra-Espinosa and Rita Ynoue and Shane O'Sullivan and Edzer Pebesma and Maria de Fatima Andrade and Mauricio Osses",
+   year           = 2018,
    url            = "https://gmd.copernicus.org/articles/11/2209/2018/",
    doi            = "10.5194/gmd-11-2209-2018",
-
    textVersion  =
    paste("Ibarra-Espinosa, S., Ynoue, R., O'Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M.: VEIN v0.2.2: an R package for bottom-up vehicular emissions inventories, Geosci. Model Dev., 11, 2209-2229, https://doi.org/10.5194/gmd-11-2209-2018, 2018.")
 )
