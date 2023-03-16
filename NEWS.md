@@ -1,6 +1,16 @@
 NEWS
 ===========
 
+
+### vein 1.0.0
+
+- Integrates all the recent changes.
+- Todo: Add weather effects at hourly and street level
+in the emission factors of all projects.
+- Decrease the number of projects adding more scripts
+as in the new chinese project.
+- Add project to develop ensembles
+
 ### vein 0.9.94
 
 - add chinese voc profiles
