@@ -8,11 +8,15 @@ Authors@R: c(
          role = c("aut", "cre"),
          email = "zergioibarra@gmail.com",
          comment = c(ORCID = "0000-0002-3162-1905")),
-         person(given="Joao", family="Bazzo", 
+  person(given="Daniel", family="Schuch", 
+         role="ctb", 
+         email="underschuch@gmail.com",
+         comment = c(ORCID = "0000-0001-5977-4519")),
+  person(given="Joao", family="Bazzo", 
          role="ctb", 
          email="joao.bazzo@gmail.com",
          comment = c(ORCID = "0000-0002-7371-1116")),
-         person(given="Mario", family="Gavidia-Calderón", 
+  person(given="Mario", family="Gavidia-Calderón", 
          role="ctb", 
          email="mario.calderon@iag.usp.br",
          comment = c(ORCID = "0000-0003-4536-5006"))) 
@@ -30,7 +34,7 @@ LazyData: no
 Depends: R (>= 3.5.0)
 Imports: sf (>= 1.0.1), data.table, units, graphics, stats, dotCall64, cptcity, fields, grDevices
 Suggests: knitr, rmarkdown, testthat
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 NeedsCompilation: yes
 Config/testthat/parallel: true
