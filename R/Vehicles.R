@@ -24,7 +24,6 @@
 #' @param time Character to be the time units as denominator, eg "1/h"
 #' @importFrom units as_units install_unit
 #' @importFrom graphics par plot abline
-#' @importFrom fields image.plot
 #' @importFrom grDevices rgb colorRamp
 #'
 #' @rdname Vehicles
@@ -147,9 +146,9 @@ plot.Vehicles <- function(x,
                           fig1 = c(0,0.8,0,0.8),
                           fig2 = c(0,0.8,0.55,1),
                           fig3 = c(0.7,1,0,0.8),
-                          mai1 = c(0.2, 0.82, 0.82, 0.42),
-                          mai2 = c(1.3, 0.82, 0.82, 0.42),
-                          mai3 = c(0.7, 0.62, 0.82, 0.42),
+                          mai1 = c(1.0, 0.82, 0.82, 0.42),
+                          mai2 = c(1.8, 0.82, 0.50, 0.42),
+                          mai3 = c(1.0, 1.00, 0.82, 0.20),
                           bias = 1.5,
                           ...) {
   # # units::install_unit("veh", warn = F)
@@ -176,15 +175,23 @@ plot.Vehicles <- function(x,
                                                bias = bias)(seq(0, 1,0.01)),
                           maxColorValue = 255)
 
+    # old code using fields
+    # fields::image.plot(
+    #   x = 1:ncol(x),
+    #   xaxt = "n",
+    #   z =t(as.matrix(x))[, nrow(x):1],
+    #   xlab = "",
+    #   ylab = paste0("Vehicles by streets [",as.character(units(x[[1]])), "]"),
+    #   breaks = bk,
+    #   col = col, horizontal = TRUE)
 
-    fields::image.plot(
-      x = 1:ncol(x),
-      xaxt = "n",
-      z =t(as.matrix(x))[, nrow(x):1],
-      xlab = "",
-      ylab = paste0("Vehicles by streets [",as.character(units(x[[1]])), "]"),
-      breaks = bk,
-      col = col, horizontal = TRUE)
+    # new using graphics and other imported code
+    graphics::image(t(as.matrix(x))[, nrow(x):1],
+                    col = col,
+                    axe = FALSE,
+                    ylab = paste0("Vehicles by streets [",as.character(units(x[[1]])), "]"))
+    axis(2, breaks = bk)
+    addscale(t(as.matrix(x))[, nrow(x):1], col = col)
 
     graphics::par(fig=fig2,
                   mai = mai2,
@@ -207,7 +214,7 @@ plot.Vehicles <- function(x,
                   ...)
     graphics::plot(x = rowSums(x, na.rm = T), y = nrow(x):1,
                    type = "l", frame = FALSE, yaxt = "n",
-                   ylab = NULL, xlab = NULL
+                   ylab = "", xlab = NULL
     )
     graphics::abline(v = mean(rowSums(x, na.rm = T), na.rm = T), col="red")
 
