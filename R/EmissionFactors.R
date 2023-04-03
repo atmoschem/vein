@@ -21,7 +21,6 @@
 #' @param ... ignored
 #' @importFrom units as_units
 #' @importFrom graphics par plot abline
-#' @importFrom fields image.plot
 #' @importFrom cptcity cpt
 #' @importFrom grDevices rgb colorRamp
 #' @rdname EmissionFactors
@@ -141,13 +140,23 @@ plot.EmissionFactors <- function(x,
                                                bias = bias)(seq(0, 1,0.01)),
                           maxColorValue = 255)
 
-    fields::image.plot(
-      x = 1:ncol(x),
-      xaxt = "n",
-      z =t(as.matrix(x))[, nrow(x):1],
-      xlab = "",
-      ylab = paste0("EF by streets [",as.character(units(x[[1]])), "]"),
-      col = col, horizontal = TRUE)
+    # fields::image.plot(
+    #   x = 1:ncol(x),
+    #   xaxt = "n",
+    #   z =t(as.matrix(x))[, nrow(x):1],
+    #   xlab = "",
+    #   ylab = paste0("EF by streets [",as.character(units(x[[1]])), "]"),
+    #   col = col, horizontal = TRUE)
+
+    graphics::image(x = 1:ncol(x),
+                    xaxt = "n",
+                    z =t(as.matrix(x))[, nrow(x):1],
+                    xlab = "",
+                    ylab = paste0("EF by streets [",as.character(units(x[[1]])), "]"),
+                    col = col,
+                    axe = FALSE)
+    axis(2)
+    addscale(t(as.matrix(x))[, nrow(x):1], col = col)
 
     graphics::par(fig=fig2,
                   mai = mai2,
@@ -170,7 +179,7 @@ plot.EmissionFactors <- function(x,
                   ...)
     graphics::plot(x = rowMeans(x, na.rm = T), y = nrow(x):1,
                    type = "l", frame = FALSE, yaxt = "n",
-                   ylab = NULL, xlab = NULL
+                   ylab = "", xlab = NULL
     )
     graphics::abline(v = avage, col="red")
 

@@ -24,7 +24,6 @@
 #' @param ... ignored
 #' Default is units is "km"
 #' @importFrom units as_units
-#' @importFrom fields image.plot
 #' @importFrom grDevices rgb colorRamp
 #' @seealso \code{\link{units}}
 #'
@@ -120,9 +119,9 @@ plot.Speed <- function(x,
                        fig1 = c(0,0.8,0,0.8),
                        fig2 = c(0,0.8,0.55,1),
                        fig3 = c(0.7,1,0,0.8),
-                       mai1 = c(0.2, 0.82, 0.82, 0.42),
-                       mai2 = c(1.3, 0.82, 0.82, 0.42),
-                       mai3 = c(0.7, 0.62, 0.82, 0.42),
+                       mai1 = c(1.0, 0.82, 0.82, 0.42),
+                       mai2 = c(1.8, 0.82, 0.50, 0.42),
+                       mai3 = c(1.0, 1.00, 0.82, 0.20),
                        bias = 1.5,
                        ...) {
   oldpar <- par(no.readonly = TRUE)       # code line i
@@ -137,14 +136,22 @@ plot.Speed <- function(x,
                                                bias = bias)(seq(0, 1,0.01)),
                           maxColorValue = 255)
 
+    # fields::image.plot(
+    #   x = 1:ncol(x),
+    #   xaxt = "n",
+    #   z =t(as.matrix(x))[, nrow(x):1],
+    #   xlab = "",
+    #   ylab = paste0("Speed by streets [",as.character(units(x[[1]])), "]"),
+    #   col = col, horizontal = TRUE)
 
-    fields::image.plot(
-      x = 1:ncol(x),
-      xaxt = "n",
-      z =t(as.matrix(x))[, nrow(x):1],
-      xlab = "",
-      ylab = paste0("Speed by streets [",as.character(units(x[[1]])), "]"),
-      col = col, horizontal = TRUE)
+    graphics::image(x = 1:ncol(x), xaxt = "n",
+                    z = t(as.matrix(x))[, nrow(x):1],
+                    xlab = "",
+                    ylab = paste0("Speed by streets [",as.character(units(x[[1]])), "]"),
+                    col = col,
+                    axe = FALSE)
+    axis(2)
+    addscale(t(as.matrix(x))[, nrow(x):1], col = col)
 
     graphics::par(fig=fig2,
                   mai = mai2,
@@ -167,7 +174,7 @@ plot.Speed <- function(x,
                   ...)
     graphics::plot(x = rowMeans(x, na.rm = T), y = nrow(x):1,
                    type = "l", frame = FALSE, yaxt = "n",
-                   ylab = NULL, xlab = NULL
+                   ylab = "", xlab = NULL
     )
     graphics::abline(v = avage, col="red")
 
