@@ -218,7 +218,7 @@ switch(language,
         "english" = cat("Plotting fuel \n"),
         "spanish" = cat("Plotando combustible \n")
 )
-
+fuel$consumption_lt <-as.numeric(fuel$consumption_lt)
 png("images/FUEL.png", width = 1500, height = 2000, units = "px", res = 300)
 barplot(
         height = fuel$consumption_lt,
