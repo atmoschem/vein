@@ -75,7 +75,7 @@ in each street.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">emis_dist</span><span class="op">(</span><span class="va">gy</span>, <span class="va">spobj</span>, <span class="va">pro</span>, <span class="va">osm</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">emis_dist</span><span class="op">(</span><span class="va">gy</span>, <span class="va">spobj</span>, <span class="va">pro</span>, <span class="va">osm</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -114,16 +114,16 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">po</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
-<span class="r-in"><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">emis_dist</span><span class="op">(</span>gy <span class="op">=</span> <span class="va">po</span>, spobj <span class="op">=</span> <span class="va">net</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">t1</span><span class="op">$</span><span class="va">gy</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">#t1 &lt;- emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1) )</span></span>
-<span class="r-in"><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">emis_dist</span><span class="op">(</span>gy <span class="op">=</span> <span class="va">po</span>, spobj <span class="op">=</span> <span class="va">net</span>, pro <span class="op">=</span> <span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">po</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span></span>
+<span class="r-in"><span><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">emis_dist</span><span class="op">(</span>gy <span class="op">=</span> <span class="va">po</span>, spobj <span class="op">=</span> <span class="va">net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">t1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">t1</span><span class="op">$</span><span class="va">gy</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">#t1 &lt;- emis_dist(gy = po, spobj = net, osm = c(5, 3, 2, 1, 1) )</span></span></span>
+<span class="r-in"><span><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu">emis_dist</span><span class="op">(</span>gy <span class="op">=</span> <span class="va">po</span>, spobj <span class="op">=</span> <span class="va">net</span>, pro <span class="op">=</span> <span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -138,7 +138,7 @@ The fifth element covers 'tertiary' and 'tertiary_link'.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

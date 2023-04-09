@@ -71,17 +71,17 @@ breaks and road surface.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">emis_wear</span><span class="op">(</span>
-  <span class="va">veh</span>,
-  <span class="va">lkm</span>,
-  <span class="va">ef</span>,
-  what <span class="op">=</span> <span class="st">"tyre"</span>,
-  <span class="va">speed</span>,
-  agemax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">veh</span><span class="op">)</span>,
-  <span class="va">profile</span>,
-  hour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">profile</span><span class="op">)</span>,
-  day <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">profile</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">emis_wear</span><span class="op">(</span></span>
+<span>  <span class="va">veh</span>,</span>
+<span>  <span class="va">lkm</span>,</span>
+<span>  <span class="va">ef</span>,</span>
+<span>  what <span class="op">=</span> <span class="st">"tyre"</span>,</span>
+<span>  <span class="va">speed</span>,</span>
+<span>  agemax <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">veh</span><span class="op">)</span>,</span>
+<span>  <span class="va">profile</span>,</span>
+<span>  hour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">profile</span><span class="op">)</span>,</span>
+<span>  day <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">profile</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -139,18 +139,18 @@ guidebook-2009. European Environment Agency, Copenhagen, 2016</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">+</span> <span class="va">net</span><span class="op">$</span><span class="va">hdv</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">pc_profile</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,</span>
-<span class="r-in">              <span class="va">net</span><span class="op">$</span><span class="va">capacity</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ef</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_wear.html">ef_wear</a></span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>, type <span class="op">=</span> <span class="st">"PC"</span>, pol <span class="op">=</span> <span class="st">"PM10"</span>, speed <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">emi</span> <span class="op">&lt;-</span> <span class="fu">emis_wear</span><span class="op">(</span>veh <span class="op">=</span> <span class="fu"><a href="age_ldv.html">age_ldv</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, name <span class="op">=</span> <span class="st">"VEH"</span><span class="op">)</span>,</span>
-<span class="r-in">                 lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, ef <span class="op">=</span> <span class="va">ef</span>, speed <span class="op">=</span> <span class="va">df</span>,</span>
-<span class="r-in">                 profile <span class="op">=</span> <span class="va">pc_profile</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">emi</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">+</span> <span class="va">net</span><span class="op">$</span><span class="va">hdv</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">pc_profile</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>              <span class="va">net</span><span class="op">$</span><span class="va">capacity</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ef</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_wear.html">ef_wear</a></span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>, type <span class="op">=</span> <span class="st">"PC"</span>, pol <span class="op">=</span> <span class="st">"PM10"</span>, speed <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">emi</span> <span class="op">&lt;-</span> <span class="fu">emis_wear</span><span class="op">(</span>veh <span class="op">=</span> <span class="fu"><a href="age_ldv.html">age_ldv</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, name <span class="op">=</span> <span class="st">"VEH"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, ef <span class="op">=</span> <span class="va">ef</span>, speed <span class="op">=</span> <span class="va">df</span>,</span></span>
+<span class="r-in"><span>                 profile <span class="op">=</span> <span class="va">pc_profile</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">emi</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -165,7 +165,7 @@ guidebook-2009. European Environment Agency, Copenhagen, 2016</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -2,6 +2,10 @@ NEWS
 ===========
 
 
+### vein 1.0.1
+
+-Add emis_emfac.
+
 ### vein 1.0.0
 
 - Integrates all the recent changes.

@@ -8,13 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Elaboration of vehicular emissions inventories,
-    consisting in four stages, pre-processing activity data, preparing 
-    emissions factors, estimating the emissions and post-processing of emissions 
-    in maps and databases. More details in Ibarra-Espinosa et al (2018) \doi{10.5194/gmd-11-2209-2018}.
-    Before using VEIN you need to know the vehicular composition of your study area, in other words,
-    the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to
-    start with the project to download a template to create a structure of directories and scripts.
+Elaboration of vehicular emissions inventories, consisting in four stages, pre-processing activity data, preparing emissions factors, estimating the emissions and post-processing of emissions in maps and databases. More details in Ibarra-Espinosa et al (2018) \doi{10.5194/gmd-11-2209-2018}. Before using VEIN you need to know the vehicular composition of your study area, in other words, the combination of of type of vehicles, size and fuel of the fleet. Then, it is recommended to start with the project to download a template to create a structure of directories and scripts.
 }
 \seealso{
 Useful links:

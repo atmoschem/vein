@@ -71,29 +71,29 @@ from EMEP/EEA emission guidelines with Tier 2.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">emis_evap2</span><span class="op">(</span>
-  <span class="va">veh</span>,
-  <span class="va">name</span>,
-  <span class="va">size</span>,
-  <span class="va">fuel</span>,
-  <span class="va">aged</span>,
-  <span class="va">nd4</span>,
-  <span class="va">nd3</span>,
-  <span class="va">nd2</span>,
-  <span class="va">nd1</span>,
-  <span class="va">hs_nd4</span>,
-  <span class="va">hs_nd3</span>,
-  <span class="va">hs_nd2</span>,
-  <span class="va">hs_nd1</span>,
-  <span class="va">rl_nd4</span>,
-  <span class="va">rl_nd3</span>,
-  <span class="va">rl_nd2</span>,
-  <span class="va">rl_nd1</span>,
-  <span class="va">d_nd4</span>,
-  <span class="va">d_nd3</span>,
-  <span class="va">d_nd2</span>,
-  <span class="va">d_nd1</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">emis_evap2</span><span class="op">(</span></span>
+<span>  <span class="va">veh</span>,</span>
+<span>  <span class="va">name</span>,</span>
+<span>  <span class="va">size</span>,</span>
+<span>  <span class="va">fuel</span>,</span>
+<span>  <span class="va">aged</span>,</span>
+<span>  <span class="va">nd4</span>,</span>
+<span>  <span class="va">nd3</span>,</span>
+<span>  <span class="va">nd2</span>,</span>
+<span>  <span class="va">nd1</span>,</span>
+<span>  <span class="va">hs_nd4</span>,</span>
+<span>  <span class="va">hs_nd3</span>,</span>
+<span>  <span class="va">hs_nd2</span>,</span>
+<span>  <span class="va">hs_nd1</span>,</span>
+<span>  <span class="va">rl_nd4</span>,</span>
+<span>  <span class="va">rl_nd3</span>,</span>
+<span>  <span class="va">rl_nd2</span>,</span>
+<span>  <span class="va">rl_nd1</span>,</span>
+<span>  <span class="va">d_nd4</span>,</span>
+<span>  <span class="va">d_nd3</span>,</span>
+<span>  <span class="va">d_nd2</span>,</span>
+<span>  <span class="va">d_nd1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -212,60 +212,60 @@ Environment Agency, Copenhagen, 2009</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">PC_G</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">33491</span>,<span class="fl">22340</span>,<span class="fl">24818</span>,<span class="fl">31808</span>,<span class="fl">46458</span>,<span class="fl">28574</span>,<span class="fl">24856</span>,<span class="fl">28972</span>,<span class="fl">37818</span>,<span class="fl">49050</span>,<span class="fl">87923</span>,</span>
-<span class="r-in">          <span class="fl">133833</span>,<span class="fl">138441</span>,<span class="fl">142682</span>,<span class="fl">171029</span>,<span class="fl">151048</span>,<span class="fl">115228</span>,<span class="fl">98664</span>,<span class="fl">126444</span>,<span class="fl">101027</span>,</span>
-<span class="r-in">          <span class="fl">84771</span>,<span class="fl">55864</span>,<span class="fl">36306</span>,<span class="fl">21079</span>,<span class="fl">20138</span>,<span class="fl">17439</span>, <span class="fl">7854</span>,<span class="fl">2215</span>,<span class="fl">656</span>,<span class="fl">1262</span>,<span class="fl">476</span>,<span class="fl">512</span>,</span>
-<span class="r-in">          <span class="fl">1181</span>, <span class="fl">4991</span>, <span class="fl">3711</span>, <span class="fl">5653</span>, <span class="fl">7039</span>, <span class="fl">5839</span>, <span class="fl">4257</span>,<span class="fl">3824</span>, <span class="fl">3068</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">veh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>PC_G <span class="op">=</span> <span class="va">PC_G</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="my_age.html">my_age</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, y <span class="op">=</span> <span class="va">PC_G</span>, name <span class="op">=</span> <span class="st">"PC"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ef1</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_evap.html">ef_evap</a></span><span class="op">(</span>ef <span class="op">=</span> <span class="st">"erhotc"</span>,v <span class="op">=</span> <span class="st">"PC"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, dt <span class="op">=</span> <span class="st">"0_15"</span>, ca <span class="op">=</span> <span class="st">"no"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dfe</span> <span class="op">&lt;-</span> <span class="fu">emis_evap2</span><span class="op">(</span>veh <span class="op">=</span> <span class="va">pc1</span>,</span>
-<span class="r-in">                 name <span class="op">=</span> <span class="st">"PC"</span>,</span>
-<span class="r-in">                 size <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span>
-<span class="r-in">                 fuel <span class="op">=</span> <span class="st">"G"</span>,</span>
-<span class="r-in">                 aged <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 nd4 <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">                 nd3 <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">                 nd2 <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                 nd1 <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">                 hs_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 hs_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 hs_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 hs_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lpc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span>,</span>
-<span class="r-in">            <span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dfe</span> <span class="op">&lt;-</span> <span class="fu">emis_evap2</span><span class="op">(</span>veh <span class="op">=</span> <span class="va">lpc</span>,</span>
-<span class="r-in">                 name <span class="op">=</span> <span class="st">"PC"</span>,</span>
-<span class="r-in">                 size <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span>
-<span class="r-in">                 fuel <span class="op">=</span> <span class="st">"G"</span>,</span>
-<span class="r-in">                 aged <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 nd4 <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">                 nd3 <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">                 nd2 <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">                 nd1 <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">                 hs_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 hs_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 hs_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 hs_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 d_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span>
-<span class="r-in">                 rl_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">PC_G</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">33491</span>,<span class="fl">22340</span>,<span class="fl">24818</span>,<span class="fl">31808</span>,<span class="fl">46458</span>,<span class="fl">28574</span>,<span class="fl">24856</span>,<span class="fl">28972</span>,<span class="fl">37818</span>,<span class="fl">49050</span>,<span class="fl">87923</span>,</span></span>
+<span class="r-in"><span>          <span class="fl">133833</span>,<span class="fl">138441</span>,<span class="fl">142682</span>,<span class="fl">171029</span>,<span class="fl">151048</span>,<span class="fl">115228</span>,<span class="fl">98664</span>,<span class="fl">126444</span>,<span class="fl">101027</span>,</span></span>
+<span class="r-in"><span>          <span class="fl">84771</span>,<span class="fl">55864</span>,<span class="fl">36306</span>,<span class="fl">21079</span>,<span class="fl">20138</span>,<span class="fl">17439</span>, <span class="fl">7854</span>,<span class="fl">2215</span>,<span class="fl">656</span>,<span class="fl">1262</span>,<span class="fl">476</span>,<span class="fl">512</span>,</span></span>
+<span class="r-in"><span>          <span class="fl">1181</span>, <span class="fl">4991</span>, <span class="fl">3711</span>, <span class="fl">5653</span>, <span class="fl">7039</span>, <span class="fl">5839</span>, <span class="fl">4257</span>,<span class="fl">3824</span>, <span class="fl">3068</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">veh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>PC_G <span class="op">=</span> <span class="va">PC_G</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="my_age.html">my_age</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, y <span class="op">=</span> <span class="va">PC_G</span>, name <span class="op">=</span> <span class="st">"PC"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ef1</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_evap.html">ef_evap</a></span><span class="op">(</span>ef <span class="op">=</span> <span class="st">"erhotc"</span>,v <span class="op">=</span> <span class="st">"PC"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, dt <span class="op">=</span> <span class="st">"0_15"</span>, ca <span class="op">=</span> <span class="st">"no"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dfe</span> <span class="op">&lt;-</span> <span class="fu">emis_evap2</span><span class="op">(</span>veh <span class="op">=</span> <span class="va">pc1</span>,</span></span>
+<span class="r-in"><span>                 name <span class="op">=</span> <span class="st">"PC"</span>,</span></span>
+<span class="r-in"><span>                 size <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span></span>
+<span class="r-in"><span>                 fuel <span class="op">=</span> <span class="st">"G"</span>,</span></span>
+<span class="r-in"><span>                 aged <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 nd4 <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                 nd3 <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                 nd2 <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                 nd1 <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                 hs_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 hs_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 hs_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 hs_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lpc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span>,</span></span>
+<span class="r-in"><span>            <span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span>, <span class="va">pc1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dfe</span> <span class="op">&lt;-</span> <span class="fu">emis_evap2</span><span class="op">(</span>veh <span class="op">=</span> <span class="va">lpc</span>,</span></span>
+<span class="r-in"><span>                 name <span class="op">=</span> <span class="st">"PC"</span>,</span></span>
+<span class="r-in"><span>                 size <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span></span>
+<span class="r-in"><span>                 fuel <span class="op">=</span> <span class="st">"G"</span>,</span></span>
+<span class="r-in"><span>                 aged <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 nd4 <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                 nd3 <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                 nd2 <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>                 nd1 <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                 hs_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 hs_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 hs_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 hs_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 d_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd4 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd3 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd2 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 rl_nd1 <span class="op">=</span> <span class="va">ef1</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">pc1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -280,7 +280,7 @@ Environment Agency, Copenhagen, 2009</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

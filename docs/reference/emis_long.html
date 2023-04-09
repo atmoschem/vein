@@ -69,7 +69,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">emis_long</span><span class="op">(</span><span class="va">x</span>, <span class="va">lkm</span>, <span class="va">ef</span>, <span class="va">tfs</span>, <span class="va">speed</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, array <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">emis_long</span><span class="op">(</span><span class="va">x</span>, <span class="va">lkm</span>, <span class="va">ef</span>, <span class="va">tfs</span>, <span class="va">speed</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, array <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -125,41 +125,41 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">net</span> <span class="op">&lt;-</span> <span class="va">net</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="age_ldv.html">age_ldv</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">+</span><span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, <span class="va">pc_profile</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>,</span>
-<span class="r-in">               <span class="va">net</span><span class="op">$</span><span class="va">ps</span>,</span>
-<span class="r-in">               <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>,</span>
-<span class="r-in">               <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>,</span>
-<span class="r-in">               <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,</span>
-<span class="r-in">               alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">s</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">df</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ef</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_wear.html">ef_wear</a></span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>,</span>
-<span class="r-in">              type <span class="op">=</span> <span class="st">"PC"</span>,</span>
-<span class="r-in">              pol <span class="op">=</span> <span class="st">"PM10"</span>,</span>
-<span class="r-in">              speed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">emis_long</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>,</span>
-<span class="r-in">               lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,</span>
-<span class="r-in">               ef <span class="op">=</span> <span class="va">ef</span>,</span>
-<span class="r-in">               tfs <span class="op">=</span> <span class="va">pc_profile</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
-<span class="r-in">               speed <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">ae</span> <span class="op">&lt;-</span> <span class="fu">emis_long</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>,</span>
-<span class="r-in">               lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,</span>
-<span class="r-in">               ef <span class="op">=</span> <span class="va">ef</span>,</span>
-<span class="r-in">               tfs <span class="op">=</span> <span class="va">pc_profile</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
-<span class="r-in">               speed <span class="op">=</span> <span class="va">df</span>,</span>
-<span class="r-in">               array <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="va">net</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="age_ldv.html">age_ldv</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">+</span><span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, <span class="va">pc_profile</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>,</span></span>
+<span class="r-in"><span>               <span class="va">net</span><span class="op">$</span><span class="va">ps</span>,</span></span>
+<span class="r-in"><span>               <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>,</span></span>
+<span class="r-in"><span>               <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>,</span></span>
+<span class="r-in"><span>               <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,</span></span>
+<span class="r-in"><span>               alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">s</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>,<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">df</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ef</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_wear.html">ef_wear</a></span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>,</span></span>
+<span class="r-in"><span>              type <span class="op">=</span> <span class="st">"PC"</span>,</span></span>
+<span class="r-in"><span>              pol <span class="op">=</span> <span class="st">"PM10"</span>,</span></span>
+<span class="r-in"><span>              speed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">s</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">emis_long</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>               lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,</span></span>
+<span class="r-in"><span>               ef <span class="op">=</span> <span class="va">ef</span>,</span></span>
+<span class="r-in"><span>               tfs <span class="op">=</span> <span class="va">pc_profile</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>               speed <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">ae</span> <span class="op">&lt;-</span> <span class="fu">emis_long</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>               lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,</span></span>
+<span class="r-in"><span>               ef <span class="op">=</span> <span class="va">ef</span>,</span></span>
+<span class="r-in"><span>               tfs <span class="op">=</span> <span class="va">pc_profile</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>               speed <span class="op">=</span> <span class="va">df</span>,</span></span>
+<span class="r-in"><span>               array <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -184,7 +184,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

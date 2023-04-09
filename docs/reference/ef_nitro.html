@@ -75,20 +75,20 @@ http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-gu
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ef_nitro</span><span class="op">(</span>
-  <span class="va">v</span>,
-  t <span class="op">=</span> <span class="st">"Hot"</span>,
-  cond <span class="op">=</span> <span class="st">"Urban"</span>,
-  <span class="va">cc</span>,
-  <span class="va">f</span>,
-  <span class="va">eu</span>,
-  p <span class="op">=</span> <span class="st">"NH3"</span>,
-  S <span class="op">=</span> <span class="fl">10</span>,
-  <span class="va">cumileage</span>,
-  k <span class="op">=</span> <span class="fl">1</span>,
-  show.equation <span class="op">=</span> <span class="cn">FALSE</span>,
-  fcorr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_nitro</span><span class="op">(</span></span>
+<span>  <span class="va">v</span>,</span>
+<span>  t <span class="op">=</span> <span class="st">"Hot"</span>,</span>
+<span>  cond <span class="op">=</span> <span class="st">"Urban"</span>,</span>
+<span>  <span class="va">cc</span>,</span>
+<span>  <span class="va">f</span>,</span>
+<span>  <span class="va">eu</span>,</span>
+<span>  p <span class="op">=</span> <span class="st">"NH3"</span>,</span>
+<span>  S <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  <span class="va">cumileage</span>,</span>
+<span>  k <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  show.equation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  fcorr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -160,18 +160,18 @@ or length equal to length of eu</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">efe10</span> <span class="op">&lt;-</span> <span class="fu">ef_nitro</span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"Hot"</span>, cond <span class="op">=</span> <span class="st">"Urban"</span>, f <span class="op">=</span> <span class="st">"G"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span>
-<span class="r-in">eu <span class="op">=</span> <span class="st">"III"</span>, p <span class="op">=</span> <span class="st">"NH3"</span>, S <span class="op">=</span> <span class="fl">10</span>,</span>
-<span class="r-in">show.equation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">efe50</span> <span class="op">&lt;-</span> <span class="fu">ef_nitro</span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"Hot"</span>, cond <span class="op">=</span> <span class="st">"Urban"</span>, f <span class="op">=</span> <span class="st">"G"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span>
-<span class="r-in">eu <span class="op">=</span> <span class="st">"III"</span>, p <span class="op">=</span> <span class="st">"NH3"</span>, S <span class="op">=</span> <span class="fl">50</span>,</span>
-<span class="r-in">show.equation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">efe10</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">efe50</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">efe10</span> <span class="op">&lt;-</span> <span class="fu">ef_nitro</span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"Hot"</span>, cond <span class="op">=</span> <span class="st">"Urban"</span>, f <span class="op">=</span> <span class="st">"G"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span>
-<span class="r-in">eu <span class="op">=</span> <span class="st">"III"</span>, p <span class="op">=</span> <span class="st">"NH3"</span>, S <span class="op">=</span> <span class="fl">10</span>, cumileage <span class="op">=</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">25000</span>, <span class="st">"km"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">efe10</span> <span class="op">&lt;-</span> <span class="fu">ef_nitro</span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"Hot"</span>, cond <span class="op">=</span> <span class="st">"Urban"</span>, f <span class="op">=</span> <span class="st">"G"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span></span>
+<span class="r-in"><span>eu <span class="op">=</span> <span class="st">"III"</span>, p <span class="op">=</span> <span class="st">"NH3"</span>, S <span class="op">=</span> <span class="fl">10</span>,</span></span>
+<span class="r-in"><span>show.equation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">efe50</span> <span class="op">&lt;-</span> <span class="fu">ef_nitro</span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"Hot"</span>, cond <span class="op">=</span> <span class="st">"Urban"</span>, f <span class="op">=</span> <span class="st">"G"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span></span>
+<span class="r-in"><span>eu <span class="op">=</span> <span class="st">"III"</span>, p <span class="op">=</span> <span class="st">"NH3"</span>, S <span class="op">=</span> <span class="fl">50</span>,</span></span>
+<span class="r-in"><span>show.equation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">efe10</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">efe50</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">efe10</span> <span class="op">&lt;-</span> <span class="fu">ef_nitro</span><span class="op">(</span>v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"Hot"</span>, cond <span class="op">=</span> <span class="st">"Urban"</span>, f <span class="op">=</span> <span class="st">"G"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>,</span></span>
+<span class="r-in"><span>eu <span class="op">=</span> <span class="st">"III"</span>, p <span class="op">=</span> <span class="st">"NH3"</span>, S <span class="op">=</span> <span class="fl">10</span>, cumileage <span class="op">=</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">25000</span>, <span class="st">"km"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -186,7 +186,7 @@ or length equal to length of eu</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
