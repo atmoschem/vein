@@ -70,6 +70,9 @@
     <loc>http://atmoschem.github.io/vein/reference/add_polid.html</loc>
   </url>
   <url>
+    <loc>http://atmoschem.github.io/vein/reference/addscale.html</loc>
+  </url>
+  <url>
     <loc>http://atmoschem.github.io/vein/reference/adt.html</loc>
   </url>
   <url>
@@ -206,6 +209,9 @@
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein/reference/emis_dist.html</loc>
+  </url>
+  <url>
+    <loc>http://atmoschem.github.io/vein/reference/emis_emfac.html</loc>
   </url>
   <url>
     <loc>http://atmoschem.github.io/vein/reference/emis_evap.html</loc>

@@ -71,18 +71,18 @@ and each link based on morning rush traffic data</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">netspeed</span><span class="op">(</span>
-  q <span class="op">=</span> <span class="fl">1</span>,
-  <span class="va">ps</span>,
-  <span class="va">ffs</span>,
-  <span class="va">cap</span>,
-  <span class="va">lkm</span>,
-  alpha <span class="op">=</span> <span class="fl">0.15</span>,
-  beta <span class="op">=</span> <span class="fl">4</span>,
-  <span class="va">net</span>,
-  scheme <span class="op">=</span> <span class="cn">FALSE</span>,
-  dist <span class="op">=</span> <span class="st">"km"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">netspeed</span><span class="op">(</span></span>
+<span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">ps</span>,</span>
+<span>  <span class="va">ffs</span>,</span>
+<span>  <span class="va">cap</span>,</span>
+<span>  <span class="va">lkm</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.15</span>,</span>
+<span>  beta <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  <span class="va">net</span>,</span>
+<span>  scheme <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  dist <span class="op">=</span> <span class="st">"km"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -138,27 +138,27 @@ Default is units from peak speed `ps`</p><table class="table table"><tr><td>00:0
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">+</span><span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, <span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">netspeed</span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co">#plot of the average speed at each hour, +- sd</span></span>
-<span class="r-in"><span class="co"># net$ps &lt;- units::set_units(net$ps, "miles/h")</span></span>
-<span class="r-in"><span class="co"># net$ffs &lt;- units::set_units(net$ffs, "miles/h")</span></span>
-<span class="r-in"><span class="co"># df &lt;- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)</span></span>
-<span class="r-in"><span class="co"># class(df)</span></span>
-<span class="r-in"><span class="co"># plot(df) #plot of the average speed at each hour, +- sd</span></span>
-<span class="r-in"><span class="co"># df &lt;- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)</span></span>
-<span class="r-in"><span class="co"># class(df)</span></span>
-<span class="r-in"><span class="co"># plot(df) #plot of the average speed at each hour, +- sd</span></span>
-<span class="r-in"><span class="co"># dfsf &lt;- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)</span></span>
-<span class="r-in"><span class="co"># class(dfsf)</span></span>
-<span class="r-in"><span class="co"># head(dfsf)</span></span>
-<span class="r-in"><span class="co"># plot(dfsf, pal = cptcity::lucky(colorRampPalette = TRUE, rev = TRUE),</span></span>
-<span class="r-in"><span class="co"># key.pos = 1, max.plot = 9)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">+</span><span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, <span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">netspeed</span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="co">#plot of the average speed at each hour, +- sd</span></span></span>
+<span class="r-in"><span><span class="co"># net$ps &lt;- units::set_units(net$ps, "miles/h")</span></span></span>
+<span class="r-in"><span><span class="co"># net$ffs &lt;- units::set_units(net$ffs, "miles/h")</span></span></span>
+<span class="r-in"><span><span class="co"># df &lt;- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)</span></span></span>
+<span class="r-in"><span><span class="co"># class(df)</span></span></span>
+<span class="r-in"><span><span class="co"># plot(df) #plot of the average speed at each hour, +- sd</span></span></span>
+<span class="r-in"><span><span class="co"># df &lt;- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)</span></span></span>
+<span class="r-in"><span><span class="co"># class(df)</span></span></span>
+<span class="r-in"><span><span class="co"># plot(df) #plot of the average speed at each hour, +- sd</span></span></span>
+<span class="r-in"><span><span class="co"># dfsf &lt;- netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE, net = net)</span></span></span>
+<span class="r-in"><span><span class="co"># class(dfsf)</span></span></span>
+<span class="r-in"><span><span class="co"># head(dfsf)</span></span></span>
+<span class="r-in"><span><span class="co"># plot(dfsf, pal = cptcity::lucky(colorRampPalette = TRUE, rev = TRUE),</span></span></span>
+<span class="r-in"><span><span class="co"># key.pos = 1, max.plot = 9)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Weighted mean =  45.39 </span>
 <span class="r-plt img"><img src="netspeed-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
@@ -175,7 +175,7 @@ Default is units from peak speed `ps`</p><table class="table table"><tr><td>00:0
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

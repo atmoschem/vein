@@ -71,16 +71,16 @@ The sources are tyres, breaks and road surface.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ef_wear</span><span class="op">(</span>
-  <span class="va">wear</span>,
-  <span class="va">type</span>,
-  pol <span class="op">=</span> <span class="st">"TSP"</span>,
-  <span class="va">speed</span>,
-  load <span class="op">=</span> <span class="fl">0.5</span>,
-  axle <span class="op">=</span> <span class="fl">2</span>,
-  road <span class="op">=</span> <span class="st">"urban"</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_wear</span><span class="op">(</span></span>
+<span>  <span class="va">wear</span>,</span>
+<span>  <span class="va">type</span>,</span>
+<span>  pol <span class="op">=</span> <span class="st">"TSP"</span>,</span>
+<span>  <span class="va">speed</span>,</span>
+<span>  load <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  axle <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  road <span class="op">=</span> <span class="st">"urban"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -141,24 +141,24 @@ Battery Electric Bus Fleet Transitions. Paper under development.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">+</span><span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, <span class="va">pc_profile</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ef</span> <span class="op">&lt;-</span> <span class="fu">ef_wear</span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>, type <span class="op">=</span> <span class="st">"PC"</span>, pol <span class="op">=</span> <span class="st">"PM10"</span>, speed <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">ef_wear</span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>,</span>
-<span class="r-in">        type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E6DV"</span><span class="op">)</span>,</span>
-<span class="r-in">        pol <span class="op">=</span> <span class="st">"PM10"</span>,</span>
-<span class="r-in">        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">ef_wear</span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>,</span>
-<span class="r-in">        type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E6DV"</span><span class="op">)</span>,</span>
-<span class="r-in">        pol <span class="op">=</span> <span class="st">"PM10"</span>,</span>
-<span class="r-in">        verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">+</span><span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, <span class="va">pc_profile</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">pc_week</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ef</span> <span class="op">&lt;-</span> <span class="fu">ef_wear</span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>, type <span class="op">=</span> <span class="st">"PC"</span>, pol <span class="op">=</span> <span class="st">"PM10"</span>, speed <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">ef_wear</span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>,</span></span>
+<span class="r-in"><span>        type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E6DV"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        pol <span class="op">=</span> <span class="st">"PM10"</span>,</span></span>
+<span class="r-in"><span>        verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">ef_wear</span><span class="op">(</span>wear <span class="op">=</span> <span class="st">"tyre"</span>,</span></span>
+<span class="r-in"><span>        type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"E6DV"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        pol <span class="op">=</span> <span class="st">"PM10"</span>,</span></span>
+<span class="r-in"><span>        verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    wear  veh  road  pol ef efi efs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 16 tyre E6DV urban PM10 27  21  38</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 27 [g/km]</span>
@@ -176,7 +176,7 @@ Battery Electric Bus Fleet Transitions. Paper under development.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

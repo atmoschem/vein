@@ -79,7 +79,7 @@ Weighted emission factors considering that part of the fleet are high emitters.<
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ef_whe</span><span class="op">(</span><span class="va">efhe</span>, <span class="va">phe</span>, <span class="va">ef</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_whe</span><span class="op">(</span><span class="va">efhe</span>, <span class="va">phe</span>, <span class="va">ef</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -108,21 +108,21 @@ program.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># Do not run</span></span>
-<span class="r-in"><span class="co"># Let's say high emitter is 5 times the normal ef.</span></span>
-<span class="r-in"><span class="va">co_efhe</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span>p <span class="op">=</span> <span class="st">"COd"</span>, <span class="st">"PC_G"</span><span class="op">)</span> <span class="op">*</span> <span class="fl">5</span></span>
-<span class="r-in"><span class="co"># Let's say that the perfil of high emitters increases linearly</span></span>
-<span class="r-in"><span class="co"># till 30 years and after that percentage is constant</span></span>
-<span class="r-in"><span class="va">perc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.3</span>, <span class="fl">0.01</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Now, lets use our ef with normal deterioration</span></span>
-<span class="r-in"><span class="va">co_ef_normal</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span>p <span class="op">=</span> <span class="st">"COd"</span>, <span class="st">"PC_G"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">efd</span> <span class="op">&lt;-</span> <span class="fu">ef_whe</span><span class="op">(</span>efhe <span class="op">=</span> <span class="va">co_efhe</span>, phe <span class="op">=</span> <span class="va">perc</span>, ef <span class="op">=</span> <span class="va">co_ef_normal</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># now, we can plot the three ef</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">co_efhe</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">co_ef_normal</span>, pch <span class="op">=</span> <span class="fl">16</span>, col <span class="op">=</span> <span class="st">"red"</span> <span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">efd</span>, pch <span class="op">=</span> <span class="fl">16</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Do not run</span></span></span>
+<span class="r-in"><span><span class="co"># Let's say high emitter is 5 times the normal ef.</span></span></span>
+<span class="r-in"><span><span class="va">co_efhe</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span>p <span class="op">=</span> <span class="st">"COd"</span>, <span class="st">"PC_G"</span><span class="op">)</span> <span class="op">*</span> <span class="fl">5</span></span></span>
+<span class="r-in"><span><span class="co"># Let's say that the perfil of high emitters increases linearly</span></span></span>
+<span class="r-in"><span><span class="co"># till 30 years and after that percentage is constant</span></span></span>
+<span class="r-in"><span><span class="va">perc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.3</span>, <span class="fl">0.01</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Now, lets use our ef with normal deterioration</span></span></span>
+<span class="r-in"><span><span class="va">co_ef_normal</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span>p <span class="op">=</span> <span class="st">"COd"</span>, <span class="st">"PC_G"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">efd</span> <span class="op">&lt;-</span> <span class="fu">ef_whe</span><span class="op">(</span>efhe <span class="op">=</span> <span class="va">co_efhe</span>, phe <span class="op">=</span> <span class="va">perc</span>, ef <span class="op">=</span> <span class="va">co_ef_normal</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># now, we can plot the three ef</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">co_efhe</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">co_ef_normal</span>, pch <span class="op">=</span> <span class="fl">16</span>, col <span class="op">=</span> <span class="st">"red"</span> <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">efd</span>, pch <span class="op">=</span> <span class="fl">16</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -137,7 +137,7 @@ program.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

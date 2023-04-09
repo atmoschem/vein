@@ -142,17 +142,17 @@
 </h4>
 <p>VEIN can be installed via CRAN or github</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"vein"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"vein"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="github">GitHub<a class="anchor" aria-label="anchor" href="#github"></a>
 </h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"atmoschem/vein"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"atmoschem/vein"</span><span class="op">)</span></span></code></pre></div>
 <p>or if you have a <strong>32 bits</strong> machine</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">install_github</span><span class="op">(</span><span class="st">"atmoschem/vein"</span>,
-INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">install_github</span><span class="op">(</span><span class="st">"atmoschem/vein"</span>,</span>
+<span>INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level4">
@@ -160,8 +160,8 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 </h4>
 <p>Then, if you want, run the demo</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span> 
-<span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span><span class="va">VEIN</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span><span class="va">VEIN</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -198,9 +198,9 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 <li><a href="https://github.com/atmoschem/vein/actions" class="external-link"><img src="https://github.com/atmoschem/vein/workflows/eu_bu_chem_simple/badge.svg" alt="R build status"></a></li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span>
-<span class="op">?</span><span class="va">get_project</span>
-<span class="fu"><a href="reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></span>
+<span><span class="op">?</span><span class="va">get_project</span></span>
+<span><span class="fu"><a href="reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span></span></code></pre></div>
 <p>The structure of the new directory “awesome_city” is:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>awesome_city</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>├── config</span>
@@ -234,7 +234,7 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 </ul>
 <p>If you do not have them already, you can install:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -252,7 +252,7 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 </h3>
 <p>Read the instruction of inventory</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">?</span><span class="va">inventory</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">?</span><span class="va">inventory</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="id_1-examples-with-traffic-data">1) Examples with traffic data:<a class="anchor" aria-label="anchor" href="#id_1-examples-with-traffic-data"></a>
 </h4>
@@ -264,72 +264,72 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 <li>You can use/merge/transform/adapt any of these functions.</li>
 </ol>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span>
-<span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span>
-  x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="va">PC_E25_1400</span>
-<span class="op">)</span>
-<span class="co">#&gt; Weighted mean =  11.17</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span></span>
+<span><span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">PC_E25_1400</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Weighted mean =  11.17</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-3-1.png"><!-- --></p>
 <p>If you want to know the vehicles per street and by age of use, just add the net. Age functions now returns ‘sf’ objects if the net argument is present.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PC_E25_1400net</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span>
-  x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, 
-  net <span class="op">=</span> <span class="va">net</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="va">PC_E25_1400net</span>, 
-  key.pos <span class="op">=</span> <span class="fl">4</span>, 
-  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>
-    colorRampPalette <span class="op">=</span> <span class="cn">T</span>, 
-    rev <span class="op">=</span> <span class="cn">T</span>
-  <span class="op">)</span>
-<span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot</span>
-<span class="co">#&gt; all</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">PC_E25_1400net</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, </span>
+<span>  net <span class="op">=</span> <span class="va">net</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">PC_E25_1400net</span>, </span>
+<span>  key.pos <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span></span>
+<span>    colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>    rev <span class="op">=</span> <span class="cn">T</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot</span></span>
+<span><span class="co">#&gt; all</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-4-1.png"><!-- --></p>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/temp_fact.html" class="external-link">temp_fact</a></li>
@@ -337,57 +337,57 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 </ul>
 <p>temporal factors and netspeed</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"pc_profile"</span><span class="op">)</span>
-<span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/temp_fact.html">temp_fact</a></span><span class="op">(</span>
-  <span class="va">net</span><span class="op">$</span><span class="va">ldv</span> <span class="op">+</span> <span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, 
-  <span class="va">pc_profile</span>
-<span class="op">)</span>
-<span class="va">dfspeed</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/netspeed.html">netspeed</a></span><span class="op">(</span>
-  q <span class="op">=</span> <span class="va">pc_week</span>, 
-  ps <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, 
-  ffs <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, 
-  cap <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, 
-  lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, 
-  alpha <span class="op">=</span> <span class="fl">1.5</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dfspeed</span><span class="op">)</span>
-<span class="co">#&gt; Weighted mean =  44.16</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"pc_profile"</span><span class="op">)</span></span>
+<span><span class="va">pc_week</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/temp_fact.html">temp_fact</a></span><span class="op">(</span></span>
+<span>  <span class="va">net</span><span class="op">$</span><span class="va">ldv</span> <span class="op">+</span> <span class="va">net</span><span class="op">$</span><span class="va">hdv</span>, </span>
+<span>  <span class="va">pc_profile</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">dfspeed</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/netspeed.html">netspeed</a></span><span class="op">(</span></span>
+<span>  q <span class="op">=</span> <span class="va">pc_week</span>, </span>
+<span>  ps <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, </span>
+<span>  ffs <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, </span>
+<span>  cap <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, </span>
+<span>  lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, </span>
+<span>  alpha <span class="op">=</span> <span class="fl">1.5</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">dfspeed</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Weighted mean =  44.16</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-5-1.png"><!-- --></p>
 <p>If you want ot check the speed at different hours by street, just add net:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dfspeednet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/netspeed.html">netspeed</a></span><span class="op">(</span>
-  q <span class="op">=</span> <span class="va">pc_week</span>, 
-  ps <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, 
-  ffs <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, 
-  cap <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, 
-  lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,
-  alpha <span class="op">=</span> <span class="fl">1.5</span>, 
-  net <span class="op">=</span> <span class="va">net</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="va">dfspeednet</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S1"</span>, <span class="st">"S9"</span><span class="op">)</span><span class="op">]</span>, 
-  key.pos <span class="op">=</span> <span class="fl">4</span>, 
-  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, 
-                     rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, 
-  axes <span class="op">=</span> <span class="cn">T</span>
-<span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dfspeednet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/netspeed.html">netspeed</a></span><span class="op">(</span></span>
+<span>  q <span class="op">=</span> <span class="va">pc_week</span>, </span>
+<span>  ps <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, </span>
+<span>  ffs <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, </span>
+<span>  cap <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, </span>
+<span>  lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">1.5</span>, </span>
+<span>  net <span class="op">=</span> <span class="va">net</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dfspeednet</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S1"</span>, <span class="st">"S9"</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>  key.pos <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                     rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, </span>
+<span>  axes <span class="op">=</span> <span class="cn">T</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-6-1.png"><!-- --> #### 2) Emission Factors</p>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/ef_ldv_speed.html" class="external-link">ef_ldv_speed</a></li>
@@ -398,23 +398,23 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 <li><a href="https://atmoschem.github.io/vein/reference/EmissionFactorsList.html" class="external-link">EmissionFactorsList</a></li>
 </ul>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>
-<span class="va">ef1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span>
-  v <span class="op">=</span> <span class="st">"PC"</span>,
-  t <span class="op">=</span> <span class="st">"4S"</span>, 
-  cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, 
-  f <span class="op">=</span> <span class="st">"G"</span>,
-  eu <span class="op">=</span> <span class="st">"PRE"</span>,
-  p <span class="op">=</span> <span class="st">"CO"</span>
-<span class="op">)</span>
-<span class="va">efs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EmissionFactors.html">EmissionFactors</a></span><span class="op">(</span><span class="fu">ef1</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="fu"><a href="reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, 
-  <span class="va">efs</span>, 
-  xlab <span class="op">=</span> <span class="st">"speed[km/h]"</span>, 
-  type <span class="op">=</span> <span class="st">"b"</span>, 
-  pch <span class="op">=</span> <span class="fl">16</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span></span>
+<span><span class="va">ef1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span></span>
+<span>  v <span class="op">=</span> <span class="st">"PC"</span>,</span>
+<span>  t <span class="op">=</span> <span class="st">"4S"</span>, </span>
+<span>  cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, </span>
+<span>  f <span class="op">=</span> <span class="st">"G"</span>,</span>
+<span>  eu <span class="op">=</span> <span class="st">"PRE"</span>,</span>
+<span>  p <span class="op">=</span> <span class="st">"CO"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">efs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EmissionFactors.html">EmissionFactors</a></span><span class="op">(</span><span class="fu">ef1</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, </span>
+<span>  <span class="va">efs</span>, </span>
+<span>  xlab <span class="op">=</span> <span class="st">"speed[km/h]"</span>, </span>
+<span>  type <span class="op">=</span> <span class="st">"b"</span>, </span>
+<span>  pch <span class="op">=</span> <span class="fl">16</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-1.png"><!-- --></p>
 </div>
 <div class="section level4">
@@ -424,32 +424,32 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 <li><a href="https://atmoschem.github.io/vein/reference/emis.html" class="external-link">emis</a></li>
 </ul>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">euro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">5</span><span class="op">)</span>, 
-  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"IV"</span>, <span class="fl">5</span><span class="op">)</span>, 
-  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"III"</span>, <span class="fl">5</span><span class="op">)</span>, 
-  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"II"</span>, <span class="fl">5</span><span class="op">)</span>,
-  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="fl">5</span><span class="op">)</span>, 
-  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"PRE"</span>, <span class="fl">15</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span>
-    v <span class="op">=</span> <span class="st">"PC"</span>, 
-    t <span class="op">=</span> <span class="st">"4S"</span>,
-    cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, 
-    f <span class="op">=</span> <span class="st">"G"</span>,
-    eu <span class="op">=</span> <span class="va">euro</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, 
-    p <span class="op">=</span> <span class="st">"CO"</span>, 
-    show.equation <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span> 
-<span class="op">}</span><span class="op">)</span>
-<span class="va">E_CO</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis.html">emis</a></span><span class="op">(</span>
-  veh <span class="op">=</span> <span class="va">PC_E25_1400</span>, 
-  lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, 
-  ef <span class="op">=</span> <span class="va">lef</span>, 
-  speed <span class="op">=</span> <span class="va">dfspeed</span>,
-  profile <span class="op">=</span> <span class="va">pc_profile</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">euro</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">5</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"IV"</span>, <span class="fl">5</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"III"</span>, <span class="fl">5</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"II"</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"I"</span>, <span class="fl">5</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"PRE"</span>, <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span></span>
+<span>    v <span class="op">=</span> <span class="st">"PC"</span>, </span>
+<span>    t <span class="op">=</span> <span class="st">"4S"</span>,</span>
+<span>    cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, </span>
+<span>    f <span class="op">=</span> <span class="st">"G"</span>,</span>
+<span>    eu <span class="op">=</span> <span class="va">euro</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, </span>
+<span>    p <span class="op">=</span> <span class="st">"CO"</span>, </span>
+<span>    show.equation <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> </span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">E_CO</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis.html">emis</a></span><span class="op">(</span></span>
+<span>  veh <span class="op">=</span> <span class="va">PC_E25_1400</span>, </span>
+<span>  lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, </span>
+<span>  ef <span class="op">=</span> <span class="va">lef</span>, </span>
+<span>  speed <span class="op">=</span> <span class="va">dfspeed</span>,</span>
+<span>  profile <span class="op">=</span> <span class="va">pc_profile</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="id_4-post-emissions">4) Post Emissions<a class="anchor" aria-label="anchor" href="#id_4-post-emissions"></a>
@@ -460,43 +460,43 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 <li>When the argument by = “streets_wide”, aggregated the emissions by street. In this cae, if you add the argument net with the respective streets, it returns an spatial net with the hourly emissions.</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">E_CO_DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>
-  arra <span class="op">=</span> <span class="va">E_CO</span>,  
-  veh <span class="op">=</span> <span class="st">"PC"</span>, 
-  size <span class="op">=</span> <span class="st">"&lt;1400"</span>, 
-  fuel <span class="op">=</span> <span class="st">"G"</span>,
-  pollutant <span class="op">=</span> <span class="st">"CO"</span>, 
-  by <span class="op">=</span> <span class="st">"veh"</span>, 
-  type_emi <span class="op">=</span> <span class="st">"exhaust"</span>
-<span class="op">)</span>
-<span class="va">E_CO_STREETS</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>
-  arra <span class="op">=</span> <span class="va">E_CO</span>, 
-  pollutant <span class="op">=</span> <span class="st">"CO"</span>, 
-  by <span class="op">=</span> <span class="st">"streets"</span>, 
-  net <span class="op">=</span> <span class="va">net</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="va">E_CO_STREETS</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V9"</span><span class="op">)</span><span class="op">]</span>, 
-  key.pos <span class="op">=</span> <span class="fl">4</span>, 
-  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, 
-                     rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, 
-  axes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">E_CO_DF</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span></span>
+<span>  arra <span class="op">=</span> <span class="va">E_CO</span>,  </span>
+<span>  veh <span class="op">=</span> <span class="st">"PC"</span>, </span>
+<span>  size <span class="op">=</span> <span class="st">"&lt;1400"</span>, </span>
+<span>  fuel <span class="op">=</span> <span class="st">"G"</span>,</span>
+<span>  pollutant <span class="op">=</span> <span class="st">"CO"</span>, </span>
+<span>  by <span class="op">=</span> <span class="st">"veh"</span>, </span>
+<span>  type_emi <span class="op">=</span> <span class="st">"exhaust"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">E_CO_STREETS</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span></span>
+<span>  arra <span class="op">=</span> <span class="va">E_CO</span>, </span>
+<span>  pollutant <span class="op">=</span> <span class="st">"CO"</span>, </span>
+<span>  by <span class="op">=</span> <span class="st">"streets"</span>, </span>
+<span>  net <span class="op">=</span> <span class="va">net</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">E_CO_STREETS</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V9"</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>  key.pos <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                     rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, </span>
+<span>  axes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-9-1.png"><!-- --></p>
 </div>
 <div class="section level4">
@@ -511,44 +511,44 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 <li>Create a grid using a path to wrfinput file instead a net. The grid will have the size of the wrf_input. You don’t have to specify the grid spacing.</li>
 </ol>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>
-<span class="va">E_CO_STREETSnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span>
-  arra <span class="op">=</span> <span class="va">E_CO</span>, 
-  pollutant <span class="op">=</span> <span class="st">"CO"</span>,
-  by <span class="op">=</span> <span class="st">"streets_wide"</span>,
-  net <span class="op">=</span> <span class="va">net</span>
-<span class="op">)</span>
-<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_grid.html">make_grid</a></span><span class="op">(</span>
-  spobj <span class="op">=</span> <span class="va">net</span>, 
-  width <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">102.47</span>
-<span class="op">)</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; Number of lon points: 12</span>
-<span class="co">#&gt; Number of lat points: 10</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="va">E_CO_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span>
-  spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, 
-  g <span class="op">=</span> <span class="va">g</span>, 
-  sr<span class="op">=</span> <span class="fl">31983</span>
-<span class="op">)</span>
-<span class="co">#&gt; Your units are:</span>
-<span class="co">#&gt; g</span>
-<span class="co">#&gt; Transforming spatial objects to 'sr'</span>
-<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
-<span class="co">#&gt; Sum of street emissions 148791715.29</span>
-<span class="co">#&gt; Sum of gridded emissions 148791715.29</span>
-<span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"1/h"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="va">E_CO_g</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V9"</span><span class="op">)</span><span class="op">]</span>, 
-  key.pos <span class="op">=</span> <span class="fl">4</span>, 
-  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, 
-                     rev <span class="op">=</span> <span class="cn">T</span>,
-                     pal <span class="op">=</span> <span class="st">"mpl_viridis"</span><span class="op">)</span>, 
-  axes <span class="op">=</span> <span class="cn">T</span>, 
-  lty <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
+<span><span class="va">E_CO_STREETSnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_post.html">emis_post</a></span><span class="op">(</span></span>
+<span>  arra <span class="op">=</span> <span class="va">E_CO</span>, </span>
+<span>  pollutant <span class="op">=</span> <span class="st">"CO"</span>,</span>
+<span>  by <span class="op">=</span> <span class="st">"streets_wide"</span>,</span>
+<span>  net <span class="op">=</span> <span class="va">net</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_grid.html">make_grid</a></span><span class="op">(</span></span>
+<span>  spobj <span class="op">=</span> <span class="va">net</span>, </span>
+<span>  width <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">102.47</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; Number of lon points: 12</span></span>
+<span><span class="co">#&gt; Number of lat points: 10</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="va">E_CO_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span></span>
+<span>  spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, </span>
+<span>  g <span class="op">=</span> <span class="va">g</span>, </span>
+<span>  sr<span class="op">=</span> <span class="fl">31983</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Your units are:</span></span>
+<span><span class="co">#&gt; g</span></span>
+<span><span class="co">#&gt; Transforming spatial objects to 'sr'</span></span>
+<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
+<span><span class="co">#&gt; Sum of street emissions 148791715.29</span></span>
+<span><span class="co">#&gt; Sum of gridded emissions 148791715.29</span></span>
+<span><span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"1/h"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">E_CO_g</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V9"</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>  key.pos <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                     rev <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>                     pal <span class="op">=</span> <span class="st">"mpl_viridis"</span><span class="op">)</span>, </span>
+<span>  axes <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>  lty <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-10-1.png"><!-- --></p>
 </div>
 <div class="section level4">
@@ -562,20 +562,20 @@ INSTALL_opts <span class="op">=</span> <span class="st">"--no-multiarch"</span><
 <li>Put the <a href="https://atmoschem.github.io/vein/reference/GriddedEmissionsArray.html" class="external-link">GriddedEmissionsArray</a> into the wrf chem input file using <a href="https://atmoschem.github.io/eixport/reference/wrf_put.html" class="external-link">eixport::wrf_put</a>.</li>
 </ol>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://atmoschem.github.io/eixport/" class="external-link">eixport</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_create.html" class="external-link">wrf_create</a></span><span class="op">(</span>wrfinput_dir         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"eixport"</span><span class="op">)</span>,
-wrfchemi_dir         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span>,
-domains              <span class="op">=</span> <span class="fl">2</span>,
-frames_per_auxinput5 <span class="op">=</span> <span class="fl">1</span>, <span class="co">#hours</span>
-auxinput5_interval_m <span class="op">=</span> <span class="fl">60</span>,
-verbose              <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">path_to_wrfi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"eixport"</span><span class="op">)</span>, <span class="st">"/wrfinput_d02"</span><span class="op">)</span>
-<span class="va">path_to_wrfc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
-<span class="va">gwrf</span> <span class="op">&lt;-</span> <span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_grid.html" class="external-link">wrf_grid</a></span><span class="op">(</span><span class="va">path_to_wrfi</span><span class="op">)</span>
-<span class="va">E_CO_gwrf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span>spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, g <span class="op">=</span> <span class="va">gwrf</span><span class="op">)</span>
-<span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span><span class="op">(</span><span class="va">E_CO_gwrf</span>, rows <span class="op">=</span> <span class="fl">51</span>, cols <span class="op">=</span> <span class="fl">63</span>, times <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_put.html" class="external-link">wrf_put</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">path_to_wrfc</span>, name <span class="op">=</span> <span class="st">"E_CO"</span>, POL <span class="op">=</span> <span class="va">gr</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://atmoschem.github.io/eixport/" class="external-link">eixport</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_create.html" class="external-link">wrf_create</a></span><span class="op">(</span>wrfinput_dir         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"eixport"</span><span class="op">)</span>,</span>
+<span>wrfchemi_dir         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span>,</span>
+<span>domains              <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>frames_per_auxinput5 <span class="op">=</span> <span class="fl">1</span>, <span class="co">#hours</span></span>
+<span>auxinput5_interval_m <span class="op">=</span> <span class="fl">60</span>,</span>
+<span>verbose              <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">path_to_wrfi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"eixport"</span><span class="op">)</span>, <span class="st">"/wrfinput_d02"</span><span class="op">)</span></span>
+<span><span class="va">path_to_wrfc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"EMISS"</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span><span class="va">gwrf</span> <span class="op">&lt;-</span> <span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_grid.html" class="external-link">wrf_grid</a></span><span class="op">(</span><span class="va">path_to_wrfi</span><span class="op">)</span></span>
+<span><span class="va">E_CO_gwrf</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span>spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, g <span class="op">=</span> <span class="va">gwrf</span><span class="op">)</span></span>
+<span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/GriddedEmissionsArray.html">GriddedEmissionsArray</a></span><span class="op">(</span><span class="va">E_CO_gwrf</span>, rows <span class="op">=</span> <span class="fl">51</span>, cols <span class="op">=</span> <span class="fl">63</span>, times <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu">eixport</span><span class="fu">::</span><span class="fu"><a href="https://atmoschem.github.io/eixport/reference/wrf_put.html" class="external-link">wrf_put</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">path_to_wrfc</span>, name <span class="op">=</span> <span class="st">"E_CO"</span>, POL <span class="op">=</span> <span class="va">gr</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="creating-a-wrfchem-input-file-using-as4wrf">Creating a WRFChem Input file using AS4WRF<a class="anchor" aria-label="anchor" href="#creating-a-wrfchem-input-file-using-as4wrf"></a>
@@ -704,7 +704,7 @@ verbose              <span class="op">=</span> <span class="cn">TRUE</span><span
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

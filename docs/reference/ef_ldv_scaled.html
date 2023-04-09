@@ -71,7 +71,7 @@ emission factor which at a speed of the driving cycle (SDC) gives a desired valu
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ef_ldv_scaled</span><span class="op">(</span><span class="va">df</span>, <span class="va">dfcol</span>, SDC <span class="op">=</span> <span class="fl">34.12</span>, <span class="va">v</span>, t <span class="op">=</span> <span class="st">"4S"</span>, <span class="va">cc</span>, <span class="va">f</span>, <span class="va">eu</span>, <span class="va">p</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_ldv_scaled</span><span class="op">(</span><span class="va">df</span>, <span class="va">dfcol</span>, SDC <span class="op">=</span> <span class="fl">34.12</span>, <span class="va">v</span>, t <span class="op">=</span> <span class="st">"4S"</span>, <span class="va">cc</span>, <span class="va">f</span>, <span class="va">eu</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -142,21 +142,21 @@ a specific type of vehicle. Thanks to Glauber Camponogara for the help.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">fe2015</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">co1</span> <span class="op">&lt;-</span> <span class="va">fe2015</span><span class="op">[</span><span class="va">fe2015</span><span class="op">$</span><span class="va">Pollutant</span><span class="op">==</span><span class="st">"CO"</span>, <span class="op">]</span></span>
-<span class="r-in"><span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu">ef_ldv_scaled</span><span class="op">(</span>dfcol <span class="op">=</span> <span class="va">co1</span><span class="op">$</span><span class="va">PC_G</span>, v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>,</span>
-<span class="r-in">eu <span class="op">=</span> <span class="va">co1</span><span class="op">$</span><span class="va">Euro_LDV</span>, p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lef</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lef</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">40</span><span class="op">)</span> <span class="co"># First element of the lit of speed functions at 40 km/h</span></span>
-<span class="r-in"><span class="va">lef</span><span class="op">[[</span><span class="fl">36</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="co"># 36th element of the lit of speed functions at 50 km/h</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>, y <span class="op">=</span> <span class="va">lef</span><span class="op">[[</span><span class="fl">36</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, type <span class="op">=</span> <span class="st">"b"</span>, ylab <span class="op">=</span> <span class="st">"[g/km]"</span>,</span>
-<span class="r-in">pch <span class="op">=</span> <span class="fl">16</span>, xlab <span class="op">=</span> <span class="st">"[km/h]"</span>,</span>
-<span class="r-in">main <span class="op">=</span> <span class="st">"Variation of emissions with speed of oldest vehicle"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>, y <span class="op">=</span> <span class="va">lef</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, type <span class="op">=</span> <span class="st">"b"</span>, ylab <span class="op">=</span> <span class="st">"[g/km]"</span>,</span>
-<span class="r-in">pch <span class="op">=</span> <span class="fl">16</span>, xlab <span class="op">=</span> <span class="st">"[km/h]"</span>,</span>
-<span class="r-in">main <span class="op">=</span> <span class="st">"Variation of emissions with speed of newest vehicle"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">fe2015</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">co1</span> <span class="op">&lt;-</span> <span class="va">fe2015</span><span class="op">[</span><span class="va">fe2015</span><span class="op">$</span><span class="va">Pollutant</span><span class="op">==</span><span class="st">"CO"</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu">ef_ldv_scaled</span><span class="op">(</span>dfcol <span class="op">=</span> <span class="va">co1</span><span class="op">$</span><span class="va">PC_G</span>, v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>,</span></span>
+<span class="r-in"><span>eu <span class="op">=</span> <span class="va">co1</span><span class="op">$</span><span class="va">Euro_LDV</span>, p <span class="op">=</span> <span class="st">"CO"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lef</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lef</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">40</span><span class="op">)</span> <span class="co"># First element of the lit of speed functions at 40 km/h</span></span></span>
+<span class="r-in"><span><span class="va">lef</span><span class="op">[[</span><span class="fl">36</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="co"># 36th element of the lit of speed functions at 50 km/h</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>, y <span class="op">=</span> <span class="va">lef</span><span class="op">[[</span><span class="fl">36</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, type <span class="op">=</span> <span class="st">"b"</span>, ylab <span class="op">=</span> <span class="st">"[g/km]"</span>,</span></span>
+<span class="r-in"><span>pch <span class="op">=</span> <span class="fl">16</span>, xlab <span class="op">=</span> <span class="st">"[km/h]"</span>,</span></span>
+<span class="r-in"><span>main <span class="op">=</span> <span class="st">"Variation of emissions with speed of oldest vehicle"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">150</span>, y <span class="op">=</span> <span class="va">lef</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, type <span class="op">=</span> <span class="st">"b"</span>, ylab <span class="op">=</span> <span class="st">"[g/km]"</span>,</span></span>
+<span class="r-in"><span>pch <span class="op">=</span> <span class="fl">16</span>, xlab <span class="op">=</span> <span class="st">"[km/h]"</span>,</span></span>
+<span class="r-in"><span>main <span class="op">=</span> <span class="st">"Variation of emissions with speed of newest vehicle"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -171,7 +171,7 @@ a specific type of vehicle. Thanks to Glauber Camponogara for the help.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
