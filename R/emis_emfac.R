@@ -33,7 +33,7 @@ emis_emfac <- function(efpath,
   # ef
 
   # ef ####
-  if(verbose) cat("Reading ef\n")
+  # if(verbose) cat("Reading ef\n")
   ef <- data.table::fread(efpath)
   names(ef) <- gsub(" ", "", names(ef))
   if(grep(pattern = "FuelConsumption", names(ef)) > 0) {
@@ -99,7 +99,7 @@ emis_emfac <- function(efpath,
 
 
   # estimation
-  if(verbose) cat("Estimation emissions \n")
+  if(verbose) cat("Estimating emissions of", pol, " for", vehname, "\n")
   data.table::rbindlist(lapply(seq_along(hours), function(l) {
 
     data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
@@ -130,7 +130,7 @@ emis_emfac <- function(efpath,
       data.table::data.table(id = 1:length(eeff),
                              emi = eeff*lkm* vv,
                              age = k,
-                             vehicles = vehicles[i],
+                             vehicles = vehname,
                              pollutant = pol,
                              hour = l)
     }))
