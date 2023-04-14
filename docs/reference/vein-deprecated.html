@@ -4,9 +4,6 @@ Evaporative returns a transformed object with class "Evaporative" and
 units g. This class represents the daily emissions presented by
 Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 it will be incorporated the techniques of Tier 3.
-ef_emfac returns emission factors reflecting California, US,
-conditions. If the user enter speeds more emission factors are returned.
-See details.
 This function was deprecated. If the user want some UF-based EF, run MOVES
 and extract EF
 emis_wrf returns a dataframe with columns lat, long, id, pollutants, local time
@@ -76,7 +73,7 @@ The functions listed below are deprecated and will be defunct in
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>DEPRECATED Construction function for class "EmissionsList"</h1>
-    <small class="dont-index">Source: <a href="https://github.com/atmoschem/vein/blob/HEAD/R/EmissionsList.R" class="external-link"><code>R/EmissionsList.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/Evaporative.R" class="external-link"><code>R/Evaporative.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/ef_emfac.R" class="external-link"><code>R/ef_emfac.R</code></a>, and 5 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/atmoschem/vein/blob/HEAD/R/EmissionsList.R" class="external-link"><code>R/EmissionsList.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/Evaporative.R" class="external-link"><code>R/Evaporative.R</code></a>, <a href="https://github.com/atmoschem/vein/blob/HEAD/R/ef_ive.R" class="external-link"><code>R/ef_ive.R</code></a>, and 4 more</small>
     <div class="hidden name"><code>vein-deprecated.Rd</code></div>
     </div>
 
@@ -86,9 +83,6 @@ The functions listed below are deprecated and will be defunct in
 units g. This class represents the daily emissions presented by
 Mellios G and Ntziachristos (2016) Gasoline evaporation, Tier 2. Eventually
 it will be incorporated the techniques of Tier 3.</p>
-<p><code>ef_emfac</code> returns emission factors reflecting California, US,
-conditions. If the user enter speeds more emission factors are returned.
-See details.</p>
 <p>This function was deprecated. If the user want some UF-based EF, run MOVES
 and extract EF</p>
 <p><code>emis_wrf</code> returns a dataframe with columns lat, long, id, pollutants, local time
@@ -104,8 +98,6 @@ assimilation system: "ASimilation System 4 WRF (AS4WRF Vera-Vala et al (2016))</
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">EmissionsList</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">Evaporative</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">ef_emfac</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ef_ive</span><span class="op">(</span></span>
 <span>  description <span class="op">=</span> <span class="st">"Auto/Sml Truck"</span>,</span>
@@ -215,22 +207,6 @@ transform the coordinates of the output</p></dd>
 <dt>object</dt>
 <dd><p>Object with class "Evaporative"</p></dd>
 
-
-<dt>veh</dt>
-<dd><p>Character; "one of the 40 vehicle categories shown below.</p></dd>
-
-
-<dt>mph</dt>
-<dd><p>Numeric; Speed in miles per hour (optional).</p></dd>
-
-
-<dt>season</dt>
-<dd><p>Character: "winter" or "summer".</p></dd>
-
-
-<dt>full</dt>
-<dd><p>Logical: To return the whole data.table or not.</p></dd>
-
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -240,9 +216,6 @@ transform the coordinates of the output</p></dd>
 
 
 <p>Objects of class "Evaporative" or "units"</p>
-
-
-<p>data.table with emission factors.</p>
 
 
 <p>An emission factor by annual mileage.</p>
@@ -265,8 +238,7 @@ enter with the mileage by age of use and the name of the pollutant.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>https://arb.ca.gov/emfac/emissions-inventory</p>
-<p>Nicole Davis, James Lents, Mauricio Osses, Nick Nikkila,
+    <p>Nicole Davis, James Lents, Mauricio Osses, Nick Nikkila,
  Matthew Barth. 2005. Development and Application of an International
  Vehicle Emissions Model. Transportation Research Board, 81st Annual Meeting,
  January 2005, Washington, D.C.</p>
@@ -281,17 +253,12 @@ Environment Agency, Copenhagen, 2009</p>
     <h2>See also</h2>
     <div class="dont-index"><p><code>vein-deprecated</code></p>
 <p><code>vein-deprecated</code></p>
-<p><code>vein-deprecated</code></p>
 <p><code>vein-deprecated</code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># do not run</span></span></span>
-<span class="r-in"><span><span class="co"># DEPRECATED</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># do not run</span></span></span>
 <span class="r-in"><span><span class="co"># DEPRECATED</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>

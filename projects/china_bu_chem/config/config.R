@@ -244,7 +244,8 @@ switch(language,
 png("images/FUEL.png", width = 1500, height = 2000, units = "px", res = 300)
 barplot(
   height = fuel$consumption_lt,
-  names.arg = fuel$fuel, xlab = "Fuel",
+  names.arg = fuel$fuel, 
+  xlab = "Fuel",
   ylab = "lt",
   main = "Fuel"
 )

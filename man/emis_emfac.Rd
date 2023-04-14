@@ -5,7 +5,7 @@
 \title{Emission calculation based on EMFAC emission factors}
 \usage{
 emis_emfac(
-  efpath,
+  ef,
   veh,
   lkm,
   speed,
@@ -14,11 +14,12 @@ emis_emfac(
   modelyear = 2021:1982,
   noyear = 2022,
   hours = paste0("S", 1:24),
+  vkm = TRUE,
   verbose = TRUE
 )
 }
 \arguments{
-\item{efpath}{Character path to EMFAC ef (g/miles)}
+\item{ef}{Character path to EMFAC ef (g/miles)}
 
 \item{veh}{Vehicles data.frame}
 
@@ -36,7 +37,9 @@ emis_emfac(
 
 \item{hours}{Character, name of hours in speed, paste0("S", 1:24) data-frame profile for passenger cars, 24 hours only.}
 
-\item{verbose, }{logical, to show more information}
+\item{vkm}{logical, to return vkm}
+
+\item{verbose}{logical, to show more information}
 }
 \value{
 data.table with emission estimation in long format
