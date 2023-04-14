@@ -1,4 +1,41 @@
 file.remove(list.files(path = "post/", recursive = T, full.names = T))
+
+dt <- fread("emi/DF_EXHAUST.csv")
+
+dt$g <- units::set_units(dt$g, "g")
+dt$t <- units::set_units(dt$g, "t")
+
+dt0 <- dt[, 
+          round(sum(t) * factor_emi, 2), 
+          by = .(pollutant)]
+print(dt0)
+
+dt0$model <- "VEIN 2019"
+dt00 <- dt0
+dt00$V1 <- units::set_units(4000*1000, "t")
+dt00$model <- "Ye Wu 2009"
+
+
+dt01 <- dt0
+dt01$V1 <- units::set_units(42.51*10000, "t")
+dt01$model <- "HTSVE 2013"
+
+
+dt02 <- dt0
+dt02$V1 <- units::set_units(469016.75, "t")
+dt02$model <- "MEIC 2013"
+
+dt03 <- dt0
+dt03$V1 <- units::set_units(60*10000, "t")
+dt03$model <- "Wang (2008) - Shanghai"
+
+dt04 <- dt0
+dt04$V1 <- units::set_units(300*1000, "t")
+dt04$model <- "Beijing S Zhang - 2021"
+
+
+stop()
+
 # streets  ####
 switch(language,
         "portuguese" = message("\nAgregando emissões por rua...\n"),
@@ -112,10 +149,35 @@ saveRDS(dt, "post/datatable/emissions.rds")
 
 dt$g <- units::set_units(dt$g, "g")
 dt$t <- units::set_units(dt$g, "t")
+
 dt0 <- dt[, 
           round(sum(t) * factor_emi, 2), 
           by = .(pollutant)]
 print(dt0)
+
+dt0$model <- "VEIN 2019"
+dt00 <- dt0
+dt00$V1 <- units::set_units(4000*1000, "t")
+dt00$model <- "Ye Wu 2009"
+
+
+dt01 <- dt0
+dt01$V1 <- units::set_units(42.51*10000, "t")
+dt01$model <- "HTSVE 2013"
+
+
+dt02 <- dt0
+dt02$V1 <- units::set_units(469016.75, "t")
+dt02$model <- "MEIC 2013"
+
+dt03 <- dt0
+dt03$V1 <- units::set_units(60*10000, "t")
+dt03$model <- "Wang (2008) - Shanghai"
+
+dt04 <- dt0
+dt04$V1 <- units::set_units(300*1000, "t")
+dt04$model <- "Beijing S Zhang - 2021"
+
 
 
 # emissoes by veh

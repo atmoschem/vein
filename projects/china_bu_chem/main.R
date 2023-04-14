@@ -9,7 +9,7 @@ sessionInfo()
 
 # 0 Configuration
 language <- "english" # portuguese english spanish
-path <- "config/inventory_chn_bu_v3.xlsx"
+path <- "config/inventory_chn_bu_v5.xlsx"
 readxl::excel_sheets(path) # For libre office, readODS::read_ods()
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
 metadata <- metadata[metadata$exist == "yes",]
@@ -91,6 +91,7 @@ pol <- c(
     "CO", "HC",  "NOx",# "CO2", "SO2",
     "PM10","PM2.5"
 )
+pol <- "CO"
 source("scripts/exhaust.R", encoding = "UTF-8")
 beepr::beep(2)
 
@@ -121,6 +122,7 @@ tfs <- readRDS("config/tfs.rds")
 pol <- c(
     "CO", "HC", "NOx", 
     "PM2.5", "PM10") #generate NMHC by fuel
+pol <- "CO"
 g <- make_grid(net, 100)
 # Number of lon points: 46
 # Number of lat points: 28
@@ -128,6 +130,7 @@ crs <- 32648 # WGS 84 / UTM zone 48N
 factor_emi <- 365 / (nrow(tfs) / 24) # daily to annual
 source("scripts/post.R", encoding = "UTF-8")
 beepr::beep(2)
+
 
 # # plots
 language <- "english" #portuguese english spanish
