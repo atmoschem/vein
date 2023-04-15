@@ -234,7 +234,7 @@ moves_rpdy <- function (veh,
 
   by_veh <- lxspeed[, -"id"][,
                              lapply(.SD, sum, na.rm = T),
-                             .SDcols = 2:32,
+                             .SDcols = 2:(agemax+1),
                              by = .(hour,
                                     veh,
                                     veh_type,
@@ -243,7 +243,6 @@ moves_rpdy <- function (veh,
                                     processID,
                                     sourceTypeID)
   ]
-
   veh <- data.table::melt.data.table(data = by_veh,
                                      id.vars = names(by_veh)[1:7],
                                      measure.vars = paste0("age_", 1:agemax))
@@ -252,6 +251,6 @@ moves_rpdy <- function (veh,
 
   rm(lxspeed)
   invisible(gc())
-  return(list(streets = streets, veh = veh))
+  age <- NULL
+  return(list(streets = streets, veh = veh[age <= agemax]))
 }
-
