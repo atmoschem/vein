@@ -50,7 +50,10 @@ moves_rpdy <- function (veh,
                         path_all,
                         verbose = FALSE) {
 
-  profile$Hour <- NULL
+  if("Hour" %in% names(profile)) {
+    profile$Hour <- NULL
+  }
+
 
   ll <- if (is.data.frame(veh)) 1 else seq_along(veh)
 
@@ -155,7 +158,7 @@ moves_rpdy <- function (veh,
         lx <- data.table::rbindlist(lapply(1:agemax,
                                            function(k) {
                                              data.table::data.table(
-                                               emi = EF[[k]] * veh[[k]] * lkm * profile[j, i],
+                                               emi = EF[[k]] * veh[[k]] * lkm * profile[[j]],
                                                id = 1:nrow(df_net_ef),
                                                age = k,
                                                hour = j)

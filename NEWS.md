@@ -5,7 +5,8 @@ NEWS
 ### vein 1.0.1
 
 - Add emis_emfac.
-- Add ef_emfac
+- Add ef_emfac.
+- moves_rpdy reads tfs for when veh is data.frame
 
 ### vein 1.0.0
 
