@@ -34,7 +34,7 @@ emis_emfac <- function(ef,
 
   # ef
 if(is.character(ef)) {
-  efx <- ef_emfac(ef)
+  ef <- ef_emfac(ef)
 }
   ModelYear <- NULL
 
@@ -44,7 +44,7 @@ if(is.character(ef)) {
 
     data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
 
-      efx <- efx[ModelYear == modelyear[k]]
+      efx <- ef[ModelYear == modelyear[k]]
 
       breaks = unique(efx$Speed)
 
