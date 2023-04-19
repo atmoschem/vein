@@ -155,7 +155,8 @@
 #' Parana, 2015.
 #'
 #' specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
-#' from Northeastern University
+#' from Northeastern University. 
+#' "pm2023" provided by Iara da Silva; Leila D. Martins
 #'
 #' Speciation with fuels \strong{"E25", "E100" and "B5"} made by Prof. Leila Martins (UTFPR),
 #' represents BRAZILIAN fuel
@@ -574,6 +575,19 @@ speciate <- function(x = 1,
           e_no3j = 0.00247 + 0.01053,
           e_pm25i = 0,
           e_pm25j = 0.1 + 0.3,
+          e_orgi = 0,
+          e_orgj = 0.0304 + 0.1296,
+          e_eci = 0,
+          e_ecj = 0.056 + 0.024#,h2o = 0.277
+        )
+      } else if (spec == "pm2023") {
+        df <- data.frame(
+          e_so4i = 0.027,
+          e_so4j = 0.008,
+          e_no3i = 0.015,
+          e_no3j = 0.001,
+          e_pm25i = 0.193,
+          e_pm25j = 0.,
           e_orgi = 0,
           e_orgj = 0.0304 + 0.1296,
           e_eci = 0,
