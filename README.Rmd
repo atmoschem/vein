@@ -41,7 +41,7 @@ knitr::opts_chunk$set(
 
 # **V**ehicular **E**missions **IN**ventories (VEIN)
 
-![](https://i.imgur.com/stnHJQx.png)
+![vein](https://user-images.githubusercontent.com/27447280/234115392-b1c891ff-474d-40a3-b9a7-e816ded9bc70.gif)
 
 
 ### TODO
