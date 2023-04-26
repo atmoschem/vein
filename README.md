@@ -4,31 +4,30 @@
 
 # VEIN <img src="man/figures/logo.png" align="right" alt="" width="220" />
 
--   build: [![AppVeyor Build
-    Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
-    [![Coverage
-    Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
--   cran:
-    [![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
-    [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein)
-    [![CRAN
-    Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
-    [![Package
-    Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-    ![CRAN/METACRAN](https://img.shields.io/cran/l/vein?style=plastic)
--   doi:
-    [![DOI](https://zenodo.org/badge/88201850.svg)](https://zenodo.org/badge/latestdoi/88201850)
--   github: [![Github
-    Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
-    ![GitHub code size in
-    bytes](https://img.shields.io/github/languages/code-size/atmoschem/vein)
-    ![GitHub
-    issues](https://img.shields.io/github/issues/atmoschem/vein)
-    <!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) -->
-    ![GitHub commit
-    activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
-    [![R build
-    status](https://github.com/atmoschem/vein/workflows/R-CMD-check/badge.svg)](https://github.com/atmoschem/vein/actions)
+- build: [![AppVeyor Build
+  Status](https://ci.appveyor.com/api/projects/status/github/ibarraespinosa/vein?branch=master&svg=true)](https://ci.appveyor.com/project/ibarraespinosa/vein)
+  [![Coverage
+  Status](https://img.shields.io/codecov/c/github/atmoschem/vein/master.svg)](https://codecov.io/github/atmoschem/vein?branch=master)
+- cran:
+  [![](http://cranlogs.r-pkg.org/badges/vein)](http://cran.rstudio.com/web/packages/vein/index.html)
+  [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein)
+  [![CRAN
+  Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
+  [![Package
+  Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+  ![CRAN/METACRAN](https://img.shields.io/cran/l/vein?style=plastic)
+- doi:
+  [![DOI](https://zenodo.org/badge/88201850.svg)](https://zenodo.org/badge/latestdoi/88201850)
+- github: [![Github
+  Stars](https://img.shields.io/github/stars/atmoschem/vein.svg?style=social&label=Github)](https://github.com/atmoschem/vein)
+  ![GitHub code size in
+  bytes](https://img.shields.io/github/languages/code-size/atmoschem/vein)
+  ![GitHub issues](https://img.shields.io/github/issues/atmoschem/vein)
+  <!-- ![Liberapay giving](https://img.shields.io/liberapay/gives/sergio.ibarra) -->
+  ![GitHub commit
+  activity](https://img.shields.io/github/commit-activity/y/ibarraespinosa/vein)
+  [![R build
+  status](https://github.com/atmoschem/vein/workflows/R-CMD-check/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 <!-- ![](https://github.com/atmoschem/vein/raw/master/all_comp.gif) -->
 
@@ -36,15 +35,14 @@
 
 ![vein](https://user-images.githubusercontent.com/27447280/234115392-b1c891ff-474d-40a3-b9a7-e816ded9bc70.gif)
 
-
 ### TODO
 
--   get_project with Chinese EF
--   Include speed functions with Fortran
--   Include CB6
--   Add EF from HBEFA?
--   See issues [GitHub](https://github.com/atmoschem/vein/issues) and
-    [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
+- get_project with Chinese EF
+- Include speed functions with Fortran
+- Include CB6
+- Add EF from HBEFA?
+- See issues [GitHub](https://github.com/atmoschem/vein/issues) and
+  [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
 
 ### System requirements
 
@@ -99,44 +97,44 @@ Use the function
 [get_project](https://atmoschem.github.io/vein/reference/get_project.html)
 and read the documentation, there you can see more projects as well.
 
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_bu_csvgz/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_bu_csv/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_td_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/amazon2014/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/masp2020/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/curitiba/badge.svg)](https://github.com/atmoschem/vein/actions)
-    <!-- - [![R build status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot/badge.svg)](https://github.com/atmoschem/vein/actions) -->
-    <!-- - [![R build status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot_month/badge.svg)](https://github.com/atmoschem/vein/actions) -->
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/ecuador_td/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/ecuador_td_im/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets_im/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/brazil_td_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2_im/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/eu_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
--   [![R build
-    status](https://github.com/atmoschem/vein/workflows/eu_bu_chem_simple/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_bu_csvgz/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_bu_csv/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_td_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/amazon2014/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/masp2020/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/curitiba/badge.svg)](https://github.com/atmoschem/vein/actions)
+  <!-- - [![R build status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot/badge.svg)](https://github.com/atmoschem/vein/actions) -->
+  <!-- - [![R build status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot_month/badge.svg)](https://github.com/atmoschem/vein/actions) -->
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/ecuador_td/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/ecuador_td_im/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets_im/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/brazil_td_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2_im/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/eu_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
+- [![R build
+  status](https://github.com/atmoschem/vein/workflows/eu_bu_chem_simple/badge.svg)](https://github.com/atmoschem/vein/actions)
 
 ``` r
 library(vein)
@@ -177,9 +175,9 @@ run `main.R`
 
 To run `main.R` you will need these extra packages:
 
--   ggplot2
--   readxl
--   eixport (If you plan to generate WRF Chem emissions file)
+- ggplot2
+- readxl
+- eixport (If you plan to generate WRF Chem emissions file)
 
 If you do not have them already, you can install:
 
@@ -304,8 +302,8 @@ plot(
 
 ![](man/figures/unnamed-chunk-4-1.png)<!-- -->
 
--   [temp_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
--   [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
+- [temp_fact](https://atmoschem.github.io/vein/reference/temp_fact.html)
+- [netspeed](https://atmoschem.github.io/vein/reference/netspeed.html)
 
 temporal factors and netspeed
 
@@ -370,12 +368,12 @@ plot(
 
 ![](man/figures/unnamed-chunk-6-1.png)<!-- --> \#### 2) Emission Factors
 
--   [ef_ldv_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
--   [ef_hdv_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
--   [ef_ldv_scaled](https://atmoschem.github.io/vein/reference/ef_ldv_scaled.html)
--   [ef_hdv_scaled](https://atmoschem.github.io/vein/reference/ef_hdv_scaled.html)
--   [EmissionFactors](https://atmoschem.github.io/vein/reference/EmissionFactors.html)
--   [EmissionFactorsList](https://atmoschem.github.io/vein/reference/EmissionFactorsList.html)
+- [ef_ldv_speed](https://atmoschem.github.io/vein/reference/ef_ldv_speed.html)
+- [ef_hdv_speed](https://atmoschem.github.io/vein/reference/ef_hdv_speed.html)
+- [ef_ldv_scaled](https://atmoschem.github.io/vein/reference/ef_ldv_scaled.html)
+- [ef_hdv_scaled](https://atmoschem.github.io/vein/reference/ef_hdv_scaled.html)
+- [EmissionFactors](https://atmoschem.github.io/vein/reference/EmissionFactors.html)
+- [EmissionFactorsList](https://atmoschem.github.io/vein/reference/EmissionFactorsList.html)
 
 ``` r
 V <- 0:150
@@ -401,7 +399,7 @@ plot(
 
 #### 3) Estimation of emissions
 
--   [emis](https://atmoschem.github.io/vein/reference/emis.html)
+- [emis](https://atmoschem.github.io/vein/reference/emis.html)
 
 ``` r
 euro <- c(
@@ -434,12 +432,12 @@ E_CO <- emis(
 
 #### 4) Post Emissions
 
--   [emis_post](https://atmoschem.github.io/vein/reference/emis_post.html)
--   When the argument by = “veh” the emissions are aggregated by age and
-    hour.
--   When the argument by = “streets_wide”, aggregated the emissions by
-    street. In this cae, if you add the argument net with the respective
-    streets, it returns an spatial net with the hourly emissions.
+- [emis_post](https://atmoschem.github.io/vein/reference/emis_post.html)
+- When the argument by = “veh” the emissions are aggregated by age and
+  hour.
+- When the argument by = “streets_wide”, aggregated the emissions by
+  street. In this cae, if you add the argument net with the respective
+  streets, it returns an spatial net with the hourly emissions.
 
 ``` r
 E_CO_DF <- emis_post(
@@ -485,7 +483,7 @@ plot(
 
 #### Grids
 
--   [make_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
+- [make_grid](https://atmoschem.github.io/vein/reference/make_grid.html).
 
 1)  Create a grid using `make_grid`.The spobj is the spatial net. The
     size of the grid has the size of the net. You have to specify the
@@ -618,14 +616,14 @@ emissions inventories, Geosci. Model Dev., 11, 2209-2229,
 
 ## Communications, doubts etc
 
--   Earth-Sciences on Stackoverflow, tag
-    [vein-r-package](https://earthscience.stackexchange.com/questions/tagged/vein-r-package)
--   Drop me an email <sergio.ibarra@usp.br> or
-    <zergioibarra@hotmail.com> (你好中国朋友 - Hello Chinese friends!)
--   Check the group on GoogleGroups
-    [Group](https://groups.google.com/d/forum/veinmodel).
--   Check the project on
-    [ResearchGate](https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories).
+- Earth-Sciences on Stackoverflow, tag
+  [vein-r-package](https://earthscience.stackexchange.com/questions/tagged/vein-r-package)
+- Drop me an email <sergio.ibarra@usp.br> or <zergioibarra@hotmail.com>
+  (你好中国朋友 - Hello Chinese friends!)
+- Check the group on GoogleGroups
+  [Group](https://groups.google.com/d/forum/veinmodel).
+- Check the project on
+  [ResearchGate](https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories).
 
 ## Issues
 
