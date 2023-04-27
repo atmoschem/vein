@@ -432,7 +432,7 @@ ef_cetesb <- function(p,
   }
   # tunnel ####
   if(scale %in% c("tunnel","tunnel2014")) {
-    if(verbose) cat("scale = tunnel2014\")
+    if(verbose) cat("scale = tunnel2014\n")
     # conferir valor do tunnel
     # ef <- sysdata$cetesb
 
@@ -476,7 +476,7 @@ ef_cetesb <- function(p,
     ef <- rbind(ef, efHCHO)
 
   } else if(scale == "tunnel2018") {
-    if(verbose) cat("scale = tunnel2018\")
+    if(verbose) cat("scale = tunnel2018\n")
 # ef <- sysdata$cetesb
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
@@ -531,7 +531,7 @@ ef_cetesb <- function(p,
     ef <- rbind(ef, efHCHO)
 
   } else {
-    if(verbose) cat("scale = default\")
+    if(verbose) cat("scale = default\n")
 }
 
   ef[is.na(ef)] <- 0
