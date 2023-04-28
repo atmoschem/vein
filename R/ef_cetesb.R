@@ -431,7 +431,9 @@ ef_cetesb <- function(p,
     if(verbose) message("Experimental: Use only with top-down approach. Units: g/km")
   }
   # tunnel ####
-  if(scale == "tunnel") {
+  if(scale %in% c("tunnel","tunnel2014")) {
+    if(verbose) cat("scale = tunnel2014\n")
+    # conferir valor do tunnel
     # ef <- sysdata$cetesb
 
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
@@ -474,7 +476,8 @@ ef_cetesb <- function(p,
     ef <- rbind(ef, efHCHO)
 
   } else if(scale == "tunnel2018") {
-    # ef <- sysdata$cetesb
+    if(verbose) cat("scale = tunnel2018\n")
+# ef <- sysdata$cetesb
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
              grep(pattern = "MC_", x = names(ef), value = TRUE))
@@ -527,7 +530,9 @@ ef_cetesb <- function(p,
     efHCHO[, HDV] <- efHCHO[, HDV]*0.07298411
     ef <- rbind(ef, efHCHO)
 
-  }
+  } else {
+    if(verbose) cat("scale = default\n")
+}
 
   ef[is.na(ef)] <- 0
   # vehicle category ####
