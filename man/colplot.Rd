@@ -6,10 +6,11 @@
 \usage{
 colplot(
   df,
-  x,
   cols = names(df),
   xlab = "",
   ylab = "",
+  xlim = c(1, nrow(df)),
+  ylim = range(unlist(df[[cols]]), na.rm = TRUE),
   main = NULL,
   theme = "black",
   col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4], n = length(names(df))),
@@ -17,20 +18,21 @@ colplot(
   lwd = 2,
   pch = 1:ncol(df),
   familyfont = "",
-  spl = 5,
-  all_values = FALSE
+  ...
 )
 }
 \arguments{
 \item{df}{data.frame.}
-
-\item{x}{the coordinates of points in the plot. (optional)}
 
 \item{cols}{Character, columns of data.frame.}
 
 \item{xlab}{a label for the x axis, defaults to a description of x.}
 
 \item{ylab}{a label for the x axis, defaults to a description of x.}
+
+\item{xlim}{x limits}
+
+\item{ylim}{y limits}
 
 \item{main}{Character, a main title for the plot, see also \code{\link{title}}.}
 
@@ -66,9 +68,7 @@ the character height (see par("cin")).}
 \item{familyfont}{"Character" to specify font, default is"", options "serif",
 "sans", "mono" or more according device}
 
-\item{spl}{numer to control space for legend, default is 5.}
-
-\item{all_values}{logical, if FALSe shows only positive > 0 values}
+\item{...}{plot arguments}
 }
 \value{
 a nice plot
@@ -81,8 +81,11 @@ This plot shows values > 0 by default. To plot all values, use all_values = TRUE
 }
 \examples{
 \dontrun{
-a <- ef_cetesb("CO", c("PC_G", "PC_FE", "PC_FG"), agemax = 20)
-colplot(df = a, ylab = "CO [g/km]", theme = "dark", pch = NULL, type = "l")
+a <- ef_cetesb("CO", c("PC_G", "PC_FE", "PC_FG", "PC_E"), agemax = 20)
+colplot(df = a, ylab = "CO [g/km]", theme = "dark", type = "b")
+colplot(df = a, ylab = "CO [g/km]", theme = "dark", pch = NULL, type = "b")
+colplot(df = a, ylab = "CO [g/km]", theme = "clean", type = "b")
+colplot(df = a, ylab = "CO [g/km]", theme = "clean", pch = NULL, type = "b")
 #colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
 #colplot(df = a, ylab = "CO [g/km]", theme = "clean")
 }

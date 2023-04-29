@@ -55,11 +55,11 @@ emis_evap <- function(veh,
                       pro_month,
                       verbose = FALSE) {
   # Check y
-  if(!missing(x)){
-    if(units(x)$numerator == "km"){
-      if(verbose) message('Emission factors must have units g/km')
-    }
-  }
+  # if(!missing(x)){
+  #   if(units(x)$numerator == "km"){
+  #     if(verbose) message('Emission factors must have units g/km')
+  #   }
+  # }
   # Checking sf
   if(inherits(veh, "sf")){
     if(verbose) message("converting sf to data.frame")

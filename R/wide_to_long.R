@@ -22,7 +22,7 @@ wide_to_long <- function(df,
                          column_with_data = names(df),
                          column_fixed,
                          geometry) {
-  message("This function will be deprecated, use data.table::melt.data.table")
+  # message("This function will be deprecated, use data.table::melt.data.table")
   a <- as.data.frame(df)
   if(!missing(column_fixed)){
     df2 <- data.frame(V1 = unlist(a[, column_with_data]))

@@ -41,14 +41,30 @@
 #' names(net)
 #' netsf <- sf::st_as_sf(net)
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
-#' plot(netg["ldv"], axes = TRUE)
+#' plot(netg["ldv"],
+#'      axes = TRUE,
+#'      graticule = TRUE,
+#'      bg = "black",
+#'      lty = 0)
+#' g <- sf::st_make_grid(net, 1/102.47/2, square = FALSE) #500m in degrees
+#' g <- st_sf(i  =1, geometry = g)
+#' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983)
+#' plot(netg["ldv"],
+#'      axes = TRUE,
+#'      graticule = TRUE,
+#'      bg = "black",
+#'      lty = 0)
 #' plot(netg["hdv"], axes = TRUE)
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, FN = "mean")
 #' plot(netg["ldv"], axes = TRUE)
 #' plot(netg["hdv"], axes = TRUE)
 #' netg <- emis_grid(spobj = netsf[, c("ldv", "hdv")], g = g, sr= 31983, flux = FALSE)
-#' plot(netg["ldv"], axes = TRUE, pch = 16,
-#' pal = cptcity::cpt(colorRampPalette= TRUE, rev = TRUE), cex = 3)
+#' plot(netg["ldv"],
+#'      axes = TRUE,
+#'      pch = 16,
+#'      pal = cptcity::cpt(colorRampPalette= TRUE,
+#'                         rev = TRUE),
+#'      cex = 3)
 #' }
 emis_grid <- function (spobj = net,
                        g,
@@ -62,7 +78,7 @@ emis_grid <- function (spobj = net,
   # add as.data.frame when net comes from data.table
   netdata <- as.data.frame(sf::st_set_geometry(net, NULL))
 
-  if(is.null(attributes(netdata[[1]])) ) {
+  if(!inherits(netdata[[1]], "units")) {
     message("Your data has no units")
     hasunits <- FALSE
   } else {
@@ -113,7 +129,6 @@ emis_grid <- function (spobj = net,
                lapply(.SD, eval(parse(text = FN)), na.rm = TRUE),
                by = "id",
                .SDcols = namesnet]
-
 
        id <- dfm$id
 

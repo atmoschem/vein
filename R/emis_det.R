@@ -51,17 +51,24 @@
 #' euros <- rbind(euro, euro)
 #' (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, km = km))
 #' }
-emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.equation = FALSE) {
+emis_det <- function(po,
+                     cc,
+                     eu,
+                     speed = Speed(18.9),
+                     km,
+                     verbose = FALSE,
+                     show.equation = FALSE) {
+
   ldv_det <- sysdata$ldv_det
 
   # Check km
   if(!inherits(km, "units")){
     stop("km neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
-  if(units(km)$numerator == "m" ){
-    stop("Units of km is 'm' ")
+  if(units(km) == units(units::as_units("m"))){
+    stop("Units of km is 'm', change to 'km'")
   }
-  if(units(km)$numerator == "km" ) {
+  if(units(km) == units(units::as_units("km"))) {
     km <- as.numeric(km)
   }
   #Check cc
@@ -82,10 +89,10 @@ emis_det <- function(po, cc, eu, speed = Speed(18.9), km, verbose = FALSE, show.
   if(!inherits(speed, "units")){
     stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
   }
-  if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){
-    stop("Units of g must be 'km/h' ")
+  if(units(speed) != units(units::as_units("km/h"))){
+    stop("Units of speed must be 'km/h' ")
   }
-  if(units(speed)$numerator == "km" & units(speed)$denominator == "h"){
+  if(units(speed) == units(units::as_units("km/h"))){
     speed <- as.numeric(speed)
   }
 

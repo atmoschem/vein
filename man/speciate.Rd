@@ -154,7 +154,8 @@ amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
 Parana, 2015.
 
 specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
-from Northeastern University
+from Northeastern University.
+"pm2023" provided by Iara da Silva; Leila D. Martins
 
 Speciation with fuels \strong{"E25", "E100" and "B5"} made by Prof. Leila Martins (UTFPR),
 represents BRAZILIAN fuel

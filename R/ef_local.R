@@ -28,9 +28,16 @@
 #' @examples \dontrun{
 #' #do not run
 #' }
-ef_local <- function(p, veh, year = 2017, agemax = 40, ef, full = FALSE, project = "constant", verbose = TRUE){
-  ef[is.na(ef)] <- 0
+ef_local <- function(p,
+                     veh,
+                     year = 2017,
+                     agemax = 40,
+                     ef,
+                     full = FALSE,
+                     project = "constant",
+                     verbose = TRUE){
 
+  ef[is.na(ef)] <- 0
 
   # Check names
   if(verbose) {

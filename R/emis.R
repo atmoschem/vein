@@ -192,7 +192,7 @@ emis <- function(veh,
   if (!inherits(lkm,  "units")) {
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
-  if (units(lkm)$numerator == "m") {
+  if (units(lkm) == units(units::as_units("m"))) {
     stop("Units of lkm is 'm'. Please, check package '?units::set_units'")
   }
   # At least, on e of these

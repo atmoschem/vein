@@ -126,10 +126,10 @@ emis_cold_td <- function(veh,
   if (!inherits(lkm,"units")) {
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
-  if (units(lkm)$numerator == "m") {
-    stop("Units of lkm is 'm' ")
+  if (units(lkm) == units(units::as_units("m"))) {
+    stop("Units of lkm is 'm', change to 'km'")
   }
-  if (units(lkm)$numerator == "km") {
+  if (units(lkm) == units(units::as_units("km"))) {
     lkm <- as.numeric(lkm)
   }
   if (length(lkm) != ncol(veh)) stop("Length of 'lkm' must be the as the number of columns of 'veh'")
@@ -139,10 +139,10 @@ emis_cold_td <- function(veh,
     if (!inherits(ef[, 1], "units")) {
       stop("columns of ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
-    if (units(ef[, 1])$numerator != "g" || units(ef[, 1])$denominator != "km") {
-      stop("Units of efcold must be 'g/km' ")
+    if (units(ef[, 1]) != units(units::as_units("g/km"))) {
+      stop("Units of ef must be 'g/km' ")
     }
-    if (units(ef[, 1])$numerator == "g" || units(ef[, 1])$denominator == "km") {
+    if (units(ef[, 1]) == units(units::as_units("g/km"))) {
       for (i in 1:ncol(veh)) {
         ef[, i] <- as.numeric(ef[, i])
       }
@@ -151,7 +151,7 @@ emis_cold_td <- function(veh,
     if (!inherits(ef, "units")) {
       stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
-    if (units(ef)$numerator != "g" || units(ef)$denominator != "km") {
+    if (units(ef) != units(units::as_units("g/km"))) {
       stop("Units of ef must be 'g/km' ")
     }
     # if(units(ef)$numerator == "g" || units(ef)$denominator == "km"){ # not tested
@@ -163,10 +163,10 @@ emis_cold_td <- function(veh,
   if (!inherits(efcold[, 1],  "units")) {
     stop("columns of efcold must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
   }
-  if (units(efcold[, 1])$numerator != "g" || units(efcold[, 1])$denominator != "km") {
+  if (units(efcold[, 1]) != units(units::as_units("g/km"))) {
     stop("Units of efcold must be 'g/km' ")
   }
-  if (units(efcold[, 1])$numerator == "g" && units(efcold[, 1])$denominator == "km") {
+  if (units(efcold[, 1]) == units(units::as_units("g/km"))) {
     for (i in 1:ncol(veh)) {
       efcold[, i] <- as.numeric(efcold[, i])
     }

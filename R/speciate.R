@@ -155,7 +155,7 @@
 #' Parana, 2015.
 #'
 #' specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
-#' from Northeastern University. 
+#' from Northeastern University.
 #' "pm2023" provided by Iara da Silva; Leila D. Martins
 #'
 #' Speciation with fuels \strong{"E25", "E100" and "B5"} made by Prof. Leila Martins (UTFPR),
@@ -215,11 +215,15 @@ speciate <- function(x = 1,
     # tyre ####
   } else if (spec == "tyre" | spec == "tire") {
     df <- data.frame(
-      PM10 = 0.6, PM2.5 = 0.42, PM1 = 0.06,
+      PM10 = 0.6,
+      PM2.5 = 0.42,
+      PM1 = 0.06,
       PM0.1 = 0.048
     )
     dfb <- Emissions(data.frame(
-      PM10 = x * 0.6, PM2.5 = x * 0.42, PM1 = x * 0.06,
+      PM10 = x * 0.6,
+      PM2.5 = x * 0.42,
+      PM1 = x * 0.06,
       PM0.1 = x * 0.048
     ))
     if (list == TRUE) {
@@ -228,11 +232,15 @@ speciate <- function(x = 1,
     # brake ####
   } else if (spec == "brake") {
     df <- data.frame(
-      PM10 = 0.98, PM2.5 = 0.39, PM1 = 0.1,
+      PM10 = 0.98,
+      PM2.5 = 0.39,
+      PM1 = 0.1,
       PM0.1 = 0.08
     )
     dfb <- Emissions(data.frame(
-      PM10 = x * 0.98, PM2.5 = x * 0.39, PM1 = x * 0.1,
+      PM10 = x * 0.98,
+      PM2.5 = x * 0.39,
+      PM1 = x * 0.1,
       PM0.1 = x * 0.08
     ))
    if (list == TRUE) {
@@ -240,8 +248,10 @@ speciate <- function(x = 1,
     }
     # road ####
   } else if (spec == "road") {
-    df <- data.frame(PM10 = 0.5, PM2.5 = 0.27)
-    dfb <- Emissions(data.frame(PM10 = x * 0.5, PM2.5 = x * 0.27))
+    df <- data.frame(PM10 = 0.5,
+                     PM2.5 = 0.27)
+    dfb <- Emissions(data.frame(PM10 = x * 0.5,
+                                PM2.5 = x * 0.27))
      if (list == TRUE) {
       dfb <- as.list(dfb)
     }
@@ -254,7 +264,10 @@ speciate <- function(x = 1,
 
     iag <- iag[iag$mech == spec, ]
 
-    iag$VEH_FUEL_STANDARD <- paste(iag$VEH, iag$FUEL, iag$STANDARD, sep = "_")
+    iag$VEH_FUEL_STANDARD <- paste(iag$VEH,
+                                   iag$FUEL,
+                                   iag$STANDARD,
+                                   sep = "_")
 
     iag2 <- long_to_wide(
       df = iag,

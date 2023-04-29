@@ -252,10 +252,10 @@ emis_hot_td <- function(veh,
   if (!inherits(lkm, "units")) {
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
-  if (units(lkm)$numerator == "m") {
+  if (units(lkm) == units(units::as_units("m"))) {
     stop("Units of lkm is 'm' ")
   }
-  if (units(lkm)$numerator == "km") {
+  if (units(lkm) == units(units::as_units("km"))) {
     lkm <- as.numeric(lkm)
   }
   if (length(lkm) != ncol(veh)) stop("Length of 'lkm' must be the as the number of columns of 'veh'")

@@ -33,8 +33,8 @@ wide format
 \examples{
 \dontrun{
 df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
-emission = vein::Emissions(1:30),
-region = rep(letters[1:2], 15))
+                 emission = vein::Emissions(1:30),
+                 region = rep(letters[1:2], 15))
 df
 long_to_wide(df)
 long_to_wide(df, column_fixed = "region")

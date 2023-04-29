@@ -28,6 +28,7 @@
 #' and ambient temperature. g/km
 #' @keywords cold emission factors
 #' @seealso \code{\link{fuel_corr}}
+#' @importFrom units as_units
 #' @export
 #' @examples \dontrun{
 #' ef1 <- ef_ldv_cold(ta = 15, cc = "<=1400", f ="G", eu = "PRE", p = "CO",
@@ -78,10 +79,10 @@ ef_ldv_cold <- function(v = "LDV",
     if(!inherits(speed, "units")){
       stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
     }
-    if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){
-      stop("Units of g must be 'km/h' ")
+    if(units(speed) != units(units::as_units("km/h"))){
+      stop("Units of speed must be 'km/h' ")
     }
-    if(units(speed)$numerator == "km" & units(speed)$denominator == "h"){
+    if(units(speed) == units(units::as_units("km/h"))){
       speed <- as.numeric(speed)
     }
   }

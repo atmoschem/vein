@@ -77,6 +77,7 @@
 #' standard VI is assumed as V
 #'
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{emis_hot_td}}
+#' @importFrom units as_units
 #' @export
 #' @examples \dontrun{
 #' # when standard is 'character'
@@ -190,10 +191,10 @@ ef_china <- function(v = "PV",
   if(!inherits(speed, "units")){
     stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
   }
-  if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){
-    stop("Units of g must be 'km/h' ")
+  if(units(speed) != units(units::as_units("km/h"))){
+    stop("Units of speed must be 'km/h' ")
   }
-  if(units(speed)$numerator == "km" & units(speed)$denominator == "h"){
+  if(units(speed) == units(units::as_units("km/h"))){
     speed <- as.numeric(speed)
   }
   #Check k

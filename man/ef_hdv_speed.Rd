@@ -32,7 +32,7 @@ ef_hdv_speed(
 "III+CRDPF", "IV+CRDPF", "II+SCR", "III+SCR" and "V+SCR" for pollutants
 Number of particles and Active Surface.}
 
-\item{x}{Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
+\item{x}{Numeric; if pollutant is "SO2", it is sulfur in fuel in ppm, if is
 "Pb", Lead in fuel in ppm.}
 
 \item{gr}{Gradient or slope of road: -0.06, -0.04, -0.02, 0.00, 0.02. 0.04 or 0.06}

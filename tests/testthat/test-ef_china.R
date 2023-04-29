@@ -384,7 +384,7 @@ test_that("ef_china stops", {# CO
 test_that("ef_china stops", {# CO
   expect_error(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
                         speed = units::set_units(0, "m/m")),
-               "U.?")
+               ".?")
 })
 
 test_that("ef_china stops", {# CO

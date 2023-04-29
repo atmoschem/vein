@@ -16,7 +16,7 @@
 #' @param l Load of the vehicle: 0.0, 0.5 or 1.0
 #' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
 #' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. See notes.
-#' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
+#' @param x Numeric; if pollutant is "SO2", it is sulfur in fuel in ppm, if is
 #' "Pb", Lead in fuel in ppm.
 #' @param k Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
@@ -55,6 +55,7 @@
 #' Fuel consumption for heavy VI comes from V
 #'
 #' @seealso \code{\link{fuel_corr}} \code{\link{emis}} \code{\link{ef_ldv_cold}}  \code{\link{speciate}}
+#' @importFrom units as_units
 #' @export
 #' @examples \dontrun{
 #' # Quick view
@@ -112,10 +113,10 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
     if(!inherits(speed, "units")){
       stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
     }
-    if(units(speed)$numerator != "km" | units(speed)$denominator != "h"){
-      stop("Units of g must be 'km/h' ")
+    if(units(speed) != units(units::as_units("km/h"))){
+      stop("Units of speed must be 'km/h' ")
     }
-    if(units(speed)$numerator == "km" & units(speed)$denominator == "h"){
+    if(units(speed) == units(units::as_units("km/h"))){
       speed <- as.numeric(speed)
     }
   }

@@ -2,10 +2,11 @@
 #'
 #' \code{\link{colplot}} plots columns of data.frame
 #' @param df data.frame.
-#' @param x the coordinates of points in the plot. (optional)
 #' @param cols Character, columns of data.frame.
 #' @param xlab a label for the x axis, defaults to a description of x.
 #' @param ylab a label for the x axis, defaults to a description of x.
+#' @param xlim x limits
+#' @param ylim y limits
 #' @param main Character, a main title for the plot, see also \code{\link{title}}.
 #' @param theme Character; "black", "dark", "clean", "ink"
 #' @param col The colors for lines and points. Multiple colors can
@@ -33,8 +34,7 @@
 #' the character height (see par("cin")).
 #' @param familyfont "Character" to specify font, default is"", options "serif",
 #'  "sans", "mono" or more according device
-#' @param spl numer to control space for legend, default is 5.
-#' @param all_values logical, if FALSe shows only positive > 0 values
+#' @param ... plot arguments
 #' @family helpers
 #' @return a nice plot
 #' @note This plot shows values > 0 by default. To plot all values, use all_values = TRUE
@@ -42,30 +42,36 @@
 #' @seealso \code{\link{par}}
 #' @export
 #' @examples \dontrun{
-#' a <- ef_cetesb("CO", c("PC_G", "PC_FE", "PC_FG"), agemax = 20)
-#' colplot(df = a, ylab = "CO [g/km]", theme = "dark", pch = NULL, type = "l")
+#' a <- ef_cetesb("CO", c("PC_G", "PC_FE", "PC_FG", "PC_E"), agemax = 20)
+#' colplot(df = a, ylab = "CO [g/km]", theme = "dark", type = "b")
+#' colplot(df = a, ylab = "CO [g/km]", theme = "dark", pch = NULL, type = "b")
+#' colplot(df = a, ylab = "CO [g/km]", theme = "clean", type = "b")
+#' colplot(df = a, ylab = "CO [g/km]", theme = "clean", pch = NULL, type = "b")
 #' #colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
 #' #colplot(df = a, ylab = "CO [g/km]", theme = "clean")
 #' }
 colplot <- function (df,
-                     x,
                      cols = names(df),
                      xlab = "",
                      ylab = "",
+                     xlim = c(1, nrow(df)),
+                     ylim = range(unlist(df[[cols]]), na.rm = TRUE),
                      main = NULL,
                      theme = "black",
                      col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4],
-                                                                      n = length(names(df))),
+                                        n = length(names(df))),
                      type = "b",
                      lwd = 2,
                      pch = 1:ncol(df),
                      familyfont = "",
-                     spl = 5,
-                     all_values = FALSE){
+                     ...){
+
+
   oldpar <- par(no.readonly = TRUE)       # code line i
   on.exit(par(oldpar))                    # code line i + 1
 
   df <- as.data.frame(df)
+
 
   if (theme == "clean") {
     graphics::par(fg = "black", adj = 0.5, ann = TRUE,
@@ -77,7 +83,8 @@ colplot <- function (df,
                   font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
                   lend = "round", ljoin = "round", lmitre = 10,
                   lty = "solid", lwd = 1, mgp = c(2, 0.5, 0),
-                  pch = 20, tck = -0.01, xaxs = "r", xaxt = "s",
+                  # pch = 20,
+                  tck = -0.01, xaxs = "r", xaxt = "s",
                   xpd = FALSE, yaxs = "r", yaxt = "s")
   }  else if (theme == "ink") {
     graphics::par(fg = "blue", adj = 0.5, ann = TRUE,
@@ -89,7 +96,8 @@ colplot <- function (df,
                   font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
                   lend = "round", ljoin = "round", lmitre = 10,
                   lty = "dotted", lwd = 2, mgp = c(2, 0.5, 0),
-                  pch = 4, tck = -0.01, xaxs = "r", xaxt = "s",
+                  # pch = 4,
+                  tck = -0.01, xaxs = "r", xaxt = "s",
                   xpd = FALSE, yaxs = "r", yaxt = "s")
   }  else if (theme == "dark") {
     graphics::par(fg = "#7E848C", adj = 0.5, ann = TRUE,
@@ -101,7 +109,9 @@ colplot <- function (df,
                   font.axis = 1, font.lab = 2, font.main = 2, font.sub = 3,
                   lab = c(5, 5, 7), las = 1, lend = "round",
                   ljoin = "round", lmitre = 10, lty = 1, lwd = 1,
-                  mgp = c(3, 0.7, 0), pch = 19, tck = -0.01, xaxs = "r",
+                  mgp = c(3, 0.7, 0),
+                  # pch = 19,
+                  tck = -0.01, xaxs = "r",
                   xaxt = "s", xpd = FALSE, yaxs = "r",
                   yaxt = "s")
   }  else if (theme == "black") {
@@ -113,56 +123,83 @@ colplot <- function (df,
                   family = familyfont, font = 1, font.axis = 1, font.lab = 2,
                   font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
                   lend = "round", ljoin = "round", lmitre = 10,
-                  lty = 1, lwd = 1, mgp = c(3, 0.7, 0), pch = 19, tck = -0.01,
+                  lty = 1, lwd = 1, mgp = c(3, 0.7, 0),
+                  # pch = 19,
+                  tck = -0.01,
                   xaxt = "s", xpd = FALSE, yaxs = "r",
                   yaxt = "s")
   }
 
-  graphics::par(xpd = T, mar = par()$mar + c(0, 0, 0, spl))
+  # function add legend
+  add_legend <- function(...) {
+    opar <- graphics::par(fig=c(0, 1, 0, 1),
+                          oma=c(0, 0, 0, 0),
+                          mar=c(0, 0, 0, 0),
+                          new=TRUE)
+    on.exit(graphics::par(opar))
+    plot(0, 0, type='n', bty='n', xaxt='n', yaxt='n')
+    graphics::legend(...)
+  }
 
-  if(missing(x)) {
-    if (!missing(cols)) df <- df[cols]
-    df <- remove_units(df)
-    df[df == 0] <- NA
-    ldf <- as.list(df)
 
-    graphics::plot(ldf[[1]], ylim = c(0, max(df, na.rm = TRUE)),
-                   type = type, pch = pch, col = col[1], ylab = ylab, xlab = xlab,
-                   main = main, lwd = lwd)
 
-    if (ncol(df) > 1) {
+  # graphics::par(xpd = T, mar = par()$mar + c(0, 0, 0, spl))
 
-      for(i in 2:ncol(df)) {
-        graphics::points(ldf[[i]], type = type, pch = pch[i],
-                         col = col[i], lwd = lwd)
-      }
+  par(mar = c(5, 4, 1.4, 0.2))
+
+  if (!missing(cols)) df <- df[cols]
+
+  df <- remove_units(df)
+  df[df == 0] <- NA
+  # ldf <- as.list(df)
+
+  # c(5, 4, 1.4, 0.2)
+
+  plot(df[[1]],
+       ylim = c(0, max(df, na.rm = TRUE)),
+       type = type,
+       pch = pch[1],
+       col = col[1],
+       ylab = ylab,
+       xlab = xlab,
+       main = main,
+       lwd = lwd,
+       ...)
+
+  if(ncol(df) > 1) {
+    print(ncol(df))
+    for(i in 2:ncol(df)) {
+      graphics::points(df[[i]],
+                       type = type,
+                       pch = pch[i],
+                       col = col[i],
+                       lwd = lwd)
     }
-    graphics::legend(x = nrow(df),
-                     y = max(unlist(ldf),
-                             na.rm = T) * 1.04,
-                     col = col[1:ncol(df)], legend = cols,
-                     pch = pch, lwd = lwd)
-
-  } else {
-    if (!missing(cols)) df <- df[cols]
-    df <- remove_units(df)
-    df[df == 0] <- NA
-    ldf <- as.list(df)
-    graphics::plot(y = ldf[[1]], x = x, ylim = c(0, max(df, na.rm = TRUE)),
-                   type = type, pch = pch, col = col[1], ylab = ylab, xlab = xlab,
-                   main = main, lwd = lwd)
-    if (ncol(df) > 1) {
-      for(i in 2:ncol(df)) {
-        graphics::points(y = ldf[[i]], x = x, type = type, pch = pch[i],
-                         col = col[i], lwd = lwd)
-      }
-    }
-    graphics::legend(x = x[length(x)], y = max(unlist(ldf),
-                                               na.rm = T) * 1.04,
-                     col = col[1:ncol(df)], legend = cols,
-                     pch = pch, lwd = lwd)
 
   }
+
+
+  add_legend("topright",
+             legend = names(df),
+             col = col[1:ncol(df)],
+             horiz=TRUE,
+             bty='n',
+             cex=1,
+             text.font=4,
+             pch = pch)
+
+
+  # graphics::plot(ldf[[1]], ylim = c(0, max(df, na.rm = TRUE)),
+  #                type = type, pch = pch, col = col[1], ylab = ylab, xlab = xlab,
+  #                main = main, lwd = lwd)
+
+
+
+  # graphics::legend(x = nrow(df),
+  #                  y = max(unlist(ldf),
+  #                          na.rm = T) * 1.04,
+  #                  col = col[1:ncol(df)], legend = cols,
+  #                  pch = pch, lwd = lwd)
 
 
 

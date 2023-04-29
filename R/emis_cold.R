@@ -83,7 +83,12 @@
 #'                           hour = 2,
 #'                           day = 1)
 #' }
-emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
+emis_cold <- function (veh,
+                       lkm,
+                       ef,
+                       efcold,
+                       beta,
+                       speed = 34,
                        agemax = if (!inherits(x = veh, what = "list")) {
                          ncol(veh)
                        } else {
@@ -99,8 +104,11 @@ emis_cold <- function (veh, lkm, ef, efcold, beta, speed = 34,
   if(!inherits(lkm, "units")){
     stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
   }
-  if(units(lkm)$numerator == "m" ){
-    stop("Units of lkm is 'm' ")
+  if(units(lkm) == units(units::as_units("m"))){
+    stop("Units of lkm is 'm', change to 'km'")
+  }
+  if(units(lkm) == units(units::as_units("km"))) {
+    lkm <- as.numeric(lkm)
   }
 
   # At least, on e of these

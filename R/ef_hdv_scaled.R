@@ -23,29 +23,58 @@
 #' @note The length of the list should be equal to the name of the age categories of
 #' a specific type of vehicle
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' # Do not run
-#' data(fe2015)
-#' co1 <- fe2015[fe2015$Pollutant=="CO",]
-#' lef <- ef_hdv_scaled(dfcol = co1$LT, v = "Trucks", t = "RT",
-#' g = "<=7.5", eu = co1$Euro_HDV, gr = 0, l = 0.5, p = "CO")
+#' CO <- ef_cetesb(p = "CO", veh = "TRUCKS_SL_D", full = TRUE)
+#' lef <- ef_hdv_scaled(dfcol = CO$CO,
+#'                      v = "Trucks",
+#'                      t = "RT",
+#'                      g = "<=7.5",
+#'                      eu = CO$Euro_EqHDV,
+#'                      gr = 0,
+#'                      l = 0.5,
+#'                      p = "CO")
 #' length(lef)
-#' plot(x = 0:150, y = lef[[36]](0:150), col = "red", type = "b", ylab = "[g/km]",
-#' pch = 16, xlab = "[km/h]",
-#' main = "Variation of emissions with speed of oldest vehicle")
-#' plot(x = 0:150, y = lef[[1]](0:150), col = "blue", type = "b", ylab = "[g/km]",
-#' pch = 16, xlab = "[km/h]",
-#' main = "Variation of emissions with speed of newest vehicle")
+#' ages <- c(1, 10, 20, 30, 40)
+#' EmissionFactors(do.call("cbind",
+#'    lapply(ages, function(i) {
+#'        data.frame(i = lef[[i]](1:100))
+#' }))) -> df
+#' names(df) <- ages
+#' colplot(df)
 #' }
-ef_hdv_scaled <- function(df, dfcol ,SDC  = 34.12, v, t, g, eu, gr = 0, l = 0.5 ,p) {
+ef_hdv_scaled <- function(df,
+                          dfcol,
+                          SDC  = 34.12,
+                          v,
+                          t,
+                          g,
+                          eu,
+                          gr = 0,
+                          l = 0.5,
+                          p) {
   if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
   la <-  lapply(1:length(dfcol), function(i)  {
-    funIN <- ef_hdv_speed(v = v, t = t, g = g, eu = as.character(eu[i]),
-                          gr = gr, l = l, p = p, k=1, show.equation = FALSE)
+    funIN <- ef_hdv_speed(v = v,
+                          t = t,
+                          g = g,
+                          eu = as.character(eu[i]),
+                          gr = gr,
+                          l = l,
+                          p = p,
+                          k=1,
+                          show.equation = FALSE)
     k <- dfcol[i]/ funIN(SDC)
-    ef_hdv_speed(v = v, t = t, g = g,eu = as.character(eu[i]),
-                 gr = gr, l = l, p = p, k = k, show.equation = FALSE)
+    ef_hdv_speed(v = v,
+                 t = t,
+                 g = g,
+                 eu = as.character(eu[i]),
+                 gr = gr,
+                 l = l,
+                 p = p,
+                 k = k,
+                 show.equation = FALSE)
   })
   class(la) <- c("EmissionFactorsList",class(la))
 return(la)
