@@ -52,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
@@ -248,7 +248,6 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p><a href="https://www.youtube.com/watch?v=6-07Y0Eimng" class="external-link">Portuguese</a></p>
-<p>Spanish coming soon!</p>
 <div class="section level3">
 <h3 id="id_2-use-inventory-a-bit-not-so-easy">2. Use inventory (a bit not so easy)<a class="anchor" aria-label="anchor" href="#id_2-use-inventory-a-bit-not-so-easy"></a>
 </h3>
@@ -268,12 +267,9 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span></span>
-<span><span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
-<span>  <span class="va">PC_E25_1400</span></span>
-<span><span class="op">)</span></span>
+<span><span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span> x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Weighted mean =  11.17</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-3-1.png"><!-- --></p>
 <p>If you want to know the vehicles per street and by age of use, just add the net. Age functions now returns ‘sf’ objects if the net argument is present.</p>
@@ -282,14 +278,11 @@
 <span>  x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, </span>
 <span>  net <span class="op">=</span> <span class="va">net</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
-<span>  <span class="va">PC_E25_1400net</span>, </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400net</span>, </span>
 <span>  key.pos <span class="op">=</span> <span class="fl">4</span>, </span>
 <span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span></span>
 <span>    colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>    rev <span class="op">=</span> <span class="cn">T</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span>    rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
 <span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
 <span><span class="co">#&gt; Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot</span></span>
@@ -409,14 +402,19 @@
 <span>  eu <span class="op">=</span> <span class="st">"PRE"</span>,</span>
 <span>  p <span class="op">=</span> <span class="st">"CO"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">efs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EmissionFactors.html">EmissionFactors</a></span><span class="op">(</span><span class="fu">ef1</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>, </span>
-<span>  <span class="va">efs</span>, </span>
-<span>  xlab <span class="op">=</span> <span class="st">"speed[km/h]"</span>, </span>
-<span>  type <span class="op">=</span> <span class="st">"b"</span>, </span>
-<span>  pch <span class="op">=</span> <span class="fl">16</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">ef2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ef_ldv_speed.html">ef_ldv_speed</a></span><span class="op">(</span></span>
+<span>  v <span class="op">=</span> <span class="st">"PC"</span>,</span>
+<span>  t <span class="op">=</span> <span class="st">"4S"</span>, </span>
+<span>  cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, </span>
+<span>  f <span class="op">=</span> <span class="st">"G"</span>,</span>
+<span>  eu <span class="op">=</span> <span class="st">"III"</span>,</span>
+<span>  p <span class="op">=</span> <span class="st">"CO"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ef1</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EmissionFactors.html">EmissionFactors</a></span><span class="op">(</span><span class="fu">ef1</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">ef2</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/EmissionFactors.html">EmissionFactors</a></span><span class="op">(</span><span class="fu">ef2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/colplot.html">colplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>PRE <span class="op">=</span> <span class="va">ef1</span>, III <span class="op">=</span> <span class="va">ef2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-1.png"><!-- --></p>
 </div>
 <div class="section level4">
@@ -541,7 +539,7 @@
 <span><span class="co">#&gt; Sum of street emissions 148791715.29</span></span>
 <span><span class="co">#&gt; Sum of gridded emissions 148791715.29</span></span>
 <span><span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"1/h"</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">E_CO_g</span><span class="op">[[</span><span class="va">na</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"1/h"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">E_CO_g</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V1"</span>, <span class="st">"V9"</span><span class="op">)</span><span class="op">]</span>, </span>
 <span>  key.pos <span class="op">=</span> <span class="fl">4</span>, </span>

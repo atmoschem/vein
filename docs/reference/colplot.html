@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
@@ -71,10 +71,11 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">colplot</span><span class="op">(</span></span>
 <span>  <span class="va">df</span>,</span>
-<span>  <span class="va">x</span>,</span>
 <span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>,</span>
 <span>  xlab <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  ylab <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">cols</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  main <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theme <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  col <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/find_cpt.html" class="external-link">find_cpt</a></span><span class="op">(</span><span class="st">"pastel"</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -82,8 +83,7 @@
 <span>  lwd <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  pch <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>,</span>
 <span>  familyfont <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  spl <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  all_values <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,10 +91,6 @@
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>data.frame.</p></dd>
-
-
-<dt>x</dt>
-<dd><p>the coordinates of points in the plot. (optional)</p></dd>
 
 
 <dt>cols</dt>
@@ -107,6 +103,14 @@
 
 <dt>ylab</dt>
 <dd><p>a label for the x axis, defaults to a description of x.</p></dd>
+
+
+<dt>xlim</dt>
+<dd><p>x limits</p></dd>
+
+
+<dt>ylim</dt>
+<dd><p>y limits</p></dd>
 
 
 <dt>main</dt>
@@ -157,12 +161,8 @@ the character height (see par("cin")).</p></dd>
 "sans", "mono" or more according device</p></dd>
 
 
-<dt>spl</dt>
-<dd><p>numer to control space for legend, default is 5.</p></dd>
-
-
-<dt>all_values</dt>
-<dd><p>logical, if FALSe shows only positive &gt; 0 values</p></dd>
+<dt>...</dt>
+<dd><p>plot arguments</p></dd>
 
 </dl></div>
     <div id="value">
@@ -187,8 +187,11 @@ the character height (see par("cin")).</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span><span class="st">"CO"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PC_G"</span>, <span class="st">"PC_FE"</span>, <span class="st">"PC_FG"</span><span class="op">)</span>, agemax <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">colplot</span><span class="op">(</span>df <span class="op">=</span> <span class="va">a</span>, ylab <span class="op">=</span> <span class="st">"CO [g/km]"</span>, theme <span class="op">=</span> <span class="st">"dark"</span>, pch <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span><span class="st">"CO"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PC_G"</span>, <span class="st">"PC_FE"</span>, <span class="st">"PC_FG"</span>, <span class="st">"PC_E"</span><span class="op">)</span>, agemax <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">colplot</span><span class="op">(</span>df <span class="op">=</span> <span class="va">a</span>, ylab <span class="op">=</span> <span class="st">"CO [g/km]"</span>, theme <span class="op">=</span> <span class="st">"dark"</span>, type <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">colplot</span><span class="op">(</span>df <span class="op">=</span> <span class="va">a</span>, ylab <span class="op">=</span> <span class="st">"CO [g/km]"</span>, theme <span class="op">=</span> <span class="st">"dark"</span>, pch <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">colplot</span><span class="op">(</span>df <span class="op">=</span> <span class="va">a</span>, ylab <span class="op">=</span> <span class="st">"CO [g/km]"</span>, theme <span class="op">=</span> <span class="st">"clean"</span>, type <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">colplot</span><span class="op">(</span>df <span class="op">=</span> <span class="va">a</span>, ylab <span class="op">=</span> <span class="st">"CO [g/km]"</span>, theme <span class="op">=</span> <span class="st">"clean"</span>, pch <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"b"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")</span></span></span>
 <span class="r-in"><span><span class="co">#colplot(df = a, ylab = "CO [g/km]", theme = "clean")</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>

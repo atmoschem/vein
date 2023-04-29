@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
@@ -87,12 +87,34 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu">celsius</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">celsius</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="celsius-1.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               V1               V2              V3             V4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.755523 [°C]  14.1997371 [°C] -8.3137414 [°C] -3.978493 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 13.547509 [°C]   4.7318303 [°C] -5.2241645 [°C]  1.038641 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -8.988298 [°C]  -0.7496335 [°C]  5.8242328 [°C]  2.063631 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -4.312727 [°C] -14.2807633 [°C]  1.4245450 [°C] 13.322836 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  2.467638 [°C]   2.3178517 [°C] -0.9129579 [°C] -4.807770 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 19.224104 [°C]  -1.9910791 [°C]  5.5308297 [°C]  3.397349 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 V5             V6              V7             V8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -16.3119198 [°C] -1.900392 [°C]  -7.515761 [°C]  5.132420 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  11.3685333 [°C]  3.946874 [°C]  -5.839575 [°C] -8.570992 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -6.3422680 [°C] 14.250055 [°C]  -5.696374 [°C] -5.575240 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -10.3009352 [°C] 10.040135 [°C] -11.155098 [°C] -2.361400 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  14.8154780 [°C] -6.939028 [°C]  -1.574739 [°C]  7.955019 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.2382377 [°C] -6.006538 [°C]  -1.847786 [°C] 19.944787 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  V9            V10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  -0.35256915 [°C] -3.664447 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   8.60949289 [°C] 15.116108 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  11.15385769 [°C] -2.737412 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -20.61711579 [°C]  6.217663 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.05384086 [°C] 10.826827 [°C]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  12.09943736 [°C] -7.543273 [°C]</span>
 </code></pre></div>
     </div>
   </div>

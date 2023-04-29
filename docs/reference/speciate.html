@@ -25,7 +25,7 @@ will be added more speciations"><meta property="og:image" content="http://atmosc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
@@ -175,7 +175,8 @@ cidade de Manaus nas concentracoes de poluentes atmosfericos da regiao
 amazonica, Master thesis, Londrina: Universidade Tecnologica Federal do
 Parana, 2015.</p>
 <p>specs: "neu_cb05", "pmneu" and "pmneu2" provided by Daniel Schuch,
-from Northeastern University</p>
+from Northeastern University.
+"pm2023" provided by Iara da Silva; Leila D. Martins</p>
 <p>Speciation with fuels <strong>"E25", "E100" and "B5"</strong> made by Prof. Leila Martins (UTFPR),
 represents BRAZILIAN fuel</p>
 
@@ -221,7 +222,7 @@ Environment Canada, September 26, 2006.</p>
 <span class="r-in"><span><span class="op">(</span><span class="va">dfa</span> <span class="op">&lt;-</span> <span class="fu">speciate</span><span class="op">(</span><span class="va">pm</span>, spec <span class="op">=</span> <span class="st">"iag"</span>, veh <span class="op">=</span> <span class="st">"veh"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="st">"Exhaust"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">dfb</span> <span class="op">&lt;-</span> <span class="fu">speciate</span><span class="op">(</span><span class="va">pm</span>, spec <span class="op">=</span> <span class="st">"iag_cb05v2"</span>, veh <span class="op">=</span> <span class="st">"veh"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="st">"Exhaust"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">dfb</span> <span class="op">&lt;-</span> <span class="fu">speciate</span><span class="op">(</span><span class="va">pm</span>, spec <span class="op">=</span> <span class="st">"neu_cb05"</span>, veh <span class="op">=</span> <span class="st">"veh"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="st">"Exhaust"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">pm</span> <span class="op">&lt;-</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="va">pm</span>, <span class="st">"g/km^2/h"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pm</span> <span class="op">&lt;-</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="va">pm</span>, <span class="st">"g/km^2/h"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))</span></span></span>
 <span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))</span></span></span>
 <span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))</span></span></span>
