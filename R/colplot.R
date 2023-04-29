@@ -167,7 +167,6 @@ colplot <- function (df,
        ...)
 
   if(ncol(df) > 1) {
-    print(ncol(df))
     for(i in 2:ncol(df)) {
       graphics::points(df[[i]],
                        type = type,
