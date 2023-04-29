@@ -149,7 +149,7 @@
 #' NH3 from EEA Tier 2
 #'
 #' @export
-#' @examples \dontrun{
+#' @examples {
 #' a <- ef_cetesb(p = "CO", veh = "PC_G")
 #' a <- ef_cetesb(p = "NOx", veh = "TRUCKS_M_D")
 #' a <- ef_cetesb("R_10_25", "PC_G")
@@ -434,6 +434,9 @@ ef_cetesb <- function(p,
   if(scale %in% c("tunnel","tunnel2014")) {
     if(verbose) cat("scale = tunnel2014\n")
     # conferir valor do tunnel
+    # I recalculated the values for tunnel 2014
+    # fleet 2014 from CETESB
+    # This fleet was used by Daniel as well.- SIE
     # ef <- sysdata$cetesb
 
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
@@ -448,20 +451,21 @@ ef_cetesb <- function(p,
     COHC <- c("CO", "CO_0km","NMHC", "NMHC_0km","HC", "HC_0km",
               "R_0_15", "R_10_25", "R_0_25")
 
-    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*4.168227
-    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.736068
+    ef[ef$Pollutant %in% COHC, LDV] <- ef[ef$Pollutant %in% COHC, LDV]*3.770729
+    ef[ef$Pollutant %in% COHC, HDV] <- ef[ef$Pollutant %in% COHC, HDV]*2.600306
 
 
     # NONO2NOx
     NONO<- c("NOx", "NO2", "NO", "NOx_0km", "NO2_0km", "NO_0km")
-    ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.125685
-    ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.376864
+    ef[ef$Pollutant %in% NONO, LDV] <- ef[ef$Pollutant %in% NONO, LDV]*1.003158
+    ef[ef$Pollutant %in% NONO, HDV] <- ef[ef$Pollutant %in% NONO, HDV]*1.25692
 
     # PM
-    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.256218
-    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.216421
+    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*1.702909
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.093566
 
     # ALD # ja tem NMHC incrementado
+    # these values i did not change
     efALD <- ef[ef$Pollutant %in% "NMHC", ]
     efALD$Pollutant <- "ALD"
     efALD[, LDV] <- efALD[, LDV]*0.05013932
@@ -476,6 +480,7 @@ ef_cetesb <- function(p,
     ef <- rbind(ef, efHCHO)
 
   } else if(scale == "tunnel2018") {
+    # Values updated by Mario
     if(verbose) cat("scale = tunnel2018\n")
 # ef <- sysdata$cetesb
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
@@ -513,8 +518,8 @@ ef_cetesb <- function(p,
 
     # # The following adjustments made for tunnel study for 2018 - MEGC
     # PM (EF_LDV = 0.0326574 g/m3, EF_HDV = 0.2749503  mg/m3, agemax = 40)
-    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*4.128006 
-    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.626788 
+    ef[ef$Pollutant %in% "PM", LDV] <- ef[ef$Pollutant %in% "PM", LDV]*4.128006
+    ef[ef$Pollutant %in% "PM", HDV] <- ef[ef$Pollutant %in% "PM", HDV]*1.626788
 
     # ALD # ja tem NMHC incrementado
     efALD <- ef[ef$Pollutant %in% "NMHC", ]

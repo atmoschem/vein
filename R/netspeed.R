@@ -48,8 +48,16 @@
 #' # plot(dfsf, pal = cptcity::lucky(colorRampPalette = TRUE, rev = TRUE),
 #' # key.pos = 1, max.plot = 9)
 #' }
-netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
-                      net, scheme = FALSE, dist = "km"){
+netspeed <- function (q = 1,
+                      ps,
+                      ffs,
+                      cap,
+                      lkm,
+                      alpha = 0.15,
+                      beta = 4,
+                      net,
+                      scheme = FALSE,
+                      dist = "km"){
   if (scheme == FALSE & missing(q)){
     stop("No vehicles on 'q'")
   } else if (scheme == FALSE){
@@ -71,19 +79,31 @@ netspeed <- function (q = 1, ps, ffs, cap, lkm, alpha = 0.15, beta = 4,
     } else {
       ps <- as.numeric(ps)
       ffs <- as.numeric(ffs)
-      dfv <- cbind(replicate(5, ffs), replicate(1, 0.5*(ps + ffs) ),
-                   replicate(3, ps), replicate(7, 0.5*(ps + ffs)),
-                   replicate(3, ps), replicate(2, 0.5*(ps + ffs)),
-                   replicate(3, ffs))
-      names(dfv) <- c(rep("FSS",5), "AS", rep("PS", 3), rep("AS", 7),
-                      rep("PS", 3), rep("AS", 2),rep("FSS",3))
 
-      df_speed <- Speed(as.data.frame(dfv), dist = dist)
+      dfv <- cbind(replicate(5, ffs),
+                   replicate(1, 0.5*(ps + ffs) ),
+                   replicate(3, ps),
+                   replicate(7, 0.5*(ps + ffs)),
+                   replicate(3, ps),
+                   replicate(2, 0.5*(ps + ffs)),
+                   replicate(3, ffs))
+
+      names(dfv) <- c(rep("FSS",5),
+                      "AS",
+                      rep("PS", 3),
+                      rep("AS", 7),
+                      rep("PS", 3),
+                      rep("AS", 2),
+                      rep("FSS",3))
+
+      df_speed <- Speed(as.data.frame(dfv),
+                        dist = dist)
 
     }
     if(!missing(net)){
       netsf <- sf::st_as_sf(net)
-      df_speedsf <- sf::st_sf(df_speed, geometry = sf::st_geometry(netsf))
+      df_speedsf <- sf::st_sf(df_speed,
+                              geometry = sf::st_geometry(netsf))
       return(df_speedsf)
     } else {
       return(df_speed)

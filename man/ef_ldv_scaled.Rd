@@ -48,20 +48,23 @@ The length of the list should be equal to the name of the age categories of
 a specific type of vehicle. Thanks to Glauber Camponogara for the help.
 }
 \examples{
-\dontrun{
-data(fe2015)
-co1 <- fe2015[fe2015$Pollutant=="CO", ]
-lef <- ef_ldv_scaled(dfcol = co1$PC_G, v = "PC", t = "4S", cc = "<=1400", f = "G",
-eu = co1$Euro_LDV, p = "CO")
+{
+CO <- ef_cetesb(p = "CO", veh = "PC_FG", full = TRUE)
+lef <- ef_ldv_scaled(dfcol = CO$CO,
+                     v = "PC",
+                     t = "4S",
+                     cc = "<=1400",
+                     f = "G",
+                     eu = CO$EqEuro_PC,
+                     p = "CO")
 length(lef)
-lef[[1]](40) # First element of the lit of speed functions at 40 km/h
-lef[[36]](50) # 36th element of the lit of speed functions at 50 km/h
-plot(x = 0:150, y = lef[[36]](0:150), col = "red", type = "b", ylab = "[g/km]",
-pch = 16, xlab = "[km/h]",
-main = "Variation of emissions with speed of oldest vehicle")
-plot(x = 0:150, y = lef[[1]](0:150), col = "blue", type = "b", ylab = "[g/km]",
-pch = 16, xlab = "[km/h]",
-main = "Variation of emissions with speed of newest vehicle")
+ages <- c(1, 10, 20, 30, 40)
+EmissionFactors(do.call("cbind",
+   lapply(ages, function(i) {
+       data.frame(i = lef[[i]](1:100))
+}))) -> df
+names(df) <- ages
+colplot(df)
 }
 }
 \seealso{

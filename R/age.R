@@ -67,32 +67,8 @@
 #' PV_Minib <- age(x = vehLIA, type = "weibull2", b = 11, a = 26)
 #' PV_Minic <- age(x = vehLIA, type = "double_logistic", b = 21, a = 0.19)
 #' PV_Minid <- age(x = vehLIA, type = "gompertz", b = -0.137, a = 1.798)
-#' plot(PV_Minia, type = "b", pch = 16)
-#' lines(PV_Minib, type = "b", pch = 16, col = "red")
-#' lines(PV_Minic, type = "b", pch = 16, col = "blue")
-#' lines(PV_Minid, type = "b", pch = 16, col = "green")
-#' legend(x = 20, y = 0.85,
-#'       legend = c("weibull", "weibull2", "double_logistic", "gompertz"),
-#'       col = c("black", "red", "blue", "green"),
-#'       lty=c(1,1),
-#'       lwd=c(2.5, 2.5, 2.5, 2.5))
-#'       #lets put some numbers
-#' vehLIA <- c(65400, 79100, 80700, 85300, 86700, 82000, 74500, 67700, 60600, 62500,
-#' 84700, 62600, 47900, 63900, 41800, 37492, 34243, 30995, 27747, 24499, 21250,
-#' 18002, 14754, 11506, 8257)
-#' PV_Minia <- age(x = vehLIA)
-#' PV_Minib <- age(x = vehLIA, type = "weibull2", b = 11, a = 26)
-#' PV_Minic <- age(x = vehLIA, type = "double_logistic",  b = 21, a = 0.19)
-#' PV_Minid <- age(x = vehLIA, type = "gompertz", b = -0.137, a = 1.798)
-#' plot(PV_Minia, type = "b", pch = 16)
-#' lines(PV_Minib, type = "b", pch = 16, col = "red")
-#' lines(PV_Minic, type = "b", pch = 16, col = "blue")
-#' lines(PV_Minid, type = "b", pch = 16, col = "green")
-#' legend(x = 20, y = 80000,
-#'       legend = c("weibull", "weibull2", "double_logistic", "gompertz"),
-#'       col = c("black", "red", "blue", "green"),
-#'       lty=c(1,1),
-#'       lwd=c(2.5, 2.5, 2.5, 2.5))
+#' dff <- data.frame(PV_Minia, PV_Minib, PV_Minic, PV_Minid)
+#' colplot(dff)
 #' }
 age <- function (x,
                  type = "weibull",

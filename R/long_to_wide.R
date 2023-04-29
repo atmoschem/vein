@@ -14,8 +14,8 @@
 #' @export
 #' @examples \dontrun{
 #' df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
-#' emission = vein::Emissions(1:30),
-#' region = rep(letters[1:2], 15))
+#'                  emission = vein::Emissions(1:30),
+#'                  region = rep(letters[1:2], 15))
 #' df
 #' long_to_wide(df)
 #' long_to_wide(df, column_fixed = "region")
@@ -25,7 +25,7 @@ long_to_wide <- function(df,
                          column_with_data = "emission",
                          column_fixed,
                          net) {
-  message("This function will be deprecated, use data.table::dcast.data.table")
+  # message("This function will be deprecated, use data.table::dcast.data.table")
 
   a <- as.data.frame(df)
   la <- split(a, a[[column_with_new_names]])

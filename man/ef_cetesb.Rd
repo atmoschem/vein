@@ -178,7 +178,7 @@ of Sao Paulo 2018, assuming 50000 streets
 NH3 from EEA Tier 2
 }
 \examples{
-\dontrun{
+{
 a <- ef_cetesb(p = "CO", veh = "PC_G")
 a <- ef_cetesb(p = "NOx", veh = "TRUCKS_M_D")
 a <- ef_cetesb("R_10_25", "PC_G")

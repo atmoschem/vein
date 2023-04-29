@@ -26,6 +26,7 @@
 #' @keywords cumileage emission factors
 #' @note if length of eu is bigger than 1, cumileage can have values  of length 1
 #' or length equal to length of eu
+#' @importFrom units as_units
 #' @export
 #' @examples \dontrun{
 #' efe10 <- ef_nitro(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
@@ -66,10 +67,10 @@ ef_nitro <- function(v,
     if(!inherits(cumileage, "units")){
       stop("cumileage neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
-    if(units(cumileage)$numerator != "km"){
-      stop("Units of g must be 'km' ")
+    if(units(cumileage) != units(units::as_units("km"))){
+      stop("Units of cumileage must be 'km' ")
     }
-    if(units(cumileage)$numerator == "km"){
+    if(units(cumileage) == units(units::as_units("km"))){
       cumileage <- as.numeric(cumileage)
     }
   }

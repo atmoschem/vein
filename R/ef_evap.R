@@ -41,6 +41,7 @@
 #' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
 #' Environment Agency, Copenhagen, 2009
 #' @importFrom data.table rbindlist
+#' @importFrom units as_units
 #' @export
 #' @examples \dontrun{
 #' # Do not run
@@ -100,10 +101,10 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
     if(!inherits(ltrip, "units")){
       stop("ltrip neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
-    if(units(ltrip)$numerator == "m" ){
+    if(units(ltrip) == units(units::as_units("m"))){
       stop("Units of ltrip is 'm'. Please, check package '?units::set_units'")
     }
-    if(units(ltrip)$numerator == "km" ){
+    if(units(ltrip) == units(units::as_units("km"))){
       ltrip <- as.numeric(ltrip)
     }
 
@@ -115,17 +116,15 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
     if(!inherits(kmday, "units")){
       stop("kmday neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
-    if(units(kmday)$numerator == "m" ){
+    if(units(kmday) == units(units::as_units("m"))){
       stop("Units of kmday is 'm'. Please, check package '?units::set_units'")
     }
-    if(units(kmday)$numerator == "km" ){
+    if(units(kmday) == units(units::as_units("km"))){
       kmday <- as.numeric(kmday)
     }
   }
   # check(dt)
     dt <- remove_units(dt)
-
-
 
   if(!is.data.frame(dt)){
     # if(class(dt) == "factor"){

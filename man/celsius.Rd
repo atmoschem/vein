@@ -16,7 +16,7 @@ Objects of class "data.frame" or "units"
 \code{celsius} just  add unit celsius to different R objects
 }
 \examples{
-\dontrun{
+{
 a <- celsius(rnorm(100)*10)
 plot(a)
 b <- celsius(matrix(rnorm(100)*10, ncol = 10))

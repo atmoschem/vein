@@ -23,7 +23,8 @@ efh <- ef_ldv_speed(v = "PC",
 
 lkm <- units::as_units(18:11, "km")*1000
 
-cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"), ta = celsius(dt))
+cold_lkm <- cold_mileage(ltrip = units::as_units(20, "km"),
+                         ta = celsius(dt))
 
 names(cold_lkm) <- paste0("Month_", 1:12)
 

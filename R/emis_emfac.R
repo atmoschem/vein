@@ -32,6 +32,27 @@ emis_emfac <- function(ef,
                        vkm = TRUE,
                        verbose = TRUE){
 
+  if(!inherits(lkm, "units")){
+    stop("lkm neeeds to has class 'units' in 'miles'. Please, check package 'units'")
+  }
+  if(units(lkm) == units(units::as_units("km"))){
+    stop("Units of lkm is 'km', change to 'miles'")
+  }
+  if(units(lkm) == units(units::as_units("miles"))) {
+    lkm <- as.numeric(lkm)
+  }
+
+
+  if(!inherits(speed, "Speed")){
+    stop("speed neeeds to has class 'Speed' with col-units'miles/h'")
+  }
+  if(units(speed[, 1]) != units(units::as_units("miles/h"))){
+    stop("Units of speed must be 'miles/h' ")
+  }
+  if(units(speed[, 1]) == units(units::as_units("miles/h"))){
+    speed <- remove_units(speed)
+  }
+
   # ef
 if(is.character(ef)) {
   ef <- ef_emfac(ef)

@@ -8,24 +8,23 @@
 #' @param ta Numeric or data.frame; average monthly temperature Celsius. It if is a
 #' data.frame, it is convenient that each column is each month.
 #' @keywords cold mileage
-#' @note This function is set so that values vaires between 0 and 1.
+#' @note This function is set so that values varies between 0 and 1.
 #' @export
 #' @examples \dontrun{
 #' lkm <- units::set_units(1:10, km)
 #' ta <- celsius(matrix(0:9, ncol = 12, nrow = 10))
-#' a <- cold_mileage(lkm, rbind(ta, ta))
-#' (a)
-#' filled.contour(as.matrix(a), col = cptcity::lucky(n = 16))
+#' a <- cold_mileage(lkm, ta)
+#' colplot(a)
 #' }
 cold_mileage <- function(ltrip, ta){
   # Check units
   if(!inherits(ltrip, "units")){
     stop("ltrip neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
-  if(units(ltrip)$numerator == "m" ){
+  if(units(ltrip) == units(units::as_units("m"))){
     stop("Units of lkm is 'm'. Please, check package '?units::set_units'")
   }
-  if(units(ltrip)$numerator == "km" ){
+  if(units(ltrip) == units(units::as_units("km"))){
     ltrip <- as.numeric(ltrip)
   }
 

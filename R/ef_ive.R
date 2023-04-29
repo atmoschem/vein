@@ -82,6 +82,6 @@ ef_ive <- function(description = "Auto/Sml Truck",
 #     return(ef)
 #   }
 # }
-  .Deprecated("ef_ive")
+  .Deprecated("ef_emfac")
   "ef_ive"
 }

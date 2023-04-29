@@ -44,19 +44,25 @@ The length of the list should be equal to the name of the age categories of
 a specific type of vehicle
 }
 \examples{
-\dontrun{
+{
 # Do not run
-data(fe2015)
-co1 <- fe2015[fe2015$Pollutant=="CO",]
-lef <- ef_hdv_scaled(dfcol = co1$LT, v = "Trucks", t = "RT",
-g = "<=7.5", eu = co1$Euro_HDV, gr = 0, l = 0.5, p = "CO")
+CO <- ef_cetesb(p = "CO", veh = "TRUCKS_SL_D", full = TRUE)
+lef <- ef_hdv_scaled(dfcol = CO$CO,
+                     v = "Trucks",
+                     t = "RT",
+                     g = "<=7.5",
+                     eu = CO$Euro_EqHDV,
+                     gr = 0,
+                     l = 0.5,
+                     p = "CO")
 length(lef)
-plot(x = 0:150, y = lef[[36]](0:150), col = "red", type = "b", ylab = "[g/km]",
-pch = 16, xlab = "[km/h]",
-main = "Variation of emissions with speed of oldest vehicle")
-plot(x = 0:150, y = lef[[1]](0:150), col = "blue", type = "b", ylab = "[g/km]",
-pch = 16, xlab = "[km/h]",
-main = "Variation of emissions with speed of newest vehicle")
+ages <- c(1, 10, 20, 30, 40)
+EmissionFactors(do.call("cbind",
+   lapply(ages, function(i) {
+       data.frame(i = lef[[i]](1:100))
+}))) -> df
+names(df) <- ages
+colplot(df)
 }
 }
 \keyword{emission}

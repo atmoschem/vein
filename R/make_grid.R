@@ -8,10 +8,10 @@
 #' @param height Height of grid cell.
 #' @param polygon  Deprecated! \code{\link{make_grid}} returns only sf grid of
 #' polygons.
-#' @param  ... ignored
-#' @param crs coordinate reference system in numeric format from
+#' @param crs coordinate reference system in numeric
+#' format from
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
-#' The default value is 4326
+#' The default value is 3857, Pseudo Mercator
 #' @return A grid of polygons class 'sf'
 #' @importFrom sf st_as_sf st_sf st_crs st_bbox st_sfc st_as_sfc
 #' @export
@@ -23,7 +23,11 @@
 #' #grid <- make_grid(net, width = 0.5/102.47) #500 mts
 #'
 #' }
-make_grid <- function(spobj, width, height = width,  polygon, crs = 4326, ...){
+make_grid <- function(spobj,
+                      width,
+                      height = width,
+                      polygon,
+                      crs = 3857){
   if(!missing(polygon)){
     message("argument 'polygon' is not needed")
   }

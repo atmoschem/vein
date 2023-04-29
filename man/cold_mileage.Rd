@@ -18,15 +18,14 @@ From the guidelines  EMEP/EEA air pollutant emission inventory guidebook
 http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
 }
 \note{
-This function is set so that values vaires between 0 and 1.
+This function is set so that values varies between 0 and 1.
 }
 \examples{
 \dontrun{
 lkm <- units::set_units(1:10, km)
 ta <- celsius(matrix(0:9, ncol = 12, nrow = 10))
-a <- cold_mileage(lkm, rbind(ta, ta))
-(a)
-filled.contour(as.matrix(a), col = cptcity::lucky(n = 16))
+a <- cold_mileage(lkm, ta)
+colplot(a)
 }
 }
 \keyword{cold}

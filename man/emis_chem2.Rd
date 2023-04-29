@@ -78,13 +78,11 @@ and convert grams to mol.
 {
 id <-1:2
 df <- data.frame(V1 = 1:2, V2 = 1:2)
-dx <- speciate(
-x = df,
-spec = "nmhc",
-fuel = "E25",
-veh = "LDV",
-eu = "Exhaust"
-)
+dx <- speciate(x = df,
+               spec = "nmhc",
+               fuel = "E25",
+               veh = "LDV",
+               eu = "Exhaust")
 dx$id <- rep(id, length(unique(dx$pol)))
 names(dx)
 vocE25EX <- emis_chem2(df = dx,

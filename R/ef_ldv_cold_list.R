@@ -18,7 +18,8 @@
 #' @export
 #' @examples \dontrun{
 #' # Do not run
-#' df <- data.frame(age1 = c(1,1), age2 = c(2,2))
+#' df <- data.frame(age1 = c(1,1),
+#'                  age2 = c(2,2))
 #' eu = c("I", "PRE")
 #' l <- ef_ldv_cold(t = 17, cc = "<=1400", f = "G",
 #' eu = "I", p = "CO")
