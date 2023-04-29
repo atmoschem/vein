@@ -197,8 +197,6 @@ install.packages(c("ggplot2", "readxl", "eixport"))
 
 [Portuguese](https://www.youtube.com/watch?v=6-07Y0Eimng)
 
-Spanish coming soon!
-
 ### 2. Use inventory (a bit not so easy)
 
 Read the instruction of inventory
@@ -228,12 +226,9 @@ Read the instruction of inventory
 ``` r
 library(vein)
 data("net")
-PC_E25_1400 <- age_ldv(
-  x = net$ldv
-)
-plot(
-  PC_E25_1400
-)
+PC_E25_1400 <- age_ldv( x = net$ldv)
+
+plot(PC_E25_1400)
 #> Weighted mean =  11.17
 ```
 
@@ -248,14 +243,11 @@ PC_E25_1400net <- age_ldv(
   x = net$ldv, 
   net = net
 )
-plot(
-  PC_E25_1400net, 
+plot(PC_E25_1400net, 
   key.pos = 4, 
   pal = cptcity::cpt(
     colorRampPalette = T, 
-    rev = T
-  )
-)
+    rev = T))
 #> old-style crs object detected; please recreate object with a recent sf::st_crs()
 #> old-style crs object detected; please recreate object with a recent sf::st_crs()
 #> Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot
@@ -385,14 +377,19 @@ ef1 <- ef_ldv_speed(
   eu = "PRE",
   p = "CO"
 )
-efs <- EmissionFactors(ef1(1:150))
-plot(
-  Speed(1:150), 
-  efs, 
-  xlab = "speed[km/h]", 
-  type = "b", 
-  pch = 16
+ef2 <- ef_ldv_speed(
+  v = "PC",
+  t = "4S", 
+  cc = "<=1400", 
+  f = "G",
+  eu = "III",
+  p = "CO"
 )
+
+ef1 <- EmissionFactors(ef1(1:150))
+ef2 <- EmissionFactors(ef2(1:150))
+colplot(data.frame(PRE = ef1, III = ef2))
+#> [1] 2
 ```
 
 ![](man/figures/unnamed-chunk-7-1.png)<!-- -->

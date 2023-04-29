@@ -24,7 +24,7 @@ reference is taken from the spatial object."><meta property="og:image" content="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
@@ -71,7 +71,7 @@ reference is taken from the spatial object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_grid</span><span class="op">(</span><span class="va">spobj</span>, <span class="va">width</span>, height <span class="op">=</span> <span class="va">width</span>, <span class="va">polygon</span>, crs <span class="op">=</span> <span class="fl">4326</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_grid</span><span class="op">(</span><span class="va">spobj</span>, <span class="va">width</span>, height <span class="op">=</span> <span class="va">width</span>, <span class="va">polygon</span>, crs <span class="op">=</span> <span class="fl">3857</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,13 +94,10 @@ polygons.</p></dd>
 
 
 <dt>crs</dt>
-<dd><p>coordinate reference system in numeric format from
+<dd><p>coordinate reference system in numeric
+format from
 http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
-The default value is 4326</p></dd>
-
-
-<dt>...</dt>
-<dd><p>ignored</p></dd>
+The default value is 3857, Pseudo Mercator</p></dd>
 
 </dl></div>
     <div id="value">

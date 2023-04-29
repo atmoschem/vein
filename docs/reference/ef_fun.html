@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
       </span>
     </div>
 
@@ -120,10 +120,10 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">fe2015</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">CO</span> <span class="op">&lt;-</span> <span class="fu">vein</span><span class="fu">::</span><span class="fu"><a href="EmissionFactors.html">EmissionFactors</a></span><span class="op">(</span><span class="va">fe2015</span><span class="op">[</span><span class="va">fe2015</span><span class="op">$</span><span class="va">Pollutant</span> <span class="op">==</span> <span class="st">"CO"</span>, <span class="st">"PC_G"</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">CO</span> <span class="op">&lt;-</span> <span class="fu"><a href="ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span>p <span class="op">=</span> <span class="st">"CO"</span>, veh <span class="op">=</span> <span class="st">"PC_G"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ef_logit</span> <span class="op">&lt;-</span> <span class="fu">ef_fun</span><span class="op">(</span>ef <span class="op">=</span> <span class="va">CO</span>, x0 <span class="op">=</span> <span class="fl">27</span>, k <span class="op">=</span> <span class="fl">0.4</span>, L <span class="op">=</span> <span class="fl">33</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ef_logit</span>, type <span class="op">=</span> <span class="st">"b"</span>, pch <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">ef_logit</span>, pch <span class="op">=</span> <span class="fl">16</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">CO</span>, <span class="va">ef_logit</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="colplot.html">colplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
