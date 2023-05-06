@@ -25,7 +25,7 @@ emission factors from EMFAC website."><meta property="og:image" content="http://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@ emission factors from EMFAC website.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_emfac</span><span class="op">(</span><span class="va">efpath</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_emfac</span><span class="op">(</span><span class="va">efpath</span>, dg <span class="op">=</span> <span class="fl">750</span>, dd <span class="op">=</span> <span class="fl">850</span>, dhy <span class="op">=</span> <span class="fl">750</span>, dcng <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,12 +81,32 @@ emission factors from EMFAC website.</p>
     <dl><dt>efpath</dt>
 <dd><p>Character path to EMFAC ef (g/miles)</p></dd>
 
+
+<dt>dg</dt>
+<dd><p>Numeric density of gasoline, default 750 kg/m3</p></dd>
+
+
+<dt>dd</dt>
+<dd><p>Numeric density of diesel, default 850 kg/m3</p></dd>
+
+
+<dt>dhy</dt>
+<dd><p>Numeric density of hybrids, default 750 kg/m3</p></dd>
+
+
+<dt>dcng</dt>
+<dd><p>Numeric density of CNG, default 0.8 kg/m3</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
 <p>data.table with emission estimation in long format</p>
+    </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>Fuel consumption must be present</p>
     </div>
 
     <div id="ref-examples">

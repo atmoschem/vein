@@ -4,10 +4,18 @@
 \alias{ef_emfac}
 \title{Emission Factors from EMFAC emission factors}
 \usage{
-ef_emfac(efpath)
+ef_emfac(efpath, dg = 750, dd = 850, dhy = 750, dcng = 0.8)
 }
 \arguments{
 \item{efpath}{Character path to EMFAC ef (g/miles)}
+
+\item{dg}{Numeric density of gasoline, default 750 kg/m3}
+
+\item{dd}{Numeric density of diesel, default 850 kg/m3}
+
+\item{dhy}{Numeric density of hybrids, default 750 kg/m3}
+
+\item{dcng}{Numeric density of CNG, default 0.8 kg/m3}
 }
 \value{
 data.table with emission estimation in long format
@@ -16,6 +24,9 @@ data.table with emission estimation in long format
 \code{\link{ef_emfac}} reads path to ef EMFAC.
 You must download the
 emission factors from EMFAC website.
+}
+\note{
+Fuel consumption must be present
 }
 \examples{
 \dontrun{

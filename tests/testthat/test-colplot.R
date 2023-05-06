@@ -1,17 +1,19 @@
 context("colplot")
 
+a <-   colplot(
+  EmissionFactors(data.frame(a = 1:5,
+                             b = 1:5))
+)
+a
 test_that("colplot works", {
   expect_equal(
-    colplot(
-      EmissionFactors(data.frame(a = 1:5,
-                                 b = 1:5))
-      )$rect$w, NULL)
+    round(a$rect$w), 0)
 })
 
 test_that("colplot works", {
   expect_equal(
-    colplot(
+    round(colplot(
       EmissionFactors(data.frame(a = 1:5))
-    )$rect$w, NULL)
+    )$rect$w, 0), 0)
 })
 

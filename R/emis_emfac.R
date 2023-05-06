@@ -46,10 +46,10 @@ emis_emfac <- function(ef,
   if(!inherits(speed, "Speed")){
     stop("speed neeeds to has class 'Speed' with col-units'miles/h'")
   }
-  if(units(speed[, 1]) != units(units::as_units("miles/h"))){
+  if(units(speed[[1]]) != units(units::as_units("miles/h"))){
     stop("Units of speed must be 'miles/h' ")
   }
-  if(units(speed[, 1]) == units(units::as_units("miles/h"))){
+  if(units(speed[[1]]) == units(units::as_units("miles/h"))){
     speed <- remove_units(speed)
   }
 

@@ -5,12 +5,21 @@
 #' emission factors from EMFAC website.
 #'
 #' @param efpath Character path to EMFAC ef (g/miles)
+#' @param dg Numeric density of gasoline, default 750 kg/m3
+#' @param dd Numeric density of diesel, default 850 kg/m3
+#' @param dhy Numeric density of hybrids, default 750 kg/m3
+#' @param dcng Numeric density of CNG, default 0.8 kg/m3
 #' @return data.table with emission estimation in long format
+#' @note Fuel consumption must be present
 #' @export
 #' @examples \dontrun{
 #' # do not run
 #' }
-ef_emfac <- function(efpath){
+ef_emfac <- function(efpath,
+                     dg = 750,
+                     dd = 850,
+                     dhy = 750,
+                     dcng = 0.8){
 
   # ef
   ModelYear <- NULL
@@ -72,7 +81,32 @@ ef_emfac <- function(efpath){
                                      variable.name = "pollutant",
                                      value.name = "gmiles")
 
-  data.table::setorderv(def, "ModelYear", -1)
-  vehicles <- pollutant <- i <- j <- k <- l <- NULL
+  pollutant <- NULL
+  ef_nofc <- def[pollutant != "FC"]
+  ef_fc <- def[pollutant == "FC"]
+
+  lt <- ef_fc$gmiles*3.79
+
+  m3 <- lt/1000
+
+  d_kg_m3 <- ifelse(
+    ef_fc$fuel == "G", dg,
+    ifelse(
+      ef_fc$fuel == "D", dd,
+      ifelse(
+        ef_fc$fuel == "CNG", dcng,
+        ifelse(
+          ef_fc$fuel == "HY", dhy,
+          1)))) #kg/m3
+
+  ef_fc$gmiles <- m3*d_kg_m3*1000
+
+  def <- rbind(ef_nofc,
+               ef_fc)
+
+    data.table::setorderv(def, "ModelYear", -1)
+
+
+  # vehicles <- pollutant <- i <- j <- k <- l <- NULL
   return(def)
 }
