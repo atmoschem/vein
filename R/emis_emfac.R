@@ -53,6 +53,15 @@ emis_emfac <- function(ef,
     speed <- remove_units(speed)
   }
 
+  if(!any(names(ef) %in% "vehicles")) {
+    stop("Add column `vehicles` with one category")
+  }
+
+  if(length(unique(ef$vehicles)) > 1) {
+    stop("ef must one `vehicles` category. There is: ",
+         unique(ef$vehicles))
+  }
+
   # ef
 if(is.character(ef)) {
   ef <- ef_emfac(ef)
