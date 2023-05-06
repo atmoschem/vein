@@ -79,7 +79,8 @@ if(is.character(ef)) {
                        efx[, c("Speed", "gmiles"),
                            with = F],
                        by = "Speed",
-                       all.x = T)
+                       all.x = TRUE,
+                       allow.cartesian = TRUE)
 
       eeff <- EmissionFactors(dfspeed$gmiles,
                               mass = "g",

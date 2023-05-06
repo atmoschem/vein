@@ -9,6 +9,8 @@
 #' @param dd Numeric density of diesel, default 850 kg/m3
 #' @param dhy Numeric density of hybrids, default 750 kg/m3
 #' @param dcng Numeric density of CNG, default 0.8 kg/m3
+#' @param fill Logical to fill and correct ef = 0
+#' @param verbose Logical, to show more information
 #' @return data.table with emission estimation in long format
 #' @note Fuel consumption must be present
 #' @export
@@ -19,7 +21,9 @@ ef_emfac <- function(efpath,
                      dg = 750,
                      dd = 850,
                      dhy = 750,
-                     dcng = 0.8){
+                     dcng = 0.8,
+                     fill = TRUE,
+                     verbose = TRUE){
 
   # ef
   ModelYear <- NULL
@@ -103,6 +107,41 @@ ef_emfac <- function(efpath,
 
   def <- rbind(ef_nofc,
                ef_fc)
+  # fix for missiing values for some speeds
+
+  if(fill) {
+
+    gmiles <- vehicles <- NULL
+    . <- pollutant <- ModelYear <- NULL
+
+    full <- def[,
+                mean(gmiles, na.rm = TRUE),
+                by = .(vehicles,
+                       pollutant,
+                       ModelYear)]
+
+    empty <- def[gmiles == 0]
+
+    if(verbose) {
+      cat("Identified ", nrow(empty), " 0 gmiles\n")
+    }
+    df_em <- merge(empty,
+                   full,
+                   by = c("vehicles",
+                          "pollutant",
+                          "ModelYear"),
+                   all.x = TRUE,
+                   allow.cartesian = TRUE)
+    df_em$gmiles <- NULL # 0
+    names(df_em)[ncol(df_em)] <- "gmiles"
+
+    gmiles <- NULL
+    def <- rbind(def[gmiles > 0],
+                  df_em)
+    # this is a fix for real missing EF
+    # if 0 is for SO2 CNG, will be 0
+
+  }
 
     data.table::setorderv(def, "ModelYear", -1)
 
