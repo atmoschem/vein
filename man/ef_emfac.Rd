@@ -4,7 +4,15 @@
 \alias{ef_emfac}
 \title{Emission Factors from EMFAC emission factors}
 \usage{
-ef_emfac(efpath, dg = 750, dd = 850, dhy = 750, dcng = 0.8)
+ef_emfac(
+  efpath,
+  dg = 750,
+  dd = 850,
+  dhy = 750,
+  dcng = 0.8,
+  fill = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{efpath}{Character path to EMFAC ef (g/miles)}
@@ -16,6 +24,10 @@ ef_emfac(efpath, dg = 750, dd = 850, dhy = 750, dcng = 0.8)
 \item{dhy}{Numeric density of hybrids, default 750 kg/m3}
 
 \item{dcng}{Numeric density of CNG, default 0.8 kg/m3}
+
+\item{fill}{Logical to fill and correct ef = 0}
+
+\item{verbose}{Logical, to show more information}
 }
 \value{
 data.table with emission estimation in long format

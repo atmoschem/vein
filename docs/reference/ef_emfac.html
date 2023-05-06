@@ -73,7 +73,15 @@ emission factors from EMFAC website.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_emfac</span><span class="op">(</span><span class="va">efpath</span>, dg <span class="op">=</span> <span class="fl">750</span>, dd <span class="op">=</span> <span class="fl">850</span>, dhy <span class="op">=</span> <span class="fl">750</span>, dcng <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_emfac</span><span class="op">(</span></span>
+<span>  <span class="va">efpath</span>,</span>
+<span>  dg <span class="op">=</span> <span class="fl">750</span>,</span>
+<span>  dd <span class="op">=</span> <span class="fl">850</span>,</span>
+<span>  dhy <span class="op">=</span> <span class="fl">750</span>,</span>
+<span>  dcng <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  fill <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -96,6 +104,14 @@ emission factors from EMFAC website.</p>
 
 <dt>dcng</dt>
 <dd><p>Numeric density of CNG, default 0.8 kg/m3</p></dd>
+
+
+<dt>fill</dt>
+<dd><p>Logical to fill and correct ef = 0</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>Logical, to show more information</p></dd>
 
 </dl></div>
     <div id="value">
