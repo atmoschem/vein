@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+### vein 1.0.3 (date: 2023-05-05)
+
+- Converts ef_emfac FC gallons to grams
+
 ### vein 1.0.2
 
 - Change all units according units package version 0.8.2.
