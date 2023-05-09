@@ -74,12 +74,12 @@ ef_emfac <- function(efpath,
                                      value.name = "gmiles")
 
   pollutant <- NULL
-  def[ , pollutant := ifelse(
+
+  def[pollutant == "FuelConsumption", pollutant := ifelse(
     pollutant == "FuelConsumption",
     "FC",
     pollutant
   )]
-
   ef_nofc <- def[pollutant != "FC"]
   ef_fc <- def[pollutant == "FC"]
 
