@@ -10,7 +10,7 @@ ef_emfac(
   dd = 850,
   dhy = 750,
   dcng = 0.8,
-  fill = TRUE,
+  fill_missing = TRUE,
   verbose = TRUE
 )
 }
@@ -25,7 +25,7 @@ ef_emfac(
 
 \item{dcng}{Numeric density of CNG, default 0.8 kg/m3}
 
-\item{fill}{Logical to fill and correct ef = 0}
+\item{fill_missing}{Logical to fill and correct ef = 0}
 
 \item{verbose}{Logical, to show more information}
 }

@@ -9,7 +9,7 @@
 #' @param dd Numeric density of diesel, default 850 kg/m3
 #' @param dhy Numeric density of hybrids, default 750 kg/m3
 #' @param dcng Numeric density of CNG, default 0.8 kg/m3
-#' @param fill Logical to fill and correct ef = 0
+#' @param fill_missing Logical to fill and correct ef = 0
 #' @param verbose Logical, to show more information
 #' @return data.table with emission estimation in long format
 #' @note Fuel consumption must be present
@@ -22,7 +22,7 @@ ef_emfac <- function(efpath,
                      dd = 850,
                      dhy = 750,
                      dcng = 0.8,
-                     fill = TRUE,
+                     fill_missing = TRUE,
                      verbose = TRUE){
 
   # ef
@@ -32,10 +32,19 @@ ef_emfac <- function(efpath,
   # if(verbose) cat("Reading ef\n")
   ef <- data.table::fread(efpath)
   names(ef) <- gsub(" ", "", names(ef))
-  if(grep(pattern = "FuelConsumption", names(ef)) > 0) {
-    names(ef)[grep("FuelConsumption",
-                   names(ef))] <- "FC"
-  }
+
+  process <- c("RUNEX",   # Running Exhaust Emissions
+               "STREX",   # Idle Exhaust Emissions
+               "IDLEX",   # Start Exhaust Tailpipe Emissions
+               "DIURN",   # Diurnal Evaporative HC Emissions
+               "RESTLOSS",# Resting Evaporative Losses (permeation through rubber and plastic)
+               "HOTSOAK", # Hot Soak Evaporative HC Emissions
+               "RUNLOSS", # Running Loss Evaporative HC Emissions
+               "PMTW",    # Tire Wear
+               "PMBW",    # Brake Wear
+               "FuelConsumption")  # FC
+
+  mval <- unlist(lapply(process, grep, names(ef), value = T))
 
   ef$fuel <- ifelse(
     ef$Fuel == "Gasoline", "G",
@@ -54,38 +63,23 @@ ef_emfac <- function(efpath,
 
   ef$vehicles <- paste0(ef$VehicleCategory,  "_", ef$fuel)
 
-
-  runex <- grep(pattern = "RUNEX",
-                x = names(ef),
-                value = T)
-
-  pmbw <- grep(pattern = "PMBW",
-               x = names(ef),
-               value = T)
-  eff <- ef[ModelYear < 2022,
-            c("ModelYear",
-              "VehicleCategory",
-              "Speed",
-              "vehicles",
-              "fuel",
-              runex,
-              pmbw,
-              "FC"),
-            with = F]
-
   def <- data.table::melt.data.table(data = ef,
                                      id.vars = c("ModelYear",
                                                  "VehicleCategory",
                                                  "Speed",
                                                  "vehicles",
                                                  "fuel"),
-                                     measure.vars = c(runex,
-                                                      pmbw,
-                                                      "FC"),
+                                     measure.vars = mval,
                                      variable.name = "pollutant",
                                      value.name = "gmiles")
 
   pollutant <- NULL
+  def[ , pollutant := ifelse(
+    pollutant == "FuelConsumption",
+    "FC",
+    pollutant
+  )]
+
   ef_nofc <- def[pollutant != "FC"]
   ef_fc <- def[pollutant == "FC"]
 
@@ -109,7 +103,7 @@ ef_emfac <- function(efpath,
                ef_fc)
   # fix for missiing values for some speeds
 
-  if(fill) {
+  if(fill_missing) {
 
     gmiles <- vehicles <- NULL
     . <- pollutant <- ModelYear <- NULL
@@ -137,14 +131,12 @@ ef_emfac <- function(efpath,
 
     gmiles <- NULL
     def <- rbind(def[gmiles > 0],
-                  df_em)
+                 df_em)
     # this is a fix for real missing EF
     # if 0 is for SO2 CNG, will be 0
-
   }
 
-    data.table::setorderv(def, "ModelYear", -1)
-
+  data.table::setorderv(def, "ModelYear", -1)
 
   # vehicles <- pollutant <- i <- j <- k <- l <- NULL
   return(def)
