@@ -7,12 +7,11 @@
 #' @param ef Character path to EMFAC ef (g/miles)
 #' @param veh Vehicles data.frame
 #' @param lkm Distance per street-link in miles
-#' @param speed Speed data.frame in niles/hour
+#' @param tfs vector to project activity by hour
+#' @param speed Speed data.frame in miles/hour
 #' @param vehname numeric vector for heavy good vehicles or trucks
 #' @param pol character, "CO_RUNEX"
 #' @param modelyear numeric vector, 2021:1982
-#' @param noyear newest numeric year to take out from ef
-#' @param hours Character, name of hours in speed, paste0("S", 1:24) data-frame profile for passenger cars, 24 hours only.
 #' @param vkm logical, to return vkm
 #' @param verbose logical, to show more information
 #' @return data.table with emission estimation in long format
@@ -20,17 +19,18 @@
 #' @examples \dontrun{
 #' # do not run
 #' }
-emis_emfac <- function(ef,
-                       veh,
-                       lkm,
-                       speed,
-                       vehname,
-                       pol = "CO_RUNEX",
-                       modelyear = 2021:1982,
-                       noyear = 2022,
-                       hours = paste0("S", 1:24),
-                       vkm = TRUE,
-                       verbose = TRUE){
+emis_emfac2 <- function(ef,
+                        veh,
+                        lkm,
+                        tfs,
+                        speed,
+                        vehname,
+                        pol = "CO_RUNEX",
+                        modelyear = 2021:1982,
+                        vkm = TRUE,
+                        verbose = TRUE){
+
+  hours = paste0("S", seq_along(tfs))
 
   if(!inherits(lkm, "units")){
     stop("lkm neeeds to has class 'units' in 'miles'. Please, check package 'units'")
@@ -42,15 +42,16 @@ emis_emfac <- function(ef,
     lkm <- as.numeric(lkm)
   }
 
-
-  if(!inherits(speed, "Speed")){
-    stop("speed neeeds to has class 'Speed' with col-units'miles/h'")
-  }
-  if(units(speed[[1]]) != units(units::as_units("miles/h"))){
-    stop("Units of speed must be 'miles/h' ")
-  }
-  if(units(speed[[1]]) == units(units::as_units("miles/h"))){
-    speed <- remove_units(speed)
+  if(!missing(speed)){
+    if(!inherits(speed, "Speed")){
+      stop("speed neeeds to has class 'Speed' with col-units'miles/h'")
+    }
+    if(units(speed[[1]]) != units(units::as_units("miles/h"))){
+      stop("Units of speed must be 'miles/h' ")
+    }
+    if(units(speed[[1]]) == units(units::as_units("miles/h"))){
+      speed <- remove_units(speed)
+    }
   }
 
   if(!any(names(ef) %in% "vehicles")) {
@@ -63,9 +64,10 @@ emis_emfac <- function(ef,
   }
 
   # ef
-if(is.character(ef)) {
-  ef <- ef_emfac(ef)
-}
+  if(is.character(ef)) {
+    ef <- ef_emfac(ef)
+  }
+  if(is.character(ef$Speed)) ef$Speed <- 0
   ModelYear <- NULL
 
   # estimation
@@ -95,7 +97,7 @@ if(is.character(ef)) {
                               mass = "g",
                               dist = "miles")
 
-      vv <- Vehicles(as.numeric(veh[[k]]),
+      vv <- Vehicles(as.numeric(veh[[k]]*tfs[l]),
                      time = "1/h")
 
       dx <- data.table::data.table(id = 1:length(eeff),
