@@ -18,7 +18,7 @@ emis_emfac(
 )
 }
 \arguments{
-\item{ef}{Character path to EMFAC ef (g/miles)}
+\item{ef}{data.frame or character path to EMFAC ef (g/miles)}
 
 \item{veh}{Vehicles data.frame}
 
@@ -45,6 +45,9 @@ data.table with emission estimation in long format
 \code{\link{emis_emfac}} estimates emissions based on
 an emission factors database from EMFAC.You must download the
 emission factors from EMFAC website.
+}
+\note{
+Emission factors must be in g/miles
 }
 \examples{
 \dontrun{

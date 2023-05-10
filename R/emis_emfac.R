@@ -4,7 +4,7 @@
 #' an emission factors database from EMFAC.You must download the
 #' emission factors from EMFAC website.
 #'
-#' @param ef Character path to EMFAC ef (g/miles)
+#' @param ef data.frame or character path to EMFAC ef (g/miles)
 #' @param veh Vehicles data.frame
 #' @param lkm Distance per street-link in miles
 #' @param tfs vector to project activity by hour
@@ -15,6 +15,7 @@
 #' @param vkm logical, to return vkm
 #' @param verbose logical, to show more information
 #' @return data.table with emission estimation in long format
+#' @note Emission factors must be in g/miles
 #' @export
 #' @examples \dontrun{
 #' # do not run
@@ -67,6 +68,9 @@ emis_emfac <- function(ef,
       data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
 
         efx <- ef[ModelYear == modelyear[k]]$gmiles
+        eeff <- Emissions(dfspeed$efx,
+                                mass = "g",
+                                dist = "miles")
 
         vv <- Vehicles(as.numeric(veh[[k]]*tfs[l]),
                        time = "1/h")

@@ -77,12 +77,11 @@ emission factors from EMFAC website.</p>
 <span>  <span class="va">ef</span>,</span>
 <span>  <span class="va">veh</span>,</span>
 <span>  <span class="va">lkm</span>,</span>
+<span>  <span class="va">tfs</span>,</span>
 <span>  <span class="va">speed</span>,</span>
 <span>  <span class="va">vehname</span>,</span>
 <span>  pol <span class="op">=</span> <span class="st">"CO_RUNEX"</span>,</span>
 <span>  modelyear <span class="op">=</span> <span class="fl">2021</span><span class="op">:</span><span class="fl">1982</span>,</span>
-<span>  noyear <span class="op">=</span> <span class="fl">2022</span>,</span>
-<span>  hours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">24</span><span class="op">)</span>,</span>
 <span>  vkm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -91,7 +90,7 @@ emission factors from EMFAC website.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ef</dt>
-<dd><p>Character path to EMFAC ef (g/miles)</p></dd>
+<dd><p>data.frame or character path to EMFAC ef (g/miles)</p></dd>
 
 
 <dt>veh</dt>
@@ -102,8 +101,12 @@ emission factors from EMFAC website.</p>
 <dd><p>Distance per street-link in miles</p></dd>
 
 
+<dt>tfs</dt>
+<dd><p>vector to project activity by hour</p></dd>
+
+
 <dt>speed</dt>
-<dd><p>Speed data.frame in niles/hour</p></dd>
+<dd><p>Speed data.frame in miles/hour</p></dd>
 
 
 <dt>vehname</dt>
@@ -116,14 +119,6 @@ emission factors from EMFAC website.</p>
 
 <dt>modelyear</dt>
 <dd><p>numeric vector, 2021:1982</p></dd>
-
-
-<dt>noyear</dt>
-<dd><p>newest numeric year to take out from ef</p></dd>
-
-
-<dt>hours</dt>
-<dd><p>Character, name of hours in speed, paste0("S", 1:24) data-frame profile for passenger cars, 24 hours only.</p></dd>
 
 
 <dt>vkm</dt>
@@ -139,6 +134,10 @@ emission factors from EMFAC website.</p>
     
 
 <p>data.table with emission estimation in long format</p>
+    </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>Emission factors must be in g/miles</p>
     </div>
 
     <div id="ref-examples">
