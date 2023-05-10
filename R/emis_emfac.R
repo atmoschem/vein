@@ -68,9 +68,9 @@ emis_emfac <- function(ef,
       data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
 
         efx <- ef[ModelYear == modelyear[k]]$gmiles
-        eeff <- Emissions(dfspeed$efx,
-                                mass = "g",
-                                dist = "miles")
+        eeff <- Emissions(efx,
+                          mass = "g",
+                          dist = "miles")
 
         vv <- Vehicles(as.numeric(veh[[k]]*tfs[l]),
                        time = "1/h")
