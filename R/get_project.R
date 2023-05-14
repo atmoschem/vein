@@ -44,14 +44,16 @@
 #' @export
 #' @examples \dontrun{
 #' #do not run
-#' get_project("awesomecity")
+#' get_project("awesomecity", case = "brazil_bu_chem")
 #' }
 #'
 get_project <- function(directory,
-                        case = "brazil_bu_chem",
+                        case,
                         url){
 
   if(missing(directory)) stop("Please, add a path to a directory") #nocov start
+
+  if(missing(case)) stop("Please, sleect a case. run ?vein::get_project")
 
   if(missing(url)){
     # brazil ####

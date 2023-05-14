@@ -97,44 +97,8 @@ Use the function
 [get_project](https://atmoschem.github.io/vein/reference/get_project.html)
 and read the documentation, there you can see more projects as well.
 
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_bu/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_bu_csvgz/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_bu_csv/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_td_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/amazon2014/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/masp2020/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/curitiba/badge.svg)](https://github.com/atmoschem/vein/actions)
-  <!-- - [![R build status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot/badge.svg)](https://github.com/atmoschem/vein/actions) -->
-  <!-- - [![R build status](https://github.com/atmoschem/vein/workflows/ecuador_td_hot_month/badge.svg)](https://github.com/atmoschem/vein/actions) -->
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/ecuador_td/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/ecuador_td_im/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_bu_chem_streets_im/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/brazil_td_chem_im/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/sebr_cb05co2_im/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/eu_bu_chem/badge.svg)](https://github.com/atmoschem/vein/actions)
-- [![R build
-  status](https://github.com/atmoschem/vein/workflows/eu_bu_chem_simple/badge.svg)](https://github.com/atmoschem/vein/actions)
+Check the projects here:
+(<https://atmoschem.github.io/vein/reference/get_project.html>)\[<https://atmoschem.github.io/vein/reference/get_project.html>\]
 
 ``` r
 library(vein)
@@ -389,7 +353,6 @@ ef2 <- ef_ldv_speed(
 ef1 <- EmissionFactors(ef1(1:150))
 ef2 <- EmissionFactors(ef2(1:150))
 colplot(data.frame(PRE = ef1, III = ef2))
-#> [1] 2
 ```
 
 ![](man/figures/unnamed-chunk-7-1.png)<!-- -->

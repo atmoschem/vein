@@ -4,7 +4,7 @@
 \alias{get_project}
 \title{Download vein project}
 \usage{
-get_project(directory, case = "brazil_bu_chem", url)
+get_project(directory, case, url)
 }
 \arguments{
 \item{directory}{Character; Path to an existing or a new directory to be created.}
@@ -55,7 +55,7 @@ In Sao Paulo the IM programs was functioning until 2011.
 \examples{
 \dontrun{
 #do not run
-get_project("awesomecity")
+get_project("awesomecity", case = "brazil_bu_chem")
 }
 
 }

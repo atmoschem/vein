@@ -46,11 +46,10 @@ knitr::opts_chunk$set(
 
 ### TODO
 
-- get_project with Chinese EF
 - Include speed functions with Fortran
 - Include CB6
 - Add EF from HBEFA?
-- See issues [GitHub](https://github.com/atmoschem/vein/issues) and [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
+- See issues [GitHub](https://github.com/atmoschem/vein/issues)
 
 
 ### System requirements
