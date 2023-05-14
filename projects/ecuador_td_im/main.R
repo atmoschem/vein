@@ -105,6 +105,7 @@ verbose <- FALSE
 year <- 2019
 nt <- 1 # check_nt() / 2
 
+# IM TRUE will correct emission factors based on IM data 
 IM <- TRUE
 im_ok <- readRDS("config/im_ok.rds")
 im_co <- readRDS("config/im_co.rds")
