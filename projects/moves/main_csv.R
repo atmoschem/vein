@@ -61,6 +61,7 @@ ffs <- "FFSPEED"
 capacity <- "CAPE"
 dist <- "miles"
 k_D <- k_CNG <- k_G <- k_E85 <- 1
+survival <- FALSE
 source("scripts/traffic.R", encoding = "UTF-8")
 rm(list = ls())
 gc()

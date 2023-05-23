@@ -10,6 +10,15 @@ tfs <- as.data.frame(tfs)
 veh <- as.data.frame(veh)
 fuel <- as.data.frame(fuel)
 met <- as.data.frame(met)
+
+
+im_ok <- as.data.frame(im_ok)
+im_co <- as.data.frame(im_co)
+im_nox <- as.data.frame(im_nox)
+im_hc <- as.data.frame(im_hc)
+im_pm <- as.data.frame(im_pm)
+
+
 pmonth <- as.data.frame(pmonth)
 for (i in 2:ncol(pmonth)) {
         pmonth[[i]] <- 100 * pmonth[[i]] / sum(pmonth[[i]])
@@ -135,6 +144,11 @@ saveRDS(fuel, "config/fuel.rds")
 saveRDS(met, "config/met.rds")
 saveRDS(pmonth, "config/pmonth.rds")
 
+saveRDS(im_ok, "config/im_ok.rds")
+saveRDS(im_co, "config/im_co.rds")
+saveRDS(im_hc, "config/im_hc.rds")
+saveRDS(im_nox, "config/im_nox.rds")
+saveRDS(im_pm, "config/im_pm.rds")
 # pastas
 if (delete_directories) {
         choice <- 1
@@ -283,6 +297,178 @@ for (i in seq_along(n_veh)) {
         dev.off()
 }
 
+
+
+# IM ####
+
+switch(language,
+       "portuguese" = cat("Plotando IM OK `tfs`\n"),
+       "english" = cat("Plotting IM OK `tfs`\n"),
+       "spanish" = cat("Plotando IM OK `tfs`\n")
+)
+
+for (i in seq_along(n_veh)) {
+        df_x <- im_ok[, n_veh[[i]]]
+        png(
+                paste0(
+                        "images/IM_OK_",
+                        names(n_veh)[i],
+                        ".png"
+                ),
+                2000, 1500, "px",
+                res = 300
+        )
+        colplot(
+                df = df_x,
+                cols = n_veh[[i]],
+                xlab = "Age",
+                ylab = "",
+                main = paste0("IM OK!  ", names(n_veh)[i]),
+                type = "l",
+                pch = NULL,
+                lwd = 1,
+                theme = theme,
+                spl = 8
+        )
+        dev.off()
+}
+
+# IM CO (reprov/Aprov) ####
+
+switch(language,
+       "portuguese" = cat("Plotando IM REP/APR CO `tfs`\n"),
+       "english" = cat("Plotting IM REP/APR CO `tfs`\n"),
+       "spanish" = cat("Plotando IM REP/APR CO `tfs`\n")
+)
+
+for (i in seq_along(n_veh)) {
+        df_x <- im_co[, n_veh[[i]]]
+        png(
+                paste0(
+                        "images/IM_REP_APR_CO_",
+                        names(n_veh)[i],
+                        ".png"
+                ),
+                2000, 1500, "px",
+                res = 300
+        )
+        colplot(
+                df = df_x,
+                cols = n_veh[[i]],
+                xlab = "Age",
+                ylab = "",
+                main = paste0("REP/APR CO  ", names(n_veh)[i]),
+                type = "l",
+                pch = NULL,
+                lwd = 1,
+                theme = theme,
+                spl = 8
+        )
+        dev.off()
+}
+
+
+# IM HC (reprov/Aprov) ####
+
+switch(language,
+       "portuguese" = cat("Plotando IM REP/APR HC `tfs`\n"),
+       "english" = cat("Plotting IM REP/APR HC `tfs`\n"),
+       "spanish" = cat("Plotando IM REP/APR HC `tfs`\n")
+)
+
+for (i in seq_along(n_veh)) {
+        df_x <- im_hc[, n_veh[[i]]]
+        png(
+                paste0(
+                        "images/IM_REP_APR_HC_",
+                        names(n_veh)[i],
+                        ".png"
+                ),
+                2000, 1500, "px",
+                res = 300
+        )
+        colplot(
+                df = df_x,
+                cols = n_veh[[i]],
+                xlab = "Age",
+                ylab = "",
+                main = paste0("REP/APR HC  ", names(n_veh)[i]),
+                type = "l",
+                pch = NULL,
+                lwd = 1,
+                theme = theme,
+                spl = 8
+        )
+        dev.off()
+}
+
+# IM NOx (reprov/Aprov) ####
+
+switch(language,
+       "portuguese" = cat("Plotando IM REP/APR NOx `tfs`\n"),
+       "english" = cat("Plotting IM REP/APR NOx `tfs`\n"),
+       "spanish" = cat("Plotando IM REP/APR NOx `tfs`\n")
+)
+
+for (i in seq_along(n_veh)) {
+        df_x <- im_co[, n_veh[[i]]]
+        png(
+                paste0(
+                        "images/IM_REP_APR_NOx_",
+                        names(n_veh)[i],
+                        ".png"
+                ),
+                2000, 1500, "px",
+                res = 300
+        )
+        colplot(
+                df = df_x,
+                cols = n_veh[[i]],
+                xlab = "Age",
+                ylab = "",
+                main = paste0("REP/APR NOx  ", names(n_veh)[i]),
+                type = "l",
+                pch = NULL,
+                lwd = 1,
+                theme = theme,
+                spl = 8
+        )
+        dev.off()
+}
+
+# IM PM2.5 (reprov/Aprov) ####
+
+switch(language,
+       "portuguese" = cat("Plotando IM REP/APR PM2.5 `tfs`\n"),
+       "english" = cat("Plotting REP/APR PM2.5 `tfs`\n"),
+       "spanish" = cat("Plotando REP/APR PM2.5 `tfs`\n")
+)
+
+for (i in seq_along(n_veh)) {
+        df_x <- im_pm[, n_veh[[i]]]
+        png(
+                paste0(
+                        "images/IM_REP_APR_PM_",
+                        names(n_veh)[i],
+                        ".png"
+                ),
+                2000, 1500, "px",
+                res = 300
+        )
+        colplot(
+                df = df_x,
+                cols = n_veh[[i]],
+                xlab = "Age",
+                ylab = "",
+                main = paste0("REP/APR PM ", names(n_veh)[i]),
+                type = "l",
+                pch = NULL,
+                lwd = 1,
+                theme = theme,
+                spl = 8
+        )
+        dev.off()
+}
 
 # Mileage ####
 

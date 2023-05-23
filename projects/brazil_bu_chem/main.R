@@ -49,6 +49,7 @@ k_G <- 1 / 0.2528437
 verbose <- FALSE
 year <- 2018
 theme <- "black" # dark clean ink
+survival <- FALSE
 source("scripts/traffic.R", encoding = "UTF-8")
 
 # 3) Estimation ####

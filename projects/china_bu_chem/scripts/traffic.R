@@ -52,21 +52,26 @@ switch(language,
 
 # constants
 kf <- ifelse(metadata$fuel == "G", k_G,
+             ifelse(
+               metadata$fuel == "D", k_D,
                ifelse(
-                 metadata$fuel == "D", k_D,
-                 ifelse(
-                   metadata$fuel == "CNG", k_CNG,
-                   1)))
+                 metadata$fuel == "CNG", k_CNG,
+                 1)))
+
+
+if(survival){
+  for (i in seq_along(metadata$vehicles)) {
+    
+    veh[[metadata$vehicles[i]]] <- age(x = veh[[metadata$vehicles[i]]], 
+                                       type = metadata$survival[i], 
+                                       b = metadata$survival_param_b[i], 
+                                       a = metadata$survival_param_a[i])
+  }
+}
+
 
 lx <- list()
-
 for (i in seq_along(metadata$vehicles)) {
-  
-  xage <- age(x = veh[[metadata$vehicles[i]]], 
-              type = metadata$survival[i], 
-              b = metadata$survival_param_b[i], 
-              a = metadata$survival_param_a[i])
-  
   
   x <- my_age(
     x = net[[metadata$vehicles[i]]],

@@ -2,21 +2,21 @@
 for (i in seq_along(metadata$vehicles)) {
   if (identical(names(veh)[i + 1], metadata$vehicles[i]) == FALSE) {
     switch(language,
-      "portuguese" = cat(
-        "Nomes incompativeis:\n",
-        "metadata:", metadata$vehicles[i], "\n",
-        "`veh`:", names(veh)[i + 1], "\n"
-      ),
-      "english" = cat(
-        "Incomptaible names:\n",
-        "metadata:", metadata$vehicles[i], "\n",
-        "`veh`:", names(veh)[i + 1], "\n"
-      ),
-      "spanish" = cat(
-        "Nombres incomptatibles:\n",
-        "metadata:", metadata$vehicles[i], "\n",
-        "`veh`:", names(veh)[i + 1], "\n"
-      )
+           "portuguese" = cat(
+             "Nomes incompativeis:\n",
+             "metadata:", metadata$vehicles[i], "\n",
+             "`veh`:", names(veh)[i + 1], "\n"
+           ),
+           "english" = cat(
+             "Incomptaible names:\n",
+             "metadata:", metadata$vehicles[i], "\n",
+             "`veh`:", names(veh)[i + 1], "\n"
+           ),
+           "spanish" = cat(
+             "Nombres incomptatibles:\n",
+             "metadata:", metadata$vehicles[i], "\n",
+             "`veh`:", names(veh)[i + 1], "\n"
+           )
     )
     stop()
   }
@@ -25,9 +25,9 @@ for (i in seq_along(metadata$vehicles)) {
 
 # apagando arquivos
 switch(language,
-  "portuguese" = message("Apagando veh/*.rds\n"),
-  "english" = message("Deleting veh/*.rds\n"),
-  "spanish" = message("Borrando veh/*.rds\n")
+       "portuguese" = message("Apagando veh/*.rds\n"),
+       "english" = message("Deleting veh/*.rds\n"),
+       "spanish" = message("Borrando veh/*.rds\n")
 )
 
 arquivos <- list.files(path = "veh", pattern = ".rds", full.names = TRUE)
@@ -38,9 +38,9 @@ veh[is.na(veh)] <- 0
 
 # plotting
 switch(language,
-  "portuguese" = cat("Plotando fluxos\n"),
-  "english" = cat("Plotting traffic flows\n"),
-  "spanish" = cat("Plotando flujos\n")
+       "portuguese" = cat("Plotando fluxos\n"),
+       "english" = cat("Plotting traffic flows\n"),
+       "spanish" = cat("Plotando flujos\n")
 )
 
 # identicar nomes de grupos
@@ -53,16 +53,19 @@ n_BUS <- nveh[grep(pattern = "BUS", x = nveh)]
 n_MC <- nveh[grep(pattern = "MC", x = nveh)]
 
 n_PC <- c(n_PC, n_TAXI)
-# PC and TAXI ####
 # apply survival functions
-for (i in seq_along(metadata$vehicles)) {
-  veh[[metadata$vehicles[i]]] <- age(
-    x = veh[[metadata$vehicles[i]]],
-    type = metadata$survival[i],
-    a = metadata$survival_param_a[i],
-    b = metadata$survival_param_b[i]
-  )
+if(survival) {
+  for (i in seq_along(metadata$vehicles)) {
+    veh[[metadata$vehicles[i]]] <- age(x = veh[[metadata$vehicles[i]]],
+                                       type = metadata$survival[i],
+                                       a = metadata$survival_param_a[i],
+                                       b = metadata$survival_param_b[i]
+    )
+  }
 }
+
+# PC and TAXI ####
+
 #
 # calculate proportion in PC
 #
@@ -207,9 +210,9 @@ df <- cbind(dfpc, dflcv, dft, dfb, dfm)
 
 # plots ####
 switch(language,
-  "portuguese" = cat("Plotando frota \n"),
-  "english" = cat("Plotting fleet \n"),
-  "spanish" = cat("Plotando flota \n")
+       "portuguese" = cat("Plotando frota \n"),
+       "english" = cat("Plotting fleet \n"),
+       "spanish" = cat("Plotando flota \n")
 )
 
 n_veh <- list(n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC)
@@ -264,8 +267,8 @@ setDT(dff)
 
 p <- ggplot(
   dff[,
-    sum(per),
-    by = .(family, fuel)
+      sum(per),
+      by = .(family, fuel)
   ],
   aes(
     x = family,
@@ -311,24 +314,24 @@ print(p)
 dev.off()
 
 switch(language,
-  "portuguese" = message("\nArquivos em:"),
-  "english" = message("\nFiles in:"),
-  "spanish" = message("\nArchivos en:")
+       "portuguese" = message("\nArquivos em:"),
+       "english" = message("\nFiles in:"),
+       "spanish" = message("\nArchivos en:")
 )
 
 message("veh/*\n")
 
 switch(language,
-  "portuguese" = message("\nFiguras em"),
-  "english" = message("\nFigures in"),
-  "spanish" = message("\nFiguras en")
+       "portuguese" = message("\nFiguras em"),
+       "english" = message("\nFigures in"),
+       "spanish" = message("\nFiguras en")
 )
 message("/images")
 
 switch(language,
-  "portuguese" = message("Limpando..."),
-  "english" = message("Cleaning..."),
-  "spanish" = message("Limpiando...")
+       "portuguese" = message("Limpando..."),
+       "english" = message("Cleaning..."),
+       "spanish" = message("Limpiando...")
 )
 
 
