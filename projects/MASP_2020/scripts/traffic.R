@@ -65,12 +65,15 @@ n_MC <- nveh[grep(pattern = "MC", x = nveh)]
 
 # PC ####
 # apply survival functions
-for(i in seq_along(metadata$vehicles)) {
-  veh[[metadata$vehicles[i]]] <-   age(x = veh[[metadata$vehicles[i]]], 
-                                       type = metadata$survival[i], 
-                                       a = metadata$survival_param_a[i],
-                                       b = metadata$survival_param_b[i])
-
+if(survival) {
+  for(i in seq_along(metadata$vehicles)) {
+    veh[[metadata$vehicles[i]]] <-   age(x = veh[[metadata$vehicles[i]]], 
+                                         type = metadata$survival[i], 
+                                         a = metadata$survival_param_a[i],
+                                         b = metadata$survival_param_b[i])
+    
+  }
+  
 }
 veh <- remove_units(veh)
 

@@ -58,6 +58,7 @@ year <- 2019
 theme <- "black" # dark clean ink
 k_D <- 1
 k_G <- 1
+survival <- TRUE
 source("scripts/traffic.R", encoding = "UTF-8")
 
 # 3) Estimation ####

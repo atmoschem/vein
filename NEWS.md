@@ -4,6 +4,7 @@ NEWS
 ### vein 1.0.3 (date: 2023-05-05)
 
 - Converts ef_emfac FC gallons to grams
+- add survival logical parameter in projects
 
 ### vein 1.0.2
 

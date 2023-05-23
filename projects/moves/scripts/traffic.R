@@ -64,7 +64,6 @@ file.remove(arquivos)
 # fleet age
 veh[is.na(veh)] <- 0
 
-veh <- remove_units(veh)
 
 # plotting
 switch (language,
@@ -72,9 +71,21 @@ switch (language,
         "english" = cat("Plotting traffic flows\n"),
         "spanish" = cat("Plotando flujos\n"))
 
+
+# survival ####
+if(survival) {
+  for(i in seq_along(metadata$vehicles)) {
+    veh[[metadata$vehicles[i]]] <-   age(x = veh[[metadata$vehicles[i]]], 
+                                         type = metadata$survival[i], 
+                                         a = metadata$survival_param_a[i],
+                                         b = metadata$survival_param_b[i])
+  }
+}
+
+veh <- remove_units(veh)
+
 # list of vehicles to colplot
 lveh <- list()
-
 
 # MC ####
 fl <- function(x) {

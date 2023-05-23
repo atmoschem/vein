@@ -57,6 +57,7 @@ year <- 2022
 theme <- "black" # dark clean ink
   
 k_G <- k_CNG <- k_D <- 1 
+survival <- TRUE
 source("scripts/traffic.R", encoding = "UTF-8")
 beepr::beep(2)
 

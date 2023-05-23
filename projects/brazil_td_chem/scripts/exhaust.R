@@ -23,6 +23,7 @@ for (i in seq_along(ns)) {
                         veh = ln[[i]],
                         year = year,
                         agemax = 40,
+                        scale = scale,
                         sppm = metadata[metadata$vehicles %in% ln[[i]], ]$sppm,
                         verbose = verbose
                 ),
@@ -78,6 +79,8 @@ for (i in seq_along(metadata$vehicles)) {
         )
 
         x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
+        ok <- im_ok[[metadata$vehicles[i]]][1:ncol(x)]
+        nok <- 1 - ok
 
         for (j in seq_along(pol)) {
                 cat(pol[j], " ")
@@ -91,6 +94,31 @@ for (i in seq_along(metadata$vehicles)) {
                         sppm = metadata$sppm[i],
                         verbose = verbose
                 )
+
+                if(IM) {
+                        #IM
+                        
+                        if(pol[j] == "CO") fim <- im_co[[metadata$vehicles[i]]][1:ncol(x)]
+                        
+                        if(pol[j] %in% c("HC", "NMHC")) fim <- im_hc[[metadata$vehicles[i]]][1:ncol(x)]
+                        
+                        if(pol[j] %in% c("NO", "NO2", "NOx")) fim <- im_nox[[metadata$vehicles[i]]][1:ncol(x)]
+                        
+                        if(pol[j] %in% c("PM")) fim <- im_pm[[metadata$vehicles[i]]][1:ncol(x)]
+                        
+                        # check that fim is only 1
+                        
+                        if(length(unique(fim)) == 1){
+                                if(unique(fim) == 1){
+                                        ok <- 1                                
+                                }
+                        } 
+                        
+                        ef <- as.numeric(ef)*ok + as.numeric(ef)*fim*nok
+                        ef[(length(ef)-8):length(ef)] <- max(ef[(length(ef)-8):length(ef)])
+                        ef <- EmissionFactors(ef)
+                        
+                }
 
                 array_x <- emis_hot_td(
                         veh = x,

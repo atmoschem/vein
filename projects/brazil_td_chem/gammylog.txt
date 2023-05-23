@@ -1,1 +1,0 @@
-﻿2021-06-21 20:30:03.347 ERROR [44160] [MainWindow::createTrayIcon@144] Systray unavailable. Closing the window will quit the app.

@@ -18,8 +18,15 @@ veh                <- readxl::read_xlsx(path = path, sheet = "fleet")
 fuel               <- readxl::read_xlsx(path = path, sheet = "fuel")
 pmonth             <- readxl::read_xlsx(path = path, sheet = "pmonth")
 met                <- readxl::read_xlsx(path = path, sheet = "met")
+
+im_ok <- readxl::read_xlsx(path = path, sheet = "im_ok")
+im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
+im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
+im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
+im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm")
+
 year               <- 2018
-scale              <- "tunnel"
+scale              <- "tunnel2018"
 theme              <- "black" # dark clean ing
 delete_directories <- TRUE
 source("config/config.R", encoding = "UTF-8")
@@ -40,6 +47,7 @@ k_G                <- 1/5.866790
 verbose            <- FALSE
 year               <- 2018
 theme              <- "black" # dark clean ink
+survival           <- TRUE
 source("scripts/traffic.R", encoding = "UTF-8")
 
 # 3) Estimation ####
@@ -51,17 +59,23 @@ net                <- readRDS("network/net.rds")
 pmonth             <- readRDS("config/pmonth.rds")
 met                <- readRDS("config/met.rds")
 verbose            <- FALSE
-year               <- 2018
+year               <- 2019
 
 # fuel calibration with fuel consumption data
-fuel              <- readRDS("config/fuel.rds")
-pol               <- "FC"
+fuel               <- readRDS("config/fuel.rds")
+pol                <- "FC"
 source("scripts/fuel_eval.R", encoding = "UTF-8")
 
 # Exhaust
-pol               <- c("CO", "HC", "NMHC", "NOx", "CO2",
-                       "PM", "NO2", "NO", "SO2")
-scale             <- "tunnel"
+pol                <- c("CO", "HC", "NMHC", "NOx", "CO2",
+                        "PM", "NO2", "NO", "SO2")
+IM                 <- FALSE
+im_ok              <- readRDS("config/im_ok.rds")
+im_co              <- readRDS("config/im_co.rds")
+im_hc              <- readRDS("config/im_hc.rds")
+im_nox             <- readRDS("config/im_nox.rds")
+im_pm              <- readRDS("config/im_pm.rds")
+scale <- "tunnel2018"
 source("scripts/exhaust.R", encoding = "UTF-8")
 
 # Evaporative

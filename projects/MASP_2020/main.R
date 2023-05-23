@@ -43,6 +43,7 @@ veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
 year <- 2020
 theme <- "black" # dark clean ink
+survival <- TRUE
 source("scripts/traffic.R", encoding = "UTF-8")
 
 # 3) Estimation ####
