@@ -211,8 +211,7 @@ colplot(
   main = "FLOW TRUCKS",
   type = "l",
   pch = NULL,
-  theme = theme,
-  spl = 9
+  theme = theme
 )
 dev.off()
 
@@ -260,8 +259,7 @@ colplot(
   main = "FLOW BUS",
   type = "l",
   pch = NULL,
-  theme = theme,
-  spl = 9
+  theme = theme
 )
 dev.off()
 
@@ -328,8 +326,7 @@ colplot(
   main = "FLOW BUS",
   type = "l",
   pch = NULL,
-  theme = theme,
-  spl = 9
+  theme = theme
 )
 dev.off()
 
@@ -389,23 +386,4 @@ switch(language,
   "spanish" = message("Limpiando...")
 )
 
-
-suppressWarnings(
-  rm(
-    kPC, kPC_G, kPC_E, kPC_FG, kPC_FE,
-    kLCV, kLCV_G, kLCV_E, kLCV_FG, kLCV_FE, kLCV_D,
-    kTRUCKS, kTRUCKS_SL_D, kTRUCKS_L_D, kTRUCKS_M_D, kTRUCKS_SH_D, kTRUCKS_H_D,
-    kBUS, kBUS_URBAN_D, kBUS_MICRO_D, kBUS_COACH_D,
-    kMC, kMC_150_G, kMC_150_500_G, kMC_500_G,
-    kMC_150_FG, kMC_150_500_FG, kMC_500_FG,
-    kMC_150_FE, kMC_150_500_FE, kMC_500_FE,
-    l_PC, l_LCV, l_TRUCKS, l_BUS, l_MC,
-    i, arquivos, cores, df, f, ff,
-    n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC,
-    na, nveh, p, tit, tit2, categories, verbose, x, kf,
-    k_G, k_D, k_E,
-    metadata, net, veh, year,
-    theme
-  )
-)
 invisible(gc())

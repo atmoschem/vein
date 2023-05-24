@@ -1,4 +1,21 @@
 # apagando dados
+file.copy("scripts/backup_evaporatives.R",
+          "scripts/evaporatives.R", 
+          overwrite = TRUE)
+
+file.copy("scripts/backup_exhaust.R",
+          "scripts/exhaust.R", 
+          overwrite = TRUE)
+
+file.copy("scripts/backup_fuel_eval.R",
+          "scripts/fuel_eval.R", 
+          overwrite = TRUE)
+
+file.remove(c("scripts/backup_evaporatives.R",
+              "scripts/backup_exhaust.R",
+              "scripts/backup_fuel_eval.R"))
+
+
 a <- list.files(path = "config", pattern = ".rds", full.names = T)
 file.remove(a)
 
@@ -21,3 +38,4 @@ if(length(d) > 1) {
 system(paste0("tar -caf ", basename(getwd()), ".tar.gz ."))
 system(paste0("mv ", basename(getwd()), ".tar.gz ../"))
 file.remove(".Rhistory")
+# suppressWarnings(source("config/clean.R"))

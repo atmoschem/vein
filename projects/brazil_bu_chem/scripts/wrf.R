@@ -7,9 +7,9 @@ sep <- ifelse(Sys.info()[["sysname"]] == "Windows", "00%3A", ":")
 ti <- wrf_get(file = wrfi, name = "Times")
 
 switch(language,
-  "portuguese" = cat("Primer tempo de WRF:", as.character(ti)[1], "\n"),
-  "english" = cat("First WRF time:", as.character(ti)[1], "\n"),
-  "spanish" = cat("Primer tiempo de WRF:", as.character(ti)[1], "\n")
+       "portuguese" = cat("Primer tempo de WRF:", as.character(ti)[1], "\n"),
+       "english" = cat("First WRF time:", as.character(ti)[1], "\n"),
+       "spanish" = cat("Primer tiempo de WRF:", as.character(ti)[1], "\n")
 )
 
 # ltemissions, first monday 00:00 before ti
@@ -84,7 +84,7 @@ eixport::wrf_create(
 for (i in 1:length(na)) {
   print(na[i])
   x <- readRDS(lf[i])
-
+  
   xx <- emis_order(
     x = x,
     lt_emissions = lt_emissions,
@@ -94,7 +94,7 @@ for (i in 1:length(na)) {
     seconds = hours * 3600,
     verbose = TRUE
   )
-
+  
   # 0-12
   gx <- GriddedEmissionsArray(
     x = xx[, 1:12],
@@ -108,7 +108,7 @@ for (i in 1:length(na)) {
     name = na[i],
     POL = gx
   )
-
+  
   # 12-0
   gx <- GriddedEmissionsArray(
     x = xx[, 13:24],
@@ -130,64 +130,70 @@ cat(paste(a1, a2, sep = "\n"))
 
 png(
   filename = paste0("images/WRF_NO0.png"),
-  width = 2100, height = 1500, units = "px", pointsize = 12,
-  bg = "white", res = 300
+  width = 2100, 
+  height = 1500, 
+  units = "px", 
+  pointsize = 12,
+  bg = "white", 
+  res = 300
 )
-a <- wrf_get(paste0(pasta_wrfchemi, "/", mech,
-                    "/wrfchemi_00z_d0", domain), "E_NO", 
+a <- wrf_get(paste0(pasta_wrfchemi, "/", 
+                    mech,
+                    "/wrfchemi_00z_d0", 
+                    domain), 
+             "E_NO", 
              as_raster = T)
 a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
-  col.regions = cpt(rev = T),
-  main = names(a),
-  scales = list(Draw = T)
+                 col.regions = cpt(rev = T),
+                 main = names(a),
+                 scales = list(Draw = T)
 ))
 dev.off()
 
 png(
   filename = paste0("images/WRF_NO12.png"),
-  width = 2100, height = 1500, units = "px", pointsize = 12,
-  bg = "white", res = 300
+  width = 2100, 
+  height = 1500, 
+  units = "px", 
+  pointsize = 12,
+  bg = "white", 
+  res = 300
 )
-a <- wrf_get(paste0(pasta_wrfchemi, "/", mech,
-                    "/wrfchemi_12z_d0", domain), "E_NO", 
+a <- wrf_get(paste0(pasta_wrfchemi, "/", 
+                    mech,
+                    "/wrfchemi_12z_d0", 
+                    domain), "E_NO", 
              as_raster = T)
 a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
-  col.regions = cpt(rev = T),
-  main = names(a),
-  scales = list(Draw = T)
+                 col.regions = cpt(rev = T),
+                 main = names(a),
+                 scales = list(Draw = T)
 ))
 dev.off()
 
 png(
   filename = paste0("images/WRF_CO0.png"),
-  width = 2100, height = 1500, units = "px", pointsize = 12,
-  bg = "white", res = 300
+  width = 2100, 
+  height = 1500, 
+  units = "px", 
+  pointsize = 12,
+  bg = "white", 
+  res = 300
 )
-a <- wrf_get(paste0(pasta_wrfchemi, "/", mech,
-                    "/wrfchemi_00z_d0", domain), "E_CO", 
+a <- wrf_get(paste0(pasta_wrfchemi, "/", 
+                    mech,
+                    "/wrfchemi_00z_d0", 
+                    domain), "E_CO", 
              as_raster = T)
 a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
-  col.regions = cpt(rev = T),
-  main = names(a),
-  scales = list(Draw = T)
+                 col.regions = cpt(rev = T),
+                 main = names(a),
+                 scales = list(Draw = T)
 ))
 dev.off()
-
-ls()
-
-suppressWarnings(
-  rm(
-    "cols", "dfwrf", "domain", "dx", "emis_opt", "emis_option",
-    "fCO", "fHC", "firsthour", "fNOx", "fPM10", "fPM2.5", "g_ch3oh",
-    "g_eth", "g_hc3", "g_hc5", "g_hc8", "g_iso", "g_ket", "g_ol2", "g_oli",
-    "g_olt", "g_tol", "g_xyl", "grids", "i", "lasthour", "mm_no2", "mm_x",
-    "net", "no2_mol", "pasta_wrfchemi", "pasta_wrfinput", "polss", "rows", "ti",
-    "voc", "vocB5EX", "vocE100EV", "vocE100EX", "vocE25EV", "vocE25EX", "wrf_times", "wrfi", "x", "xx"
-  )
-)
