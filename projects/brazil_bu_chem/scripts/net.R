@@ -48,8 +48,3 @@ switch(language,
         "english" = message("Cleaning..."),
         "spanish" = message("Limpiando...")
 )
-
-suppressWarnings(
-        rm(i, tit, net, categories, crs)
-)
-invisible(gc())

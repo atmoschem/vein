@@ -151,10 +151,3 @@ switch(language,
        "english" = message("Cleaning..."),
        "spanish" = message("Limpiando...")
 )
-
-suppressWarnings(
-  rm(
-    "df1", "df2", "df3", "dt", "dt0", "dt1", "dt2", "dt3", "factor_emi",
-    "g", "gx", "i", "lf", "na", "net", "pol", "pols", "x", "crs"
-  )
-)

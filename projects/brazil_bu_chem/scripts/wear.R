@@ -24,7 +24,7 @@ for (i in seq_along(metadata$vehicles)) {
   veh <- temp_veh(x = x, tfs = pro)
   
   for (j in seq_along(pol)) {
-    cat("\n",pol[j], " ")
+    cat(" ",pol[j], " ")
     
     for (k in seq_along(wear)) {
       cat(wear[k], " ")
