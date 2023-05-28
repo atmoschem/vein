@@ -10,7 +10,8 @@ ef_fun(
   x = 1:length(ef),
   x0 = mean(ef),
   k = 1/4,
-  L = max(ef)
+  L = max(ef),
+  verbose = TRUE
 )
 }
 \arguments{
@@ -25,18 +26,19 @@ ef_fun(
 \item{k}{Numeric; the steepness of the curve.}
 
 \item{L}{Integer; the curve's maximum value.}
+
+\item{verbose}{Logical; to show the equation.}
 }
 \value{
-dataframe of age distrubution of vehicles at each street.
+numeric vector.
 }
 \description{
 \code{\link{ef_fun}} returns amount of vehicles at each age
 }
 \examples{
 \dontrun{
-data(fe2015)
 CO <- ef_cetesb(p = "CO", veh = "PC_G")
-ef_logit <- ef_fun(ef = CO, x0 = 27, k = 0.4, L = 33)
+ef_logit <- ef_fun(ef = CO, x0 = 27, k = 0.4, L = max(CO))
 df <- data.frame(CO, ef_logit)
 colplot(df)
 }
