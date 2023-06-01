@@ -70,6 +70,8 @@ A vector of Emission Factor or a data.frame
 \code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
 }
 \note{
+new emission factors ar projects as the lates available,
+
 The new convention for vehicles names are translated from CETESB report:
 \tabular{ll}{
   veh    \tab description \cr

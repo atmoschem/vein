@@ -29,7 +29,7 @@ ef_fun <- function(ef,
     FD <- function(x, x0, L, k) {
       L/(1 + exp(1)^(-k*(x - x0))  )
     }
-    print(FD)
+    if(verbose) print(FD)
     a <- vein::EmissionFactors(FD(x, x0 = x0, k = k, L = L))
     return(a)
   }

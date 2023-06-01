@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+### vein 1.0.4 (date: 2023-05-31)
+
+- project newer cetesb emission factors
+
 ### vein 1.0.3 (date: 2023-05-05)
 
 - Converts ef_emfac FC gallons to grams
