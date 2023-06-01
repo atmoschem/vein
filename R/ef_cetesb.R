@@ -37,7 +37,8 @@
 #' @param csv String with the path to download the ef in a .csv file. For instance,
 #' ef.csv
 #' @return A vector of Emission Factor or a data.frame
-#' @importFrom data.table melt rbindlist
+#' @note new emission factors ar projects as the lates available,
+#' @importFrom data.table melt rbindlist ":="
 #' @keywords  emission factors
 #' @note The new convention for vehicles names are translated from CETESB report:
 #' \tabular{ll}{
@@ -182,7 +183,28 @@ ef_cetesb <- function(p,
   } else {
     ef <- sysdata$cetesb
   }
-  if(year > max(ef$Year)) stop("For projections use argument efinput")
+
+  ymax <- max(ef$Year)
+  if(year > ymax) {
+    message("using projec=`constant` ONLY")
+    efmax <- ef[ef$Year == max(ef$Year), ]
+
+    dify <- year - ymax
+
+    efmm <- data.table::rbindlist(replicate(
+      dify, efmax, simplify = FALSE))
+
+    Year <- Pollutant <- NULL
+    efmm[,
+         Year := year:(ymax - 2),
+         by = Pollutant]
+
+    ef <- rbind(ef, efmm)
+    data.table::setorderv(ef,
+                          cols = c("Pollutant", "Year"),
+                          order = c(1, -1))
+  }
+
 
   if(year < 1949) stop("Choose a newer year at least in 1949")
 
@@ -369,9 +391,6 @@ ef_cetesb <- function(p,
               efrchod, efrcho)
   ef <- as.data.frame(ef)
 
-  # adding PMRES ####
-  # silt de CENMA 2013
-  # solo debe ser usado con TOP-DOWN!
   nLDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
             grep(pattern = "LCV_", x = names(ef), value = TRUE),
             "G_BEFORE_GNV", "G_AFTER_GNV", "GNV_AFTER_GNV")
@@ -482,7 +501,7 @@ ef_cetesb <- function(p,
   } else if(scale == "tunnel2018") {
     # Values updated by Mario
     if(verbose) cat("scale = tunnel2018\n")
-# ef <- sysdata$cetesb
+    # ef <- sysdata$cetesb
     LDV <- c(grep(pattern = "PC_", x = names(ef), value = TRUE),
              grep(pattern = "LCV_", x = names(ef), value = TRUE)[1:4],
              grep(pattern = "MC_", x = names(ef), value = TRUE))
@@ -537,7 +556,7 @@ ef_cetesb <- function(p,
 
   } else {
     if(verbose) cat("scale = default\n")
-}
+  }
 
   ef[is.na(ef)] <- 0
   # vehicle category ####
@@ -588,7 +607,7 @@ ef_cetesb <- function(p,
   evap <- c("S_20_35", "R_20_35", "S_10_25", "R_10_25", "S_0_15", "R_0_15")
   pols <- as.character(unique(ef$Pollutant))
 
-    if(!p %in% c(pols, "SO2")){
+  if(!p %in% c(pols, "SO2")){
     stop(cat("Please, choose one of the following pollutants:\n", pols, "\n"))
   }
 
@@ -654,8 +673,8 @@ ef_cetesb <- function(p,
     if(!is.null(agemax)) df <- df[1:agemax, ]
   } else {
     if(!is.null(agemax)) df <- df[1:agemax]
-
   }
+
 
   if(!missing(csv)) {
     data.table::fwrite(x = df, file = csv)
