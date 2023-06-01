@@ -186,7 +186,7 @@ ef_cetesb <- function(p,
 
   ymax <- max(ef$Year)
   if(year > ymax) {
-    message("Projecting new EF constant ONLY")
+    if(verbose) message("Projecting new EF constant ONLY")
     efmax <- ef[ef$Year == max(ef$Year), ]
 
     dify <- year - ymax
