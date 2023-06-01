@@ -186,7 +186,7 @@ ef_cetesb <- function(p,
 
   ymax <- max(ef$Year)
   if(year > ymax) {
-    message("using projec=`constant` ONLY")
+    message("Projecting new EF constant ONLY")
     efmax <- ef[ef$Year == max(ef$Year), ]
 
     dify <- year - ymax
@@ -196,7 +196,7 @@ ef_cetesb <- function(p,
 
     Year <- Pollutant <- NULL
     efmm[,
-         Year := year:(ymax - 2),
+         Year := year:(ymax + 1),
          by = Pollutant]
 
     ef <- rbind(ef, efmm)
