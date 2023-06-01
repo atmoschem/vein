@@ -4,6 +4,8 @@ NEWS
 ### vein 1.0.4 (date: 2023-05-31)
 
 - project newer cetesb emission factors
+add projet to estimate emissions in Brazil
+by state a year
 
 ### vein 1.0.3 (date: 2023-05-05)
 

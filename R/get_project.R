@@ -11,6 +11,7 @@
 #'   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
+#'   brazil_country     \tab Top down \tab CETESB+tunnel\tab  .rds\cr
 #'   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   sebr_cb05co2   \tab Top-down SP, MG and RJ\tab CETESB+tunnel\tab  .rds\cr
 #'   amazon2014     \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
@@ -106,6 +107,17 @@ get_project <- function(directory,
                            destfile =  tf)
       utils::untar(tarfile = tf, exdir = directory)
       message("Your directory is in ", directory)
+
+      # brazil_country ####
+    } else if(case %in% c("brazil_country",
+                          "brasil_country")){
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil.tar.gz"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL,
+                           destfile =  tf)
+      utils::untar(tarfile = tf, exdir = directory)
+      message("Your directory is in ", directory)
+
 
       # manizales_bu ####
     } else if(case %in% c("manizales_bu",
