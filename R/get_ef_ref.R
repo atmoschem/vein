@@ -5,7 +5,6 @@
 #'
 #' @param ref Character; The ef model required (e.g. "eea" for ef_eea)
 #' @importFrom data.table setDT
-#  (do I need this??)
 #' @note This function is a shortcut to access unexported ef model information
 #' in vein.
 #'

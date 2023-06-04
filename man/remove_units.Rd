@@ -4,10 +4,12 @@
 \alias{remove_units}
 \title{Remove units}
 \usage{
-remove_units(x)
+remove_units(x, verbose = FALSE)
 }
 \arguments{
 \item{x}{Object with class "sf",  "data.frame", "matrix" or "units"}
+
+\item{verbose}{Logical, to print more information}
 }
 \value{
 "sf", data.frame", "matrix" or numeric
@@ -20,7 +22,7 @@ remove_units(x)
 ef1 <- ef_cetesb(p = "CO", c("PC_G", "PC_FE"))
 class(ef1)
 sapply(ef1, class)
-a <- remove_units(ef1)
+(a <- remove_units(ef1))
 }
 }
 \keyword{units}
