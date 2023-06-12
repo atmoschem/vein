@@ -61,6 +61,7 @@ names(dt0)[2] <- "estimation_t"
 dtf <- merge(dt0, fuel, by = "fuel")
 dtf$estimation_consumption <- dtf$estimation_t/dtf$consumption_t
 print(dtf[, c("fuel", "estimation_t", "consumption_t", "estimation_consumption")])
+fwrite(dtf, "config/kfuel.csv")
 
 # 2) Traffic ####
 net                <- readRDS("network/net.rds")
