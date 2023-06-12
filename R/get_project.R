@@ -68,7 +68,7 @@ get_project <- function(directory,
 
   if(missing(directory)) stop("Please, add a path to a directory") #nocov start
 
-  if(missing(case)) stop("Please, sleect a case. run ?vein::get_project")
+  if(missing(case) && missing(url) ) stop("Please, sleect a case. run ?vein::get_project")
 
   if(missing(url)){
     # brazil ####
