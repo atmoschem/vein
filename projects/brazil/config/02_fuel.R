@@ -55,82 +55,92 @@ ggplot(x,
              scales = "free_y")
 
 setorderv(x, "date", order = -1)
+
+names(x)[6] <- "region"
 saveRDS(x, "config/fuel_month.rds")
 
 xy <- x[, lapply(.SD, sum),
         .SDcols = c("consumption_t",
                     "m3"),
-        by = .(fuel, UF, Year)]
+        by = .(fuel, region, Year)]
 
 setorderv(xy, "Year", order = -1)
 
-saveRDS(xy, "config/fuel.rds")
+# all ratios gives 0.9
+fs <- c("E", "D", "G")
 
-# projection did not work ####
-# older is 2000 and newer 2022
-x$UFF <- paste0(x$UF, x$fuel)
-uff <- unique(x$UFF)
+rbindlist(lapply(1:3,function(j){
+  rbindlist(lapply(1:40,function(i){
+    l <- xy[fuel == fs[j], 
+            consumption_t[.N]*0.9^i, 
+            by = region]
+    l$Year <- 2000 - i
+    names(l)[2] <- "consumption_t"
+    l$fuel <- fs[j]
+    l$type <- "data"
+    l
+  } )) 
+} )) -> fuel_past
 
-x$consumption_t <- as.numeric(x$consumption_t)
-x$date <- as.Date(x$date)
-x$type <- "data"
+fuel_past$consumption_t <- as.numeric(fuel_past$consumption_t)
 
-rbindlist(pbapply::pblapply(seq_along(uff), function(i) {
-  dt <- x[UFF == uff[i]]
-  # pasado
-  date <- rev(seq.Date(as.Date("1990-01-01"),
-                       as.Date("1999-12-01"),
-                       by = "month"))
-  
-  m <- auto.arima(dt$consumption_t)
-  f <- forecast(m, length(date))
-  
-  df_pasado <- data.table(
-    date = date,
-    UF = dt[1]$UF,
-    fuel = dt[1]$fuel,
-    UFF = uff[i],
-    consumption_t = as.numeric(f$mean),
-    type = "projection")   
-  
-  # futuro
-  date = seq.Date(as.Date("2023-01-01"),
-                  as.Date("2100-12-01"),
-                  by = "month")
-  
-  m <- auto.arima(dt$consumption_t)
-  f <- forecast(m, length(date))
-  
-  df_futuro <- data.table(
-    date = date,
-    UF = dt[1]$UF,
-    fuel = dt[1]$fuel,
-    UFF = uff[i],
-    consumption_t = if(any(as.numeric(f$mean) < 0)){ 
-      as.data.frame(f$upper)[[1]] 
-    } else {
-      as.numeric(f$mean)
-    },
-    type = "projection")   
-  
-  df <- rbind(df_pasado,
-              dt[, c("date", 
-                     "UF", 
-                     "fuel", 
-                     "UFF",
-                     "consumption_t",
-                     "type"),
-                 with = FALSE])
-  df
-  
-})) -> DT
+fd <- function(x) {
+  as.numeric(
+    vein::ef_fun(ef = x, 
+                 x = 1:(length(x) + 78),
+                 x0 = 10, 
+                 k = 0.15, 
+                 L = max(x)*0.95, 
+                 verbose = FALSE))
+}
 
-ggplot(DT, 
-       aes(x = date,
+ufs <- unique(xy$region)
+
+rbindlist(lapply(1:3,function(j){
+  rbindlist(lapply(seq_along(ufs),function(i){
+    
+    d <- as.numeric(rev(xy[fuel == fs[j] &
+                             region == ufs[i]]$consumption_t))
+    
+    df1 <- data.table(
+      Year = 2000:2022,
+      consumption_t = d,
+      region = ufs[i],
+      fuel = fs[j],
+      type = "data"
+    )
+    
+    df2 <- data.table(
+      Year = 2000:2100,
+      consumption_t = fd(d),
+      region = ufs[i],
+      fuel = fs[j],
+      type = "projection"
+    )
+    
+    rbind(df1, df2)
+  } )) 
+} )) -> fuel_future
+
+
+df <- rbind(fuel_past,
+            fuel_future[type == "data"],
+            fuel_future[type == "projection" &
+                          Year > 2022])
+
+setorderv(df, 
+          c("region", 
+            "Year",
+            "fuel"), 
+          order = c(1, 1, 1))
+saveRDS(df, "config/fuel.rds")
+
+
+ggplot(df, 
+       aes(x = Year,
            y = consumption_t,
            colour = fuel)) +
   geom_line() +
-  facet_wrap(~UF,
+  facet_wrap(~region,
              scales = "free_y")
 
-saveRDS(x, "config/fuel_month.rds")
