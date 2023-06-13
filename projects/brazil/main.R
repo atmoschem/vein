@@ -6,7 +6,8 @@ source("config/04_met.R")
 source("config/05_pre_main.R")
 
 x <- list.files(path="estimation", pattern = "main.R", recursive = T, full.names = T)
-xx <- paste0("/p1-baal/sibarra/brazil/", x[!grepl(pattern = ".Rproj", x)])
+xx <- paste0("/home/sibarra/BR/estimation", 
+             x[!grepl(pattern = ".Rproj", x)])
 xx <- gsub("main.R", "", xx)
 saveRDS(xx, "/p1-baal/sibarra/brazil/mains.rds")
 
