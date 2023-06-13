@@ -8,15 +8,15 @@ sessionInfo()
 
 # 0 Configuration
 language <- "english" # spanish portuguese
-path <- "../inventory_all.xlsx"
+path <- paste0(getwd(), "/config/inventory_all.xlsx")
 readxl::excel_sheets(path)
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
-mileage <- readRDS("../mileage.rds")
+mileage <- readRDS(paste0(getwd(), "/config/mileage.rds"))
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
-veh <- readRDS("../fleet_age.rds")
-fuel <- readRDS("../fuel.rds")
-pmonth <-  readRDS("../fuel_month.rds")
-met <-  readRDS("../met.rds")
+veh <- readRDS(paste0(getwd(), "/config/fleet_age.rds"))
+fuel <- readRDS(paste0(getwd(), "/config/fuel.rds"))
+pmonth <-  readRDS(paste0(getwd(), "/config/fuel_month.rds"))
+met <-  readRDS(paste0(getwd(), "/config/met.rds"))
 scale <- "tunnel2018"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE

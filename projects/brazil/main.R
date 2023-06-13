@@ -1,19 +1,36 @@
 
 source("config/01_fleet_brazil.R")
+rm(list = ls())
+gc()
 source("config/02_fuel.R")
+rm(list = ls())
+gc()
 source("config/03_mileage.R")
+rm(list = ls())
+gc()
 source("config/04_met.R")
+rm(list = ls())
+gc()
 source("config/05_pre_main.R")
 
-x <- list.files(path="estimation", pattern = "main.R", recursive = T, full.names = T)
-xx <- paste0("/home/sibarra/BR/estimation", 
-             x[!grepl(pattern = ".Rproj", x)])
-xx <- gsub("main.R", "", xx)
-saveRDS(xx, "/p1-baal/sibarra/brazil/mains.rds")
+rm(list = ls())
+gc()
 
-for (i in 1:810) {
+x <- list.files(path="estimation",
+                pattern = "main.R", 
+                recursive = T, 
+                full.names = T)
+
+xx <- paste0(getwd(),"/",  
+             x[!grepl(pattern = ".Rproj", x)])
+
+xx <- gsub("main.R", "", xx)
+
+saveRDS(xx, paste0(getwd(), "/mains.rds"))
+
+for (i in seq_along(xx)) {
   
-  di <- readRDS("/p1-baal/sibarra/brazil/mains.rds")
+  di <- readRDS(paste0(getwd(), "/mains.rds"))
   setwd(di[i])
   print(di[i])
 
