@@ -10,7 +10,7 @@ maxage       <- 40
 year_select        <- as.numeric(substr(x = getwd(), 
                                         start = nchar(getwd()) - 6, 
                                         stop = nchar(getwd()) - 3))
-year_select <- 2000
+# year_select <- 2000
 
 #           <- basename(getwd())
 
@@ -165,6 +165,7 @@ pmonth <- pmonth[Year == ifelse(
     year_select > 2022, 2022,
     year_select))]
 
+pmonth$Year <- year_select
 
 # met ####
 head(met)
@@ -172,16 +173,6 @@ met$date <- ISOdate(met$Year, met$Month, 1, 0,0,0)
 met <- met[Year == year_select]
 
 # fuel ####
-head(fuel)
-if(year_select < 2000) {
-  warning(print("Fuel Consumption prior 2000 is 2000"))
-} else if(year_select > 2022) {
-  warning(print("Fuel Consumption after 2022 is 2022"))
-}
-fuel <- fuel[Year == ifelse(
-  year_select < 2000, 2000, 
-  ifelse(
-    year_select > 2022, 2022, year_select))]
 fuel$kinitial <- 1
 
 # saving RDS ####
