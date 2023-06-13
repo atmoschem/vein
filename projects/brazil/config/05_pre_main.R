@@ -5,13 +5,13 @@
 a  <- readRDS("rds/ufs.rds")
 
 ufs <- a$abbrev_state |> as.character()
-uf <- "config/UF.tar.gz"
+uf <- "config/UFBR.tar.gz"
 #dir.create("estimation")
 unlink("estimation", recursive = T)
 dir.create("estimation")
 
 
-years <- c(2000, 2022)
+years <- 1960:2100
 
 lapply(seq_along(years), function(i) {
   lapply(seq_along(ufs), function(j) {
@@ -20,6 +20,6 @@ lapply(seq_along(years), function(i) {
     untar(tarfile = uf, 
           exdir = paste0("estimation/", years, "/", 
                          ufs[j])[i])
-    file.remove(paste0("estimation/", years, "/", ufs[j], "/UF.tar.gz")[i])
+    file.remove(paste0("estimation/", years, "/", ufs[j], "/UFBR.tar.gz")[i])
   })
 })

@@ -1,8 +1,8 @@
 suppressWarnings(file.remove("emi/WEAR.csv"))
 
-year_select        <- as.numeric(substr(x = getwd(), 
-                                        start = nchar(getwd()) - 6, 
-                                        stop = nchar(getwd()) - 3))
+year_select  <- as.numeric(substr(x = getwd(), 
+                                  start = nchar(getwd()) - 6, 
+                                  stop = nchar(getwd()) - 3))
 
 
 switch(language,
