@@ -1,6 +1,6 @@
 year               <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
 
-year_selected <- 2000
+# year_selected <- 2000
 
 suppressWarnings(file.remove("emi/exhaust.csv"))
 if(plot_ef){

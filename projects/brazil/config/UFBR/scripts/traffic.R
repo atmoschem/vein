@@ -1,6 +1,6 @@
 year_selected <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
 
-year_selected <- 2000
+# year_selected <- 2000
 
 # n_veh
 
