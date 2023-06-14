@@ -2,6 +2,8 @@ year               <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6,
 
 year_selected <- year
 
+# year_selected <- 2000
+
 suppressWarnings(file.remove("emi/FC_INITIAL.csv"))
 
 reg <- unique(veh$region)
@@ -19,6 +21,8 @@ for(k in seq_along(reg)) {
     
     
     x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
+    
+    x[is.na(x)] <- 0
     
     x <- x[region == reg[k], ]
     
@@ -78,11 +82,11 @@ dt$g <- units::set_units(dt$emissions, "g")
 dt$t <- units::set_units(dt$g, t)
 
 dt0 <- dt[pollutant == "FC", 
-          round(sum(t), 2), 
+          round(sum(t, na.rm = T), 2), 
           by = .(fuel, 
                  region)]
 
-data.table::setkey(dt0, c("fuel", "region"))
+# data.table::setkey(dt0, c("fuel", "region"))
 
 names(dt0)[3] <- "estimation_t" 
 dtf <- merge(dt0, fuel, by = c("fuel", "region"))
@@ -95,6 +99,9 @@ print(dtf[, c("region",
 
 dtf$kfinal <- as.numeric(1/dtf$estimation_consumption)
 
+dtf$kfinal[is.na(dtf$kfinal)] <- 1
+
+dtf$kfinal[is.infinite(dtf$kfinal)] <- 1
 fwrite(dtf, "config/kfuel.csv")
 
 # 2) Traffic ####
@@ -132,6 +139,7 @@ for(k in seq_along(reg)) {
     
     x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
     
+    x[is.na(x)] <- 0
     x <- x[region == reg[k], ]
     
     x$region <- NULL

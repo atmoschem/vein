@@ -1,6 +1,5 @@
 year_selected               <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
 
-year_selected <- 2000
 suppressWarnings(file.remove("emi/evaporatives.csv"))
 
 # filtrando veiculos otto
@@ -138,7 +137,7 @@ for(tt in seq_along(t_sc)) {
               "spanish" = message("\nFiguras en /images\n"))
     }
     
-
+    
     
     
     
@@ -150,6 +149,8 @@ for(tt in seq_along(t_sc)) {
       for(i in seq_along(veh_ev)) {
         
         x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
+        
+        x[is.na(x)] <- 0
         
         x <- x[region == reg[rr], ]
         

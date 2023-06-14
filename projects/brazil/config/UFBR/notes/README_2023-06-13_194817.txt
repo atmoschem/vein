@@ -1,0 +1,103 @@
+========================================
+Brazil by state 2000
+========================================
+
+Directory: /media/sergio/ext4/brazil/config/UFBR
+
+Local Time: 2023-06-13 19:48:17
+Inventory compiler: sergio
+========================================
+
+sysname = Linux
+release = 6.2.0-20-generic
+version = #20-Ubuntu SMP PREEMPT_DYNAMIC Thu Apr  6 07:48:48 UTC 2023
+nodename = sergio-gl639sd
+machine = x86_64
+user = sergio
+R version = 4.2.2
+nickname = Innocent and Trusting
+Memory used = 1584Mb 
+========================================
+
+VEIN version = 1.0.4
+========================================
+
+Traffic:
+DENATRAN
+
+Approach:
+Top-Down
+
+Vehicular composition:
+CETESB
+
+Emission Factors:
+CETESB tunnel2018
+
+Cold starts:
+Not Applicable
+
+Evaporative:
+Running Losses, Diurnal and Hot Soak
+
+Traffic standards:
+PROCONVE, PROMOT
+
+Traffic mileage:
+Bruni and Bales 2013
+
+Notes:
+Default notes for vein::get_project
+========================================
+
+Session Info:
+R version 4.2.2 Patched (2022-11-10 r83330)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 23.04
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.11.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.11.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets 
+[6] methods   base     
+
+other attached packages:
+[1] data.table_1.14.8 ggplot2_3.4.2     cptcity_1.0.6    
+[4] sf_1.0-12         vein_1.0.4       
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.10        cellranger_1.1.0  
+ [3] compiler_4.2.2     pillar_1.9.0      
+ [5] class_7.3-21       tools_4.2.2       
+ [7] dotCall64_1.0-2    lifecycle_1.0.3   
+ [9] tibble_3.2.1       gtable_0.3.3      
+[11] pkgconfig_2.0.3    rlang_1.1.0       
+[13] DBI_1.1.3          cli_3.6.1         
+[15] rstudioapi_0.14    e1071_1.7-13      
+[17] withr_2.5.0        dplyr_1.1.2       
+[19] generics_0.1.3     vctrs_0.6.2       
+[21] classInt_0.4-9     grid_4.2.2        
+[23] tidyselect_1.2.0   glue_1.6.2        
+[25] R6_2.5.1           fansi_1.0.4       
+[27] readxl_1.4.2       farver_2.1.1      
+[29] magrittr_2.0.3     scales_1.2.1      
+[31] units_0.8-2        colorspace_2.1-0  
+[33] labeling_0.4.2     KernSmooth_2.23-20
+[35] utf8_1.2.3         proxy_0.4-27      
+[37] munsell_0.5.0     
+
+========================================
+
+
+
+Thanks for using VEIN

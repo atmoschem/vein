@@ -1,9 +1,3 @@
-# renames ####
-veh$region <- NULL
-veh$region <- veh[[region]]
-fuel$region <- fuel[[region]]
-pmonth$region <- pmonth[[region]]
-met$region <- met[[region]]
 
 maxage       <- 40
 
@@ -110,11 +104,11 @@ setDT(met)
 
 # setorder
 setorderv(veh, 
-          cols = c(region, "Year"),
+          cols = c("region", "Year"),
           order = c(1, -1))
 
 setorderv(fuel, 
-          cols = c(region, "Year"),
+          cols = c("region", "Year"),
           order = c(1, -1))
 
 # mileage
@@ -173,6 +167,7 @@ met$date <- ISOdate(met$Year, met$Month, 1, 0,0,0)
 met <- met[Year == year_select]
 
 # fuel ####
+fuel <- fuel[Year == year_select]
 fuel$kinitial <- 1
 
 # saving RDS ####
@@ -286,10 +281,10 @@ switch (language,
 setDT(veh)
 setDT(metadata)
 vv <- melt.data.table(data = veh[, c(metadata$vehicles, 
-                                     region, 
+                                     "region", 
                                      "Year"), 
                                  with = F], 
-                      id.vars = c("Year", region), 
+                      id.vars = c("Year", "region"), 
                       variable.name = "vehicles",
                       value.name = "veh")
 vv <- merge(vv, 

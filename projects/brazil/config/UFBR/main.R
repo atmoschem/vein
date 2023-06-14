@@ -8,19 +8,18 @@ sessionInfo()
 
 # 0 Configuration
 language <- "english" # spanish portuguese
-path <- paste0(getwd(), "/config/inventory_all.xlsx")
+path <- "../../../config/inventory_all.xlsx"
 readxl::excel_sheets(path)
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
-mileage <- readRDS(paste0(getwd(), "/config/mileage.rds"))
+mileage <- readRDS("../../../config/mileage.rds")
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
-veh <- readRDS(paste0(getwd(), "/config/fleet_age.rds"))
-fuel <- readRDS(paste0(getwd(), "/config/fuel.rds"))
-pmonth <-  readRDS(paste0(getwd(), "/config/fuel_month.rds"))
-met <-  readRDS(paste0(getwd(), "/config/met.rds"))
+veh <- readRDS("../../../config/fleet_age.rds")
+fuel <- readRDS("../../../config/fuel.rds")
+pmonth <-  readRDS("../../../config/fuel_month.rds")
+met <-  readRDS("../../../config/met.rds")
 scale <- "tunnel2018"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
-region <- "UF" #renames UF to region
 source("config/config.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
@@ -51,7 +50,7 @@ language <- "portuguese" # english chinese spanish portuguese
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
-net <- readRDS("network/net.rds")
+# net <- readRDS("network/net.rds")
 pmonth <- readRDS("config/pmonth.rds")
 met <- readRDS("config/met.rds")
 verbose <- FALSE
@@ -70,7 +69,7 @@ language <- "portuguese" # english chinese spanish portuguese
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
-net <- readRDS("network/net.rds")
+# net <- readRDS("network/net.rds")
 pmonth <- readRDS("config/pmonth.rds")
 met <- readRDS("config/met.rds")
 verbose <- FALSE
