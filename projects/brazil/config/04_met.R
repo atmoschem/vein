@@ -6,7 +6,7 @@ setDT(x)
 x$date <- ISOdate(x$Year, x$Month, 1, 0,0,0)
 x[,
   mean(Temperature),
-  by = .(UF, capitals, date, scenario, Year, Month)] -> mett
+  by = .(region, capitals, date, scenario, Year, Month)] -> mett
 
 names(mett)[ncol(mett)] <- "Temperature"
 unique(mett$scenario)

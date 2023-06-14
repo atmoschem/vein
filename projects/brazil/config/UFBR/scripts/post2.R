@@ -2,7 +2,7 @@
 
 UF_select          <- basename(getwd())
 
-g <- readRDS(paste0("../../../rds/g_", UF_select, ".rds"))
+# g <- readRDS(paste0("../../../rds/g_", UF_select, ".rds"))
 
 # df
 df <- rbind(

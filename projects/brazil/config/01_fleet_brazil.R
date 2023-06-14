@@ -189,4 +189,5 @@ fleet <- merge(fleet,
 
 setorderv(fleet, cols = "Year", order = -1)
 
+fleet$region <- fleet$UF
 saveRDS(fleet, "config/fleet_age.rds")

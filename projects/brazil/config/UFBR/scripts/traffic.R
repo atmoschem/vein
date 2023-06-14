@@ -1,4 +1,6 @@
-year_selected <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
+year_selected <- as.numeric(substr(x = getwd(), 
+                                   start = nchar(getwd()) - 6, 
+                                   stop = nchar(getwd()) - 3))
 
 # year_selected <- 2000
 
@@ -55,21 +57,21 @@ n_MC <- nveh[grep(pattern = "MC", x = nveh)]
 
 setDT(veh)
 setorderv(veh, 
-          cols = c(region, "Year"), 
+          cols = c("region", "Year"), 
           order = c(1, -1))
 
 if(survival) {
-  lv <- split(veh, veh[[region]])
+  lv <- split(veh, veh[["region"]])
   for(j in seq_along(lv)) {
     
     for(i in seq_along(metadata$vehicles)) {
       lv[[j]][[metadata$vehicles[i]]] <-   age(x = lv[[j]][[metadata$vehicles[i]]], 
-                                           type = metadata$survival[i], 
-                                           a = metadata$survival_param_a[i],
-                                           b = metadata$survival_param_b[i])
+                                               type = metadata$survival[i], 
+                                               a = metadata$survival_param_a[i],
+                                               b = metadata$survival_param_b[i])
     }
-
-        
+    
+    
   }
   
   veh <- rbindlist(lv)
@@ -79,20 +81,21 @@ if(survival) {
 # veh ####
 #
 v <- metadata$vehicles
-reg <- unique(veh[[region]])
-lv <- split(veh, veh[[region]])
+reg <- unique(veh[["region"]])
+lv <- split(veh, veh[["region"]])
 
-lf <- split(fuel, fuel[[region]])
+lf <- split(fuel, fuel[["region"]])
 
 rbindlist(lapply(seq_along(v), function(i) {
   if(verbose) cat(v[i], " ")
   rbindlist(lapply(seq_along(reg), function(j) {
-  x <- lv[[reg[j]]][[v[i]]]*lf[[reg[j]]][fuel == metadata$fuel[i]]$kinitial
-  x <- remove_units(x)[1:maxage]
-  x <- Vehicles(matrix(x, ncol = maxage))
-  x$region <- reg[j]
-  x
+    x <- lv[[reg[j]]][[v[i]]]*lf[[reg[j]]][fuel == metadata$fuel[i]]$kinitial
+    x <- remove_units(x)[1:maxage]
+    x <- Vehicles(matrix(x, ncol = maxage))
+    x$"region" <- reg[j]
+    x
   })) -> dt
+  # print(dt)
   saveRDS(dt, paste0("veh/", v[i], ".rds"))
   
   df <- melt.data.table(dt, 
@@ -188,7 +191,7 @@ p <- ggplot(dx,
        title = "Vehicles") +
   facet_wrap(~ region,
              scales = "free_x", 
-              nrow = 2) +
+             nrow = 2) +
   theme_bw() +
   scale_y_sqrt() +
   coord_flip()+

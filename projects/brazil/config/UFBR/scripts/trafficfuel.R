@@ -55,11 +55,11 @@ n_MC <- nveh[grep(pattern = "MC", x = nveh)]
 
 setDT(veh)
 setorderv(veh, 
-          cols = c(region, "Year"), 
+          cols = c("region", "Year"), 
           order = c(1, -1))
 
 if(survival) {
-  lv <- split(veh, veh[[region]])
+  lv <- split(veh, veh[["region"]])
   for(j in seq_along(lv)) {
     
     for(i in seq_along(metadata$vehicles)) {
@@ -79,10 +79,10 @@ if(survival) {
 # veh ####
 #
 v <- metadata$vehicles
-reg <- unique(veh[[region]])
-lv <- split(veh, veh[[region]])
+reg <- unique(veh[["region"]])
+lv <- split(veh, veh[["region"]])
 
-lf <- split(fuel, fuel[[region]])
+lf <- split(fuel, fuel[["region"]])
 
 rbindlist(lapply(seq_along(v), function(i) {
   if(verbose) cat(v[i], " ")
@@ -90,7 +90,7 @@ rbindlist(lapply(seq_along(v), function(i) {
     x <- lv[[reg[j]]][[v[i]]]*lf[[reg[j]]][fuel == metadata$fuel[i]]$kfinal
     x <- remove_units(x)[1:maxage]
     x <- Vehicles(matrix(x, ncol = maxage))
-    x$region <- reg[j]
+    x$"region" <- reg[j]
     x
   })) -> dt
   saveRDS(dt, paste0("veh/", v[i], ".rds"))

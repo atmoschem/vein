@@ -2,6 +2,7 @@ year  <- as.numeric(substr(x = getwd(),
                            start = nchar(getwd()) - 6, 
                            stop = nchar(getwd()) - 3))
 year_selected <- year
+
 # year_selected <- 2000
 
 suppressWarnings(file.remove("emi/exhaust.csv"))
@@ -84,6 +85,8 @@ for(k in seq_along(reg)) {
     
     
     x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
+    
+    x[is.na(x)] <- 0
     
     x <- x[region == reg[k], ]
     
