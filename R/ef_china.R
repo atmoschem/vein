@@ -1024,6 +1024,7 @@ ef_china_det <- function(v = "PV",
 #' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
+#' @param long Logical, to process long format of ef
 #' @return long data.frame
 #' @importFrom data.table setDT
 #' @export
@@ -1037,7 +1038,8 @@ ef_china_det <- function(v = "PV",
 ef_china_speed <- function(speed,
                            f = "G",
                            standard,
-                           p){
+                           p,
+                           long = FALSE){
   efsp <- sysdata$speed_china
 
   f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", f)
@@ -1050,6 +1052,43 @@ ef_china_speed <- function(speed,
 
   efsp[FUEL == f &
          POLLUTANT == p] -> basesp
+
+  if(long) {
+    data.table::melt.data.table(
+      basesp,
+      id.vars = c("FUEL", "STANDARD", "POLLUTANT"),
+      measure.vars = c("S20",
+                       "S20_30",
+                       "S30_40",
+                       "S40_80",
+                       "S80"),
+      variable.name = "speed_label",
+      value.name = "speed_cor") -> dft
+
+sp <- data.frame(speed = sp)
+
+sp$speed_label <- ifelse(
+  sp < 20, "S20",
+  ifelse(
+    sp >= 20 & sp < 30, "S20_30",
+    ifelse(
+      sp >= 30 & sp < 40, "S30_40",
+      ifelse(
+        sp >= 40 & sp < 80, "S40_80",
+        "S80"))))
+
+efs <- lapply(seq_along(standard), function(i) {
+  sp_std <- basesp[STANDARD == standard[i]]
+
+  dd <- merge(sp,
+              dft,
+              by = "speed_label",
+              all.x = T)
+  dd
+})
+efs <- as.data.frame(do.call("cbind", efs))
+
+  }
 
   efs <- lapply(seq_along(standard), function(i) {
     sp_std <- basesp[STANDARD == standard[i]]

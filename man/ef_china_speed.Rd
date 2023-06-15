@@ -4,7 +4,7 @@
 \alias{ef_china_speed}
 \title{Correction of Chinese emission factors by speed}
 \usage{
-ef_china_speed(speed, f = "G", standard, p)
+ef_china_speed(speed, f = "G", standard, p, long = FALSE)
 }
 \arguments{
 \item{speed}{numeric speed km/h}
@@ -15,6 +15,8 @@ ef_china_speed(speed, f = "G", standard, p)
 
 \item{p}{Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 or "Evaporative_parking"}
+
+\item{long}{Logical, to process long format of ef}
 }
 \value{
 long data.frame
