@@ -1054,6 +1054,7 @@ ef_china_speed <- function(speed,
          POLLUTANT == p] -> basesp
 
   if(long) {
+
     data.table::melt.data.table(
       basesp,
       id.vars = c("FUEL", "STANDARD", "POLLUTANT"),
@@ -1087,7 +1088,9 @@ ef_china_speed <- function(speed,
     efs <- as.data.frame(do.call("cbind", efs))
 
 
-  }
+  } else {
+
+
 
   efs <- lapply(seq_along(standard), function(i) {
     sp_std <- basesp[STANDARD == standard[i]]
@@ -1108,7 +1111,7 @@ ef_china_speed <- function(speed,
 
   })
   efs <- as.data.frame(do.call("cbind", efs))
-
+  }
   return(efs)
 }
 
