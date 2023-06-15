@@ -1065,28 +1065,27 @@ ef_china_speed <- function(speed,
       variable.name = "speed_label",
       value.name = "speed_cor") -> dft
 
-sp <- data.frame(speed = sp)
+    sp <- data.frame(speed = sp)
 
-sp$speed_label <- ifelse(
-  sp < 20, "S20",
-  ifelse(
-    sp >= 20 & sp < 30, "S20_30",
-    ifelse(
-      sp >= 30 & sp < 40, "S30_40",
+    sp$speed_label <- ifelse(
+      sp < 20, "S20",
       ifelse(
-        sp >= 40 & sp < 80, "S40_80",
-        "S80"))))
+        sp >= 20 & sp < 30, "S20_30",
+        ifelse(
+          sp >= 30 & sp < 40, "S30_40",
+          ifelse(
+            sp >= 40 & sp < 80, "S40_80",
+            "S80"))))
 
-efs <- lapply(seq_along(standard), function(i) {
-  sp_std <- basesp[STANDARD == standard[i]]
+    efs <- lapply(seq_along(standard), function(i) {
+      dd <- merge(sp,
+                  dft[STANDARD == standard[i]],
+                  by = "speed_label",
+                  all.x = T)
+      dd$speed_cor
+    })
+    efs <- as.data.frame(do.call("cbind", efs))
 
-  dd <- merge(sp,
-              dft,
-              by = "speed_label",
-              all.x = T)
-  dd
-})
-efs <- as.data.frame(do.call("cbind", efs))
 
   }
 
