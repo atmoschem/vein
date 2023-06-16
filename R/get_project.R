@@ -23,6 +23,7 @@
 #'   eu_bu_chem       \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
 #'   eu_bu_chem_simple\tab Bottom-up  chemical mechanisms 7 veh\tab EEA 2019\tab  .rds\cr
 #'   china_bu_chem    \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
+#'   china_bu_chem_1h    \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
 #' }
 #' @param url String, with the URL to download VEIN project
 #' @note  All projects include option to apply survival functions
@@ -228,7 +229,16 @@ get_project <- function(directory,
       utils::untar(tarfile = tf, exdir = directory)
       message("Your directory for vehicular emissions is in ", directory)
 
-      # curitiba ####
+      # china_bu_chem_realtime ####
+    } else if(case %in% c("china_bu_chem_1h")){
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/china_bu_chem_realtime.tar.gz"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL,
+                           destfile =  tf)
+      utils::untar(tarfile = tf, exdir = directory)
+      message("Your directory for vehicular emissions is in ", directory)
+
+            # curitiba ####
     } else if(case %in% c("curitiba")){
       URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/curitiba.tar.gz"
       tf <- paste0(tempfile(), ".tar.gz")
