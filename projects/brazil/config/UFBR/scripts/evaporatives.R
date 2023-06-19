@@ -1,16 +1,16 @@
-year_selected               <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
+  year_selected               <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
 
-suppressWarnings(file.remove("emi/evaporatives.csv"))
+  suppressWarnings(file.remove("emi/evaporatives.csv"))
 
 # filtrando veiculos otto
 meta_ev <- metadata[metadata$fuel != "D", ]
 veh_ev <- meta_ev$vehicles
 
 # temperature
-t_sc <- split(met, met$scenario)
+t_sc <- split(meto, meto$scenario)
 sc <- names(t_sc)
 
-reg <- unique(met$region)
+reg <- unique(meto$region)
 
 switch (language,
         "portuguese" = cat("\nEmissões evaporativas\n"),
@@ -22,9 +22,10 @@ for(tt in seq_along(t_sc)) {
   met <- t_sc[[tt]]
   
   for (rr in seq_along(reg)) {
-    cat("\n", reg[rr],  " ")
+
+      cat("\n", reg[rr],  " ")
     
-    met <- met[region == reg[rr]]
+    met <- meto[region == reg[rr]]
     
     te <- met$Temperature
     bb <-   (0+15)/2
@@ -144,7 +145,7 @@ for(tt in seq_along(t_sc)) {
     for(mm in 1:12) {
       met <- met[Month == mm]
       
-      cat(sprintf("%02d", mm), " iom, ")
+      cat(sprintf("%02d", mm), " ")
       
       for(i in seq_along(veh_ev)) {
         
@@ -188,7 +189,7 @@ for(tt in seq_along(t_sc)) {
           xx[is.na(xx)] <- 0
           
           array_x <- emis_hot_td(
-            veh = x*dm[eva],
+            veh = x*as.numeric(dm)[eva],
             lkm = mileage[[veh_ev[i]]], 
             ef = xx, 
             fortran = TRUE, 
