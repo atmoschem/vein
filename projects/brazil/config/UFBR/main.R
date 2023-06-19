@@ -87,9 +87,9 @@ language <- "portuguese" # english chinese spanish portuguese
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
-net <- readRDS("network/net.rds")
+#net <- readRDS("network/net.rds")
 pmonth <- readRDS("config/pmonth.rds")
-met <- readRDS("config/met.rds")
+meto <- readRDS("config/met.rds")
 verbose <- FALSE
 maxage <- 40
 scale <- "tunnel2018"
