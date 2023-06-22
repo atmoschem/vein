@@ -1,8 +1,8 @@
-suppressWarnings(file.remove("emi/WEAR.csv"))
+suppressWarnings(file.remove("emi/wear.csv"))
 
 year_select  <- as.numeric(substr(x = getwd(), 
-                                  start = nchar(getwd()) - 6, 
-                                  stop = nchar(getwd()) - 3))
+                                  start = nchar(getwd()) - 3, 
+                                  stop = nchar(getwd()) ))
 
 
 switch(language,
@@ -15,52 +15,63 @@ switch(language,
 # Wear ####
 wear <- c("tyre", "break", "road")
 
-for (i in seq_along(metadata$vehicles)) {
-  cat(
-    "\n", metadata$vehicles[i],
-    rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
-  )
+reg <- unique(veh$region)
+
+for(rr in seq_along(reg)) {
   
-  x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
-  
-  pro <- tfs[[metadata$vehicles[i]]]
-  veh <- temp_veh(x = x, tfs = pro)
-  
-  for (j in seq_along(pol)) {
-    cat(" ",pol[j], " ")
+  for (i in seq_along(metadata$vehicles)) {
+    cat(
+      "\n", metadata$vehicles[i],
+      rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
+    )
     
-    for (k in seq_along(wear)) {
-      cat(wear[k], " ")
+    x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
+    x <- as.data.frame(x)
+    x[is.na(x)] <- 0
+    
+    for (j in seq_along(pol)) {
+      cat(" ",pol[j], " ")
       
-      ef <- ef_wear(wear = wear[k], 
-                    type = metadata$family[i],
-                    pol = pol[j], 
-                    speed = metadata$speed[i])
-      ef <- rep(ef[[1]], ncol(x))
-      
-      
-      array_x <- emis_hot_td(veh = x, 
-                             lkm = mileage[[metadata$vehicles[i]]], 
-                             ef = ef, 
-                             pro_month = as.numeric(pmonth[fuel == metadata$fuel[i]]$m3),
-                             fortran = TRUE,
-                             nt = check_nt()*0.9, 
-                             verbose = verbose, 
-                             params = list(veh = metadata$vehicles[i],
-                                           size = metadata$size[i],
-                                           fuel = metadata$fuel[i],
-                                           pollutant = pol[j],
-                                           type_emi = "Wear",
-                                           subtype_emi = wear[k],
-                                           baseyear = year_select))
-      
-      fwrite(array_x, "emi/wear.csv", append = TRUE)
-      
-      
+      for (k in seq_along(wear)) {
+        cat(wear[k], " ")
+        
+        ef <- ef_wear(wear = wear[k], 
+                      type = metadata$family[i],
+                      pol = pol[j], 
+                      speed = metadata$speed[i])
+        
+        ef <- rep(ef[[1]], ncol(x))
+        
+        dm <- pmonth[region == reg[rr] &
+                       fuel == metadata$fuel[i]]$m3
+        
+        
+        array_x <- emis_hot_td(veh = x[x$region == reg[[rr]], 1:maxage], 
+                               lkm = mileage[[metadata$vehicles[i]]], 
+                               ef = ef[1:maxage], 
+                               pro_month = as.numeric(dm),
+                               fortran = TRUE,
+                               nt = check_nt()*0.9, 
+                               verbose = verbose, 
+                               params = list(veh = metadata$vehicles[i],
+                                             size = metadata$size[i],
+                                             fuel = metadata$fuel[i],
+                                             pollutant = pol[j],
+                                             type_emi = "Wear",
+                                             subtype_emi = wear[k],
+                                             baseyear = year_select))
+        
+        array_x$region <- reg[rr]
+        
+        fwrite(array_x, "emi/wear.csv", append = TRUE)
+        
+        
+      }
     }
+    rm(array_x, ef)
+    gc()
   }
-  rm(array_x, ef)
-  gc()
+  
 }
 
 

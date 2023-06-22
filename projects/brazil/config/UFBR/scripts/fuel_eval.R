@@ -1,4 +1,6 @@
-year               <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
+year               <- as.numeric(substr(x = getwd(), 
+                                        start = nchar(getwd()) - 3, 
+                                        stop = nchar(getwd()) ))
 
 year_selected <- year
 
@@ -74,6 +76,8 @@ switch (language,
 
 cat(paste0(getwd(), "/emi/*\n"))
 
+
+
 # data.table ####
 dt <- fread("emi/FC_INITIAL.csv")
 
@@ -114,7 +118,9 @@ theme <- "black" # dark clean ink
 survival   <- TRUE
 fuel <- dtf
 maxage <- 40
-source("scripts/trafficfuel.R", encoding = "UTF-8")
+source("scripts/trafficfuel.R", 
+       encoding = "UTF-8",
+       echo = TRUE)
 
 # Re estimating FC ####
 suppressWarnings(file.remove("emi/FC_ADJUSTED.csv"))
@@ -213,4 +219,5 @@ switch (language,
         "portuguese" = message("Limpando..."),
         "english" = message("Cleaning..."),
         "spanish" = message("Limpiando..."))
+
 
