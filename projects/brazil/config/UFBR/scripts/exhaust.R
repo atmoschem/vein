@@ -1,6 +1,6 @@
 year  <- as.numeric(substr(x = getwd(), 
-                           start = nchar(getwd()) - 6, 
-                           stop = nchar(getwd()) - 3))
+                           start = nchar(getwd()) - 3, 
+                           stop = nchar(getwd()) ))
 year_selected <- year
 
 # year_selected <- 2000

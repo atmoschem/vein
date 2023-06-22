@@ -1,6 +1,8 @@
-  year_selected               <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
+year_selected    <- as.numeric(substr(x = getwd(), 
+                                      start = nchar(getwd()) - 3, 
+                                      stop = nchar(getwd()) ))
 
-  suppressWarnings(file.remove("emi/evaporatives.csv"))
+suppressWarnings(file.remove("emi/evaporatives.csv"))
 
 # filtrando veiculos otto
 meta_ev <- metadata[metadata$fuel != "D", ]
@@ -22,8 +24,8 @@ for(tt in seq_along(t_sc)) {
   met <- t_sc[[tt]]
   
   for (rr in seq_along(reg)) {
-
-      cat("\n", reg[rr],  " ")
+    
+    cat("\n", reg[rr],  " ")
     
     met <- meto[region == reg[rr]]
     

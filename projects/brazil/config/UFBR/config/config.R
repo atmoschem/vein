@@ -2,8 +2,8 @@
 maxage       <- 40
 
 year_select        <- as.numeric(substr(x = getwd(), 
-                                        start = nchar(getwd()) - 6, 
-                                        stop = nchar(getwd()) - 3))
+                                        start = nchar(getwd()) - 3, 
+                                        stop = nchar(getwd()) ))
 # year_select <- 2000
 
 #           <- basename(getwd())
