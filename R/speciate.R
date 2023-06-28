@@ -593,18 +593,18 @@ speciate <- function(x = 1,
           e_eci = 0,
           e_ecj = 0.056 + 0.024#,h2o = 0.277
         )
-      } else if (spec == "pm2023") {
+      } else if (spec == "pm20232") {
         df <- data.frame(
-          e_so4i = 0.003672,
-          e_so4j = 0.023328,
-          e_no3i = 0.00345,
-          e_no3j = 0.01155,
-          e_pm25i = 0.04825,
-          e_pm25j = 0.14475,
-          e_orgi = 0.08284,
-          e_orgj = 0.35316,
-          e_eci = 0.30926,
-          e_ecj = 0.01974#,h2o = 0.277
+          e_so4i = 0.00646,
+          e_so4j = 0.04104,
+          e_no3i = 0.004025,
+          e_no3j = 0.013475,
+          e_pm25i = 0.114,
+          e_pm25j = 0.342,
+          e_orgi = 0.041515,
+          e_orgj = 0.176985,
+          e_eci = 0.24487,
+          e_ecj = 0.01563#,h2o = 0.277
         )
       } else if (spec == "pmneu2") {
         df <- data.frame(
