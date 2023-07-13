@@ -148,7 +148,7 @@ plot.Speed <- function(x,
                     z = t(as.matrix(x))[, nrow(x):1],
                     xlab = "",
                     ylab = paste0("Speed by streets [",as.character(units(x[[1]])), "]"),
-                    col = col,
+                    col = rev(col),
                     axe = FALSE)
     axis(2)
     addscale(t(as.matrix(x))[, nrow(x):1], col = col)
