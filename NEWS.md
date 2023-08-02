@@ -2,6 +2,12 @@ NEWS
 ===========
 
 
+### vein 1.1.0 (date: 2023-08-01)
+
+- fortran files now end on .90
+- manizales and europe now adds wear
+
+
 ### vein 1.0.5 (date: 2023-06-14)
 
 - ef_china_speed now has long argument to process in long format
