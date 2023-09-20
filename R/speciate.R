@@ -13,6 +13,7 @@
 #' \item{"road"}{: Splits PM in PM10 and PM2.5.}
 #' \item{"nox"}{: Splits NOx in NO and NO2.}
 #' \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
+#' \item{"voc"}{: Splits NMHC in voc groups according EDGAR.
 #' \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
 #' }
 #' @param veh Type of vehicle:
@@ -163,6 +164,12 @@
 #'
 #'
 #' pmiag2 pass the mass only on j fraction
+#'
+#' @note spec \strong{"voc"} splits nmhc into the 25 VOC
+#' groups according: Huang et al 2019, "Speciation of anthropogenic
+#' emissions of non-methane volatile
+#' organic compounds: a global gridded data set for
+#' 1970–2012" ACP. Specaition In development.
 #' @export
 #' @examples
 #' \dontrun{
@@ -209,7 +216,7 @@ speciate <- function(x = 1,
       BC = x * df$BC / 100,
       OM = (df$OM / 100) * (x * df$BC / 100)
     ))
-     if (list == TRUE) {
+    if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # tyre ####
@@ -243,7 +250,7 @@ speciate <- function(x = 1,
       PM1 = x * 0.1,
       PM0.1 = x * 0.08
     ))
-   if (list == TRUE) {
+    if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # road ####
@@ -252,7 +259,7 @@ speciate <- function(x = 1,
                      PM2.5 = 0.27)
     dfb <- Emissions(data.frame(PM10 = x * 0.5,
                                 PM2.5 = x * 0.27))
-     if (list == TRUE) {
+    if (list == TRUE) {
       dfb <- as.list(dfb)
     }
     # iag ####
@@ -293,8 +300,8 @@ speciate <- function(x = 1,
     iag$VEH_FUEL_STANDARD <- NULL
 
     df <- iag[iag$VEH == veh &
-      iag$FUEL == fuel &
-      iag$STANDARD == eu, ]
+                iag$FUEL == fuel &
+                iag$STANDARD == eu, ]
 
     df <- df[, 1:(ncol(df) - 3)]
 
@@ -363,12 +370,59 @@ speciate <- function(x = 1,
 
     } else {
 
-        dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
+      dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
         data.frame(x = df[i, ]$x * x / 100,
                    pol = df$species[i])
       }))
-        if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
+      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
     }
+
+
+    # voc ####
+  } else if (spec == "voc") {
+    nmhc <- sysdata$mech
+
+    if(!veh %in% unique(nmhc$veh)) {
+      choice <- utils::menu(unique(nmhc$veh),
+                            title="Choose veh")
+      veh <- unique(nmhc$veh)[choice]
+    }
+    nmhc <- nmhc[nmhc$veh == veh , ]
+
+    if(!fuel %in% unique(nmhc$fuel)) {
+      choice <- utils::menu(unique(nmhc$fuel),
+                            title="Choose fuel")
+      fuel <- unique(nmhc$fuel)[choice]
+    }
+    nmhc <- nmhc[nmhc$fuel == fuel , ]
+
+    if(!eu %in% unique(nmhc$eu)) {
+      choice <- utils::menu(unique(nmhc$eu),
+                            title="Choose eu")
+      eu <- unique(nmhc$eu)[choice]
+    }
+    df <- nmhc[nmhc$eu == eu , ]
+    df <- data.table::as.data.table(df)
+    df <- df[, sum(x), by = voc]
+    names(df)[2] <- "x"
+
+    if (list == T) {
+
+      dfb <- lapply(1:nrow(df), function(i) {
+        df[i, ]$x * x / 100
+      })
+      names(dfb) <- df$species
+
+    } else {
+
+      dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
+        data.frame(x = df[i, ]$x * x / 100,
+                   pol = df$species[i])
+      }))
+      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
+    }
+
+
 
     # pah ####
   } else if (spec == "pah") {
@@ -534,7 +588,7 @@ speciate <- function(x = 1,
       if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
     }
 
-        # nox ####
+    # nox ####
   } else if (spec == "nox") {
     bcom <- sysdata$nox
     df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ]
@@ -622,7 +676,7 @@ speciate <- function(x = 1,
       }
     }
 
-names(df) <- toupper(names(df))
+    names(df) <- toupper(names(df))
 
     if (is.data.frame(x)) {
       for (i in 1:ncol(x)) {

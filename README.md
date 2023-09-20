@@ -33,16 +33,19 @@
 
 # **V**ehicular **E**missions **IN**ventories (VEIN)
 
-![vein](https://user-images.githubusercontent.com/27447280/234115392-b1c891ff-474d-40a3-b9a7-e816ded9bc70.gif)
+<figure>
+<img
+src="https://user-images.githubusercontent.com/27447280/234115392-b1c891ff-474d-40a3-b9a7-e816ded9bc70.gif"
+alt="vein" />
+<figcaption aria-hidden="true">vein</figcaption>
+</figure>
 
 ### TODO
 
-- get_project with Chinese EF
 - Include speed functions with Fortran
 - Include CB6
 - Add EF from HBEFA?
-- See issues [GitHub](https://github.com/atmoschem/vein/issues) and
-  [GitLab](https://gitlab.com/ibarraespinosa/vein/-/issues)
+- See issues [GitHub](https://github.com/atmoschem/vein/issues)
 
 ### System requirements
 

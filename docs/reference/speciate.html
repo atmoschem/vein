@@ -25,7 +25,7 @@ will be added more speciations"><meta property="og:image" content="http://atmosc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -89,17 +89,6 @@ will be added more speciations</p>
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>Emissions estimation</p></dd>
-
-
-<dt>spec</dt>
-<dd><p>The speciations are:</p><ul><li><p>"bcom": Splits PM2.5 in black carbon and organic matter.</p></li>
-<li><p>"tyre" or "tire": Splits PM in PM10, PM2.5, PM1 and PM0.1.</p></li>
-<li><p>"brake": Splits PM in PM10, PM2.5, PM1 and PM0.1.</p></li>
-<li><p>"road": Splits PM in PM10 and PM2.5.</p></li>
-<li><p>"nox": Splits NOx in NO and NO2.</p></li>
-<li><p>"nmhc": Splits NMHC in compounds, see <code><a href="ef_ldv_speed.html">ef_ldv_speed</a></code>.</p></li>
-<li><p>"pmiag", "pmneu",  "pmneu2": Splits PM in groups, see note below.</p></li>
-</ul></dd>
 
 
 <dt>veh</dt>
@@ -181,6 +170,11 @@ from Northeastern University.
 represents BRAZILIAN fuel</p>
 
 <p>pmiag2 pass the mass only on j fraction</p>
+<p>spec <strong>"voc"</strong> splits nmhc into the 25 VOC
+groups according: Huang et al 2019, "Speciation of anthropogenic
+emissions of non-methane volatile
+organic compounds: a global gridded data set for
+1970–2012" ACP. Specaition In development.</p>
     </div>
     <div id="references">
     <h2>References</h2>

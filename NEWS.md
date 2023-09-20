@@ -2,6 +2,11 @@ NEWS
 ===========
 
 
+### vein 1.1.1 (date: 2023-09-19)
+
+- speciation voc according EDGAR
+
+
 ### vein 1.1.0 (date: 2023-08-01)
 
 - fortran files now end on .90
