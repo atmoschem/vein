@@ -18,17 +18,6 @@ speciate(
 \arguments{
 \item{x}{Emissions estimation}
 
-\item{spec}{The speciations are:
-\itemize{
-\item{"bcom"}{: Splits PM2.5 in black carbon and organic matter.}
-\item{"tyre" or "tire"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
-\item{"brake"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
-\item{"road"}{: Splits PM in PM10 and PM2.5.}
-\item{"nox"}{: Splits NOx in NO and NO2.}
-\item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
-\item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
-}}
-
 \item{veh}{Type of vehicle:
 \itemize{
 \item{"bcom"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
@@ -162,6 +151,12 @@ represents BRAZILIAN fuel
 
 
 pmiag2 pass the mass only on j fraction
+
+spec \strong{"voc"} splits nmhc into the 25 VOC
+groups according: Huang et al 2019, "Speciation of anthropogenic
+emissions of non-methane volatile
+organic compounds: a global gridded data set for
+1970–2012" ACP. Specaition In development.
 }
 \examples{
 \dontrun{
