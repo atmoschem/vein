@@ -18,6 +18,18 @@ speciate(
 \arguments{
 \item{x}{Emissions estimation}
 
+\item{spec}{The speciations are:
+\itemize{
+\item{"bcom"}{: Splits PM2.5 in black carbon and organic matter.}
+\item{"tyre" or "tire"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
+\item{"brake"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
+\item{"road"}{: Splits PM in PM10 and PM2.5.}
+\item{"nox"}{: Splits NOx in NO and NO2.}
+\item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
+\item{"voc"}{: Splits NMHC in voc groups according EDGAR.}
+\item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
+}}
+
 \item{veh}{Type of vehicle:
 \itemize{
 \item{"bcom"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
