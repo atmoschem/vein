@@ -13,7 +13,7 @@
 #' \item{"road"}{: Splits PM in PM10 and PM2.5.}
 #' \item{"nox"}{: Splits NOx in NO and NO2.}
 #' \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
-#' \item{"voc"}{: Splits NMHC in voc groups according EDGAR.
+#' \item{"voc"}{: Splits NMHC in voc groups according EDGAR.}
 #' \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
 #' }
 #' @param veh Type of vehicle:
@@ -381,6 +381,7 @@ speciate <- function(x = 1,
     # voc ####
   } else if (spec == "voc") {
     nmhc <- sysdata$mech
+    nmhc <- as.data.frame(nmhc)
 
     if(!veh %in% unique(nmhc$veh)) {
       choice <- utils::menu(unique(nmhc$veh),
@@ -402,7 +403,9 @@ speciate <- function(x = 1,
       eu <- unique(nmhc$eu)[choice]
     }
     df <- nmhc[nmhc$eu == eu , ]
+
     df <- data.table::as.data.table(df)
+    voc <- NULL
     df <- df[, sum(x), by = voc]
     names(df)[2] <- "x"
 
@@ -411,13 +414,13 @@ speciate <- function(x = 1,
       dfb <- lapply(1:nrow(df), function(i) {
         df[i, ]$x * x / 100
       })
-      names(dfb) <- df$species
+      names(dfb) <- df$voc
 
     } else {
 
       dfb <- data.table::rbindlist(lapply(1:nrow(df), function(i) {
         data.frame(x = df[i, ]$x * x / 100,
-                   pol = df$species[i])
+                     pol = df$voc[i])
       }))
       if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
     }
