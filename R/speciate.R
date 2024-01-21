@@ -14,7 +14,7 @@
 #' \item{"nox"}{: Splits NOx in NO and NO2.}
 #' \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
 #' \item{"voc"}{: Splits NMHC in voc groups according EDGAR.}
-#' \item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
+#' \item{"pmiag", "pmneu",  "pmneu2", "pm2023"}{: Splits PM in groups, see note below.}
 #' }
 #' @param veh Type of vehicle:
 #' \itemize{
@@ -650,7 +650,7 @@ speciate <- function(x = 1,
           e_eci = 0,
           e_ecj = 0.056 + 0.024#,h2o = 0.277
         )
-      } else if (spec == "pm20232") {
+      } else if (spec == "pm2023") {
         df <- data.frame(
           e_so4i = 0.00646,
           e_so4j = 0.04104,

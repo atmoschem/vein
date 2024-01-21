@@ -5,7 +5,6 @@
 #' @return Objects of class "EmissionsList" and numeric elements as "units"
 #'
 #' @param x object with class "EmissionList"
-#' @param object object with class "EmissionList"
 #' @param ... ignored
 #' @aliases EmissionsList print.EmissionsList summary.EmissionsList
 #' plot.EmissionsList
