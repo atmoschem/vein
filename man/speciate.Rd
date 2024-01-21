@@ -27,7 +27,7 @@ speciate(
 \item{"nox"}{: Splits NOx in NO and NO2.}
 \item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
 \item{"voc"}{: Splits NMHC in voc groups according EDGAR.}
-\item{"pmiag", "pmneu",  "pmneu2"}{: Splits PM in groups, see note below.}
+\item{"pmiag", "pmneu",  "pmneu2", "pm2023"}{: Splits PM in groups, see note below.}
 }}
 
 \item{veh}{Type of vehicle:

@@ -1,10 +1,12 @@
 NEWS
 ===========
+### vein 1.1.2 (date: 2024-01-20)
 
+- fix speciation "pm2023"
 
-### vein 1.1.1 (date: 2023-09-19)
+### vein 1.1.1 (date: 2023-10-03)
 
-- speciation voc according EDGAR
+- speciation voc according EDGAR (voc 1..25)
 
 
 ### vein 1.1.0 (date: 2023-08-01)
