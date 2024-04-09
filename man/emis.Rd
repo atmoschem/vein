@@ -64,10 +64,6 @@ of the emissions implicitly will be g/day.
 vehicles on a road, length of the road, emission factor avaliated at the
 respective speed. \eqn{E = VEH*LENGTH*EF(speed)}
 }
-\note{
-Hour and day will be deprecated because they can be infered from the profile
-matrix.
-}
 \examples{
 \dontrun{
 # Do not run

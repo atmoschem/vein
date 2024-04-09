@@ -30,8 +30,6 @@
 #' @return If the user applies a top-down approach, the resulting units will be
 #' according its own data. For instance, if the vehicles are veh/day, the units
 #' of the emissions implicitly will be g/day.
-#' @note Hour and day will be deprecated because they can be infered from the profile
-#' matrix.
 #' @export
 #' @importFrom sf st_set_geometry
 #' @importFrom dotCall64 .C64 vector_dc

@@ -4,7 +4,7 @@
 \alias{make_grid}
 \title{Creates rectangular grid for emission allocation}
 \usage{
-make_grid(spobj, width, height = width, polygon, crs = 3857)
+make_grid(spobj, width, height = width, crs = 3857)
 }
 \arguments{
 \item{spobj}{A spatial object of class sp or sf.}
@@ -13,11 +13,7 @@ make_grid(spobj, width, height = width, polygon, crs = 3857)
 
 \item{height}{Height of grid cell.}
 
-\item{polygon}{Deprecated! \code{\link{make_grid}} returns only sf grid of
-polygons.}
-
-\item{crs}{coordinate reference system in numeric
-format from
+\item{crs}{coordinate reference system in numeric format from
 http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
 The default value is 3857, Pseudo Mercator}
 }
