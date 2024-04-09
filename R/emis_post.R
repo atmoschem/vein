@@ -154,8 +154,8 @@ emis_post <- function(arra,
 
       return(df)
     } else if (by == "streets_narrow") {
-      # soon deprecated this function?
-      x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
+
+            x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
         unlist(lapply (1:dim(arra)[3],function(i) { # hora
           rowSums(arra[,,i,j], na.rm = TRUE)
         }))

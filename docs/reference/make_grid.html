@@ -71,7 +71,7 @@ reference is taken from the spatial object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_grid</span><span class="op">(</span><span class="va">spobj</span>, <span class="va">width</span>, height <span class="op">=</span> <span class="va">width</span>, <span class="va">polygon</span>, crs <span class="op">=</span> <span class="fl">3857</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_grid</span><span class="op">(</span><span class="va">spobj</span>, <span class="va">width</span>, height <span class="op">=</span> <span class="va">width</span>, crs <span class="op">=</span> <span class="fl">3857</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -88,14 +88,8 @@ reference is taken from the spatial object.</p>
 <dd><p>Height of grid cell.</p></dd>
 
 
-<dt>polygon</dt>
-<dd><p>Deprecated! <code>make_grid</code> returns only sf grid of
-polygons.</p></dd>
-
-
 <dt>crs</dt>
-<dd><p>coordinate reference system in numeric
-format from
+<dd><p>coordinate reference system in numeric format from
 http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
 The default value is 3857, Pseudo Mercator</p></dd>
 

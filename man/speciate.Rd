@@ -20,47 +20,47 @@ speciate(
 
 \item{spec}{The speciations are:
 \itemize{
-\item{"bcom"}{: Splits PM2.5 in black carbon and organic matter.}
-\item{"tyre" or "tire"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
-\item{"brake"}{: Splits PM in PM10, PM2.5, PM1 and PM0.1.}
-\item{"road"}{: Splits PM in PM10 and PM2.5.}
-\item{"nox"}{: Splits NOx in NO and NO2.}
-\item{"nmhc"}{: Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.}
-\item{"voc"}{: Splits NMHC in voc groups according EDGAR.}
-\item{"pmiag", "pmneu",  "pmneu2", "pm2023"}{: Splits PM in groups, see note below.}
+\item "bcom": Splits PM2.5 in black carbon and organic matter.
+\item "tyre" or "tire": Splits PM in PM10, PM2.5, PM1 and PM0.1.
+\item "brake": Splits PM in PM10, PM2.5, PM1 and PM0.1.
+\item "road": Splits PM in PM10 and PM2.5.
+\item "nox": Splits NOx in NO and NO2.
+\item "nmhc": Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.
+\item "voc": Splits NMHC in voc groups according EDGAR.
+\item "pmiag", "pmneu",  "pmneu2", "pm2023": Splits PM in groups, see note below.
 }}
 
 \item{veh}{Type of vehicle:
 \itemize{
-\item{"bcom"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
-\item{"tyre" or "tire"}{: not necessary.}
-\item{"brake"}{: not necessary.}
-\item{"road"}{: not necessary.}
-\item{"nox"}{: veh can be "PC", "LCV", HDV" or "Motorcycle".}
-\item{"nmhc"}{see below}
-\item{""pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+\item "bcom": veh can be "PC", "LCV", HDV" or "Motorcycle".
+\item "tyre" or "tire": not necessary.
+\item "brake": not necessary.
+\item "road": not necessary.
+\item "nox": veh can be "PC", "LCV", HDV" or "Motorcycle".
+\item "nmhc":see below
+\item ""pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
 }}
 
 \item{fuel}{Fuel.
 \itemize{
-\item{"bcom"}{: "G" or "D".}
-\item{"tyre" or "tire"}{: not necessary.}
-\item{"brake"}{: not necessary.}
-\item{"road"}{: not necessary.}
-\item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
-\item{"nmhc"}{see below}
-\item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+\item "bcom": "G" or "D".
+\item "tyre" or "tire": not necessary.
+\item "brake": not necessary.
+\item "road": not necessary.
+\item "nox": "G", "D", "LPG", "E85" or "CNG".
+\item "nmhc":see below
+\item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
 }}
 
 \item{eu}{Emission standard
 \itemize{
-\item{"bcom"}{: "G" or "D".}
-\item{"tyre" or "tire"}{: not necessary.}
-\item{"brake"}{: not necessary.}
-\item{"road"}{: not necessary.}
-\item{"nox"}{: "G", "D", "LPG", "E85" or "CNG".}
-\item{"nmhc"}{see below}
-\item{"pmiag", "pmneu",  "pmneu2"}{: not necessary.}
+\item "bcom": "G" or "D".
+\item "tyre" or "tire": not necessary.
+\item "brake": not necessary.
+\item "road": not necessary.
+\item "nox": "G", "D", "LPG", "E85" or "CNG".
+\item "nmhc":see below
+\item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
 }}
 
 \item{list}{when TRUE returns a list with number of elements of the list as
@@ -139,12 +139,12 @@ options for spec "nmhc":
 after eu = OM, all profiles are Chinese
 # the following specs will be removed soon
 \itemize{
-\item{"iag_racm"}{: ethanol emissions added in hc3.}
-\item{"iag" or "iag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
-\item{"petroiag_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt1) group .}
-\item{"iag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group .}
-\item{"neu_cb05"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
-\item{"petroiag_cb05v2"}{: Splits NMHC by CB05 (WRF exb05_opt2) group alternative.}
+\item"iag_racm": ethanol emissions added in hc3.
+\item"iag" or "iag_cb05": Splits NMHC by CB05 (WRF exb05_opt1) group .
+\item"petroiag_cb05": Splits NMHC by CB05 (WRF exb05_opt1) group .
+\item"iag_cb05v2": Splits NMHC by CB05 (WRF exb05_opt2) group .
+\item"neu_cb05": Splits NMHC by CB05 (WRF exb05_opt2) group alternative.
+\item"petroiag_cb05v2": Splits NMHC by CB05 (WRF exb05_opt2) group alternative.
 }
 
 spec \strong{"pmiag"} speciate pm2.5 into e_so4i, e_so4j, e_no3i,
@@ -168,7 +168,7 @@ spec \strong{"voc"} splits nmhc into the 25 VOC
 groups according: Huang et al 2019, "Speciation of anthropogenic
 emissions of non-methane volatile
 organic compounds: a global gridded data set for
-1970–2012" ACP. Specaition In development.
+1970-2012" ACP. Speciation In development.
 }
 \examples{
 \dontrun{

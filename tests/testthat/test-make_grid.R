@@ -26,8 +26,3 @@ test_that("emis_grid warning", {
   expect_warning(make_grid(b, 1/102.47/2, crs = "+init=epsg:31983")$id[1],
                1)
 })
-
-test_that("emis_grid message", {
-  expect_message(make_grid(net, 1/102.47/2, polygon = T),
-                 "argument.?")
-})

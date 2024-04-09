@@ -6,10 +6,7 @@
 #' @param spobj A spatial object of class sp or sf.
 #' @param width Width of grid cell. It is recommended to use projected values.
 #' @param height Height of grid cell.
-#' @param polygon  Deprecated! \code{\link{make_grid}} returns only sf grid of
-#' polygons.
-#' @param crs coordinate reference system in numeric
-#' format from
+#' @param crs coordinate reference system in numeric format from
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
 #' The default value is 3857, Pseudo Mercator
 #' @return A grid of polygons class 'sf'
@@ -26,11 +23,7 @@
 make_grid <- function(spobj,
                       width,
                       height = width,
-                      polygon,
                       crs = 3857){
-  if(!missing(polygon)){
-    message("argument 'polygon' is not needed")
-  }
 
   if(substr(crs, 1, 5) == "+init"){
     warning("GDAL Message 1: +init=epsg:XXXX syntax is deprecated.

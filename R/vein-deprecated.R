@@ -7,3 +7,40 @@
 #' @name vein-deprecated
 #' @keywords internal
 NULL
+
+#' @rdname vein-deprecated
+#' @export
+EmissionsList <- function(...) {
+  .Deprecated("EmissionsList")
+  "EmissionsList"
+}
+
+
+#' @rdname vein-deprecated
+#' @export
+running_losses <- function() {
+  .Deprecated("emis_evap")
+  "Evaporative emissions"
+}
+
+#' @rdname vein-deprecated
+#' @export
+hot_soak <- function() {
+  .Deprecated("emis_evap")
+  "Evaporative emissions"
+}
+
+
+
+
+#' @rdname vein-deprecated
+#' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
+#' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
+#' Environment Agency, Copenhagen, 2009
+#' @export
+Evaporative <- function() {
+  .Deprecated("emis_evap")
+  "Evaporative emissions"
+}
+
+

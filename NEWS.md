@@ -1,6 +1,6 @@
 NEWS
 ===========
-### vein 1.1.2 (date: 2024-01-20)
+### vein 1.1.2 (date: 2024-01-24)
 
 - fix speciation "pm2023"
 
