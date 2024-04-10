@@ -12,6 +12,7 @@
 #'   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
 #'   brazil_country     \tab Top down \tab CETESB+tunnel\tab  .rds\cr
+#'   brazil_countryv2     \tab Top down \tab CETESB+tunnel\tab  .rds\cr
 #'   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   sebr_cb05co2   \tab Top-down SP, MG and RJ\tab CETESB+tunnel\tab  .rds\cr
 #'   amazon2014     \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
@@ -55,6 +56,8 @@
 #' In any case, if you find any error, please, send a pull request in github.
 #'
 #' In Sao Paulo the IM programs was functioning until 2011.
+#'
+#' brazil_countryv2 has scripts updated
 #'
 #' @importFrom utils download.file untar
 #' @export
@@ -113,6 +116,14 @@ get_project <- function(directory,
     } else if(case %in% c("brazil_country",
                           "brasil_country")){
       URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil.tar.gz"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL,
+                           destfile =  tf)
+      utils::untar(tarfile = tf, exdir = directory)
+      message("Your directory is in ", directory)
+
+    } else if(case %in% c("brazil_countryv2")){
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_country.tar.gz"
       tf <- paste0(tempfile(), ".tar.gz")
       utils::download.file(url = URL,
                            destfile =  tf)
