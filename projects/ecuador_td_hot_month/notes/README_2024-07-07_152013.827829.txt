@@ -1,0 +1,90 @@
+========================================
+Ecuador province 2019
+========================================
+
+Directory: /media/sergio/ext4/models/vein/projects/ecuador_td_hot_month
+
+Local Time: 2024-07-07 15:20:13.828316
+Inventory compiler: sergio
+========================================
+
+sysname = Linux
+release = 6.8.0-36-generic
+version = #36-Ubuntu SMP PREEMPT_DYNAMIC Mon Jun 10 10:49:14 UTC 2024
+nodename = sergio-gl639sd
+machine = x86_64
+user = sergio
+R version = 4.3.3
+nickname = Angel Food Cake
+Memory used = 1704Mb 
+========================================
+
+VEIN version = 1.1.3
+========================================
+
+Traffic:
+Statistics
+
+Approach:
+Top-Down
+
+Vehicular composition:
+Ecuador
+
+Emission Factors:
+EEA, vehiculos pesados con gasolina, asumidos PC grandes. 
+        Vehiculos hibridos asumidos PC Euro 4 (es el unico disponible en los EF).
+        Es necesario colocar 0 en estos vehiculos donde no estaban en circulacion
+
+Cold starts:
+NO
+
+Evaporative:
+NO
+
+Traffic standards:
+Euro
+
+Traffic mileage:
+Bruni and Bales 2013, Brazil
+
+Notes:
+Default notes for vein::get_project
+========================================
+
+Session Info:
+R version 4.3.3 (2024-02-29)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 24.04 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8   
+ [6] LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+time zone: America/Denver
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] colorout_1.3-0.1  data.table_1.15.0 eixport_0.6.0     ggplot2_3.5.1     cptcity_1.0.6     sf_1.0-16         vein_1.1.3       
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.4       dplyr_1.1.4        compiler_4.3.3     tidyselect_1.2.0   Rcpp_1.0.12        parallel_4.3.3     scales_1.3.0       readxl_1.4.3      
+ [9] lattice_0.22-5     R6_2.5.1           labeling_0.4.3     generics_0.1.3     classInt_0.4-10    dotCall64_1.1-0    tibble_3.2.1       units_0.8-5       
+[17] munsell_0.5.0      DBI_1.2.1          pillar_1.9.0       rlang_1.1.3        utf8_1.2.4         sp_2.1-3           terra_1.7-78       cli_3.6.2         
+[25] withr_3.0.0        magrittr_2.0.3     class_7.3-22       grid_4.3.3         ncdf4_1.22         lifecycle_1.0.4    vctrs_0.6.5        KernSmooth_2.23-22
+[33] proxy_0.4-27       glue_1.7.0         farver_2.1.1       cellranger_1.1.0   raster_3.6-26      codetools_0.2-19   fansi_1.0.6        e1071_1.7-14      
+[41] colorspace_2.1-0   tools_4.3.3        pkgconfig_2.0.3   
+
+========================================
+
+
+
+Thanks for using VEIN
