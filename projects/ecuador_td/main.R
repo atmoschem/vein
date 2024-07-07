@@ -40,12 +40,24 @@ col_region <- "region" # esta columna debe estar presente en fuel y met
 scale <- "none"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
+
+im_ok <- readxl::read_xlsx(path = path, sheet = "im_ok")
+im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
+im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
+im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
+im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm25")
+
 source("config/config.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
+
 
 # 1) Network ####
 net <- st_read("network/ecuador_provincias.gpkg")
 crs <- 4326
 source("scripts/net.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
 
 # 2) Traffic ####
 language <- "spanish" # english spanish portuguese
@@ -60,6 +72,8 @@ k_D <- 1
 k_G <- 1
 survival <- TRUE
 source("scripts/traffic.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
 
 # 3) Estimation ####
 language <- "spanish" # english spanish portuguese

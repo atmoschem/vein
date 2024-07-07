@@ -201,7 +201,7 @@ ef_ldv_speed <- function(
 
 
   # try to solve error of negative values present in EEA guidelines
-  if(v == "LCV" && eu == "V") {
+  if(v == "LCV" && any(eu %in% "V")) {
     warning("When `v` is 'LCV' and `eu` is 'V', I replaces `v` by 'PC' and `cc` by >'2000' see issue #204")
     v <- "PC"
     cc <- ">2000"
