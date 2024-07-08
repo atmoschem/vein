@@ -9,7 +9,7 @@
 \usage{
 EmissionFactors(x, mass = "g", dist = "km", ...)
 
-\method{print}{EmissionFactors}(x)
+\method{print}{EmissionFactors}(x, ...)
 
 \method{summary}{EmissionFactors}(object, ...)
 

@@ -67,16 +67,17 @@ EmissionFactors <- function(x,
 
 #' @rdname EmissionFactors
 #' @method print EmissionFactors
+#' @param... print arguments
 #' @export
-print.EmissionFactors <- function(x) {
+print.EmissionFactors <- function(x, ...) {
   nr <- ifelse(nrow(x) <= 5, nrow(x), 5)
   if(ncol(x) == 1) {
     ndf <- names(x)
     df <- data.frame(ndf = x[1:nr, ])
     names(df) <- ndf
-    print.data.frame(df)
+    print.data.frame(df, ...)
   } else {
-    print.data.frame(x[1:nr, ])
+    print.data.frame(x[1:nr, ], ...)
   }
   if(nrow(x) > 5)     cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
 }
@@ -85,10 +86,11 @@ print.EmissionFactors <- function(x) {
 
 #' @rdname EmissionFactors
 #' @method summary EmissionFactors
+#' @param ... summary arguments
 #' @export
 summary.EmissionFactors <- function(object, ...) {
   cat("Mean EmissionFactors in study area = \n")
-  print(summary.data.frame(object))
+  print(summary.data.frame(object), ...)
 }
 
 #' @rdname EmissionFactors
