@@ -95,6 +95,7 @@ pol <- "FC"
 provincia <- unique(fuel$region)[1]
 # provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 nt <- 1 # check_nt() / 2
+survival <- TRUE
 source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
 # rm(list = ls())
 # gc()

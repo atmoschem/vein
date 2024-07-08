@@ -17,8 +17,7 @@
 #'   sebr_cb05co2   \tab Top-down SP, MG and RJ\tab CETESB+tunnel\tab  .rds\cr
 #'   amazon2014     \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   curitiba       \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
-#'   ecuador_td     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
-#'   ecuador_td_hot_month  \tab Top-down\tab EEA\tab  csv and.rds\cr
+#'   ecuador     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
 #'   moves_bu         \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
 #'   manizales_bu     \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
 #'   eu_bu_chem       \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
@@ -48,17 +47,8 @@
 #' \strong{sebr_cb05co2} covers
 #' "sebr_cb05co2_im"
 #'
-#' \strong{ecuador_td} covers
-#' "ecuador_td",
-#' "ecuador_td_hot",
-#' "ecuador_td_im"
-#'
-#' In any case, if you find any error, please, send a pull request in github.
-#'
 #' In Sao Paulo the IM programs was functioning until 2011.
-#'
-#' brazil_countryv2 has scripts updated
-#'
+#'#'
 #' @importFrom utils download.file untar
 #' @export
 #' @examples \dontrun{
@@ -178,7 +168,8 @@ get_project <- function(directory,
       message("Your directory is in ", directory)
 
       # ecuador_td_im ####
-    } else if(case %in% c("ecuador_td",
+    } else if(case %in% c("ecuador",
+                          "ecuador_td",
                           "ecuador_td_hot",
                           "ecuador_td_im")){
       URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td.tar.gz"
@@ -187,11 +178,11 @@ get_project <- function(directory,
                            destfile =  tf)
       utils::untar(tarfile = tf, exdir = directory)
 
-      x <- readLines(paste0(directory, "/main.R"))
-      x <- gsub(pattern = "IM <- FALSE",
-                replacement = "IM <- TRUE",
-                x = x)
-      writeLines(x, paste0(directory, "/main.R"))
+      # x <- readLines(paste0(directory, "/main.R"))
+      # x <- gsub(pattern = "IM <- FALSE",
+      #           replacement = "IM <- TRUE",
+      #           x = x)
+      # writeLines(x, paste0(directory, "/main.R"))
 
       message("Your directory is in ", directory)
 

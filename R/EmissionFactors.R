@@ -1,6 +1,6 @@
 #' Construction function for class "EmissionFactors"
 #'
-#' @description \code{EmissionFactors} returns a transformed object with class
+#' @description EmissionFactors returns a transformed object with class
 #' "EmissionFactors" and units g/km.
 #'
 #' @return Objects of class "EmissionFactors" or "units"
@@ -27,18 +27,14 @@
 #' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors
 #' plot.EmissionFactors
 #' @examples \dontrun{
-#' data(fe2015)
-#' names(fe2015)
-#' class(fe2015)
-#' df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
-#' ef1 <- EmissionFactors(df)
-#' class(ef1)
-#' summary(ef1)
-#' plot(ef1)
-#' print(ef1)
+#' #do not run
+#' EmissionFactors(1)
 #' }
 #' @export
-EmissionFactors <- function(x, mass = "g", dist = "km", ...) {
+EmissionFactors <- function(x,
+                            mass = "g",
+                            dist = "km",
+                            ...) {
   if ( is.matrix(x) ) {
     ef <- as.data.frame(x)
     for(i in 1:ncol(ef)){
@@ -72,7 +68,7 @@ EmissionFactors <- function(x, mass = "g", dist = "km", ...) {
 #' @rdname EmissionFactors
 #' @method print EmissionFactors
 #' @export
-print.EmissionFactors <- function(x, ...) {
+print.EmissionFactors <- function(x) {
   nr <- ifelse(nrow(x) <= 5, nrow(x), 5)
   if(ncol(x) == 1) {
     ndf <- names(x)
@@ -97,6 +93,7 @@ summary.EmissionFactors <- function(object, ...) {
 
 #' @rdname EmissionFactors
 #' @method plot EmissionFactors
+#' @param ... par arguments if needed
 #' @export
 plot.EmissionFactors <- function(x,
                                  pal = "mpl_viridis",
