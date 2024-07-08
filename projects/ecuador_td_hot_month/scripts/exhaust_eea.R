@@ -123,7 +123,7 @@ for (i in seq_along(metadata$vehicles)) {
                                gr = 0,
                                l = 0.5,
                                p = pol[j],
-                               speed = Speed(rep(metadata$speed[i], 12)))
+                               speed = Speed(metadata$speed[i]))
           }
           
                 array_x <- emis_hot_td(

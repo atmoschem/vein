@@ -36,14 +36,14 @@ head(ef_china_te(te = net$ps,
 }
 \seealso{
 Other China: 
-\code{\link{ef_china_det}()},
-\code{\link{ef_china_hu}()},
-\code{\link{ef_china_h}()},
-\code{\link{ef_china_long}()},
-\code{\link{ef_china_speed}()},
-\code{\link{ef_china_s}()},
-\code{\link{ef_china_th}()},
 \code{\link{ef_china}()},
+\code{\link{ef_china_det}()},
+\code{\link{ef_china_h}()},
+\code{\link{ef_china_hu}()},
+\code{\link{ef_china_long}()},
+\code{\link{ef_china_s}()},
+\code{\link{ef_china_speed}()},
+\code{\link{ef_china_th}()},
 \code{\link{emis_china}()},
 \code{\link{emis_long}()}
 }

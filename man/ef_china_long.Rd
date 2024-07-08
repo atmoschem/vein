@@ -44,26 +44,26 @@ ef_china_long(standard = "I", p = "CO")
 }
 \seealso{
 Other China: 
+\code{\link{ef_china}()},
 \code{\link{ef_china_det}()},
-\code{\link{ef_china_hu}()},
 \code{\link{ef_china_h}()},
-\code{\link{ef_china_speed}()},
+\code{\link{ef_china_hu}()},
 \code{\link{ef_china_s}()},
+\code{\link{ef_china_speed}()},
 \code{\link{ef_china_te}()},
 \code{\link{ef_china_th}()},
-\code{\link{ef_china}()},
 \code{\link{emis_china}()},
 \code{\link{emis_long}()}
 
 Other China: 
+\code{\link{ef_china}()},
 \code{\link{ef_china_det}()},
-\code{\link{ef_china_hu}()},
 \code{\link{ef_china_h}()},
-\code{\link{ef_china_speed}()},
+\code{\link{ef_china_hu}()},
 \code{\link{ef_china_s}()},
+\code{\link{ef_china_speed}()},
 \code{\link{ef_china_te}()},
 \code{\link{ef_china_th}()},
-\code{\link{ef_china}()},
 \code{\link{emis_china}()},
 \code{\link{emis_long}()}
 }

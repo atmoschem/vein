@@ -4,7 +4,7 @@ Ecuador province 2019
 
 Directory: /media/sergio/ext4/models/vein/projects/ecuador_td_hot_month
 
-Local Time: 2024-07-07 15:20:13.828316
+Local Time: 2024-07-07 16:53:11.781841
 Inventory compiler: sergio
 ========================================
 
@@ -73,15 +73,16 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] colorout_1.3-0.1  data.table_1.15.0 eixport_0.6.0     ggplot2_3.5.1     cptcity_1.0.6     sf_1.0-16         vein_1.1.3       
+[1] data.table_1.15.4 eixport_0.6.0     ggplot2_3.5.1     cptcity_1.0.6     sf_1.0-16         vein_1.1.3       
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.4       dplyr_1.1.4        compiler_4.3.3     tidyselect_1.2.0   Rcpp_1.0.12        parallel_4.3.3     scales_1.3.0       readxl_1.4.3      
- [9] lattice_0.22-5     R6_2.5.1           labeling_0.4.3     generics_0.1.3     classInt_0.4-10    dotCall64_1.1-0    tibble_3.2.1       units_0.8-5       
-[17] munsell_0.5.0      DBI_1.2.1          pillar_1.9.0       rlang_1.1.3        utf8_1.2.4         sp_2.1-3           terra_1.7-78       cli_3.6.2         
-[25] withr_3.0.0        magrittr_2.0.3     class_7.3-22       grid_4.3.3         ncdf4_1.22         lifecycle_1.0.4    vctrs_0.6.5        KernSmooth_2.23-22
-[33] proxy_0.4-27       glue_1.7.0         farver_2.1.1       cellranger_1.1.0   raster_3.6-26      codetools_0.2-19   fansi_1.0.6        e1071_1.7-14      
-[41] colorspace_2.1-0   tools_4.3.3        pkgconfig_2.0.3   
+ [1] gtable_0.3.4       dplyr_1.1.4        compiler_4.3.3     tidyselect_1.2.0   Rcpp_1.0.12        parallel_4.3.3     scales_1.3.0      
+ [8] readxl_1.4.3       lattice_0.22-5     R6_2.5.1           labeling_0.4.3     generics_0.1.3     classInt_0.4-10    dotCall64_1.1-1   
+[15] tibble_3.2.1       units_0.8-5        munsell_0.5.0      DBI_1.2.3          pillar_1.9.0       rlang_1.1.3        utf8_1.2.4        
+[22] sp_2.1-3           terra_1.7-78       cli_3.6.2          withr_3.0.0        magrittr_2.0.3     class_7.3-22       grid_4.3.3        
+[29] ncdf4_1.22         lifecycle_1.0.4    vctrs_0.6.5        KernSmooth_2.23-22 proxy_0.4-27       glue_1.7.0         farver_2.1.1      
+[36] cellranger_1.1.0   raster_3.6-26      codetools_0.2-19   fansi_1.0.6        e1071_1.7-14       colorspace_2.1-0   tools_4.3.3       
+[43] pkgconfig_2.0.3   
 
 ========================================
 

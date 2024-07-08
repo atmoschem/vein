@@ -9,7 +9,7 @@
 \usage{
 EmissionFactors(x, mass = "g", dist = "km", ...)
 
-\method{print}{EmissionFactors}(x, ...)
+\method{print}{EmissionFactors}(x)
 
 \method{summary}{EmissionFactors}(object, ...)
 
@@ -34,7 +34,7 @@ EmissionFactors(x, mass = "g", dist = "km", ...)
 
 \item{dist}{String indicating the units of the resulting distance in speed.}
 
-\item{...}{ignored}
+\item{...}{par arguments if needed}
 
 \item{object}{object with class "EmissionFactors'}
 
@@ -60,19 +60,12 @@ EmissionFactors(x, mass = "g", dist = "km", ...)
 Objects of class "EmissionFactors" or "units"
 }
 \description{
-\code{EmissionFactors} returns a transformed object with class
+EmissionFactors returns a transformed object with class
 "EmissionFactors" and units g/km.
 }
 \examples{
 \dontrun{
-data(fe2015)
-names(fe2015)
-class(fe2015)
-df <- fe2015[fe2015$Pollutant=="CO", c(ncol(fe2015)-1,ncol(fe2015))]
-ef1 <- EmissionFactors(df)
-class(ef1)
-summary(ef1)
-plot(ef1)
-print(ef1)
+#do not run
+EmissionFactors(1)
 }
 }
