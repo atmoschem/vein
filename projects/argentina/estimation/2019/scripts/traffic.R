@@ -136,17 +136,19 @@ if(any(grepl("region", names(veh)))) {
 } else {
   cat("No `region` in `veh`\n")
     
+
   rbindlist(lapply(seq_along(v), function(i) {
+
     if(verbose){
       cat("\n", metadata$vehicles[i],
         rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
       )
-    }
-      rbindlist(lapply(seq_along(reg), function(j) {
+    } 
+rbindlist(lapply(seq_along(reg), function(j) {
 
-        if(verbose) cat(reg[j], " " )
+        #if(verbose) cat(reg[j], " " )
         
-    
+
        x <- veh[[v[i]]]*fuel[region == reg[j] & 
                              fuel == metadata$fuel[i]]$kinitial
         x <- remove_units(x)[1:metadata$maxage[i]]
@@ -211,7 +213,7 @@ ggplot(vv[family == fam[i] &
   dev.off()  
 }
 
-# hast aqui
+
 # ggplot2
 
 dx <- vv[,
