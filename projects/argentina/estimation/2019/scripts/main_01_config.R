@@ -20,12 +20,16 @@ metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
 mileage <- readRDS("../../config/rds/mileage.rds")
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
 
-s <- readxl::read_xlsx(path = path, sheet = "s")
 
 veh <- readRDS("../../config/rds/fleet_age.rds")
-fuel <- readRDS("../../config/rds/fuel.rds")
+
+# assuming fuel 2019
+fuel_month <- readxl::read_xlsx(path = path, sheet = "fuel_month")
+# columns used: date, FUEL_M3, density_tm3, type, fuel
+fuel_month$Year <- 2019
+s <- readxl::read_xlsx(path = path, sheet = "s")
 fuel_spec <- readxl::read_xlsx(path = path, sheet = "fuel_spec")
-pmonth <-  readRDS("../../config/rds/fuel_month.rds")
+
 met <-  readRDS("../../config/rds/met.rds")
 
 euro <- readxl::read_xlsx(path = path, sheet = "euro")
@@ -40,6 +44,7 @@ im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
 im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
 im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
 im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm25")
+
 
 source("config/config.R")
 
