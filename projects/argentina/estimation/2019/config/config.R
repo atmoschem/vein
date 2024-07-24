@@ -20,10 +20,25 @@ setDT(mileage)
 setDT(tfs)
 setDT(veh)
 
-setDT(fuel)
+setDT(fuel_month)
+
+fuel_month[, date := ISOdate(Year, Month, 1, 0,0,0)]
+
+
+fuel_month[, consumption_t := FUEL_M3 *density_tm3]
+
+fuel_month[, type := "data"]
+
+pmonth <- fuel_month
+
+fuel_month[, sum(consumption_t), 
+  by = .(region, Year = year(date), fuel, type)
+] -> fuel
+
+names(fuel)[ncol(fuel)] <- "consumption_t"
+
 setDT(fuel_spec)
 setDT(met)
-setDT(pmonth)
 setDT(euro)
 setDT(tech)
 
@@ -168,16 +183,14 @@ switch (language,
         "spanish" = cat("Plotando combustible \n"))
 
 p <- ggplot(pmonth,
-            aes(x = m,
-                y = as.numeric(m3),
+            aes(x = month(date),
+                y = as.numeric(FUEL_M3),
                 fill = fuel)) +
   geom_bar(stat = "identity") +
   labs(y = "m3") +
-  facet_wrap(~ region, 
-             scales = "free_y") +
+  facet_wrap(~ region) +
   theme_bw(base_size = 16) +
-  theme(legend.position = c(0.8, 0.05),
-        legend.direction="horizontal")
+  theme(panel.spacing = unit(0,'lines'))
 
 png("images/FUEL.png", 
     width = 3000, 
