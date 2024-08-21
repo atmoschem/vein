@@ -212,6 +212,14 @@ filled.contour(as.matrix(a), col = cptcity::lucky(),
 xlab = "Speed", ylab = "Age")
 persp(x = as.matrix(a), theta = 35, xlab = "Speed", ylab = "Euros",
 zlab = "CO [g/km]", col = cptcity::lucky(), phi = 25)
+
+ef <- ef_ldv_speed(v = "LCV",
+                   t = "4S",
+                   cc = "<3.5",
+                   f = "G",
+                   p = "FC",
+                   eu = c("I", "II"),
+                   speed = Speed(10))
 }
 }
 \seealso{

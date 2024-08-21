@@ -22,17 +22,21 @@ setDT(veh)
 
 setDT(fuel_month)
 
+# necesita columnas Year, Month, FUEL_M3 *density_tm3
 fuel_month[, date := ISOdate(Year, Month, 1, 0,0,0)]
-
 
 fuel_month[, consumption_t := FUEL_M3 *density_tm3]
 
+# manual
 fuel_month[, type := "data"]
 
 pmonth <- fuel_month
 
 fuel_month[, sum(consumption_t), 
-  by = .(region, Year = year(date), fuel, type)
+  by = .(region, 
+         Year, 
+         fuel, 
+         type)
 ] -> fuel
 
 names(fuel)[ncol(fuel)] <- "consumption_t"
@@ -55,13 +59,13 @@ setDT(im_pm)
 
 met$region <- toupper(met$region)
 pmonth$region <- toupper(pmonth$region)
+rain$region <- toupper(rain$region)
 
 # pmonth ####
-setDT(pmonth)
 switch (language,
-  "portuguese" = cat( "Filtrando pmonth: ", year_select, "\n"),
-  "english" =  cat( "Filtering pmonth: ", year_select, "\n"),
-  "spanish" = cat( "Filtrando pmonth: ", year_select, "\n"))
+  "portuguese" = cat( "Filtrando fuel_month: ", year_select, "\n"),
+  "english" =  cat( "Filtering fuel_month: ", year_select, "\n"),
+  "spanish" = cat( "Filtrando fuel_month: ", year_select, "\n"))
 
 pmonth <- pmonth[Year ==  year_select]
 
@@ -75,6 +79,8 @@ switch (language,
   "spanish" = cat( "Filtrando met: ", year_select, "\n"))
 
 met <- met[Year == year_select]
+
+rain <- rain[year(date) == year_select]
 
 # fuel ####
 switch (language,
@@ -94,6 +100,7 @@ saveRDS(veh, "config/fleet_age.rds")
 saveRDS(fuel, "config/fuel.rds")
 saveRDS(fuel_spec, "config/fuel_spec.rds")
 saveRDS(met, "config/met.rds")
+saveRDS(rain, "config/rain.rds")
 saveRDS(pmonth, "config/pmonth.rds")
 saveRDS(euro, "config/euro.rds")
 saveRDS(tech, "config/tech.rds")
@@ -191,6 +198,7 @@ p <- ggplot(pmonth,
   facet_wrap(~ region) +
   theme_bw(base_size = 16) +
   theme(panel.spacing = unit(0,'lines'))
+p
 
 png("images/FUEL.png", 
     width = 3000, 
@@ -276,7 +284,6 @@ for(i in seq_along(n_veh)) {
 
 
 # Plot Mileage ####
-
 switch (language,
         "portuguese" = cat("Plotando quilometragem \n"),
         "english" = cat("Plot mileage `tfs`\n"),
@@ -362,7 +369,6 @@ aes(x = Year,
 geom_tile() +
   theme_bw(base_size = 14) -> p
 
-
 png(paste0("images/standard.png"), 
 width = 3000, 
 height = 2500, 
@@ -375,17 +381,16 @@ dev.off()
 # Plot Temperature ####
 units(celsius(1))$numerator
 
-for(i in 1){
   
   ggplot(met, 
          aes(x = date,
-             y = Temperature,
-             colour = scenario)) +
+             y = Temperature)) +
     geom_line() +
     labs(title = year_select) + 
     facet_wrap(~ region) + 
     theme_bw(base_size = 16) -> p
-  
+ 
+
   png("images/Temperature.png", 
       width = 2000, 
       height = 1500, 
@@ -393,7 +398,27 @@ for(i in 1){
       res = 300)
   print(p)  
   dev.off()
-}
+
+
+# Plot Rain ####
+  
+  ggplot(rain, 
+         aes(x = date,
+             y = PN)) +
+    geom_line() +
+    labs(title = year_select) + 
+    facet_wrap(~ region) + 
+    theme_bw(base_size = 16) -> p
+ 
+
+  png("images/Rain.png", 
+      width = 2000, 
+      height = 1500, 
+      "px",
+      res = 300)
+  print(p)  
+  dev.off()
+
 
 # # Plot month #####
 # pmonth <- as.data.frame(pmonth)
@@ -426,14 +451,14 @@ switch (language,
 
 vein_notes(notes = c("Default notes for vein::get_project"), 
            file = "notes/README", 
-           title = paste0("Brazil by state ", year_select), 
+           title = paste0("Argentina by state ", year_select), 
            approach = 'Top-Down', 
-           traffic = "DENATRAN", 
-           composition = "CETESB", 
-           ef = paste0("CETESB ", scale), 
-           cold_start = "Not Applicable", 
+           traffic = "DNRBA", 
+           composition = "DNRBA", 
+           ef = "COPERT", 
+           cold_start = "COPERT", 
            evaporative = "Running Losses, Diurnal and Hot Soak", 
-           standards = "PROCONVE, PROMOT", 
+           standards = "EURO", 
            mileage = "Bruni and Bales 2013")
 # saveRDS
 

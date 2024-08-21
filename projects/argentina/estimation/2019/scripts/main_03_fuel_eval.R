@@ -7,7 +7,6 @@ library(cptcity) # 7120 colour palettes
 library(ggplot2) # plots
 library(data.table) # faster data.frames
 library(units)
-library(stars)
 library(eixport)
 sessionInfo()
 
@@ -21,9 +20,11 @@ veh <- readRDS("config/fleet_age.rds")
 pmonth <- readRDS("config/pmonth.rds")
 met <- readRDS("config/met.rds")
 verbose <- FALSE
-
+euro <- readRDS("config/euro.rds")
+tech <- readRDS("config/tech.rds")
 # fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
+
 pol <- "FC"
 source("scripts/fuel_eval.R", encoding = "UTF-8")
 rm(list = ls())

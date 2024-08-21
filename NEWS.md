@@ -1,5 +1,9 @@
 NEWS
 ===========
+### vein 1.1.4 (date: 2024-08-20)
+
+- ef_ldv_speed when LCV G and eu longer than 1,  works 
+
 ### vein 1.1.2 (date: 2024-01-24)
 
 - fix speciation "pm2023"
