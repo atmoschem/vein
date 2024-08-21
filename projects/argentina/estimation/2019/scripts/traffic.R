@@ -85,12 +85,12 @@ if(survival) {
   }}
 }
 
-# lleguehasta aqui
 
 # veh ####
 #
 v <- metadata$vehicles
 
+# columna region en hoja fuel ####
 reg <- unique(fuel[["region"]])
 
 if(any(grepl("region", names(veh)))) {
