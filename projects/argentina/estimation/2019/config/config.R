@@ -20,6 +20,24 @@ setDT(mileage)
 setDT(tfs)
 setDT(veh)
 
+# vehicle ####
+reg <- unique(fuel_month$region)
+if(!any(grepl("region", names(veh)))) {
+if(add_reg_veh) {
+  switch (language,
+          "portuguese" = cat( "Adicionando `region` em `veh`\n"),
+          "english" =  cat( "Adding `region` column in  `veh`\n"),
+          "spanish" = cat( "Agregando columna `region` en `veh`\n"))
+
+  veh <- rbindlist(lapply(seq_along(reg), function(i){
+    veh$region <- reg[i]
+    veh
+  }))
+
+}}
+
+
+# fuel ####
 setDT(fuel_month)
 
 # necesita columnas Year, Month, FUEL_M3 *density_tm3
@@ -32,14 +50,18 @@ fuel_month[, type := "data"]
 
 pmonth <- fuel_month
 
-fuel_month[, sum(consumption_t), 
-  by = .(region, 
-         Year, 
-         fuel, 
-         type)
+fuel_month[, sum(consumption_t),
+  by = .(region,
+         Year,
+         fuel,
+         type,
+         density_tm3)
 ] -> fuel
 
 names(fuel)[ncol(fuel)] <- "consumption_t"
+
+fuel$consumption_t <- units::set_units(fuel$consumption_t, "t")
+fuel$density_tm3 <- units::set_units(fuel$density_tm3, "t/m3")
 
 setDT(fuel_spec)
 setDT(met)
@@ -121,7 +143,7 @@ switch (language,
 # pastas
 if(delete_directories){
   choice <- 1
-  
+
   if(language == "portuguese") {
     # choice <- utils::menu(c("Sim", "Não"), title="Apagar pastas csv, emi, images, notes, post e veh??")
     if(choice == 1){
@@ -131,7 +153,7 @@ if(delete_directories){
       unlink("notes", recursive = T)
       unlink("post", recursive = T)
       unlink("veh", recursive = T)
-    } 
+    }
   } else if(language == "english"){
     # choice <- utils::menu(c("Yes", "No"), title="Delete folders `csv`, `emi`, `images`, `notes`, `post` e `veh`??")
     if(choice == 1){
@@ -141,8 +163,8 @@ if(delete_directories){
       unlink("notes", recursive = T)
       unlink("post", recursive = T)
       unlink("veh", recursive = T)
-    } 
-    
+    }
+
   } else if(language == "spanish"){
     # choice <- utils::menu(c("Si", "No"), title="Borrar carpetas `csv`, `emi`, `images`, `notes`, `post` y `veh`??")
     if(choice == 1){
@@ -152,7 +174,7 @@ if(delete_directories){
       unlink("images", recursive = T)
       unlink("post", recursive = T)
       unlink("veh", recursive = T)
-    } 
+    }
   }
 }
 
@@ -178,10 +200,10 @@ n_LCV <- metadata$vehicles[grep(pattern = "LCV", x = metadata$vehicles)]
 n_TRUCKS <- metadata$vehicles[grep(pattern = "TRUCKS", x = metadata$vehicles)]
 n_BUS <- metadata$vehicles[grep(pattern = "BUS", x = metadata$vehicles)]
 n_MC <- metadata$vehicles[grep(pattern = "MC", x = metadata$vehicles)]
-n_veh <- list(PC = n_PC, 
-              LCV = n_LCV, 
-              TRUCKS = n_TRUCKS, 
-              BUS = n_BUS, 
+n_veh <- list(PC = n_PC,
+              LCV = n_LCV,
+              TRUCKS = n_TRUCKS,
+              BUS = n_BUS,
               MC = n_MC)
 # Plot Fuel ####
 switch (language,
@@ -200,9 +222,9 @@ p <- ggplot(pmonth,
   theme(panel.spacing = unit(0,'lines'))
 p
 
-png("images/FUEL.png", 
-    width = 3000, 
-    height = 2000, 
+png("images/FUEL.png",
+    width = 3000,
+    height = 2000,
     units = "px",
     res = 300)
 print(p)
@@ -215,15 +237,15 @@ switch (language,
         "spanish" = cat("Plotando flota \n"))
 setDT(veh)
 setDT(metadata)
-vv <- melt.data.table(data = veh[, c(metadata$vehicles, 
-                                     "Year"), 
-                                 with = F], 
-                      id.vars = c("Year"), 
+vv <- melt.data.table(data = veh[, c(metadata$vehicles,
+                                     "Year"),
+                                 with = F],
+                      id.vars = c("Year"),
                       variable.name = "vehicles",
                       value.name = "veh")
-vv <- merge(vv, 
-            metadata[, 
-                     c("vehicles", 
+vv <- merge(vv,
+            metadata[,
+                     c("vehicles",
                        "family",
                        "fuel",
                        "size"),
@@ -235,24 +257,24 @@ vv$sf <- paste(vv$size, vv$fuel)
 fam <- unique(metadata$family)
 
 for(i in seq_along(fam)) {
-  
+
     ggplot(vv[family == fam[i] &
-                veh> 0], 
+                veh> 0],
            aes(x = Year,
                y = veh,
                colour = vehicles)) +
       geom_point() +
       geom_line() +
       theme_bw()-> p
-    
-  
-  png(paste0("images/FLEET_", fam[i], ".png"), 
-      width = 3000, 
-      height = 2500, 
+
+
+  png(paste0("images/FLEET_", fam[i], ".png"),
+      width = 3000,
+      height = 2500,
       "px",
       res = 300)
-  print(p)  
-  dev.off()  
+  print(p)
+  dev.off()
 }
 
 
@@ -266,9 +288,9 @@ switch (language,
 for(i in seq_along(n_veh)) {
   df_x <- tfs[, n_veh[[i]], with = F]
   png(
-    paste0("images/TFS_", 
+    paste0("images/TFS_",
            names(n_veh)[i],
-           ".png"), 
+           ".png"),
     2000, 1500, "px",res = 300)
   colplot(df = df_x,
           cols = n_veh[[i]],
@@ -318,7 +340,7 @@ switch(language,
 
 for (i in seq_along(n_veh)) {
   df_x <- as.data.frame(s)[, n_veh[[i]]]
-  
+
   png(
     paste0(
       "images/S_",
@@ -354,69 +376,69 @@ peuro <- euro[, metadata$vehicles, with = F]
 
 for(i in 1:ncol(peuro)){
   peuro[[i]] <- gsub("Euro ", "", peuro[[i]])
-  peuro[[i]] <- as.roman(peuro[[i]])
+  peuro[[i]] <- suppressWarnings(as.roman(peuro[[i]]))
   peuro[[i]] <- as.numeric(peuro[[i]])
-} 
+}
 
 peuro[is.na(peuro)] <- 0
 peuro$Year<- euro$Year
 melt.data.table(peuro, measure.vars = metadata$vehicles, id.vars = "Year") -> dfeuro
 
-ggplot(dfeuro, 
+ggplot(dfeuro,
 aes(x = Year,
  y = variable,
  fill = as.factor(value))) +
 geom_tile() +
   theme_bw(base_size = 14) -> p
 
-png(paste0("images/standard.png"), 
-width = 3000, 
-height = 2500, 
+png(paste0("images/standard.png"),
+width = 3000,
+height = 2500,
 "px",
 res = 300)
-print(p)  
-dev.off()  
+print(p)
+dev.off()
 
 
 # Plot Temperature ####
 units(celsius(1))$numerator
 
-  
-  ggplot(met, 
+
+  ggplot(met,
          aes(x = date,
              y = Temperature)) +
     geom_line() +
-    labs(title = year_select) + 
-    facet_wrap(~ region) + 
+    labs(title = year_select) +
+    facet_wrap(~ region) +
     theme_bw(base_size = 16) -> p
- 
 
-  png("images/Temperature.png", 
-      width = 2000, 
-      height = 1500, 
+
+  png("images/Temperature.png",
+      width = 2000,
+      height = 1500,
       "px",
       res = 300)
-  print(p)  
+  print(p)
   dev.off()
 
 
 # Plot Rain ####
-  
-  ggplot(rain, 
+
+  ggplot(rain,
          aes(x = date,
              y = PN)) +
     geom_line() +
-    labs(title = year_select) + 
-    facet_wrap(~ region) + 
+    labs(title = year_select) +
+    facet_wrap(~ region) +
     theme_bw(base_size = 16) -> p
- 
 
-  png("images/Rain.png", 
-      width = 2000, 
-      height = 1500, 
+
+  png("images/Rain.png",
+      width = 2000,
+      height = 1500,
       "px",
       res = 300)
-  print(p)  
+  print(p)
   dev.off()
 
 
@@ -440,7 +462,7 @@ units(celsius(1))$numerator
 #           theme = theme)
 #   dev.off()
 # }
-# 
+#
 
 
 # Notes ####
@@ -449,16 +471,16 @@ switch (language,
         "english" = cat("\nTaking some notes\n"),
         "spanish" = cat("\nEscribiendo notas\n"))
 
-vein_notes(notes = c("Default notes for vein::get_project"), 
-           file = "notes/README", 
-           title = paste0("Argentina by state ", year_select), 
-           approach = 'Top-Down', 
-           traffic = "DNRBA", 
-           composition = "DNRBA", 
-           ef = "COPERT", 
-           cold_start = "COPERT", 
-           evaporative = "Running Losses, Diurnal and Hot Soak", 
-           standards = "EURO", 
+vein_notes(notes = c("Default notes for vein::get_project"),
+           file = "notes/README",
+           title = paste0("Argentina by state ", year_select),
+           approach = 'Top-Down',
+           traffic = "DNRBA",
+           composition = "DNRBA",
+           ef = "COPERT",
+           cold_start = "COPERT",
+           evaporative = "Running Losses, Diurnal and Hot Soak",
+           standards = "EURO",
            mileage = "Bruni and Bales 2013")
 # saveRDS
 

@@ -40,6 +40,8 @@ col_region <- "region" # esta columna debe estar presente en fuel y met
 scale <- "none"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
+add_reg_veh <- TRUE
+
 
 im_ok <- readxl::read_xlsx(path = path, sheet = "im_ok")
 im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
