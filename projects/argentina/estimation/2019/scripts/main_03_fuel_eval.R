@@ -26,7 +26,7 @@ tech <- readRDS("config/tech.rds")
 fuel <- readRDS("config/fuel.rds")
 
 pol <- "FC"
-source("scripts/fuel_eval.R", encoding = "UTF-8")
+source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 

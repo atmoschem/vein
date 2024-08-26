@@ -72,17 +72,17 @@ if(survival) {
                                                  b = metadata$survival_param_b[i])
       }
     }
-      veh <- rbindlist(lv)
+    veh <- rbindlist(lv)
 
   } else {
     cat("No `region` in `veh`\n")
 
-      for(i in seq_along(metadata$vehicles)) {
-        veh[[metadata$vehicles[i]]] <-   age(x = veh[[metadata$vehicles[i]]],
-                                             type = metadata$survival[i],
-                                             a = metadata$survival_param_a[i],
-                                             b = metadata$survival_param_b[i])
-  }}
+    for(i in seq_along(metadata$vehicles)) {
+      veh[[metadata$vehicles[i]]] <-   age(x = veh[[metadata$vehicles[i]]],
+                                           type = metadata$survival[i],
+                                           a = metadata$survival_param_a[i],
+                                           b = metadata$survival_param_b[i])
+    }}
 }
 
 
@@ -102,16 +102,18 @@ if(any(grepl("region", names(veh)))) {
 
   for(j in seq_along(lv)) {
 
-    cat("\n\n",reg[j],"\n")
 
     rbindlist(lapply(seq_along(v), function(i) {
 
-      # if(verbose){
-      #
-      # cat(
-      #   "\n", metadata$vehicles[i],
-      #   rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
-      # )}
+      cat(reg[j], "\n")
+
+      if(verbose){
+
+      #   cat(
+      #     "\n", metadata$vehicles[i],
+      #     rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
+      #   )
+      # }
 
       rbindlist(lapply(seq_along(reg), function(j) {
         x <- lv[[reg[j]]][[v[i]]]*lf[[reg[j]]][fuel == metadata$fuel[i]]$kinitial
@@ -119,8 +121,44 @@ if(any(grepl("region", names(veh)))) {
         x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
         x$"region" <- reg[j]
         x
+      })) -> dt
+      # print(dt)
+      saveRDS(dt, paste0("veh/", v[i], ".rds"))
+
+      df <- melt.data.table(dt,
+                            id.vars = "region",
+                            measure.vars = paste0("V", 1:metadata$maxage[i]),
+                            variable.name = "age",
+                            value.name = "veh")
+      df$vehicles <- v[i]
+      df
+    })) -> vv
+  }
+  veh <- rbindlist(lv)
+
+} else {
+  cat("No `region` in `veh`\n")
+
+  rbindlist(lapply(seq_along(v), function(i) {
+
+    # if(verbose){
+    #   cat("\n", metadata$vehicles[i],
+    #       rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
+    #   )}
+
+    rbindlist(lapply(seq_along(reg), function(j) {
+
+      cat(reg[j], " " )
+
+
+      x <- veh[[v[i]]]*fuel[region == reg[j] &
+                              fuel == metadata$fuel[i]]$kinitial
+      x <- remove_units(x)[1:metadata$maxage[i]]
+      x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
+      x$"region" <- reg[j]
+      x
     })) -> dt
-    # print(dt)
+
     saveRDS(dt, paste0("veh/", v[i], ".rds"))
 
     df <- melt.data.table(dt,
@@ -130,45 +168,8 @@ if(any(grepl("region", names(veh)))) {
                           value.name = "veh")
     df$vehicles <- v[i]
     df
-    })) -> vv
-  }
-    veh <- rbindlist(lv)
-
-} else {
-  cat("No `region` in `veh`\n")
-
-  rbindlist(lapply(seq_along(v), function(i) {
-
-    if(verbose){
-
-      cat("\n", metadata$vehicles[i],
-        rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
-      )
-    }
-rbindlist(lapply(seq_along(reg), function(j) {
-
-        #if(verbose) cat(reg[j], " " )
-
-
-       x <- veh[[v[i]]]*fuel[region == reg[j] &
-                             fuel == metadata$fuel[i]]$kinitial
-        x <- remove_units(x)[1:metadata$maxage[i]]
-        x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
-        x$"region" <- reg[j]
-        x
-      })) -> dt
-
-      saveRDS(dt, paste0("veh/", v[i], ".rds"))
-
-    df <- melt.data.table(dt,
-                          id.vars = "region",
-                          measure.vars = paste0("V", 1:metadata$maxage[i]),
-                          variable.name = "age",
-                          value.name = "veh")
-    df$vehicles <- v[i]
-    df
-      })) -> vv
-  }
+  })) -> vv
+}
 
 
 cat("\n")
@@ -194,18 +195,18 @@ vv <- remove_units(vv)
 
 for(i in seq_along(fam)) {
 
-ggplot(vv[family == fam[i] &
-                as.numeric(veh)> 0],
-           aes(x = Year,
-               y = veh,
-               colour = vehicles)) +
-      geom_line() +
-      facet_wrap(~ region,
-                 scales = "free_y") +
-      theme_bw(base_size = 10)+
-      theme(axis.text.x = element_text(angle = 90)) -> p
+  ggplot(vv[family == fam[i] &
+              as.numeric(veh)> 0],
+         aes(x = Year,
+             y = veh,
+             colour = vehicles)) +
+    geom_line() +
+    facet_wrap(~ region,
+               scales = "free_y") +
+    theme_bw(base_size = 10)+
+    theme(axis.text.x = element_text(angle = 90)) -> p
 
-  png(paste0("images/FLEET_CIRCULATING_", fam[i], ".png"),
+  png(paste0("images/FLEET_CIRCULATING_", fam[i], "_FINAL.png"),
       width = 3000,
       height = 2500,
       "px",
@@ -245,7 +246,7 @@ p <- ggplot(dx,
 
 p
 
-png(filename =  paste0("images/VEHICLES_INITIAL.png"),
+png(filename =  paste0("images/VEHICLES_FINAL.png"),
     width = 2500, height = 2500, units = "px", pointsize = 12,
     bg = "white",  res = 300)
 print(p)

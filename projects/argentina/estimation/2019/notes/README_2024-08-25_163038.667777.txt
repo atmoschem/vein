@@ -1,0 +1,93 @@
+========================================
+Argentina by state 2019
+========================================
+
+Directory: /media/sergio/ext4/models/vein/projects/argentina/estimation/2019
+
+Local Time: 2024-08-25 16:30:38.66824
+Inventory compiler: sergio
+========================================
+
+sysname = Linux
+release = 6.8.0-41-generic
+version = #41-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  2 20:41:06 UTC 2024
+nodename = sergio-gl639sd
+machine = x86_64
+user = sergio
+R version = 4.4.1
+nickname = Race for Your Life
+Memory used = 1520Mb 
+========================================
+
+VEIN version = 1.1.4
+========================================
+
+Traffic:
+DNRBA
+
+Approach:
+Top-Down
+
+Vehicular composition:
+DNRBA
+
+Emission Factors:
+COPERT
+
+Cold starts:
+COPERT
+
+Evaporative:
+Running Losses, Diurnal and Hot Soak
+
+Traffic standards:
+EURO
+
+Traffic mileage:
+Bruni and Bales 2013
+
+Notes:
+Default notes for vein::get_project
+========================================
+
+Session Info:
+R version 4.4.1 (2024-06-14)
+Platform: x86_64-pc-linux-gnu
+Running under: Ubuntu 24.04 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8       
+ [4] LC_COLLATE=en_US.UTF-8     LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                  LC_ADDRESS=C              
+[10] LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+time zone: America/Denver
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] stars_0.6-6       abind_1.4-5       eixport_0.6.0     units_0.8-5       data.table_1.15.4
+[6] ggplot2_3.5.1     cptcity_1.0.6     sf_1.0-16         vein_1.1.4       
+
+loaded via a namespace (and not attached):
+ [1] utf8_1.2.4         generics_0.1.3     class_7.3-22       KernSmooth_2.23-24 lattice_0.22-5    
+ [6] magrittr_2.0.3     grid_4.4.1         cellranger_1.1.0   e1071_1.7-14       DBI_1.2.3         
+[11] fansi_1.0.6        scales_1.3.0       codetools_0.2-20   cli_3.6.3          rlang_1.1.4       
+[16] munsell_0.5.1      withr_3.0.1        tools_4.4.1        raster_3.6-26      parallel_4.4.1    
+[21] dplyr_1.1.4        colorspace_2.1-1   ncdf4_1.23         vctrs_0.6.5        R6_2.5.1          
+[26] proxy_0.4-27       lifecycle_1.0.4    classInt_0.4-10    pkgconfig_2.0.3    terra_1.7-78      
+[31] pillar_1.9.0       gtable_0.3.5       glue_1.7.0         Rcpp_1.0.13        tibble_3.2.1      
+[36] tidyselect_1.2.1   rstudioapi_0.16.0  farver_2.1.2       labeling_0.4.3     dotCall64_1.1-1   
+[41] compiler_4.4.1     readxl_1.4.3       sp_2.1-4          
+
+========================================
+
+
+
+Thanks for using VEIN
