@@ -7,34 +7,34 @@ library(cptcity) # 7120 colour palettes
 library(ggplot2) # plots
 library(data.table) # faster data.frames
 library(units)
-library(stars)
 library(eixport)
 sessionInfo()
 
 
 
 
-# Exhaust
-language <- "portuguese" # english chinese spanish portuguese
+# Exhaust ####
+language <- "spanish" # english spanish portuguese
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
-# net <- readRDS("network/net.rds")
 pmonth <- readRDS("config/pmonth.rds")
 met <- readRDS("config/met.rds")
+euro <- readRDS("config/euro.rds")
+tech <- readRDS("config/tech.rds")
+fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
+
+fuel <- readRDS("config/fuel.rds")
+
 pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
-  "PM", "NO2", "NO", "SO2", "CH4",
-  "NH3", "CH4", "N2O", "ETOH"
+  "PM", "NO2", "NO", "CH4"
 )
-scale <- "tunnel2018"
-plot_ef <- FALSE
 
-s <- readRDS("config/s.rds")
-factors <- readRDS("config/factors.rds")
+IM <- FALSE
 
-source("scripts/exhaust_sulfur.R", encoding = "UTF-8")
+source("scripts/hot_exhaust_eea.R")
 rm(list = ls())
 gc()
 

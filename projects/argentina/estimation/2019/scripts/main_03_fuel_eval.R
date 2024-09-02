@@ -24,8 +24,8 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 # fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
-
 pol <- "FC"
+
 source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()

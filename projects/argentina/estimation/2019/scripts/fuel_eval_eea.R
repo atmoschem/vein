@@ -17,7 +17,6 @@ metadata <- metadata[metadata$fuel != "ELEC", ]
 
 setDT(pmonth)
 
-
 reg <- unique(pmonth$region)
 
 cat("\nHot Running Fuel Consumption\n")
@@ -25,7 +24,7 @@ cat("\nHot Running Fuel Consumption\n")
 # 1 Exhaust ####
 for(k in seq_along(reg)) {
 
-  cat(reg[k],  "\n")
+  cat("\n", reg[k],  "\n")
 
 
   for(i in seq_along(metadata$vehicles)) {
@@ -109,7 +108,7 @@ for(k in seq_along(reg)) {
 
 
 # 2 Cold Start ####
-cat("\nCold Exhaust Fuel Consumption ")
+cat("\nCold Exhaust Fuel Consumption\n")
 
 metadata_cold <- metadata[metadata$fuel_eea_old %in% "G" &
                        metadata$v_eea_old %in% c("PC", "LCV"), ]
@@ -203,12 +202,9 @@ for(k in seq_along(reg)) {
 
       fwrite(array_x, "emi/FC_INITIAL.csv", append = TRUE)
 
-
     }
   }
 }
-
-
 
 
 switch(language,
@@ -231,21 +227,23 @@ dt0 <- dt[pollutant == "FC",
           by = .(fuel,
                  region)
 ]
-data.table::setkey(dt0, "fuel")
 
 names(dt0)[ncol(dt0)] <- "estimation_t"
 
 dtf <- merge(dt0, fuel, by = c("fuel", "region"))
 
-setorderv(dtf, cols = c("fuel"))
+setorderv(dtf, cols = c("fuel", "region"))
 
 dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
+
 print(dtf[, c("region", "fuel", "estimation_t", "consumption_t", "estimation_consumption")])
 
 # calibrate k ####
 k_D <- as.numeric(1/dtf[fuel == "D"]$estimation_consumption)
 k_G <- as.numeric(1/dtf[fuel == "G"]$estimation_consumption)
-dtf[, kinitial := as.numeric(1/estimation_consumption)]
+# print(paste(k_D, k_G))
+
+dtf[, kfinal := as.numeric(1/estimation_consumption)]
 
 
 metadata <- readRDS("config/metadata.rds")
@@ -279,7 +277,7 @@ metadata_original <- metadata
 metadata <- metadata[metadata$fuel != "ELEC", ]
 
 # Hot Exhaust ####
-cat("\nHot Running Fuel Consumption\n ")
+cat("\nHot Running Fuel Consumption\n")
 
 reg <- unique(pmonth$region)
 
@@ -482,9 +480,10 @@ switch(language,
 cat(paste0(getwd(), "/emi/*\n"))
 
 # data.table ####
-fuel <- readRDS("config/fuel.rds")
-
+fuel$estimation_t_initial <- fuel$estimation_t
+fuel$estimation_t <- NULL
 dt <- fread("emi/FC_FINAL.csv")
+
 dt$pollutant <- as.character(dt$pollutant)
 dt$g <- units::set_units(dt$emissions, "g")
 dt$t <- units::set_units(dt$g, t)
@@ -494,7 +493,6 @@ dt0 <- dt[pollutant == "FC",
           by = .(fuel,
                  region)
 ]
-data.table::setkey(dt0, "fuel")
 
 names(dt0)[ncol(dt0)] <- "estimation_t"
 
@@ -503,7 +501,9 @@ dtf <- merge(dt0, fuel, by = c("fuel", "region"))
 setorderv(dtf, cols = c("fuel", "region"))
 
 dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
+
 print(dtf[, c("region", "fuel", "estimation_t", "consumption_t", "estimation_consumption")])
+
 
 
 

@@ -94,33 +94,29 @@ v <- metadata$vehicles
 reg <- unique(fuel[["region"]])
 
 if(any(grepl("region", names(veh)))) {
+
   cat("Identified `region` in `veh`\n")
 
-  lv <- split(veh, veh[["region"]])
+  rbindlist(lapply(seq_along(v), function(i) {
 
-  lf <- split(fuel, fuel[["region"]])
+    if(verbose){
+      cat("\n", metadata$vehicles[i],
+          rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
+      )}
 
-  for(j in seq_along(lv)) {
+    rbindlist(lapply(seq_along(reg), function(j) {
 
-    cat("\n\n",reg[j],"\n")
+      # cat(reg[j], " " )
 
-    rbindlist(lapply(seq_along(v), function(i) {
 
-      # if(verbose){
-      #
-      # cat(
-      #   "\n", metadata$vehicles[i],
-      #   rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
-      # )}
-
-      rbindlist(lapply(seq_along(reg), function(j) {
-        x <- lv[[reg[j]]][[v[i]]]*lf[[reg[j]]][fuel == metadata$fuel[i]]$kinitial
-        x <- remove_units(x)[1:metadata$maxage[i]]
-        x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
-        x$"region" <- reg[j]
-        x
+      x <- veh[[v[i]]]*fuel[region == reg[j] &
+                              fuel == metadata$fuel[i]]$kinitial
+      x <- remove_units(x)[1:metadata$maxage[i]]
+      x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
+      x$"region" <- reg[j]
+      x
     })) -> dt
-    # print(dt)
+
     saveRDS(dt, paste0("veh/", v[i], ".rds"))
 
     df <- melt.data.table(dt,
@@ -130,9 +126,7 @@ if(any(grepl("region", names(veh)))) {
                           value.name = "veh")
     df$vehicles <- v[i]
     df
-    })) -> vv
-  }
-    veh <- rbindlist(lv)
+  })) -> vv
 
 } else {
   cat("No `region` in `veh`\n")
@@ -140,35 +134,30 @@ if(any(grepl("region", names(veh)))) {
   rbindlist(lapply(seq_along(v), function(i) {
 
     if(verbose){
-
       cat("\n", metadata$vehicles[i],
-        rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
-      )
-    }
-rbindlist(lapply(seq_along(reg), function(j) {
-
-        #if(verbose) cat(reg[j], " " )
+          rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
+      )}
 
 
-       x <- veh[[v[i]]]*fuel[region == reg[j] &
-                             fuel == metadata$fuel[i]]$kinitial
-        x <- remove_units(x)[1:metadata$maxage[i]]
-        x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
-        x$"region" <- reg[j]
-        x
-      })) -> dt
+    # cat(reg[j], " " )
 
-      saveRDS(dt, paste0("veh/", v[i], ".rds"))
 
-    df <- melt.data.table(dt,
-                          id.vars = "region",
+    x <- veh[[v[i]]]*fuel[fuel == metadata$fuel[i]]$kinitial
+    x <- remove_units(x)[1:metadata$maxage[i]]
+    x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
+    x
+
+    saveRDS(x, paste0("veh/", v[i], ".rds"))
+
+    df <- melt.data.table(x,
+                          # id.vars = "region",
                           measure.vars = paste0("V", 1:metadata$maxage[i]),
                           variable.name = "age",
                           value.name = "veh")
     df$vehicles <- v[i]
     df
-      })) -> vv
-  }
+  })) -> vv
+}
 
 
 cat("\n")
