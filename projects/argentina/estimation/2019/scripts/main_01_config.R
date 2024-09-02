@@ -27,11 +27,14 @@ veh <- readRDS("../../config/rds/fleet_age.rds")
 
 # assuming fuel 2019
 fuel_month <-  readRDS("../../config/rds/fuel_month.rds")
+
 # columns used: date, FUEL_M3, density_tm3, type, fuel
 s <- readxl::read_xlsx(path = path, sheet = "s")
+
 fuel_spec <- readxl::read_xlsx(path = path, sheet = "fuel_spec")
 
 met <-  readRDS("../../config/rds/met.rds")
+
 rain <-  readRDS("../../config/rds/rain.rds")
 
 euro <- readxl::read_xlsx(path = path, sheet = "euro")

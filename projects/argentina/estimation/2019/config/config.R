@@ -36,7 +36,9 @@ if(add_reg_veh) {
 
 }}
 
-
+fuel_month[is.na(UF), ]$UF <- "CF"
+unique(fuel_month$region)
+unique(fuel_month$UF)
 # fuel ####
 setDT(fuel_month)
 

@@ -30,9 +30,9 @@ switch (language,
         "portuguese" = message("Apagando veh/*.rds\n"),
         "english" = message("Deleting veh/*.rds\n"),
         "spanish" = message("Borrando veh/*.rds\n"))
-
-arquivos <- list.files(path = "veh", pattern = ".rds", full.names = TRUE)
-file.remove(arquivos)
+system("cp -rf veh vehold")
+# arquivos <- list.files(path = "veh", pattern = ".rds", full.names = TRUE)
+# file.remove(arquivos)
 
 # fleet age
 veh[is.na(veh)] <- 0
@@ -66,6 +66,7 @@ if(survival) {
     for(j in seq_along(lv)) {
 
       for(i in seq_along(metadata$vehicles)) {
+
         lv[[j]][[metadata$vehicles[i]]] <-   age(x = lv[[j]][[metadata$vehicles[i]]],
                                                  type = metadata$survival[i],
                                                  a = metadata$survival_param_a[i],
@@ -94,65 +95,23 @@ v <- metadata$vehicles
 reg <- unique(fuel[["region"]])
 
 if(any(grepl("region", names(veh)))) {
+
   cat("Identified `region` in `veh`\n")
-
-  lv <- split(veh, veh[["region"]])
-
-  lf <- split(fuel, fuel[["region"]])
-
-  for(j in seq_along(lv)) {
-
-
-    rbindlist(lapply(seq_along(v), function(i) {
-
-      cat(reg[j], "\n")
-
-      if(verbose){
-
-      #   cat(
-      #     "\n", metadata$vehicles[i],
-      #     rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
-      #   )
-      # }
-
-      rbindlist(lapply(seq_along(reg), function(j) {
-        x <- lv[[reg[j]]][[v[i]]]*lf[[reg[j]]][fuel == metadata$fuel[i]]$kinitial
-        x <- remove_units(x)[1:metadata$maxage[i]]
-        x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
-        x$"region" <- reg[j]
-        x
-      })) -> dt
-      # print(dt)
-      saveRDS(dt, paste0("veh/", v[i], ".rds"))
-
-      df <- melt.data.table(dt,
-                            id.vars = "region",
-                            measure.vars = paste0("V", 1:metadata$maxage[i]),
-                            variable.name = "age",
-                            value.name = "veh")
-      df$vehicles <- v[i]
-      df
-    })) -> vv
-  }
-  veh <- rbindlist(lv)
-
-} else {
-  cat("No `region` in `veh`\n")
 
   rbindlist(lapply(seq_along(v), function(i) {
 
-    # if(verbose){
-    #   cat("\n", metadata$vehicles[i],
-    #       rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
-    #   )}
+    if(verbose){
+      cat("\n", metadata$vehicles[i],
+          rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
+      )}
 
     rbindlist(lapply(seq_along(reg), function(j) {
 
-      cat(reg[j], " " )
+      # cat(reg[j], " " )
 
 
       x <- veh[[v[i]]]*fuel[region == reg[j] &
-                              fuel == metadata$fuel[i]]$kinitial
+                              fuel == metadata$fuel[i]]$kfinal
       x <- remove_units(x)[1:metadata$maxage[i]]
       x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
       x$"region" <- reg[j]
@@ -163,6 +122,36 @@ if(any(grepl("region", names(veh)))) {
 
     df <- melt.data.table(dt,
                           id.vars = "region",
+                          measure.vars = paste0("V", 1:metadata$maxage[i]),
+                          variable.name = "age",
+                          value.name = "veh")
+    df$vehicles <- v[i]
+    df
+  })) -> vv
+
+} else {
+  cat("No `region` in `veh`\n")
+
+  rbindlist(lapply(seq_along(v), function(i) {
+
+    if(verbose){
+      cat("\n", metadata$vehicles[i],
+          rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
+      )}
+
+
+      # cat(reg[j], " " )
+
+
+      x <- veh[[v[i]]]*fuel[fuel == metadata$fuel[i]]$kinitial
+      x <- remove_units(x)[1:metadata$maxage[i]]
+      x <- Vehicles(matrix(x, ncol = metadata$maxage[i]))
+      x
+
+    saveRDS(x, paste0("veh/", v[i], ".rds"))
+
+    df <- melt.data.table(x,
+                          # id.vars = "region",
                           measure.vars = paste0("V", 1:metadata$maxage[i]),
                           variable.name = "age",
                           value.name = "veh")
@@ -193,27 +182,55 @@ fam <- unique(metadata$family)
 
 vv <- remove_units(vv)
 
-for(i in seq_along(fam)) {
+if(any("region" %in% names(vv))) {
 
-  ggplot(vv[family == fam[i] &
-              as.numeric(veh)> 0],
-         aes(x = Year,
-             y = veh,
-             colour = vehicles)) +
-    geom_line() +
-    facet_wrap(~ region,
-               scales = "free_y") +
-    theme_bw(base_size = 10)+
-    theme(axis.text.x = element_text(angle = 90)) -> p
+  for(i in seq_along(fam)) {
 
-  png(paste0("images/FLEET_CIRCULATING_", fam[i], "_FINAL.png"),
-      width = 3000,
-      height = 2500,
-      "px",
-      res = 300)
-  print(p)
-  dev.off()
+    ggplot(vv[family == fam[i] &
+                as.numeric(veh)> 0],
+           aes(x = Year,
+               y = veh,
+               colour = vehicles)) +
+      geom_line() +
+      facet_wrap(~ region) +
+      scale_y_sqrt() +
+      theme_bw(base_size = 10) -> p
+
+    png(paste0("images/FLEET_CIRCULATING_", fam[i], "_FINAL.png"),
+        width = 3000,
+        height = 2500,
+        "px",
+        res = 300)
+    print(p)
+    dev.off()
+  }
+
+} else {
+  for(i in seq_along(fam)) {
+
+    ggplot(vv[family == fam[i] &
+                as.numeric(veh)> 0],
+           aes(x = Year,
+               y = veh,
+               colour = vehicles)) +
+      geom_line() +
+      # facet_wrap(~ region,
+      # scales = "free_y") +
+      theme_bw(base_size = 10)+
+      theme(axis.text.x = element_text(angle = 90)) -> p
+
+    png(paste0("images/FLEET_CIRCULATING_", fam[i], "_FINAL.png"),
+        width = 3000,
+        height = 2500,
+        "px",
+        res = 300)
+    print(p)
+    dev.off()
+  }
+
+
 }
+
 
 
 # ggplot2
@@ -235,8 +252,8 @@ p <- ggplot(dx,
   labs(y = "veh",
        title = "Vehicles") +
   facet_wrap(~ region,
-             scales = "free_x",
-             nrow = 2) +
+             # scales = "free_x",
+             nrow = 1) +
   theme_bw() +
   scale_y_sqrt() +
   coord_flip()+
