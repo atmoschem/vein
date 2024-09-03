@@ -40,3 +40,11 @@ gc()
 
 
 
+pol <- c(
+  "CO", "HC", "NMHC", "NOx", "CO2",
+  "NO2", "NO", "CH4"
+)
+
+source("scripts/cold_exhaust_eea.R")
+
+
