@@ -6,7 +6,6 @@ library(cptcity) # 7120 colour palettes
 library(ggplot2) # plots
 library(data.table) # faster data.frames
 library(units)
-library(stars)
 library(eixport)
 sessionInfo()
 
@@ -22,8 +21,9 @@ pmonth <- readRDS("config/pmonth.rds")
 pol      <- c("PM2.5", "PM10")
 verbose  <- FALSE
 maxage <- 40
-ra <- readRDS("config/rain_br.rds")
-source("scripts/paved_country.R", encoding = "UTF-8")
+ra <- readRDS("config/rain.rds")
+fuel <- readRDS("config/fuel.rds")
+source("scripts/ressuspension.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 
