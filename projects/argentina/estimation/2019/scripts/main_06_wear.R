@@ -18,10 +18,13 @@ tfs      <- readRDS("config/tfs.rds")
 # net      <- readRDS("network/net.rds")
 veh      <- readRDS("config/fleet_age.rds")
 pmonth <- readRDS("config/pmonth.rds")
+# pol <- c("TSP", "PM10", "PM2.5", "PM1",  "PM0.1")
 pol      <- c("PM2.5", "PM10")
+
 verbose  <- FALSE
 maxage <- 40
-source("scripts/wear.R", encoding = "UTF-8")
+fuel <- readRDS("config/fuel.rds")
+source("scripts/wear_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 
