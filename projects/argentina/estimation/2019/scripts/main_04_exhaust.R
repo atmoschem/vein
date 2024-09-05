@@ -40,11 +40,34 @@ gc()
 
 
 
+# Exhaust ####
+language <- "spanish" # english spanish portuguese
+metadata <- readRDS("config/metadata.rds")
+mileage <- readRDS("config/mileage.rds")
+veh <- readRDS("config/fleet_age.rds")
+pmonth <- readRDS("config/pmonth.rds")
+met <- readRDS("config/met.rds")
+euro <- readRDS("config/euro.rds")
+tech <- readRDS("config/tech.rds")
+fuel_spec <- readRDS("config/fuel_spec.rds")
+verbose <- FALSE
+
+fuel <- readRDS("config/fuel.rds")
+
+pol <- c(
+  "CO", "HC", "NMHC", "NOx", "CO2",
+  "PM", "NO2", "NO", "CH4"
+)
+
+IM <- FALSE
+
 pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
   "NO2", "NO", "CH4"
 )
 
 source("scripts/cold_exhaust_eea.R")
+rm(list = ls())
+gc()
 
 

@@ -198,7 +198,7 @@ for(k in seq_along(reg)) {
         )
       )
 
-      fwrite(array_x, "emi/exhaust.csv", append = TRUE)
+      fwrite(array_x, "emi/cold_exhaust.csv", append = TRUE)
     }
   }
 }

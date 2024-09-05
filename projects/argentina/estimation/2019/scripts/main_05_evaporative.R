@@ -7,7 +7,6 @@ library(ggplot2) # plots
 library(data.table) # faster data.frames
 library(units)
 library(stars)
-library(eixport)
 sessionInfo()
 
 
@@ -23,14 +22,13 @@ meto <- readRDS("config/met.rds")
 verbose <- FALSE
 maxage <- 40
 scale <- "tunnel2018"
-plot_ef <- F
 
 metadata[family == "PC", maxage := 40]
 metadata[family == "LCV", maxage := 40]
 metadata[family == "TRUCKS", maxage := 40]
 metadata[family == "BUS", maxage := 40]
 metadata[family == "MC", maxage := 40]
-source("scripts/evaporatives.R", encoding = "UTF-8", echo = F)
+source("scripts/evaporatives_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 

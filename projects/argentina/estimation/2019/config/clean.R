@@ -12,5 +12,5 @@ unlink("wrf", recursive = T)
 # unlink(paste0("wrf/", wrfc))
 
 system(paste0("tar -caf ", basename(getwd()), ".tar.gz ."))
-system(paste0("mv ", basename(getwd()), ".tar.gz ../"))
+system(paste0("mv ", basename(getwd()), ".tar.gz ../../config/"))
 file.remove(".Rhistory")
