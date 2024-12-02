@@ -22,16 +22,12 @@ x <- readxl::read_excel("config/inventory.xlsx",
                         "rain")
 setDT(x)
 x$date <- as.Date(paste0(x$Fecha, "-01"))
-x
-x$Month <- month(x$date)
-x$month <- month(x$date)
 
-nd <- unlist(lapply(1:nrow(x), function(i) {
-vein::dmonth(year = year(x$date[i]), month =  month(x$date[i]))
-}))
+nd <- vein::dmonth(x$date)
+  
 
 x$P <- x$numDias
-x$N <- nd
+x$N <- as.numeric(nd)
 x$PN <- x$P/x$N
 saveRDS(x, "config/rds/rain.rds")
-saveRDS(x, "estimation/2019/config/rain.rds")
+# saveRDS(x, "estimation/2019/config/rain.rds")

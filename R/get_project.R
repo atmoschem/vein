@@ -7,6 +7,7 @@
 #' @param case Character; One of  of the following:
 #' \tabular{llll}{
 #'   \strong{case}  \tab \strong{Description}\tab  \strong{EF} \tab \strong{Notes}   \cr
+#'   argentina  \tab top down\tab COPERT \tab  .rds\cr
 #'   emislacovid  \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
 #'   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
@@ -129,6 +130,24 @@ get_project <- function(directory,
       utils::download.file(url = URL,
                            destfile =  tf)
       utils::untar(tarfile = tf, exdir = directory)
+      message("Your directory is in ", directory)
+
+      # argentina ####
+    } else if(case %in% c("argentina")){
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/argentina.tar.gz"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL,
+                           destfile =  tf)
+      utils::untar(tarfile = tf, exdir = directory)
+
+      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/wrf_argentina/wrfinput_d01"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL,
+                           destfile =  paste0(directory, "/wrfinput_d01"))
+
+      message("Your directory is in ", directory)
+
+
       message("Your directory is in ", directory)
 
       # brazil_bu_chem_streets ####
