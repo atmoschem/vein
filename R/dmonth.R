@@ -1,6 +1,6 @@
 #' Number of days of the month
 #'
-#' \code{\link{ef_ldv_speed}} return the number of day sof the month
+#' \code{\link{ef_ldv_speed}} return the number of days of the month
 #'
 #'
 #' @param year Numeric
@@ -10,13 +10,22 @@
 #' @export
 #' @examples \dontrun{
 #' dmonth(2022, 1)
+#' dmonth(Sys.Date())
 #' }
 dmonth <- function(year, month) {
-  date <- ISOdate(year, month, 1, 0, 0, 0)
-  m <- format(date, format="%m")
 
-  while (format(date, format="%m") == m) {
-    date <- date + 1*3600
+  if(inherits(year, "Date")) {
+    date <- year
+  } else {
+    date <- as.Date(ISOdate(year, month, 1, 0, 0, 0))
+
   }
-  return(as.integer(format(date - 1, format="%d")))
+
+  datef <- as.Date(unlist(lapply(seq_along(date), function(i) {
+    seq.Date(date[i], length.out = 2, by = "1 months")[2]
+  })))
+
+  ddif <- datef - date
+
+    return(as.integer(ddif))
 }

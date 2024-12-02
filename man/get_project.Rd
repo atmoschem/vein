@@ -12,6 +12,7 @@ get_project(directory, case, url)
 \item{case}{Character; One of  of the following:
 \tabular{llll}{
   \strong{case}  \tab \strong{Description}\tab  \strong{EF} \tab \strong{Notes}   \cr
+  argentina  \tab top down\tab COPERT \tab  .rds\cr
   emislacovid  \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr

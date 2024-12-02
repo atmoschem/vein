@@ -1,4 +1,7 @@
-a <- list.files(path = "config", pattern = ".rds", full.names = T)
+a <- list.files(path = "config/rds", pattern = ".rds", full.names = T)
+file.remove(a)
+
+a <- list.files(path = "config/xlsx", pattern = ".rds", full.names = T)
 file.remove(a)
 
 unlink("estimation", recursive = T)
