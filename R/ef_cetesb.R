@@ -211,10 +211,10 @@ ef_cetesb <- function(p,
   if(length(p) > 1) stop("One pollutant each time please")
 
 
-  #extend ef until 120 years in past ####
+  #extend ef until 150 years in past ####
   # rep nrow ef
   lef <- split(ef, ef$Pollutant)
-  nx <- 120 - nrow(lef[[1]])
+  nx <- 150 - nrow(lef[[1]])
   ef <- data.table::rbindlist(
     lapply(
       1:length(lef),
