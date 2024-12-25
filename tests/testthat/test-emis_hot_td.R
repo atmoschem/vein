@@ -5,13 +5,13 @@ netsf <- sf::st_as_sf(net)[1:10, ]
 euros <- c("V", "V", "IV", "III", "II", "I", "PRE", "PRE")
 efh <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G",
                     eu = euros, p = "CO", speed = Speed(34))
-veh <- age_ldv(1:10, agemax = 8)
-veh2 <- age_ldv(1:10, agemax = 8, net = netsf[1:10, ])
+veh <- age_veh(1:10, "ldv", agemax = 8)
+veh2 <- age_veh(1:10, "ldv", agemax = 8, net = netsf[1:10, ])
 
 lkm <- units::as_units(18:11, "km")*1000
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 data(net)
-vehsf <- age_ldv(1:10, agemax = 10, net = net[1:10, ])
+vehsf <- age_veh(1:10, "ldv", agemax = 10, net = net[1:10, ])
 a <- emis_hot_td(veh = veh,
                  lkm = lkm,
                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
@@ -148,17 +148,17 @@ test_that("emis_hot_td works", {
                            verbose = TRUE),
                ".?")
 
-  expect_equal(emis_hot_td(veh = age_ldv(1:10, agemax = 8),
+  expect_equal(emis_hot_td(veh = age_veh(1:10, "ldv", agemax = 8),
                            lkm = lkm,
                            ef = EmissionFactors(as.numeric(efh[, 1:8])),
                            verbose = TRUE)$rows[1],
                "1")
-  expect_message(emis_hot_td(veh = age_ldv(1:10, agemax = 8),
+  expect_message(emis_hot_td(veh = age_veh(1:10, "ldv",  agemax = 8),
                              lkm = lkm,
                              ef = EmissionFactors(as.numeric(efh[, 1:8])),
                              verbose = TRUE)$rows[1],
                  ".?")
-  expect_output(emis_hot_td(veh = age_ldv(1:10, agemax = 8),
+  expect_output(emis_hot_td(veh = age_veh(1:10, "ldv",  agemax = 8),
                             lkm = lkm,
                             ef = EmissionFactors(as.numeric(efh[, 1:8])),
                             verbose = TRUE)$rows[1],

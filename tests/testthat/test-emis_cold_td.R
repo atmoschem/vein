@@ -30,7 +30,7 @@ names(cold_lkm) <- paste0("Month_", 1:12)
 
 veh_month <- c(rep(8, 1), rep(10, 5), 9, rep(10, 5))
 
-veh <- age_ldv(1:10, agemax = 8)
+veh <- age_veh(1:10, "ldv", agemax = 8)
 
 
 emis_cold_td(veh = veh,
@@ -91,7 +91,7 @@ test_that("emis_cold works", {
                                    pro_month = veh_month,
                                    verbose = T)$emissions[1]),
                 "S.?")
-expect_equal(
+  expect_equal(
     round(emis_cold_td(veh = veh,
                        lkm = lkm,
                        ef = efh,

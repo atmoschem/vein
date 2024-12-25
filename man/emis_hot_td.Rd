@@ -77,7 +77,7 @@ efh <- ef_ldv_speed(
   eu = euros, p = "CO", speed = Speed(34)
 )
 lkm <- units::as_units(c(20:13), "km") * 1000
-veh <- age_ldv(1:10, agemax = 8)
+veh <- age_veh(1:10, type = "ldv", agemax = 8)
 system.time(
   a <- emis_hot_td(
     veh = veh,

@@ -9,29 +9,13 @@
 #' @param ylim y limits
 #' @param main Character, a main title for the plot, see also \code{\link{title}}.
 #' @param theme Character; "black", "dark", "clean", "ink"
-#' @param col The colors for lines and points. Multiple colors can
-#' be specified so that each point can be given its own color. If
-#' there are fewer colors than points they are recycled in the
-#' standard fashion. Default are cptcity colour palette "kst_18_pastels"
-#' @param type 1-character string giving the type of plot desired.
-#' The following values are possible, for details, see plot: "p" for
-#' points, "l" for lines, "b" for both points and lines, "c"
-#' for empty points joined by lines, "o" for overplotted points and
+#' @param col Colors. Default are cptcity colour palette "kst_18_pastels"
+#' @param type "p" for points, "l" for lines, "b" for both points and lines,
+#' "c" for empty points joined by lines, "o" for overplotted points and
 #' lines, "s" and "S" for stair steps and "h" for histogram-like vertical
 #' lines. Finally, "n" does not produce any points or lines.
 #' @param lwd a vector of line widths, see \code{\link{par}}.
-#' @param pch plotting ‘character’, i.e., symbol to use. This can either be a
-#' single character or an integer code for one of a set of graphics symbols.
-#' The full set of S symbols is available with pch = 0:18, see the
-#' examples below. (NB: R uses circles instead of the octagons used in S.).
-#' Value pch = "." (equivalently pch = 46) is handled specially.
-#' It is a rectangle of side 0.01 inch (scaled by cex). In addition,
-#' if cex = 1 (the default), each side is at least one pixel
-#' (1/72 inch on the pdf, postscript and xfig devices).
-#' For other text symbols, cex = 1 corresponds to the default fontsize
-#' of the device, often specified by an argument pointsize.
-#' For pch in 0:25 the default size is about 75% of
-#' the character height (see par("cin")).
+#' @param pch plotting ‘character’, i.e., symbol to use.
 #' @param familyfont "Character" to specify font, default is"", options "serif",
 #'  "sans", "mono" or more according device
 #' @param ... plot arguments
