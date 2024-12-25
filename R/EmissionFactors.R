@@ -108,26 +108,8 @@ plot.EmissionFactors <- function(x,
                                  mai3 = c(0.7, 0.62, 0.82, 0.42),
                                  bias = 1.5,
                                  ...) {
-  # ef <- x
-  # if (ncol(ef) >= 1 & ncol(ef) <= 3) {
-  #   graphics::par(mfrow=c(1, ncol(ef)), tcl = -0.5)
-  # } else if (ncol(ef) == 4) {
-  #   graphics::par(mfrow=c(2, 2), tcl = -0.5)
-  # } else if (ncol(ef) >= 5 & ncol(ef) <= 6 ) {
-  #   graphics::par(mfrow=c(2, 3), tcl = -0.5)
-  # } else if (ncol(ef) >= 7 & ncol(ef) <= 9 ) {
-  #   graphics::par(mfrow=c(3, 3), tcl = -0.5)
-  # } else {
-  #   message("Plotting first 9 plots")
-  #   graphics::par(mfrow=c(3, 3), tcl = -0.5)
-  # }
-  # nc <- ifelse(ncol(ef) <= 9, ncol(ef), 9)
-  # for (i in 1:nc) {
-  #   graphics::plot(ef[,i], type = "l", ...)
-  # }
-  # graphics::par(mfrow=c(1,1))
-  #
-  oldpar <- par(no.readonly = TRUE)       # code line i
+
+    oldpar <- par(no.readonly = TRUE)       # code line i
   on.exit(par(oldpar))                    # code line i + 1
 
   if(ncol(x) > 1) {
@@ -138,14 +120,6 @@ plot.EmissionFactors <- function(x,
     col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
                                                bias = bias)(seq(0, 1,0.01)),
                           maxColorValue = 255)
-
-    # fields::image.plot(
-    #   x = 1:ncol(x),
-    #   xaxt = "n",
-    #   z =t(as.matrix(x))[, nrow(x):1],
-    #   xlab = "",
-    #   ylab = paste0("EF by streets [",as.character(units(x[[1]])), "]"),
-    #   col = col, horizontal = TRUE)
 
     graphics::image(x = 1:ncol(x),
                     xaxt = "n",

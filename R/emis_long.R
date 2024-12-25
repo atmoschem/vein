@@ -16,7 +16,7 @@
 #' data(net)
 #' net <- net[1:100, ]
 #' data(pc_profile)
-#' x <- age_ldv(net$ldv)
+#' x <- age_veh(net$ldv)
 #' pc_week <- temp_fact(net$ldv+net$hdv, pc_profile[[1]])
 #' df <- netspeed(pc_week,
 #'                net$ps,

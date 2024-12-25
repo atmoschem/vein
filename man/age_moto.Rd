@@ -77,6 +77,7 @@ plot(MOTO_E25_500)
 Other age: 
 \code{\link{age}()},
 \code{\link{age_hdv}()},
-\code{\link{age_ldv}()}
+\code{\link{age_ldv}()},
+\code{\link{age_veh}()}
 }
 \concept{age}

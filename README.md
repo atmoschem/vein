@@ -193,7 +193,7 @@ Read the instruction of inventory
 ``` r
 library(vein)
 data("net")
-PC_E25_1400 <- age_ldv( x = net$ldv)
+PC_E25_1400 <- age_veh( x = net$ldv, "ldv")
 
 plot(PC_E25_1400)
 #> Weighted mean =  11.17
@@ -206,8 +206,9 @@ the net. Age functions now returns ‘sf’ objects if the net argument is
 present.
 
 ``` r
-PC_E25_1400net <- age_ldv(
+PC_E25_1400net <- age_veh(
   x = net$ldv, 
+  "ldv",
   net = net
 )
 plot(PC_E25_1400net, 
@@ -215,48 +216,8 @@ plot(PC_E25_1400net,
   pal = cptcity::cpt(
     colorRampPalette = T, 
     rev = T))
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 #> Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot
 #> all
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 ![](man/figures/unnamed-chunk-4-1.png)<!-- -->
@@ -307,22 +268,6 @@ plot(
                      rev = T), 
   axes = T
 )
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 ![](man/figures/unnamed-chunk-6-1.png)<!-- --> \#### 2) Emission Factors
@@ -424,22 +369,6 @@ plot(
   pal = cptcity::cpt(colorRampPalette = T, 
                      rev = T), 
   axes = T)
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 ```
 
 ![](man/figures/unnamed-chunk-9-1.png)<!-- -->
@@ -467,11 +396,8 @@ g <- make_grid(
   spobj = net, 
   width = 1/102.47
 )
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 #> Number of lon points: 12
 #> Number of lat points: 10
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 E_CO_g <- emis_grid(
   spobj = E_CO_STREETSnet, 
   g = g, 
@@ -480,7 +406,6 @@ E_CO_g <- emis_grid(
 #> Your units are:
 #> g
 #> Transforming spatial objects to 'sr'
-#> old-style crs object detected; please recreate object with a recent sf::st_crs()
 #> Sum of street emissions 148791715.29
 #> Sum of gridded emissions 148791715.29
 na <- paste0("V", 1:168)

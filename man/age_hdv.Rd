@@ -77,6 +77,7 @@ plot(LT_B5)
 Other age: 
 \code{\link{age}()},
 \code{\link{age_ldv}()},
-\code{\link{age_moto}()}
+\code{\link{age_moto}()},
+\code{\link{age_veh}()}
 }
 \concept{age}

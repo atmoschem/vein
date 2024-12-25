@@ -185,7 +185,7 @@ the shape of this curve.
 ```{r, fig.height=8, fig.width=6}
 library(vein)
 data("net")
-PC_E25_1400 <- age_ldv( x = net$ldv)
+PC_E25_1400 <- age_veh( x = net$ldv, "ldv")
 
 plot(PC_E25_1400)
 ```
@@ -195,8 +195,9 @@ If you want to know the vehicles per street and by age of use, just
 add the net. Age functions now returns 'sf' objects if the net argument is present.
 
 ```{r, fig.height=5, fig.width=7}
-PC_E25_1400net <- age_ldv(
+PC_E25_1400net <- age_veh(
   x = net$ldv, 
+  "ldv",
   net = net
 )
 plot(PC_E25_1400net, 

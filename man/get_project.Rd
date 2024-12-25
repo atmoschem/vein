@@ -40,29 +40,7 @@ The projects are available on Github.com/atmoschem/vein/projects
 }
 \note{
 All projects include option to apply survival functions
-
-\strong{brazil_bu_chem} covers
-"brazil",
-"brazil_bu",
-"brasil_bu",
-"brazil_bu_chem",
-"brazil_bu_csvgz",
-"brazil_bu_csv",
-"brazil_bu_cb05",
-"brazil_mech",
-"brazil_bu_chem_month",
-"brazil_bu_chem_im"
-"brazil_bu_chem_streets_im" (type <- 'streets')
-"brazil_bu_chem_streets" (type <- 'streets')
-
-\strong{brazil_td_chem} covers
-"brazil_td_chem_im"
-
-\strong{sebr_cb05co2} covers
-"sebr_cb05co2_im"
-
 In Sao Paulo the IM programs was functioning until 2011.
-#'
 }
 \examples{
 \dontrun{

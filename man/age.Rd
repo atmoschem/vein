@@ -87,6 +87,7 @@ colplot(dff)
 Other age: 
 \code{\link{age_hdv}()},
 \code{\link{age_ldv}()},
-\code{\link{age_moto}()}
+\code{\link{age_moto}()},
+\code{\link{age_veh}()}
 }
 \concept{age}

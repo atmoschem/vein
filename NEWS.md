@@ -1,5 +1,10 @@
 NEWS
 ===========
+### vein 1.2.0 (date: 2024-12-25)
+
+- Deprecated age_ldv, age_hdv and age_mc in favor of age_veh.
+- Deleted emis_merge, now all projects store emissions in databases.
+
 ### vein 1.1.4 (date: 2024-08-20)
 
 - ef_ldv_speed when LCV G and eu longer than 1,  works 

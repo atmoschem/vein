@@ -46,7 +46,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -238,15 +238,16 @@ vein
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"net"</span><span class="op">)</span></span>
-<span><span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span> x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">)</span></span>
+<span><span class="va">PC_E25_1400</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_veh.html">age_veh</a></span><span class="op">(</span> x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, <span class="st">"ldv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Weighted mean =  11.17</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-3-1.png"><!-- --></p>
 <p>If you want to know the vehicles per street and by age of use, just add the net. Age functions now returns ‘sf’ objects if the net argument is present.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">PC_E25_1400net</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_ldv.html">age_ldv</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">PC_E25_1400net</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/age_veh.html">age_veh</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span>, </span>
+<span>  <span class="st">"ldv"</span>,</span>
 <span>  net <span class="op">=</span> <span class="va">net</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">PC_E25_1400net</span>, </span>
@@ -254,48 +255,8 @@ vein
 <span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span></span>
 <span>    colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>    rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
 <span><span class="co">#&gt; Warning: plotting the first 9 out of 50 attributes; use max.plot = 50 to plot</span></span>
-<span><span class="co">#&gt; all</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span></code></pre></div>
+<span><span class="co">#&gt; all</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-4-1.png"><!-- --></p>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/temp_fact.html" class="external-link">temp_fact</a></li>
@@ -337,23 +298,7 @@ vein
 <span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                     rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, </span>
 <span>  axes <span class="op">=</span> <span class="cn">T</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-6-1.png"><!-- --> #### 2) Emission Factors</p>
 <ul>
 <li><a href="https://atmoschem.github.io/vein/reference/ef_ldv_speed.html" class="external-link">ef_ldv_speed</a></li>
@@ -450,23 +395,7 @@ vein
 <span>  key.pos <span class="op">=</span> <span class="fl">4</span>, </span>
 <span>  pal <span class="op">=</span> <span class="fu">cptcity</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cptcity/man/cpt.html" class="external-link">cpt</a></span><span class="op">(</span>colorRampPalette <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                     rev <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, </span>
-<span>  axes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span></code></pre></div>
+<span>  axes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-9-1.png"><!-- --></p>
 </div>
 <div class="section level4">
@@ -492,11 +421,8 @@ vein
 <span>  spobj <span class="op">=</span> <span class="va">net</span>, </span>
 <span>  width <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">102.47</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
 <span><span class="co">#&gt; Number of lon points: 12</span></span>
 <span><span class="co">#&gt; Number of lat points: 10</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
 <span><span class="va">E_CO_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/emis_grid.html">emis_grid</a></span><span class="op">(</span></span>
 <span>  spobj <span class="op">=</span> <span class="va">E_CO_STREETSnet</span>, </span>
 <span>  g <span class="op">=</span> <span class="va">g</span>, </span>
@@ -505,7 +431,6 @@ vein
 <span><span class="co">#&gt; Your units are:</span></span>
 <span><span class="co">#&gt; g</span></span>
 <span><span class="co">#&gt; Transforming spatial objects to 'sr'</span></span>
-<span><span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></span>
 <span><span class="co">#&gt; Sum of street emissions 148791715.29</span></span>
 <span><span class="co">#&gt; Sum of gridded emissions 148791715.29</span></span>
 <span><span class="va">na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"V"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span></span>
