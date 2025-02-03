@@ -6,7 +6,7 @@ df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
 
 data(net)
 test_that("long_to_wide works", {
-  expect_equal(long_to_wide(df)$CO[1],
+  expect_equal(as.numeric(long_to_wide(df)$CO[1]),
                1)
 })
 
