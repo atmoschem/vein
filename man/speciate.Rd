@@ -26,7 +26,7 @@ speciate(
 \item "road": Splits PM in PM10 and PM2.5.
 \item "nox": Splits NOx in NO and NO2.
 \item "nmhc": Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.
-\item "voc": Splits NMHC in voc groups according EDGAR.
+\item "voc": Splits NMHC in voc groups according EDGAR-CAMS.
 \item "pmiag", "pmneu",  "pmneu2", "pm2023": Splits PM in groups, see note below.
 }}
 
@@ -38,6 +38,7 @@ speciate(
 \item "road": not necessary.
 \item "nox": veh can be "PC", "LCV", HDV" or "Motorcycle".
 \item "nmhc":see below
+\item "voc": read options while running.
 \item ""pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
 }}
 
@@ -49,6 +50,7 @@ speciate(
 \item "road": not necessary.
 \item "nox": "G", "D", "LPG", "E85" or "CNG".
 \item "nmhc":see below
+\item "voc": read options while running.
 \item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
 }}
 
@@ -60,6 +62,7 @@ speciate(
 \item "road": not necessary.
 \item "nox": "G", "D", "LPG", "E85" or "CNG".
 \item "nmhc":see below
+\item "voc": read options while running.
 \item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
 }}
 

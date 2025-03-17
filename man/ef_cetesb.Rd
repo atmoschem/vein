@@ -50,7 +50,7 @@ If project is 'constant' values above 2017 and below 1980 will be repeated}
 \item{scale}{Character; values "default","tunnel" o  "tunnel2018". If "tunnel", emission
 factors are scaled to represent EF measurements in tunnels in Sao Paulo}
 
-\item{sppm}{Numeric, sulfur (sulphur) in ppm in fuel.}
+\item{sppm}{Numeric, sulfur (sulphur) in ppm in fuel. Length 1 or EF}
 
 \item{full}{Logical; To return a data.frame instead or a vector adding
 Age, Year, Brazilian emissions standards and its euro equivalents.}
@@ -189,9 +189,9 @@ ef_cetesb(p = "CO", veh = "PC_G", year = 1970, agemax = 40)
 ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 a <- ef_cetesb(p = "NMHC", veh = c("PC_G", "PC_FG", "PC_FE", "PC_E"), year = 2018, agemax = 20)
-colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
-ef_cetesb(p = "PM25RES", veh = "PC_ELEC", year = 1970, agemax = 40)
-ef_cetesb(p = "PM25RES", veh = "BUS_ELEC", year = 1970, agemax = 40)
+# colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
+# ef_cetesb(p = "PM25RES", veh = "PC_ELEC", year = 1970, agemax = 40)
+# ef_cetesb(p = "PM25RES", veh = "BUS_ELEC", year = 1970, agemax = 40)
 }
 }
 \references{
