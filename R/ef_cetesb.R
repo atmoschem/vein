@@ -28,7 +28,7 @@
 #' @param agemax Integer; age of oldest vehicles for that category
 #' @param scale Character; values "default","tunnel" o  "tunnel2018". If "tunnel", emission
 #' factors are scaled to represent EF measurements in tunnels in Sao Paulo
-#' @param sppm Numeric, sulfur (sulphur) in ppm in fuel.
+#' @param sppm Numeric, sulfur (sulphur) in ppm in fuel. Length 1 or EF
 #' @param full Logical; To return a data.frame instead or a vector adding
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
 #' @param efinput data.frame with efinput structure of sysdata cetesb. Allow
@@ -159,9 +159,9 @@
 #' ef_cetesb(p = "CO", veh = "TRUCKS_L_D", year = 2018)
 #' ef_cetesb(p = "CO", veh = "SLT", year = 2018) #  olds names
 #' a <- ef_cetesb(p = "NMHC", veh = c("PC_G", "PC_FG", "PC_FE", "PC_E"), year = 2018, agemax = 20)
-#' colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
-#' ef_cetesb(p = "PM25RES", veh = "PC_ELEC", year = 1970, agemax = 40)
-#' ef_cetesb(p = "PM25RES", veh = "BUS_ELEC", year = 1970, agemax = 40)
+#' # colplot(a, main = "NMHC EF", ylab = "[g/km]", xlab = "Years of use")
+#' # ef_cetesb(p = "PM25RES", veh = "PC_ELEC", year = 1970, agemax = 40)
+#' # ef_cetesb(p = "PM25RES", veh = "BUS_ELEC", year = 1970, agemax = 40)
 #' }
 ef_cetesb <- function(p,
                       veh,
@@ -191,8 +191,9 @@ ef_cetesb <- function(p,
 
     dify <- year - ymax
 
-    efmm <- data.table::rbindlist(replicate(
-      dify, efmax, simplify = FALSE))
+    efmm <- data.table::rbindlist(replicate(dify,
+                                            efmax,
+                                            simplify = FALSE))
 
     Year <- Pollutant <- NULL
     efmm[,
@@ -201,7 +202,8 @@ ef_cetesb <- function(p,
 
     ef <- rbind(ef, efmm)
     data.table::setorderv(ef,
-                          cols = c("Pollutant", "Year"),
+                          cols = c("Pollutant",
+                                   "Year"),
                           order = c(1, -1))
   }
 
@@ -225,8 +227,12 @@ ef_cetesb <- function(p,
         )}))
 
   Age <- Year <- .N <- Pollutant <- NULL
-  ef[, Age := 1:.N, by= Pollutant]
-  ef[, Year := max(ef$Year):(max(ef$Year)-max(ef$Age) + 1), by= Pollutant]
+  ef[,
+     Age := 1:.N, by= Pollutant]
+
+  ef[,
+     Year := max(ef$Year):(max(ef$Year)-max(ef$Age) + 1),
+     by= Pollutant]
 
   # deterioration ####
   ef <- ef[ef$Year <= year, ]
@@ -263,55 +269,121 @@ ef_cetesb <- function(p,
 
   det$xmil <-
     ifelse(
-      det$pol == "CO" & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year > 1994, 0.0000032,
+      det$pol == "CO" &
+        det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+        det$Year > 1994,
+      0.0000032,
       ifelse(
-        det$pol == "CO" & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year <= 1994 & det$Year > 1985, 0.0000275,
+        det$pol == "CO" &
+          det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+          det$Year <= 1994 &
+          det$Year > 1985,
+        0.0000275,
         ifelse(
-          det$pol == "CO" & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year <= 1985, 0.0000413,
+          det$pol == "CO" &
+            det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+            det$Year <= 1985,
+          0.0000413,
           ifelse(
-            det$pol == "CO" & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year > 1994, 0.0000028,
+            det$pol == "CO" &
+              det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+              det$Year > 1994,
+            0.0000028,
             ifelse(
-              det$pol == "CO" & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year <= 1994 & det$Year > 1985, 0.000016,
+              det$pol == "CO" &
+                det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+                det$Year <= 1994 & det$Year > 1985, 0.000016,
               ifelse(
-                det$pol == "CO" & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year <= 1985, 0.0000225,0))))))
+                det$pol == "CO" &
+                  det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+                  det$Year <= 1985, 0.0000225,0))))))
 
   det$xmil <-
     ifelse(
-      det$pol %in% c("NMHC", "HC") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year > 1994, 0.000000288,
+      det$pol %in% c("NMHC", "HC") &
+        det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+        det$Year > 1994,
+      0.000000288,
       ifelse(
-        det$pol %in% c("NMHC", "HC") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year <= 1994 & det$Year > 1985, 0.0000017,
+        det$pol %in% c("NMHC", "HC") &
+          det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+          det$Year <= 1994 &
+          det$Year > 1985,
+        0.0000017,
         ifelse(
-          det$pol %in% c("NMHC", "HC") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year <= 1985, 0.00000319,
+          det$pol %in% c("NMHC", "HC") &
+            det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+            det$Year <= 1985,
+          0.00000319,
           ifelse(
-            det$pol %in% c("NMHC", "HC") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year > 1994, 0.0000003,
+            det$pol %in% c("NMHC", "HC") &
+              det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+              det$Year > 1994,
+            0.0000003,
             ifelse(
-              det$pol %in% c("NMHC", "HC") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year <= 1994 & det$Year > 1985, 0.0000017,
+              det$pol %in% c("NMHC", "HC") &
+                det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+                det$Year <= 1994 &
+                det$Year > 1985,
+              0.0000017,
               ifelse(
                 det$pol %in% c("NMHC", "HC") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year <= 1985, 0.0000017, det$xmil))))))
 
   det$xmil <-
     ifelse(
-      det$pol %in% c("RCHO") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year > 1994, 0.000000008,
+      det$pol %in% c("RCHO") &
+        det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+        det$Year > 1994, 0.000000008,
       ifelse(
-        det$pol %in% c("RCHO") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year <= 1994 & det$Year > 1985, 0.00000005,
+        det$pol %in% c("RCHO") &
+          det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+          det$Year <= 1994 &
+          det$Year > 1985,
+        0.00000005,
         ifelse(
-          det$pol %in% c("RCHO") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year <= 1985, 0.00000003,
+          det$pol %in% c("RCHO") &
+            det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+            det$Year <= 1985,
+          0.00000003,
           ifelse(
-            det$pol %in% c("RCHO") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year > 1994, 0.00000003,
+            det$pol %in% c("RCHO") &
+              det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+              det$Year > 1994,
+            0.00000003,
             ifelse(
-              det$pol %in% c("RCHO") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year <= 1994 & det$Year > 1985, 0.0000001,
+              det$pol %in% c("RCHO") &
+                det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+                det$Year <= 1994 &
+                det$Year > 1985,
+              0.0000001,
               ifelse(
-                det$pol %in% c("RCHO") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year <= 1985, 0.0000001, det$xmil))))))
+                det$pol %in% c("RCHO") &
+                  det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+                  det$Year <= 1985,
+                0.0000001,
+                det$xmil))))))
 
   det$xmil <-
     ifelse(
-      det$pol %in% c("NOx", "NO", "NO2") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year > 1994, 0.000000375,
+      det$pol %in% c("NOx", "NO", "NO2") &
+        det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+        det$Year > 1994,
+      0.000000375,
       ifelse(
-        det$pol %in% c("NOx", "NO", "NO2") & det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") & det$Year <= 1994, 1,
+        det$pol %in% c("NOx", "NO", "NO2") &
+          det$veh %in% c("PC_G", "PC_FG", "LCV_G", "LCV_FG") &
+          det$Year <= 1994, 1,
         ifelse(
-          det$pol %in% c("NOx", "NO", "NO2") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year > 1994, 0.00000025,
+          det$pol %in% c("NOx", "NO", "NO2") &
+            det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+            det$Year > 1994,
+          0.00000025,
           ifelse(
-            det$pol %in% c("NOx", "NO", "NO2") & det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") & det$Year <= 1994, 1, det$xmil))))
+            det$pol %in% c("NOx", "NO", "NO2") &
+              det$veh %in% c("PC_E", "PC_FE", "LCV_E", "LCV_FE") &
+              det$Year <= 1994,
+            1,
+            det$xmil))))
   # 5 merging ####
   d0$ID <- paste(d0$Year, d0$Pollutant,  d0$veh)
   det$ID <- paste(det$Year, det$pol, det$veh)
@@ -319,10 +391,12 @@ ef_cetesb <- function(p,
   # 6 fe mileages ####
   det2$ef80 <- ifelse(det2$Year < 1994,0, det2$x + det2$ef)
   det2$ef160 <- ifelse(det2$Year < 1994, det2$ef + det2$ef*0.2, det2$x + det2$ef80)
+
   # 7 constrain fe160 ####
   xx <- det2[det2$Year == 1984 &
                det2$pol == "CO" &
                det2$veh == "PC_G", ]$ef160
+
   det2$ef160 <- ifelse(
     det2$veh == "PC_G" &
       det2$pol == "CO" &
@@ -330,18 +404,25 @@ ef_cetesb <- function(p,
     xx,
     det2$ef160)
   det2[is.na(det2)]<- 0
+
   # 8 ef det ####
   det2$efd <- ifelse(
-    det2$pol %in% c("CO", "NMHC", "RCHO", "HC") & det2$Year > 1994,
+    det2$pol %in% c("CO", "NMHC", "RCHO", "HC") &
+      det2$Year > 1994,
     det2$xmil*det2$mil + det2$ef,
     ifelse(
-      det2$pol %in% c("CO", "NMHC", "RCHO", "HC") & det2$Year <= 1994 & det2$mil > 160000,
+      det2$pol %in% c("CO", "NMHC", "RCHO", "HC") &
+        det2$Year <= 1994 &
+        det2$mil > 160000,
       det2$ef160,
       ifelse(
-        det2$pol %in% c("CO", "NMHC", "RCHO", "HC") & det2$Year <= 1994 & det2$mil <= 160000,
+        det2$pol %in% c("CO", "NMHC", "RCHO", "HC") &
+          det2$Year <= 1994 &
+          det2$mil <= 160000,
         det2$xmil*det2$mil + det2$ef,
         ifelse(
-          det2$pol %in% c("NO", "NO2", "NOx") & det2$Year > 1994,
+          det2$pol %in% c("NO", "NO2", "NOx") &
+            det2$Year > 1994,
           det2$xmil*det2$mil + det2$ef,
           det2$ef))))
 
@@ -354,31 +435,38 @@ ef_cetesb <- function(p,
 
   efnoxd <- efnox <- ef[ef$Pollutant == "NOx", ]
   efnox$Pollutant <-  "NOx_0km"
-  for(i in seq_along(ve4s)) efnoxd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "NOx", ]$efd
+  for(i in seq_along(ve4s)) efnoxd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+                                                        det2$pol == "NOx", ]$efd
 
   efnod <- efno <- ef[ef$Pollutant == "NO", ]
   efno$Pollutant <-  "NO_0km"
-  for(i in seq_along(ve4s)) efnox[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "NO", ]$efd
+  for(i in seq_along(ve4s)) efnox[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+                                                       det2$pol == "NO", ]$efd
 
   efno2d <- efno2 <- ef[ef$Pollutant == "NO2", ]
   efno2$Pollutant <-  "NO2_0km"
-  for(i in seq_along(ve4s)) efno2d[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "NO2", ]$efd
+  for(i in seq_along(ve4s)) efno2d[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+                                                        det2$pol == "NO2", ]$efd
 
   efcod <- efco <- ef[ef$Pollutant == "CO", ]
   efcod$Pollutant <-  "CO_0km"
-  for(i in seq_along(ve4s)) efcod[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "CO", ]$efd
+  for(i in seq_along(ve4s)) efcod[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+                                                       det2$pol == "CO", ]$efd
 
   efnmhcd <- efnmhc <- ef[ef$Pollutant == "NMHC", ]
   efnmhcd$Pollutant <-  "NMHC_0km"
-  for(i in seq_along(ve4s)) efnmhcd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "NMHC", ]$efd
+  for(i in seq_along(ve4s)) efnmhcd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+                                                         det2$pol == "NMHC", ]$efd
 
   efhcd <- efhc <- ef[ef$Pollutant == "HC", ]
   efhcd$Pollutant <-  "HC_0km"
-  for(i in seq_along(ve4s)) efhcd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "HC", ]$efd
+  for(i in seq_along(ve4s)) efhcd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+                                                       det2$pol == "HC", ]$efd
 
   efrchod <- efrcho <- ef[ef$Pollutant == "RCHO", ]
   efrcho$Pollutant <-  "RCHO_0km"
-  for(i in seq_along(ve4s)) efrchod[[ve4s[i]]] <- det2[det2$veh == ve4s[i] & det2$pol == "RCHO", ]$efd
+  for(i in seq_along(ve4s)) efrchod[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+                                                         det2$pol == "RCHO", ]$efd
 
 
   ef <- rbind(efd,
@@ -407,30 +495,38 @@ ef_cetesb <- function(p,
   pmef10 <-  pmef2 <-  ef[ef$Pollutant == "CO", ]
   pmef2$Pollutant <- "PM25RES"
   pmef2[, nLDV] <- ifelse(pmef2[, nLDV]>0,
-                          1*pmdf[pmdf$pol == "PM" & pmdf$veh == "LDV", ]$gst,
+                          1*pmdf[pmdf$pol == "PM" &
+                                   pmdf$veh == "LDV", ]$gst,
                           NA)
   pmef2[, nHDV] <- ifelse(pmef2[, nHDV]>0,
-                          1*pmdf[pmdf$pol == "PM" & pmdf$veh == "HDV", ]$gst,
+                          1*pmdf[pmdf$pol == "PM" &
+                                   pmdf$veh == "HDV", ]$gst,
                           NA)
   pmef2[, nBUS] <- ifelse(pmef2[, nBUS]>0,
-                          1*pmdf[pmdf$pol == "PM" & pmdf$veh == "BUS", ]$gst,
+                          1*pmdf[pmdf$pol == "PM" &
+                                   pmdf$veh == "BUS", ]$gst,
                           NA)
   pmef2[, nMC] <- ifelse(pmef2[, nMC]>0,
-                         1*pmdf[pmdf$pol == "PM" & pmdf$veh == "MC", ]$gst,
+                         1*pmdf[pmdf$pol == "PM" &
+                                  pmdf$veh == "MC", ]$gst,
                          NA)
 
   pmef10$Pollutant <- "PM10RES"
   pmef10[, nLDV] <- ifelse(pmef10[, nLDV]>0,
-                           1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "LDV", ]$gst,
+                           1*pmdf[pmdf$pol == "PM10" &
+                                    pmdf$veh == "LDV", ]$gst,
                            NA)
   pmef10[, nHDV] <- ifelse(pmef10[, nHDV]>0,
-                           1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "HDV", ]$gst,
+                           1*pmdf[pmdf$pol == "PM10" &
+                                    pmdf$veh == "HDV", ]$gst,
                            NA)
   pmef10[, nBUS] <- ifelse(pmef10[, nBUS]>0,
-                           1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "BUS", ]$gst,
+                           1*pmdf[pmdf$pol == "PM10" &
+                                    pmdf$veh == "BUS", ]$gst,
                            NA)
   pmef10[, nMC] <- ifelse(pmef10[, nMC]>0,
-                          1*pmdf[pmdf$pol == "PM10" & pmdf$veh == "MC", ]$gst,
+                          1*pmdf[pmdf$pol == "PM10" &
+                                   pmdf$veh == "MC", ]$gst,
                           NA)
   pmef2$PC_ELEC <-  pmef2$PC_G
   pmef2$LCV_ELEC <-  pmef2$LCV_G
@@ -642,7 +738,8 @@ ef_cetesb <- function(p,
       names(df)[ncol(df)] <- p
 
     } else {
-      if(pol == "SO2" & length(veh) == 1){
+      if(pol == "SO2" &
+         length(veh) == 1){
         if(veh %in% s0) k = 0
       }
       df <- cbind(ef[ef$Pollutant == p, 1:11],
