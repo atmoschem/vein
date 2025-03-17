@@ -1,5 +1,9 @@
 NEWS
 ===========
+### vein 1.2.1 (date: 2025-03-16)
+
+- Update speciation for "voc": (CAMS)
+
 ### vein 1.2.0 (date: 2024-12-25)
 
 - Deprecated age_ldv, age_hdv and age_mc in favor of age_veh.
