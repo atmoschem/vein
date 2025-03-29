@@ -34,9 +34,4 @@ The functions listed below are deprecated and will be defunct in
   functionality are also mentioned. Help pages for deprecated functions are
   available at \code{help("-deprecated")}.
 }
-\references{
-Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
-EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
-Environment Agency, Copenhagen, 2009
-}
 \keyword{internal}
