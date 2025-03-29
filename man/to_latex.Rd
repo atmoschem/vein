@@ -19,28 +19,20 @@ to_latex(df, file, caption = "My table", label = "tab:df")
 a text file with extension .tex.
 }
 \description{
-\code{\link{to_latex}} reads a data.frme an dgenerates a .tex
+\code{\link{to_latex}} reads a data.frme and generates a .tex
 table, aiming to replicate the method of tablegenerator.com
 }
 \examples{
 \dontrun{
-df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
-                 emission = vein::Emissions(1:30),
-                 region = rep(letters[1:2], 15))
-df
-long_to_wide(df)
-(df2 <- long_to_wide(df, column_fixed = "region"))
-to_latex(df2)
-to_latex(long_to_wide(df, column_fixed = "region"),
-file = paste0(tempfile(), ".tex"))
+ef <- ef_cetesb(p = "CO", veh = "PC_FG", full = T)
+to_latex(ef)
 }
 }
 \seealso{
-\code{\link{vein_notes}}  \code{\link{long_to_wide}}
+\code{\link{vein_notes}}
 
 Other helpers: 
 \code{\link{colplot}()},
-\code{\link{dmonth}()},
-\code{\link{wide_to_long}()}
+\code{\link{dmonth}()}
 }
 \concept{helpers}

@@ -2,12 +2,24 @@
 % Please edit documentation in R/vein-deprecated.R
 \name{vein-deprecated}
 \alias{vein-deprecated}
+\alias{emis_chem}
+\alias{long_to_wide}
+\alias{wide_to_long}
+\alias{invcop}
 \alias{EmissionsList}
 \alias{running_losses}
 \alias{hot_soak}
 \alias{Evaporative}
 \title{Deprecated functions in package \pkg{vein}.}
 \usage{
+emis_chem(...)
+
+long_to_wide(...)
+
+wide_to_long(...)
+
+invcop(...)
+
 EmissionsList(...)
 
 running_losses()

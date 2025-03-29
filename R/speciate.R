@@ -123,6 +123,7 @@
 #' }
 #' @importFrom units as_units
 #' @importFrom sf st_as_sf st_set_geometry
+#' @importFrom data.table as.data.table dcast.data.table
 #' @return dataframe of speciation in grams or mols
 #' @references "bcom": Ntziachristos and Zamaras. 2016. Passenger cars, light
 #' commercial trucks, heavy-duty vehicles including buses and motorcycles. In:
@@ -279,12 +280,14 @@ speciate <- function(x = 1,
                                    iag$STANDARD,
                                    sep = "_")
 
-    iag2 <- long_to_wide(
-      df = iag,
-      column_with_new_names = "groups",
-      column_with_data = "x",
-      column_fixed = "VEH_FUEL_STANDARD"
-    )
+    VEH_FUEL_STANDARD <- groups <- NULL
+
+    iag2 <- data.table::dcast.data.table(
+      data.table::as.data.table(iag),
+      formula = VEH_FUEL_STANDARD ~ groups,
+      value.var = "x")
+
+    iag2 <- as.data.frame(iag2)
 
     iag2 <- cbind(
       iag2,

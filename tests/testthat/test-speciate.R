@@ -46,7 +46,9 @@ test_that("speciate works", {
 
 test_that("speciate works", {
   expect_equal(round(speciate(pm, spec = "iag",
-                              veh = "veh", fuel = "G", eu = "Exhaust")[[1]][1]),
+                              veh = "veh",
+                              fuel = "G", eu =
+                                "Exhaust")[[1]][1]),
                0)
   expect_equal(as.numeric(round(speciate(data.frame(pm), spec = "iag",
                                          veh = "veh", fuel = "G",
