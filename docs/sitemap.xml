@@ -61,7 +61,6 @@
 <url><loc>http://atmoschem.github.io/vein/reference/ef_wear.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/ef_whe.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/emis.html</loc></url>
-<url><loc>http://atmoschem.github.io/vein/reference/emis_chem.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/emis_chem2.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/emis_china.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/emis_cold.html</loc></url>
@@ -91,9 +90,7 @@
 <url><loc>http://atmoschem.github.io/vein/reference/get_project.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/grid_emis.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/index.html</loc></url>
-<url><loc>http://atmoschem.github.io/vein/reference/invcop.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/inventory.html</loc></url>
-<url><loc>http://atmoschem.github.io/vein/reference/long_to_wide.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/make_grid.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/matvect.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/moves_ef.html</loc></url>
@@ -125,6 +122,5 @@
 <url><loc>http://atmoschem.github.io/vein/reference/vein-package.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/vein_notes.html</loc></url>
 <url><loc>http://atmoschem.github.io/vein/reference/vkm.html</loc></url>
-<url><loc>http://atmoschem.github.io/vein/reference/wide_to_long.html</loc></url>
 </urlset>
 

@@ -1,6 +1,6 @@
 #' creates a .tex a table from a data.frame
 #'
-#' @description \code{\link{to_latex}} reads a data.frme an dgenerates a .tex
+#' @description \code{\link{to_latex}} reads a data.frme and generates a .tex
 #' table, aiming to replicate the method of tablegenerator.com
 #'
 #' @param df data.frame with three column.
@@ -10,18 +10,11 @@
 #' @family helpers
 #' @return a text file with extension .tex.
 #' @importFrom sf st_sf
-#' @seealso \code{\link{vein_notes}}  \code{\link{long_to_wide}}
+#' @seealso \code{\link{vein_notes}}
 #' @export
 #' @examples \dontrun{
-#' df <- data.frame(pollutant = rep(c("CO", "propadiene", "NO2"), 10),
-#'                  emission = vein::Emissions(1:30),
-#'                  region = rep(letters[1:2], 15))
-#' df
-#' long_to_wide(df)
-#' (df2 <- long_to_wide(df, column_fixed = "region"))
-#' to_latex(df2)
-#' to_latex(long_to_wide(df, column_fixed = "region"),
-#' file = paste0(tempfile(), ".tex"))
+#' ef <- ef_cetesb(p = "CO", veh = "PC_FG", full = T)
+#' to_latex(ef)
 #' }
 to_latex <- function (df,
                       file,

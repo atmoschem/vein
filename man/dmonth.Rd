@@ -26,7 +26,6 @@ dmonth(Sys.Date())
 \seealso{
 Other helpers: 
 \code{\link{colplot}()},
-\code{\link{to_latex}()},
-\code{\link{wide_to_long}()}
+\code{\link{to_latex}()}
 }
 \concept{helpers}

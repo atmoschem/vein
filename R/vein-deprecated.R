@@ -8,10 +8,41 @@
 #' @keywords internal
 NULL
 
+
+#' @rdname vein-deprecated
+#' @export
+emis_chem <- function(...) {
+  .Deprecated("emis_chem2")
+  "emis_chem2"
+}
+
+
+#' @rdname vein-deprecated
+#' @export
+long_to_wide <- function(...) {
+  .Deprecated("data.table::dcast.data.table")
+  "Use data.table::dcast.data.table"
+}
+
+#' @rdname vein-deprecated
+#' @export
+wide_to_long <- function(...) {
+  .Deprecated("melt::dcast.data.table")
+  "Use data.table::melt.data.table"
+}
+
+#' @rdname vein-deprecated
+#' @export
+invcop <- function(...) {
+  .Deprecated("get_project")
+  "Use projects"
+}
+
+
 #' @rdname vein-deprecated
 #' @export
 EmissionsList <- function(...) {
-  .Deprecated("EmissionsList")
+  .Deprecated("Emissions")
   "EmissionsList"
 }
 
