@@ -61,13 +61,7 @@ hot_soak <- function() {
   "Evaporative emissions"
 }
 
-
-
-
 #' @rdname vein-deprecated
-#' @references Mellios G and Ntziachristos 2016. Gasoline evaporation. In:
-#' EEA, EMEP. EEA air pollutant emission inventory guidebook-2009. European
-#' Environment Agency, Copenhagen, 2009
 #' @export
 Evaporative <- function() {
   .Deprecated("emis_evap")
