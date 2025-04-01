@@ -1,6 +1,11 @@
 NEWS
 ===========
-### vein 1.3.0 (date: 2025-03-16)
+
+### vein 1.3.1 (date: 2025-03-30)
+
+- Update spec "voc"
+
+### vein 1.3.0 (date: 2025-03-28)
 
 - Deprecated long_to_wide, wide_to_long, 
 - emis_chem, in favor of emis_chem2 (Carter 2015)
