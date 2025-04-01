@@ -193,6 +193,12 @@
 #' (xs <- speciate(spec = "pcdd", veh = "LDV", fuel = "G", eu = "I"))
 #' (xs <- speciate(spec = "pmchar", veh = "LDV", fuel = "G", eu = "I"))
 #' (xs <- speciate(spec = "metals", veh = "LDV", fuel = "G", eu = "all"))
+#'  dx1 <- speciate(
+#'  x = pm,
+#'  spec = "voc",
+#'  fuel = "E25",
+#'  veh = "LDV",
+#'  eu = "Exhaust")
 #' }
 speciate <- function(x = 1,
                      spec = "bcom",
@@ -401,6 +407,7 @@ speciate <- function(x = 1,
                             title="Choose fuel")
       fuel <- unique(nmhc$fuel)[choice]
     }
+
     nmhc <- nmhc[nmhc$fuel == fuel , ]
 
     if(!eu %in% unique(nmhc$eu)) {
@@ -408,11 +415,13 @@ speciate <- function(x = 1,
                             title="Choose eu")
       eu <- unique(nmhc$eu)[choice]
     }
+
     df <- nmhc[nmhc$eu == eu , ]
 
     df <- data.table::as.data.table(df)
     voc <- NULL
     df <- df[, sum(x), by = voc]
+
     names(df)[2] <- "x"
 
     if (list == T) {

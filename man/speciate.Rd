@@ -191,6 +191,12 @@ pm <- units::set_units(pm, "g/km^2/h")
 (xs <- speciate(spec = "pcdd", veh = "LDV", fuel = "G", eu = "I"))
 (xs <- speciate(spec = "pmchar", veh = "LDV", fuel = "G", eu = "I"))
 (xs <- speciate(spec = "metals", veh = "LDV", fuel = "G", eu = "all"))
+ dx1 <- speciate(
+ x = pm,
+ spec = "voc",
+ fuel = "E25",
+ veh = "LDV",
+ eu = "Exhaust")
 }
 }
 \references{
