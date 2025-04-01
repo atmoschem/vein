@@ -22,8 +22,11 @@ dmonth <- function(year, month) {
   }
 
   datef <- as.Date(unlist(lapply(seq_along(date), function(i) {
-    seq.Date(date[i], length.out = 2, by = "1 months")[2]
-  })))
+    seq.Date(date[i],
+             length.out = 2,
+             by = "1 months")[2]
+  })),
+  origin = "1970-01-01")
 
   ddif <- datef - date
 
