@@ -4,6 +4,8 @@ NEWS
 ### vein 1.3.1 (date: 2025-03-30)
 
 - Update spec "voc"
+- In R 4.04 as.Date origin must be specified.
+- This fixed dmonth
 
 ### vein 1.3.0 (date: 2025-03-28)
 
