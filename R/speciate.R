@@ -14,7 +14,7 @@
 #' \item "nox": Splits NOx in NO and NO2.
 #' \item "nmhc": Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.
 #' \item "voc": Splits NMHC in voc groups according EDGAR-CAMS.
-#' \item "pmiag", "pmneu",  "pmneu2", "pm2023": Splits PM in groups, see note below.
+#' \item "pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": Splits PM in groups, see note below.
 #' }
 #' @param veh Type of vehicle:
 #' \itemize{
@@ -26,6 +26,7 @@
 #' \item "nmhc":see below
 #' \item "voc": read options while running.
 #' \item ""pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
+#' \item "pm2025": "LDV", "HDV"
 #' }
 #' @param fuel Fuel.
 #' \itemize{
@@ -36,7 +37,7 @@
 #' \item "nox": "G", "D", "LPG", "E85" or "CNG".
 #' \item "nmhc":see below
 #' \item "voc": read options while running.
-#' \item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
+#' \item "pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": not necessary.
 #' }
 #' @param eu Emission standard
 #' \itemize{
@@ -47,7 +48,7 @@
 #' \item "nox": "G", "D", "LPG", "E85" or "CNG".
 #' \item "nmhc":see below
 #' \item "voc": read options while running.
-#' \item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
+#' \item "pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": not necessary.
 #' }
 #' @param list when TRUE returns a list with number of elements of the list as
 #' the number species of pollutants
@@ -188,6 +189,8 @@
 #' #(dfb <- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))
 #' #(dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
 #' #(dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
+#' #(dfb <- speciate(as.data.frame(pm), spec = "pm2025", veh = "LDV"))
+#' #(dfb <- speciate(as.data.frame(pm), spec = "pm2025", veh = "HDV"))
 #' # new
 #' (pah <- speciate(spec = "pah", veh = "LDV", fuel = "G", eu = "I"))
 #' (xs <- speciate(spec = "pcdd", veh = "LDV", fuel = "G", eu = "I"))
@@ -678,7 +681,42 @@ speciate <- function(x = 1,
           e_eci = 0.24487,
           e_ecj = 0.01563#,h2o = 0.277
         )
-      } else if (spec == "pmneu2") {
+        #pm2025
+      } else if (spec == "pm2025") {
+        if(veh == "LDV") {
+
+          df <- data.frame(
+            e_so4i = 0.00087,
+          e_so4j = 0.00553,
+          e_no3i = 0.00000,
+          e_no3j = 0.00000,
+          e_orgi = 0.04535,
+          e_orgj = 0.19335,
+          e_eci = 0.22360,
+          e_ecj = 0.01427,
+          e_pm25i = 0.12925,
+          e_pm25j = 0.38776
+          )
+
+        } else if(veh == "HDV") {
+          df <- data.frame(
+          e_so4i = 0.00796,
+          e_so4j = 0.05056,
+          e_no3i = 0.00876,
+          e_no3j = 0.02933,
+          e_orgi = 0.07032,
+          e_orgj = 0.29976,
+          e_eci = 0.50131,
+          e_ecj = 0.03200,
+          e_pm25i = 0.00000,
+          e_pm25j = 0.00000
+          )
+
+        } else{
+          stop("when spec = pm2025, veh can be LDV or HDV")
+        }
+
+      }  else if (spec == "pmneu2") {
         df <- data.frame(
           e_so4i = 0,
           e_so4j = 0.07,

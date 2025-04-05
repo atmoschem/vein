@@ -25,7 +25,7 @@ will be added more speciations"><meta property="og:image" content="http://atmosc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vein</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.0</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ will be added more speciations</p>
 <li><p>"nox": Splits NOx in NO and NO2.</p></li>
 <li><p>"nmhc": Splits NMHC in compounds, see <code><a href="ef_ldv_speed.html">ef_ldv_speed</a></code>.</p></li>
 <li><p>"voc": Splits NMHC in voc groups according EDGAR-CAMS.</p></li>
-<li><p>"pmiag", "pmneu",  "pmneu2", "pm2023": Splits PM in groups, see note below.</p></li>
+<li><p>"pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": Splits PM in groups, see note below.</p></li>
 </ul></dd>
 
 
@@ -114,6 +114,7 @@ will be added more speciations</p>
 <li><p>"nmhc":see below</p></li>
 <li><p>"voc": read options while running.</p></li>
 <li><p>""pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.</p></li>
+<li><p>"pm2025": "LDV", "HDV"</p></li>
 </ul></dd>
 
 
@@ -125,7 +126,7 @@ will be added more speciations</p>
 <li><p>"nox": "G", "D", "LPG", "E85" or "CNG".</p></li>
 <li><p>"nmhc":see below</p></li>
 <li><p>"voc": read options while running.</p></li>
-<li><p>"pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.</p></li>
+<li><p>"pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": not necessary.</p></li>
 </ul></dd>
 
 
@@ -137,7 +138,7 @@ will be added more speciations</p>
 <li><p>"nox": "G", "D", "LPG", "E85" or "CNG".</p></li>
 <li><p>"nmhc":see below</p></li>
 <li><p>"voc": read options while running.</p></li>
-<li><p>"pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.</p></li>
+<li><p>"pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": not necessary.</p></li>
 </ul></dd>
 
 
@@ -235,6 +236,8 @@ Environment Canada, September 26, 2006.</p>
 <span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))</span></span></span>
 <span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))</span></span></span>
 <span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))</span></span></span>
+<span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pm2025", veh = "LDV"))</span></span></span>
+<span class="r-in"><span><span class="co">#(dfb &lt;- speciate(as.data.frame(pm), spec = "pm2025", veh = "HDV"))</span></span></span>
 <span class="r-in"><span><span class="co"># new</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">pah</span> <span class="op">&lt;-</span> <span class="fu">speciate</span><span class="op">(</span>spec <span class="op">=</span> <span class="st">"pah"</span>, veh <span class="op">=</span> <span class="st">"LDV"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="st">"I"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu">speciate</span><span class="op">(</span>spec <span class="op">=</span> <span class="st">"pcdd"</span>, veh <span class="op">=</span> <span class="st">"LDV"</span>, fuel <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="st">"I"</span><span class="op">)</span><span class="op">)</span></span></span>

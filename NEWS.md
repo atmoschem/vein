@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+### vein 1.4.0 (date: 2025-03-30)
+
+- Add spec pm2025 for LDV and HDV
+
 ### vein 1.3.1 (date: 2025-03-30)
 
 - Update spec "voc"

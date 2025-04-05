@@ -27,7 +27,7 @@ speciate(
 \item "nox": Splits NOx in NO and NO2.
 \item "nmhc": Splits NMHC in compounds, see \code{\link{ef_ldv_speed}}.
 \item "voc": Splits NMHC in voc groups according EDGAR-CAMS.
-\item "pmiag", "pmneu",  "pmneu2", "pm2023": Splits PM in groups, see note below.
+\item "pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": Splits PM in groups, see note below.
 }}
 
 \item{veh}{Type of vehicle:
@@ -40,6 +40,7 @@ speciate(
 \item "nmhc":see below
 \item "voc": read options while running.
 \item ""pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
+\item "pm2025": "LDV", "HDV"
 }}
 
 \item{fuel}{Fuel.
@@ -51,7 +52,7 @@ speciate(
 \item "nox": "G", "D", "LPG", "E85" or "CNG".
 \item "nmhc":see below
 \item "voc": read options while running.
-\item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
+\item "pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": not necessary.
 }}
 
 \item{eu}{Emission standard
@@ -63,7 +64,7 @@ speciate(
 \item "nox": "G", "D", "LPG", "E85" or "CNG".
 \item "nmhc":see below
 \item "voc": read options while running.
-\item "pmiag", "pmneu",  "pmneu2", "pm2023": not necessary.
+\item "pmiag", "pmneu",  "pmneu2", "pm2023", "pm2025": not necessary.
 }}
 
 \item{list}{when TRUE returns a list with number of elements of the list as
@@ -186,6 +187,8 @@ pm <- units::set_units(pm, "g/km^2/h")
 #(dfb <- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))
 #(dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
 #(dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
+#(dfb <- speciate(as.data.frame(pm), spec = "pm2025", veh = "LDV"))
+#(dfb <- speciate(as.data.frame(pm), spec = "pm2025", veh = "HDV"))
 # new
 (pah <- speciate(spec = "pah", veh = "LDV", fuel = "G", eu = "I"))
 (xs <- speciate(spec = "pcdd", veh = "LDV", fuel = "G", eu = "I"))
