@@ -187,9 +187,12 @@
 #' (dfb <- speciate(pm, spec = "neu_cb05", veh = "veh", fuel = "G", eu = "Exhaust"))
 #' pm <- units::set_units(pm, "g/km^2/h")
 #' #(dfb <- speciate(as.data.frame(pm), spec = "pmiag", veh = "veh", fuel = "G", eu = "Exhaust"))
+#' for (i in 1:ncol(dfb)) {
+#'     dfb[, i] <- units::set_units(dfb[, i], "ug/m^2/s")
+#'   }
 #' #(dfb <- speciate(as.data.frame(pm), spec = "pmneu", veh = "veh", fuel = "G", eu = "Exhaust"))
 #' #(dfb <- speciate(as.data.frame(pm), spec = "pmneu2", veh = "veh", fuel = "G", eu = "Exhaust"))
-#' #(dfb <- speciate(as.data.frame(pm), spec = "pm2025", veh = "LDV"))
+#' (dfb <- speciate(as.data.frame(pm), spec = "pm2025", veh = "LDV"))
 #' #(dfb <- speciate(as.data.frame(pm), spec = "pm2025", veh = "HDV"))
 #' # new
 #' (pah <- speciate(spec = "pah", veh = "LDV", fuel = "G", eu = "I"))
@@ -621,10 +624,8 @@ speciate <- function(x = 1,
       dfb <- as.list(dfb)
     }
     # PM ####
-  } else if (spec %in% c("pmiag", "pmneu", "pmneu2","pm2023")) {
-    if(verbose) message("Input emissions must be in g/(km^2)/h\n")
-    if(verbose) message("Output flux will be  ug/(m^2)/s\n")
-    if(verbose) message("PM.2.5-10 must be calculated as substraction of PM10-PM2.5 to enter this variable into WRF")
+  } else if (spec %in% c("pmiag", "pmneu", "pmneu2","pm2023", "pm2025")) {
+
     if (inherits(x, "sf")) {
       x <- sf::st_set_geometry(x, NULL)
     } else if (inherits(x, "Spatial")) {
@@ -733,12 +734,6 @@ speciate <- function(x = 1,
     }
 
     names(df) <- toupper(names(df))
-
-    if (is.data.frame(x)) {
-      for (i in 1:ncol(x)) {
-        x[, i] <- units::set_units(x[, i], "ug/m^2/s")
-      }
-    }
     if (list == T) {
       dfx <- df
       dfb <- lapply(1:ncol(dfx), function(i) {
