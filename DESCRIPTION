@@ -23,7 +23,15 @@ Authors@R: c(
   person(given="Karl", family="Ropkins", 
          role="ctb", 
          email="k.ropkins@its.leeds.ac.uk",
-         comment = c(ORCID = "0000-0002-0294-6997"))) 
+         comment = c(ORCID = "0000-0002-0294-6997")),
+  person(given="Iara", family="da Silva", 
+         role="ctb", 
+         email="iaradasilva@usp.br",
+         comment = c(ORCID = "0000-0003-1306-5906")),
+  person(given="Guilherme", family="Martins Pereira", 
+         role="ctb", 
+         email="guilherme.martins.pereira@usp.br",
+         comment = c(ORCID = "0000-0003-1153-7236"))) 
 Description: Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
