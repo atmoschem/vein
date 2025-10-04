@@ -19,3 +19,4 @@
 ^projects$
 ^\.github$
 ^CRAN-RELEASE$
+^demo$
