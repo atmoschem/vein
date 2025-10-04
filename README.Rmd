@@ -47,7 +47,6 @@ knitr::opts_chunk$set(
 ### TODO
 
 - Include speed functions with Fortran
-- Include CB6
 - Add EF from HBEFA?
 - See issues [GitHub](https://github.com/atmoschem/vein/issues)
 - Second edition of my book
