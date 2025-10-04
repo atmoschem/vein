@@ -1,8 +1,8 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 1.4.0
-Date: 2025-04-04
+Version: 1.5.0
+Date: 2025-10-04
 Authors@R: c( 
   person(given = "Sergio", family = "Ibarra-Espinosa",
          role = c("aut", "cre"),
@@ -38,7 +38,7 @@ LazyData: no
 Depends: R (>= 3.5.0)
 Imports: sf (>= 1.0.1), data.table, units, graphics, stats, dotCall64, cptcity, grDevices
 Suggests: knitr, rmarkdown, testthat
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 NeedsCompilation: yes
 Config/testthat/parallel: true

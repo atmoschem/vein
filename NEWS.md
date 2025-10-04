@@ -1,5 +1,9 @@
 NEWS
 ===========
+### vein 1.5.0 (date: 2025-10-04)
+
+- Update ecuador excel config file
+
 
 ### vein 1.4.0 (date: 2025-03-30)
 
