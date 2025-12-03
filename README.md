@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- date: "19 de Octubre de 2016" -->
 
 # VEIN <img src="man/figures/logo.png" align="right" alt="" width="220" />
@@ -43,7 +44,6 @@ alt="vein" />
 ### TODO
 
 - Include speed functions with Fortran
-- Include CB6
 - Add EF from HBEFA?
 - See issues [GitHub](https://github.com/atmoschem/vein/issues)
 - Second edition of my book
@@ -87,36 +87,19 @@ and read the documentation, there you can see more projects as well.
 
 ``` r
 library(vein)
-?get_project
-get_project(directory = "awesome_city")
 ```
 
-The structure of the new directory “awesome_city” is:
+``` r
+awesome_city <- tempdir()
+awesome_city
+#> [1] "/tmp/Rtmp9irGAj"
+get_project(directory = awesome_city,
+case = "brazil_bu_chem")
+#> Your directory is in /tmp/Rtmp9irGAj
+```
 
 ``` r
-awesome_city
-├── config
-│   ├── clean.R
-│   ├── config.R
-│   ├── inventory.xlsx
-│   └── packages.R
-├── main.R
-├── main.Rproj
-├── network
-│   ├── net.gpkg
-│   └── net.rds
-├── scripts
-│   ├── evaporatives.R
-│   ├── exhaust.R
-│   ├── fuel_eval.R
-│   ├── net.R
-│   ├── pavedroads.R
-│   ├── plots.R
-│   ├── post.R
-│   ├── traffic.R
-│   └── wrf.R
-└── wrf
-└── wrfinput_d02
+system(paste0("tree ", awesome_city))
 ```
 
 You have to open the file `main.Rproj` with Rstudio and then open and
@@ -147,11 +130,13 @@ alt="vein proejcts" />
 ## Too complicated? Watch a YouTube
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/tHSWIjg26vg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
 </iframe>
 
 [English](https://www.youtube.com/embed/tHSWIjg26vg)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6-07Y0Eimng" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
 </iframe>
 
 [Portuguese](https://www.youtube.com/watch?v=6-07Y0Eimng)
@@ -246,4 +231,5 @@ More details on
 [StackOverflow](https://stackoverflow.com/questions/13575180/how-to-change-language-settings-in-r)
 
 <!-- You can learn more about VEIN reading the documentation in [PDF](https://cran.r-project.org/web/packages/vein/vein.pdf), [online](https://atmoschem.github.io/vein/), reading the book [online](https://ibarraespinosa.github.io/VEINBOOK/), or buy it in  [Kindle](https://www.amazon.com/VEINBOOK-Estimating-vehicular-emissions-package-ebook-dp-B07L7XRFKC/dp/B07L7XRFKC/ref=mt_kindle?_encoding=UTF8&me=&qid=) or  [Paperback](https://www.amazon.com/gp/product/1791571158?pf_rd_p=1581d9f4-062f-453c-b69e-0f3e00ba2652&pf_rd_r=EMDPZM3G7BWCHAD9F4QP) -->
+
 <!-- ![](https://i.imgur.com/RcfNmDm.jpg) -->

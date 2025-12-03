@@ -1,7 +1,7 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 1.5.0
+Version: 1.5.1
 Date: 2025-10-04
 Authors@R: c( 
   person(given = "Sergio", family = "Ibarra-Espinosa",
@@ -35,7 +35,7 @@ License: MIT + file LICENSE
 URL: https://github.com/atmoschem/vein
 BugReports: https://github.com/atmoschem/vein/issues
 LazyData: no
-Depends: R (>= 3.5.0)
+Depends: R (>= 3.5.1)
 Imports: sf (>= 1.0.1), data.table, units, graphics, stats, dotCall64, cptcity, grDevices
 Suggests: knitr, rmarkdown, testthat
 RoxygenNote: 7.3.3

@@ -116,7 +116,6 @@ vein
 </h3>
 <ul>
 <li>Include speed functions with Fortran</li>
-<li>Include CB6</li>
 <li>Add EF from HBEFA?</li>
 <li>See issues <a href="https://github.com/atmoschem/vein/issues" class="external-link">GitHub</a>
 </li>
@@ -155,33 +154,16 @@ vein
 </h2>
 <p>Use the function <a href="https://atmoschem.github.io/vein/reference/get_project.html" class="external-link">get_project</a> and read the documentation, there you can see more projects as well.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></span>
-<span><span class="op">?</span><span class="va">get_project</span></span>
-<span><span class="fu"><a href="reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">"awesome_city"</span><span class="op">)</span></span></code></pre></div>
-<p>The structure of the new directory “awesome_city” is:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>awesome_city</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>├── config</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>│   ├── clean.R</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>│   ├── config.R</span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>│   ├── inventory.xlsx</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>│   └── packages.R</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>├── main.R</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>├── main.Rproj</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>├── network</span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>│   ├── net.gpkg</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>│   └── net.rds</span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>├── scripts</span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>│   ├── evaporatives.R</span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>│   ├── exhaust.R</span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>│   ├── fuel_eval.R</span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>│   ├── net.R</span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>│   ├── pavedroads.R</span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>│   ├── plots.R</span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>│   ├── post.R</span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>│   ├── traffic.R</span>
-<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>│   └── wrf.R</span>
-<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>└── wrf</span>
-<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>└── wrfinput_d02</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">awesome_city</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">awesome_city</span></span>
+<span><span class="co">#&gt; [1] "/tmp/Rtmp9irGAj"</span></span>
+<span><span class="fu"><a href="reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">awesome_city</span>,</span>
+<span>case <span class="op">=</span> <span class="st">"brazil_bu_chem"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Your directory is in /tmp/Rtmp9irGAj</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"tree "</span>, <span class="va">awesome_city</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>You have to open the file <code>main.Rproj</code> with Rstudio and then open and run <code>main.R</code></p>
 <p>To run <code>main.R</code> you will need these extra packages:</p>
 <ul>
@@ -190,7 +172,7 @@ vein
 <li>eixport (If you plan to generate WRF Chem emissions file)</li>
 </ul>
 <p>If you do not have them already, you can install:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"readxl"</span>, <span class="st">"eixport"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Check the projects <a href="https://atmoschem.github.io/vein/reference/get_project.html" class="external-link">here</a></p>
 <figure><img src="https://ibarraespinosa.github.io/2025CU/figuras/vein_projects.jpg" alt="vein proejcts"><figcaption aria-hidden="true">
@@ -218,17 +200,17 @@ vein proejcts
 </h2>
 <p>If you use VEIN, please, cite it (<a href="https://gmd.copernicus.org/articles/11/2209/2018/gmd-11-2209-2018.bib" class="external-link">BIBTEX</a>, <a href="https://gmd.copernicus.org/articles/11/2209/2018/gmd-11-2209-2018.ris" class="external-link">ENDNOTE</a>):</p>
 <p>Ibarra-Espinosa, S., Ynoue, R., O’Sullivan, S., Pebesma, E., Andrade, M. D. F., and Osses, M.: VEIN v0.2.2: an R package for bottom-up vehicular emissions inventories, Geosci. Model Dev., 11, 2209-2229, <a href="https://doi.org/10.5194/gmd-11-2209-2018" class="external-link uri">https://doi.org/10.5194/gmd-11-2209-2018</a>, 2018.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="sc">@</span>article{gmd<span class="dv">-11-2209-2018</span>,</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>author <span class="ot">=</span> {Ibarra<span class="sc">-</span>Espinosa, S. and Ynoue, R. and O<span class="st">'Sullivan, S. and Pebesma, E. and Andrade, M. D. F. and Osses, M.},</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="st">title = {VEIN v0.2.2: an R package for bottom--up vehicular emissions inventories},</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="st">journal = {Geoscientific Model Development},</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="st">volume = {11},</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="st">year = {2018},</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="st">number = {6},</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="st">pages = {2209--2229},</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="st">url = {https://gmd.copernicus.org/articles/11/2209/2018/},</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="st">doi = {10.5194/gmd-11-2209-2018}</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="st">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="sc">@</span>article{gmd<span class="dv">-11-2209-2018</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>author <span class="ot">=</span> {Ibarra<span class="sc">-</span>Espinosa, S. and Ynoue, R. and O<span class="st">'Sullivan, S. and Pebesma, E. and Andrade, M. D. F. and Osses, M.},</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="st">title = {VEIN v0.2.2: an R package for bottom--up vehicular emissions inventories},</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="st">journal = {Geoscientific Model Development},</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="st">volume = {11},</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="st">year = {2018},</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="st">number = {6},</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="st">pages = {2209--2229},</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="st">url = {https://gmd.copernicus.org/articles/11/2209/2018/},</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="st">doi = {10.5194/gmd-11-2209-2018}</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="st">}</span></span></code></pre></div>
 <p><a href="https://scholar.google.com/scholar?q=VEIN+v0.2.2%3A+an+R+package+for+bottom%E2%80%93up+vehicular+emissions+inventories" class="external-link">Google Scholar</a></p>
 <div id="metrics-365-60926-crossref" class="metrics-tile metrics-tile-crossref low-opacity">
 <p><a href="javascript:void(0);" title="Toggle crossref metric details"> <img class="metrics-tile-image" alt="" src="https://www.geoscientific-model-development.net/metrics_logo_crossref.png"></a></p>
@@ -265,8 +247,8 @@ vein proejcts
 <h3 id="note-for-non-english-and-anaconda-users">Note for non-english and anaconda users<a class="anchor" aria-label="anchor" href="#note-for-non-english-and-anaconda-users"></a>
 </h3>
 <p>Sometimes you need to install R and all dependencies and a way for doing that is using anaconda. Well, as my system is in portuguese, after installing R using anaconda it changed the decimal character to ‘,’. In order to change it back to english meaning decimal separator as ‘.’, I added this variable into the .bashrc</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>nano <span class="sc">~</span><span class="er">/</span>.bashrc</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>export Lang<span class="ot">=</span>C</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>nano <span class="sc">~</span><span class="er">/</span>.bashrc</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>export Lang<span class="ot">=</span>C</span></code></pre></div>
 <p>More details on <a href="https://stackoverflow.com/questions/13575180/how-to-change-language-settings-in-r" class="external-link">StackOverflow</a></p>
 <!-- You can learn more about VEIN reading the documentation in [PDF](https://cran.r-project.org/web/packages/vein/vein.pdf), [online](https://atmoschem.github.io/vein/), reading the book [online](https://ibarraespinosa.github.io/VEINBOOK/), or buy it in  [Kindle](https://www.amazon.com/VEINBOOK-Estimating-vehicular-emissions-package-ebook-dp-B07L7XRFKC/dp/B07L7XRFKC/ref=mt_kindle?_encoding=UTF8&me=&qid=) or  [Paperback](https://www.amazon.com/gp/product/1791571158?pf_rd_p=1581d9f4-062f-453c-b69e-0f3e00ba2652&pf_rd_r=EMDPZM3G7BWCHAD9F4QP) -->
 <!-- ![](https://i.imgur.com/RcfNmDm.jpg) -->

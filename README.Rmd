@@ -62,19 +62,19 @@ mentioned [here](https://www.github.com/r-spatial/sf).
 #### CRAN
 
 VEIN can be installed via CRAN or github
-```r
+```{r, eval = F}
 install.packages("vein")
 ```
 
 #### GitHub
 
-```r
+```{r, eval = F}
 remotes::install_github("atmoschem/vein")
 ```
 
 or if you have a **32 bits** machine
 
-```r
+```{r, eval = F}
 install_github("atmoschem/vein",
 INSTALL_opts = "--no-multiarch")
 ```
@@ -85,41 +85,21 @@ INSTALL_opts = "--no-multiarch")
 Use the function [get_project](https://atmoschem.github.io/vein/reference/get_project.html) and read the documentation, there you can see more projects as well.
 
 
-
-```r
+```{r}
 library(vein)
-?get_project
-get_project(directory = "awesome_city")
 
 ```
 
-The structure of the new directory "awesome_city" is:
-
-
-```r
+```{r}
+awesome_city <- tempdir()
 awesome_city
-├── config
-│   ├── clean.R
-│   ├── config.R
-│   ├── inventory.xlsx
-│   └── packages.R
-├── main.R
-├── main.Rproj
-├── network
-│   ├── net.gpkg
-│   └── net.rds
-├── scripts
-│   ├── evaporatives.R
-│   ├── exhaust.R
-│   ├── fuel_eval.R
-│   ├── net.R
-│   ├── pavedroads.R
-│   ├── plots.R
-│   ├── post.R
-│   ├── traffic.R
-│   └── wrf.R
-└── wrf
-└── wrfinput_d02
+get_project(directory = awesome_city,
+case = "brazil_bu_chem")
+```
+
+
+```{r}
+system(paste0("tree ", awesome_city))
 ```
 
 You have to open the file `main.Rproj` with Rstudio and then open and run `main.R`
