@@ -1,5 +1,9 @@
 NEWS
 ===========
+### vein 1.5.1 (date: 2025-12-02) (Feliz cumpleanos papa, Q.E.P.D)
+
+- Remove testhat warning
+
 ### vein 1.5.0 (date: 2025-10-04)
 
 - Update ecuador excel config file
