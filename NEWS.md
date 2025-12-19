@@ -1,5 +1,11 @@
 NEWS
 ===========
+
+### vein 1.6.0 (date: 2025-12-19)
+
+- add proejct ecuador_mdpi
+- remove inventory
+
 ### vein 1.5.1 (date: 2025-12-02) (Feliz cumpleanos papa, Q.E.P.D)
 
 - Remove testhat warning

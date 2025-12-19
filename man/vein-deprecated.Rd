@@ -10,6 +10,7 @@
 \alias{running_losses}
 \alias{hot_soak}
 \alias{Evaporative}
+\alias{inventory}
 \title{Deprecated functions in package \pkg{vein}.}
 \usage{
 emis_chem(...)
@@ -27,6 +28,8 @@ running_losses()
 hot_soak()
 
 Evaporative()
+
+inventory(...)
 }
 \description{
 The functions listed below are deprecated and will be defunct in
