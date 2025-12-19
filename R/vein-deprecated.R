@@ -69,3 +69,9 @@ Evaporative <- function() {
 }
 
 
+#' @rdname vein-deprecated
+#' @export
+inventory <- function(...) {
+  .Deprecated("")
+  "inventory"
+}
