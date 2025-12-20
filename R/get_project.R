@@ -124,8 +124,6 @@ get_project <- function(directory, case, url) {
 
       message("Your directory is in ", directory)
 
-      message("Your directory is in ", directory)
-
       # brazil_bu_chem_streets ####
     } else if (
       case %in% c("brazil_bu_chem_streets", "brazil_bu_chem_streets_im")
@@ -167,8 +165,19 @@ get_project <- function(directory, case, url) {
         c(
           "ecuador",
           "ecuador_td",
-          "ecuador_td_hot",
-          "ecuador_td_im",
+        )
+    ) {
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td.tar.gz"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL, destfile = tf)
+      utils::untar(tarfile = tf, exdir = directory)
+
+      message("Your directory is in ", directory)
+
+      # ecuador ####
+    } else if (
+      case %in%
+        c(
           "ecuador_mdpi"
         )
     ) {
