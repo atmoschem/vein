@@ -92,10 +92,10 @@ library(vein)
 ``` r
 awesome_city <- tempdir()
 awesome_city
-#> [1] "/tmp/RtmpARbei6"
+#> [1] "/tmp/Rtmp3IxF7V"
 get_project(directory = awesome_city,
 case = "brazil_bu_chem")
-#> Your directory is in /tmp/RtmpARbei6
+#> Your directory is in /tmp/Rtmp3IxF7V
 ```
 
 ``` r
@@ -233,3 +233,11 @@ More details on
 <!-- You can learn more about VEIN reading the documentation in [PDF](https://cran.r-project.org/web/packages/vein/vein.pdf), [online](https://atmoschem.github.io/vein/), reading the book [online](https://ibarraespinosa.github.io/VEINBOOK/), or buy it in  [Kindle](https://www.amazon.com/VEINBOOK-Estimating-vehicular-emissions-package-ebook-dp-B07L7XRFKC/dp/B07L7XRFKC/ref=mt_kindle?_encoding=UTF8&me=&qid=) or  [Paperback](https://www.amazon.com/gp/product/1791571158?pf_rd_p=1581d9f4-062f-453c-b69e-0f3e00ba2652&pf_rd_r=EMDPZM3G7BWCHAD9F4QP) -->
 
 <!-- ![](https://i.imgur.com/RcfNmDm.jpg) -->
+
+**Stargazers**
+
+<p>
+
+<a href="https://github.com/atmoschem/vein/stargazers">
+<img src="http://reporoster.com/stars/dark/atmoschem/vein"/> </a>
+</p>
