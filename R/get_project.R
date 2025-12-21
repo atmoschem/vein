@@ -160,13 +160,7 @@ get_project <- function(directory, case, url) {
       message("Your directory is in ", directory)
 
       # ecuador ####
-    } else if (
-      case %in%
-        c(
-          "ecuador",
-          "ecuador_td",
-        )
-    ) {
+    } else if (case %in% c("ecuador", "ecuador_td")) {
       URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td.tar.gz"
       tf <- paste0(tempfile(), ".tar.gz")
       utils::download.file(url = URL, destfile = tf)
