@@ -7,7 +7,8 @@ tfs <- as.data.frame(tfs)
 # Escapamento ####
 for (i in seq_along(metadata$vehicles)) {
   cat(
-    "\n", metadata$vehicles[i],
+    "\n",
+    metadata$vehicles[i],
     rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
   )
 
@@ -21,8 +22,7 @@ for (i in seq_along(metadata$vehicles)) {
       veh = metadata$vehicles[i],
       year = 2018,
       agemax = nrow(x),
-      verbose = verbose,
-      scale = scale
+      verbose = verbose
     )
 
     array_x <- emis(
@@ -46,15 +46,13 @@ for (i in seq_along(metadata$vehicles)) {
       by = "veh"
     )
 
-
-    fwrite(x_DF, 
-           "emi/EXHAUST_FC_FIRST.csv", 
-           append = TRUE)
+    fwrite(x_DF, "emi/EXHAUST_FC_FIRST.csv", append = TRUE)
   }
   rm(array_x, ef, x, x_DF)
 }
 
-switch(language,
+switch(
+  language,
   "portuguese" = message("\nArquivos em: /emi/*:"),
   "english" = message("\nFiles in: /emi/*"),
   "spanish" = message("\nArchivos en: /emi/*")
@@ -67,9 +65,7 @@ dt$pollutant <- as.character(dt$pollutant)
 dt$g <- units::set_units(dt$g, g)
 dt$t <- units::set_units(dt$g, t)
 
-dt0 <- dt[pollutant == "FC", 
-          round(sum(t) * factor_emi, 2), 
-          by = .(fuel)]
+dt0 <- dt[pollutant == "FC", round(sum(t) * factor_emi, 2), by = .(fuel)]
 
 data.table::setkey(dt0, "fuel")
 
@@ -83,7 +79,7 @@ dtf$consumption_t <- dtf$consumption_m3 * dtf$density_tm3
 dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
 print(dtf)
 
-dtf$k <- 1/dtf$estimation_consumption |> as.numeric()
+dtf$k <- 1 / dtf$estimation_consumption |> as.numeric()
 
 k_G <- dtf[fuel == "G"]$k
 k_E <- dtf[fuel == "E"]$k
@@ -128,24 +124,25 @@ tfs <- as.data.frame(tfs)
 # Escapamento ####
 for (i in seq_along(metadata$vehicles)) {
   cat(
-    "\n", metadata$vehicles[i],
+    "\n",
+    metadata$vehicles[i],
     rep("", max(nchar(metadata$vehicles) + 1) - nchar(metadata$vehicles[i]))
   )
-  
+
   x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
-  
+
   for (j in seq_along(pol)) {
     cat(pol[j], " ")
-    
+
     ef <- ef_cetesb(
       p = pol[j],
       veh = metadata$vehicles[i],
       year = 2018,
       agemax = nrow(x),
       verbose = verbose,
-      scale = scale
+      scale = default
     )
-    
+
     array_x <- emis(
       veh = x,
       lkm = lkm,
@@ -156,7 +153,7 @@ for (i in seq_along(metadata$vehicles)) {
       simplify = TRUE,
       verbose = verbose
     )
-    
+
     x_DF <- emis_post(
       arra = array_x,
       veh = metadata$vehicles[i],
@@ -166,19 +163,17 @@ for (i in seq_along(metadata$vehicles)) {
       type_emi = "Exhaust",
       by = "veh"
     )
-    
-    
-    fwrite(x_DF, 
-           "emi/EXHAUST_FC_FINAL.csv", 
-           append = TRUE)
+
+    fwrite(x_DF, "emi/EXHAUST_FC_FINAL.csv", append = TRUE)
   }
   rm(array_x, ef, x, x_DF)
 }
 
-switch(language,
-       "portuguese" = message("\nArquivos em: /emi/*:"),
-       "english" = message("\nFiles in: /emi/*"),
-       "spanish" = message("\nArchivos en: /emi/*")
+switch(
+  language,
+  "portuguese" = message("\nArquivos em: /emi/*:"),
+  "english" = message("\nFiles in: /emi/*"),
+  "spanish" = message("\nArchivos en: /emi/*")
 )
 
 # data.table ####
@@ -188,9 +183,7 @@ dt$pollutant <- as.character(dt$pollutant)
 dt$g <- units::set_units(dt$g, g)
 dt$t <- units::set_units(dt$g, t)
 
-dt0 <- dt[pollutant == "FC", 
-          round(sum(t) * factor_emi, 2), 
-          by = .(fuel)]
+dt0 <- dt[pollutant == "FC", round(sum(t) * factor_emi, 2), by = .(fuel)]
 
 data.table::setkey(dt0, "fuel")
 
@@ -205,7 +198,8 @@ dtf$estimation_consumption <- dtf$estimation_t / dtf$consumption_t
 print(dtf)
 
 
-switch(language,
+switch(
+  language,
   "portuguese" = message("Limpando..."),
   "english" = message("Cleaning..."),
   "spanish" = message("Limpiando...")

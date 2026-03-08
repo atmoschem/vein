@@ -1,258 +1,182 @@
-suppressWarnings(file.remove("emi/EVAP_DF.csv"))
-suppressWarnings(file.remove("emi/EVAP_STREETS.csv"))
+# grade
+g <- st_transform(g, crs)
 
+# streets  ####
+switch(
+  language,
+  "portuguese" = message("\nAgregando emissões por rua...\n"),
+  "english" = message("\nAgregating emissions by street...\n"),
+  "spanish" = message("\nAgregando emisiones por calle...\n")
+)
 
-if(nrow(met) == nrow(tfs)) {
-  cat("Detecting hourly temperatures\n
-      Sourcing: `scripts/evaporatives_hourly.R`")
-  source("scripts/evaporatives_hourly.R", encoding = "UTF-8")
-} 
+x <- rbind(
+  fread("emi/EXHAUST_STREETS.csv"),
+  fread("emi/EVAP_STREETS.csv"),
+  fread("emi/WEAR_STREETS.csv")
+)
 
-# temperature
-te <- met$Temperature
-bb <- (0 + 15) / 2
-cc <- (10 + 25) / 2
-dd <- (20 + 35) / 2
+x[, pol := fifelse(pol == "PM", "PM2.5", pol)]
+unique(x$pol)
+na <- paste0("V", 1:nrow(tfs))
 
-tem <- ifelse(
-  te <= bb, "0_15",
-  ifelse(
-    te > bb & te <= cc, "10_25",
-    "20_35"
+names(x)
+
+nmhc <- c("NMHC", "Diurnal", "Hot Soak", "Running Losses")
+
+# non NMHC
+x[
+  !pol %in% nmhc,
+  lapply(.SD, sum, na.rm = T),
+  .SDcols = na,
+  by = .(id, pol)
+] -> xx
+
+uxxpol <- unique(xx$pol)
+
+for (i in seq_along(uxxpol)) {
+  print(uxxpol[i])
+
+  dt <- xx[pol == uxxpol[i]]
+  dt$id <- NULL
+  dt$pol <- NULL
+
+  dt <- st_sf(
+    Emissions(dt, mass = "g", time = "h"),
+    geometry = st_geometry(net)
   )
-)
-
-nmonth <- ifelse(nchar(seq_along(te)) < 2,
-                 paste0(0, seq_along(te)),
-                 seq_along(te)
-)
-
-# filtrando veiculos otto
-meta_ev <- metadata[metadata$fuel != "D", ]
-veh_ev <- meta_ev$vehicles
-
-# checks name
-type_emis <- c("Diurnal", "Running Losses", "Hot Soak")
-name_file_evap <- c("/DIURNAL_", "/RUNNING_LOSSES_", "/HOT_SOAK_")
-
-ef_d <- paste0("D_", tem)
-ef_rl <- paste0("R_", tem)
-ef_hs <- paste0("S_", tem)
-
-# plot
-n_PC <- metadata[metadata$family == "PC", ]$vehicles
-n_LCV <- metadata[metadata$family == "LCV", ]$vehicles[1:4]
-n_MC <- metadata[metadata$family == "MC", ]$vehicles
-
-ns <- c(
-  "PC", "LCV", "MC",
-  "PC", "LCV", "MC",
-  "PC", "LCV", "MC"
-)
-ln <- list(
-  n_PC, n_LCV, n_MC,
-  n_PC, n_LCV, n_MC,
-  n_PC, n_LCV, n_MC
-)
-laby <- c(
-  "g/day", "g/day", "g/day",
-  "g/trip", "g/trip", "g/trip",
-  "g/trip", "g/trip", "g/trip"
-)
-ev <- c(
-  "DIURNAL", "DIURNAL", "DIURNAL",
-  "RUNNING_LOSSES", "RUNNING_LOSSES", "RUNNING_LOSSES",
-  "HOT_SOAK", "HOT_SOAK", "HOT_SOAK"
-)
-
-# plotting
-switch(language,
-       "portuguese" = cat("Plotando EF\n"),
-       "english" = cat("Plotting EF\n"),
-       "spanish" = cat("Plotando EF\n")
-)
-
-for (i in seq_along(ns)) {
-  dl <- lapply(seq_along(ef_d), function(j) {
-    data.frame(ef_cetesb(
-      p = ef_d[j], 
-      veh = ln[[i]], 
-      year = year,
-      agemax = 40, 
-      verbose = verbose
-    ), 
-    month = nmonth[j])
-  })
-  
-  dl <- rbindlist(dl)
-  df <- wide_to_long(
-    df = dl,
-    column_with_data = ln[[i]],
-    column_fixed = "month"
+  saveRDS(
+    dt,
+    paste0(
+      "post/streets/",
+      uxxpol[i],
+      ".rds"
+    )
   )
-  df$age <- 1:40
-  setDT(df)
-  names(df) <- c("ef", "month", "veh", "age")
-  p <- ggplot(
-    df[df$ef > 0, ],
-    aes(x = age, 
-        y = ef, 
-        colour = veh)
-  ) +
-    geom_line() +
-    facet_wrap(~month) +
-    ylim(0, NA) +
-    labs(y = laby[i], 
-         title = ev[i]) +
-    # scale_y_log10() +
-    theme_bw()
-  
-  png(
-    filename = paste0("images/EF_", ev[i], "_", ns[i], ".png"),
-    width = 2100, 
-    height = 1500, 
-    units = "px", 
-    pointsize = 12,
-    bg = "white", 
-    res = 300
+}
+# NMHC
+
+na <- paste0("V", 1:nrow(tfs))
+xnmhc <- x[pol %in% nmhc]
+xnmhc[,
+  pol := fifelse(
+    pol %in% c("Diurnal", "Hot Soak", "Running Losses"),
+    "EVAP",
+    pol
   )
-  print(p)
-  dev.off()
+]
+
+xnmhc[,
+  lapply(.SD, sum, na.rm = T),
+  .SDcols = na,
+  by = .(id, paste0(fuel, "_", pol))
+] -> xx
+
+names(xx)[2] <- "pol"
+
+uxxpol <- unique(xx$pol)
+
+for (i in seq_along(uxxpol)) {
+  print(uxxpol[i])
+
+  dt <- xx[pol == uxxpol[i]]
+  dt$id <- NULL
+  dt$pol <- NULL
+  dt <- st_sf(
+    Emissions(dt, mass = "g", time = "h"),
+    geometry = st_geometry(net)
+  )
+  saveRDS(
+    dt,
+    paste0(
+      "post/streets/",
+      uxxpol[i],
+      ".rds"
+    )
+  )
 }
 
-switch(language,
-       "portuguese" = message("\nFiguras em /images\n"),
-       "english" = message("\nFigures in /image\n"),
-       "spanish" = message("\nFiguras en /images\n")
+# grids ####
+switch(
+  language,
+  "portuguese" = message("\nAgregando emissões por grade\n"),
+  "english" = message("\nAgregating emissions by grid...\n"),
+  "spanish" = message("\nAgregando emisiones por grilla...\n")
 )
 
+lf <- list.files(path = "post/streets", pattern = ".rds", full.names = TRUE)
+na <- list.files(path = "post/streets", pattern = ".rds", full.names = F)
+na <- gsub(pattern = ".rds", replacement = "", x = na)
 
-
-switch(language,
-       "portuguese" = cat("\nEmissões evaporativas\n"),
-       "english" = cat("\nEvaporative diurnal\n"),
-       "spanish" = cat("\nEmisiones evaporativas\n")
-)
-
-evtype <- c("Diurnal", "Running Losses", "Hot Soak")
-
-for (i in seq_along(veh_ev)) {
-  
-  cat(
-    "\n", veh_ev[i],
-    rep("", max(nchar(veh_ev) + 1) - nchar(veh_ev[i]))
-  )
-  
-  x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
-  
-  for (j in seq_along(te)) {
-    cat(nmonth[j], " ")
-    
-    
-    for(k in seq_along(evtype)) {
-      cat(evtype[k], " ")
-      
-      if(evtype[k] == "Diurnal") {
-
-        ef <- ef_cetesb(
-          p = ef_d[j],
-          veh = veh_ev[i],
-          year = year,
-          agemax = ncol(x),
-          # diurnal: g/day* day/km= g/km
-          verbose = verbose
-        ) / (mileage[[veh_ev[i]]] / 365) # mean daily mileage 
-        
-      } else if(evtype[k] == "Running Losses"){
-
-        ef <- ef_cetesb(
-          p = ef_rl[j],
-          veh = veh_ev[i],
-          year = year,
-          agemax = ncol(x),
-          # g/trip * trip/day * day/km = g/km
-          verbose = verbose
-        ) * meta_ev$trips_day[i] / (mileage[[veh_ev[i]]] / 365)
-        
-      } else {
-
-        ef <- ef_cetesb(
-          p = ef_hs[j],
-          veh = veh_ev[i],
-          year = year,
-          agemax = ncol(x),
-          # g/trip * trip/day * day/km = g/km
-          verbose = verbose
-        ) * meta_ev$trips_day[i] / (mileage[[veh_ev[i]]] / 365)
-      }
-      
-      
-      # muda NaNaN para 0
-      ef[is.na(ef)] <- 0
-
-      array_x <- emis(
-        veh = x,
-        lkm = lkm,
-        ef = ef,
-        profile = tfs[[veh_ev[i]]],
-        fortran = TRUE,
-        nt = check_nt() / 2,
-        simplify = TRUE,
-        verbose = verbose
-      )
-      
-      x_DF <- emis_post(
-        arra = array_x,
-        veh = veh_ev[i],
-        size = meta_ev$size[i],
-        fuel = meta_ev$fuel[i],
-        pollutant = "NMHC",
-        type_emi = evtype[k],
-        by = "veh"
-      )
-      
-      fwrite(x_DF, 
-             "emi/EVAP_DF.csv", 
-             append = TRUE)
-      
-      
-      x_STREETS <- emis_post(
-        arra = array_x,
-        pollutant = veh_ev[j],
-        by = "streets"
-      )
-      
-      
-      x_STREETS$id <- 1:nrow(net)
-      x_STREETS$family <- meta_ev$family[i]
-      x_STREETS$vehicles <- meta_ev$vehicles[i]
-      x_STREETS$fuel <- meta_ev$fuel[i]
-      x_STREETS$pol <- evtype[k]
-      
-      fwrite(x_STREETS, 
-             "emi/EVAP_STREETS.csv", 
-             append = TRUE)
-      
-    }}
-  rm(array_x, ef, x, x_DF, x_STREETS)
+for (i in seq_along(lf)) {
+  print(na[i])
+  x <- readRDS(lf[i])
+  gx <- emis_grid(spobj = x, g = g)
+  saveRDS(gx, paste0("post/grids/", na[i], ".rds"))
 }
 
-switch(language,
-       "portuguese" = message("\n\nArquivos em: /emi/*:"),
-       "english" = message("\nFiles in: /emi/*"),
-       "spanish" = message("\nArchivos en: /emi/*")
+# datatable ####
+switch(
+  language,
+  "portuguese" = message("\nAgregando emissões em data.table\n"),
+  "english" = message("\nAgregating emissions in data.table...\n"),
+  "spanish" = message("\nAgregando emisiones en data.table...\n")
 )
 
 
-switch(language,
-       "portuguese" = message("Limpando..."),
-       "english" = message("Cleaning..."),
-       "spanish" = message("Limpiando...")
+dt <- rbind(
+  fread("emi/EXHAUST_DF.csv"),
+  fread("emi/EVAP_DF.csv"),
+  fread("emi/WEAR_DF.csv")
+)
+# Agregando emissões por categoria ####
+switch(
+  language,
+  "portuguese" = message("\nAgregando emissões por categoria\n"),
+  "english" = message("\nAggregating emissions by category...\n"),
+  "spanish" = message("\nAgregando emisiones por categoria...\n")
+)
+dt$pollutant <- as.character(dt$pollutant)
+dt$g <- units::set_units(dt$g, g)
+dt$t <- units::set_units(dt$g, t)
+saveRDS(dt, "post/datatable/emissions.rds")
+data.table::fwrite(dt, "csv/emissions.csv", row.names = FALSE)
+
+
+dt0 <- dt[, round(sum(t) * factor_emi, 2), by = .(pollutant)]
+print(dt0)
+
+
+# emissoes by veh
+dt1 <- dt[, sum(t), by = .(pollutant, veh)]
+df1 <- dcast.data.table(data = dt1, formula = pollutant ~ veh)
+saveRDS(df1, "post/datatable/emissions_by_veh.rds")
+data.table::fwrite(df1, "csv/emissions_by_veh.csv", row.names = FALSE)
+
+# emissoes by fuel
+dt2 <- dt[, sum(t), by = .(pollutant, fuel)]
+df2 <- dcast.data.table(data = dt2, formula = pollutant ~ fuel)
+
+saveRDS(df2, "post/datatable/emissions_by_fuel.rds")
+data.table::fwrite(df2, "csv/emissions_by_fuel.csv", row.names = FALSE)
+
+# emissoes by age
+dt3 <- dt[, sum(t), by = .(pollutant, age)]
+df3 <- dcast.data.table(data = dt3, formula = pollutant ~ age)
+
+saveRDS(df3, "post/datatable/emissions_by_age.rds")
+data.table::fwrite(df3, "csv/emissions_by_age.csv", row.names = FALSE)
+
+switch(
+  language,
+  "portuguese" = message("\n\nArquivos em: /post/*:"),
+  "english" = message("\nFiles in: /post/*"),
+  "spanish" = message("\nArchivos en: /post/*")
 )
 
-suppressWarnings(rm(
-  i, mileage, meta_ev, veh_ev, year,
-  diurnal_ef, hot_soak_ef, running_losses_ef
-))
 
-invisible(gc())
+switch(
+  language,
+  "portuguese" = message("Limpando..."),
+  "english" = message("Cleaning..."),
+  "spanish" = message("Limpiando...")
+)
