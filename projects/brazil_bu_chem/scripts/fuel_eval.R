@@ -139,8 +139,7 @@ for (i in seq_along(metadata$vehicles)) {
       veh = metadata$vehicles[i],
       year = 2018,
       agemax = nrow(x),
-      verbose = verbose,
-      scale = default
+      verbose = verbose
     )
 
     array_x <- emis(
