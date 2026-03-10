@@ -12,10 +12,7 @@
 #'   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
-#'   brazil_country     \tab Top down \tab CETESB+tunnel\tab  .rds\cr
-#'   brazil_countryv2     \tab Top down \tab CETESB+tunnel\tab  .rds\cr
 #'   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
-#'   sebr_cb05co2   \tab Top-down SP, MG and RJ\tab CETESB+tunnel\tab  .rds\cr
 #'   amazon2014     \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   curitiba       \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   ecuador     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
@@ -87,19 +84,11 @@ get_project <- function(directory, case, url) {
       message("Your directory is in ", directory)
 
       # brazil_country ####
-    } else if (case %in% c("brazil_country", "brasil_country")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil.tar.gz"
+    } else if (case %in% c("brazil_country", "brazil_td")) {
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_td.tar.gz"
       tf <- paste0(tempfile(), ".tar.gz")
       utils::download.file(url = URL, destfile = tf)
       utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
-    } else if (case %in% c("brazil_countryv2")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_country.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
-
       # manizales_bu ####
     } else if (case %in% c("manizales_bu", "manizales")) {
       URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/manizales_bu.tar.gz"
@@ -151,14 +140,6 @@ get_project <- function(directory, case, url) {
       utils::untar(tarfile = tf, exdir = directory)
       message("Your directory is in ", directory)
 
-      # brazil_td_chem ####
-    } else if (case %in% c("brazil_td_chem")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_td_chem.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
-
       # ecuador ####
     } else if (case %in% c("ecuador", "ecuador_td")) {
       URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td.tar.gz"
@@ -169,12 +150,7 @@ get_project <- function(directory, case, url) {
       message("Your directory is in ", directory)
 
       # ecuador ####
-    } else if (
-      case %in%
-        c(
-          "ecuador_mdpi"
-        )
-    ) {
+    } else if (case %in% "ecuador_mdpi") {
       URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_mdpi.tar.gz"
       tf <- paste0(tempfile(), ".tar.gz")
       utils::download.file(url = URL, destfile = tf)
@@ -244,48 +220,6 @@ get_project <- function(directory, case, url) {
       utils::download.file(url = URL, destfile = tf)
       utils::untar(tarfile = tf, exdir = paste0(directory, "/industry"))
       message("Your directory for industrial emissions is in ", directory)
-    } else if (case %in% c("sebr_cb05co2", "sebr_cb05co2_im")) {
-      dir.create(directory)
-      tf <- paste0(tempfile(), ".tar.gz")
-
-      utils::download.file(
-        url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/MG.tar.gz",
-        destfile = tf
-      )
-      utils::untar(tarfile = tf, exdir = paste0(directory, "/MG"))
-
-      utils::download.file(
-        url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/SP.tar.gz",
-        destfile = tf
-      )
-      utils::untar(tarfile = tf, exdir = paste0(directory, "/SP"))
-
-      utils::download.file(
-        url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/RJ.tar.gz",
-        destfile = tf
-      )
-      utils::untar(tarfile = tf, exdir = paste0(directory, "/RJ"))
-
-      utils::download.file(
-        url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/merge_wrf.R",
-        destfile = paste0(directory, "/merge_wrf.R")
-      )
-
-      utils::download.file(
-        url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2/sebr_cb05co2.Rproj",
-        destfile = paste0(directory, "/sebr_cb05co2.Rproj")
-      )
-
-      utils::download.file(
-        url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/sebr_cb05co2_wrfi.tar.gz",
-        destfile = paste0(directory, "/sebr_cb05co2_wrfi.tar.gz")
-      )
-      utils::untar(
-        tarfile = paste0(directory, "/sebr_cb05co2_wrfi.tar.gz"),
-        exdir = directory
-      )
-
-      message("Your directory is in ", directory) #nocov end
     } else {
       stop("Other cases not supported yet")
     }
