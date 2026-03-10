@@ -5,6 +5,8 @@ library(cptcity) # 7120 colour palettes
 library(ggplot2) # plots
 library(eixport) # WRF Chem
 library(data.table) # blasting speed
+library(units)
+
 sessionInfo()
 
 # 0 Configuration
