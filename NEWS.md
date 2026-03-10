@@ -1,9 +1,13 @@
 NEWS
 ===========
 
+### vein 1.7.0 (date: 2026-03-09)
+
+- Refactor brazil top down for match century paper and bu
+
 ### vein 1.6.0 (date: 2025-12-19)
 
-- add proejct ecuador_mdpi
+- add project ecuador_mdpi
 - remove inventory
 
 ### vein 1.5.1 (date: 2025-12-02) (Feliz cumpleanos papa, Q.E.P.D)

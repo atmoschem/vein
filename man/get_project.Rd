@@ -17,10 +17,7 @@ get_project(directory, case, url)
   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
   brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
-  brazil_country     \tab Top down \tab CETESB+tunnel\tab  .rds\cr
-  brazil_countryv2     \tab Top down \tab CETESB+tunnel\tab  .rds\cr
   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
-  sebr_cb05co2   \tab Top-down SP, MG and RJ\tab CETESB+tunnel\tab  .rds\cr
   amazon2014     \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
   curitiba       \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
   ecuador     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
