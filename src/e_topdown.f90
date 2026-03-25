@@ -17,10 +17,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j,k) = veh(i,j) * lkm(j) * ef(i,j)*month(k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j,k) = veh(i,j) * lkm(j) * ef(i,j)*month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -55,10 +55,10 @@ DOUBLE PRECISION :: emis(nrowv,ncolv,pmonth)
 INTEGER i, j, k
 
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(i, k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -84,9 +84,9 @@ DOUBLE PRECISION :: emis(nrowv, ncolv)
 
 INTEGER i, j
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      emis(i, j) = beta(i) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j)
+DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j) = beta(i) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j)
    ENDDO
 ENDDO
 
@@ -110,10 +110,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -139,10 +139,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -166,10 +166,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(i, k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -195,10 +195,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(i, k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -222,10 +222,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j,k) = veh(i,j) * lkm(j) * ef(j) * month(k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j,k) = veh(i,j) * lkm(j) * ef(j) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -252,10 +252,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -279,10 +279,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j, k) = veh(i,j) * lkm(j) * ef(j) * month(i, k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i,j) * lkm(j) * ef(j) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -308,10 +308,10 @@ DOUBLE PRECISION :: emis(nrowv, ncolv, pmonth)
 
 INTEGER i, j, k
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(i, k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -333,9 +333,9 @@ DOUBLE PRECISION :: emis(nrowv, ncolv)
 
 INTEGER i, j
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-       emis(i, j) = veh(i,j) * lkm(j) * ef(j)
+DO j = 1, ncolv
+       DO i = 1, nrowv
+   emis(i, j) = veh(i,j) * lkm(j) * ef(j)
    ENDDO
 ENDDO
 
@@ -362,12 +362,12 @@ INTEGER i, j, k, nt
 
 emis = 0.0
 
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j,k) = veh(i,j) * lkm(j) * ef(i,j)*month(k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j,k) = veh(i,j) * lkm(j) * ef(i,j)*month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -407,12 +407,12 @@ INTEGER i, j, k, nt
 
 emis = 0.0
 
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(i, k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j)*month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -443,11 +443,11 @@ INTEGER i, j, nt
 
 emis = 0.0
 
-!$OMP PARALLEL DO PRIVATE(i, j) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(2) PRIVATE(i, j) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      emis(i, j) = beta(i) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j)
+DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j) = beta(i) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j)
    ENDDO
 ENDDO
 
@@ -477,12 +477,12 @@ INTEGER i, j, k, nt
 
 emis = 0.0
 
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -515,13 +515,13 @@ INTEGER i, j, k, nt
 
 emis = 0.0
 
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -550,12 +550,12 @@ INTEGER i, j, k, nt
 
 !$ CALL OMP_SET_DYNAMIC(.TRUE.)
 emis = 0.0
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(i, k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i, j) * lkm(j) * ef(i, j, k) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -586,12 +586,12 @@ INTEGER i, j, k, nt
 
 !$ CALL OMP_SET_DYNAMIC(.TRUE.)
 emis = 0.0
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(i, k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -620,12 +620,12 @@ INTEGER i, j, k, nt
 
 !$ CALL OMP_SET_DYNAMIC(.TRUE.)
 emis = 0.0
-!$OMP PARALLEL DO PRIVATE(i, j) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(2) PRIVATE(i, j) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j,k) = veh(i,j) * lkm(j) * ef(j) * month(k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j,k) = veh(i,j) * lkm(j) * ef(j) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -656,12 +656,12 @@ INTEGER i, j, k, nt
 
 !$ CALL OMP_SET_DYNAMIC(.TRUE.)
 emis = 0.0
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(i, j) * efcold(i, j, k) * month(k)
       ENDDO
    ENDDO
 ENDDO
@@ -690,12 +690,12 @@ INTEGER i, j, k, nt
 
 !$ CALL OMP_SET_DYNAMIC(.TRUE.)
 emis = 0.0
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-        emis(i, j, k) = veh(i,j) * lkm(j) * ef(j) * month(i, k)
+DO k = 1, pmonth
+        DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = veh(i,j) * lkm(j) * ef(j) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -726,12 +726,12 @@ INTEGER i, j, k, nt
 
 !$ CALL OMP_SET_DYNAMIC(.TRUE.)
 emis = 0.0
-!$OMP PARALLEL DO PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(3) PRIVATE(i, j, k) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-      DO k = 1, pmonth
-         emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(i, k)
+DO k = 1, pmonth
+         DO j = 1, ncolv
+      DO i = 1, nrowv
+   emis(i, j, k) = beta(i, k) * veh(i, j) * lkm(j) * ef(j) * efcold(i, j, k) * month(i, k)
       ENDDO
    ENDDO
 ENDDO
@@ -758,11 +758,11 @@ INTEGER i, j, nt
 
 !$ CALL OMP_SET_DYNAMIC(.TRUE.)
 emis = 0.0
-!$OMP PARALLEL DO PRIVATE(i, j) DEFAULT(shared) NUM_THREADS(nt)
+!$OMP PARALLEL DO COLLAPSE(2) PRIVATE(i, j) DEFAULT(shared) NUM_THREADS(nt)
 
-DO i = 1, nrowv
-   DO j = 1, ncolv
-       emis(i, j) = veh(i,j) * lkm(j) * ef(j)
+DO j = 1, ncolv
+       DO i = 1, nrowv
+   emis(i, j) = veh(i,j) * lkm(j) * ef(j)
    ENDDO
 ENDDO
 
