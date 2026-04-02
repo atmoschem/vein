@@ -22,115 +22,161 @@ im_pm <- as.data.frame(im_pm)
 
 
 # checkar metadata$vehicles ####
-switch(language,
-       "portuguese" = cat("Metadata$Vehicles é:\n"),
-       "english" = cat("Metadata$Vehicles is:\n"),
-       "spanish" = cat("Metadata$Vehicles es:\n")
+switch(
+  language,
+  "portuguese" = cat("Metadata$Vehicles é:\n"),
+  "english" = cat("Metadata$Vehicles is:\n"),
+  "spanish" = cat("Metadata$Vehicles es:\n")
 )
 
 # cat( "Metadata$Vehicles é:\n")
 print(metadata$vehicles)
 
 # checar nomes mileage ####
-if (!length(intersect(metadata$vehicles, names(mileage))) == length(metadata$vehicles)) {
-  switch(language,
-         "portuguese" = stop(
-           "Precisa adicionar coluna ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " em `mileage`"
-         ),
-         "english" = stop(
-           "You need to add column ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " in `mileage`"
-         ),
-         "spanish" = stop(
-           "Necesitas agregar la columna ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " en `mileage`"
-         )
+if (
+  !length(intersect(metadata$vehicles, names(mileage))) ==
+    length(metadata$vehicles)
+) {
+  switch(
+    language,
+    "portuguese" = stop(
+      "Precisa adicionar coluna ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " em `mileage`"
+    ),
+    "english" = stop(
+      "You need to add column ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " in `mileage`"
+    ),
+    "spanish" = stop(
+      "Necesitas agregar la columna ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " en `mileage`"
+    )
   )
 }
 
 # checar nomes tfs ####
-if (!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles)) {
-  switch(language,
-         "portuguese" = stop(
-           "Precisa adicionar coluna ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " em `tfs`"
-         ),
-         "english" = stop(
-           "You need to add column ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " in `tfs`"
-         ),
-         "spanish" = stop(
-           "Necesitas agregar la columna ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " en `tfs`"
-         )
+if (
+  !length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles)
+) {
+  switch(
+    language,
+    "portuguese" = stop(
+      "Precisa adicionar coluna ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " em `tfs`"
+    ),
+    "english" = stop(
+      "You need to add column ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " in `tfs`"
+    ),
+    "spanish" = stop(
+      "Necesitas agregar la columna ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " en `tfs`"
+    )
   )
 }
 
 # checar nomes veh ####
-if (!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles)) {
-  switch(language,
-         "portuguese" = stop(
-           "Precisa adicionar coluna ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " em `veh`"
-         ),
-         "english" = stop(
-           "You need to add column ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " in `veh`"
-         ),
-         "spanish" = stop(
-           "Necesitas agregar la columna ",
-           setdiff(metadata$vehicles, names(mileage)),
-           " en `veh`"
-         )
+if (
+  !length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles)
+) {
+  switch(
+    language,
+    "portuguese" = stop(
+      "Precisa adicionar coluna ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " em `veh`"
+    ),
+    "english" = stop(
+      "You need to add column ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " in `veh`"
+    ),
+    "spanish" = stop(
+      "Necesitas agregar la columna ",
+      setdiff(metadata$vehicles, names(mileage)),
+      " en `veh`"
+    )
   )
 }
 
 # checar Year ####
 if (!"Year" %in% names(veh)) {
-  switch(language,
-         "portuguese" = stop("Não estou enxergando a coluna 'Year' em `veh`"),
-         "english" = stop("I'm not seeing column 'Year' in `veh`"),
-         "spanish" = stop("No estoy viendo la columna 'Year' in `veh`")
+  switch(
+    language,
+    "portuguese" = stop("Não estou enxergando a coluna 'Year' em `veh`"),
+    "english" = stop("I'm not seeing column 'Year' in `veh`"),
+    "spanish" = stop("No estoy viendo la columna 'Year' in `veh`")
   )
 }
 if (!"Year" %in% names(mileage)) {
-  switch(language,
-         "portuguese" = stop("Não estou enxergando a coluna 'Year' em `mileage`"),
-         "english" = stop("I'm not seeing column 'Year' in `mileage`"),
-         "spanish" = stop("No estoy viendo la columna 'Year' in `mileage`")
+  switch(
+    language,
+    "portuguese" = stop("Não estou enxergando a coluna 'Year' em `mileage`"),
+    "english" = stop("I'm not seeing column 'Year' in `mileage`"),
+    "spanish" = stop("No estoy viendo la columna 'Year' in `mileage`")
   )
 }
 
 # checar ano base
 if (veh$Year[1] != year) {
-  switch(language,
-         "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `veh` é ", veh$Year[1])),
-         "english" = stop(paste0("The base year is ", year, " but the first year in `veh` is ", veh$Year[1])),
-         "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `veh` es ", veh$Year[1]))
+  switch(
+    language,
+    "portuguese" = stop(paste0(
+      "O ano base é ",
+      year,
+      " mas o primeiro ano em `veh` é ",
+      veh$Year[1]
+    )),
+    "english" = stop(paste0(
+      "The base year is ",
+      year,
+      " but the first year in `veh` is ",
+      veh$Year[1]
+    )),
+    "spanish" = stop(paste0(
+      "El año base es ",
+      year,
+      " pero el primer año de `veh` es ",
+      veh$Year[1]
+    ))
   )
 }
 if (mileage$Year[1] != year) {
-  switch(language,
-         "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `mileage` é ", mileage$Year[1])),
-         "english" = stop(paste0("The base year is ", year, " but the first year in `mileage` is ", veh$Year[1])),
-         "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `mileage` es ", mileage$Year[1]))
+  switch(
+    language,
+    "portuguese" = stop(paste0(
+      "O ano base é ",
+      year,
+      " mas o primeiro ano em `mileage` é ",
+      mileage$Year[1]
+    )),
+    "english" = stop(paste0(
+      "The base year is ",
+      year,
+      " but the first year in `mileage` is ",
+      veh$Year[1]
+    )),
+    "spanish" = stop(paste0(
+      "El año base es ",
+      year,
+      " pero el primer año de `mileage` es ",
+      mileage$Year[1]
+    ))
   )
 }
 
 
-switch(language,
-       "portuguese" = message("Arquivos em: ", getwd(), "/config/*\n"),
-       "english" = message("Files in: ", getwd(), "/config/*\n"),
-       "spanish" = message("Archivos en: ", getwd(), "/config/*\n")
+switch(
+  language,
+  "portuguese" = message("Arquivos em: ", getwd(), "/config/*\n"),
+  "english" = message("Files in: ", getwd(), "/config/*\n"),
+  "spanish" = message("Archivos en: ", getwd(), "/config/*\n")
 )
 
 saveRDS(metadata, "config/metadata.rds")
@@ -152,7 +198,7 @@ saveRDS(im_pm, "config/im_pm.rds")
 # pastas
 if (delete_directories) {
   choice <- 1
-  
+
   if (language == "portuguese") {
     # choice <- utils::menu(c("Sim", "Não"), title="Apagar pastas csv, emi, images, notes, post e veh??")
     if (choice == 1) {
@@ -201,14 +247,14 @@ dir.create(path = "veh", showWarnings = FALSE)
 
 # for (i in seq_along(metadata$vehicles)) dir.create(path = paste0("emi/", metadata$vehicles[i]))
 
-
 pa <- list.dirs(path = "emi", full.names = T, recursive = T)
 po <- list.dirs("post", full.names = T, recursive = T)
 
-switch(language,
-       "portuguese" = message("Novas pastas:"),
-       "english" = message("New folders:"),
-       "spanish" = message("Nuevas carpetas")
+switch(
+  language,
+  "portuguese" = message("Novas pastas:"),
+  "english" = message("New folders:"),
+  "spanish" = message("Nuevas carpetas")
 )
 
 message("csv\n")
@@ -231,26 +277,29 @@ n_veh <- list(
   MC = n_MC
 )
 # Fuel ####
-switch(language,
-       "portuguese" = cat("Plotando combustivel \n"),
-       "english" = cat("Plotting fuel \n"),
-       "spanish" = cat("Plotando combustible \n")
+switch(
+  language,
+  "portuguese" = cat("Plotando combustivel \n"),
+  "english" = cat("Plotting fuel \n"),
+  "spanish" = cat("Plotando combustible \n")
 )
 
 png("images/FUEL.png", width = 1500, height = 2000, units = "px", res = 300)
 barplot(
   height = fuel$consumption_lt,
-  names.arg = fuel$fuel, xlab = "Fuel",
+  names.arg = fuel$fuel,
+  xlab = "Fuel",
   ylab = "lt",
   main = "Fuel"
 )
 dev.off()
 
 # Fleet ####
-switch(language,
-       "portuguese" = cat("Plotando frota \n"),
-       "english" = cat("Plotting fleet \n"),
-       "spanish" = cat("Plotando flota \n")
+switch(
+  language,
+  "portuguese" = cat("Plotando frota \n"),
+  "english" = cat("Plotting fleet \n"),
+  "spanish" = cat("Plotando flota \n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -261,7 +310,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -280,10 +331,11 @@ for (i in seq_along(n_veh)) {
 
 # TFS ####
 
-switch(language,
-       "portuguese" = cat("Plotando perfis `tfs`\n"),
-       "english" = cat("Plotting profiles `tfs`\n"),
-       "spanish" = cat("Plotando perfiles `tfs`\n")
+switch(
+  language,
+  "portuguese" = cat("Plotando perfis `tfs`\n"),
+  "english" = cat("Plotting profiles `tfs`\n"),
+  "spanish" = cat("Plotando perfiles `tfs`\n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -294,7 +346,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -312,13 +366,13 @@ for (i in seq_along(n_veh)) {
 }
 
 
-
 # IM ####
 
-switch(language,
-       "portuguese" = cat("Plotando IM OK `tfs`\n"),
-       "english" = cat("Plotting IM OK `tfs`\n"),
-       "spanish" = cat("Plotando IM OK `tfs`\n")
+switch(
+  language,
+  "portuguese" = cat("Plotando IM OK `tfs`\n"),
+  "english" = cat("Plotting IM OK `tfs`\n"),
+  "spanish" = cat("Plotando IM OK `tfs`\n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -329,7 +383,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -348,10 +404,11 @@ for (i in seq_along(n_veh)) {
 
 # IM CO (reprov/Aprov) ####
 
-switch(language,
-       "portuguese" = cat("Plotando IM REP/APR CO `tfs`\n"),
-       "english" = cat("Plotting IM REP/APR CO `tfs`\n"),
-       "spanish" = cat("Plotando IM REP/APR CO `tfs`\n")
+switch(
+  language,
+  "portuguese" = cat("Plotando IM REP/APR CO `tfs`\n"),
+  "english" = cat("Plotting IM REP/APR CO `tfs`\n"),
+  "spanish" = cat("Plotando IM REP/APR CO `tfs`\n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -362,7 +419,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -382,10 +441,11 @@ for (i in seq_along(n_veh)) {
 
 # IM HC (reprov/Aprov) ####
 
-switch(language,
-       "portuguese" = cat("Plotando IM REP/APR HC `tfs`\n"),
-       "english" = cat("Plotting IM REP/APR HC `tfs`\n"),
-       "spanish" = cat("Plotando IM REP/APR HC `tfs`\n")
+switch(
+  language,
+  "portuguese" = cat("Plotando IM REP/APR HC `tfs`\n"),
+  "english" = cat("Plotting IM REP/APR HC `tfs`\n"),
+  "spanish" = cat("Plotando IM REP/APR HC `tfs`\n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -396,7 +456,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -415,10 +477,11 @@ for (i in seq_along(n_veh)) {
 
 # IM NOx (reprov/Aprov) ####
 
-switch(language,
-       "portuguese" = cat("Plotando IM REP/APR NOx `tfs`\n"),
-       "english" = cat("Plotting IM REP/APR NOx `tfs`\n"),
-       "spanish" = cat("Plotando IM REP/APR NOx `tfs`\n")
+switch(
+  language,
+  "portuguese" = cat("Plotando IM REP/APR NOx `tfs`\n"),
+  "english" = cat("Plotting IM REP/APR NOx `tfs`\n"),
+  "spanish" = cat("Plotando IM REP/APR NOx `tfs`\n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -429,7 +492,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -448,10 +513,11 @@ for (i in seq_along(n_veh)) {
 
 # IM PM2.5 (reprov/Aprov) ####
 
-switch(language,
-       "portuguese" = cat("Plotando IM REP/APR PM2.5 `tfs`\n"),
-       "english" = cat("Plotting REP/APR PM2.5 `tfs`\n"),
-       "spanish" = cat("Plotando REP/APR PM2.5 `tfs`\n")
+switch(
+  language,
+  "portuguese" = cat("Plotando IM REP/APR PM2.5 `tfs`\n"),
+  "english" = cat("Plotting REP/APR PM2.5 `tfs`\n"),
+  "spanish" = cat("Plotando REP/APR PM2.5 `tfs`\n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -462,7 +528,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -482,10 +550,11 @@ for (i in seq_along(n_veh)) {
 
 # Mileage ####
 
-switch(language,
-       "portuguese" = cat("Plotando quilometragem \n"),
-       "english" = cat("Plotting mileage `tfs`\n"),
-       "spanish" = cat("Plotando kilometraje `tfs`\n")
+switch(
+  language,
+  "portuguese" = cat("Plotando quilometragem \n"),
+  "english" = cat("Plotting mileage `tfs`\n"),
+  "spanish" = cat("Plotando kilometraje `tfs`\n")
 )
 
 for (i in seq_along(n_veh)) {
@@ -496,7 +565,9 @@ for (i in seq_along(n_veh)) {
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -515,22 +586,25 @@ for (i in seq_along(n_veh)) {
 
 
 # sulphur/enxofre ####
-switch(language,
-       "portuguese" = cat("Plotando enxofre (ppm) \n"),
-       "english" = cat("Plotting sulfur (ppm) \n"),
-       "spanish" = cat("Plotando azufre (ppm) \n")
+switch(
+  language,
+  "portuguese" = cat("Plotando enxofre (ppm) \n"),
+  "english" = cat("Plotting sulfur (ppm) \n"),
+  "spanish" = cat("Plotando azufre (ppm) \n")
 )
 
 for (i in seq_along(n_veh)) {
   df_x <- s[, n_veh[[i]]]
-  
+
   png(
     paste0(
       "images/S_",
       names(n_veh)[i],
       ".png"
     ),
-    2000, 1500, "px",
+    2000,
+    1500,
+    "px",
     res = 300
   )
   colplot(
@@ -550,10 +624,7 @@ for (i in seq_along(n_veh)) {
 
 # Temperature ####
 units(celsius(1))$numerator
-png("images/Temperature.png",
-    2000, 1500, "px",
-    res = 300
-)
+png("images/Temperature.png", 2000, 1500, "px", res = 300)
 colplot(
   df = met,
   cols = "Temperature",
@@ -568,10 +639,11 @@ colplot(
 dev.off()
 
 # Notes ####
-switch(language,
-       "portuguese" = cat("\nFazendo anotações\n"),
-       "english" = cat("\nTaking some notes\n"),
-       "spanish" = cat("\nEscribiendo notas\n")
+switch(
+  language,
+  "portuguese" = cat("\nFazendo anotações\n"),
+  "english" = cat("\nTaking some notes\n"),
+  "spanish" = cat("\nEscribiendo notas\n")
 )
 
 vein_notes(
@@ -589,10 +661,11 @@ vein_notes(
 )
 # saveRDS
 
-switch(language,
-       "portuguese" = message("\nArquivos em:"),
-       "english" = message("\nFiles in:"),
-       "spanish" = message("\nArchivos en:")
+switch(
+  language,
+  "portuguese" = message("\nArquivos em:"),
+  "english" = message("\nFiles in:"),
+  "spanish" = message("\nArchivos en:")
 )
 
 message(
@@ -603,17 +676,25 @@ message(
   "config/fuel.rds\n"
 )
 
-switch(language,
-       "portuguese" = message("\nFiguras em /images\n"),
-       "english" = message("\nFigures in /image\n"),
-       "spanish" = message("\nFiguras en /images\n")
+switch(
+  language,
+  "portuguese" = message("\nFiguras em /images\n"),
+  "english" = message("\nFigures in /image\n"),
+  "spanish" = message("\nFiguras en /images\n")
 )
 
 
-switch(language,
-       "portuguese" = message("\nAdicionando ano ", year, " e scale ", scale, " em:"),
-       "english" = message("\nAdding year ", year, " amd scale ", scale, " in:"),
-       "spanish" = message("\nAgregando año ", year, " y scale ", scale, " en:")
+switch(
+  language,
+  "portuguese" = message(
+    "\nAdicionando ano ",
+    year,
+    " e scale ",
+    scale,
+    " em:"
+  ),
+  "english" = message("\nAdding year ", year, " amd scale ", scale, " in:"),
+  "spanish" = message("\nAgregando año ", year, " y scale ", scale, " en:")
 )
 
 message(
@@ -622,38 +703,44 @@ message(
   "scripts/fuel_eval.R\n"
 )
 
-x <- c("scripts/exhaust.R",
-       "scripts/evaporatives.R",
-       "scripts/fuel_eval.R")
+x <- c("scripts/exhaust.R", "scripts/evaporatives.R", "scripts/fuel_eval.R")
 
-for(i in seq_along(x)) {
-  file.copy(from = x[i], 
-            to = gsub("scripts/", "scripts/backup_", x[i]))
+for (i in seq_along(x)) {
+  file.copy(from = x[i], to = gsub("scripts/", "scripts/backup_", x[i]))
   l <- readLines(x[i])
-  
-  # year  
-  l <- gsub(pattern = "year = year", 
-            replacement = paste0("year = ", year), 
-            x = l)
-  
-  l <- gsub(pattern = "year <- year", 
-            replacement = paste0("year <- ", year), 
-            x = l)
+
+  # year
+  l <- gsub(
+    pattern = "year = year",
+    replacement = paste0("year = ", year),
+    x = l
+  )
+
+  l <- gsub(
+    pattern = "year <- year",
+    replacement = paste0("year <- ", year),
+    x = l
+  )
   # scale
-  l <- gsub(pattern = "scale = scale", 
-            replacement = paste0("scale = ", scale), 
-            x = l)
-  
-  l <- gsub(pattern = "scale <- scale", 
-            replacement = paste0("scale <- ", scale), 
-            x = l)
-  # write  
+  l <- gsub(
+    pattern = "scale = scale",
+    replacement = paste0("scale = ", shQuote(scale)),
+    x = l
+  )
+
+  l <- gsub(
+    pattern = "scale <- scale",
+    replacement = paste0("scale <- ", shQuote(scale)),
+    x = l
+  )
+  # write
   writeLines(text = l, con = x[i])
 }
 
 
-switch(language,
-       "portuguese" = message("Limpando..."),
-       "english" = message("Cleaning..."),
-       "spanish" = message("Limpiando...")
+switch(
+  language,
+  "portuguese" = message("Limpando..."),
+  "english" = message("Cleaning..."),
+  "spanish" = message("Limpiando...")
 )
