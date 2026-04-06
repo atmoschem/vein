@@ -126,3 +126,4 @@ rbindlist(lapply(seq_along(fn$UF), function(i) {
 setorderv(DD, c("Year", "region"), c(-1, 1))
 
 saveRDS(DD, "config/fleet_age_all.rds")
+saveRDS(DD, "config/fleet_age.rds")

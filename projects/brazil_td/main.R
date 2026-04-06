@@ -17,6 +17,7 @@ source("config/04_metv2.R")
 rm(list = ls())
 gc()
 
+years <- c(2019, 2025)
 source("config/05_pre_main.R")
 rm(list = ls())
 gc()
