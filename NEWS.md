@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+### vein 1.7.1 (date: 2026-04-09)
+
+- Project brazil_bu_chem heavy biodiesel speciation form D to B5
+
 ### vein 1.7.0 (date: 2026-03-09)
 
 - Refactor brazil top down for match century paper and bu
