@@ -131,14 +131,13 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
 
   # df$id <- rep(id, length(unique(df$pol)))
 
-  data.table::setDT(df)
   data.table::setDT(cheml)
 
     # To ensure 0 GB intermediate allocations on massive global environments,
     # we pre-allocate the precise shape of the expected output dataset
     # and accumulate values exclusively in-place using native C pointers.
     
-    unique_pols <- unique(df$pol)
+    unique_pols <- unique(df[["pol"]])
     
     Mwt <- factor <- weight <- group <- pol <- NULL
     cheml[, weight := factor / Mwt]
@@ -149,7 +148,7 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     
     cheml_sub <- cheml[!is.na(weight) & weight > 0, list(pol, group, weight)]
     
-    unique_ids <- unique(df$id)
+    unique_ids <- unique(df[["id"]])
     unique_groups <- unique(cheml_sub$group)
     
     if (!na.rm) {
@@ -166,9 +165,11 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
         
         if (nrow(p_maps) == 0) {
             if (!na.rm) {
-                # Subset strictly id and nx for unmapped variants
-                p_data <- df[pol == p, c("id", nx), with = FALSE]
-                p_data <- p_data[, lapply(.SD, sum, na.rm = TRUE), by = id, .SDcols = nx]
+                # Subset strictly id and nx for unmapped variants using base subsets to avoid deep copies
+                p_idx <- which(df[["pol"]] == p)
+                p_data <- df[p_idx, c("id", nx), drop = FALSE]
+                data.table::setDT(p_data)
+                p_data <- p_data[, lapply(.SD, sum, na.rm = TRUE), by = "id", .SDcols = nx]
                 
                 # Update dy in place for NA_character_
                 p_data[, group := NA_character_]
@@ -177,10 +178,12 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
                 }
             }
         } else {
-            # Extract id and nx once per mapped pollutant
-            p_data <- df[pol == p, c("id", nx), with = FALSE]
+            # Extract id and nx once per mapped pollutant securely
+            p_idx <- which(df[["pol"]] == p)
+            p_data <- df[p_idx, c("id", nx), drop = FALSE]
+            data.table::setDT(p_data)
             # Aggregate down to distinct IDs immediately
-            p_data <- p_data[, lapply(.SD, sum, na.rm=TRUE), by = id, .SDcols = nx]
+            p_data <- p_data[, lapply(.SD, sum, na.rm=TRUE), by = "id", .SDcols = nx]
             
             for (i in seq_len(nrow(p_maps))) {
                 g <- p_maps$group[i]
