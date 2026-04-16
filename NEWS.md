@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+### vein 1.8.0 (date: 2026-04-16)
+
+- Small but significant change. emis_chem2 was draining ram, now with jus tone line is more efficient, by relying on data.table.
+
 ### vein 1.7.1 (date: 2026-04-09)
 
 - Project brazil_bu_chem heavy biodiesel speciation form D to B5
