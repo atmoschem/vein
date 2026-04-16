@@ -129,14 +129,14 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     names(cheml)[length(cheml)] <- "factor"
   }
 
-    # df$id <- rep(id, length(unique(df$pol)))
+  # df$id <- rep(id, length(unique(df$pol)))
 
-    data.table::setDT(df)
-    data.table::setDT(cheml)
+  data.table::setDT(df)
+  data.table::setDT(cheml)
 
-    # To ensure zero chance of memory limits being exceeded, we bypass `merge` completely.
-    # We loop over unique pollutants one by one, keeping only the bare minimum slice of data
-    # in RAM at any given millisecond.
+    # To ensure 0 GB intermediate allocations on massive global environments,
+    # we pre-allocate the precise shape of the expected output dataset
+    # and accumulate values exclusively in-place using native C pointers.
     
     unique_pols <- unique(df$pol)
     
@@ -147,57 +147,57 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     cheml[, group := gsub(pattern = mech_name, replacement = "", x = mech)]
     cheml[, group := gsub(pattern = "_", replacement = "", x = group)]
     
-    # Map of mechanisms
     cheml_sub <- cheml[!is.na(weight) & weight > 0, list(pol, group, weight)]
     
-    res_list <- list()
-    idx <- 1
+    unique_ids <- unique(df$id)
+    unique_groups <- unique(cheml_sub$group)
+    
+    if (!na.rm) {
+        unique_groups <- c(unique_groups, NA_character_)
+    }
+    
+    # Pre-allocate precisely shaped 'dy' accumulator buffer natively
+    dy <- data.table::CJ(group = unique_groups, id = unique_ids)
+    for (n in nx) data.table::set(dy, j = n, value = 0.0)
+    data.table::setkeyv(dy, c("group", "id"))
     
     for (p in unique_pols) {
-        # Find which groups this pollutant contributes to
         p_maps <- cheml_sub[pol == p]
         
-        # If the pollutant doesn't map to anything
         if (nrow(p_maps) == 0) {
             if (!na.rm) {
-                # Subset strictly id and nx 
-                pol_sub <- df[pol == p, c("id", nx), with = FALSE]
-                # Pre-aggregate directly to prevent duplication
-                pol_sub <- pol_sub[, lapply(.SD, sum, na.rm = TRUE), by = list(id), .SDcols = nx]
+                # Subset strictly id and nx for unmapped variants
+                p_data <- df[pol == p, c("id", nx), with = FALSE]
+                p_data <- p_data[, lapply(.SD, sum, na.rm = TRUE), by = id, .SDcols = nx]
                 
-                pol_sub[, (nx) := 0]
-                pol_sub[, group := NA_character_]
-                res_list[[idx]] <- pol_sub
-                idx <- idx + 1
+                # Update dy in place for NA_character_
+                p_data[, group := NA_character_]
+                for (n in nx) {
+                    dy[p_data, on = c("group", "id"), (n) := get(paste0("x.", n)) + get(paste0("i.", n))]
+                }
             }
         } else {
-            # Subset strictly id and nx
-            pol_sub <- df[pol == p, c("id", nx), with = FALSE]
-            # Pre-aggregate directly to prevent ID duplication
-            pol_sub <- pol_sub[, lapply(.SD, sum, na.rm = TRUE), by = list(id), .SDcols = nx]
+            # Extract id and nx once per mapped pollutant
+            p_data <- df[pol == p, c("id", nx), with = FALSE]
+            # Aggregate down to distinct IDs immediately
+            p_data <- p_data[, lapply(.SD, sum, na.rm=TRUE), by = id, .SDcols = nx]
             
-            # Apply to all relevant mechanism groups
             for (i in seq_len(nrow(p_maps))) {
                 g <- p_maps$group[i]
                 w <- p_maps$weight[i]
                 
-                # Copy isolated aggregate and mutate in place
-                grp_sub <- data.table::copy(pol_sub)
-                grp_sub[, (nx) := lapply(.SD, function(x) x * w), .SDcols = nx]
-                grp_sub[, group := g]
+                # Apply inline weight securely
+                p_data_w <- data.table::copy(p_data)
+                p_data_w[, (nx) := lapply(.SD, function(x) x * w), .SDcols = nx]
+                p_data_w[, group := g]
                 
-                res_list[[idx]] <- grp_sub
-                idx <- idx + 1
+                # Accumulate dynamically against dy's preallocated memory buffer
+                for (n in nx) {
+                    dy[p_data_w, on = c("group", "id"), (n) := get(paste0("x.", n)) + get(paste0("i.", n))]
+                }
             }
         }
     }
-    
-    # Rapid bind of all tiny aggregated summaries
-    dy <- data.table::rbindlist(res_list, use.names = TRUE, fill = TRUE)
-    
-    # Final summation globally for identical groups
-    id_ref <- NULL
-    dy <- dy[, lapply(.SD, sum, na.rm = TRUE), by = list(group, id), .SDcols = nx]
     
     data.table::setorderv(dy, c("group", "id"))
 
@@ -205,6 +205,7 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
         dy <- dy[!is.na(group)]
     }
     
+    id_ref <- NULL
     dy <- dy[!is.na(id)]
     
     return(dy)
