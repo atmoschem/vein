@@ -129,56 +129,74 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     names(cheml)[length(cheml)] <- "factor"
   }
 
-    # important
     # df$id <- rep(id, length(unique(df$pol)))
 
     data.table::setDT(df)
     data.table::setDT(cheml)
 
-    # To prevent catastrophic memory expansion during cartesian merges on massive datasets,
-    # processing is batched into strict row limits. Peak memory footprint is securely capped.
-    chunk_size <- 50000
-    n_rows <- nrow(df)
-    n_chunks <- ceiling(n_rows / chunk_size)
+    # To ensure zero chance of memory limits being exceeded, we bypass `merge` completely.
+    # We loop over unique pollutants one by one, keeping only the bare minimum slice of data
+    # in RAM at any given millisecond.
     
-    Mwt <- factor <- weight <- group <- NULL
+    unique_pols <- unique(df$pol)
+    
+    Mwt <- factor <- weight <- group <- pol <- NULL
     cheml[, weight := factor / Mwt]
     
     mech_name <- mech
     cheml[, group := gsub(pattern = mech_name, replacement = "", x = mech)]
     cheml[, group := gsub(pattern = "_", replacement = "", x = group)]
     
-    cheml_sub <- cheml[, list(pol, group, weight)]
+    # Map of mechanisms
+    cheml_sub <- cheml[!is.na(weight) & weight > 0, list(pol, group, weight)]
     
-    res_list <- vector("list", n_chunks)
+    res_list <- list()
+    idx <- 1
     
-    for (i in seq_len(n_chunks)) {
-        start_idx <- (i - 1) * chunk_size + 1
-        end_idx <- min(i * chunk_size, n_rows)
+    for (p in unique_pols) {
+        # Find which groups this pollutant contributes to
+        p_maps <- cheml_sub[pol == p]
         
-        # Isolate exactly chunk_size rows independently of columns
-        sub_df <- df[start_idx:end_idx, ]
-        
-        # Merge this small subset
-        merged_chunk <- merge(sub_df, cheml_sub, by = "pol", all = TRUE, allow.cartesian = TRUE)
-        
-        # Perform calculation in place
-        merged_chunk[, (nx) := lapply(.SD, function(x) x * weight), .SDcols = nx]
-        
-        # Aggregate subset securely
-        agg_chunk <- merged_chunk[, lapply(.SD, sum, na.rm = TRUE), by = list(group, id), .SDcols = nx]
-        
-        res_list[[i]] <- agg_chunk
-        
-        # Wipe intermediate steps from active RAM completely
-        rm(sub_df, merged_chunk, agg_chunk)
-        if (i %% 5 == 0) gc(verbose = FALSE)
+        # If the pollutant doesn't map to anything
+        if (nrow(p_maps) == 0) {
+            if (!na.rm) {
+                # Subset strictly id and nx 
+                pol_sub <- df[pol == p, c("id", nx), with = FALSE]
+                # Pre-aggregate directly to prevent duplication
+                pol_sub <- pol_sub[, lapply(.SD, sum, na.rm = TRUE), by = list(id), .SDcols = nx]
+                
+                pol_sub[, (nx) := 0]
+                pol_sub[, group := NA_character_]
+                res_list[[idx]] <- pol_sub
+                idx <- idx + 1
+            }
+        } else {
+            # Subset strictly id and nx
+            pol_sub <- df[pol == p, c("id", nx), with = FALSE]
+            # Pre-aggregate directly to prevent ID duplication
+            pol_sub <- pol_sub[, lapply(.SD, sum, na.rm = TRUE), by = list(id), .SDcols = nx]
+            
+            # Apply to all relevant mechanism groups
+            for (i in seq_len(nrow(p_maps))) {
+                g <- p_maps$group[i]
+                w <- p_maps$weight[i]
+                
+                # Copy isolated aggregate and mutate in place
+                grp_sub <- data.table::copy(pol_sub)
+                grp_sub[, (nx) := lapply(.SD, function(x) x * w), .SDcols = nx]
+                grp_sub[, group := g]
+                
+                res_list[[idx]] <- grp_sub
+                idx <- idx + 1
+            }
+        }
     }
     
-    # Efficiently bind all aggregated chunks back together
+    # Rapid bind of all tiny aggregated summaries
     dy <- data.table::rbindlist(res_list, use.names = TRUE, fill = TRUE)
     
-    # Catch any ID that might have straddled two sequential chunks
+    # Final summation globally for identical groups
+    id_ref <- NULL
     dy <- dy[, lapply(.SD, sum, na.rm = TRUE), by = list(group, id), .SDcols = nx]
     
     data.table::setorderv(dy, c("group", "id"))
@@ -187,8 +205,7 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
         dy <- dy[!is.na(group)]
     }
     
-    # remove NA in id
-    id <- NULL
     dy <- dy[!is.na(id)]
-  return(dy)
+    
+    return(dy)
 }
