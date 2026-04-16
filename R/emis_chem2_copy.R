@@ -129,66 +129,42 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     names(cheml)[length(cheml)] <- "factor"
   }
 
-    # important
-    # df$id <- rep(id, length(unique(df$pol)))
+  # important
+  # df$id <- rep(id, length(unique(df$pol)))
 
-    data.table::setDT(df)
-    data.table::setDT(cheml)
+  data.table::setDT(df)
+  data.table::setDT(cheml)
 
-    # To prevent catastrophic memory expansion during cartesian merges,
-    # mapping is done iteratively per mechanism
-    unique_mechs <- unique(cheml$mech)
-    mech_name <- mech
-    mech_clean_names <- gsub(pattern = mech_name, replacement = "", x = unique_mechs)
-    mech_clean_names <- gsub(pattern = "_", replacement = "", x = mech_clean_names)
-    
-    res_list <- vector("list", length(unique_mechs) + 1)
-    
-    id <- NULL
-    Mwt <- NULL
-    factor <- NULL
-    
-    for (m_idx in seq_along(unique_mechs)) {
-       m <- unique_mechs[m_idx]
-       group_name <- mech_clean_names[m_idx]
-       
-       sub_cheml <- cheml[mech == m, ]
-       # Inner join limits memory strictly to relevant pollutants
-       sub_df <- df[sub_cheml, on = "pol", nomatch = NULL, allow.cartesian = TRUE]
-       
-       if (nrow(sub_df) > 0) {
-           sub_df[, (nx) := lapply(.SD, function(x) x / Mwt * factor), .SDcols = nx]
-           
-           agg_df <- sub_df[,
-                            lapply(.SD, sum, na.rm = TRUE),
-                            .SDcols = nx,
-                            by = list(id)]
-           agg_df[, group := group_name]
-           res_list[[m_idx]] <- agg_df
-       }
-    }
-    
-    group <- NULL
-    if (!na.rm) {
-        unmapped_pols <- setdiff(unique(df$pol), unique(cheml$pol))
-        if (length(unmapped_pols) > 0) {
-            sub_df_unmapped <- df[pol %in% unmapped_pols, ]
-            sub_df_unmapped[, (nx) := 0]
-            agg_df_unmapped <- sub_df_unmapped[,
-                            lapply(.SD, sum, na.rm = TRUE),
-                            .SDcols = nx,
-                            by = list(id)]
-            agg_df_unmapped[, group := NA_character_]
-            res_list[[length(res_list)]] <- agg_df_unmapped
-        }
-    }
-    
-    dy <- data.table::rbindlist(res_list[!sapply(res_list, is.null)], use.names = TRUE, fill = TRUE)
+  y <- merge(x = df, y = cheml, by = "pol", all = TRUE, allow.cartesian = TRUE)
+  # key! Use := with .SD for idiomatic and memory-efficient in-place modification
+  Mwt <- factor <- NULL
+  y[, (nx) := lapply(.SD, function(x) x / Mwt * factor), .SDcols = nx]
 
-    data.table::setorderv(dy, c("group", "id"))
+  mech_name <- mech
+  data.table::set(
+    y,
+    j = "mech",
+    value = gsub(pattern = mech_name, replacement = "", x = y[["mech"]])
+  )
+  data.table::set(
+    y,
+    j = "mech",
+    value = gsub(pattern = "_", replacement = "", x = y[["mech"]])
+  )
 
-    if(na.rm) dy <- dy[!is.na(group)]
-    # remove NA in id
-    dy <- dy[!is.na(id)]
+  id <- NULL
+  dy <- y[,
+    lapply(.SD, sum, na.rm = T),
+    .SDcols = nx,
+    by = list(id, group = mech)
+  ]
+  data.table::setorderv(dy, c("group", "id"))
+
+  group <- NULL
+  if (na.rm) {
+    dy <- dy[!is.na(group)]
+  }
+  # remove NA in id
+  dy <- dy[!is.na(id)]
   return(dy)
 }
