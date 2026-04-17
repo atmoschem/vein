@@ -141,7 +141,6 @@ pol <- c(
   "NO2",
   "NO"
 )
-pol <- c("CO")
 source("scripts/hot_exhaust_eea.R", encoding = "UTF-8")
 
 pol <- c(
@@ -152,7 +151,6 @@ pol <- c(
   "NO2",
   "NO"
 )
-pol <- c("CO")
 source("scripts/cold_start_eea.R", encoding = "UTF-8")
 # rm(list = ls())
 # gc()
