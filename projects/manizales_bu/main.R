@@ -1,6 +1,6 @@
 ###########################################################
 ###                                                    ####
-###   ANNUAL EMISSIONS INVENTORY FOR MANIZALES CITY    ####
+###   ANNUAL EMISSIONS INVENTORY FOR QUITO, ECUADOR    ####
 ###                                                    ####
 ###########################################################
 options(encoding = "UTF-8")
@@ -12,13 +12,6 @@ library(eixport) # create wrfchemi
 library(data.table) # faster data.frames
 sessionInfo()
 
-#wrf
-
-download.file(
-  url = "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/wrf_manizales.zip",
-  destfile = "wrf.zip"
-)
-unzip(zipfile = "wrf.zip")
 # 0 Configuration
 language <- "spanish" # spanish portuguese english
 path <- "config/inventory_manizales_im.xlsx"
@@ -47,9 +40,12 @@ scale <- "none"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
 source("config/config.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
 
 # 1) Network ####
 net <- st_read("network/manizales_simu.gpkg")
+net <- net[1:100, ]
 crs <- 4326
 categories <- c(
   "pc",
@@ -63,6 +59,8 @@ categories <- c(
   "ffs"
 )
 source("scripts/net.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
 
 # 2) Traffic ####
 language <- "spanish" # english spanish portuguese
@@ -82,6 +80,8 @@ ps <- "ps"
 ffs <- "ffs"
 capacity <- "capacity"
 source("scripts/traffic.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
 
 # 3) Estimation ####
 language <- "spanish" # english spanish portuguese
@@ -103,9 +103,9 @@ fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
 provincia <- "MANIZALES"
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
-source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
-# rm(list = ls())
-# gc()
+source("scripts/fuel_eval_eea.R", encoding = "UTF-8", echo = F)
+rm(list = ls())
+gc()
 
 # Exhaust ####
 language <- "spanish" # english spanish portuguese
@@ -148,7 +148,7 @@ pol <- c(
   "NOx",
   "NMHC",
   "HC",
-  "NO2",
+  "NO",
   "NO"
 )
 source("scripts/cold_start_eea.R", encoding = "UTF-8")
@@ -213,12 +213,15 @@ source("scripts/wear_eea.R", encoding = "UTF-8")
 language <- "spanish" # english spanish portuguese
 net <- readRDS("network/net.rds")
 tfs <- readRDS("config/tfs.rds")
-g <- eixport::wrf_grid("wrf_manizales/wrfinput_d03")
+g <- eixport::wrf_grid("wrf/wrfinput_d03")
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 # Number of lat points 100
 # Number of lon points 110
 crs <- 31983
+years <- 2017
 source("scripts/post.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
 
 # plots ####
 language <- "spanish" # english portuguese
@@ -234,7 +237,8 @@ pal <- "mpl_viridis" # procura mais paletas com ?cptcity::find_cpt
 breaks <- "quantile" # "sd" "quantile" "pretty"
 tit <- "Emisiones en Manizales, Colombia"
 source("scripts/plots.R")
-
+rm(list = ls())
+gc()
 
 # MECH ####
 # "CB4", "CB05","CB05opt2", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1" "CBMZ"
@@ -251,25 +255,25 @@ for (z in seq_along(mechs)) {
   source("scripts/mech2.R", encoding = "UTF-8")
 }
 
-
-# WRF CHEM ####
-mechs <- c("CBMZ", "S99", "RADM2", "CB05")
-mechs <- "CBMZ"
-for (z in seq_along(mechs)) {
-  print(mechs[z])
-  mech <- mechs[z]
-  language <- "english" # english spanish
-  tfs <- readRDS("config/tfs.rds")
-  net <- readRDS("network/net.rds")
-  cols <- 100
-  rows <- 110
-  wrf_times <- 168 # ?
-  dir_wrfinput <- "wrf"
-  dir_wrfchemi <- "wrf"
-  domain <- 3
-  hours <- 0
-  io_style_emissions <- 1 # 2 for all the hours, 1 for two emission files 0-12z
-  n_aero <- 15 # number of PM species
-  rotate <- "cols" # see ?GriddedEmissionsArray
-  source("scripts/wrf.R", encoding = "UTF-8")
-}
+# for this part need a lot of memory
+# # WRF CHEM ####
+# mechs <- c("CBMZ", "S99", "RADM2", "CB05")
+# mechs <- "CBMZ"
+# for (z in seq_along(mechs)) {
+#   print(mechs[z])
+#   mech <- mechs[z]
+#   language <- "english" # english spanish
+#   tfs <- readRDS("config/tfs.rds")
+#   net <- readRDS("network/net.rds")
+#   cols <- 100
+#   rows <- 110
+#   wrf_times <- 168 # ?
+#   dir_wrfinput <- "wrf"
+#   dir_wrfchemi <- "wrf"
+#   domain <- 3
+#   hours <- 0
+#   io_style_emissions <- 1 # 2 for all the hours, 1 for two emission files 0-12z
+#   n_aero <- 15 # number of PM species
+#   rotate <- "cols" # see ?GriddedEmissionsArray
+#   source("scripts/wrf.R", encoding = "UTF-8")
+# }

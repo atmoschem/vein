@@ -1,5 +1,3 @@
-years <- 2017
-
 # grade
 g <- st_transform(g, crs)
 
@@ -93,7 +91,7 @@ x <- list.files(
 
 dtxx(x, tfs) -> x_st
 
-x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/CO.rds")
 
@@ -108,7 +106,7 @@ x <- list.files(
 
 dtxx(x, tfs) -> x_st
 
-x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/NOx.rds")
 
@@ -122,7 +120,7 @@ x <- list.files(
 
 dtxx(x, tfs) -> x_st
 
-x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/NO.rds")
 
@@ -136,7 +134,7 @@ x <- list.files(
 
 dtxx(x, tfs) -> x_st
 
-x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/NO2.rds")
 
@@ -150,7 +148,7 @@ x <- list.files(
 
 dtxx(x, tfs, rmf = T) -> x_st
 
-x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/PM2.5.rds")
 
@@ -164,7 +162,7 @@ x <- list.files(
 
 dtxx(x, tfs, rmf = T) -> x_st
 
-x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/PM10.rds")
 
@@ -196,7 +194,7 @@ names(ln)
 for (i in seq_along(ln)) {
   ln[[i]]$fuel <- NULL
   x_st <- ln[[i]]
-  x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+  x_st <- st_sf(x_st, geometry = net$geom)
   saveRDS(x_st, paste0("post/streets/NMHC_EXHAUST_", names(ln)[i], ".rds"))
 }
 
@@ -230,7 +228,7 @@ names(ln)
 for (i in seq_along(ln)) {
   ln[[i]]$fuel <- NULL
   x_st <- ln[[i]]
-  x_st <- st_sf(x_st[1:5698, ], geometry = net$geom)
+  x_st <- st_sf(x_st, geometry = net$geom)
   saveRDS(x_st, paste0("post/streets/NMHC_EVAP_", names(ln)[i], ".rds"))
 }
 
@@ -259,4 +257,36 @@ switch(
   "portuguese" = message("\n\nArquivos em: /post/*:"),
   "english" = message("\nFiles in: /post/*"),
   "spanish" = message("\nArchivos en: /post/*")
+)
+
+
+switch(
+  language,
+  "portuguese" = message("Limpando..."),
+  "english" = message("Cleaning..."),
+  "spanish" = message("Limpiando...")
+)
+
+suppressWarnings(
+  rm(
+    "df1",
+    "df2",
+    "df3",
+    "dt",
+    "dt0",
+    "dt1",
+    "dt2",
+    "dt3",
+    "factor_emi",
+    "g",
+    "gx",
+    "i",
+    "lf",
+    "na",
+    "net",
+    "pol",
+    "pols",
+    "x",
+    "crs"
+  )
 )
