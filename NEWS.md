@@ -1,6 +1,11 @@
 NEWS
 ===========
 
+### vein 1.8.1 (date: 2026-05-02)
+
+- Add quito project (based on manizales bu)
+- Reduced size of .git history, huge!
+
 ### vein 1.8.0 (date: 2026-04-16)
 
 - Small but significant change. emis_chem2 was draining ram, now with jus tone line is more efficient, by relying on data.table.

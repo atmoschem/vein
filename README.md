@@ -90,10 +90,10 @@ library(vein)
 ``` r
 awesome_city <- tempdir()
 awesome_city
-#> [1] "/tmp/RtmpLMKxSP"
+#> [1] "/tmp/Rtmpndndt8"
 get_project(directory = awesome_city,
 case = "brazil_bu_chem")
-#> Your directory is in /tmp/RtmpLMKxSP
+#> Your directory is in /tmp/Rtmpndndt8
 ```
 
 ``` r

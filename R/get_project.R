@@ -17,6 +17,7 @@
 #'   curitiba       \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   ecuador     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
 #'   ecuador_mdpi     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
+#'   quito     \tab Bottom-up \tab EEA\tab  csv and.rds\cr
 #'   moves_bu         \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
 #'   manizales_bu     \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
 #'   eu_bu_chem       \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
@@ -96,6 +97,11 @@ get_project <- function(directory, case, url) {
       utils::download.file(url = URL, destfile = tf)
       utils::untar(tarfile = tf, exdir = directory)
       message("Your directory is in ", directory)
+    } else if (case %in% c("quito")) {
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/quito.gz"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL, destfile = tf)
+      utils::untar(tarfile = tf, exdir = directory)
 
       # argentina ####
     } else if (case %in% c("argentina")) {
