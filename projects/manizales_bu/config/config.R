@@ -178,12 +178,12 @@ if (!"region" %in% names(fuel)) {
 
 
 setDT(fuel)
-fuel <- fuel[UF == toupper(provincia) & 
+fuel <- fuel[region == toupper(provincia) & 
                Year == year] #all the months!
 
 
 setDT(met)
-met <- met[UF == toupper(provincia) & 
+met <- met[region == toupper(provincia) & 
              Year == year &
              Month == month] #all the months!
 

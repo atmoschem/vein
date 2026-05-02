@@ -133,7 +133,6 @@ for (i in seq_along(metadata_cold$vehicles)) {
       simplify = T,
       profile = tfs[[metadata_cold$vehicles[i]]], 
     )
-    print(sum(array_x))
     
     x_DF <- emis_post(
       arra = array_x,

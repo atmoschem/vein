@@ -14,7 +14,7 @@ sessionInfo()
 
 # 0 Configuration
 language <- "spanish" # spanish portuguese english
-path <- "config/inventory_ecuador.xlsx"
+path <- "config/inventory_manizales_im.xlsx"
 readxl::excel_sheets(path)
 
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
@@ -22,7 +22,6 @@ mileage <- readxl::read_xlsx(path = path, sheet = "mileage")
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
 veh <- readxl::read_xlsx(path = path, sheet = "fleet_age")
 fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
-(UFS <- unique(fuel$UF))
 fuel_spec <- readxl::read_xlsx(path = path, sheet = "fuel_spec")
 met <- readxl::read_xlsx(path = path, sheet = "met")
 euro <- readxl::read_xlsx(path = path, sheet = "euro")
@@ -32,11 +31,11 @@ im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
 im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
 im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
 im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm25")
-year <- 2019
+year <- 2017
 month <- 6
 agemax <- 40
-provincia <- "PI"
-col_region <- "UF" # esta columna debe estar presente en fuel y met
+provincia <- "MANIZALES"
+col_region <- "region" # esta columna debe estar presente en fuel y met
 scale <- "none"
 theme <- "black" # dark clean ing
 delete_directories <- TRUE
@@ -45,7 +44,7 @@ rm(list = ls())
 gc()
 
 # 1) Network ####
-net <- st_read("network/synthetic_quito.gpkg")
+net <- st_read("network/manizales_simu.gpkg")
 net <- net[1:100, ]
 crs <- 4326
 categories <- c(
@@ -70,7 +69,7 @@ metadata <- readRDS("config/metadata.rds")
 categories <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
 veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2017
 theme <- "black" # dark clean ink
 k_D <- 1
 k_G <- 1
@@ -96,13 +95,13 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 speed <- readRDS("network/speed.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2017
 remove_fuel <- c("ELEC", "HY")
 
 # fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
-provincia <- "PI"
+provincia <- "MANIZALES"
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 source("scripts/fuel_eval_eea.R", encoding = "UTF-8", echo = F)
 rm(list = ls())
@@ -122,7 +121,7 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
 year <- 2019
-nt <- 2 # check_nt() / 2
+nt <- 1 # check_nt() / 2
 remove_fuel <- c("ELEC", "HY", "GLP")
 
 IM <- FALSE
@@ -153,26 +152,25 @@ pol <- c(
   "NO"
 )
 source("scripts/cold_start_eea.R", encoding = "UTF-8")
-rm(list = ls())
-gc()
+# rm(list = ls())
+# gc()
 
 # Evaporatives ####
 language <- "spanish" # english spanish portuguese
-# provincia <- "PI"
+provincia <- "MANIZALES"
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
 net <- readRDS("network/net.rds")
 met <- readRDS("config/met.rds")
 euro <- readRDS("config/euro.rds")
-tfs <- readRDS("config/tfs.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2017
 source("scripts/evaporatives_eea.R", encoding = "UTF-8")
-rm(list = ls())
-gc()
+# rm(list = ls())
+# gc()
 
 # paved roads ####
 language <- "spanish" # english spanish
@@ -192,41 +190,35 @@ sL2 <- 0.7 # silt [g/m^2] se 500 < ADT < 5000 (CENMA CHILE)
 sL3 <- 0.6 # silt [g/m^2] se 5000 < ADT < 10000 (CENMA CHILE)
 sL4 <- 0.3 # silt [g/m^2] se ADT > 10000 (CENMA CHILE)
 source("scripts/paved_roads.R", encoding = "UTF-8")
-rm(list = ls())
-gc()
 
 # Wear ####
 language <- "spanish" # english spanish portuguese
-# provincia <- "PI"
+provincia <- "MANIZALES"
 # provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
 net <- readRDS("network/net.rds")
-speed <- readRDS("network/speed.rds")
 met <- readRDS("config/met.rds")
 euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 tfs <- readRDS("config/tfs.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2017
 nt <- 1 # check_nt() / 2
 source("scripts/wear_eea.R", encoding = "UTF-8")
-rm(list = ls())
-gc()
 
 # Post-estimation ####
 language <- "spanish" # english spanish portuguese
 net <- readRDS("network/net.rds")
 tfs <- readRDS("config/tfs.rds")
-g <- make_grid(net, width = 1000)
-# g <- eixport::wrf_grid("wrf/wrfinput_d03")
+g <- eixport::wrf_grid("wrf/wrfinput_d03")
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 # Number of lat points 100
 # Number of lon points 110
 crs <- 31983
-years <- 2019
+years <- 2017
 source("scripts/post.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
@@ -237,13 +229,13 @@ metadata <- readRDS("config/metadata.rds")
 tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
 pol <- c("CO", "NMHC_EXHAUST_G", "NO", "NO2", "PM2.5")
-year <- 2019
+year <- 2017
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 hours <- 8
 bg <- "white"
 pal <- "mpl_viridis" # procura mais paletas com ?cptcity::find_cpt
 breaks <- "quantile" # "sd" "quantile" "pretty"
-tit <- "Emisiones en Quito, Ecuador"
+tit <- "Emisiones en Manizales, Colombia"
 source("scripts/plots.R")
 rm(list = ls())
 gc()
