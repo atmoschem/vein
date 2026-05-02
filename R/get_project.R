@@ -98,7 +98,7 @@ get_project <- function(directory, case, url) {
       utils::untar(tarfile = tf, exdir = directory)
       message("Your directory is in ", directory)
     } else if (case %in% c("quito")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/quito.gz"
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/quito.tar.gz"
       tf <- paste0(tempfile(), ".tar.gz")
       utils::download.file(url = URL, destfile = tf)
       utils::untar(tarfile = tf, exdir = directory)
