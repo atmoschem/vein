@@ -47,7 +47,7 @@ gc()
 # 1) Network ####
 net <- st_read("network/synthetic_quito.gpkg")
 net <- net[1:100, ]
-crs <- 4326
+crs <- 31986
 categories <- c(
   "pc",
   "lcv",
@@ -225,7 +225,7 @@ g <- make_grid(net, width = 1000)
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 # Number of lat points 100
 # Number of lon points 110
-crs <- 31983
+crs <- 31986
 years <- 2019
 source("scripts/post.R", encoding = "UTF-8")
 rm(list = ls())

@@ -54,12 +54,12 @@ mentioned [here](https://www.github.com/r-spatial/sf).
 
 ### Installation
 
-#### CRAN
+#### r-universe or CRAN
 
 VEIN can be installed via CRAN or github
 
 ``` r
-install.packages("vein")
+install.packages('vein', repos = c('https://atmoschem.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 #### GitHub
@@ -67,15 +67,6 @@ install.packages("vein")
 ``` r
 remotes::install_github("atmoschem/vein")
 ```
-
-or if you have a **32 bits** machine
-
-``` r
-install_github("atmoschem/vein",
-INSTALL_opts = "--no-multiarch")
-```
-
-------------------------------------------------------------------------
 
 ## Run with a project
 
@@ -90,10 +81,10 @@ library(vein)
 ``` r
 awesome_city <- tempdir()
 awesome_city
-#> [1] "/tmp/Rtmpndndt8"
+#> [1] "/tmp/RtmpzgEtaM"
 get_project(directory = awesome_city,
 case = "brazil_bu_chem")
-#> Your directory is in /tmp/Rtmpndndt8
+#> Your directory is in /tmp/RtmpzgEtaM
 ```
 
 ``` r

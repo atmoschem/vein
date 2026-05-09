@@ -58,11 +58,11 @@ mentioned [here](https://www.github.com/r-spatial/sf).
 
 ### Installation
 
-#### CRAN
+#### r-universe or CRAN
 
 VEIN can be installed via CRAN or github
 ```{r, eval = F}
-install.packages("vein")
+install.packages('vein', repos = c('https://atmoschem.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 #### GitHub
@@ -70,14 +70,6 @@ install.packages("vein")
 ```{r, eval = F}
 remotes::install_github("atmoschem/vein")
 ```
-
-or if you have a **32 bits** machine
-
-```{r, eval = F}
-install_github("atmoschem/vein",
-INSTALL_opts = "--no-multiarch")
-```
----
 
 ## Run with a project 
 
