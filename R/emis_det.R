@@ -3,7 +3,7 @@
 #' @description \code{\link{emis_det}} returns deterioration factors. The emission
 #' factors comes from the guidelines for developing emission factors of the
 #' EMEP/EEA air pollutant emission inventory guidebook
-#' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+#' https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 #' This function subset an internal database of emission factors with each argument
 #'
 #' @param po Character; Pollutant "CO", "NOx" or "HC"

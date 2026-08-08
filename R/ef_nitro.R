@@ -3,7 +3,7 @@
 #' \code{\link{ef_nitro}} returns emission factors as a functions of acondumulated mileage.
 #' The emission factors comes from the guidelines  EMEP/EEA air pollutant
 #' emission inventory guidebook
-#' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+#' https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 #'
 #' @param v Category vehicle: "PC", "LCV", "Motorcycles_2S", "Motorcycles",
 #' "Trucks", "Trucks-A", "Coach" and "BUS"

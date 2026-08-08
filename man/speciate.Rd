@@ -220,15 +220,14 @@ guidebook-2009. European Environment Agency, Copenhagen, 2016
 using bottom-up vehicular emissions inventories. 2017. PhD thesis. Instituto de
 Astronomia, Geofisica e Ciencias Atmosfericas, Universidade de Sao Paulo,
 Sao Paulo, page 88.
-Speciate EPA: https://cfpub.epa.gov/speciate/. :
+Speciate EPA: https://www.epa.gov/air-emissions-modeling/speciate. :
 K. Sexton, H. Westberg, "Ambient hydrocarbon and ozone measurements downwind
 of a large automotive painting plant" Environ. Sci. Tchnol. 14:329 (1980).P.A.
 Scheff, R.A. Schauer, James J., Kleeman, Mike J., Cass, Glen R., Characterization
 and Control of Organic Compounds Emitted from Air Pollution Sources, Final Report,
 Contract 93-329, prepared for California Air Resources Board Research Division,
 Sacramento, CA, April 1998.
-2004 NPRI National Databases as of April 25, 2006,
-http://www.ec.gc.ca/pdb/npri/npri_dat_rep_e.cfm. Memorandum
+2004 NPRI National Databases as of April 25, 2006. Memorandum
 Proposed procedures for preparing composite speciation profiles using
 Environment Canada s National Pollutant Release Inventory (NPRI) for
 stationary sources, prepared by Ying Hsu and Randy Strait of E.H. Pechan

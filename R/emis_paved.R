@@ -22,7 +22,7 @@
 #' @return emission estimation  g/h
 #' @export
 #' @references EPA, 2016. Emission factor documentation for AP-42. Section
-#' 13.2.1, Paved Roads. https://www3.epa.gov/ttn/chief/ap42/ch13/final/c13s0201.pdf
+#' 13.2.1, Paved Roads. https://www.epa.gov/sites/default/files/2020-10/documents/13.2.1_paved_roads.pdf
 #'
 #' CENMA Chile: Actualizacion de inventario de emisiones de contaminntes atmosfericos RM 2020
 #' Universidad de Chile#'

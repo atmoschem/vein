@@ -37,7 +37,7 @@ It returns a numeric vector representing the increase in emissions due to normal
 \code{\link{emis_det}} returns deterioration factors. The emission
 factors comes from the guidelines for developing emission factors of the
 EMEP/EEA air pollutant emission inventory guidebook
-http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 This function subset an internal database of emission factors with each argument
 }
 \note{

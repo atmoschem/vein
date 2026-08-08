@@ -2,7 +2,7 @@
 #'
 #' This function returns speed dependent emission factors. The emission factors
 #' comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
-#' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+#' https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 #'
 #' @param v Category vehicle: "Coach", "Trucks" or "Ubus"
 #' @param t Sub-category of of vehicle: "3Axes", "Artic", "Midi", "RT, "Std" and "TT"

@@ -15,7 +15,7 @@ data.frame, it is convenient that each column is each month.}
 \description{
 This function depends length of trip and on ambient temperature.
 From the guidelines  EMEP/EEA air pollutant emission inventory guidebook
-http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 }
 \note{
 This function is set so that values varies between 0 and 1.

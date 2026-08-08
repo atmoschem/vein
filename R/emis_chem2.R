@@ -129,87 +129,42 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
     names(cheml)[length(cheml)] <- "factor"
   }
 
+  # important
   # df$id <- rep(id, length(unique(df$pol)))
 
+  data.table::setDT(df)
   data.table::setDT(cheml)
 
-    # To ensure 0 GB intermediate allocations on massive global environments,
-    # we pre-allocate the precise shape of the expected output dataset
-    # and accumulate values exclusively in-place using native C pointers.
-    
-    unique_pols <- unique(df[["pol"]])
-    
-    Mwt <- factor <- weight <- group <- pol <- NULL
-    cheml[, weight := factor / Mwt]
-    
-    mech_name <- mech
-    cheml[, group := gsub(pattern = mech_name, replacement = "", x = mech)]
-    cheml[, group := gsub(pattern = "_", replacement = "", x = group)]
-    
-    cheml_sub <- cheml[!is.na(weight) & weight > 0, list(pol, group, weight)]
-    
-    unique_ids <- unique(df[["id"]])
-    unique_groups <- unique(cheml_sub$group)
-    
-    if (!na.rm) {
-        unique_groups <- c(unique_groups, NA_character_)
-    }
-    
-    # Pre-allocate precisely shaped 'dy' accumulator buffer natively
-    dy <- data.table::CJ(group = unique_groups, id = unique_ids)
-    for (n in nx) data.table::set(dy, j = n, value = 0.0)
-    data.table::setkeyv(dy, c("group", "id"))
-    
-    for (p in unique_pols) {
-        p_maps <- cheml_sub[pol == p]
-        
-        if (nrow(p_maps) == 0) {
-            if (!na.rm) {
-                # Subset strictly id and nx for unmapped variants using base subsets to avoid deep copies
-                p_idx <- which(df[["pol"]] == p)
-                p_data <- df[p_idx, c("id", nx), drop = FALSE]
-                data.table::setDT(p_data)
-                p_data <- p_data[, lapply(.SD, sum, na.rm = TRUE), by = "id", .SDcols = nx]
-                
-                # Update dy in place for NA_character_
-                p_data[, group := NA_character_]
-                for (n in nx) {
-                    dy[p_data, on = c("group", "id"), (n) := get(paste0("x.", n)) + get(paste0("i.", n))]
-                }
-            }
-        } else {
-            # Extract id and nx once per mapped pollutant securely
-            p_idx <- which(df[["pol"]] == p)
-            p_data <- df[p_idx, c("id", nx), drop = FALSE]
-            data.table::setDT(p_data)
-            # Aggregate down to distinct IDs immediately
-            p_data <- p_data[, lapply(.SD, sum, na.rm=TRUE), by = "id", .SDcols = nx]
-            
-            for (i in seq_len(nrow(p_maps))) {
-                g <- p_maps$group[i]
-                w <- p_maps$weight[i]
-                
-                # Apply inline weight securely
-                p_data_w <- data.table::copy(p_data)
-                p_data_w[, (nx) := lapply(.SD, function(x) x * w), .SDcols = nx]
-                p_data_w[, group := g]
-                
-                # Accumulate dynamically against dy's preallocated memory buffer
-                for (n in nx) {
-                    dy[p_data_w, on = c("group", "id"), (n) := get(paste0("x.", n)) + get(paste0("i.", n))]
-                }
-            }
-        }
-    }
-    
-    data.table::setorderv(dy, c("group", "id"))
+  y <- merge(x = df, y = cheml, by = "pol", all = TRUE, allow.cartesian = TRUE)
+  # key! Use := with .SD for idiomatic and memory-efficient in-place modification
+  Mwt <- factor <- NULL
+  y[, (nx) := lapply(.SD, function(x) x / Mwt * factor), .SDcols = nx]
 
-    if (na.rm) {
-        dy <- dy[!is.na(group)]
-    }
-    
-    id_ref <- NULL
-    dy <- dy[!is.na(id)]
-    
-    return(dy)
+  mech_name <- mech
+  data.table::set(
+    y,
+    j = "mech",
+    value = gsub(pattern = mech_name, replacement = "", x = y[["mech"]])
+  )
+  data.table::set(
+    y,
+    j = "mech",
+    value = gsub(pattern = "_", replacement = "", x = y[["mech"]])
+  )
+
+  id <- NULL
+  dy <- y[,
+    lapply(.SD, sum, na.rm = T),
+    .SDcols = nx,
+    by = list(id, group = mech)
+  ]
+  data.table::setorderv(dy, c("group", "id"))
+
+  group <- NULL
+  if (na.rm) {
+    dy <- dy[!is.na(group)]
+  }
+  # remove NA in id
+  dy <- dy[!is.na(id)]
+  return(dy)
 }

@@ -3,7 +3,7 @@
 #' \code{\link{ef_ldv_cold}} returns speed functions or data.frames which depends on ambient temperature
 #' average speed. The emission factors comes from the guidelines  EMEP/EEA air pollutant
 #' emission inventory guidebook
-#' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+#' https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 #'
 #' @param v Character; Category vehicle:  "LDV"
 #' @param ta Numeric vector or data.frame; Ambient temperature. Monthly mean can be used. When

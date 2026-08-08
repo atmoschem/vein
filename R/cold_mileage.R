@@ -2,7 +2,7 @@
 #'
 #' This function depends length of trip and on ambient temperature.
 #' From the guidelines  EMEP/EEA air pollutant emission inventory guidebook
-#' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+#' https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 #'
 #' @param ltrip Numeric; Length of trip. It must be in 'units' km.
 #' @param ta Numeric or data.frame; average monthly temperature Celsius. It if is a

@@ -56,7 +56,7 @@ or an EmissionFactor
 \code{\link{ef_nitro}} returns emission factors as a functions of acondumulated mileage.
 The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
-http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 }
 \note{
 if length of eu is bigger than 1, cumileage can have values  of length 1

@@ -1,1 +1,3 @@
 vein.dll
+*.so
+*.o

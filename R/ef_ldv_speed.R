@@ -3,7 +3,7 @@
 #' \code{\link{ef_ldv_speed}} returns speed dependent emission factors, data.frames or
 #' list of emission factors. The emission factors
 #'  comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
-#' http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+#' https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 #'
 #' The argument of this functions have several options which results in
 #' different combinations that returns emission factors. If a combination of

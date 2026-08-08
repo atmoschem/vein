@@ -111,7 +111,7 @@
 #' \item Range MC Flex 150-500cc and >500cc: 2018 - 2012.  EF for 2011 and older as moving average.
 #'}
 #' @references Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
-#' url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
+#' url: https://www.cetesb.sp.gov.br/cetesb.
 #'
 #' @note Currently, 2020, there are not any system for recovery of fuel vapors in Brazil. Hence,
 #' the FS takes into account the vapour that comes from the fuel tank inside the car and

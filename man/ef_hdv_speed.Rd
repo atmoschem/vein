@@ -59,7 +59,7 @@ an emission factor function which depends of the average speed V  g/km
 \description{
 This function returns speed dependent emission factors. The emission factors
 comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
-http://www.eea.europa.eu/themes/air/emep-eea-air-pollutant-emission-inventory-guidebook
+https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 }
 \note{
 \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",

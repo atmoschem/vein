@@ -1,10 +1,13 @@
 NEWS
 ===========
 
-### vein 1.8.1 (date: 2026-05-02)
+### vein 1.8.1 (date: 2026-08-07)
 
 - Add quito project (based on manizales bu)
 - Reduced size of .git history, huge!
+- Fix broken or moved URLs in documentation (EEA guidebook, EPA AP-42, EPA SPECIATE, CETESB)
+- Remove duplicated R/emis_chem2_copy.R and keep the proven merge-based emis_chem2 implementation (the experimental rewrite was never active and failed correctness checks)
+- Depends on R (>= 3.5.0)
 
 ### vein 1.8.0 (date: 2026-04-16)
 

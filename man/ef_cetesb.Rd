@@ -196,7 +196,7 @@ a <- ef_cetesb(p = "NMHC", veh = c("PC_G", "PC_FG", "PC_FE", "PC_E"), year = 201
 }
 \references{
 Emissoes Veiculares no Estado de Sao Paulo 2016. Technical Report.
-url: https://cetesb.sp.gov.br/veicular/relatorios-e-publicacoes/.
+url: https://www.cetesb.sp.gov.br/cetesb.
 }
 \keyword{emission}
 \keyword{factors}
