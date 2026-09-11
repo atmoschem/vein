@@ -14,7 +14,7 @@ sessionInfo()
 
 # 0 Configuration
 language <- "spanish" # spanish portuguese english
-path <- "config/inventory_ecuador.xlsx"
+path <- "config/inventory_ecuador_2026.xlsx"
 readxl::excel_sheets(path)
 
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
@@ -32,10 +32,10 @@ im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
 im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
 im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
 im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm25")
-year <- 2019
+year <- 2025
 month <- 6
 agemax <- 40
-provincia <- "PI"
+provincia <- "QU"
 col_region <- "UF" # esta columna debe estar presente en fuel y met
 scale <- "none"
 theme <- "black" # dark clean ing
@@ -45,7 +45,7 @@ rm(list = ls())
 gc()
 
 # 1) Network ####
-net <- st_read("network/synthetic_quito.gpkg")
+net <- st_read("network/net_sumo_v2.gpkg")
 net <- net[1:100, ]
 crs <- 31986
 categories <- c(
@@ -70,7 +70,7 @@ metadata <- readRDS("config/metadata.rds")
 categories <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
 veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2025
 theme <- "black" # dark clean ink
 k_D <- 1
 k_G <- 1
@@ -96,13 +96,13 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 speed <- readRDS("network/speed.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2025
 remove_fuel <- c("ELEC", "HY")
 
 # fuel calibration with fuel consumption data
 fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
-provincia <- "PI"
+provincia <- "QU"
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 source("scripts/fuel_eval_eea.R", encoding = "UTF-8", echo = F)
 rm(list = ls())
@@ -121,7 +121,7 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2025
 nt <- 2 # check_nt() / 2
 remove_fuel <- c("ELEC", "HY", "GLP")
 
@@ -169,7 +169,7 @@ tfs <- readRDS("config/tfs.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2025
 source("scripts/evaporatives_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
@@ -210,7 +210,7 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 tfs <- readRDS("config/tfs.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2025
 nt <- 1 # check_nt() / 2
 source("scripts/wear_eea.R", encoding = "UTF-8")
 rm(list = ls())
@@ -226,7 +226,7 @@ factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 # Number of lat points 100
 # Number of lon points 110
 crs <- 31986
-years <- 2019
+years <- 2025
 source("scripts/post.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
@@ -236,8 +236,9 @@ language <- "spanish" # english portuguese
 metadata <- readRDS("config/metadata.rds")
 tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
+
 pol <- c("CO", "NMHC_EXHAUST_G", "NO", "NO2", "PM2.5")
-year <- 2019
+year <- 2025
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 hours <- 8
 bg <- "white"
