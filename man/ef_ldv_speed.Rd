@@ -220,6 +220,26 @@ ef <- ef_ldv_speed(v = "LCV",
                    p = "FC",
                    eu = c("I", "II"),
                    speed = Speed(10))
+
+# plot speed data.frame by hour
+
+data(net)
+data(pc_profile)
+pc_week <- temp_fact(net$ldv + net$hdv, pc_profile)
+df <- netspeed(pc_week, net$ps, net$ffs, net$capacity, net$lkm)
+lapply(1:ncol(df), function(i) {
+ a <- ef_ldv_speed(
+ v = "PC",
+ t = "4S",
+ cc = "<=1400",
+ f = "G",
+ eu = "III",
+ p = "CO",
+ speed = df[[i]]
+ )
+}) -> lef
+ def <- EmissionFactors(remove_units(do.call("cbind", lef)))
+ plot(def)
 }
 }
 \seealso{

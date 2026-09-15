@@ -1,6 +1,10 @@
 NEWS
 ===========
 
+### vein 1.8.2 (date: 2026-09-15)
+
+- Quito project updated for many years and default 2025
+
 ### vein 1.8.1 (date: 2026-08-07)
 
 - Add quito project (based on manizales bu)
