@@ -57,25 +57,29 @@ ef_ldv_scaled <- function(df,
                           p) {
   if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
-  la <- lapply(1:length(dfcol), function(i)  {
-    funIN <- ef_ldv_speed(v = v,
-                          t = t,
-                          cc = cc,
-                          f = f,
-                         eu = as.character(eu[i]),
-                         p = p,
-                         k = 1,
-                         show.equation = FALSE)
-    k <- dfcol[i]/ funIN(SDC)
+  n <- length(dfcol)
+  base <- lapply(seq_len(n), function(i) {
+    ef_ldv_program(v = v, t = t, cc = cc, f = f,
+                   eu = as.character(eu[i]), p = p, k = 1)
+  })
+  SDC0 <- vapply(base, function(pr) ef_eval_program(pr, SDC), numeric(1))
+  ks <- dfcol / SDC0
+  la <- lapply(seq_len(n), function(i) {
     ef_ldv_speed(v = v,
                  t = t,
                  cc = cc,
                  f = f,
                  eu = as.character(eu[i]),
                  p = p,
-                 k = k,
+                 k = ks[i],
                  show.equation = FALSE)
    })
+  progs <- lapply(seq_len(n), function(i) {
+    pr <- base[[i]]
+    pr$k <- ks[i]
+    pr
+  })
   class(la) <- c("EmissionFactorsList", class(la))
+  attr(la, "programs") <- speed_programs(progs)
   return(la)
 }

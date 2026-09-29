@@ -84,10 +84,10 @@ colplot(dff)
 }
 }
 \seealso{
-Other age: 
-\code{\link{age_hdv}()},
-\code{\link{age_ldv}()},
-\code{\link{age_moto}()},
-\code{\link{age_veh}()}
+Other age:
+\code{\link[=age_hdv]{age_hdv()}},
+\code{\link[=age_ldv]{age_ldv()}},
+\code{\link[=age_moto]{age_moto()}},
+\code{\link[=age_veh]{age_veh()}}
 }
 \concept{age}

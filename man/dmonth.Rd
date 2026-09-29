@@ -24,8 +24,8 @@ dmonth(Sys.Date())
 }
 }
 \seealso{
-Other helpers: 
-\code{\link{colplot}()},
-\code{\link{to_latex}()}
+Other helpers:
+\code{\link[=colplot]{colplot()}},
+\code{\link[=to_latex]{to_latex()}}
 }
 \concept{helpers}

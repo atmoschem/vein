@@ -1,7 +1,8 @@
 PKG_FFLAGS = $(SHLIB_OPENMP_FFLAGS)
+PKG_CFLAGS = $(SHLIB_OPENMP_CFLAGS)
 PKG_LIBS = $(SHLIB_OPENMP_CFLAGS)
 
-C_OBJS = init.o
+C_OBJS = init.o e_speed.o
 FT_OBJS = e_bottomup.o e_topdown.o
 
 all:
@@ -10,4 +11,4 @@ all:
 
 $(SHLIB): $(FT_OBJS) $(C_OBJS)
 
-init.o:  e_bottomup.o e_topdown.o
+init.o:  e_bottomup.o e_topdown.o e_speed.o

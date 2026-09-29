@@ -24,7 +24,7 @@ print(head(b))
 }
 }
 \seealso{
-Other Add distance unitts: 
-\code{\link{add_lkm}()}
+Other Add distance unitts:
+\code{\link[=add_lkm]{add_lkm()}}
 }
 \concept{Add distance unitts}

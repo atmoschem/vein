@@ -10,6 +10,7 @@
 #'   argentina  \tab top down\tab COPERT \tab  .rds\cr
 #'   emislacovid  \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
 #'   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
+#'   brazil_bu_speed    \tab Bottom-up hourly speed-dependent (EMEP/EEA scaled)\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
 #'   brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
 #'   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
@@ -63,6 +64,16 @@ get_project <- function(directory, case, url) {
         )
     ) {
       URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem.tar.gz"
+      tf <- paste0(tempfile(), ".tar.gz")
+      utils::download.file(url = URL, destfile = tf)
+      utils::untar(tarfile = tf, exdir = directory)
+      message("Your directory is in ", directory)
+
+      # brazil_bu_speed ####
+    } else if (
+      case %in% c("brazil_bu_speed", "brazil_speed", "brazil_bu_scaled")
+    ) {
+      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_speed.tar.gz"
       tf <- paste0(tempfile(), ".tar.gz")
       utils::download.file(url = URL, destfile = tf)
       utils::untar(tarfile = tf, exdir = directory)

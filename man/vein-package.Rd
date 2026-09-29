@@ -21,6 +21,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Sergio Ibarra-Espinosa \email{zergioibarra@gmail.com} (\href{https://orcid.org/0000-0002-3162-1905}{ORCID})
 
+Authors:
+\itemize{
+  \item Sergio Ibarra-Espinosa \email{zergioibarra@gmail.com} (\href{https://orcid.org/0000-0002-3162-1905}{ORCID})
+}
+
 Other contributors:
 \itemize{
   \item Daniel Schuch \email{underschuch@gmail.com} (\href{https://orcid.org/0000-0001-5977-4519}{ORCID}) [contributor]

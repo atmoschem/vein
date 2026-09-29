@@ -189,17 +189,17 @@ dim(a)
 \seealso{
 \code{\link{ef_ldv_speed}} \code{\link{emis_hot_td}}
 
-Other China: 
-\code{\link{ef_china_det}()},
-\code{\link{ef_china_h}()},
-\code{\link{ef_china_hu}()},
-\code{\link{ef_china_long}()},
-\code{\link{ef_china_s}()},
-\code{\link{ef_china_speed}()},
-\code{\link{ef_china_te}()},
-\code{\link{ef_china_th}()},
-\code{\link{emis_china}()},
-\code{\link{emis_long}()}
+Other China:
+\code{\link[=ef_china_det]{ef_china_det()}},
+\code{\link[=ef_china_h]{ef_china_h()}},
+\code{\link[=ef_china_hu]{ef_china_hu()}},
+\code{\link[=ef_china_long]{ef_china_long()}},
+\code{\link[=ef_china_s]{ef_china_s()}},
+\code{\link[=ef_china_speed]{ef_china_speed()}},
+\code{\link[=ef_china_te]{ef_china_te()}},
+\code{\link[=ef_china_th]{ef_china_th()}},
+\code{\link[=emis_china]{emis_china()}},
+\code{\link[=emis_long]{emis_long()}}
 }
 \concept{China}
 \keyword{China}

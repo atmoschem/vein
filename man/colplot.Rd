@@ -77,8 +77,8 @@ colplot(df = a, ylab = "CO [g/km]", theme = "clean", pch = NULL, type = "b")
 \seealso{
 \code{\link{par}}
 
-Other helpers: 
-\code{\link{dmonth}()},
-\code{\link{to_latex}()}
+Other helpers:
+\code{\link[=dmonth]{dmonth()}},
+\code{\link[=to_latex]{to_latex()}}
 }
 \concept{helpers}

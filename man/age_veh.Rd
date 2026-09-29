@@ -80,10 +80,10 @@ plot(PC_E25_1400)
 }
 }
 \seealso{
-Other age: 
-\code{\link{age}()},
-\code{\link{age_hdv}()},
-\code{\link{age_ldv}()},
-\code{\link{age_moto}()}
+Other age:
+\code{\link[=age]{age()}},
+\code{\link[=age_hdv]{age_hdv()}},
+\code{\link[=age_ldv]{age_ldv()}},
+\code{\link[=age_moto]{age_moto()}}
 }
 \concept{age}

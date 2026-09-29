@@ -1,6 +1,17 @@
 #include <R_ext/RS.h>
 #include <stdlib.h> // for NULL
+#include <Rinternals.h>
 #include <R_ext/Rdynload.h>
+
+/* .Call calls */
+extern SEXP emis_speed_engine(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                              SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
+                              SEXP, SEXP, SEXP, SEXP);
+
+static const R_CallMethodDef CallEntries[] = {
+    {"emis_speed_engine", (DL_FUNC) &emis_speed_engine, 20},
+    {NULL, NULL, 0}
+};
 
 /* FIXME:
  Check these declarations against the C/Fortran source code.
@@ -75,6 +86,6 @@ static const R_FortranMethodDef FortranEntries[] = {
 
 void R_init_vein(DllInfo *dll)
 {
-  R_registerRoutines(dll, NULL, NULL, FortranEntries, NULL);
+  R_registerRoutines(dll, NULL, CallEntries, FortranEntries, NULL);
   R_useDynamicSymbols(dll, FALSE);
 }

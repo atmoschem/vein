@@ -24,7 +24,7 @@ print(head(b))
 }
 }
 \seealso{
-Other Add distance unitts: 
-\code{\link{add_miles}()}
+Other Add distance unitts:
+\code{\link[=add_miles]{add_miles()}}
 }
 \concept{Add distance unitts}

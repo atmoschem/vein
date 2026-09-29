@@ -24,8 +24,7 @@
 #' @importFrom cptcity cpt
 #' @importFrom grDevices rgb colorRamp
 #' @rdname EmissionFactors
-#' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors
-#' plot.EmissionFactors
+#' @aliases EmissionFactors print.EmissionFactors summary.EmissionFactors plot.EmissionFactors
 #' @examples \dontrun{
 #' #do not run
 #' EmissionFactors(1)

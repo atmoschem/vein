@@ -31,8 +31,8 @@ to_latex(ef)
 \seealso{
 \code{\link{vein_notes}}
 
-Other helpers: 
-\code{\link{colplot}()},
-\code{\link{dmonth}()}
+Other helpers:
+\code{\link[=colplot]{colplot()}},
+\code{\link[=dmonth]{dmonth()}}
 }
 \concept{helpers}

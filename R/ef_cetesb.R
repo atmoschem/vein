@@ -38,7 +38,7 @@
 #' ef.csv
 #' @return A vector of Emission Factor or a data.frame
 #' @note new emission factors ar projects as the lates available,
-#' @importFrom data.table melt rbindlist ":="
+#' @importFrom data.table melt rbindlist
 #' @keywords  emission factors
 #' @note The new convention for vehicles names are translated from CETESB report:
 #' \tabular{ll}{

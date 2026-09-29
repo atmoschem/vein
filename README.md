@@ -39,9 +39,20 @@ alt="vein" />
 <figcaption aria-hidden="true">vein</figcaption>
 </figure>
 
+### Speed-dependent inventories
+
+`emis_speed()` estimates hourly emissions per street with
+speed-dependent emission factors. The EMEP/EEA driving-cycle curves used
+by `ef_ldv_scaled()` / `ef_hdv_scaled()` are compiled to a small stack
+machine and evaluated with an OpenMP C kernel (`src/e_speed.c`). Ages
+sharing the same equation are grouped, so each curve is evaluated once
+per street-hour. The result matches `emis()` to machine precision and is
+6-17 times faster on a laptop, which makes country-scale hourly
+inventories (hundreds of thousands of links) feasible. See the
+`brazil_bu_speed` project.
+
 ### TODO
 
-- Include speed functions with Fortran
 - Add EF from HBEFA?
 - See issues [GitHub](https://github.com/atmoschem/vein/issues)
 - Second edition of my book
@@ -81,10 +92,10 @@ library(vein)
 ``` r
 awesome_city <- tempdir()
 awesome_city
-#> [1] "/tmp/Rtmp1rkIsm"
+#> [1] "/tmp/RtmpN51fAu"
 get_project(directory = awesome_city,
 case = "brazil_bu_chem")
-#> Your directory is in /tmp/Rtmp1rkIsm
+#> Your directory is in /tmp/RtmpN51fAu
 ```
 
 ``` r

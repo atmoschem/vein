@@ -15,6 +15,7 @@ get_project(directory, case, url)
   argentina  \tab top down\tab COPERT \tab  .rds\cr
   emislacovid  \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
+  brazil_bu_speed    \tab Bottom-up hourly speed-dependent (EMEP/EEA scaled)\tab CETESB+tunnel\tab  .rds\cr
   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
   brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr

@@ -88,6 +88,7 @@ export(emis_long)
 export(emis_order)
 export(emis_paved)
 export(emis_post)
+export(emis_speed)
 export(emis_to_streets)
 export(emis_wear)
 export(fuel_corr)
@@ -120,59 +121,74 @@ export(vein_notes)
 export(vkm)
 export(wide_to_long)
 importFrom(cptcity,cpt)
-importFrom(data.table,":=")
-importFrom(data.table,':=')
-importFrom(data.table,.SD)
-importFrom(data.table,as.data.table)
-importFrom(data.table,data.table)
-importFrom(data.table,dcast.data.table)
-importFrom(data.table,fifelse)
-importFrom(data.table,melt)
-importFrom(data.table,melt.data.table)
-importFrom(data.table,rbindlist)
-importFrom(data.table,setDF)
-importFrom(data.table,setDT)
-importFrom(data.table,setorderv)
-importFrom(dotCall64,.C64)
-importFrom(dotCall64,vector_dc)
-importFrom(grDevices,colorRamp)
-importFrom(grDevices,heat.colors)
-importFrom(grDevices,rgb)
-importFrom(graphics,abline)
-importFrom(graphics,axis)
-importFrom(graphics,legend)
-importFrom(graphics,par)
-importFrom(graphics,plot)
-importFrom(graphics,points)
-importFrom(graphics,polygon)
-importFrom(sf,st_area)
-importFrom(sf,st_as_sf)
-importFrom(sf,st_as_sfc)
-importFrom(sf,st_bbox)
-importFrom(sf,st_cast)
-importFrom(sf,st_crop)
-importFrom(sf,st_crs)
-importFrom(sf,st_dimension)
-importFrom(sf,st_geometry)
-importFrom(sf,st_geometry_type)
-importFrom(sf,st_intersection)
-importFrom(sf,st_length)
-importFrom(sf,st_set_geometry)
-importFrom(sf,st_sf)
-importFrom(sf,st_sfc)
-importFrom(sf,st_transform)
-importFrom(stats,median)
-importFrom(stats,quantile)
-importFrom(stats,sd)
-importFrom(units,as_units)
-importFrom(units,install_unit)
-importFrom(units,remove_unit)
-importFrom(utils,download.file)
-importFrom(utils,head)
-importFrom(utils,menu)
-importFrom(utils,object.size)
-importFrom(utils,packageVersion)
-importFrom(utils,sessionInfo)
-importFrom(utils,untar)
+importFrom(data.table,
+  ':=',
+  .SD,
+  as.data.table,
+  data.table,
+  dcast.data.table,
+  fifelse,
+  melt,
+  melt.data.table,
+  rbindlist,
+  setDF,
+  setDT,
+  setorderv
+)
+importFrom(dotCall64,
+  .C64,
+  vector_dc
+)
+importFrom(grDevices,
+  colorRamp,
+  heat.colors,
+  rgb
+)
+importFrom(graphics,
+  abline,
+  axis,
+  legend,
+  par,
+  plot,
+  points,
+  polygon
+)
+importFrom(sf,
+  st_area,
+  st_as_sf,
+  st_as_sfc,
+  st_bbox,
+  st_cast,
+  st_crop,
+  st_crs,
+  st_dimension,
+  st_geometry,
+  st_geometry_type,
+  st_intersection,
+  st_length,
+  st_set_geometry,
+  st_sf,
+  st_sfc,
+  st_transform
+)
+importFrom(stats,
+  median,
+  quantile,
+  sd
+)
+importFrom(units,
+  as_units,
+  install_unit,
+  remove_unit
+)
+importFrom(utils,
+  download.file,
+  head,
+  menu,
+  object.size,
+  packageVersion,
+  sessionInfo,
+  untar
+)
 useDynLib(vein)
 useDynLib(vein, .registration = TRUE)

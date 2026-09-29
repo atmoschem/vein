@@ -11,8 +11,7 @@
 #' prints messages with description of list
 #' @param ... ignored
 #' @rdname EmissionFactorsList
-#' @aliases EmissionFactorsList print.EmissionFactorsList
-#' summary.EmissionFactorsList plot.EmissionFactorsList
+#' @aliases EmissionFactorsList print.EmissionFactorsList summary.EmissionFactorsList plot.EmissionFactorsList
 #' @examples \dontrun{
 #' data(fe2015)
 #' names(fe2015)

@@ -11,8 +11,7 @@
 #' @param ... ignored
 #' @importFrom  stats median quantile sd
 #' @rdname EmissionsArray
-#' @aliases EmissionsArray print.EmissionsArray summary.EmissionsArray
-#' plot.EmissionsArray
+#' @aliases EmissionsArray print.EmissionsArray summary.EmissionsArray plot.EmissionsArray
 #' @note Future version of this function will return an Array of 3 dimensions.
 #' @examples \dontrun{
 #' data(net)

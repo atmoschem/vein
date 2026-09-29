@@ -1,6 +1,18 @@
 NEWS
 ===========
 
+### vein 2.0.0 (date: 2026-09-29)
+
+- New `emis_speed()` for fast speed-dependent bottom-up inventories. The
+  EMEP/EEA speed curves used by `ef_ldv_speed()`/`ef_hdv_speed()` are compiled
+  once to a small stack-machine and evaluated with an OpenMP C kernel
+  (`src/e_speed.c`). Ages sharing the same equation are grouped so each curve is
+  evaluated once per street-hour. `ef_ldv_scaled()`/`ef_hdv_scaled()` now
+  attach the compiled programs to their result.
+- New project `brazil_bu_speed`: hourly (168 h) speed inventory for Brazil,
+  scaling CETESB emission factors with EMEP/EEA driving-cycle curves.
+- Validation: `emis_speed()` reproduces `emis()` to machine precision.
+
 ### vein 1.8.2 (date: 2026-09-15)
 
 - Quito project updated for many years and default 2025

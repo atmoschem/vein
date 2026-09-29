@@ -16,8 +16,7 @@
 #' "cols","rows", "both", "br", "colsbr", "rowsbr", "bothbr".
 #' br means starting a matrix byrow
 #' @rdname GriddedEmissionsArray
-#' @aliases GriddedEmissionsArray print.GriddedEmissionsArray
-#' summary.GriddedEmissionsArray plot.GriddedEmissionsArray
+#' @aliases GriddedEmissionsArray print.GriddedEmissionsArray summary.GriddedEmissionsArray plot.GriddedEmissionsArray
 #' @importFrom sf st_set_geometry
 #' @importFrom utils head
 #' @examples \dontrun{
