@@ -18,6 +18,9 @@
 #' @param l Load of the vehicle: 0.0, 0.5 or 1.0
 #' @param p Pollutant: "CO", "FC", "NOx" or "HC"
 #' @param df deprecated
+#' @param programs_only Logical; if \code{TRUE}, return only the compiled
+#' speed programs used by \code{\link{emis_speed}} and skip building the R
+#' emission-factor functions (faster when only the compiled engine is used).
 #' @return A list of scaled emission factors g/km
 #' @keywords speed emission factors
 #' @note The length of the list should be equal to the name of the age categories of
@@ -52,16 +55,22 @@ ef_hdv_scaled <- function(df,
                           eu,
                           gr = 0,
                           l = 0.5,
-                          p) {
+                          p,
+                          programs_only = FALSE) {
   if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
   n <- length(dfcol)
-  base <- lapply(seq_len(n), function(i) {
-    ef_hdv_program(v = v, t = t, g = g, eu = as.character(eu[i]),
-                   gr = gr, l = l, p = p, k = 1)
-  })
+  base <- ef_hdv_programs(v = v, t = t, g = g, eu = as.character(eu),
+                          gr = gr, l = l, p = p, k = rep(1, n))
   SDC0 <- vapply(base, function(pr) ef_eval_program(pr, SDC), numeric(1))
   ks <- dfcol / SDC0
+  progs <- lapply(seq_len(n), function(i) {
+    pr <- base[[i]]
+    pr$k <- ks[i]
+    pr
+  })
+  programs <- speed_programs(progs)
+  if (programs_only) return(programs)
   la <- lapply(seq_len(n), function(i) {
     ef_hdv_speed(v = v,
                  t = t,
@@ -73,13 +82,8 @@ ef_hdv_scaled <- function(df,
                  k = ks[i],
                  show.equation = FALSE)
   })
-  progs <- lapply(seq_len(n), function(i) {
-    pr <- base[[i]]
-    pr$k <- ks[i]
-    pr
-  })
   class(la) <- c("EmissionFactorsList", class(la))
-  attr(la, "programs") <- speed_programs(progs)
+  attr(la, "programs") <- programs
   return(la)
 }
 

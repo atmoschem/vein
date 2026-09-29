@@ -12,6 +12,12 @@ NEWS
 - New project `brazil_bu_speed`: hourly (168 h) speed inventory for Brazil,
   scaling CETESB emission factors with EMEP/EEA driving-cycle curves.
 - Validation: `emis_speed()` reproduces `emis()` to machine precision.
+- `ef_cetesb()` caches the pollutant/vehicle-independent prepared EF table per
+  year/scale; repeated calls are ~60x faster (0.096 s -> 0.0015 s per call).
+- `ef_ldv_scaled()`/`ef_hdv_scaled()` gained `programs_only` and build all ages
+  with one table lookup (single table subset instead of one per age).
+- `brazil_bu_speed` uses a closed-form aggregation for constant EFs instead of
+  building a 3-d array; the project runs ~3.6x faster end to end.
 
 ### vein 1.8.2 (date: 2026-09-15)
 

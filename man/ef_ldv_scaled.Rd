@@ -4,7 +4,18 @@
 \alias{ef_ldv_scaled}
 \title{Scaling constant with speed emission factors of Light Duty Vehicles}
 \usage{
-ef_ldv_scaled(df, dfcol, SDC = 34.12, v, t = "4S", cc, f, eu, p)
+ef_ldv_scaled(
+  df,
+  dfcol,
+  SDC = 34.12,
+  v,
+  t = "4S",
+  cc,
+  f,
+  eu,
+  p,
+  programs_only = FALSE
+)
 }
 \arguments{
 \item{df}{deprecated}
@@ -29,6 +40,10 @@ Moped: "<=50". LCV :  "<3.5" for gross weight.}
 
 \item{p}{Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
 is based on fuel, use "FC", if it is based on "HC", use "HC".}
+
+\item{programs_only}{Logical; if \code{TRUE}, return only the compiled
+speed programs used by \code{\link{emis_speed}} and skip building the R
+emission-factor functions (faster when only the compiled engine is used).}
 }
 \value{
 A list of scaled emission factors  g/km

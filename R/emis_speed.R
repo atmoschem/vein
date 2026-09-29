@@ -36,7 +36,7 @@ emis_speed <- function(veh,
                        by_age = TRUE,
                        nt = ifelse(check_nt() == 1, 1, check_nt() / 2),
                        verbose = FALSE) {
-  prog <- attr(ef, "programs")
+  prog <- if (inherits(ef, "speed_programs")) ef else attr(ef, "programs")
   if (is.null(prog)) {
     stop(
       "`ef` must come from ef_ldv_scaled() or ef_hdv_scaled() and carry ",

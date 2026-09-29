@@ -70,7 +70,19 @@ available local emission factors for several consecutive years.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_hdv_scaled</span><span class="op">(</span><span class="va">df</span>, <span class="va">dfcol</span>, SDC <span class="op">=</span> <span class="fl">34.12</span>, <span class="va">v</span>, <span class="va">t</span>, <span class="va">g</span>, <span class="va">eu</span>, gr <span class="op">=</span> <span class="fl">0</span>, l <span class="op">=</span> <span class="fl">0.5</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_hdv_scaled</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">dfcol</span>,</span>
+<span>  SDC <span class="op">=</span> <span class="fl">34.12</span>,</span>
+<span>  <span class="va">v</span>,</span>
+<span>  <span class="va">t</span>,</span>
+<span>  <span class="va">g</span>,</span>
+<span>  <span class="va">eu</span>,</span>
+<span>  gr <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  l <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  <span class="va">p</span>,</span>
+<span>  programs_only <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -117,6 +129,12 @@ available local emission factors for several consecutive years.</p>
 
 <dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
 <dd><p>Pollutant: "CO", "FC", "NOx" or "HC"</p></dd>
+
+
+<dt id="arg-programs-only">programs_only<a class="anchor" aria-label="anchor" href="#arg-programs-only"></a></dt>
+<dd><p>Logical; if <code>TRUE</code>, return only the compiled
+speed programs used by <code><a href="emis_speed.html">emis_speed</a></code> and skip building the R
+emission-factor functions (faster when only the compiled engine is used).</p></dd>
 
 </dl></div>
     <div id="value">

@@ -64,7 +64,18 @@ emission factor which at a speed of the driving cycle (SDC) gives a desired valu
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_ldv_scaled</span><span class="op">(</span><span class="va">df</span>, <span class="va">dfcol</span>, SDC <span class="op">=</span> <span class="fl">34.12</span>, <span class="va">v</span>, t <span class="op">=</span> <span class="st">"4S"</span>, <span class="va">cc</span>, <span class="va">f</span>, <span class="va">eu</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ef_ldv_scaled</span><span class="op">(</span></span>
+<span>  <span class="va">df</span>,</span>
+<span>  <span class="va">dfcol</span>,</span>
+<span>  SDC <span class="op">=</span> <span class="fl">34.12</span>,</span>
+<span>  <span class="va">v</span>,</span>
+<span>  t <span class="op">=</span> <span class="st">"4S"</span>,</span>
+<span>  <span class="va">cc</span>,</span>
+<span>  <span class="va">f</span>,</span>
+<span>  <span class="va">eu</span>,</span>
+<span>  <span class="va">p</span>,</span>
+<span>  programs_only <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -110,6 +121,12 @@ Moped: "&lt;=50". LCV :  "&lt;3.5" for gross weight.</p></dd>
 <dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
 <dd><p>Pollutant: "CO", "FC", "NOx", "HC" or "PM". If your pollutant dfcol
 is based on fuel, use "FC", if it is based on "HC", use "HC".</p></dd>
+
+
+<dt id="arg-programs-only">programs_only<a class="anchor" aria-label="anchor" href="#arg-programs-only"></a></dt>
+<dd><p>Logical; if <code>TRUE</code>, return only the compiled
+speed programs used by <code><a href="emis_speed.html">emis_speed</a></code> and skip building the R
+emission-factor functions (faster when only the compiled engine is used).</p></dd>
 
 </dl></div>
     <div id="value">

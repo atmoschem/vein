@@ -42,7 +42,8 @@ pol_speed_hdv <- c("CO", "HC", "NMHC", "NOx", "CO2", "PM",
 
 # Build a scaled speed emission factor list for one CETESB category + pollutant
 ef_cetesb_speed <- function(veh, pol, year = 2018, agemax = 40,
-                            scale = "default", SDC = 34.12, sppm) {
+                            scale = "default", SDC = 34.12, sppm,
+                            programs_only = FALSE) {
   m <- ef_speed_mapping[ef_speed_mapping$veh == veh, ]
   if (nrow(m) == 0) stop("No speed mapping for ", veh)
   full <- ef_cetesb(p = pol, veh = veh, year = year, agemax = agemax,
@@ -51,9 +52,11 @@ ef_cetesb_speed <- function(veh, pol, year = 2018, agemax = 40,
   dfcol <- as.numeric(full[[pol]])
   if (m$engine == "ldv") {
     ef_ldv_scaled(dfcol = dfcol, SDC = SDC, v = m$v, t = m$t,
-                  cc = m$cc, f = m$f, eu = eu, p = pol)
+                  cc = m$cc, f = m$f, eu = eu, p = pol,
+                  programs_only = programs_only)
   } else {
     ef_hdv_scaled(dfcol = dfcol, SDC = SDC, v = m$v, t = m$t,
-                  g = m$g, eu = eu, gr = 0, l = 0.5, p = pol)
+                  g = m$g, eu = eu, gr = 0, l = 0.5, p = pol,
+                  programs_only = programs_only)
   }
 }

@@ -39,19 +39,25 @@ speed_ready <- function(veh, pol) {
 build_speed_ef <- function(veh_i, pj, A) {
   lef <- tryCatch(
     ef_cetesb_speed(veh_i, pj, year = year, agemax = A, scale = scale,
-                    sppm = as.numeric(s[[veh_i]])[1]),
+                    sppm = as.numeric(s[[veh_i]])[1], programs_only = TRUE),
     error = function(e) NULL
   )
   if (is.null(lef)) return(NULL)
-  if (any(!is.finite(attr(lef, "programs")$kk_age))) return(NULL)
+  if (any(!is.finite(lef$kk_age))) return(NULL)
   lef
 }
 
-# Constant emission factor path (falls back to Fortran emis)
+# Constant emission factor path. The 3D array is never built: for a constant
+# EF the totals have a closed form (much faster for large networks).
 constant_emis <- function(x, ef, prof, A) {
-  arr <- emis(veh = x, lkm = lkm, ef = ef, profile = prof,
-              agemax = A, simplify = TRUE, fortran = TRUE, nt = nt)
-  list(streets = apply(arr, c(1, 3), sum), veh = apply(arr, c(2, 3), sum))
+  xm <- as.matrix(remove_units(x))
+  ev <- as.numeric(ef)
+  lkmv <- as.numeric(remove_units(lkm))
+  profv <- as.numeric(unlist(prof))
+  list(
+    streets = outer(as.numeric(xm %*% ev) * lkmv, profv),
+    veh = outer(as.numeric(colSums(xm * lkmv) * ev), profv)
+  )
 }
 
 switch(

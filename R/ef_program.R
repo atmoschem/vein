@@ -174,6 +174,80 @@ ef_hdv_program <- function(v, t, g, eu, gr = 0, l = 0.5, p, x = 0, k = 1,
   )
 }
 
+# Build all LDV programs for a set of euro standards in one table lookup
+ef_ldv_programs <- function(v, t = "4S", cc, f, eu, p, x = 0, k = 1,
+                            fcorr = rep(1, 8)) {
+  eu <- as.character(eu)
+  n <- length(eu)
+  kk <- rep(as.numeric(k), length.out = n) * fcorr_factor(eu, fcorr)
+  df <- sysdata$ldv
+  # LCV euro V is taken from PC >2000 (issue #204), applied per age as in
+  # ef_ldv_speed()
+  remap <- v == "LCV" & (eu %in% "V")
+  tab <- df[
+    df$VEH == v & df$TYPE == t & df$CC == cc & df$FUEL == f &
+      df$POLLUTANT == p,
+  ]
+  if (nrow(tab) == 0) stop(paste("ef_ldv_programs: no EF for", v, t, cc, f, p))
+  tab_pc <- NULL
+  if (any(remap)) {
+    tab_pc <- df[
+      df$VEH == "PC" & df$TYPE == t & df$CC == ">2000" & df$FUEL == f &
+        df$POLLUTANT == p,
+    ]
+    if (nrow(tab_pc) == 0) stop("ef_ldv_programs: no PC >2000 EF for LCV euro V")
+  }
+  lapply(seq_len(n), function(i) {
+    tb <- if (remap[i]) tab_pc else tab
+    row <- tb[tb$EURO == eu[i], , drop = FALSE]
+    if (nrow(row) == 0) {
+      stop(paste("ef_ldv_programs: no EF for", v, t, cc, f, eu[i], p))
+    }
+    row <- row[1, ]
+    prg <- compile_ef_expr(as.character(row$Y))
+    list(
+      code = prg$code, consts = prg$consts,
+      coef = .coef6(row), x = as.numeric(x),
+      minv = as.numeric(row$MINV), maxv = as.numeric(row$MAXV), k = kk[i]
+    )
+  })
+}
+
+# Build all HDV programs for a set of euro standards in one table lookup
+ef_hdv_programs <- function(v, t, g, eu, gr = 0, l = 0.5, p, x = 0, k = 1,
+                            fcorr = rep(1, 8)) {
+  p_cri <- as.character(unique(sysdata$hdv_criteria$POLLUTANT))
+  p_ghg <- as.character(unique(sysdata$hdv_ghg$POLLUTANT))
+  if (p %in% p_cri) {
+    df <- sysdata$hdv_criteria
+  } else if (p %in% p_ghg) {
+    df <- sysdata$hdv_ghg
+  } else {
+    stop(paste("ef_hdv_programs: pollutant", p, "not found"))
+  }
+  eu <- as.character(eu)
+  n <- length(eu)
+  kk <- rep(as.numeric(k), length.out = n) * fcorr_factor(eu, fcorr)
+  tab <- df[
+    df$VEH == v & df$TYPE == t & df$GW == g & df$GRA == gr & df$LOAD == l &
+      df$POLLUTANT == p,
+  ]
+  if (nrow(tab) == 0) stop(paste("ef_hdv_programs: no EF for", v, t, g, gr, l, p))
+  lapply(seq_len(n), function(i) {
+    row <- tab[tab$EURO == eu[i], , drop = FALSE]
+    if (nrow(row) == 0) {
+      stop(paste("ef_hdv_programs: no EF for", v, t, g, eu[i], gr, l, p))
+    }
+    row <- row[1, ]
+    prg <- compile_ef_expr(as.character(row$Y))
+    list(
+      code = prg$code, consts = prg$consts,
+      coef = .coef6(row), x = as.numeric(x),
+      minv = as.numeric(row$MINV), maxv = as.numeric(row$MAXV), k = kk[i]
+    )
+  })
+}
+
 # Concatenate a list of programs into the flat structure read by the C engine.
 # Ages sharing the same equation are grouped so it is evaluated only once.
 speed_programs <- function(progs) {

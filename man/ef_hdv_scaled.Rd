@@ -4,7 +4,19 @@
 \alias{ef_hdv_scaled}
 \title{Scaling constant with speed emission factors of Heavy Duty Vehicles}
 \usage{
-ef_hdv_scaled(df, dfcol, SDC = 34.12, v, t, g, eu, gr = 0, l = 0.5, p)
+ef_hdv_scaled(
+  df,
+  dfcol,
+  SDC = 34.12,
+  v,
+  t,
+  g,
+  eu,
+  gr = 0,
+  l = 0.5,
+  p,
+  programs_only = FALSE
+)
 }
 \arguments{
 \item{df}{deprecated}
@@ -28,6 +40,10 @@ ef_hdv_scaled(df, dfcol, SDC = 34.12, v, t, g, eu, gr = 0, l = 0.5, p)
 \item{l}{Load of the vehicle: 0.0, 0.5 or 1.0}
 
 \item{p}{Pollutant: "CO", "FC", "NOx" or "HC"}
+
+\item{programs_only}{Logical; if \code{TRUE}, return only the compiled
+speed programs used by \code{\link{emis_speed}} and skip building the R
+emission-factor functions (faster when only the compiled engine is used).}
 }
 \value{
 A list of scaled emission factors g/km
