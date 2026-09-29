@@ -3,7 +3,8 @@ pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   basics: basics.html
-last_built: 2026-09-29T20:07Z
+  speed: speed.html
+last_built: 2026-09-29T20:11Z
 urls:
   reference: http://atmoschem.github.io/vein/reference
   article: http://atmoschem.github.io/vein/articles

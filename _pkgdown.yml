@@ -9,3 +9,9 @@ template:
 authors:
   Sergio Ibarra-Espinosa:
     href: https://ibarraespinosa.github.io
+
+articles:
+- title: Articles
+  contents:
+  - basics
+  - speed

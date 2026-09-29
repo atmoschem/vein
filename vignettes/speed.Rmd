@@ -1,0 +1,90 @@
+---
+title: "Speed-dependent emissions with emis_speed"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Speed-dependent emissions with emis_speed}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Why speed-dependent emission factors?
+
+Local emission factors (for instance the CETESB values used in Brazil) are
+usually measured over a driving cycle and reported as a single number per age.
+The EMEP/EEA guidebook provides **speed curves** for the same technologies.
+`ef_ldv_scaled()` and `ef_hdv_scaled()` combine both: the EMEP/EEA curve gives
+the shape as a function of the average speed, and it is rescaled so that at the
+speed of the local driving cycle (SDC) it reproduces the local emission factor.
+
+Estimating an inventory for many streets and hours with these curves used to be
+very slow, because the R equations were interpreted once per street, hour and
+age. `emis_speed()` compiles the equations to a tiny stack machine and
+evaluates them in an OpenMP C kernel (`src/e_speed.c`), grouping the ages that
+share the same equation.
+
+## Scaling a local emission factor by speed
+
+```{r}
+library(vein)
+library(units)
+
+# local (CETESB) emission factors for passenger cars, 40 ages
+CO <- ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40, full = TRUE)
+
+# scale the EMEP/EEA curve so that at SDC = 34.12 km/h it gives the local EF
+lef <- ef_ldv_scaled(
+  dfcol = CO$CO,
+  v = "PC", t = "4S", cc = "<=1400", f = "G",
+  eu = CO$EqEuro_PC, p = "CO"
+)
+length(lef)
+```
+
+## Running the inventory
+
+`emis_speed()` needs the vehicle flow by age (`veh`), the link lengths (`lkm`),
+the number of hours and speeds. It returns the emissions by street and hour and,
+optionally, the totals by age and hour.
+
+```{r}
+S <- 200 # streets
+A <- 40  # ages
+H <- 24  # hours
+
+veh <- matrix(100, nrow = S, ncol = A)
+lkm <- set_units(rep(1, S), "km")
+speed <- Speed(matrix(rep(c(10, 30, 50, 80), length.out = S * H), S, H))
+profile <- matrix(1, 24, 1)
+
+E <- emis_speed(
+  veh = veh,
+  lkm = lkm,
+  ef = lef,
+  speed = speed,
+  profile = profile,
+  by_age = TRUE,
+  nt = 2
+)
+
+# emissions by street and hour
+dim(E$streets)
+# total emissions by age and hour
+dim(E$veh)
+round(sum(E$streets), 1)
+```
+
+The result is equivalent to the reference implementation `emis()` (to machine
+precision) but considerably faster, which makes country-scale hourly
+inventories feasible. The detailed workflow, with CETESB emission factors and a
+168 h week, is implemented in the `brazil_bu_speed` project:
+
+```{r, eval = FALSE}
+get_project(directory = tempdir(), case = "brazil_bu_speed")
+```
