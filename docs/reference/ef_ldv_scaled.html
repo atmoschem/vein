@@ -169,8 +169,18 @@ a specific type of vehicle. Thanks to Glauber Camponogara for the help.</p>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">df</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">ages</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="colplot.html">colplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># programs_only = TRUE skips the R functions and returns the compiled</span></span></span>
+<span class="r-in"><span><span class="co"># speed programs used by emis_speed()</span></span></span>
+<span class="r-in"><span><span class="va">prog</span> <span class="op">&lt;-</span> <span class="fu">ef_ldv_scaled</span><span class="op">(</span>dfcol <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">CO</span>,</span></span>
+<span class="r-in"><span>                      v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>,</span></span>
+<span class="r-in"><span>                      eu <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">EqEuro_PC</span>, p <span class="op">=</span> <span class="st">"CO"</span>, programs_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">prog</span><span class="op">)</span>   <span class="co"># "speed_programs"</span></span></span>
+<span class="r-in"><span><span class="va">prog</span><span class="op">$</span><span class="va">n</span>        <span class="co"># ages</span></span></span>
+<span class="r-in"><span><span class="va">prog</span><span class="op">$</span><span class="va">G</span>        <span class="co"># distinct equations after grouping</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="ef_ldv_scaled-1.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 </code></pre></div>
     </div>
   </div>

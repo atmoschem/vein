@@ -27,6 +27,35 @@
 #' @return A list with \code{streets} (streets x hours) and, when
 #' \code{by_age = TRUE}, \code{veh} (ages x hours).
 #' @export
+#' @examples
+#' # 1) Local emission factors by age (CETESB, Brazil)
+#' CO <- ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40, full = TRUE)
+#'
+#' # 2) Scale the EMEP/EEA speed curve so that at the driving-cycle speed
+#' #    (SDC) it reproduces the local emission factor
+#' lef <- ef_ldv_scaled(dfcol = CO$CO, v = "PC", t = "4S", cc = "<=1400",
+#'                      f = "G", eu = CO$EqEuro_PC, p = "CO")
+#' lef[[1]](34.12)      # equals CO$CO[1]
+#' length(lef)          # one function per age
+#'
+#' # 3) A tiny network: 200 streets, 40 ages, 24 hours
+#' S <- 200; A <- 40; H <- 24
+#' veh <- matrix(100, nrow = S, ncol = A)
+#' lkm <- units::set_units(rep(1, S), "km")
+#' speed <- Speed(matrix(rep(c(10, 30, 50, 80), length.out = S * H), S, H))
+#' profile <- matrix(1, 24, 1)
+#'
+#' # 4) Fast inventory
+#' E <- emis_speed(veh = veh, lkm = lkm, ef = lef, speed = speed,
+#'                 profile = profile, by_age = TRUE, nt = 1)
+#' dim(E$streets)       # streets x hours
+#' dim(E$veh)           # ages x hours
+#' sum(E$streets)
+#'
+#' # 5) Same result as the reference implementation emis()
+#' Er <- emis(veh = veh, lkm = lkm, ef = lef, speed = speed,
+#'            profile = profile, simplify = TRUE, agemax = A)
+#' max(abs(apply(Er, c(1, 3), sum) - E$streets))
 emis_speed <- function(veh,
                        lkm,
                        ef,

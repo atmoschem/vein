@@ -48,6 +48,15 @@
 #' }))) -> df
 #' names(df) <- ages
 #' colplot(df)
+#'
+#' # programs_only = TRUE skips the R functions and returns the compiled
+#' # speed programs used by emis_speed()
+#' prog <- ef_ldv_scaled(dfcol = CO$CO,
+#'                       v = "PC", t = "4S", cc = "<=1400", f = "G",
+#'                       eu = CO$EqEuro_PC, p = "CO", programs_only = TRUE)
+#' class(prog)   # "speed_programs"
+#' prog$n        # ages
+#' prog$G        # distinct equations after grouping
 #' }
 ef_ldv_scaled <- function(df,
                           dfcol ,

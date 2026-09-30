@@ -1,90 +1,216 @@
 ---
-title: "Speed-dependent emissions with emis_speed"
+title: "Understanding speed-dependent inventories with emis_speed"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Speed-dependent emissions with emis_speed}
+  %\VignetteIndexEntry{Understanding speed-dependent inventories with emis_speed}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 6, fig.height = 4)
 ```
 
-## Why speed-dependent emission factors?
+This article explains, step by step, how VEIN builds an hourly, per-street
+inventory with **speed-dependent** emission factors, and how `emis_speed()`
+makes it fast enough for country-scale networks. Every chunk runs; you can copy
+and paste them.
 
-Local emission factors (for instance the CETESB values used in Brazil) are
-usually measured over a driving cycle and reported as a single number per age.
-The EMEP/EEA guidebook provides **speed curves** for the same technologies.
-`ef_ldv_scaled()` and `ef_hdv_scaled()` combine both: the EMEP/EEA curve gives
-the shape as a function of the average speed, and it is rescaled so that at the
-speed of the local driving cycle (SDC) it reproduces the local emission factor.
+## 1. The idea
 
-Estimating an inventory for many streets and hours with these curves used to be
-very slow, because the R equations were interpreted once per street, hour and
-age. `emis_speed()` compiles the equations to a tiny stack machine and
-evaluates them in an OpenMP C kernel (`src/e_speed.c`), grouping the ages that
-share the same equation.
+A local emission factor (for example the CETESB factors used in Brazil) is a
+single number per vehicle age, measured over a driving cycle. Real emissions
+depend on the average speed of the link. The EMEP/EEA guidebook provides
+*speed curves* for the same technologies. VEIN combines both: the EMEP/EEA
+curve gives the **shape** as a function of speed, rescaled so that at the speed
+of the local driving cycle it reproduces the **local** emission factor.
 
-## Scaling a local emission factor by speed
+Doing this for every street and every hour used to be slow because the curve was
+interpreted in R once per street, hour and age. `emis_speed()` compiles the
+curves and evaluates them in a C/OpenMP kernel.
+
+## 2. Local emission factors by age
+
+`ef_cetesb()` returns one emission factor per age. `full = TRUE` also gives the
+Euro equivalence standard of each age, which we need to pick the right curve.
 
 ```{r}
 library(vein)
-library(units)
 
-# local (CETESB) emission factors for passenger cars, 40 ages
 CO <- ef_cetesb(p = "CO", veh = "PC_G", year = 2018, agemax = 40, full = TRUE)
-
-# scale the EMEP/EEA curve so that at SDC = 34.12 km/h it gives the local EF
-lef <- ef_ldv_scaled(
-  dfcol = CO$CO,
-  v = "PC", t = "4S", cc = "<=1400", f = "G",
-  eu = CO$EqEuro_PC, p = "CO"
-)
-length(lef)
+head(CO[, c("Age", "Year", "Proconve_PC", "EqEuro_PC", "CO")], 8)
 ```
 
-## Running the inventory
+More than one call to `ef_cetesb()` with the same `year`/`scale` is cheap: the
+large, pollutant-independent CETESB table is cached internally.
 
-`emis_speed()` needs the vehicle flow by age (`veh`), the link lengths (`lkm`),
-the number of hours and speeds. It returns the emissions by street and hour and,
-optionally, the totals by age and hour.
+## 3. Scaling a curve to the driving cycle (SDC)
+
+`ef_ldv_scaled()` (light vehicles) and `ef_hdv_scaled()` (heavy vehicles
+and buses) return one function per age. Each function is
+`EF_a(V) = k_a * curve_a(V)` where `k_a = EF_local[a] / curve_a(SDC)`, so that
+at the driving-cycle speed `SDC` we recover the local factor exactly.
 
 ```{r}
-S <- 200 # streets
-A <- 40  # ages
-H <- 24  # hours
-
-veh <- matrix(100, nrow = S, ncol = A)
-lkm <- set_units(rep(1, S), "km")
-speed <- Speed(matrix(rep(c(10, 30, 50, 80), length.out = S * H), S, H))
-profile <- matrix(1, 24, 1)
-
-E <- emis_speed(
-  veh = veh,
-  lkm = lkm,
-  ef = lef,
-  speed = speed,
-  profile = profile,
-  by_age = TRUE,
-  nt = 2
+lef <- ef_ldv_scaled(
+  dfcol = CO$CO, SDC = 34.12,
+  v = "PC", t = "4S", cc = "<=1400", f = "G", eu = CO$EqEuro_PC, p = "CO"
 )
 
-# emissions by street and hour
-dim(E$streets)
-# total emissions by age and hour
-dim(E$veh)
-round(sum(E$streets), 1)
+length(lef) # one function per age
+# at the driving-cycle speed the scaled function equals the local factor
+c(local = as.numeric(CO$CO[1]), scaled = as.numeric(lef[[1]](34.12)))
 ```
 
-The result is equivalent to the reference implementation `emis()` (to machine
-precision) but considerably faster, which makes country-scale hourly
-inventories feasible. The detailed workflow, with CETESB emission factors and a
-168 h week, is implemented in the `brazil_bu_speed` project:
+Once scaled, the factor depends on speed. Ages with a newer Euro standard have a
+different curve, so the shape also changes with age:
+
+```{r}
+V <- seq(0, 130, by = 10)
+round(sapply(c(1, 10, 20, 40), function(a) as.numeric(lef[[a]](V))), 3)
+```
+
+## 4. What `emis_speed()` consumes: compiled programs
+
+Evaluating R closures for millions of street-hours is slow. Instead we compile
+each curve to a tiny stack machine and **group the ages that share the same
+equation**. `programs_only = TRUE` returns just that bundle.
+
+```{r}
+prog <- ef_ldv_scaled(
+  dfcol = CO$CO, SDC = 34.12,
+  v = "PC", t = "4S", cc = "<=1400", f = "G", eu = CO$EqEuro_PC, p = "CO",
+  programs_only = TRUE
+)
+class(prog)
+c(ages = prog$n, groups = prog$G) # 40 ages collapse into a few equations
+str(prog, max.level = 1)
+```
+
+The important fields:
+
+- `code`, `consts`: the RPN bytecode of each distinct equation.
+- `cofs`, `minv`, `maxv`: coefficients `a..f` and the speed clamp per group.
+- `gid`: for each age, which group (equation) it uses.
+- `kk_age`: the per-age scaling constant `k_a`.
+
+## 5. Speeds per street and hour
+
+Emissions need a speed for each link and each hour of the week. `temp_fact()`
+expands the traffic flow with a temporal profile and `netspeed()` turns flow
+into speed with a BPR function.
+
+```{r}
+data(net)
+data(pc_profile)
+
+total <- net$ldv + net$hdv
+flow  <- temp_fact(total, pc_profile)                                  # 168 h
+speed <- netspeed(flow, net$ps, net$ffs, net$capacity, net$lkm, alpha = 1)
+dim(speed) # streets x (24 h * 7 days)
+```
+
+## 6. Running the inventory
+
+`veh` is a matrix of vehicle flow (veh/h) by street (rows) and age (columns).
+`emis_speed()` returns the emissions by **street x hour** and, with
+`by_age = TRUE`, the totals by **age x hour**.
+
+```{r}
+A <- 40
+veh <- matrix(as.numeric(net$ldv) / A, nrow = nrow(net), ncol = A)
+
+E <- emis_speed(
+  veh = veh, lkm = net$lkm, ef = lef,
+  speed = speed, profile = pc_profile,
+  by_age = TRUE, nt = 2
+)
+
+dim(E$streets) # streets x hours
+dim(E$veh)     # ages x hours
+sum(E$streets) # grams per hour over the network
+```
+
+The units of `E$streets` are g/h because `veh` is veh/h, `lkm` is km and the
+emission factor is g/km.
+
+## 7. It matches the reference implementation
+
+`emis_speed()` is a drop-in replacement for the speed branch of `emis()`; the
+results agree to machine precision.
+
+```{r}
+Eref <- emis(
+  veh = veh, lkm = net$lkm, ef = lef,
+  speed = speed, profile = pc_profile,
+  simplify = TRUE, agemax = A
+)
+
+max(abs(apply(Eref, c(1, 3), sum) - E$streets))
+```
+
+## 8. Under the hood
+
+1. **Compile.** Each `Y` equation in `sysdata$ldv` / `sysdata$hdv_*` is parsed
+   once into RPN bytecode (`compile_ef_expr()`); the result is cached.
+2. **Group.** Ages with identical equation and coefficients (usually several
+   years within one Euro standard) are merged, so a curve is evaluated once per
+   street-hour instead of once per age. For this example the 40 ages need only
+   `r prog$G` equations.
+3. **Evaluate.** `src/e_speed.c` runs the bytecode in a tight OpenMP loop and
+   accumulates the totals directly, never materialising the full
+   street x age x hour array.
+
+A quick timing comparison:
+
+```{r}
+S <- 1000
+vh <- matrix(50, S, A)
+sp <- Speed(matrix(40, S, H <- 168))
+pf <- matrix(1, 24, 7)
+lkm1 <- units::set_units(rep(1, S), "km")
+
+t_ref <- system.time(
+  E1 <- emis(veh = vh, lkm = lkm1, ef = lef, speed = sp, profile = pf,
+             simplify = TRUE, agemax = A)
+)["elapsed"]
+t_new <- system.time(
+  E2 <- emis_speed(veh = vh, lkm = lkm1, ef = lef, speed = sp, profile = pf,
+                   agemax = A, nt = 2)
+)["elapsed"]
+round(c(emis = t_ref, emis_speed = t_new), 3)
+```
+
+## 9. Country-scale workflow: the `brazil_bu_speed` project
+
+The complete workflow is packaged as a project you can download and run:
 
 ```{r, eval = FALSE}
 get_project(directory = tempdir(), case = "brazil_bu_speed")
 ```
+
+Key files:
+
+- `config/ef_speed_mapping.R` maps every CETESB category (e.g. `TRUCKS_M_D`)
+  to an EMEP/EEA category (`v`, `t`, `cc`/`g`, `f`) and the Euro column of
+  `ef_cetesb()`. It also defines `ef_cetesb_speed()`, the scaled-EF builder.
+- `scripts/speed.R` computes the 168 hourly speeds with `netspeed()`.
+- `scripts/exhaust_speed.R` loops over categories and pollutants, runs
+  `emis_speed()` and falls back to a constant emission factor when no EMEP
+  curve applies.
+- `scripts/post_speed.R` grids the hourly street emissions and writes totals.
+
+## 10. Tips and pitfalls
+
+- **Not every curve is usable.** For some pollutant/Euro combinations the EMEP
+  curve is zero at `SDC` (for example pre-Euro PM), so the scaling constant is
+  not finite. `emis_speed()` stops with a clear message; the project detects
+  this and uses the constant CETESB factor instead.
+- **Threads.** `nt` controls OpenMP threads. The default is half of
+  `check_nt()`, which works well when R and the kernel must share the machine.
+- **Memory.** For huge networks the per-street result is only
+  `streets x hours` (e.g. 200 000 x 168 is about 270 MB), because ages are
+  summed in C. Ask for `by_age = TRUE` to also get the small `ages x hours`
+  totals.
+- **Speed layout.** The columns of `speed` must match the flattened
+  `profile` (hours of day 1, then day 2, ...). `temp_fact()` produces this order.

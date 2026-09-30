@@ -49,7 +49,9 @@ sharing the same equation are grouped, so each curve is evaluated once
 per street-hour. The result matches `emis()` to machine precision and is
 6-17 times faster on a laptop, which makes country-scale hourly
 inventories (hundreds of thousands of links) feasible. See the
-`brazil_bu_speed` project.
+`brazil_bu_speed` project and the step-by-step article [Understanding
+speed-dependent inventories with
+emis_speed](https://atmoschem.github.io/vein/articles/speed.html).
 
 ### TODO
 
@@ -92,10 +94,10 @@ library(vein)
 ``` r
 awesome_city <- tempdir()
 awesome_city
-#> [1] "/tmp/RtmpN51fAu"
+#> [1] "/tmp/RtmpQ9FRLO"
 get_project(directory = awesome_city,
 case = "brazil_bu_chem")
-#> Your directory is in /tmp/RtmpN51fAu
+#> Your directory is in /tmp/RtmpQ9FRLO
 ```
 
 ``` r

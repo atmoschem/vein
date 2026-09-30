@@ -45,6 +45,16 @@
 #' }))) -> df
 #' names(df) <- ages
 #' colplot(df)
+#'
+#' # programs_only = TRUE skips the R functions and returns the compiled
+#' # speed programs used by emis_speed()
+#' prog <- ef_hdv_scaled(dfcol = CO$CO,
+#'                       v = "Trucks", t = "RT", g = "<=7.5",
+#'                       eu = CO$Euro_EqHDV, gr = 0, l = 0.5, p = "CO",
+#'                       programs_only = TRUE)
+#' class(prog)   # "speed_programs"
+#' prog$n        # ages
+#' prog$G        # distinct equations after grouping
 #' }
 ef_hdv_scaled <- function(df,
                           dfcol,

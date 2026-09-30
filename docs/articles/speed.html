@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Speed-dependent emissions with emis_speed • vein</title>
+<title>Understanding speed-dependent inventories with emis_speed • vein</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="48x48" href="../favicon-48x48.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Speed-dependent emissions with emis_speed">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Understanding speed-dependent inventories with emis_speed">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -78,7 +78,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Speed-dependent emissions with emis_speed</h1>
+      <h1 data-toc-skip>Understanding speed-dependent inventories with
+emis_speed</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/atmoschem/vein/blob/HEAD/vignettes/speed.Rmd" class="external-link"><code>vignettes/speed.Rmd</code></a></small>
@@ -88,86 +89,293 @@
 
     
     
+<p>This article explains, step by step, how VEIN builds an hourly,
+per-street inventory with <strong>speed-dependent</strong> emission
+factors, and how <code><a href="../reference/emis_speed.html">emis_speed()</a></code> makes it fast enough for
+country-scale networks. Every chunk runs; you can copy and paste
+them.</p>
 <div class="section level2">
-<h2 id="why-speed-dependent-emission-factors">Why speed-dependent emission factors?<a class="anchor" aria-label="anchor" href="#why-speed-dependent-emission-factors"></a>
+<h2 id="the-idea">1. The idea<a class="anchor" aria-label="anchor" href="#the-idea"></a>
 </h2>
-<p>Local emission factors (for instance the CETESB values used in
-Brazil) are usually measured over a driving cycle and reported as a
-single number per age. The EMEP/EEA guidebook provides <strong>speed
-curves</strong> for the same technologies. <code><a href="../reference/ef_ldv_scaled.html">ef_ldv_scaled()</a></code>
-and <code><a href="../reference/ef_hdv_scaled.html">ef_hdv_scaled()</a></code> combine both: the EMEP/EEA curve gives
-the shape as a function of the average speed, and it is rescaled so that
-at the speed of the local driving cycle (SDC) it reproduces the local
-emission factor.</p>
-<p>Estimating an inventory for many streets and hours with these curves
-used to be very slow, because the R equations were interpreted once per
-street, hour and age. <code><a href="../reference/emis_speed.html">emis_speed()</a></code> compiles the equations
-to a tiny stack machine and evaluates them in an OpenMP C kernel
-(<code>src/e_speed.c</code>), grouping the ages that share the same
-equation.</p>
+<p>A local emission factor (for example the CETESB factors used in
+Brazil) is a single number per vehicle age, measured over a driving
+cycle. Real emissions depend on the average speed of the link. The
+EMEP/EEA guidebook provides <em>speed curves</em> for the same
+technologies. VEIN combines both: the EMEP/EEA curve gives the
+<strong>shape</strong> as a function of speed, rescaled so that at the
+speed of the local driving cycle it reproduces the
+<strong>local</strong> emission factor.</p>
+<p>Doing this for every street and every hour used to be slow because
+the curve was interpreted in R once per street, hour and age.
+<code><a href="../reference/emis_speed.html">emis_speed()</a></code> compiles the curves and evaluates them in a
+C/OpenMP kernel.</p>
 </div>
 <div class="section level2">
-<h2 id="scaling-a-local-emission-factor-by-speed">Scaling a local emission factor by speed<a class="anchor" aria-label="anchor" href="#scaling-a-local-emission-factor-by-speed"></a>
+<h2 id="local-emission-factors-by-age">2. Local emission factors by age<a class="anchor" aria-label="anchor" href="#local-emission-factors-by-age"></a>
 </h2>
+<p><code><a href="../reference/ef_cetesb.html">ef_cetesb()</a></code> returns one emission factor per age.
+<code>full = TRUE</code> also gives the Euro equivalence standard of
+each age, which we need to pick the right curve.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/atmoschem/vein" class="external-link">vein</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-quantities.github.io/units/" class="external-link">units</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; udunits database from /usr/share/xml/udunits/udunits2.xml</span></span>
 <span></span>
-<span><span class="co"># local (CETESB) emission factors for passenger cars, 40 ages</span></span>
 <span><span class="va">CO</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ef_cetesb.html">ef_cetesb</a></span><span class="op">(</span>p <span class="op">=</span> <span class="st">"CO"</span>, veh <span class="op">=</span> <span class="st">"PC_G"</span>, year <span class="op">=</span> <span class="fl">2018</span>, agemax <span class="op">=</span> <span class="fl">40</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># scale the EMEP/EEA curve so that at SDC = 34.12 km/h it gives the local EF</span></span>
-<span><span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ef_ldv_scaled.html">ef_ldv_scaled</a></span><span class="op">(</span></span>
-<span>  dfcol <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">CO</span>,</span>
-<span>  v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>,</span>
-<span>  eu <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">EqEuro_PC</span>, p <span class="op">=</span> <span class="st">"CO"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lef</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 40</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">CO</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Age"</span>, <span class="st">"Year"</span>, <span class="st">"Proconve_PC"</span>, <span class="st">"EqEuro_PC"</span>, <span class="st">"CO"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      Age Year Proconve_PC EqEuro_PC           CO</span></span>
+<span><span class="co">#&gt; 1051   3 2018          L6         V 0.173 [g/km]</span></span>
+<span><span class="co">#&gt; 1052   4 2017          L6         V 0.141 [g/km]</span></span>
+<span><span class="co">#&gt; 1053   5 2016          L6         V 0.114 [g/km]</span></span>
+<span><span class="co">#&gt; 1054   6 2015          L6         V 0.155 [g/km]</span></span>
+<span><span class="co">#&gt; 1055   7 2014          L5        IV 0.211 [g/km]</span></span>
+<span><span class="co">#&gt; 1056   8 2013          L5        IV 0.241 [g/km]</span></span>
+<span><span class="co">#&gt; 1057   9 2012          L5        IV 0.274 [g/km]</span></span>
+<span><span class="co">#&gt; 1058  10 2011          L5       III 0.274 [g/km]</span></span></code></pre></div>
+<p>More than one call to <code><a href="../reference/ef_cetesb.html">ef_cetesb()</a></code> with the same
+<code>year</code>/<code>scale</code> is cheap: the large,
+pollutant-independent CETESB table is cached internally.</p>
 </div>
 <div class="section level2">
-<h2 id="running-the-inventory">Running the inventory<a class="anchor" aria-label="anchor" href="#running-the-inventory"></a>
+<h2 id="scaling-a-curve-to-the-driving-cycle-sdc">3. Scaling a curve to the driving cycle (SDC)<a class="anchor" aria-label="anchor" href="#scaling-a-curve-to-the-driving-cycle-sdc"></a>
 </h2>
-<p><code><a href="../reference/emis_speed.html">emis_speed()</a></code> needs the vehicle flow by age
-(<code>veh</code>), the link lengths (<code>lkm</code>), the number of
-hours and speeds. It returns the emissions by street and hour and,
-optionally, the totals by age and hour.</p>
+<p><code><a href="../reference/ef_ldv_scaled.html">ef_ldv_scaled()</a></code> (light vehicles) and
+<code><a href="../reference/ef_hdv_scaled.html">ef_hdv_scaled()</a></code> (heavy vehicles and buses) return one
+function per age. Each function is
+<code>EF_a(V) = k_a * curve_a(V)</code> where
+<code>k_a = EF_local[a] / curve_a(SDC)</code>, so that at the
+driving-cycle speed <code>SDC</code> we recover the local factor
+exactly.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fl">200</span> <span class="co"># streets</span></span>
-<span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fl">40</span>  <span class="co"># ages</span></span>
-<span><span class="va">H</span> <span class="op">&lt;-</span> <span class="fl">24</span>  <span class="co"># hours</span></span>
-<span></span>
-<span><span class="va">veh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">100</span>, nrow <span class="op">=</span> <span class="va">S</span>, ncol <span class="op">=</span> <span class="va">A</span><span class="op">)</span></span>
-<span><span class="va">lkm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">S</span><span class="op">)</span>, <span class="st">"km"</span><span class="op">)</span></span>
-<span><span class="va">speed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">30</span>, <span class="fl">50</span>, <span class="fl">80</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="va">S</span> <span class="op">*</span> <span class="va">H</span><span class="op">)</span>, <span class="va">S</span>, <span class="va">H</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">24</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">E</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emis_speed.html">emis_speed</a></span><span class="op">(</span></span>
-<span>  veh <span class="op">=</span> <span class="va">veh</span>,</span>
-<span>  lkm <span class="op">=</span> <span class="va">lkm</span>,</span>
-<span>  ef <span class="op">=</span> <span class="va">lef</span>,</span>
-<span>  speed <span class="op">=</span> <span class="va">speed</span>,</span>
-<span>  profile <span class="op">=</span> <span class="va">profile</span>,</span>
-<span>  by_age <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  nt <span class="op">=</span> <span class="fl">2</span></span>
+<code class="sourceCode R"><span><span class="va">lef</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ef_ldv_scaled.html">ef_ldv_scaled</a></span><span class="op">(</span></span>
+<span>  dfcol <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">CO</span>, SDC <span class="op">=</span> <span class="fl">34.12</span>,</span>
+<span>  v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">EqEuro_PC</span>, p <span class="op">=</span> <span class="st">"CO"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># emissions by street and hour</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">E</span><span class="op">$</span><span class="va">streets</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 200  24</span></span>
-<span><span class="co"># total emissions by age and hour</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">E</span><span class="op">$</span><span class="va">veh</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 40 24</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">E</span><span class="op">$</span><span class="va">streets</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 200577240</span></span></code></pre></div>
-<p>The result is equivalent to the reference implementation
-<code><a href="../reference/emis.html">emis()</a></code> (to machine precision) but considerably faster,
-which makes country-scale hourly inventories feasible. The detailed
-workflow, with CETESB emission factors and a 168 h week, is implemented
-in the <code>brazil_bu_speed</code> project:</p>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lef</span><span class="op">)</span> <span class="co"># one function per age</span></span>
+<span><span class="co">#&gt; [1] 40</span></span>
+<span><span class="co"># at the driving-cycle speed the scaled function equals the local factor</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>local <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">CO</span><span class="op">$</span><span class="va">CO</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, scaled <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">lef</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="fl">34.12</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  local scaled </span></span>
+<span><span class="co">#&gt;  0.173  0.173</span></span></code></pre></div>
+<p>Once scaled, the factor depends on speed. Ages with a newer Euro
+standard have a different curve, so the shape also changes with age:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">130</span>, by <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">40</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">a</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">lef</span><span class="op">[[</span><span class="va">a</span><span class="op">]</span><span class="op">]</span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        [,1]  [,2]  [,3]   [,4]</span></span>
+<span><span class="co">#&gt;  [1,] 0.190 0.224 1.906 71.501</span></span>
+<span><span class="co">#&gt;  [2,] 0.190 0.224 1.906 71.501</span></span>
+<span><span class="co">#&gt;  [3,] 0.162 0.195 1.072 46.202</span></span>
+<span><span class="co">#&gt;  [4,] 0.167 0.196 0.802 35.787</span></span>
+<span><span class="co">#&gt;  [5,] 0.182 0.206 0.678 29.855</span></span>
+<span><span class="co">#&gt;  [6,] 0.195 0.222 0.616 25.939</span></span>
+<span><span class="co">#&gt;  [7,] 0.202 0.244 0.591 23.125</span></span>
+<span><span class="co">#&gt;  [8,] 0.207 0.274 0.591 20.984</span></span>
+<span><span class="co">#&gt;  [9,] 0.222 0.314 0.615 19.291</span></span>
+<span><span class="co">#&gt; [10,] 0.262 0.370 0.670 17.912</span></span>
+<span><span class="co">#&gt; [11,] 0.346 0.454 0.769 16.846</span></span>
+<span><span class="co">#&gt; [12,] 0.500 0.589 0.954 18.062</span></span>
+<span><span class="co">#&gt; [13,] 0.746 0.844 1.351 19.277</span></span>
+<span><span class="co">#&gt; [14,] 1.113 1.500 2.645 20.493</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="what-emis_speed-consumes-compiled-programs">4. What <code>emis_speed()</code> consumes: compiled programs<a class="anchor" aria-label="anchor" href="#what-emis_speed-consumes-compiled-programs"></a>
+</h2>
+<p>Evaluating R closures for millions of street-hours is slow. Instead
+we compile each curve to a tiny stack machine and <strong>group the ages
+that share the same equation</strong>. <code>programs_only = TRUE</code>
+returns just that bundle.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prog</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ef_ldv_scaled.html">ef_ldv_scaled</a></span><span class="op">(</span></span>
+<span>  dfcol <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">CO</span>, SDC <span class="op">=</span> <span class="fl">34.12</span>,</span>
+<span>  v <span class="op">=</span> <span class="st">"PC"</span>, t <span class="op">=</span> <span class="st">"4S"</span>, cc <span class="op">=</span> <span class="st">"&lt;=1400"</span>, f <span class="op">=</span> <span class="st">"G"</span>, eu <span class="op">=</span> <span class="va">CO</span><span class="op">$</span><span class="va">EqEuro_PC</span>, p <span class="op">=</span> <span class="st">"CO"</span>,</span>
+<span>  programs_only <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">prog</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "speed_programs"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>ages <span class="op">=</span> <span class="va">prog</span><span class="op">$</span><span class="va">n</span>, groups <span class="op">=</span> <span class="va">prog</span><span class="op">$</span><span class="va">G</span><span class="op">)</span> <span class="co"># 40 ages collapse into a few equations</span></span>
+<span><span class="co">#&gt;   ages groups </span></span>
+<span><span class="co">#&gt;     40      6</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">prog</span>, max.level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 13</span></span>
+<span><span class="co">#&gt;  $ n     : int 40</span></span>
+<span><span class="co">#&gt;  $ G     : int 6</span></span>
+<span><span class="co">#&gt;  $ gid   : int [1:40] 0 0 0 0 1 1 1 2 2 2 ...</span></span>
+<span><span class="co">#&gt;  $ kk_age: num [1:40] 0.71 0.578 0.468 0.636 1.153 ...</span></span>
+<span><span class="co">#&gt;  $ code  : int [1:152] 10 17 1 0 24 22 11 17 1 1 ...</span></span>
+<span><span class="co">#&gt;  $ clen  : int [1:6] 33 26 26 26 26 15</span></span>
+<span><span class="co">#&gt;  $ consts: num [1:17] 5 4 3 2 2 1 2 2 1 2 ...</span></span>
+<span><span class="co">#&gt;  $ soff  : int [1:6] 0 4 7 10 13 16</span></span>
+<span><span class="co">#&gt;  $ cofs  : num [1:36] -1.35e-10 7.86e-08 -1.22e-05 7.75e-04 -1.97e-02 3.98e-01 1.36e-01 -1.41e-02 -8.91e-04 4.99e-05 ...</span></span>
+<span><span class="co">#&gt;  $ x     : num [1:6] 0 0 0 0 0 0</span></span>
+<span><span class="co">#&gt;  $ minv  : num [1:6] 10 10 10 10 10 10</span></span>
+<span><span class="co">#&gt;  $ maxv  : num [1:6] 130 130 130 130 130 130</span></span>
+<span><span class="co">#&gt;  $ progs :List of 40</span></span>
+<span><span class="co">#&gt;  - attr(*, "class")= chr "speed_programs"</span></span></code></pre></div>
+<p>The important fields:</p>
+<ul>
+<li>
+<code>code</code>, <code>consts</code>: the RPN bytecode of each
+distinct equation.</li>
+<li>
+<code>cofs</code>, <code>minv</code>, <code>maxv</code>:
+coefficients <code>a..f</code> and the speed clamp per group.</li>
+<li>
+<code>gid</code>: for each age, which group (equation) it uses.</li>
+<li>
+<code>kk_age</code>: the per-age scaling constant
+<code>k_a</code>.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="speeds-per-street-and-hour">5. Speeds per street and hour<a class="anchor" aria-label="anchor" href="#speeds-per-street-and-hour"></a>
+</h2>
+<p>Emissions need a speed for each link and each hour of the week.
+<code><a href="../reference/temp_fact.html">temp_fact()</a></code> expands the traffic flow with a temporal
+profile and <code><a href="../reference/netspeed.html">netspeed()</a></code> turns flow into speed with a BPR
+function.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">pc_profile</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">total</span> <span class="op">&lt;-</span> <span class="va">net</span><span class="op">$</span><span class="va">ldv</span> <span class="op">+</span> <span class="va">net</span><span class="op">$</span><span class="va">hdv</span></span>
+<span><span class="va">flow</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temp_fact.html">temp_fact</a></span><span class="op">(</span><span class="va">total</span>, <span class="va">pc_profile</span><span class="op">)</span>                                  <span class="co"># 168 h</span></span>
+<span><span class="va">speed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/netspeed.html">netspeed</a></span><span class="op">(</span><span class="va">flow</span>, <span class="va">net</span><span class="op">$</span><span class="va">ps</span>, <span class="va">net</span><span class="op">$</span><span class="va">ffs</span>, <span class="va">net</span><span class="op">$</span><span class="va">capacity</span>, <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">speed</span><span class="op">)</span> <span class="co"># streets x (24 h * 7 days)</span></span>
+<span><span class="co">#&gt; [1] 1505  168</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="running-the-inventory">6. Running the inventory<a class="anchor" aria-label="anchor" href="#running-the-inventory"></a>
+</h2>
+<p><code>veh</code> is a matrix of vehicle flow (veh/h) by street (rows)
+and age (columns). <code><a href="../reference/emis_speed.html">emis_speed()</a></code> returns the emissions by
+<strong>street x hour</strong> and, with <code>by_age = TRUE</code>, the
+totals by <strong>age x hour</strong>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">A</span> <span class="op">&lt;-</span> <span class="fl">40</span></span>
+<span><span class="va">veh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">net</span><span class="op">$</span><span class="va">ldv</span><span class="op">)</span> <span class="op">/</span> <span class="va">A</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">net</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="va">A</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">E</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emis_speed.html">emis_speed</a></span><span class="op">(</span></span>
+<span>  veh <span class="op">=</span> <span class="va">veh</span>, lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, ef <span class="op">=</span> <span class="va">lef</span>,</span>
+<span>  speed <span class="op">=</span> <span class="va">speed</span>, profile <span class="op">=</span> <span class="va">pc_profile</span>,</span>
+<span>  by_age <span class="op">=</span> <span class="cn">TRUE</span>, nt <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">E</span><span class="op">$</span><span class="va">streets</span><span class="op">)</span> <span class="co"># streets x hours</span></span>
+<span><span class="co">#&gt; [1] 1505  168</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">E</span><span class="op">$</span><span class="va">veh</span><span class="op">)</span>     <span class="co"># ages x hours</span></span>
+<span><span class="co">#&gt; [1]  40 168</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">E</span><span class="op">$</span><span class="va">streets</span><span class="op">)</span> <span class="co"># grams per hour over the network</span></span>
+<span><span class="co">#&gt; [1] 795654179</span></span></code></pre></div>
+<p>The units of <code>E$streets</code> are g/h because <code>veh</code>
+is veh/h, <code>lkm</code> is km and the emission factor is g/km.</p>
+</div>
+<div class="section level2">
+<h2 id="it-matches-the-reference-implementation">7. It matches the reference implementation<a class="anchor" aria-label="anchor" href="#it-matches-the-reference-implementation"></a>
+</h2>
+<p><code><a href="../reference/emis_speed.html">emis_speed()</a></code> is a drop-in replacement for the speed
+branch of <code><a href="../reference/emis.html">emis()</a></code>; the results agree to machine
+precision.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Eref</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emis.html">emis</a></span><span class="op">(</span></span>
+<span>  veh <span class="op">=</span> <span class="va">veh</span>, lkm <span class="op">=</span> <span class="va">net</span><span class="op">$</span><span class="va">lkm</span>, ef <span class="op">=</span> <span class="va">lef</span>,</span>
+<span>  speed <span class="op">=</span> <span class="va">speed</span>, profile <span class="op">=</span> <span class="va">pc_profile</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">TRUE</span>, agemax <span class="op">=</span> <span class="va">A</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">Eref</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span> <span class="op">-</span> <span class="va">E</span><span class="op">$</span><span class="va">streets</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.047738e-09</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="under-the-hood">8. Under the hood<a class="anchor" aria-label="anchor" href="#under-the-hood"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Compile.</strong> Each <code>Y</code> equation in
+<code>sysdata$ldv</code> / <code>sysdata$hdv_*</code> is parsed once
+into RPN bytecode (<code>compile_ef_expr()</code>); the result is
+cached.</li>
+<li>
+<strong>Group.</strong> Ages with identical equation and
+coefficients (usually several years within one Euro standard) are
+merged, so a curve is evaluated once per street-hour instead of once per
+age. For this example the 40 ages need only 6 equations.</li>
+<li>
+<strong>Evaluate.</strong> <code>src/e_speed.c</code> runs the
+bytecode in a tight OpenMP loop and accumulates the totals directly,
+never materialising the full street x age x hour array.</li>
+</ol>
+<p>A quick timing comparison:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
+<span><span class="va">vh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">50</span>, <span class="va">S</span>, <span class="va">A</span><span class="op">)</span></span>
+<span><span class="va">sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Speed.html">Speed</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">40</span>, <span class="va">S</span>, <span class="va">H</span> <span class="op">&lt;-</span> <span class="fl">168</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">24</span>, <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="va">lkm1</span> <span class="op">&lt;-</span> <span class="fu">units</span><span class="fu">::</span><span class="fu"><a href="https://r-quantities.github.io/units/reference/units.html" class="external-link">set_units</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">S</span><span class="op">)</span>, <span class="st">"km"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">t_ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
+<span>  <span class="va">E1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emis.html">emis</a></span><span class="op">(</span>veh <span class="op">=</span> <span class="va">vh</span>, lkm <span class="op">=</span> <span class="va">lkm1</span>, ef <span class="op">=</span> <span class="va">lef</span>, speed <span class="op">=</span> <span class="va">sp</span>, profile <span class="op">=</span> <span class="va">pf</span>,</span>
+<span>             simplify <span class="op">=</span> <span class="cn">TRUE</span>, agemax <span class="op">=</span> <span class="va">A</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span></span>
+<span><span class="va">t_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span></span>
+<span>  <span class="va">E2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/emis_speed.html">emis_speed</a></span><span class="op">(</span>veh <span class="op">=</span> <span class="va">vh</span>, lkm <span class="op">=</span> <span class="va">lkm1</span>, ef <span class="op">=</span> <span class="va">lef</span>, speed <span class="op">=</span> <span class="va">sp</span>, profile <span class="op">=</span> <span class="va">pf</span>,</span>
+<span>                   agemax <span class="op">=</span> <span class="va">A</span>, nt <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">[</span><span class="st">"elapsed"</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>emis <span class="op">=</span> <span class="va">t_ref</span>, emis_speed <span class="op">=</span> <span class="va">t_new</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       emis.elapsed emis_speed.elapsed </span></span>
+<span><span class="co">#&gt;              1.100              0.058</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="country-scale-workflow-the-brazil_bu_speed-project">9. Country-scale workflow: the <code>brazil_bu_speed</code>
+project<a class="anchor" aria-label="anchor" href="#country-scale-workflow-the-brazil_bu_speed-project"></a>
+</h2>
+<p>The complete workflow is packaged as a project you can download and
+run:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_project.html">get_project</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, case <span class="op">=</span> <span class="st">"brazil_bu_speed"</span><span class="op">)</span></span></code></pre></div>
+<p>Key files:</p>
+<ul>
+<li>
+<code>config/ef_speed_mapping.R</code> maps every CETESB category
+(e.g. <code>TRUCKS_M_D</code>) to an EMEP/EEA category (<code>v</code>,
+<code>t</code>, <code>cc</code>/<code>g</code>, <code>f</code>) and the
+Euro column of <code><a href="../reference/ef_cetesb.html">ef_cetesb()</a></code>. It also defines
+<code>ef_cetesb_speed()</code>, the scaled-EF builder.</li>
+<li>
+<code>scripts/speed.R</code> computes the 168 hourly speeds with
+<code><a href="../reference/netspeed.html">netspeed()</a></code>.</li>
+<li>
+<code>scripts/exhaust_speed.R</code> loops over categories and
+pollutants, runs <code><a href="../reference/emis_speed.html">emis_speed()</a></code> and falls back to a constant
+emission factor when no EMEP curve applies.</li>
+<li>
+<code>scripts/post_speed.R</code> grids the hourly street emissions
+and writes totals.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="tips-and-pitfalls">10. Tips and pitfalls<a class="anchor" aria-label="anchor" href="#tips-and-pitfalls"></a>
+</h2>
+<ul>
+<li>
+<strong>Not every curve is usable.</strong> For some pollutant/Euro
+combinations the EMEP curve is zero at <code>SDC</code> (for example
+pre-Euro PM), so the scaling constant is not finite.
+<code><a href="../reference/emis_speed.html">emis_speed()</a></code> stops with a clear message; the project
+detects this and uses the constant CETESB factor instead.</li>
+<li>
+<strong>Threads.</strong> <code>nt</code> controls OpenMP threads.
+The default is half of <code><a href="../reference/check_nt.html">check_nt()</a></code>, which works well when R
+and the kernel must share the machine.</li>
+<li>
+<strong>Memory.</strong> For huge networks the per-street result is
+only <code>streets x hours</code> (e.g. 200 000 x 168 is about 270 MB),
+because ages are summed in C. Ask for <code>by_age = TRUE</code> to also
+get the small <code>ages x hours</code> totals.</li>
+<li>
+<strong>Speed layout.</strong> The columns of <code>speed</code>
+must match the flattened <code>profile</code> (hours of day 1, then day
+2, …). <code><a href="../reference/temp_fact.html">temp_fact()</a></code> produces this order.</li>
+</ul>
 </div>
   </div>
 
