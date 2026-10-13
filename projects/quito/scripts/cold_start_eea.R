@@ -1,7 +1,9 @@
 
+suppressWarnings(file.remove("emi/cold.csv"))
+
 # Escapamento ####
 switch(language,
-       "portuguese" = cat("Estimando emissões Cold Start\n"),
+       "portuguese" = cat("Estimando emisses Cold Start\n"),
        "english" = cat("Estimating emissions Cold Start\n"),
        "spanish" = cat("Estimando emisiones Cold Start\n")
 )
@@ -11,6 +13,29 @@ switch(language,
 
 metadata_cold <- metadata[metadata$fuel_eea_old %in% "G" &
                             metadata$v_eea_old %in% c("PC", "LCV"), ]
+
+# remove stale COLD_* files from vehicles without cold start ####
+cold_stale <- list.files(
+  path = "emi", pattern = "^COLD_", recursive = TRUE, full.names = TRUE
+)
+cold_stale <- cold_stale[
+  !basename(dirname(cold_stale)) %in% metadata_cold$vehicles
+]
+if (length(cold_stale) > 0) {
+  file.remove(cold_stale)
+  switch(
+    language,
+    "portuguese" = message(
+      "\nCOLD antigos removidos: ", length(cold_stale), "\n"
+    ),
+    "english" = message(
+      "\nStale COLD files removed: ", length(cold_stale), "\n"
+    ),
+    "spanish" = message(
+      "\nArchivos COLD antiguos eliminados: ", length(cold_stale), "\n"
+    )
+  )
+}
 
 for (i in seq_along(metadata_cold$vehicles)) {
   
@@ -42,7 +67,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
         )),
         cc = "<=1400",
         eu = cate[1:ncol(veh)], 
-        km = cumsum(mileage[[metadata$vehicles[i]]])))
+        km = cumsum(mileage[[metadata_cold$vehicles[i]]])))
     } else {
       efdet <- 1
     }
@@ -96,12 +121,12 @@ for (i in seq_along(metadata_cold$vehicles)) {
     ef$speed <- NULL
     
     if(IM) {
-      ok <- im_ok[[metadata$vehicles[i]]][1:ncol(veh)]
+      ok <- im_ok[[metadata_cold$vehicles[i]]][1:ncol(veh)]
       nok <- 1 - ok
-      if(pol == "CO")fim <- im_co[[metadata$vehicles[i]]][1:ncol(veh)]
-      if(pol %in% c("HC", "NMHC")) fim <- im_hc[[metadata$vehicles[i]]][1:ncol(veh)]
-      if(pol %in% c("NO", "NO2", "NOx")) fim <- im_nox[[metadata$vehicles[i]]][1:ncol(veh)]
-      if(pol %in% c("PM")) fim <- im_pm[[metadata$vehicles[i]]][1:ncol(veh)]
+      if(pol == "CO")fim <- im_co[[metadata_cold$vehicles[i]]][1:ncol(veh)]
+      if(pol %in% c("HC", "NMHC")) fim <- im_hc[[metadata_cold$vehicles[i]]][1:ncol(veh)]
+      if(pol %in% c("NO", "NO2", "NOx")) fim <- im_nox[[metadata_cold$vehicles[i]]][1:ncol(veh)]
+      if(pol %in% c("PM")) fim <- im_pm[[metadata_cold$vehicles[i]]][1:ncol(veh)]
       ef <- EmissionFactors(matrix(as.numeric(ef)*ok + as.numeric(ef)*fim*nok, nrow = 1))
     }
     
@@ -132,17 +157,17 @@ for (i in seq_along(metadata_cold$vehicles)) {
     
     x_ST <- emis_post(
       arra = array_x,
-      veh = metadata$vehicles[i],
-      size = metadata$size[i],
-      fuel = metadata$fuel[i],
+      veh = metadata_cold$vehicles[i],
+      size = metadata_cold$size[i],
+      fuel = metadata_cold$fuel[i],
       pollutant = pol[j],
-      type_emi = "Exhaust",
+      type_emi = "Cold",
       by = "streets"
     )
     
-    x_ST$fuel <- metadata$fuel[i]
+    x_ST$fuel <- metadata_cold$fuel[i]
     
-    fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/COLD_", pol[j], ".csv"), append = FALSE)
+    fwrite(x_ST, paste0("emi/", metadata_cold$vehicles[i], "/COLD_", pol[j], ".csv"), append = FALSE)
     
     
   }
@@ -150,7 +175,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
 
 
 switch(language,
-       "portuguese" = message("\nEmissões em: /emi/exhaust.csv:"),
+       "portuguese" = message("\nEmisses em: /emi/exhaust.csv:"),
        "english" = message("\nEmissions in: /emi/exhaust.csv"),
        "spanish" = message("\nEmisiones en: /emi/exhaust.csv")
 )

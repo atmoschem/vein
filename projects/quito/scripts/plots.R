@@ -1,7 +1,7 @@
 # check hours
 if (length(hours) > nrow(tfs)) {
   switch(language,
-         "portuguese" = stop("\nEscolhe um número de horas menor ou igual que numero de horas de tfs\n"),
+         "portuguese" = stop("\nEscolhe um nmero de horas menor ou igual que numero de horas de tfs\n"),
          "english" = stop("\nChoose a number of hours less than or equal to the number of hours of tfs\n"),
          "spanish" = stop("\nEscoje un numero de horas menor o igual que el numero de horas de tfs\n")
   )
@@ -260,7 +260,7 @@ for (i in seq_along(pole)) {
     geom_bar(stat = "identity", col = "black") +
     labs(
       y = "t/ano",
-      title = paste0(pol[i], ": ", tit)
+      title = paste0(pole[i], ": ", tit)
     ) +
     theme_bw()
   

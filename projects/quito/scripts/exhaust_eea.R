@@ -2,7 +2,7 @@ file.remove("emi/exhaust.csv")
 
 # Escapamento ####
 switch(language,
-       "portuguese" = cat("Estimando emissões\n"),
+       "portuguese" = cat("Estimando emisses\n"),
        "english" = cat("Estimating emissions\n"),
        "spanish" = cat("Estimando emisiones\n")
 )

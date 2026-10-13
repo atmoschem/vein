@@ -13,6 +13,7 @@ library(data.table) # faster data.frames
 sessionInfo()
 
 # 0 Configuration
+print("0 configuracion")
 language <- "spanish" # spanish portuguese english
 path <- "config/inventory_ecuador_2026.xlsx"
 readxl::excel_sheets(path)
@@ -32,21 +33,22 @@ im_co <- readxl::read_xlsx(path = path, sheet = "im_co")
 im_hc <- readxl::read_xlsx(path = path, sheet = "im_hc")
 im_nox <- readxl::read_xlsx(path = path, sheet = "im_nox")
 im_pm <- readxl::read_xlsx(path = path, sheet = "im_pm25")
-year <- 2025
+year <- 2024
 month <- 6
 agemax <- 40
 provincia <- "QU"
 col_region <- "UF" # esta columna debe estar presente en fuel y met
 scale <- "none"
 theme <- "black" # dark clean ing
-delete_directories <- TRUE
+delete_directories <- FALSE
 source("config/config.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 
 # 1) Network ####
+print("Network")
 net <- st_read("network/net_sumo_v2.gpkg")
-net <- net[1:100, ]
+#net <- net[1:100, ]
 crs <- 31986
 categories <- c(
   "pc",
@@ -64,13 +66,14 @@ rm(list = ls())
 gc()
 
 # 2) Traffic ####
+print("traffic")
 language <- "spanish" # english spanish portuguese
 net <- readRDS("network/net.rds")
 metadata <- readRDS("config/metadata.rds")
 categories <- c("pc", "lcv", "trucks", "bus", "mc") # in network/net.gpkg
 veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
-year <- 2025
+year <- 2024
 theme <- "black" # dark clean ink
 k_D <- 1
 k_G <- 1
@@ -85,6 +88,7 @@ rm(list = ls())
 gc()
 
 # 3) Estimation ####
+print("Estimacin de consumo de combustible")
 language <- "spanish" # english spanish portuguese
 tfs <- readRDS("config/tfs.rds")
 metadata <- readRDS("config/metadata.rds")
@@ -96,7 +100,7 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 speed <- readRDS("network/speed.rds")
 verbose <- FALSE
-year <- 2025
+year <- 2024
 remove_fuel <- c("ELEC", "HY")
 
 # fuel calibration with fuel consumption data
@@ -109,6 +113,7 @@ rm(list = ls())
 gc()
 
 # Exhaust ####
+print("Tubo de escape caliente")
 language <- "spanish" # english spanish portuguese
 metadata <- readRDS("config/metadata.rds")
 tfs <- readRDS("config/tfs.rds")
@@ -121,8 +126,8 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
-year <- 2025
-nt <- 2 # check_nt() / 2
+year <- 2024
+nt <- 32 # check_nt() / 2
 remove_fuel <- c("ELEC", "HY", "GLP")
 
 IM <- FALSE
@@ -157,6 +162,7 @@ rm(list = ls())
 gc()
 
 # Evaporatives ####
+print("Evaporativas")
 language <- "spanish" # english spanish portuguese
 # provincia <- "PI"
 metadata <- readRDS("config/metadata.rds")
@@ -169,7 +175,7 @@ tfs <- readRDS("config/tfs.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
-year <- 2025
+year <- 2024
 source("scripts/evaporatives_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
@@ -196,6 +202,7 @@ rm(list = ls())
 gc()
 
 # Wear ####
+print("desgaste de frenos y neumaticos")
 language <- "spanish" # english spanish portuguese
 # provincia <- "PI"
 # provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
@@ -210,35 +217,45 @@ tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 tfs <- readRDS("config/tfs.rds")
 verbose <- FALSE
-year <- 2025
-nt <- 1 # check_nt() / 2
+year <- 2024
+nt <- 32 # check_nt() / 2
 source("scripts/wear_eea.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 
 # Post-estimation ####
+print("pos-estimacion")
 language <- "spanish" # english spanish portuguese
 net <- readRDS("network/net.rds")
 tfs <- readRDS("config/tfs.rds")
-g <- make_grid(net, width = 1000)
-# g <- eixport::wrf_grid("wrf/wrfinput_d03")
+# g <- make_grid(net, width = 1000)
+g <- eixport::wrf_grid("wrf/wrfinput_d04")
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
-# Number of lat points 100
-# Number of lon points 110
+# Number of lat points 141
+# Number of lon points 141
 crs <- 31986
-years <- 2025
+years <- 2024
 source("scripts/post.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 
+# NetCDF ####
+print("netcdf")
+language <- "spanish" # english spanish portuguese
+year <- 2024
+source("scripts/nc.R", encoding = "UTF-8")
+rm(list = ls())
+gc()
+
 # plots ####
+print("plots")
 language <- "spanish" # english portuguese
 metadata <- readRDS("config/metadata.rds")
 tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
 
 pol <- c("CO", "NMHC_EXHAUST_G", "NO", "NO2", "PM2.5")
-year <- 2025
+year <- 2024
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 hours <- 8
 bg <- "white"
@@ -250,13 +267,14 @@ rm(list = ls())
 gc()
 
 # MECH ####
+print("Mecanismos quimicos")
 # "CB4", "CB05","CB05opt2", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1" "CBMZ"
 mechs <- c("CBMZ", "CB05", "S99", "RADM2")
 for (z in seq_along(mechs)) {
   print(mechs[z])
   language <- "spanish" # portuguese english spanish
   net <- readRDS("network/net.rds")
-  g <- eixport::wrf_grid("wrf/wrfinput_d03")
+  g <- eixport::wrf_grid("wrf/wrfinput_d04")
   pol <- c("CO", "NO", "NO2")
   mol <- c(12, 14 + 16, 14 + 16 * 2)
   aer <- "pmneu2" # pmiag, pmneu
@@ -264,25 +282,25 @@ for (z in seq_along(mechs)) {
   source("scripts/mech2.R", encoding = "UTF-8")
 }
 
-# for this part need a lot of memory
-# # WRF CHEM ####
-# mechs <- c("CBMZ", "S99", "RADM2", "CB05")
-# mechs <- "CBMZ"
-# for (z in seq_along(mechs)) {
-#   print(mechs[z])
-#   mech <- mechs[z]
-#   language <- "english" # english spanish
-#   tfs <- readRDS("config/tfs.rds")
-#   net <- readRDS("network/net.rds")
-#   cols <- 100
-#   rows <- 110
-#   wrf_times <- 168 # ?
-#   dir_wrfinput <- "wrf"
-#   dir_wrfchemi <- "wrf"
-#   domain <- 3
-#   hours <- 0
-#   io_style_emissions <- 1 # 2 for all the hours, 1 for two emission files 0-12z
-#   n_aero <- 15 # number of PM species
-#   rotate <- "cols" # see ?GriddedEmissionsArray
-#   source("scripts/wrf.R", encoding = "UTF-8")
-# }
+#for this part need a lot of memory
+ # WRF CHEM ####
+ mechs <- c("CBMZ", "S99", "RADM2", "CB05")
+ mechs <- "CBMZ"
+ for (z in seq_along(mechs)) {
+   print(mechs[z])
+   mech <- mechs[z]
+   language <- "english" # english spanish
+   tfs <- readRDS("config/tfs.rds")
+   net <- readRDS("network/net.rds")
+   cols <- 141
+   rows <- 141
+   wrf_times <- 24 # ?
+   dir_wrfinput <- "wrf"
+   dir_wrfchemi <- "wrf"
+   domain <- 4
+   hours <- 0
+   io_style_emissions <- 1 # 2 for all the hours, 1 for two emission files 0-12z
+   n_aero <- 15 # number of PM species
+   rotate <- "cols" # see ?GriddedEmissionsArray
+   source("scripts/wrf.R", encoding = "UTF-8")
+ }

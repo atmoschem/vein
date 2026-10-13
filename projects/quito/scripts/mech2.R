@@ -9,7 +9,7 @@ fs <- list.files(
 file.remove(fs)
 
 # Gasoline Exhaust
-x <- st_set_geometry(readRDS("post/grids/NMHC_EVAP_G.rds"), NULL)
+x <- st_set_geometry(readRDS("post/grids/NMHC_EXHAUST_G.rds"), NULL)
 x[is.na(x)] <- 0
 id <- x$id
 x$id <- NULL
@@ -82,31 +82,35 @@ voc_d_ex <- emis_chem2(
   na.rm = TRUE
 )
 
-# GLP Exhaust
-x <- st_set_geometry(readRDS("post/grids/NMHC_EXHAUST_GLP.rds"), NULL)
-x[is.na(x)] <- 0
-id <- x$id
-x$id <- NULL
+# GLP Exhaust (only if the grid exists: GLP is removed in main.R)
+if (file.exists("post/grids/NMHC_EXHAUST_GLP.rds")) {
+  x <- st_set_geometry(readRDS("post/grids/NMHC_EXHAUST_GLP.rds"), NULL)
+  x[is.na(x)] <- 0
+  id <- x$id
+  x$id <- NULL
 
-# nx!!!!
-nx <- names(x)
+  # nx!!!!
+  nx <- names(x)
 
-dx <- speciate(
-  x = x,
-  spec = "nmhc",
-  fuel = "E85",
-  veh = "LDV",
-  eu = "Evaporative"
-)
+  dx <- speciate(
+    x = x,
+    spec = "nmhc",
+    fuel = "LPG",
+    veh = "LDV",
+    eu = "all"
+  )
 
-dx$id <- rep(id, length(unique(dx$pol)))
-names(dx)
-voc_glp_ex <- emis_chem2(
-  df = dx,
-  mech = mech,
-  nx = nx,
-  na.rm = TRUE
-)
+  dx$id <- rep(id, length(unique(dx$pol)))
+  names(dx)
+  voc_glp_ex <- emis_chem2(
+    df = dx,
+    mech = mech,
+    nx = nx,
+    na.rm = TRUE
+  )
+} else {
+  voc_glp_ex <- NULL
+}
 
 voc <- rbind(voc_g_ex,
              voc_g_ev,
@@ -151,13 +155,15 @@ for (j in seq_along(pol)) {
 gPM <- st_set_geometry(readRDS("post/grids/PM2.5.rds"), NULL)
 names(gPM)
 gPM$id <- NULL
+# convert to WRF units (ug/m2/s) BEFORE speciation, so the PM species files
+# are saved in the same units as the gases (mol) and E_PM_10 (ug/m2/s)
+for (i in 1:ncol(gPM)) gPM[, i] <- units::set_units(gPM[, i], "ug/m^2/s")
 gPM1 <- speciate(x = gPM, spec = aer, list = T)
 
 for (i in 1:length(names(gPM1))) {
   gPMx <- st_sf(gPM1[[i]], geometry = g$geometry)
   saveRDS(gPMx, paste0("post/", mech, "/", toupper(names(gPM1))[i], ".rds"))
 }
-for (i in 1:ncol(gPM)) gPM[, i] <- units::set_units(gPM[, i], "ug/m^2/s")
 
 gPM10 <- st_set_geometry(readRDS("post/grids/PM10.rds"), NULL)
 names(gPM10)
@@ -165,10 +171,9 @@ gPM10$id <- NULL
 for (i in 1:ncol(gPM10)) gPM10[, i] <- units::set_units(gPM10[, i], "ug/m^2/s")
 
 
-# gPM2510 are in g/km/h
-# need to change units to ug/m2/s
+# gPM2510 = PM10 - PM2.5, both already converted to ug/m2/s
 gPM2510 <- gPM10 - gPM
-gPM2510 <- st_sf(gPM2510, geometry = g$g)
+gPM2510 <- st_sf(gPM2510, geometry = g$geometry)
 saveRDS(gPM2510, paste0("post/", mech, "/E_PM_10.rds"))
 
 

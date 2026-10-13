@@ -3,7 +3,7 @@ suppressWarnings(file.remove("emi/exhaust.csv"))
 
 # Escapamento ####
 switch(language,
-       "portuguese" = cat("Estimando emissões Hot Running\n"),
+       "portuguese" = cat("Estimando emisses Hot Running\n"),
        "english" = cat("Estimating emissions Hot Running\n"),
        "spanish" = cat("Estimando emisiones Hot Running\n")
 )
@@ -167,7 +167,7 @@ for (i in seq_along(metadata$vehicles)) {
     
     x_ST$fuel <- metadata$fuel[i]
     
-  fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/", pol[j], ".csv"), append = TRUE)
+  fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/", pol[j], ".csv"), append = FALSE)
     
     
     
@@ -177,7 +177,7 @@ for (i in seq_along(metadata$vehicles)) {
 
 
 switch(language,
-       "portuguese" = message("\nEmissões em: /emi/exhaust.csv:"),
+       "portuguese" = message("\nEmisses em: /emi/exhaust.csv:"),
        "english" = message("\nEmissions in: /emi/exhaust.csv"),
        "spanish" = message("\nEmisiones en: /emi/exhaust.csv")
 )

@@ -42,7 +42,7 @@ switch(language,
 )
 
 
-ti <- as.POSIXct(ti)
+ti <- timepos # first WRF time as POSIXct
 
 
 # creating directory wrf/mech
@@ -53,6 +53,20 @@ dir.create(path = dir_wrfchemi)
 lf <- list.files(path = dir_mech, pattern = ".rds", full.names = TRUE)
 na <- list.files(path = dir_mech, pattern = ".rds", full.names = F)
 emis_option <- na <- gsub(".rds", "", na)
+
+# wrf_create assigns the aerosol units to the LAST n_aero variables, so put
+# the aerosol species (from scripts/mech2.R) at the end and set n_aero ####
+aero <- grep(
+  "^E_(SO4I|SO4J|NO3I|NO3J|PM25I|PM25J|PM_10|ORGI|ORGJ|ECI|ECJ)$",
+  na,
+  value = TRUE
+)
+ord <- match(c(setdiff(na, aero), aero), na)
+lf <- lf[ord]
+na <- na[ord]
+emis_option <- na
+n_aero <- length(aero)
+cat("aerosol species (", n_aero, "): ", paste(aero, collapse = ", "), "\n")
 
 
 if (io_style_emissions == 1) {
@@ -183,7 +197,7 @@ a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
                  col.regions = cpt(rev = T),
-                 main = paste(names(a), "mol/km²/h"),
+                 main = paste(names(a), "mol/km/h"),
                  scales = list(Draw = T)
 ))
 dev.off()
@@ -198,7 +212,7 @@ a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
                  col.regions = cpt(rev = T),
-                 main = paste(names(a), "mol/km²/h"),
+                 main = paste(names(a), "mol/km/h"),
                  scales = list(Draw = T)
 ))
 dev.off()
@@ -213,7 +227,7 @@ a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
                  col.regions = cpt(rev = T),
-                 main = paste(names(a), "mol/km²/h"),
+                 main = paste(names(a), "mol/km/h"),
                  scales = list(Draw = T)
 ))
 dev.off()

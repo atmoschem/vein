@@ -1,3 +1,5 @@
+suppressWarnings(file.remove("emi/paved_roads.csv"))
+
 # identicar nomes de grupos
 nveh <- names(veh)
 n_PC <- nveh[grep(pattern = "PC", x = nveh)]

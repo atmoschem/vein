@@ -17,10 +17,10 @@ dt$t <- units::set_units(dt$g, "t")
 fwrite(dt, "post/DF/emissions.csv.gz")
 saveRDS(dt, "post/DF/emissions.rds")
 
-# Agregando emissões por categoria ####
+# Agregando emisses por categoria ####
 switch(
   language,
-  "portuguese" = message("\nAgregando emissões por categoria\n"),
+  "portuguese" = message("\nAgregando emisses por categoria\n"),
   "english" = message("\nAggregating emissions by category...\n"),
   "spanish" = message("\nAgregando emisiones por categoria...\n")
 )
@@ -54,7 +54,7 @@ data.table::fwrite(df3, "csv/emissions_by_age.csv", row.names = FALSE)
 dir.create("post/streets")
 switch(
   language,
-  "portuguese" = message("\nAgregando emissões por rua...\n"),
+  "portuguese" = message("\nAgregando emisses por rua...\n"),
   "english" = message("\nAgregating emissions by street...\n"),
   "spanish" = message("\nAgregando emisiones por calle...\n")
 )
@@ -99,7 +99,7 @@ saveRDS(x_st, "post/streets/CO.rds")
 # NOx
 x <- list.files(
   path = "emi/",
-  pattern = "NO.csv",
+  pattern = "NOx.csv",
   recursive = T,
   full.names = T
 )
@@ -221,7 +221,7 @@ for (i in 1:nrow(tfs)) {
   )
 }
 
-xx <- xx[!fuel %in% c("ELEC", "GLP", "HY")] # 0
+xx <- xx[!fuel %in% c("D", "ELEC", "GLP", "HY")] # 0, D: no evaporative emissions in diesel
 unique(xx$fuel)
 ln <- split(xx, xx$fuel)
 names(ln)
@@ -232,12 +232,15 @@ for (i in seq_along(ln)) {
   saveRDS(x_st, paste0("post/streets/NMHC_EVAP_", names(ln)[i], ".rds"))
 }
 
+# diesel evaporative does not exist: remove stale files from previous runs ####
+unlink(c("post/streets/NMHC_EVAP_D.rds", "post/grids/NMHC_EVAP_D.rds"))
+
 
 # grids ####
 dir.create("post/grids")
 switch(
   language,
-  "portuguese" = message("\nAgregando emissões por grade\n"),
+  "portuguese" = message("\nAgregando emisses por grade\n"),
   "english" = message("\nAgregating emissions by grid...\n"),
   "spanish" = message("\nAgregando emisiones por grilla...\n")
 )
