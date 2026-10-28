@@ -1,0 +1,2 @@
+# Preserve original MOVES CSV bytes and SHA-256 hashes on every operating system.
+inst/extdata/moves/*.csv -text whitespace=cr-at-eol

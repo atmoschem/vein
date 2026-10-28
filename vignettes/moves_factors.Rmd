@@ -1,0 +1,121 @@
+---
+title: "MOVES emission factors in R, without a database"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MOVES emission factors in R, without a database}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+`ef_moves()` uses local MOVES rate data to evaluate running-exhaust emission
+factors. It runs in R on Linux, macOS and Windows. There is no database connection,
+SQL query, Java process, network download or MOVES installation involved in
+evaluating factors.
+
+## Use the reference factors
+
+The small dataset shipped with VEIN contains MOVES6 running-exhaust rates for a
+documented U.S. reference scenario. The selected model year describes the
+vehicle's year of manufacture; `yearID` is the inventory year, which determines
+vehicle age. They must not be interchanged.
+
+```{r}
+library(vein)
+x <- moves_factors()
+x$runs[, c("masterVersion", "defaultDatabaseUsed", "massUnits", "distanceUnits")]
+unique(x$rates[, c("yearID", "hourID", "temperature_C", "relHumidity")])
+range(x$rates$modelYearID)
+```
+
+Here is NOx from a model-year 2020 gasoline passenger car at the hour-1 reference
+conditions. Numeric input speeds use km/h; results have units of g/km.
+
+```{r}
+ef_moves("NOx", model_year = 2020, speed = c(20, 40, 60),
+         factors = x, select = list(hourID = 1))
+```
+
+`temperature` (degrees C) and `rel_humidity` (percent) can select meteorological
+points directly. Any remaining varying dimensions must be selected explicitly
+using `select`. The function never averages together different scenarios,
+model years, fuels, road types or temperatures.
+
+The reference fleet and fuel assumptions describe the U.S. scenario recorded in
+the dataset. Application to Ecuador requires a suitable vehicle/technology
+mapping and local fuel, meteorology, road load and inspection assumptions.
+The input metadata and production notes are installed with the data:
+
+```{r}
+system.file("extdata", "moves", "README.md", package = "vein")
+```
+
+## Speed functions for VEIN inventories
+
+Omitting `speed` returns a function of speed giving numeric g/km. Build one
+function per model year in the same order as the columns of the vehicle matrix.
+
+```{r}
+years <- c(2020, 2010)
+curves <- EmissionFactorsList(lapply(years, function(y) {
+  ef_moves("NOx", model_year = y, factors = x, select = list(hourID = 1))
+}))
+veh <- data.frame(MY2020 = c(100, 200), MY2010 = c(30, 50))
+lengths <- units::set_units(c(0.5, 1), "km")
+speeds <- data.frame(H1 = c(30, 50))
+emissions <- emis(veh, lengths, ef = curves, speed = speeds,
+                  profile = matrix(1, 1, 1), simplify = TRUE, verbose = FALSE)
+emissions
+```
+
+## Native bins and interpolation
+
+The default `method = "bin"` selects the exported MOVES rate for the corresponding
+speed bin. It preserves valid zeros and fails if a requested bin is absent.
+Positive speeds up to 75 mph (120.7008 km/h) are accepted. Stationary idle needs
+an hour-based factor and matching activity; a distance factor cannot describe it.
+
+With `method = "linear"`, factors are interpolated between nominal MOVES bin
+speeds: 2.5, 5, 10, ..., 75 mph. Both neighboring bins must exist. Extrapolation
+is disabled. This is an approximation between exported rates, so speed-bin
+lookup is the appropriate method for exact reproduction of the reference table.
+
+```{r}
+f <- ef_moves("NOx", model_year = 2020, factors = x,
+              select = list(hourID = 1), method = "linear")
+f(c(20, 40, 60))
+attr(f, "moves_metadata")$scenario
+```
+
+Meteorology, model year and vehicle category are selected exactly; this first
+version does not interpolate those dimensions.
+
+## Supply additional local data
+
+Data producers can run MOVES once and export running-exhaust `RatePerDistance`
+and `MOVESRun` tables. R users only need those local files or a saved RDS object.
+The importer reads units from `MOVESRun`, preserves all original rate-table
+dimensions, converts pollutant mass rates to g/km, and checks for duplicate keys
+and missing provenance. It supports plain or gzip-compressed CSV and TSV files.
+
+```{r eval=FALSE}
+x <- moves_factors("my_rateperdistance.csv", "my_movesrun.csv")
+saveRDS(x, "my_moves_factors.rds")
+
+# This file can be copied to an R installation on another OS.
+x <- readRDS("my_moves_factors.rds")
+f <- ef_moves("NOx", model_year = 2020, factors = x,
+              select = list(MOVESRunID = 1, yearID = 2025, hourID = 1))
+```
+
+This interface currently accepts running exhaust (process 1), road types 2--5,
+and pollutant mass rates. Starts, evaporation, stationary idle and energy need
+their own rate bases and activity denominators. MOVES base operating-mode rates
+also need activity weighting and adjustments before they become distance-based
+factors.
+
+EPA describes external use of rate tables in section 4.2.2 of the
+[MOVES6 technical guidance](https://www.epa.gov/moves/latest-version-motor-vehicle-emission-simulator-moves).

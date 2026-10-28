@@ -1,6 +1,18 @@
 NEWS
 ===========
 
+### Development version
+
+- `moves_factors()` and `ef_moves()` provide portable, local MOVES running-exhaust
+  factors with explicit units and scenario selection, exact speed-bin lookup and
+  optional bounded linear interpolation. Evaluation needs only R and the factor
+  data, with no MariaDB, SQL, Java or MOVES runtime. Speed functions work with
+  `EmissionFactorsList()` and `emis()`.
+- Includes 2,496 genuine MOVES6 reference factors: running-exhaust CO/NOx,
+  gasoline passenger cars, model years 2000--2025, inventory year 2025,
+  16 speed bins and three temperatures. Provenance and scope are documented
+  in `inst/extdata/moves/`; production scripts are in `data-raw/moves/`.
+
 ### vein 2.1.0 (date: 2026-10-27)
 
 - Light-duty hot emission factors (`ef_ldv_speed()`, `emis_speed()`) rebuilt
@@ -1007,5 +1019,3 @@ inventories for cities with lack of data. Journal of Earth Sciences &
 Geotechnical Engineering. issn 1792--9660.
 URL =
 https://www.researchgate.net/publication/313253283_REMI_model_Bottom-up_emissions_inventories_for_cities_with_lack_of_data
-
-

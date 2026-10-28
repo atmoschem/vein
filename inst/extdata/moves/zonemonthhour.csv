@@ -1,0 +1,4 @@
+monthID,zoneID,hourID,temperature,relHumidity,heatIndex,specificHumidity,molWaterFraction
+1,261610,1,68,50,,,
+1,261610,2,50,50,,,
+1,261610,3,86,50,,,

@@ -20,3 +20,5 @@
 ^\.github$
 ^CRAN-RELEASE$
 ^demo$
+^data-raw$
+^\.gitattributes$

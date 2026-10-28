@@ -1,0 +1,57 @@
+<runspec version="MOVES6.0.0">
+  <description><![CDATA[VEIN portable running-exhaust reference. MOVES6.0.0, Washtenaw County MI defaults, calendar 2025, gasoline passenger cars, CO and NOx, urban unrestricted, January weekday. Temperatures are artificial lookup grid points: hour 1=20 C, 2=10 C, 3=30 C, RH=50%. U.S. reference, not an Ecuador calibration.]]></description>
+  <models><model value="ONROAD"/></models>
+  <modelscale value="Rates"/>
+  <modeldomain value="DEFAULT"/>
+  <geographicselections>
+    <geographicselection type="COUNTY" key="26161" description="MICHIGAN - Washtenaw County"/>
+  </geographicselections>
+  <timespan>
+    <year key="2025"/><month id="1"/><day id="2"/>
+    <beginhour id="1"/><endhour id="3"/><aggregateBy key="Hour"/>
+  </timespan>
+  <onroadvehicleselections>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="21" sourcetypename="Passenger Car"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="21" sourcetypename="Passenger Car"/>
+    <onroadvehicleselection fueltypeid="5" fueltypedesc="Ethanol (E-85)" sourcetypeid="21" sourcetypename="Passenger Car"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="21" sourcetypename="Passenger Car"/>
+  </onroadvehicleselections>
+  <roadtypes>
+    <roadtype roadtypeid="5" roadtypename="Urban Unrestricted Access" modelCombination="M1"/>
+  </roadtypes>
+  <pollutantprocessassociations>
+    <pollutantprocessassociation pollutantkey="2" pollutantname="Carbon Monoxide (CO)" processkey="1" processname="Running Exhaust"/>
+    <pollutantprocessassociation pollutantkey="3" pollutantname="Oxides of Nitrogen (NOx)" processkey="1" processname="Running Exhaust"/>
+  </pollutantprocessassociations>
+  <databaseselections>
+    <databaseselection servername="localhost" databasename="vein_reference_input" description="Temperature grid only; all other inputs from EPA defaults"/>
+  </databaseselections>
+  <internalcontrolstrategies/>
+  <inputdatabase servername="" databasename="" description=""/>
+  <geographicoutputdetail description="COUNTY"/>
+  <outputemissionsbreakdownselection>
+    <modelyear selected="true"/><fueltype selected="true"/>
+    <fuelsubtype selected="false"/><emissionprocess selected="true"/>
+    <onroadoffroad selected="false"/><roadtype selected="true"/>
+    <sourceusetype selected="true"/><movesvehicletype selected="false"/>
+    <onroadscc selected="false"/>
+    <estimateuncertainty selected="false" numberOfIterations="2" keepSampledData="false" keepIterations="false"/>
+    <sector selected="false"/>
+    <engtechid selected="false"/><hpclass selected="false"/><regclassid selected="false"/>
+  </outputemissionsbreakdownselection>
+  <outputdatabase servername="localhost" databasename="vein_reference_output" description="Portable factor reference"/>
+  <outputtimestep value="Hour"/>
+  <outputvmtdata value="true"/><outputsho value="true"/>
+  <outputsh value="false"/><outputshp value="false"/>
+  <outputshidling value="false"/><outputstarts value="false"/><outputpopulation value="false"/>
+  <scaleinputdatabase servername="" databasename="" description=""/>
+  <outputfactors>
+    <timefactors selected="true" units="Hours"/>
+    <distancefactors selected="true" units="Miles"/>
+    <massfactors selected="true" units="Grams" energyunits="Joules"/>
+  </outputfactors>
+  <savedata/><donotexecute/>
+  <generatordatabase shouldsave="false" servername="" databasename="" description=""/>
+  <donotperformfinalaggregation selected="false"/>
+  <lookuptableflags scenarioid="vein-reference-2025" truncateoutput="true" truncateactivity="true" truncatebaserates="true"/>
+</runspec>
