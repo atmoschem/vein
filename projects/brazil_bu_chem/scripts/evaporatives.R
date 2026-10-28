@@ -2,7 +2,10 @@ suppressWarnings(file.remove("emi/EVAP_DF.csv"))
 suppressWarnings(file.remove("emi/EVAP_STREETS.csv"))
 
 
-if (nrow(met) == nrow(tfs)) {
+# hourly temperatures: evaporatives_hourly.R does the whole estimation and the
+# monthly/annual loop below is skipped (otherwise both would be written)
+hourly <- nrow(met) == nrow(tfs)
+if (hourly) {
         cat(
                 "Detecting hourly temperatures\n
       Sourcing: `scripts/evaporatives_hourly.R`"
@@ -122,7 +125,7 @@ for (i in seq_along(ns)) {
 
         names(df) <- c("month", "veh", "ef")
 
-        df$age <- rep(1:40, length(ln[[i]]))
+        df$age <- rep(1:40, length(ln[[i]]) * length(ef_d)) # ages x temperature rows x vehicles
 
         p <- ggplot(
                 df[as.numeric(ef) > 0, ],
@@ -165,7 +168,13 @@ switch(
 
 evtype <- c("Diurnal", "Running Losses", "Hot Soak")
 
+# each temperature row of `met` (e.g. 12 months) gives the emissions of a
+# typical period of `tfs` with that temperature: weight them by 1/nrow(met) so
+# that the result is the mean over the year, not the sum of all rows
+k_te <- 1 / length(te)
+
 for (i in seq_along(veh_ev)) {
+        if (hourly) break
         cat(
                 "\n",
                 veh_ev[i],
@@ -235,15 +244,17 @@ for (i in seq_along(veh_ev)) {
                                 fuel = meta_ev$fuel[i],
                                 pollutant = "NMHC",
                                 type_emi = evtype[k],
-                                by = "veh"
+                                by = "veh",
+                                k = k_te
                         )
 
                         fwrite(x_DF, "emi/EVAP_DF.csv", append = TRUE)
 
                         x_STREETS <- emis_post(
                                 arra = array_x,
-                                pollutant = veh_ev[j],
-                                by = "streets"
+                                pollutant = "NMHC",
+                                by = "streets",
+                                k = k_te
                         )
 
                         x_STREETS$id <- 1:nrow(net)

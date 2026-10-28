@@ -45,8 +45,9 @@ The number of rows is equal to the number of streets link.}
 
 \item{speed_bin}{Data.frame or vector of avgSpeedBinID as defined by MOVES.}
 
-\item{profile}{Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-the week}
+\item{profile}{Data.frame or Matrix with one row per hour (ncol(speed_bin)
+rows) and one column per vehicle category, in the same order as veh. A
+column "Hour" is ignored.}
 
 \item{vehicle}{Character, type of vehicle}
 
@@ -54,7 +55,8 @@ the week}
 
 \item{fuel_subtype}{Character, subtype of vehicle}
 
-\item{process_id}{Character, processID}
+\item{process_id}{Character, processID. When present, ef is filtered by it.
+ef is also filtered by road_type_id when it has a column roadTypeID.}
 
 \item{net}{Road network class sf}
 

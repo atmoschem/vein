@@ -29,13 +29,16 @@ for (i in seq_along(metadata$vehicles)) {
     
     cat(pol[j], " ")
     
+    # do not overwrite x: the division must not accumulate across pollutants
     if(pol[j] == "Evaporative_parking") {
       # Assuming that parks represent trips, then
       # g/trip * trip/km
-      x <- x/metadata$km_cycle[i]
+      xx <- x/metadata$km_cycle[i]
+    } else {
+      xx <- x
     }
     
-    array_x <- emis_china(x = x, 
+    array_x <- emis_china(x = xx, 
                           lkm = net$lkm, 
                           tfs = pro, 
                           v = metadata$v[i],
@@ -47,6 +50,7 @@ for (i in seq_along(metadata$vehicles)) {
                           te = met$Temperature,
                           hu = met$Humidity,
                           h = h$h,
+                          yeardet = year,
                           p = pol[j],
                           array = T,
                           verbose =verbose)
@@ -90,7 +94,7 @@ for (i in seq_along(metadata$vehicles)) {
             )
     )
   }
-  suppressWarnings(rm(array_x, ef, x, x_DF, x_STREETS))
+  suppressWarnings(rm(array_x, ef, x, xx, x_DF, x_STREETS))
   gc()
 }
 

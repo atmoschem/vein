@@ -103,13 +103,10 @@ emis_post <- function(arra,
                       type_emi,
                       k = 1) {
 
-   if (inherits(arra, "EmissionsArray") & length(dim(arra)) == 4){
+   if (inherits(arra, "EmissionsArray") && length(dim(arra)) == 4){
     if (by == "veh"){
-      x <- unlist(lapply(1:dim(arra)[4], function(j) {
-        unlist(lapply (1:dim(arra)[3],function(i) {
-          colSums(arra[,,i,j], na.rm = TRUE)
-        }))
-      }))
+      # categories x hours x days, categories varying fastest
+      x <- as.vector(apply(X = unclass(arra), MARGIN = c(2, 3, 4), FUN = sum, na.rm = TRUE))
       df <- cbind(deparse(substitute(arra)),
                   as.data.frame(x))
       names(df) <- c(as.character(df[1,1]), "g")
@@ -155,11 +152,8 @@ emis_post <- function(arra,
       return(df)
     } else if (by == "streets_narrow") {
 
-            x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
-        unlist(lapply (1:dim(arra)[3],function(i) { # hora
-          rowSums(arra[,,i,j], na.rm = TRUE)
-        }))
-      }))*k
+      # streets x hours x days, streets varying fastest
+      x <- as.vector(apply(X = unclass(arra), MARGIN = c(1, 3, 4), FUN = sum, na.rm = TRUE))*k
       df <- cbind(deparse(substitute(arra)),as.data.frame(x))
       hour <- rep(seq(0: (dim(arra)[3]-1) ),
                   times = dim(arra)[4],
@@ -172,17 +166,11 @@ emis_post <- function(arra,
 
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
-      x <- unlist(lapply(1:dim(arra)[4], function(j) {# dia
-        unlist(lapply (1:dim(arra)[3],function(i) { # hora
-          rowSums(arra[,,i,j], na.rm = T)
-        }))
-      }))*k
+      x <- as.vector(apply(X = unclass(arra), MARGIN = c(1, 3, 4), FUN = sum, na.rm = TRUE))*k
       m <- matrix(x, nrow=dim(arra)[1], ncol=dim(arra)[3]*dim(arra)[4])
 
       df <- as.data.frame(m)
 
-
-      nombres <- lapply(1:dim(m)[2], function(i){paste0("h",i)})
       if(!missing(net)){
         netsf <- sf::st_as_sf(net)
         dfsf <- sf::st_sf(Emissions(df), geometry = sf::st_geometry(netsf))
@@ -192,9 +180,9 @@ emis_post <- function(arra,
       }
     }
 
-  } else if(inherits(arra, "EmissionsArray") & length(dim(arra) == 3)){
+  } else if(inherits(arra, "EmissionsArray") && length(dim(arra)) == 3){
     if (by == "veh"){
-      x <- as.vector(apply(X = arra, MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
+      x <- as.vector(apply(X = unclass(arra), MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
       df <- cbind(deparse(substitute(arra)),
                   as.data.frame(x))
       names(df) <- c(as.character(df[1,1]), "g")
@@ -235,14 +223,14 @@ emis_post <- function(arra,
       df$g <- Emissions(df$g)*k
       return(df)
     } else if (by %in% c("streets_narrow")) {
-      df <- as.vector(apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE))
-      df <- data.frame(street = length(df) / dim(arra)[3],
+      df <- as.vector(apply(X = unclass(arra), MARGIN = c(1,3), FUN = sum, na.rm = TRUE))*k
+      df <- data.frame(street = rep(seq_len(dim(arra)[1]), dim(arra)[3]),
                        g = Emissions(df),
                        hour = rep(1:dim(arra)[3], each = dim(arra)[1]))
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
-      df <- apply(X = arra, MARGIN = c(1,3), FUN = sum, na.rm = TRUE)*k
-      names(df) <- paste0("h",1:length(df))
+      df <- apply(X = unclass(arra), MARGIN = c(1,3), FUN = sum, na.rm = TRUE)*k
+      df <- matrix(df, nrow = dim(arra)[1], ncol = dim(arra)[3])
 
       df <- as.data.frame(df)
 
@@ -256,7 +244,7 @@ emis_post <- function(arra,
     }
 
 
-  } else if(inherits(arra, "Emissions") & length(dim(arra) == 2)) {
+  } else if(inherits(arra, "Emissions") && length(dim(arra)) == 2) {
     if(by != "veh") stop("Only by  == 'veh' accepted")
     x_DF <- data.frame(array_x = paste0("array_", 1:nrow(arra)))
     x_DF$g <- arra$emissions*k

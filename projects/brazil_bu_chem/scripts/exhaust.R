@@ -25,7 +25,7 @@ for (i in seq_along(ns)) {
       dfef <- data.frame(ef_cetesb(
         p = "FC",
         veh = ln[[i]],
-        year = 2018,
+        year = year,
         agemax = 40,
         verbose = verbose
       )) *
@@ -36,7 +36,7 @@ for (i in seq_along(ns)) {
       dfef <- data.frame(ef_cetesb(
         p = pol[j],
         veh = ln[[i]],
-        year = 2018,
+        year = year,
         agemax = 40,
         verbose = verbose
       ))
@@ -109,7 +109,7 @@ for (i in seq_along(metadata$vehicles)) {
       ef <- ef_cetesb(
         p = "FC",
         veh = metadata$vehicles[i],
-        year = 2018,
+        year = year,
         agemax = ncol(x),
         verbose = verbose,
         scale = scale
@@ -121,7 +121,7 @@ for (i in seq_along(metadata$vehicles)) {
       ef <- ef_cetesb(
         p = pol[j],
         veh = metadata$vehicles[i],
-        year = 2018,
+        year = year,
         agemax = ncol(x),
         verbose = verbose,
         scale = scale

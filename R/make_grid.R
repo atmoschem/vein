@@ -8,7 +8,8 @@
 #' @param height Height of grid cell.
 #' @param crs coordinate reference system in numeric format from
 #' http://spatialreference.org/ to transform/project spatial data using sf::st_transform.
-#' The default value is 3857, Pseudo Mercator
+#' When missing (default), the grid keeps the crs of `spobj`. When it is
+#' supplied, the grid is transformed to `crs`, e.g. 3857, Pseudo Mercator.
 #' @return A grid of polygons class 'sf'
 #' @importFrom sf st_as_sf st_sf st_crs st_bbox st_sfc st_as_sfc
 #' @export

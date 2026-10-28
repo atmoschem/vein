@@ -12,10 +12,22 @@ gs <- paste0("post/grids/", "emis_grid_", sprintf("%02d", 1:12), ".rds")
 for (kk in seq_along(gs)) {
   x <- readRDS(gs[kk])
 
-  nxx <- names(x)[2:19]
+  # emission columns (grams per month): everything but id and geometry
+  nxx <- setdiff(names(x), c("id", attr(x, "sf_column"), "geometry"))
 
   for (i in seq_along(nxx)) {
-    x[[nxx[i]]] <- x[[nxx[i]]] * set_units(1, g)
+    if (!inherits(x[[nxx[i]]], "units")) x[[nxx[i]]] <- x[[nxx[i]]] * set_units(1, g)
+  }
+
+  # evaporative NMHC column of the single temperature scenario in the grid
+  evcol <- function(f) {
+    cn <- grep(paste0("^NMHC_", f, "_EVAPORATIVES"), names(x), value = TRUE)
+    if (length(cn) != 1) {
+      stop("expected one NMHC_", f, "_EVAPORATIVES_* column in ", gs[kk],
+           ", found: ", paste(cn, collapse = ", "),
+           " (set `evap_scenario` in main.R)")
+    }
+    cn
   }
 
   id <- x$id
@@ -31,7 +43,7 @@ for (kk in seq_along(gs)) {
 
   dx1$id <- rep(id, length(unique(dx1$pol)))
 
-  dx2 <- data.table(x = x$ETOH, pol = "ethanol", id = 1:nrow(x))
+  dx2 <- data.table(x = x$ETOH, pol = "ethanol", id = id)
 
   dx <- rbind(dx1, dx2)
 
@@ -51,7 +63,7 @@ for (kk in seq_along(gs)) {
 
   # Gasoline Evap ####
   dx2 <- speciate(
-    x = x$NMHC_G_EVAPORATIVES_HISTORIC,
+    x = x[[evcol("G")]],
     spec = "nmhc",
     fuel = "E25",
     veh = "LDV",
@@ -97,7 +109,7 @@ for (kk in seq_along(gs)) {
 
   # Etanol Evap ####
   dx4 <- speciate(
-    x = x$NMHC_E_EVAPORATIVES_HISTORIC,
+    x = x[[evcol("E")]],
     spec = "nmhc",
     fuel = "E100",
     veh = "LDV",
@@ -177,10 +189,11 @@ for (kk in seq_along(gs)) {
     # mol/km^2/h
     x[[paste0("E_", pol[i])]] <- x[[pol[i]]] /
       mw[i] /
-      units::set_units(dmonth(year_selected, kk) / 24, "h")
+      units::set_units(dmonth(year_selected, kk) * 24, "h")
   }
 
-  dfx <- cbind(dfx, x[, pol, with = F])
+  # gases in mol/h (E_*), not the monthly mass columns
+  dfx <- cbind(dfx, as.data.frame(x)[, paste0("E_", pol), drop = FALSE])
 
   print(paste0("post/spec_grid/", "emis_voc_", sprintf("%02d", kk), ".rds"))
 

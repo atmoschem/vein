@@ -74,7 +74,7 @@ pol <- c(
 # for a comprehensive estimation, uncomment the following lines
 # pol <- c(
 #    "ETOH", "CO", "HC", "NMHC", "NOx", "CO2",
-#    "PM", "NO2", "NO", "SO2", "CH4", "NH3", "CH4", "N2O"
+#    "PM", "NO2", "NO", "SO2", "CH4", "NH3", "N2O"
 # )
 
 scale <- "tunnel2018"
@@ -157,7 +157,9 @@ for (z in seq_along(mechs)) {
     # Number of lat points 51
     # Number of lon points 60
     pol <- c("CO", "NO", "NO2", "SO2", "NH3")
-    mol <- c(12, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
+    # g/mol: CO, NO, NO2, SO2, NH3. vein's NO is NO2-equivalent mass
+    # (NO = NOx * (1 - fNO2) with NOx as NO2), so NO uses 46, not 30
+    mol <- c(12 + 16, 14 + 16 * 2, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
     aer <- "pmneu2" # pmiag, pmneu
     # mech <- "iag" # iag_cb05v2, neu_cb05, iag_racm
     # source("scripts/mech.R", encoding = "UTF-8")

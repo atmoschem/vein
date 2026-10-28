@@ -33,7 +33,8 @@ Emissions(x, mass = "g", time, ...)
 
 \item{mass}{Character to be the time units as numerator, default "g" for grams}
 
-\item{time}{Character to be the time units as denominator, eg "h"}
+\item{time}{Character to be the time units as denominator, eg "h". When x
+has units and time is missing, x is converted to `mass`.}
 
 \item{...}{ignored}
 

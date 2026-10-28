@@ -25,13 +25,24 @@ test_that("emis stops", {
 })
 
 
-test_that("emis works", {
-  expect_error(round(emis(veh = pc1,
-                          lkm = units::set_units(net$lkm, "m"),
-                          ef = lef,
-                          speed = speed,
-                          profile = profiles$PC_JUNE_2014)[1], 2),
-               ".")
+test_that("emis converts lkm in m to km", {
+  e_km <- emis(veh = pc1,
+               lkm = net$lkm,
+               ef = lef,
+               speed = speed,
+               profile = profiles$PC_JUNE_2014)
+  e_m <- emis(veh = pc1,
+              lkm = units::set_units(net$lkm, "m"),
+              ef = lef,
+              speed = speed,
+              profile = profiles$PC_JUNE_2014)
+  expect_equal(unclass(e_m), unclass(e_km))
+  expect_error(emis(veh = pc1,
+                    lkm = units::set_units(as.numeric(net$lkm), "h"),
+                    ef = lef,
+                    speed = speed,
+                    profile = profiles$PC_JUNE_2014),
+               "Units.?")
 })
 
 test_that("emis works", {
@@ -120,12 +131,14 @@ test_that("emis works", {
 })
 
 
-test_that("emis error", {
-  expect_error(emis(veh = pc1,
-                          lkm = net$lkm,
-                          ef = EmissionFactors(3),
-                          fortran = TRUE),
-               ".?")
+test_that("emis pads ef the same way in R and fortran", {
+  expect_equal(emis(veh = pc1,
+                    lkm = net$lkm,
+                    ef = EmissionFactors(3),
+                    fortran = TRUE),
+               emis(veh = pc1,
+                    lkm = net$lkm,
+                    ef = EmissionFactors(rep(3, ncol(pc1)))))
 })
 
 

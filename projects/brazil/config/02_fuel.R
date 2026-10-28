@@ -1,7 +1,6 @@
 library(data.table)
 library(ggplot2)
 library(units)
-library(forecast)
 x <- readxl::read_excel("config/inventory_all.xlsx",
                         "fuel_all")
 setDT(x)
@@ -23,7 +22,12 @@ x
 
 x$Year <- x$ANO
 x <- x[Year < 2023]
-x$m <- rep(1:12, nrow(x)/12)
+# month index from the month name in column `Data`, not from the row order
+meses <- c("JANEIRO", "FEVEREIRO", "MARCO", "ABRIL", "MAIO", "JUNHO",
+           "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO")
+x$m <- match(toupper(chartr("\u00e7\u00c7", "cC", enc2utf8(x$Data))), meses)
+if (anyNA(x$m)) stop("Unknown month names in fuel_all$Data: ",
+                     paste(unique(x$Data[is.na(x$m)]), collapse = ", "))
 
 setorderv(x, 
           cols = c("ESTADO", "Year", "m"), 
@@ -54,9 +58,10 @@ ggplot(x,
   facet_wrap(~UF,
              scales = "free_y")
 
-setorderv(x, "date", order = -1)
-
-names(x)[6] <- "region"
+setnames(x, "UF", "region")
+# chronological order (Jan..Dec) for each region and fuel: monthly
+# profiles (pmonth) are read in this order downstream
+setorderv(x, c("region", "fuel", "date"))
 saveRDS(x, "config/fuel_month.rds")
 
 xy <- x[, lapply(.SD, sum),

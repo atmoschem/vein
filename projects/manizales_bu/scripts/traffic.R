@@ -66,9 +66,15 @@ for (i in seq_along(metadata$vehicles)) {
 #
 # calculate proportion in PC
 #
+# taxis have their own flow in the network (net$taxi): the shares are
+# computed within cars and within taxis, and each group takes its own flow.
+# Without a `taxi` column, cars and taxis share net$pc as before.
+taxi_flow <- "taxi" %in% names(net) && length(n_TAXI) > 0
+is_taxi <- n_PC %in% n_TAXI
 lapply(seq_along(n_PC), function(i) {
-  df <- veh[, n_PC]
-  sum(df[i]) / sum(df, na.rm = T)
+  grp <- if (taxi_flow) n_PC[is_taxi == is_taxi[i]] else n_PC
+  df <- veh[, grp, drop = FALSE]
+  sum(veh[[n_PC[i]]]) / sum(df, na.rm = T)
 }) -> l_pc
 
 names(l_pc) <- n_PC
@@ -84,7 +90,7 @@ kf <- c(rep(k_G, 4), rep(k_D, 4), 1, 1, k_G, 1)
 
 for (i in seq_along(n_PC)) {
   x <- my_age(
-    x = net[["pc"]],
+    x = net[[if (taxi_flow && is_taxi[i]) "taxi" else "pc"]],
     y = veh[[n_PC[i]]],
     name = n_PC[i],
     k = l_pc[[i]] * kf[i],
@@ -243,7 +249,7 @@ switch(language,
        "spanish" = cat("Plotando flota \n")
 )
 
-n_veh <- list(n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC)
+n_veh <- list(PC = n_PC, LCV = n_LCV, TRUCKS = n_TRUCKS, BUS = n_BUS, MC = n_MC)
 
 for (i in seq_along(n_veh)) {
   df_x <- df[, n_veh[[i]]]

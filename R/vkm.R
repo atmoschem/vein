@@ -5,7 +5,8 @@
 #' vehicles and then extrapolates the vehicles
 #'
 #' @param veh Numeric vector with number of vehicles per street
-#' @param lkm Length of each link (km)
+#' @param lkm Length of each link (km). If it has class "units" (e.g. from
+#' \code{sf::st_length}, in m) it is converted to km.
 #' @param profile Numerical or dataframe with nrows equal to 24 and ncol 7 day of the week
 #' @param hour Number of considered hours in estimation
 #' @param day Number of considered days in estimation
@@ -36,6 +37,9 @@ vkm <- function (veh,
     profile <- matrix(profile, ncol = 1)
   }
   veh <- as.numeric(veh)
+  if(inherits(lkm, "units")) {
+    lkm <- units::set_units(lkm, "km", mode = "standard")
+  }
   lkm <- as.numeric(lkm)
   if(array == F){
     lista <- lapply(1:day,function(j){
@@ -45,20 +49,23 @@ vkm <- function (veh,
     })
     return(lista)
   } else {
-    d <- simplify2array(lapply(1:day, function(j) {
-      simplify2array(lapply(1:hour, function(i) {
-        veh* profile[i, j]*lkm
-      }))
-    }))
+    nveh <- max(length(veh), length(lkm))
+    d <- array(
+      unlist(lapply(1:day, function(j) {
+        lapply(1:hour, function(i) {
+          rep_len(veh* profile[i, j]*lkm, nveh)
+        })
+      })),
+      dim = c(nveh, hour, day)
+    )
     if(as_df == FALSE){
       return(d)
     } else {
       df <- as.data.frame(matrix(data = as.vector(d),
-                             nrow = length(d[,1, 1]),
-                             ncol = length(d[1, , ])))
+                                 nrow = nveh,
+                                 ncol = hour*day))
       names(df) <- paste0("h",1:length(df))
       return(df)
     }
   }
 }
-

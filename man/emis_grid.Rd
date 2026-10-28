@@ -12,8 +12,10 @@ it is transformed to "sf".}
 
 \item{g}{A grid with class "SpatialPolygonsDataFrame" or "sf".}
 
-\item{sr}{Spatial reference e.g: 31983. It is required if spobj and g are
-not projected. Please, see http://spatialreference.org/.}
+\item{sr}{Spatial reference e.g: 31983, "EPSG:31983" or "+init=epsg:31983".
+It is required if spobj and g are not projected. When missing and the crs of
+spobj and g are different, spobj is transformed to the crs of g.
+Please, see http://spatialreference.org/.}
 
 \item{type}{type of geometry: "lines", "points" or "polygons".}
 
@@ -23,7 +25,8 @@ not projected. Please, see http://spatialreference.org/.}
 in a polygon grid, if false,  mass / time (implicit) as points, in a similar fashion
 as EDGAR provide data.}
 
-\item{k}{Numeric to multiply emissions}
+\item{k}{Numeric to multiply emissions, applied after the aggregation
+with FN.}
 }
 \description{
 \code{\link{emis_grid}} allocates emissions proportionally to each grid
@@ -47,7 +50,9 @@ It is
 \strong{in km^2 and multiply by each column of the resulting emissions grid, and then sum.}
 
 
-\strong{4) If FN = "sum", is mass conservative!. }
+\strong{4) If FN = "sum", is mass conservative for each column: the}
+\strong{emissions of the parts of spobj outside g are not allocated.}
+\strong{Only numeric columns of spobj are gridded.}
 }
 \examples{
 \dontrun{

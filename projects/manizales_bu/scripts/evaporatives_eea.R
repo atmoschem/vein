@@ -1,8 +1,33 @@
 suppressWarnings(file.remove("emi/evaporatives.csv"))
 
 # adjustments
-metadata_evap <- metadata[metadata$fuel_eea_old %in% "G" &
+# evaporative emissions only exist in gasoline vehicles (ELEC, HY, D, GLP excluded)
+metadata_evap <- metadata[metadata$fuel %in% "G" &
+                            metadata$fuel_eea_old %in% "G" &
                             metadata$v_eea_old %in% c("PC", "LCV", "Motorcycle"), ]
+
+# remove stale EVAP_* files from vehicles without evaporative emissions ####
+evap_stale <- list.files(
+  path = "emi", pattern = "^EVAP_", recursive = TRUE, full.names = TRUE
+)
+evap_stale <- evap_stale[
+  !basename(dirname(evap_stale)) %in% metadata_evap$vehicles
+]
+if (length(evap_stale) > 0) {
+  file.remove(evap_stale)
+  switch(
+    language,
+    "portuguese" = message(
+      "\nEVAP antigos removidos: ", length(evap_stale), "\n"
+    ),
+    "english" = message(
+      "\nStale EVAP files removed: ", length(evap_stale), "\n"
+    ),
+    "spanish" = message(
+      "\nArchivos EVAP antiguos eliminados: ", length(evap_stale), "\n"
+    )
+  )
+}
 
 metadata_evap$v_eea_old <- ifelse(metadata_evap$v_eea_old == "LCV", "PC", metadata_evap$v_eea_old)
 metadata_evap$cc_eea_old <- ifelse(metadata_evap$cc_eea_old == "<3.5", "1400_2000", metadata_evap$cc_eea_old)
@@ -50,7 +75,7 @@ for (i in seq_along(metadata_evap$vehicles)) {
     veh = veh,
     lkm = net$lkm,
     ef = ef,
-    profile = tfs[[metadata$vehicles[i]]], 
+    profile = tfs[[metadata_evap$vehicles[i]]], 
     fortran = TRUE,
     nt = check_nt() / 2,
     simplify = TRUE,
@@ -73,9 +98,9 @@ for (i in seq_along(metadata_evap$vehicles)) {
     arra = array_x,
     by = "streets"
   )
-  x_ST$fuel <- metadata$fuel[i]
+  x_ST$fuel <- metadata_evap$fuel[i]
   
-  fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/EVAP_RUNNING_LOSSES.csv"), append = FALSE)
+  fwrite(x_ST, paste0("emi/", metadata_evap$vehicles[i], "/EVAP_RUNNING_LOSSES.csv"), append = FALSE)
   
 }
 
@@ -118,7 +143,7 @@ for (i in seq_along(metadata_evap$vehicles)) {
     veh = veh,
     lkm = net$lkm,
     ef = ef,
-    profile = tfs[[metadata$vehicles[i]]], 
+    profile = tfs[[metadata_evap$vehicles[i]]], 
     fortran = TRUE,
     nt = check_nt() / 2,
     simplify = TRUE,
@@ -141,9 +166,9 @@ for (i in seq_along(metadata_evap$vehicles)) {
     arra = array_x,
     by = "streets"
   )
-  x_ST$fuel <- metadata$fuel[i]
+  x_ST$fuel <- metadata_evap$fuel[i]
   
-  fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/EVAP_HOT_SOAK.csv"), append = FALSE)
+  fwrite(x_ST, paste0("emi/", metadata_evap$vehicles[i], "/EVAP_HOT_SOAK.csv"), append = FALSE)
   
 }
 
@@ -186,7 +211,7 @@ for (i in seq_along(metadata_evap$vehicles)) {
     veh = veh,
     lkm = net$lkm,
     ef = ef,
-    profile = tfs[[metadata$vehicles[i]]], 
+    profile = tfs[[metadata_evap$vehicles[i]]], 
     fortran = TRUE,
     nt = check_nt() / 2,
     simplify = TRUE,
@@ -209,9 +234,9 @@ for (i in seq_along(metadata_evap$vehicles)) {
     arra = array_x,
     by = "streets"
   )
-  x_ST$fuel <- metadata$fuel[i]
+  x_ST$fuel <- metadata_evap$fuel[i]
   
-  fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/EVAP_DIURNAL.csv"), append = FALSE)
+  fwrite(x_ST, paste0("emi/", metadata_evap$vehicles[i], "/EVAP_DIURNAL.csv"), append = FALSE)
   
   
 }

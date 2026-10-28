@@ -23,6 +23,11 @@ to each category of street}
 
 \item{verbose}{Logical; to show more info.}
 }
+\value{
+sf with the same rows and order of `streets`, adding one column
+for each column of `dfemis` (except `by`). Streets whose `by` is not
+present in `dfemis` receive 0 emissions.
+}
 \description{
 \code{\link{emis_to_streets}} allocates emissions proportionally to
 each feature. "Spatial" objects are converter to "sf" objects. Currently,

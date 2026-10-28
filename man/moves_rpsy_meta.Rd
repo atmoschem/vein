@@ -27,8 +27,8 @@ moves_rpsy_meta(
 
 \item{fuel_type}{Data.frame of fuelSubtypeID exported by MOVES.}
 
-\item{profile}{Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-the week}
+\item{profile}{Data.frame or Matrix with one row per hour and one column
+per vehicle, named as metadata$vehicles. A column "Hour" is ignored.}
 
 \item{agemax}{Integer; max age for the fleet, assuming the same for all vehicles.}
 

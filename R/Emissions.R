@@ -9,7 +9,8 @@
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param mass Character to be the time units as numerator, default "g" for grams
-#' @param time Character to be the time units as denominator, eg "h"
+#' @param time Character to be the time units as denominator, eg "h". When x
+#' has units and time is missing, x is converted to `mass`.
 #' @param object object with class "Emissions"
 #' @param pal Palette of colors available or the number of the position
 #' @param rev Logical; to internally revert order of rgb color vectors.
@@ -106,10 +107,16 @@ Emissions <- function(x, mass = "g", time, ...) {
   } else if ( inherits(x, "units" )) {
 
     e <- x
+    target <- if (missing(time)) mass else paste0(mass, "/", time)
 
-    if(as.character(units(e)) != paste0(mass, "/", time) ){
-      message("Converting ", as.character(units(e)), " to ", mass, "/", time)
-      e <- units::as_units(e, paste0(mass, " ", time, "-1"))
+    if(as.character(units(e)) != target){
+      message("Converting ", as.character(units(e)), " to ", target)
+      e <- tryCatch(
+        units::set_units(e, target, mode = "standard"),
+        error = function(err) {
+          stop("The units of x (", as.character(units(e)), ") cannot be converted to ",
+               target, ": ", conditionMessage(err), call. = FALSE)
+        })
     } else {
       message("Units are the same and no cerversions will be made")
     }
@@ -117,11 +124,13 @@ Emissions <- function(x, mass = "g", time, ...) {
 
   } else if( inherits(x, "numeric") | inherits(x, "integer")) {
 
-    e <- x*units::as_units("g")
+    e <- x*units::as_units(mass)
 
     if(!missing(time)){
       e <- e*units::as_units(1, paste0(time, "-1"))
     }
+  } else {
+    stop("Class of x must be 'sf', 'matrix', 'data.frame', 'units' or numeric")
   }
   return(e)
 }

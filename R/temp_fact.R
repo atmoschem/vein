@@ -21,7 +21,7 @@
 #' plot(pc_weeksf)
 #' }
 temp_fact <- function(q, pro, net, time) {
-  if (missing(q) | is.null(q)) {
+  if (missing(q) || is.null(q)) {
     stop("No traffic data")
   }
   if(!missing(time)){

@@ -70,10 +70,11 @@ switch(language,
 f <- list.files(path = "emi", pattern = "STREETS", full.names = T, recursive = T)
 
 # emissions differnet than break and tire wear
+# the pattern is anchored: "pollutantID_3" must not also read pollutantID_30..39
 for(i in seq_along(fff)) {
   if(fff[i] %in% c(106, 107, 116, 117)) next
   cat("Reading pollutantID", fff[i], "\n")
-  df <- rbindlist(lapply(grep(pattern = paste0("pollutantID_", fff[i]), x = f, value = T), fread))
+  df <- rbindlist(lapply(grep(pattern = paste0("pollutantID_", fff[i], "(\\D|$)"), x = f, value = T), fread))
   df[, 
      lapply(.SD, sum, na.rm = T),
      .SDcols = ntfs,
@@ -90,7 +91,7 @@ nl <-names(lemi_elec)
 for(i in seq_along(nl)) {
   dx <- lemi_elec[[nl[i]]]
   dx[, pollutantID := NULL]
-  df <- rbindlist(lapply(grep(pattern = paste0("pollutantID_", nl[i]), x = f, value = T), fread))
+  df <- rbindlist(lapply(grep(pattern = paste0("pollutantID_", nl[i], "(\\D|$)"), x = f, value = T), fread))
   
   df <- rbind(dx, df)
   df[, 
@@ -153,10 +154,10 @@ switch(language,
        "english" = message("\nAgregating emissions in data.table...\n"),
        "spanish" = message("\nAgregando emisiones en data.table...\n")
 )
-f <- list.files(path = "emi", pattern = "DF", full.names = T, recursive = T)
-f1 <- fread(f[1])
-f2 <- fread(f[2])
-f3 <- fread(f[3])
+# explicit files instead of positions in list.files(), whose order depends on the locale
+f1 <- fread("emi/emissions_rate_per_distance/DF.csv.gz")
+f2 <- fread("emi/emissions_rate_per_distance/DF_ELEC.csv.gz")
+f3 <- fread("emi/emissions_rate_per_vehicle/DF.csv.gz")
 f2$fuelTypeID <- 9
 f2$fuel <- "ELEC"
 names(f1)

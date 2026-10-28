@@ -14,7 +14,10 @@ numberOfDays <- function(date) {
   return(as.integer(format(date - 1, format="%d")))
 }
 
-factor_emi <- numberOfDays(date = date) # daily to month
+# tfs is hourly and already spans the whole month (744 rows for March 2020),
+# so sums over tfs are monthly. Scale the period covered by tfs to the month:
+# 1 here, 31 only if tfs were a single day. The old "* days" counted 31 times.
+factor_emi <- numberOfDays(date = date) * 24 / nrow(tfs) # tfs period to month
 
 # 
 # check hours
@@ -133,7 +136,7 @@ for (i in seq_along(pol)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/ano",
+      y = "t/mês",
       title = paste0(pol[i], ": ", tit)
     ) +
     scale_fill_gradientn(pol[i], colours = cpt()) +
@@ -174,7 +177,7 @@ for (i in seq_along(pole)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/ano",
+      y = "t/mês",
       title = paste0(pole[i], ": ", tit)
     ) +
     scale_fill_gradientn(pole[i], colours = cpt()) +
@@ -210,7 +213,7 @@ for (i in seq_along(pol)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/ano",
+      y = "t/mês",
       title = paste0(pol[i], ": ", tit)
     ) +
     scale_x_discrete(limits = rev(metadata$vehicles)) +
@@ -245,7 +248,7 @@ for (i in seq_along(pol)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/ano",
+      y = "t/h",
       title = paste0(pol[i], ": ", tit)
     ) +
     theme_bw()
@@ -278,7 +281,7 @@ for (i in seq_along(pole)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/ano",
+      y = "t/h",
       title = paste0(pol[i], ": ", tit)
     ) +
     theme_bw()
@@ -305,7 +308,7 @@ for (i in seq_along(pol)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/ano",
+      y = "t/mês",
       title = ifelse(pol[i] == "PM",
         paste0(pol[i], ": ", tit, " sem ressuspenssao "),
         paste0(pol[i], ": ", tit)

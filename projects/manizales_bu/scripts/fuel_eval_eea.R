@@ -332,7 +332,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
       lkm = net$lkm, 
       ef = ef, 
       efcold = efcold, 
-      beta = matrix(a, ncol= ncol(x)), 
+      beta = matrix(a, ncol= ncol(veh)), 
       speed = speed, 
       agemax = 40, 
       simplify = T,

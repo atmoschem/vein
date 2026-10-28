@@ -10,7 +10,7 @@ colplot(
   xlab = "",
   ylab = "",
   xlim = c(1, nrow(df)),
-  ylim = range(unlist(df[[cols]]), na.rm = TRUE),
+  ylim = NULL,
   main = NULL,
   theme = "black",
   col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4], n = length(names(df))),
@@ -18,6 +18,7 @@ colplot(
   lwd = 2,
   pch = 1:ncol(df),
   familyfont = "",
+  all_values = FALSE,
   ...
 )
 }
@@ -32,7 +33,7 @@ colplot(
 
 \item{xlim}{x limits}
 
-\item{ylim}{y limits}
+\item{ylim}{y limits. Default (NULL) is from 0 to the maximum value.}
 
 \item{main}{Character, a main title for the plot, see also \code{\link{title}}.}
 
@@ -51,6 +52,9 @@ lines. Finally, "n" does not produce any points or lines.}
 
 \item{familyfont}{"Character" to specify font, default is"", options "serif",
 "sans", "mono" or more according device}
+
+\item{all_values}{Logical; when FALSE (default) values equal to 0 are not
+plotted.}
 
 \item{...}{plot arguments}
 }

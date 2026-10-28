@@ -21,12 +21,17 @@ emis_wear(
 
 \item{lkm}{Length of the road in km.}
 
-\item{ef}{list of emission factor functions class "EmissionFactorsList",
-length equals to hours.}
+\item{ef}{Emission factors from \code{\link{ef_wear}}: a data.frame with
+one column per hour (hour x day columns), or a single value (e.g. road wear)
+used for all hours.}
 
-\item{what}{Character for indicating "tyre", "break" or "road"}
+\item{what}{Character for indicating "tyre", "break" or "road". Kept for
+compatibility; it is not used because the speed correction is applied by
+\code{\link{ef_wear}}.}
 
-\item{speed}{Speed data-frame with number of columns as hours}
+\item{speed}{Speed data-frame with number of columns as hours. Kept for
+compatibility; it is not used because the speed correction is applied by
+\code{\link{ef_wear}}.}
 
 \item{agemax}{Age of oldest vehicles for that category}
 
@@ -43,6 +48,13 @@ emission estimation  g/h
 \description{
 \code{emis_wear} estimates wear emissions. The sources are tyres,
 breaks and road surface.
+}
+\note{
+\code{ef} must be the output of \code{\link{ef_wear}}, with one column
+per hour (hour x day columns). The speed correction factor is part of
+\code{ef}. Before vein 2.0.0, \code{emis_wear} applied the speed correction
+a second time (using the brake curve for tyres and vice versa) and
+always read the speed of the first day.
 }
 \examples{
 \dontrun{

@@ -1,6 +1,6 @@
 # Weekly hourly speed per link ------------------------------------------------
 # Computes the speed of every link for each of the 168 hours of a week using
-# the BPR function in netspeed(). Requires: net, categories, language, verbose
+# the BPR function in netspeed(). Requires: net, categories, tfs, language, verbose
 
 switch(
   language,
@@ -10,13 +10,20 @@ switch(
 )
 
 if (!requireNamespace("vein", quietly = TRUE)) stop("vein needed")
-data("pc_profile", package = "vein", envir = environment())
 
-# total traffic flow per link (veh/h)
-total_flow <- net$pc + net$lcv + net$trucks + net$bus + net$mc
-
-# 168 hourly flows
-pcw <- temp_fact(total_flow, pc_profile)
+# total traffic flow per link for the 168 hours of the week, with the same
+# temporal profiles used for the emissions (tfs; a daily profile is repeated
+# over the 7 days). One profile per category, as in scripts/pavedroads.R
+tf <- list(
+  pc = tfs$PC_G,
+  lcv = tfs$LCV_G,
+  trucks = tfs$TRUCKS_L_D,
+  bus = tfs$BUS_URBAN_D,
+  mc = tfs$MC_150_G
+)
+pcw <- Reduce(`+`, lapply(categories, function(cc) {
+  temp_fact(net[[cc]], rep_len(as.numeric(tf[[cc]]), 168))
+}))
 
 # hourly speeds (BPR)
 speed_week <- netspeed(

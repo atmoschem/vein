@@ -1,5 +1,5 @@
 suppressWarnings(file.remove("emi/DF_WEAR.csv"))
-suppressWarnings(file.remove("emi/DF_WEAR_STREET.csv"))
+suppressWarnings(file.remove("emi/DF_WEAR_STREETS.csv"))
 
 
 switch(language,
@@ -54,7 +54,7 @@ for (i in seq_along(metadata$vehicles)) {
         size = metadata$t[i],
         fuel = metadata$f[i],
         pollutant = pol[j],
-        type_emi = "Exhaust",
+        type_emi = wear[k],
         by = "veh"
       )
       
@@ -75,12 +75,11 @@ for (i in seq_along(metadata$vehicles)) {
       x_STREETS <- data.frame(
         id = net$id,
         g = rowSums(E, na.rm  = T),
-        pollutant = pol[j],
         veh = metadata$vehicles[i],
         size = metadata$t[i],
         fuel = metadata$f[i],
         pollutant = pol[j],
-        type_emi = "Exhaust",
+        type_emi = wear[k],
         by = "veh"
       )
       

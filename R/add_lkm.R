@@ -6,7 +6,9 @@
 #'
 #' @return Objects of class "data.frame" or "units"
 #'
-#' @param x Object with class "data.frame", "matrix",  "numeric" or "integer"
+#' @param x Object with class "data.frame", "matrix",  "numeric", "integer"
+#' or "units". Objects (or columns) with class "units" are converted to
+#' 'km'.
 #' @importFrom units as_units
 #'
 #' @examples \dontrun{
@@ -17,18 +19,27 @@
 #' }
 #' @export
 add_lkm <- function(x) {
+  to_u <- function(v) {
+    if(inherits(v, "units")) {
+      units::set_units(v, "km", mode = "standard")
+    } else {
+      v*units::as_units("km")
+    }
+  }
   if ( is.matrix(x) ) {
     e <- as.data.frame(x)
     for(i in 1:ncol(e)){
-      e[,i] <- e[,i]*units::as_units("km")
+      e[,i] <- to_u(e[,i])
     }
   } else if ( is.data.frame(x) ) {
     e <- x
     for(i in 1:ncol(x)){
-      e[,i] <- e[,i]*units::as_units("km")
+      e[,i] <- to_u(e[,i])
     }
-  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
-    e <- x*units::as_units("km")
+  } else if( is.numeric(x) ) {
+    e <- to_u(x)
+  } else {
+    stop("'x' must be of class 'data.frame', 'matrix', 'units', 'numeric' or 'integer'")
   }
   return(e)
 }
@@ -41,7 +52,9 @@ add_lkm <- function(x) {
 #'
 #' @return Objects of class "data.frame" or "units"
 #'
-#' @param x Object with class "data.frame", "matrix",  "numeric" or "integer"
+#' @param x Object with class "data.frame", "matrix",  "numeric", "integer"
+#' or "units". Objects (or columns) with class "units" are converted to
+#' 'miles'.
 #' @importFrom units as_units
 #'
 #' @examples \dontrun{
@@ -52,18 +65,27 @@ add_lkm <- function(x) {
 #' }
 #' @export
 add_miles <- function(x) {
+  to_u <- function(v) {
+    if(inherits(v, "units")) {
+      units::set_units(v, "miles", mode = "standard")
+    } else {
+      v*units::as_units("miles")
+    }
+  }
   if ( is.matrix(x) ) {
     e <- as.data.frame(x)
     for(i in 1:ncol(e)){
-      e[,i] <- e[,i]*units::as_units("miles")
+      e[,i] <- to_u(e[,i])
     }
   } else if ( is.data.frame(x) ) {
     e <- x
     for(i in 1:ncol(x)){
-      e[,i] <- e[,i]*units::as_units("miles")
+      e[,i] <- to_u(e[,i])
     }
-  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
-    e <- x*units::as_units("miles")
+  } else if( is.numeric(x) ) {
+    e <- to_u(x)
+  } else {
+    stop("'x' must be of class 'data.frame', 'matrix', 'units', 'numeric' or 'integer'")
   }
   return(e)
 }

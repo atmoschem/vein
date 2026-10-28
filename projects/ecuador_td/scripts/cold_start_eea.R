@@ -29,24 +29,20 @@ for (i in seq_along(metadata_cold$vehicles)) {
   
   for (j in seq_along(pol)) {
     
-    f_fcorr <- fcorr[veh == metadata_cold$v_eea_old_fuel[i] &
-                       pol == pol[j]]
+    # local names that are not columns of fcorr (data.table scoping)
+    pj <- pol[j]
+    vj <- metadata_cold$v_eea_old_fuel[i]
+    f_fcorr <- fcorr[veh == vj & pol == pj]
     
-    # deterioration factor
-    if(pol[j] %in% c("CO", "NO", "NO2", "HC", "NMHC")) {
-      
-      (efdet <- emis_det(po = ifelse(
-        pol[j] %in% c("NO", "NOx", "NO2"),"NOx",
-        ifelse(
-          pol[j] %in% c("NMHC", "HC"),"HC",
-          "CO"
-        )),
-        cc = "<=1400",
-        eu = cate[1:ncol(veh)], 
-        km = cumsum(mileage[[metadata$vehicles[i]]])))
-    } else {
-      efdet <- 1
-    }
+    # deterioration factor, one per age (scripts/deterioration.R)
+    efdet <- det_factor(
+      p = pol[j],
+      family = metadata_cold$family[i],
+      fuel = metadata_cold$fuel_eea_old[i],
+      cc = metadata_cold$cc_eea_old[i],
+      eu = cate[1:ncol(veh)],
+      km = cumsum(mileage[[metadata_cold$vehicles[i]]])[1:ncol(veh)]
+    )
     
     cat(pol[j], " ")
     
@@ -60,24 +56,18 @@ for (i in seq_along(metadata_cold$vehicles)) {
                        f = if(metadata_cold$fuel_eea_old[i] == "LPG" & pol[j] == "PM") "G" else  metadata_cold$fuel_eea_old[i],  
                        p = pol[j],
                        eu = cate,
-                       speed = Speed(metadata$speed[i]),
+                       speed = Speed(metadata_cold$speed[i]),
                        fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr$value)[1:length(veh)]
     
     ef <- ef*efdet
-    k <- 1
     
+    # cold/hot ratios exist for NOx and HC: NO and NO2 use the NOx ratio,
+    # NMHC the HC ratio (the hot EF above is already pollutant specific)
     poly <- ifelse(
       pol[j] %in% c("NO", "NO2"), "NOx",
       ifelse(
         pol[j] %in% c("NMHC"), "HC",
         pol[j]
-      ))
-    
-    k <- ifelse(
-      pol[j] %in% c("NO", "NMHC"), 0.9,
-      ifelse(
-        pol[j] %in% c("NO2"), 0.1,
-        1
       ))
     
     
@@ -102,7 +92,8 @@ for (i in seq_along(metadata_cold$vehicles)) {
       fortran = TRUE,
       beta = matrix(a, nrow = 1),
       nt = nt,
-      pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+      # monthly profile of the fuel used by the vehicle (diesel or gasoline)
+      pro_month = pmonth[fuel == ifelse(metadata_cold$fuel[i] == "D", "D", "G")]$consumption_lt,
       verbose = verbose,
       params = list(
         veh = metadata_cold$vehicles[i],

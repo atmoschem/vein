@@ -48,7 +48,7 @@ for (i in seq_along(metadata_evap$vehicles)) {
   array_x <- emis_evap(veh = veh, 
                            x =  mileage[[metadata_evap$vehicles[i]]], 
                            hotfi = ef[,1:ncol(veh)],
-                       pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+                       pro_month = pmonth[fuel == ifelse(metadata_evap$fuel[i] == "D", "D", "G")]$consumption_lt,
                        params = list(
                            veh = metadata_evap$vehicles[i],
                            size = metadata_evap$size[i],
@@ -101,7 +101,7 @@ for (i in seq_along(metadata_evap$vehicles)) {
   array_x <- emis_evap(veh = veh, 
                        x =  mileage[[metadata_evap$vehicles[i]]], 
                        hotfi = ef[,1:ncol(veh)],
-                       pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+                       pro_month = pmonth[fuel == ifelse(metadata_evap$fuel[i] == "D", "D", "G")]$consumption_lt,
                        params = list(
                          veh = metadata_evap$vehicles[i],
                          size = metadata_evap$size[i],
@@ -155,7 +155,7 @@ for (i in seq_along(metadata_evap$vehicles)) {
   array_x <- emis_evap(veh = veh, 
                        x =  mileage[[metadata_evap$vehicles[i]]], 
                        hotfi = ef[,1:ncol(veh)],
-                       pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+                       pro_month = pmonth[fuel == ifelse(metadata_evap$fuel[i] == "D", "D", "G")]$consumption_lt,
                        params = list(
                          veh = metadata_evap$vehicles[i],
                          size = metadata_evap$size[i],

@@ -130,8 +130,19 @@ they are internally changed to the new convention:
 PC_ELEC, LCV_ELEC, TRUCKS_ELEC, BUS_ELEC,
 MC_150_ELEC, MC_150_500_ELEC, MC_500_ELEC
 
-If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
-it will show a warning
+If pollutant is "SO2", it needs sppm, with the same length as veh. Each
+vehicle uses its own sppm (SO2 = FC * 2 * sppm * 1e-6) and ethanol vehicles
+("PC_E", "PC_FE", "LCV_E", "LCV_FE", "MC_150_FE", "MC_150_500_FE",
+"MC_500_FE") get 0.
+
+For "CO", "HC", "NMHC", "NOx", "NO", "NO2" and "RCHO" of otto PC and LCV,
+the pollutant name returns the deteriorated emission factor and the
+suffix "_0km" the emission factor of new vehicles (in earlier versions "CO",
+"HC" and "NMHC" were swapped with their "_0km" versions, "NOx_0km" held
+deteriorated NO and "NO" was not deteriorated).
+
+When agemax is larger than the available ages (50), the oldest emission
+factor is repeated.
 
 \strong{Emission factor for vehicles older than the reported by CETESB were filled with las highest EF}
 

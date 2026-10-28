@@ -74,13 +74,13 @@ if(!length(intersect(metadata$vehicles, names(mileage))) == length(metadata$vehi
 if(!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles)) {
   switch (language,
           "portuguese" = stop("Precisa adicionar coluna ",
-                              setdiff(metadata$vehicles, names(mileage)),
+                              setdiff(metadata$vehicles, names(tfs)),
                               " em `tfs`"),
           "english" = stop("You need to add column ",
-                           setdiff(metadata$vehicles, names(mileage)),
+                           setdiff(metadata$vehicles, names(tfs)),
                            " in `tfs`"),
           "spanish" = stop("Necesitas agregar la columna ",
-                           setdiff(metadata$vehicles, names(mileage)),
+                           setdiff(metadata$vehicles, names(tfs)),
                            " en `tfs`"))
 }
 
@@ -88,13 +88,13 @@ if(!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicles
 if(!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicles)) {
   switch (language,
           "portuguese" = stop("Precisa adicionar coluna ",
-                              setdiff(metadata$vehicles, names(mileage)),
+                              setdiff(metadata$vehicles, names(veh)),
                               " em `veh`"),
           "english" = stop("You need to add column ",
-                           setdiff(metadata$vehicles, names(mileage)),
+                           setdiff(metadata$vehicles, names(veh)),
                            " in `veh`"),
           "spanish" = stop("Necesitas agregar la columna ",
-                           setdiff(metadata$vehicles, names(mileage)),
+                           setdiff(metadata$vehicles, names(veh)),
                            " en `veh`"))
 }
 
@@ -129,25 +129,24 @@ veh[is.na(veh)] <- 0
 # 
 # veh$LCV_E <- ifelse(year_select %in% 1978:2006, veh$PC_E, 0)
 
-veh$PC_FG <- ifelse(year_select <2003, 0, veh$PC_FG)
+# flex vehicles do not exist before 2003 (PC, LCV) and 2009 (MC): zero the
+# whole column for earlier inventory years (a scalar `ifelse()` here would
+# return a single value and recycle it over the whole column)
+if (year_select < 2003) {
+  veh$PC_FG <- 0
+  veh$PC_FE <- 0
+  veh$LCV_FG <- 0
+  veh$LCV_FE <- 0
+}
 
-veh$PC_FE <- ifelse(year_select <2003, 0, veh$PC_FE)
-
-veh$LCV_FG <- ifelse(year_select <2003, 0, veh$LCV_FG)
-
-veh$LCV_FE <- ifelse(year_select <2003, 0, veh$LCV_FE)
-
-veh$MC_150_FG <- ifelse(year_select <2009, 0, veh$MC_150_FG)
-
-veh$MC_150_500_FG <- ifelse(year_select <2009, 0, veh$MC_150_500_FG)
-
-veh$MC_500_FE <- ifelse(year_select <2009, 0, veh$MC_500_FG)
-
-veh$MC_150_FE <- ifelse(year_select <2009, 0, veh$MC_150_FE)
-
-veh$MC_150_500_FE <- ifelse(year_select <2009, 0, veh$MC_150_500_FE)
-
-veh$MC_500_FE <- ifelse(year_select <2009, 0, veh$MC_500_FE)
+if (year_select < 2009) {
+  veh$MC_150_FG <- 0
+  veh$MC_150_500_FG <- 0
+  veh$MC_500_FG <- 0
+  veh$MC_150_FE <- 0
+  veh$MC_150_500_FE <- 0
+  veh$MC_500_FE <- 0
+}
 
 # In this way, all vehicles are considered with a 40 year_selects lifetime.
 
@@ -413,9 +412,9 @@ switch (language,
 
 vein_notes(notes = c("Default notes for vein::get_project"), 
            file = "notes/README", 
-           title = paste0("Metropolitan Area of São Paulo (MASP) ", year_select), 
+           title = paste0("Brazil, state ", UF_select, " ", year_select), 
            approach = 'Top-Down', 
-           traffic = "Samples of travel demand models for MASP", 
+           traffic = "DENATRAN", 
            composition = "CETESB", 
            ef = paste0("CETESB ", scale), 
            cold_start = "Not Applicable", 

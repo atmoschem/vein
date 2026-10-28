@@ -1,10 +1,13 @@
 suppressWarnings(file.remove("emi/exhaust.csv"))
 
+# det_factor() and apply_det()
+source("scripts/deterioration.R", encoding = "UTF-8")
+
 setDT(pmonth)
 
 # Escapamento ####
 switch(language,
-       "portuguese" = cat("Estimando emisses Hot Running\n"),
+       "portuguese" = cat("Estimando emissões Hot Running\n"),
        "english" = cat("Estimating emissions Hot Running\n"),
        "spanish" = cat("Estimando emisiones Hot Running\n")
 )
@@ -71,25 +74,23 @@ for (i in seq_along(metadata$vehicles)) {
   for (j in seq_along(pol)) {
     cat(pol[j], " ")
     
-    f_fcorr <- fcorr[veh == metadata$v_eea_old_fuel[i] &
-                       pol == pol[j]]
+    # local names that are not columns of fcorr (data.table scoping)
+    pj <- pol[j]
+    vj <- metadata$v_eea_old_fuel[i]
+    f_fcorr <- fcorr[veh == vj & pol == pj]
     
     
-    # deterioration factor
-    if(pol[j] %in% c("CO", "NO", "NO2", "HC", "NMHC")) {
-      
-      (efdet <- emis_det(po = ifelse(
-        pol[j] %in% c("NO", "NOx", "NO2"),"NOx",
-        ifelse(
-          pol[j] %in% c("NMHC", "HC"),"HC",
-          "CO"
-        )),
-        cc = "<=1400",
-        eu = cate[1:ncol(veh)], 
-        km = cumsum(mileage[[metadata$vehicles[i]]])))
-    } else {
-      efdet <- 1
-    }
+    # deterioration factor, one per age (scripts/deterioration.R)
+    efdet <- det_factor(
+      p = pol[j],
+      family = metadata$family[i],
+      fuel = metadata$fuel_eea_old[i],
+      cc = metadata$cc_eea_old[i],
+      eu = cate[1:ncol(veh)],
+      km = cumsum(mileage[[metadata$vehicles[i]]])[1:ncol(veh)]
+    )
+    # applied across the age columns; `veh` itself is not modified
+    veh_j <- apply_det(veh, efdet)
     
     
     if(metadata$v_eea_old[i] %in% c("PC", "LCV", "Motorcycle")) {
@@ -108,7 +109,6 @@ for (i in seq_along(metadata$vehicles)) {
                load = 0)
       })
       
-      veh <- veh*efdet
       
       
       
@@ -116,7 +116,7 @@ for (i in seq_along(metadata$vehicles)) {
       if(metadata$fuel_eea_old[i] == "LPG" & pol[j] == "PM") ef <- ef*0
       
     } else {
-      ef <-       ef <- lapply(seq_along(cate), function(eu) {
+      ef <- lapply(seq_along(cate), function(eu) {
         ef_hdv_speed(v = metadata$v_eea_old[i],
                      t = metadata$t_eea_old[i],
                      g = metadata$cc_eea_old[i],
@@ -125,7 +125,7 @@ for (i in seq_along(metadata$vehicles)) {
                      l = 0.5,
                      p = pol[j],
                      speed = Speed(metadata$speed[i]), 
-                     fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr)
+                     fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr$value)
       })
     }
     
@@ -148,7 +148,7 @@ for (i in seq_along(metadata$vehicles)) {
     }
     
     array_x <- emis_hot_td(
-      veh = veh,
+      veh = veh_j,
       lkm = mileage[[metadata$vehicles[i]]],
       ef = ef[, 1:ncol(veh)],
       fortran = TRUE,
@@ -172,7 +172,7 @@ for (i in seq_along(metadata$vehicles)) {
 
 
 switch(language,
-       "portuguese" = message("\nEmisses em: /emi/exhaust.csv:"),
+       "portuguese" = message("\nEmissões em: /emi/exhaust.csv:"),
        "english" = message("\nEmissions in: /emi/exhaust.csv"),
        "spanish" = message("\nEmisiones en: /emi/exhaust.csv")
 )

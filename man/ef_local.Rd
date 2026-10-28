@@ -33,7 +33,10 @@ be `Age`    `Year`    `Pollutant` and all the vehicle categories...}
 Age, Year, Brazilian emissions standards and its euro equivalents.}
 
 \item{project}{Character showing the method for projecting emission factors in
-future. Currently the only value is "constant"}
+future. Currently the only value is "constant". When \code{year} is after
+the newest year of \code{ef}, the newest emission factor is repeated for
+the new ages, also when \code{full = TRUE} (ignored before vein 2.0.0); in
+that case the columns \code{Age} and \code{Year} are recomputed.}
 
 \item{verbose}{Logical; To show more information}
 }

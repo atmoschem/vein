@@ -3,7 +3,7 @@
 #' This dataset is an sf class object with roads
 #' from a traffic simulation made by CET Sao Paulo, Brazil
 #'
-#' @format A Spatial data.frame (sf) with 1796 rows and 1 variables:
+#' @format A Spatial data.frame (sf) with 1505 rows and 9 variables:
 #' \describe{
 #'   \item{ldv}{Light Duty Vehicles (veh/h)}
 #'   \item{hdv}{Heavy Duty Vehicles (veh/h)}

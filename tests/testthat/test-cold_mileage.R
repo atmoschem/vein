@@ -10,9 +10,10 @@ test_that("cold_mileage works", {
   expect_error(cold_mileage(ltrip = as.numeric(lkm), rbind(ta, ta)),
                ".?")
 
-  expect_error(cold_mileage(ltrip = units::set_units(as.numeric(lkm), "m"),
+  # lengths in m are converted to km
+  expect_equal(cold_mileage(ltrip = units::set_units(lkm, "m"),
                             rbind(ta, ta)),
-               ".?")
+               cold_mileage(lkm, rbind(ta, ta)))
   expect_error(cold_mileage(ltrip = units::set_units(as.numeric(lkm), "m"),
                             remove_units(rbind(ta, ta))),
                ".?")

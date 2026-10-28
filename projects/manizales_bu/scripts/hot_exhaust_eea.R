@@ -1,5 +1,8 @@
 suppressWarnings(file.remove("emi/exhaust.csv"))
 
+# det_factor() and apply_det()
+source("scripts/deterioration.R", encoding = "UTF-8")
+
 
 # Escapamento ####
 switch(language,
@@ -68,25 +71,23 @@ for (i in seq_along(metadata$vehicles)) {
   for (j in seq_along(pol)) {
     cat(pol[j], " ")
     
-    f_fcorr <- fcorr[veh == metadata$v_eea_old_fuel[i] &
-                       pol == pol[j]]
+    # local names that are not columns of fcorr (data.table scoping)
+    pj <- pol[j]
+    vj <- metadata$v_eea_old_fuel[i]
+    f_fcorr <- fcorr[veh == vj & pol == pj]
     
     
-    # deterioration factor
-    if(pol[j] %in% c("CO", "NO", "NO2", "HC", "NMHC")) {
-      
-      (efdet <- emis_det(po = ifelse(
-        pol[j] %in% c("NO", "NOx", "NO2"),"NOx",
-        ifelse(
-          pol[j] %in% c("NMHC", "HC"),"HC",
-          "CO"
-        )),
-        cc = "<=1400",
-        eu = cate[1:ncol(veh)], 
-        km = cumsum(mileage[[metadata$vehicles[i]]])))
-    } else {
-      efdet <- 1
-    }
+    # deterioration factor, one per age (scripts/deterioration.R)
+    efdet <- det_factor(
+      p = pol[j],
+      family = metadata$family[i],
+      fuel = metadata$fuel_eea_old[i],
+      cc = metadata$cc_eea_old[i],
+      eu = cate[1:ncol(veh)],
+      km = cumsum(mileage[[metadata$vehicles[i]]])[1:ncol(veh)]
+    )
+    # applied across the age columns; `veh` itself is not modified
+    veh_j <- apply_det(veh, efdet)
     
     
     if(metadata$v_eea_old[i] %in% c("PC", "LCV", "Motorcycle")) {
@@ -101,9 +102,11 @@ for (i in seq_along(metadata$vehicles)) {
                          # speed = Speed(metadata$speed[i]),
                          fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr$value)
       })
-      veh <- veh*efdet
       
-      if(metadata$fuel_eea_old[i] == "LPG" & pol[j] == "PM") ef <- ef*0
+      # LPG has no PM exhaust: zero the speed functions (ef is a list of functions)
+      if(metadata$fuel_eea_old[i] == "LPG" & pol[j] == "PM") {
+        ef <- lapply(ef, function(f) function(V) 0 * f(V))
+      }
       
     } else {
       ef <- lapply(seq_along(cate), function(eu) {
@@ -115,7 +118,7 @@ for (i in seq_along(metadata$vehicles)) {
                          l = 0.5,
                          p = pol[j],
                          # speed = Speed(metadata$speed[i]), 
-                         fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr)
+                         fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr$value)
       })
     }
     
@@ -134,7 +137,7 @@ for (i in seq_along(metadata$vehicles)) {
     }
     
     array_x <- emis(
-      veh = veh, 
+      veh = veh_j, 
       lkm = net$lkm, 
       ef = ef, 
       speed = speed, 
@@ -167,7 +170,7 @@ for (i in seq_along(metadata$vehicles)) {
     
     x_ST$fuel <- metadata$fuel[i]
     
-  fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/", pol[j], ".csv"), append = TRUE)
+  fwrite(x_ST, paste0("emi/", metadata$vehicles[i], "/", pol[j], ".csv"), append = FALSE)
     
     
     

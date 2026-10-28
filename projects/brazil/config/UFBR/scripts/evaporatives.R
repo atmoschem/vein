@@ -8,7 +8,16 @@ suppressWarnings(file.remove("emi/evaporatives.csv"))
 meta_ev <- metadata[metadata$fuel != "D", ]
 veh_ev <- meta_ev$vehicles
 
-# temperature
+# temperature: one estimate per scenario. Scenarios are labelled in type_emi;
+# set `evap_scenario` in main.R to keep only one (several scenarios in the same
+# table must not be added together)
+if (exists("evap_scenario") && !is.null(evap_scenario)) {
+  meto <- meto[scenario %in% evap_scenario]
+  if (nrow(meto) == 0) {
+    stop("`evap_scenario` (", paste(evap_scenario, collapse = ", "),
+         ") not found in met for year ", year_selected)
+  }
+}
 t_sc <- split(meto, meto$scenario)
 sc <- names(t_sc)
 
@@ -21,13 +30,19 @@ switch (language,
 
 
 for(tt in seq_along(t_sc)) {
-  met <- t_sc[[tt]]
   
   for (rr in seq_along(reg)) {
     
     cat("\n", reg[rr],  " ")
     
-    met <- meto[region == reg[rr]]
+    # monthly temperature of this scenario and region (repeated rows averaged)
+    met <- t_sc[[tt]][region == reg[rr],
+                      .(Temperature = mean(Temperature)),
+                      keyby = Month]
+    if (!identical(as.numeric(met$Month), as.numeric(1:12))) {
+      stop("met must have the 12 months for region ", reg[rr],
+           " and scenario ", sc[tt])
+    }
     
     te <- met$Temperature
     bb <-   (0+15)/2
@@ -72,7 +87,7 @@ for(tt in seq_along(t_sc)) {
     
     tdf <- c(rep("Diurnal", length(met$ef_d)),
              rep("Running Losses", length(met$ef_rl)),
-             rep("Hoat Soak", length(met$ef_hs)))
+             rep("Hot Soak", length(met$ef_hs)))
     
     
     
@@ -144,91 +159,88 @@ for(tt in seq_along(t_sc)) {
     
     
     
-    for(mm in 1:12) {
-      met <- met[Month == mm]
+    # each vehicle, evaporative type and month is estimated and written once
+    for(i in seq_along(veh_ev)) {
       
-      cat(sprintf("%02d", mm), " ")
+      x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
       
-      for(i in seq_along(veh_ev)) {
+      x[is.na(x)] <- 0
+      
+      x <- x[region == reg[rr], ]
+      
+      x$region <- NULL
+      
+      setDF(x)
+      
+      # monthly share of fuel sales, Jan..Dec
+      dm <- pmonth[region == reg[rr] &
+                     fuel == meta_ev$fuel[i]][order(m)]$consumption_t
+      if (length(dm) != 12) stop("pmonth must have 12 months for ", reg[rr], " fuel ", meta_ev$fuel[i])
+      dm <- rep(as.numeric(dm)/sum(as.numeric(dm)), 3)
+      
+      mon <- rep(met$Month, 3)
+      
+      for(eva in seq_along(dd)) {
         
-        x <- readRDS(paste0("veh/", veh_ev[i], ".rds"))
+        xx <- ef_cetesb(
+          p = dd[eva], 
+          veh = veh_ev[i], 
+          year = year_selected,
+          scale = scale, 
+          agemax = ncol(x),
+          verbose = verbose)
         
-        x[is.na(x)] <- 0
-        
-        x <- x[region == reg[rr], ]
-        
-        x$region <- NULL
-        
-        setDF(x)
-        
-        dm <- pmonth[region == reg[rr] &
-                       fuel == meta_ev$fuel[i]]$consumption_t
-        dm <- rep(dm/sum(dm), 3)
-        
-        mon <- rep(1:12, 3)
-        
-        for(eva in seq_along(dd)) {
+        if(tdf[eva] == "Diurnal") {
+          # diurnal: g/day* day/km= g/km
+          xx <- xx/(mileage[[veh_ev[i]]]/365) # mean daily mileage
           
-          xx <- ef_cetesb(
-            p = dd[eva], 
-            veh = veh_ev[i], 
-            year = year_selected,
-            scale = scale, 
-            agemax = ncol(x),
-            verbose = verbose)
-          
-          if(tdf[eva] == "Diurnal") {
-            # diurnal: g/day* day/km= g/km
-            xx <- xx/(mileage[[veh_ev[i]]]/365) # mean daily mileage
-            
-          } else {
-            # hot soak
-            #running losses
-            xx <- xx*meta_ev$trips_day[i]/(mileage[[veh_ev[i]]]/365) # quilometragem medio diario
-          }
-          
-          # muda NaNaN para 0
-          xx[is.na(xx)] <- 0
-          
-          array_x <- emis_hot_td(
-            veh = x*as.numeric(dm)[eva],
-            lkm = mileage[[veh_ev[i]]], 
-            ef = xx, 
-            fortran = TRUE, 
-            nt = check_nt()*0.9,
-            verbose = verbose,
-            params = list(
-              veh = veh_ev[i],
-              size = meta_ev$size[i],
-              fuel = meta_ev$fuel[i],
-              pollutant = "NMHC",
-              type_emi = paste0("Evaporatives ", sc[tt]),
-              subtype_emi = tdf[eva],
-              baseyear = year_selected))
-          
-          array_x$month <- mon[eva]
-          array_x$region <- reg[rr]
-          setDT(array_x)
-          array_x <- array_x[, 
-                             c("emissions",
-                               "rows",
-                               "age",
-                               "month",
-                               "veh",
-                               "size",
-                               "fuel",
-                               "pollutant",
-                               "type_emi",
-                               "subtype_emi",
-                               "baseyear",
-                               "region"),
-                             with = FALSE]
-          fwrite(array_x, "emi/evaporatives.csv", 
-                 append = TRUE)
-          rm(array_x)
-          gc()
-        } 
-      }
+        } else {
+          # hot soak
+          #running losses
+          xx <- xx*meta_ev$trips_day[i]/(mileage[[veh_ev[i]]]/365) # quilometragem medio diario
+        }
+        
+        # muda NaNaN para 0
+        xx[is.na(xx)] <- 0
+        
+        array_x <- emis_hot_td(
+          veh = x*dm[eva],
+          lkm = mileage[[veh_ev[i]]], 
+          ef = xx, 
+          fortran = TRUE, 
+          nt = check_nt()*0.9,
+          verbose = verbose,
+          params = list(
+            veh = veh_ev[i],
+            size = meta_ev$size[i],
+            fuel = meta_ev$fuel[i],
+            pollutant = "NMHC",
+            type_emi = paste0("Evaporatives ", sc[tt]),
+            subtype_emi = tdf[eva],
+            baseyear = year_selected))
+        
+        array_x$month <- mon[eva]
+        array_x$region <- reg[rr]
+        setDT(array_x)
+        array_x <- array_x[, 
+                           c("emissions",
+                             "rows",
+                             "age",
+                             "month",
+                             "veh",
+                             "size",
+                             "fuel",
+                             "pollutant",
+                             "type_emi",
+                             "subtype_emi",
+                             "baseyear",
+                             "region"),
+                           with = FALSE]
+        fwrite(array_x, "emi/evaporatives.csv", 
+               append = TRUE)
+        rm(array_x)
+        gc()
+      } 
     }
   }  
 }

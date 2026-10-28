@@ -46,7 +46,7 @@ for (i in seq_along(metadata$vehicles)) {
   x <- my_age(
     x = net[[metadata$vehicles[i]]],
     y = veh[[metadata$vehicles[i]]], 
-    k = 1, 
+    k = kf[i], 
     agemax = length(veh[[metadata$vehicles[i]]]))
   
   saveRDS(x, paste0("veh/", metadata$vehicles[i], ".rds"))

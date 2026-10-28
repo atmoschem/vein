@@ -7,7 +7,8 @@
 remove_units(x, verbose = FALSE)
 }
 \arguments{
-\item{x}{Object with class "sf",  "data.frame", "matrix" or "units"}
+\item{x}{Object with class "sf",  "data.frame", "matrix" or "units"
+(including arrays with units, which keep their dimensions)}
 
 \item{verbose}{Logical, to print more information}
 }

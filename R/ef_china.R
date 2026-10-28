@@ -10,23 +10,27 @@
 #' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
 #' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
 #'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
-#' @param standard Character or data.frame; "PRE", "I", "II", "III", "IV", "V". When
-#' it is a data.frame, it each row is a different region and ta, humidity,
+#' @param standard Character or data.frame; "PRE", "I", "II", "III", "IV", "V", "VI".
+#' When it is a data.frame, it each row is a different region and ta, humidity,
 #' altitud, speed, sulphur and load_factor lengths have the same as the number of
-#' rows.
-#' @param f Character;fuel: "G", "D", "CNG", "ALL"
+#' rows (humidity can also have length 1).
+#' @param f Character;fuel: "G", "D", "CNG", "G HY", "D HY D". Speed and
+#' sulphur corrections of "G" are used for "CNG" and "G HY" and of "D" for
+#' "D HY D"; "ALL" is not supported.
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @param k Numeric; multiplication factor
 #' @param ta Numeric; temperature of ambient in celcius degrees. When standard is a
 #' data.frame, the length must be equal to the number of rows of standard.
-#' @param humidity Numeric; relative humidity. When standard is a
+#' @param humidity Numeric; relative humidity as fraction (0-1). When standard is a
 #' data.frame, the length must be equal to the number of rows of standard.
 #' @param altitude Numeric; altitude in meters. When standard is a
 #' data.frame, the length must be equal to the number of rows of standard.
 #' @param speed Numeric; altitude in km/h When standard is a
 #' data.frame, the length must be equal to the number of rows of standard.
-#' @param baseyear_det Integer; any of 2014, 2015, 2016, 2017, 2018
+#' @param baseyear_det Integer; any of 2015, 2016, 2017, 2018. Deterioration
+#' is applied to gasoline CO, HC and NOx (it was ignored when standard was a
+#' character vector in earlier versions).
 #' @param sulphur Numeric; sulphur in ppm. When standard is a
 #' data.frame, the length must be equal to the number of rows of standard.
 #' @param load_factor Numeric; When standard is a
@@ -74,7 +78,12 @@
 #'   Trucks   \tab Mini   \tab   D   \cr
 #' }
 #'
-#' standard VI is assumed as V
+#' standard VI is assumed as V for the base emission factor and deterioration.
+#'
+#' load_factor classes: 0, (0, 0.5), 0.5, (0.5, 0.6], (0.6, 0.75] and > 0.75
+#' (earlier versions compared sulphur instead of load_factor for the classes
+#' above 0.5). Speeds of 80 km/h or more use the S80 correction (80 km/h
+#' returned 0 in earlier versions).
 #'
 #' @seealso \code{\link{ef_ldv_speed}} \code{\link{emis_hot_td}}
 #' @importFrom units as_units
@@ -216,17 +225,61 @@ ef_china <- function(v = "PV",
     cat("'p' must be one of:", unique(ef_china$POLLUTANT), "\n")
     stop("")
   }
+  # fuel of the speed and sulphur correction tables
+  if (f %in% c("G", "G HY", "CNG")) {
+    fcor <- "G"
+  } else if (f %in% c("D", "D HY D")) {
+    fcor <- "D"
+  } else {
+    stop("speed and sulphur corrections are not available for f = '", f,
+         "', use 'G' or 'D'")
+  }
+  # standard VI is assumed as V for the base EF and deterioration
+  std_ef <- function(s) ifelse(s == "VI", "V", s)
+  get_ef <- function(s) {
+    df <- ef_china[ef_china$VEH == v &
+                     ef_china$TYPE == t &
+                     ef_china$FUEL == f &
+                     ef_china$STANDARD == std_ef(s) &
+                     ef_china$POLLUTANT == p, ]
+    if(nrow(df) != 1) stop("No emission factor for v = '", v, "', t = '", t,
+                           "', f = '", f, "', standard = '", s,
+                           "' and p = '", p, "'")
+    df
+  }
+  get_det <- function(s) {
+    ts <- ifelse(t %in% c("Mini", "Small"),"group1",
+                 ifelse(t == "Taxi", "Taxi","group2"))
+    detfac <- det_china[det_china$TYPE == ts &
+                          det_china$FUEL == f &
+                          det_china$STANDARD == std_ef(s) &
+                          det_china$POLLUTANT == p &
+                          det_china$YEAR == baseyear_det, ]
+    if(nrow(detfac) != 1) stop("No deterioration factor for standard '", s,
+                               "' and baseyear_det = ", baseyear_det,
+                               ". baseyear_det must be one of: ",
+                               paste(sort(unique(det_china$YEAR[det_china$STANDARD == "V"])),
+                                     collapse = ", "))
+    detfac$DET
+  }
+  load_cor <- function(EF, dfl) {
+    ifelse(
+      load_factor == 0, EF*dfl$L0,
+      ifelse(
+        load_factor > 0 & load_factor < 0.5, EF*dfl$L50,
+        ifelse(load_factor == 0.5, EF,
+               ifelse(
+                 load_factor > 0.5 & load_factor <= 0.6, EF*dfl$L60,
+                 ifelse(
+                   load_factor > 0.6 & load_factor <= 0.75, EF*dfl$L75,
+                   EF*dfl$L100)))))
+  }
 
 
   # fun starts ####
-  if(!is.data.frame(standard) & !is.data.frame(ta)){
+  if(!is.data.frame(standard) & !is.matrix(standard) & !is.data.frame(ta)){
     dff <- lapply(1:length(standard), function(i){
-      df <- ef_china[ef_china$VEH == v &
-                       ef_china$TYPE == t &
-                       ef_china$FUEL == f &
-                       ef_china$STANDARD == standard[i] &
-                       ef_china$POLLUTANT == p, ]
-
+      df <- get_ef(standard[i])
       # details
       if(details){
         cat("English: ", df$Description)
@@ -353,7 +406,7 @@ ef_china <- function(v = "PV",
           }}
       }
       # Check speed
-      efspeed <- speed_china[speed_china$FUEL == f &
+      efspeed <- speed_china[speed_china$FUEL == fcor &
                                speed_china$STANDARD == standard[i] &
                                speed_china$POLLUTANT == p, ]
       df$EF <- ifelse(
@@ -366,19 +419,13 @@ ef_china <- function(v = "PV",
               speed > 30 & speed < 40, df$EF*efspeed$S30_40,
               ifelse(
                 speed >= 40 & speed < 80, df$EF*efspeed$S40_80,
-                ifelse(speed > 80, df$EF*efspeed$S80, 0))))))
+                df$EF*efspeed$S80)))))
       # Check deterioration
       if(f == "G" & p %in% c("CO", "HC", "NOx")){
-        ts <- ifelse(t %in% c("Mini", "Small"),"group1",
-                     ifelse(t == "Taxi", "Taxi","group2"))
-        detfac <- det_china[det_china$TYPE == ts &
-                              det_china$FUEL == f &
-                              det_china$STANDARD == standard[i] &
-                              det_china$POLLUTANT == p &
-                              det_china$YEAR == baseyear_det, ]
+        df$EF <- df$EF*get_det(standard[i])
       }
       # Check sulphur
-      sulphur_china <- sulphur_china[sulphur_china$FUEL == f &
+      sulphur_china <- sulphur_china[sulphur_china$FUEL == fcor &
                                        sulphur_china$STANDARD == standard[i] &
                                        sulphur_china$POLLUTANT == p, ]
       df$EF <- ifelse(
@@ -393,16 +440,7 @@ ef_china <- function(v = "PV",
                      df$EF*sulphur_china$S800)))))
       # Check load
       dfl <- fl[fl$POLLUTANT == p, ]
-      df$EF <- ifelse(
-        load_factor == 0, df$EF*dfl$L0,
-        ifelse(
-          load_factor > 0 & load_factor < 0.5, df$EF*dfl$L50,
-          ifelse(load_factor == 0.5, df$EF,
-                 ifelse(
-                   load_factor > 0.5 & sulphur <= 0.6, df$EF*dfl$L60,
-                   ifelse(
-                     load_factor > 0.6 & sulphur <= 0.75, df$EF*dfl$L75,
-                     df$EF*dfl$L100)))))
+      df$EF <- load_cor(df$EF, dfl)
     })
 
     if(correction_only){
@@ -412,16 +450,14 @@ ef_china <- function(v = "PV",
     }
 
     # standard is data.frames ####
-  } else if(is.matrix(standard) | is.data.frame(standard) & !is.data.frame(ta)) {
+  } else if((is.matrix(standard) | is.data.frame(standard)) & !is.data.frame(ta)) {
     standard <- as.data.frame(standard)
+    if(length(humidity) == 1) humidity <- rep(humidity, nrow(standard))
+    if(length(humidity) != nrow(standard)) stop("length of 'humidity' must be the same as the number of rows of 'standard'")
 
     dff <- do.call("rbind", lapply(1:nrow(standard), function(j){
       do.call("cbind", lapply(1:ncol(standard), function(i){
-        df <- ef_china[ef_china$VEH == v &
-                         ef_china$TYPE == t &
-                         ef_china$FUEL == f &
-                         ef_china$STANDARD == standard[j,i][[1]] &
-                         ef_china$POLLUTANT == p, ]
+        df <- get_ef(standard[j,i][[1]])
         # Check to return only correction
         if(correction_only) df$EF <- 1
 
@@ -485,9 +521,11 @@ ef_china <- function(v = "PV",
         }
         # Check correction NOx - humidity
         if(p == "NOx" & f == "G"){
-          df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.92, df$EF*1.06)
+          df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.92,
+                          ifelse(humidity[j] < 0.5, df$EF*1.06, df$EF))
         } else if(p == "NOx" & f == "D"){
-          df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.94, df$EF*1.04)
+          df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.94,
+                          ifelse(humidity[j] < 0.5, df$EF*1.04, df$EF))
         } else {
           df$EF <- df$EF
         }
@@ -495,15 +533,19 @@ ef_china <- function(v = "PV",
         if(ta[j] > 24){
           if(f == "G"){
             if(p == "CO"){
-              df$EF <- ifelse(humidity[j] > 0.5, df$EF*1.04, df$EF*0.97)
+              df$EF <- ifelse(humidity[j] > 0.5, df$EF*1.04,
+                              ifelse(humidity[j] < 0.5, df$EF*0.97, df$EF))
             } else if (p == "HC"){
-              df$EF <- ifelse(humidity[j] > 0.5, df$EF*1.01, df$EF*0.99)
+              df$EF <- ifelse(humidity[j] > 0.5, df$EF*1.01,
+                              ifelse(humidity[j] < 0.5, df$EF*0.99, df$EF))
             } else if(p == "NOx"){
-              df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.87, df$EF*1.13)
+              df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.87,
+                              ifelse(humidity[j] < 0.5, df$EF*1.13, df$EF))
             }
           } else if(f == "D"){
             if(p == "NOx"){
-              df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.88, df$EF*1.12)
+              df$EF <- ifelse(humidity[j] > 0.5, df$EF*0.88,
+                              ifelse(humidity[j] < 0.5, df$EF*1.12, df$EF))
             }
           }
         }
@@ -527,7 +569,7 @@ ef_china <- function(v = "PV",
             if(t %in% c("Small", "Light")){
               df$EF <- ifelse(p == "CO", df$EF*1.2,
                               ifelse(p == "HC", df$EF*1.32,
-                                     ifelse(p == "NOx", df$EF*3.15, df$EF)))
+                                     ifelse(p == "NOx", df$EF*1.35, df$EF*1.35)))
             } else if(!t %in% c("Small", "Light")){
               df$EF <- ifelse(p == "CO", df$EF*2.46,
                               ifelse(p == "HC", df$EF*2.05,
@@ -539,7 +581,7 @@ ef_china <- function(v = "PV",
 
         # Check speed
         if(length(speed) != nrow(standard)) stop("length of 'speed' must be the same as the number of rows of 'standard'")
-        efspeed <- speed_china[speed_china$FUEL == f &
+        efspeed <- speed_china[speed_china$FUEL == fcor &
                                  speed_china$STANDARD == standard[j,i][[1]] &
                                  speed_china$POLLUTANT == p, ]
         df$EF <- ifelse(
@@ -555,18 +597,11 @@ ef_china <- function(v = "PV",
 
         # Check deterioration
         if(f == "G" & p %in% c("CO", "HC", "NOx")){
-          ts <- ifelse(t %in% c("Mini", "Small"),"group1",
-                       ifelse(t == "Taxi", "Taxi","group2"))
-          detfac <- det_china[det_china$TYPE == ts &
-                                det_china$FUEL == f &
-                                det_china$STANDARD == standard[j,i][[1]] &
-                                det_china$POLLUTANT == p &
-                                det_china$YEAR == baseyear_det, ]
-          df$EF <- df$EF*detfac$DET
+          df$EF <- df$EF*get_det(standard[j,i][[1]])
         }
         # Check sulphur
         if(length(sulphur) != nrow(standard)) stop("length of 'sulphur' must be the same as the number of rows of 'standard'")
-        sulphur_china <- sulphur_china[sulphur_china$FUEL == f &
+        sulphur_china <- sulphur_china[sulphur_china$FUEL == fcor &
                                          sulphur_china$STANDARD == standard[j,i][[1]] &
                                          sulphur_china$POLLUTANT == p, ]
         df$EF <- ifelse(
@@ -582,16 +617,7 @@ ef_china <- function(v = "PV",
 
         # Check load
         dfl <- fl[fl$POLLUTANT == p, ]
-        df$EF <- ifelse(
-          load_factor == 0, df$EF*dfl$L0,
-          ifelse(
-            load_factor > 0 & load_factor < 0.5, df$EF*dfl$L50,
-            ifelse(load_factor == 0.5, df$EF,
-                   ifelse(
-                     load_factor > 0.5 & sulphur <= 0.6, df$EF*dfl$L60,
-                     ifelse(
-                       load_factor > 0.6 & sulphur <= 0.75, df$EF*dfl$L75,
-                       df$EF*dfl$L100)))))
+        df$EF <- load_cor(df$EF, dfl)
 
         df$EF
       }))
@@ -608,21 +634,21 @@ ef_china <- function(v = "PV",
       return(dff)
     }
     # standard and ta are data.frames ####
-  } else if (is.matrix(standard) | is.data.frame(standard) & is.data.frame(ta)){
+  } else if ((is.matrix(standard) | is.data.frame(standard)) & is.data.frame(ta)){
     standard <- as.data.frame(standard)
 
     if(ncol(ta) != 12) warning("This function was designed so that number of columns of ta is 12, one year")
     if(nrow(ta) != nrow(standard)) {
       stop("number of rows of 'ta' must be the same as the number of rows of 'standard'")
     }
+    if(!is.data.frame(humidity)) {
+      if(length(humidity) != 1) stop("when 'ta' is a data.frame, 'humidity' must be a data.frame with the same dimensions or length 1")
+      humidity <- as.data.frame(matrix(humidity, nrow = nrow(ta), ncol = ncol(ta)))
+    }
     dff <- do.call("rbind", lapply(1:ncol(ta), function(k){
       do.call("rbind", lapply(1:nrow(standard), function(j){
         do.call("cbind", lapply(1:ncol(standard), function(i){
-          df <- ef_china[ef_china$VEH == v &
-                           ef_china$TYPE == t &
-                           ef_china$FUEL == f &
-                           ef_china$STANDARD == standard[j,i][[1]] &
-                           ef_china$POLLUTANT == p, ]
+          df <- get_ef(standard[j,i][[1]])
           # Check to return only correction
           if(correction_only) df$EF <- 1
           # Check correction gasoline - ta
@@ -687,9 +713,11 @@ ef_china <- function(v = "PV",
           }
           # Check correction NOx - humidity
           if(p == "NOx" & f == "G"){
-            df$EF <- ifelse(humidity > 0.5, df$EF*0.92, df$EF*1.06)
+            df$EF <- ifelse(humidity > 0.5, df$EF*0.92,
+                            ifelse(humidity < 0.5, df$EF*1.06, df$EF))
           } else if(p == "NOx" & f == "D"){
-            df$EF <- ifelse(humidity > 0.5, df$EF*0.94, df$EF*1.04)
+            df$EF <- ifelse(humidity > 0.5, df$EF*0.94,
+                            ifelse(humidity < 0.5, df$EF*1.04, df$EF))
           } else {
             df$EF <- df$EF
           }
@@ -697,15 +725,19 @@ ef_china <- function(v = "PV",
           if(ta > 24){
             if(f == "G"){
               if(p == "CO"){
-                df$EF <- ifelse(humidity > 0.5, df$EF*1.04, df$EF*0.97)
+                df$EF <- ifelse(humidity > 0.5, df$EF*1.04,
+                                ifelse(humidity < 0.5, df$EF*0.97, df$EF))
               } else if (p == "HC"){
-                df$EF <- ifelse(humidity > 0.5, df$EF*1.01, df$EF*0.99)
+                df$EF <- ifelse(humidity > 0.5, df$EF*1.01,
+                                ifelse(humidity < 0.5, df$EF*0.99, df$EF))
               } else if(p == "NOx"){
-                df$EF <- ifelse(humidity > 0.5, df$EF*0.87, df$EF*1.13)
+                df$EF <- ifelse(humidity > 0.5, df$EF*0.87,
+                                ifelse(humidity < 0.5, df$EF*1.13, df$EF))
               }
             } else if(f == "D"){
               if(p == "NOx"){
-                df$EF <- ifelse(humidity > 0.5, df$EF*0.88, df$EF*1.12)
+                df$EF <- ifelse(humidity > 0.5, df$EF*0.88,
+                                ifelse(humidity < 0.5, df$EF*1.12, df$EF))
               }
             }
           }
@@ -728,7 +760,7 @@ ef_china <- function(v = "PV",
               if(t %in% c("Small", "Light")){
                 df$EF <- ifelse(p == "CO", df$EF*1.2,
                                 ifelse(p == "HC", df$EF*1.32,
-                                       ifelse(p == "NOx", df$EF*3.15, df$EF)))
+                                       ifelse(p == "NOx", df$EF*1.35, df$EF*1.35)))
               } else if(!t %in% c("Small", "Light")){
                 df$EF <- ifelse(p == "CO", df$EF*2.46,
                                 ifelse(p == "HC", df$EF*2.05,
@@ -739,7 +771,7 @@ ef_china <- function(v = "PV",
           }
           # Check speed
           if(length(speed) != nrow(standard)) stop("length of 'speed' must be the same as the number of rows of 'standard'")
-          efspeed <- speed_china[speed_china$FUEL == f &
+          efspeed <- speed_china[speed_china$FUEL == fcor &
                                    speed_china$STANDARD == standard[j,i][[1]] &
                                    speed_china$POLLUTANT == p, ]
           df$EF <- ifelse(
@@ -755,18 +787,11 @@ ef_china <- function(v = "PV",
 
           # Check deterioration
           if(f == "G" & p %in% c("CO", "HC", "NOx")){
-            ts <- ifelse(t %in% c("Mini", "Small"),"group1",
-                         ifelse(t == "Taxi", "Taxi","group2"))
-            detfac <- det_china[det_china$TYPE == ts &
-                                  det_china$FUEL == f &
-                                  det_china$STANDARD == standard[j,i][[1]] &
-                                  det_china$POLLUTANT == p &
-                                  det_china$YEAR == baseyear_det, ]
-            df$EF <- df$EF*detfac$DET
+            df$EF <- df$EF*get_det(standard[j,i][[1]])
           }
           # Check sulphur
           if(length(sulphur) != nrow(standard)) stop("length of 'sulphur' must be the same as the number of rows of 'standard'")
-          sulphur_china <- sulphur_china[sulphur_china$FUEL == f &
+          sulphur_china <- sulphur_china[sulphur_china$FUEL == fcor &
                                            sulphur_china$STANDARD == standard[j,i][[1]] &
                                            sulphur_china$POLLUTANT == p, ]
           df$EF <- ifelse(
@@ -781,16 +806,7 @@ ef_china <- function(v = "PV",
                          df$EF*sulphur_china$S800)))))
           # Check load
           dfl <- fl[fl$POLLUTANT == p, ]
-          df$EF <- ifelse(
-            load_factor == 0, df$EF*dfl$L0,
-            ifelse(
-              load_factor > 0 & load_factor < 0.5, df$EF*dfl$L50,
-              ifelse(load_factor == 0.5, df$EF,
-                     ifelse(
-                       load_factor > 0.5 & sulphur <= 0.6, df$EF*dfl$L60,
-                       ifelse(
-                         load_factor > 0.6 & sulphur <= 0.75, df$EF*dfl$L75,
-                         df$EF*dfl$L100)))))
+          df$EF <- load_cor(df$EF, dfl)
           df$EF
         }))
       }))
@@ -806,6 +822,8 @@ ef_china <- function(v = "PV",
       dff$sulphur <- sulphur
       return(dff)
     }
+  } else {
+    stop("when 'ta' is a data.frame, 'standard' must be a data.frame or matrix")
   }
 }
 
@@ -817,56 +835,13 @@ ef_china <- function(v = "PV",
 #' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
 #' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
 #'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
-#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
+#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V", "VI".
+#' Standard "VI" is assumed as "V".
 #' @param f Character;fuel: "G", "D", "CNG", "ALL"
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
-#' @return long data.frame
-#' @importFrom data.table setDT
-#' @export
-#' @examples {
-#' \dontrun{
-#' # Do not run
-#' }
-#' }
-ef_china_long <- function(v = "PV",
-                          t = "Small",
-                          f = "G",
-                          standard,
-                          p){
-  chi <- sysdata$ef_china
-  data.table::setDT(chi)
-
-  VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
-
-  chi[VEH == v &
-        TYPE == t &
-        FUEL == f &
-        POLLUTANT == p,
-      c("STANDARD", "EF")] -> base
-
-  efb <- EmissionFactors(unlist(lapply(seq_along(standard), function(i) {
-    base[STANDARD == standard[i]]$EF
-  })))
-
-  return(efb)
-}
-
-
-#' @title Correction of Chinese emission factors by speed
-#' @family China
-#' @name ef_china_long
-#' @description Correction of Chinese emission
-#' @param v Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"
-#' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
-#' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
-#'  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"
-#' @param standard Character vector; "PRE", "I", "II", "III", "IV", "V".
-#' @param f Character;fuel: "G", "D", "CNG", "ALL"
-#' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
-#' or "Evaporative_parking"
-#' @return long data.frame
-#' @importFrom data.table setDT
+#' @return EmissionFactors with one value per standard
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' ef_china_long(standard = "I", p = "CO")
@@ -876,9 +851,7 @@ ef_china_long <- function(v = "PV",
                           f = "G",
                           standard,
                           p){
-  chi <- sysdata$ef_china
-
-  data.table::setDT(chi)
+  chi <- data.table::as.data.table(sysdata$ef_china)
 
   VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
 
@@ -888,11 +861,15 @@ ef_china_long <- function(v = "PV",
         POLLUTANT == p,
       c("STANDARD", "EF")] -> base
 
-  efb <- EmissionFactors(unlist(lapply(seq_along(standard), function(i) {
-    base[STANDARD == standard[i]]$EF
-  })))
+  std <- ifelse(standard == "VI", "V", standard)
+  efb <- base$EF[match(std, base$STANDARD)]
+  if (anyNA(efb)) {
+    stop("No emission factor for v = '", v, "', t = '", t, "', f = '", f,
+         "', p = '", p, "' and standard: ",
+         paste(unique(standard[is.na(efb)]), collapse = ", "))
+  }
 
-  return(efb)
+  return(EmissionFactors(efb))
 }
 
 
@@ -907,7 +884,7 @@ ef_china_long <- function(v = "PV",
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
-#' @importFrom data.table setDT melt.data.table
+#' @importFrom data.table as.data.table melt.data.table
 #' @export
 #' @examples {
 #' ef_china_s(s = 1000, standard = "I", p = "CO")
@@ -919,9 +896,7 @@ ef_china_s <- function(s,
 
   f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
 
-  chi <- sysdata$sulphur_china
-
-  data.table::setDT(chi)
+  chi <- data.table::as.data.table(sysdata$sulphur_china)
 
   VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
 
@@ -930,17 +905,18 @@ ef_china_s <- function(s,
                                                   "STANDARD",
                                                   "POLLUTANT"),
                                       variable.name = "sulfur")
+  # same sulphur classes as ef_china()
   xs <- ifelse(
-    s >=800, "S800",
+    s <= 10, "S10",
     ifelse(
-      s < 800 & s >= 500, "S500",
+      s <= 50, "S50",
       ifelse(
-        s < 500 & s >= 350, "S350",
+        s <= 150, "S150",
         ifelse(
-          s < 350 & s >= 150, "S150",
+          s <= 350, "S350",
           ifelse(
-            s < 150 & s >= 50, "S50",
-            "S10")))))
+            s <= 500, "S500",
+            "S800")))))
 
   sulfur <- NULL
   chi[FUEL == f &
@@ -948,11 +924,13 @@ ef_china_s <- function(s,
         sulfur == xs] -> base
 
 
-  efb <- unlist(lapply(seq_along(standard), function(i) {
-    base[STANDARD == standard[i]]$value
-  }))
-
-  if(nrow(base) == 0) efb <- rep(1, length(standard))
+  if(nrow(base) == 0) {
+    efb <- rep(1, length(standard))
+  } else {
+    efb <- base$value[match(standard, base$STANDARD)]
+    if (anyNA(efb)) stop("No sulphur correction for standard: ",
+                         paste(unique(standard[is.na(efb)]), collapse = ", "))
+  }
 
   return(efb)
 }
@@ -972,7 +950,7 @@ ef_china_s <- function(s,
 #' or "Evaporative_parking"
 #' @param yeardet Integer; any of 2014, 2015, 2016, 2017, 2018
 #' @return long data.frame
-#' @importFrom data.table setDT
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' ef_china_det(standard = "I", p = "CO")
@@ -988,9 +966,7 @@ ef_china_det <- function(v = "PV",
                          p){
 
 
-  det <- sysdata$det_china_long
-
-  data.table::setDT(det)
+  det <- data.table::as.data.table(sysdata$det_china_long)
 
   VEH <- TYPE <- FUEL <- POLLUTANT <- YEAR <- STANDARD <- NULL
 
@@ -1003,11 +979,13 @@ ef_china_det <- function(v = "PV",
         "DET")] -> basedet
 
   if(nrow(basedet) > 0) {
-
-    efs <- unlist(lapply(seq_along(standard), function(i) {
-      basedet[STANDARD == standard[i]]$DET
-    }))
-
+    if (anyDuplicated(basedet$STANDARD)) {
+      stop("Duplicated deterioration factors for yeardet = ", yeardet,
+           ". yeardet must be one of 2015, 2016, 2017, 2018")
+    }
+    efs <- basedet$DET[match(standard, basedet$STANDARD)]
+    if (anyNA(efs)) stop("No deterioration factor for standard: ",
+                         paste(unique(standard[is.na(efs)]), collapse = ", "))
   } else {
     efs <- rep(1, length(standard))
   }
@@ -1026,7 +1004,7 @@ ef_china_det <- function(v = "PV",
 #' or "Evaporative_parking"
 #' @param long Logical, to process long format of ef
 #' @return long data.frame
-#' @importFrom data.table setDT
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' data(net)
@@ -1040,11 +1018,9 @@ ef_china_speed <- function(speed,
                            standard,
                            p,
                            long = FALSE){
-  efsp <- sysdata$speed_china
+  efsp <- data.table::as.data.table(sysdata$speed_china)
 
   f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", f)
-
-  data.table::setDT(efsp)
 
   sp <- as.numeric(speed)
 
@@ -1052,6 +1028,10 @@ ef_china_speed <- function(speed,
 
   efsp[FUEL == f &
          POLLUTANT == p] -> basesp
+  if (any(!standard %in% basesp$STANDARD)) {
+    stop("No speed correction for f = '", f, "', p = '", p, "' and standard: ",
+         paste(unique(standard[!standard %in% basesp$STANDARD]), collapse = ", "))
+  }
 
   if(long) {
 
@@ -1079,11 +1059,9 @@ ef_china_speed <- function(speed,
             "S80"))))
 
     efs <- lapply(seq_along(standard), function(i) {
-      dd <- merge(sp,
-                  dft[STANDARD == standard[i]],
-                  by = "speed_label",
-                  all.x = T)
-      dd$speed_cor
+      dd <- dft[STANDARD == standard[i]]
+      # match() keeps the order of speed
+      dd$speed_cor[match(sp$speed_label, dd$speed_label)]
     })
     efs <- as.data.frame(do.call("cbind", efs))
 
@@ -1128,7 +1106,7 @@ ef_china_speed <- function(speed,
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
-#' @importFrom data.table setDT
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' data(net)
@@ -1141,11 +1119,9 @@ ef_china_te <- function(te,
                         t = "Small",
                         f = "G",
                         p){
-  efte <- sysdata$te_china
+  efte <- data.table::as.data.table(sysdata$te_china)
 
   f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
-
-  data.table::setDT(efte)
 
   VEH <- TYPE <- FUEL <- POLLUTANT <- NULL
 
@@ -1153,6 +1129,8 @@ ef_china_te <- function(te,
          TYPE == t &
          FUEL == f &
          POLLUTANT == p, ] -> eftes
+  if (nrow(eftes) != 1) stop("No unique temperature correction for v = '", v,
+                             "', t = '", t, "', f = '", f, "', p = '", p, "'")
 
   te <- as.numeric(te)
 
@@ -1170,7 +1148,7 @@ ef_china_te <- function(te,
 #' @family China
 #' @name ef_china_hu
 #' @description Correction of Chinese emission
-#' @param hu numeric humidity
+#' @param hu numeric relative humidity in percent (0-100)
 #' @param v Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"
 #' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
 #' "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
@@ -1180,7 +1158,7 @@ ef_china_te <- function(te,
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
-#' @importFrom data.table setDT
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' ef_china_hu(hu = 60, standard = "I", p = "CO")
@@ -1191,11 +1169,9 @@ ef_china_hu <- function(hu,
                         f = "G",
                         standard,
                         p){
-  efh <- sysdata$humidity_china
+  efh <- data.table::as.data.table(sysdata$humidity_china)
 
   f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
-
-  data.table::setDT(efh)
 
   VEH <- TYPE <- FUEL <- POLLUTANT <- NULL
 
@@ -1203,6 +1179,8 @@ ef_china_hu <- function(hu,
         TYPE == t &
         FUEL == f &
         POLLUTANT == p, ] -> efhs
+  if (nrow(efhs) != 1) stop("No unique humidity correction for v = '", v,
+                            "', t = '", t, "', f = '", f, "', p = '", p, "'")
 
   hu <- as.numeric(hu)
 
@@ -1219,7 +1197,7 @@ ef_china_hu <- function(hu,
 #' @family China
 #' @name ef_china_th
 #' @description Correction of Chinese emission
-#' @param hu numeric humidity
+#' @param hu numeric relative humidity in percent (0-100)
 #' @param te numeric temperature in celsius
 #' @param v Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"
 #' @param t Character; sub-category of of vehicle: PV Gasoline:  "Mini", "Small","Medium",
@@ -1229,7 +1207,7 @@ ef_china_hu <- function(hu,
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
-#' @importFrom data.table setDT
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' ef_china_th(hu = 60, te = 25,  p = "CO")
@@ -1240,11 +1218,9 @@ ef_china_th <- function(hu,
                         t = "Small",
                         f = "G",
                         p){
-  efth <- sysdata$tehu_china
+  efth <- data.table::as.data.table(sysdata$tehu_china)
 
   f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
-
-  data.table::setDT(efth)
 
   VEH <- TYPE <- FUEL <- POLLUTANT <- NULL
 
@@ -1252,6 +1228,8 @@ ef_china_th <- function(hu,
          TYPE == t &
          FUEL == f &
          POLLUTANT == p, ] -> efhs
+  if (nrow(efhs) != 1) stop("No unique temperature-humidity correction for v = '", v,
+                            "', t = '", t, "', f = '", f, "', p = '", p, "'")
 
   hu <- as.numeric(hu)
   te <- as.numeric(te)
@@ -1279,7 +1257,7 @@ ef_china_th <- function(hu,
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @return long data.frame
-#' @importFrom data.table setDT
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' ef_china_h(h = 1600, p = "CO")
@@ -1289,11 +1267,9 @@ ef_china_h <- function(h,
                        t = "Small",
                        f = "G",
                        p){
-  efhi <- sysdata$h_china
+  efhi <- data.table::as.data.table(sysdata$h_china)
 
   f <- ifelse(f %in% c("CNG", "G HY", "G"), "G", "D")
-
-  data.table::setDT(efhi)
 
   VEH <- TYPE <- FUEL <- POLLUTANT <- NULL
 
@@ -1301,6 +1277,8 @@ ef_china_h <- function(h,
          TYPE == t &
          FUEL == f &
          POLLUTANT == p, ] -> efhis
+  if (nrow(efhis) != 1) stop("No unique altitude correction for v = '", v,
+                             "', t = '", t, "', f = '", f, "', p = '", p, "'")
 
   h <- as.numeric(h)
 
@@ -1325,9 +1303,10 @@ ef_china_h <- function(h,
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 #' or "Evaporative_parking"
 #' @param s Sulhur in ppm
-#' @param speed Speed  (length nrow x)
+#' @param speed Speed in km/h, data.frame with nrow(x) rows and one column for
+#' each element of tfs (a single column is repeated for every hour)
 #' @param te Temperature (length tfs)
-#' @param hu Humidity (length tfs)
+#' @param hu Humidity in percent (length tfs)
 #' @param h Altitude (length nrow x)
 #' @param yeardet Year, default 2016
 #' @param p Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
@@ -1335,7 +1314,7 @@ ef_china_h <- function(h,
 #' @param array Logical to return EmissionsArray or not
 #' @param verbose Logical to show more info
 #' @return long data.frame
-#' @importFrom data.table setDT
+#' @importFrom data.table as.data.table
 #' @export
 #' @examples {
 #' ef_china_h(h = 1600, p = "CO")
@@ -1365,6 +1344,12 @@ emis_china <- function(x,
   # if(ncol(speed) != ncol(x)) stop("speed and x must have equal length of cols")
 
   if(length(h) != nrow(x)) stop("length h and nrow x must have equal")
+  if(length(standard) != ncol(x)) stop("length of standard must be equal to the number of columns of x")
+  if(ncol(speed) == 1 & length(tfs) > 1) {
+    speed <- speed[, rep(1, length(tfs)), drop = FALSE]
+  }
+  if(ncol(speed) != length(tfs)) stop("speed must have one column or one column for each tfs")
+  if(nrow(speed) != nrow(x)) stop("speed and x must have the same number of rows")
 
   # Vehicle
   if(verbose) cat("\nProcessing Vehicles\n")
@@ -1434,8 +1419,8 @@ emis_china <- function(x,
                             p = p)
 
   efmet <- ef_base_temp * ef_base_hu * ef_base_th
-  # rep met each hour
-  efmet <- rep(efmet, each = nc)
+  # one value per hour, rows are stacked by hour (nr rows each)
+  efmet <- rep(efmet, each = nr)
 
   if(verbose) cat("Correcting Base EF by Altitude\n")
   # altitude
@@ -1445,21 +1430,19 @@ emis_china <- function(x,
                           f = f,
                           p = p)
 
-  ef_base_speedv2 <- ef_base_h*
-    ef_base_speed *
-    remove_units(ef_base) *
-    ef_base_det*
-    ef_base_s *
-    efmet
+  # per standard (column) factors
+  f_std <- as.numeric(remove_units(ef_base)) * ef_base_det * ef_base_s
+  # per row factors (street x hour)
+  f_row <- rep(ef_base_h, length(tfs)) * efmet
 
-  ef_base_speedv2 <- EmissionFactors(as.data.frame(ef_base_speedv2))
-
-
+  ef_base_speedv2 <- as.matrix(ef_base_speed) *
+    matrix(f_std, nrow = nr*length(tfs), ncol = nc, byrow = TRUE) *
+    f_row
 
   if(verbose) cat("Estimating emissions\n")
-  E <- Emissions(do.call("cbind", lapply(1:nc, function(i) {
-    as.data.frame(ef_base_speedv2)[, i] * as.data.frame(x)[, i] * rep(lkm, length(tfs))
-  })))
+  xx <- as.matrix(as.data.frame(x)[, 1:nc])
+  E <- Emissions(as.data.frame(
+    ef_base_speedv2 * xx * rep(as.numeric(lkm), length(tfs))))
   # return(E)
   E$Hour <- rep(seq_along(tfs), each = nr)
 

@@ -68,7 +68,7 @@ Speed <- function(x, ..., dist = "km", time = "h") {
     spd <- x
     if(as.character(units(spd)) != paste0(dist, "/", time) ){
       message("Converting ", as.character(units(spd)), " to ", dist, "/", time)
-      spd <- units::as_units(spd, paste0(dist, " ", time, "-1"))
+      spd <- units::set_units(spd, paste0(dist, "/", time), mode = "standard")
     } else {
      message("Units are the same and no cerversions will be made")
     }
@@ -84,12 +84,12 @@ Speed <- function(x, ..., dist = "km", time = "h") {
 #' @method print Speed
 #' @export
 print.Speed <- function(x, ...) {
-  if(nrow(x) < 10 & ncol(x) < 10){
+  if(nrow(x) <= 10 & ncol(x) <= 10){
     NextMethod("print", x, right = TRUE)
-  } else if (nrow(x) > 10 & ncol(x) < 10){
-    print.data.frame(x[1:5, ], right = TRUE)
+  } else if (nrow(x) > 10 & ncol(x) <= 10){
+    print.data.frame(x[1:5, , drop = FALSE], right = TRUE)
     cat(paste0("... and more ", nrow(x) - 5, " rows\n"))
-  } else if(nrow(x) < 10 & ncol(x) > 10){
+  } else if(nrow(x) <= 10 & ncol(x) > 10){
     print.data.frame(x[, 1:5], right = TRUE)
     cat(paste0("... and more ", ncol(x) - 5, " columns\n"))
   } else {

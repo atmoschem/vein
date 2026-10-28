@@ -1,0 +1,148 @@
+---
+title: "Instantaneous emissions with the HBEFA-based models of SUMO"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Instantaneous emissions with the HBEFA-based models of SUMO}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 6, fig.height = 4)
+```
+
+The traffic simulator [Eclipse SUMO](https://eclipse.dev/sumo/) contains
+emission models that are continuous reformulations of the Handbook Emission
+Factors for Road Transport ([HBEFA](https://www.hbefa.net/)) versions 4.2,
+3.1 and 2.1: polynomials in speed and acceleration fitted by DLR to HBEFA data
+([SUMO docs](https://sumo.dlr.de/docs/Models/Emissions/HBEFA4-based.html);
+Krajzewicz et al., 2015). VEIN includes an exact R port of these models:
+
+* `hbefa_classes()`: the available emission classes,
+* `emis_hbefa()`: instantaneous emissions (g/s) from speed, acceleration and slope,
+* `ef_hbefa()`: constant-speed (cruise) emission factors (g/km),
+* `ef_hbefa_cycle()`: emission factors (g/km) over a speed trace.
+
+The formulas and coefficients come from SUMO and are distributed under
+EPL-2.0 OR GPL-2.0-or-later (see `system.file("COPYRIGHTS", package = "vein")`).
+
+## 1. Emission classes
+
+```{r}
+library(vein)
+cl <- hbefa_classes()           # HBEFA4, 833 classes
+table(cl$category)
+cl[cl$category == "PC" & cl$fuel %in% "petrol", c("class", "euro", "hbefa_id")]
+```
+
+HBEFA3 and HBEFA2 classes are also available:
+
+```{r}
+head(hbefa_classes("HBEFA3")[, c("class", "category", "fuel", "euro")])
+```
+
+## 2. Instantaneous emissions
+
+`emis_hbefa()` takes the speed in m/s and the acceleration in m/s² (or
+`units` objects) and returns g/s. Pollutants are `"CO2"`, `"CO"`, `"HC"`,
+`"FC"` (fuel), `"NOx"`, `"PM"` and `"EC"` (electricity, Wh/s).
+
+```{r}
+emis_hbefa("HBEFA4/PC_petrol_Euro-4", "CO2",
+           v = units::set_units(50, "km/h"), a = c(-1, -0.2, 0, 0.5, 1))
+```
+
+The first value is 0: like SUMO, a car that decelerates more than its coasting
+deceleration (about -0.29 m/s² at 50 km/h for 1500 kg) does not emit.
+Battery electric vehicles recover energy instead:
+
+```{r}
+emis_hbefa("HBEFA4/PC_BEV", "EC", v = 50 / 3.6, a = c(-1, 0, 1))
+```
+
+## 3. Cruise emission factors vs. EMEP/EEA average-speed factors
+
+`ef_hbefa()` evaluates the model at constant speed and divides by the distance
+travelled per second. Here we compare it with `ef_ldv_speed()` for a Euro 4
+petrol car.
+
+```{r}
+V <- 10:130
+hb <- ef_hbefa("HBEFA4/PC_petrol_Euro-4", "CO2")
+eea <- ef_ldv_speed(v = "PC", t = "4S", cc = "<=1400", f = "G", eu = "IV", p = "CO2")
+plot(V, hb(V), type = "l", col = "blue", ylim = c(0, 600),
+     xlab = "Speed [km/h]", ylab = "CO2 [g/km]")
+lines(V, eea(V), col = "red")
+legend("topright", c("SUMO HBEFA4 cruise (average Euro 4 petrol car)",
+                     "EMEP/EEA average speed (<= 1.4 l)"),
+       col = c("blue", "red"), lty = 1)
+```
+
+The curves come from different data and have a different meaning: the
+EMEP/EEA factors are averages over real driving at a given mean speed, while
+the cruise factors are steady-speed values of an instantaneous model, without
+accelerations, stops, traffic situations or cold starts. At low speeds the
+cruise curve rises steeply because the idle consumption is divided by a short
+distance; below `vmin` (5 km/h by default) the speed is clamped.
+
+## 4. Emission factors over a driving pattern
+
+`ef_hbefa_cycle()` integrates the instantaneous emissions over a 1 Hz speed
+trace in km/h, with the convention of SUMO's `emissionsDrivingCycle`
+(a_t = v_t - v_(t-1), emissions at v_t).
+
+```{r}
+# synthetic urban trip: three stop-and-go segments with a traffic light
+seg <- c(seq(0, 50, by = 5), rep(50, 30), seq(50, 0, by = -7.5), 0, rep(0, 15))
+urban <- rep(seg, 3)
+plot(urban, type = "l", xlab = "time [s]", ylab = "speed [km/h]")
+ef_hbefa_cycle(c("HBEFA4/PC_petrol_Euro-4", "HBEFA4/PC_diesel_Euro-6d"),
+               "CO2", speed = urban)
+```
+
+The mean speed of this trip is `r round(mean(urban), 1)` km/h; the cruise
+factor at that speed is lower than the trip factor, as it ignores
+accelerations and idling:
+
+```{r}
+hb(mean(urban))
+```
+
+## 5. EMEP/EEA categories
+
+`hbefa_eea()` translates the vehicle keys of `ef_ldv_speed()` and
+`ef_hdv_speed()` into HBEFA4 classes. Called without arguments it returns
+the equivalence for every key of vein's EEA tables, with a note when the
+match is not direct (e.g. HBEFA4 has no engine size classes for passenger
+cars, full hybrids are taken as petrol, Euro IV/V trucks as the SCR variant).
+
+```{r}
+hbefa_eea("PC", "4S", "1400_2000", "G", c("PRE", "I", "IV", "VI", "VId"))
+tab <- hbefa_eea()
+table(tab$VEH, tab$exact)
+head(tab[!tab$exact, ])
+```
+
+`ef_hbefa_speed()` takes the same arguments as `ef_ldv_speed()` (and `g`,
+`gr`, `l` of `ef_hdv_speed()`) and returns the same objects, so it can replace
+them in a project script. NO2 and NO use the NOx share of the EEA tables.
+
+```{r}
+ef_hbefa_speed("PC", "4S", "1400_2000", "G", c("I", "IV", "VI"), "CO2",
+               speed = Speed(c(20, 50, 90)))
+ef_ldv_speed("PC", "4S", "1400_2000", "G", c("I", "IV", "VI"), "CO2",
+             speed = Speed(c(20, 50, 90)))
+ef_hbefa_speed(v = "Trucks", t = "RT", g = ">14 & <=20", eu = "V", p = "NOx",
+               speed = Speed(c(20, 50, 90)), show.equation = TRUE)
+```
+
+Remember that these are cruise factors (section 3): below about 30 km/h they
+are higher than the EEA average-speed factors, and HBEFA4 "PM" includes
+non-exhaust PM10.
+
+## References
+
+Krajzewicz, D., Behrisch, M., Wagner, P., Luz, R., Krumnow, M. (2015).
+Second Generation of Pollutant Emission Models for SUMO. In: Modeling Mobility
+with Open Data. Lecture Notes in Mobility. Springer, Cham.
+https://doi.org/10.1007/978-3-319-15024-6_12

@@ -283,7 +283,8 @@ if (type == "streets") {
 
 # gPM2510 are in g/km/h
 # need to change units to ug/m2/s
-gPM2510 <- gPM10 # - gPM
+# coarse PM = PM10 - PM2.5 (post.R adds exhaust PM to both)
+gPM2510 <- gPM10 - gPM
 gPM2510 <- st_sf(gPM2510, geometry = st_geometry(g))
 saveRDS(gPM2510, paste0("post/mech/", mech[k], "/", type, "/", "/E_PM_10.rds"))
 

@@ -14,12 +14,14 @@
 #' @param road_type_id  Number to identify type of road as defined by MOVES.
 #' @param fuel_type Data.frame of fuelSubtypeID exported by MOVES.
 #' @param speed_bin Data.frame or vector of avgSpeedBinID as defined by MOVES.
-#' @param profile Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-#' the week
+#' @param profile Data.frame or Matrix with one row per hour (ncol(speed_bin)
+#' rows) and one column per vehicle category, in the same order as veh. A
+#' column "Hour" is ignored.
 #' @param vehicle Character, type of vehicle
 #' @param vehicle_type Character, subtype of vehicle
 #' @param fuel_subtype Character, subtype of vehicle
-#' @param process_id Character, processID
+#' @param process_id Character, processID. When present, ef is filtered by it.
+#' ef is also filtered by road_type_id when it has a column roadTypeID.
 #' @param net Road network class sf
 #' @param path_all Character to export whole estimation. It is not recommended since it
 #' is usually too heavy.
@@ -50,6 +52,9 @@ moves_rpdy <- function (veh,
                         path_all,
                         verbose = FALSE) {
 
+  has_fuel <- !missing(fuel_type)
+  has_process <- !missing(process_id)
+  profile <- as.data.frame(profile)
   if("Hour" %in% names(profile)) {
     profile$Hour <- NULL
   }
@@ -65,14 +70,31 @@ moves_rpdy <- function (veh,
                     source_type_id[i], "and fuelTypeID",  fuel_type_id[i], "\n")
 
     data.table::rbindlist(lapply(1:ncol(speed_bin), function(j) {
-      seq_horas <- rep(1:24, ncol(speed_bin)/24)
+      # hour of the day for any number of days
+      hour_j <- (j - 1) %% 24 + 1
 
       hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
 
-      def <- ef[hourID == seq_horas[j] &
+      def <- ef[hourID == hour_j &
                   pollutantID == pollutant_id &
                   sourceTypeID == source_type_id[i] &
                   fuelTypeID == fuel_type_id[i],]
+      if (has_process && "processID" %in% names(def)) {
+        def <- def[processID == process_id]
+      }
+      if ("roadTypeID" %in% names(def)) {
+        def <- def[roadTypeID == road_type_id]
+      }
+      if (nrow(def) == 0) {
+        stop("No EF for hourID ", hour_j, ", pollutantID ", pollutant_id,
+             ", sourceTypeID ", source_type_id[i], ", fuelTypeID ",
+             fuel_type_id[i], " and roadTypeID ", road_type_id)
+      }
+      if ("modelYearID" %in% names(def) &&
+          anyDuplicated(def[, c("avgSpeedBinID", "modelYearID"), with = FALSE])) {
+        stop("ef has more than one EF per avgSpeedBinID and modelYearID; ",
+             "filter it by processID/roadTypeID first")
+      }
 
       data.table::setorderv(def, cols = "modelYearID", order = -1)
 
@@ -110,28 +132,30 @@ moves_rpdy <- function (veh,
       }
 
 
-      df_fuel <- data.table::as.data.table(fuel_type)[fuelTypeID == fuel_type_id[i],
-                                                      lapply(.SD, mean, na.rm = T),
-                                                      .SDcols = c("carbonContent",
-                                                                  "humidityCorrectionCoeff",
-                                                                  "energyContent",
-                                                                  "fuelDensity"),
-                                                      by = fuelTypeID]
-      # def <- merge(def, df_fuel, by = "fuelTypeID")
-
-
-      dt <- data.table::data.table(avgSpeedBinID = speed_bin[[j]])
+      # id keeps the order of the links after merge()
+      dt <- data.table::data.table(id = seq_along(speed_bin[[j]]),
+                                   avgSpeedBinID = speed_bin[[j]])
 
       df_net_ef <- merge(dt,
                          def_veh,
                          by = "avgSpeedBinID",
                          all.x = T)
+      df_net_ef <- df_net_ef[order(df_net_ef$id), ]
+      df_net_ef$id <- NULL
 
       #EmissionFactors
 
       EF <- df_net_ef[,2:ncol(df_net_ef)]
 
       if (pollutant_id == 91) {
+        if (!has_fuel) stop("Please, add `fuel_type` data.frame from MOVES")
+        df_fuel <- data.table::as.data.table(fuel_type)[fuelTypeID == fuel_type_id[i],
+                                                        lapply(.SD, mean, na.rm = T),
+                                                        .SDcols = c("carbonContent",
+                                                                    "humidityCorrectionCoeff",
+                                                                    "energyContent",
+                                                                    "fuelDensity"),
+                                                        by = fuelTypeID]
         EF <- EF/1000 * 1/df_fuel$energyContent * 1/df_fuel$fuelDensity
         for(kk in 1:ncol(EF)) {
           EF[[kk]] <- units::set_units(EF[[kk]],"gallons/miles/veh")
@@ -158,7 +182,7 @@ moves_rpdy <- function (veh,
         lx <- data.table::rbindlist(lapply(1:agemax,
                                            function(k) {
                                              data.table::data.table(
-                                               emi = EF[[k]] * veh[[k]] * lkm * profile[[j]],
+                                               emi = EF[[k]] * veh[[k]] * lkm * profile[j, i],
                                                id = 1:nrow(df_net_ef),
                                                age = k,
                                                hour = j)
@@ -237,7 +261,7 @@ moves_rpdy <- function (veh,
 
   by_veh <- lxspeed[, -"id"][,
                              lapply(.SD, sum, na.rm = T),
-                             .SDcols = 2:(agemax+1),
+                             .SDcols = paste0("age_", 1:agemax),
                              by = .(hour,
                                     veh,
                                     veh_type,

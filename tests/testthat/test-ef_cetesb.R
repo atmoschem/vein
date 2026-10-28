@@ -1,7 +1,9 @@
 context("ef_cetesb")
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G")[1]), 0.1612112)
+  # "CO" is deteriorated, "CO_0km" is the CETESB table value (2017: 0.141)
+  expect_equal(as.numeric(ef_cetesb("CO", "PC_G")[1]), 0.1612112)
+  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G")[1]), 0.141)
 })
 
 test_that("ef_cetesb works", {
@@ -44,7 +46,7 @@ test_that("ef_cetesb stops", {
 
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G", full = TRUE)$CO[1]), 0.1612112)
+  expect_equal(as.numeric(ef_cetesb("CO_0km", "PC_G", full = TRUE)$CO_0km[1]), 0.141)
 })
 
 test_that("ef_cetesb works", {
@@ -55,7 +57,7 @@ test_that("ef_cetesb works", {
 })
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO_0km",
+  expect_equal(as.numeric(ef_cetesb("CO",
                                     "PC_G",
                                     full = TRUE)$CO[1]),
                0.1612112)
@@ -69,14 +71,14 @@ test_that("ef_cetesb works", {
 })
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
+  expect_equal(as.numeric(ef_cetesb("CO_0km",
                                     "PC_G",
                                     year = 1980)[1]),
                33)
 })
 
 test_that("ef_cetesb works", {
-  expect_equal(as.numeric(ef_cetesb("CO",
+  expect_equal(as.numeric(ef_cetesb("CO_0km",
                                     c("PC_G"),
                                     year = 1980,
                                     agemax = 100)[1]),

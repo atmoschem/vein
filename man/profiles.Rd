@@ -33,7 +33,7 @@ A list of data-frames with 24 rows and 7 variables:
 }
 }
 \usage{
-data(pc_profile)
+data(profiles)
 }
 \description{
 This dataset is n a list of data-frames with traffic activity normalized

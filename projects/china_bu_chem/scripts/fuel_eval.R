@@ -108,7 +108,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
   x <- readRDS(paste0("veh/", metadata_cold$vehicles[i], ".rds"))
   
   # euro
-  std1 <- std[[metadata$vehicles[i]]]
+  std1 <- std[[metadata_cold$vehicles[i]]]
   
   for (j in seq_along(pol)) {
     cat(pol[j], " ")
@@ -213,8 +213,9 @@ net <- readRDS("network/net.rds")
 metadata <- readRDS("config/metadata.rds")
 veh <- readRDS("config/fleet_age.rds")
 verbose <- FALSE
-year <- 2016
+year <- 2022
 theme <- "black" # dark clean ink
+survival <- TRUE # as in the traffic block of main.R
   source("scripts/traffic.R")
 
 
@@ -329,7 +330,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
   x <- readRDS(paste0("veh/", metadata_cold$vehicles[i], ".rds"))
   
   # euro
-  std1 <- std[[metadata$vehicles[i]]]
+  std1 <- std[[metadata_cold$vehicles[i]]]
   
   for (j in seq_along(pol)) {
     cat(pol[j], " ")

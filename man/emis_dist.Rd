@@ -19,7 +19,10 @@ The first element covers 'motorway' and 'motorway_link.
 The second element covers 'trunk' and 'trunk_link'.
 The third element covers 'primary' and 'primary_link'.
 The fourth element covers 'secondary' and 'secondary_link'.
-The fifth element covers 'tertiary' and 'tertiary_link'.}
+The fifth element covers 'tertiary' and 'tertiary_link'.
+Streets of other types are not used. When there are no streets for one
+category, `osm` is normalized with the categories present, so that the sum
+of the emissions is always `gy`.}
 
 \item{verbose}{Logical; to show more info.}
 }

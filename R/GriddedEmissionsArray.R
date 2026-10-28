@@ -11,7 +11,8 @@
 #' @param ... ignored
 #' @param rows Number of rows
 #' @param cols Number of columns
-#' @param times Number of times
+#' @param times Number of times. Default is the number of columns of `x`
+#' without `id` and geometry. Only the first `times` columns are used.
 #' @param rotate Character, rotate array:"default",  "left", "right",
 #' "cols","rows", "both", "br", "colsbr", "rowsbr", "bothbr".
 #' br means starting a matrix byrow
@@ -72,15 +73,17 @@ GriddedEmissionsArray <- function(x, ...,
                                   rows,
                                   times = ncol(x),
                                   rotate = "default") {
-  x$id <- NULL
   if(inherits(x, "Spatial")){
     df <- sf::st_as_sf(x)
     df <- sf::st_set_geometry(df, NULL)
   } else if(inherits(x, "sf")){
     df <- sf::st_set_geometry(x, NULL)
   } else {
-    df <- x
+    df <- as.data.frame(x)
   }
+  df$id <- NULL
+  # default: all columns, without id and geometry
+  if(missing(times)) times <- ncol(df)
   if(times > ncol(df)) stop("`times` cannot be higher than number of columns of `x` without x$id")
   for (i in 1:ncol(df)) {
     df[, i] <- as.numeric(df[, i])
@@ -122,7 +125,7 @@ GriddedEmissionsArray <- function(x, ...,
     })
     #4 cols####
   } else if(rotate == "cols"){
-    l <- lapply(1:ncol(df), function(j){
+    l <- lapply(1:times, function(j){
       mx <- matrix(df[, j],
                    nrow = rows,
                    ncol = cols)
@@ -130,7 +133,7 @@ GriddedEmissionsArray <- function(x, ...,
     })
     #5 rows####
   } else if(rotate == "rows"){
-    l <- lapply(1:ncol(df), function(j){
+    l <- lapply(1:times, function(j){
       mx <- matrix(df[, j],
                    nrow = rows,
                    ncol = cols)
@@ -138,7 +141,7 @@ GriddedEmissionsArray <- function(x, ...,
     })
     #6 both####
   } else if(rotate == "both"){
-    l <- lapply(1:ncol(df), function(j){
+    l <- lapply(1:times, function(j){
       mx <- matrix(df[, j],
                    nrow = rows,
                    ncol = cols)
@@ -147,7 +150,7 @@ GriddedEmissionsArray <- function(x, ...,
     })
     #7 br####
   } else if(rotate == "br"){
-    l <- lapply(1:ncol(df), function(j){
+    l <- lapply(1:times, function(j){
       mx <- matrix(df[, j],
                    nrow = rows,
                    ncol = cols,
@@ -155,7 +158,7 @@ GriddedEmissionsArray <- function(x, ...,
     })
     #8 colsbr####
   } else if(rotate == "colsbr"){
-    l <- lapply(1:ncol(df), function(j){
+    l <- lapply(1:times, function(j){
       mx <- matrix(df[, j],
                    nrow = rows,
                    ncol = cols,
@@ -164,7 +167,7 @@ GriddedEmissionsArray <- function(x, ...,
     })
     #9 rowsbr####
   } else if(rotate == "rowsbr"){
-    l <- lapply(1:ncol(df), function(j){
+    l <- lapply(1:times, function(j){
       mx <- matrix(df[, j],
                    nrow = rows,
                    ncol = cols,
@@ -173,7 +176,7 @@ GriddedEmissionsArray <- function(x, ...,
     })
     #10 bothbr####
   } else if(rotate == "bothbr"){
-    l <- lapply(1:ncol(df), function(j){
+    l <- lapply(1:times, function(j){
       mx <- matrix(df[, j],
                    nrow = rows,
                    ncol = cols,

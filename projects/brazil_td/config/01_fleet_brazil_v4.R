@@ -4,9 +4,9 @@ library(colorout)
 
 list.files()
 
-x <- readxl::excel_sheets("masp2020/inventory.xlsx")
+x <- readxl::excel_sheets("config/inventory.xlsx")
 
-v <- readxl::read_excel("masp2020/inventory.xlsx",
+v <- readxl::read_excel("config/inventory.xlsx",
                         "fleet_age")
 setDT(v)
 
@@ -14,7 +14,7 @@ v <- v[Year > 1978]
 
 v[is.na(v)] <- 0
 
-veh <- readxl::read_excel("masp2020/inventory.xlsx",
+veh <- readxl::read_excel("config/inventory.xlsx",
 			  "metadata")$vehicles
 
 denatran <- readxl::read_excel("config/inventory_all.xlsx", "denatran")

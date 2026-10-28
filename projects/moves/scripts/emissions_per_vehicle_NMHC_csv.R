@@ -25,6 +25,15 @@ fuelTypeIDEF <- as.data.table(fuelTypeIDEF)
 
 names(fuelTypeIDEF)[ncol(fuelTypeIDEF)] <- "EF" 
 
+# light (MC, PC, PT, LCT) or heavy (BUS, TRUCKS) from the full metadata,
+# computed once outside the loop so that `metadata` keeps the non-electric
+# filter in every iteration
+meta_all <- readRDS("config/metadata.rds")
+setDT(meta_all)
+meta_all$vtype <- ifelse(meta_all$family %in% c("MC", "PC", "PT", "LCT"), "LDV", "HDV")
+id_ldv <- unique(meta_all[vtype == "LDV"]$sourceTypeID)
+id_hdv <- unique(meta_all[vtype == "HDV"]$sourceTypeID)
+
 for(i in seq_along(fuelTypeIDEF$EF)) {
     
 
@@ -43,6 +52,11 @@ eff[pollutantID == 79 &
 names(ef)
 names(ef)[ncol(ef)] <- "EF" 
 
+# WARNING (methodological, not fixed): MOVES rates per vehicle (starts,
+# evaporative, hotelling; g/vehicle/hour) are applied here to the traffic flow
+# of every street link (lkm = 1). A vehicle is then counted on every link it
+# drives through, so these emissions scale with network density rather than
+# with the vehicle population. Expect an overestimate.
 moves_rpsy_meta(
     metadata = metadata, 
     lkm = rep(1, length(lkm)), 
@@ -55,11 +69,6 @@ moves_rpsy_meta(
 
 
 #NMHC
-metadata <- readRDS("config/metadata.rds")
-setDT(metadata)
-metadata$vtype <- c(rep("LDV", 13), rep("HDV", 39-14))
-id_ldv <- unique(metadata[vtype == "LDV"]$sourceTypeID)
-id_hdv <- unique(metadata[vtype == "HDV"]$sourceTypeID)
 
 emi[, family := fifelse(
         sourceTypeID %in% id_ldv, "LDV", "HDV"

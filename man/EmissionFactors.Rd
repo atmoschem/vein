@@ -57,7 +57,10 @@ EmissionFactors(x, mass = "g", dist = "km", ...)
 \item{bias}{positive number. Higher values give more widely spaced colors at the high end.}
 }
 \value{
-Objects of class "EmissionFactors" or "units"
+Objects of class "EmissionFactors" or "units". Inputs that already
+have units are converted to \code{mass/dist} (before vein 2.0.0 a units
+vector was not converted and data.frame columns with units were multiplied
+again, giving g^2/km^2).
 }
 \description{
 EmissionFactors returns a transformed object with class

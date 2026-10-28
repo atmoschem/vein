@@ -1,5 +1,6 @@
 # calibração combustivel http://dadosenergeticos.energia.sp.gov.br/portalcev2/intranet/PetroGas/index.html
-suppressWarnings(file.remove("emi/EXHAUST_FC.csv"))
+# both outputs of this step are written with append: start from scratch
+suppressWarnings(file.remove(c("emi/EXHAUST_FC_FIRST.csv", "emi/EXHAUST_FC_FINAL.csv")))
 
 # tfs
 tfs <- as.data.frame(tfs)
@@ -20,8 +21,8 @@ for (i in seq_along(metadata$vehicles)) {
     ef <- ef_cetesb(
       p = pol[j],
       veh = metadata$vehicles[i],
-      year = 2018,
-      agemax = nrow(x),
+      year = year,
+      agemax = ncol(x),
       verbose = verbose
     )
 
@@ -107,7 +108,6 @@ net <- readRDS("network/net.rds")
 lkm <- net$lkm
 scale <- "tunnel"
 verbose <- FALSE
-year <- 2018
 s <- readRDS("config/s.rds")
 
 # Fuel eval
@@ -116,7 +116,6 @@ fuel <- readRDS("config/fuel.rds")
 pol <- "FC"
 factor_emi <- 365 / (nrow(tfs) / 24) # daily to annual
 # calibração combustivel http://dadosenergeticos.energia.sp.gov.br/portalcev2/intranet/PetroGas/index.html
-suppressWarnings(file.remove("emi/EXHAUST_FC.csv"))
 
 # tfs
 tfs <- as.data.frame(tfs)
@@ -137,8 +136,8 @@ for (i in seq_along(metadata$vehicles)) {
     ef <- ef_cetesb(
       p = pol[j],
       veh = metadata$vehicles[i],
-      year = 2018,
-      agemax = nrow(x),
+      year = year,
+      agemax = ncol(x),
       verbose = verbose
     )
 

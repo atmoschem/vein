@@ -129,7 +129,7 @@ for (i in seq_along(metadata$vehicles)) {
                 array_x <- emis_hot_td(
                         veh = x,
                         lkm = mileage[[metadata$vehicles[i]]],
-                        ef = as.vector(ef)[, 1:ncol(x)],
+                        ef = ef[, 1:ncol(x)],
                         # pro_month = pmonth[[metadata$vehicles[i]]],
                         fortran = TRUE,
                         nt = check_nt() / 2,

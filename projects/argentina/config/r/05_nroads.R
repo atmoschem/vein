@@ -1,12 +1,16 @@
 library(data.table)
 library(sf)
-file.remove("config/csv/nroads.csv")
+if (file.exists("config/csv/nroads.csv")) file.remove("config/csv/nroads.csv")
 
-l <- list.files("/media/sergio/ext4/veinrun/brazil_roads/" ,
+# folder with one OSM road file per region, named <region>_roads.gpkg
+# (not included in the project)
+dir_roads <- "network/roads/"
+
+l <- list.files(dir_roads,
                 pattern = "gpkg",
                 full.names = T)
 
-n <- list.files("/media/sergio/ext4/veinrun/brazil_roads/" ,
+n <- list.files(dir_roads,
                 pattern = "gpkg",
                 full.names = F)
 

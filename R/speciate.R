@@ -169,6 +169,14 @@
 #'
 #' pmiag2 pass the mass only on j fraction
 #'
+#' "nmhc" and "voc" use the same profiles (in \% of NMHC), including the
+#' Chinese ones (eu "OM...", "urban" and "highway"). "metals" multiplies x
+#' (fuel consumption) also when list = TRUE. Specs "pmiag", "pmneu",
+#' "pmneu2", "pm2023" and "pm2025" accept numeric x. When a veh, fuel or eu is
+#' not available in a non-interactive session, speciate stops listing the
+#' options. "petroiag_cb05v2" with fuel "E" and eu "Exhaust" stops, because
+#' its profile is not physically possible.
+#'
 #' @note spec \strong{"voc"} splits nmhc into the 25 VOC
 #' groups according: Huang et al 2019, "Speciation of anthropogenic
 #' emissions of non-methane volatile
@@ -226,7 +234,9 @@ speciate <- function(x = 1,
   # bcom black carbon and organic matter####
   if (spec == "bcom") {
     bcom <- sysdata$bcom
-    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ]
+    df <- unique(bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ])
+    if (nrow(df) != 1) stop("No unique 'bcom' speciation for veh = '", veh,
+                            "', fuel = '", fuel, "' and eu = '", eu, "'")
     dfb <- Emissions(data.frame(
       BC = x * df$BC / 100,
       OM = (df$OM / 100) * (x * df$BC / 100)
@@ -285,6 +295,11 @@ speciate <- function(x = 1,
     spec <- ifelse(spec == "iag", "iag_cb05", spec)
 
     iag <- iag[iag$mech == spec, ]
+    if (spec == "petroiag_cb05v2" && fuel == "E" && eu == "Exhaust") {
+      stop("spec 'petroiag_cb05v2' with fuel 'E' and eu 'Exhaust' is not ",
+           "available: its profile adds up to 10.3 mol/100 g (5.4 mol of E_ETHA), ",
+           "which is not physically possible")
+    }
 
     iag$VEH_FUEL_STANDARD <- paste(iag$VEH,
                                    iag$FUEL,
@@ -338,8 +353,12 @@ speciate <- function(x = 1,
 
       names(dfb) <- names(dfx)
       for (j in 1:length(dfb)) {
-        for (i in 1:ncol(x)) {
-          dfb[[j]][, i] <- dfb[[j]][, i] * units::as_units("mol h-1")
+        if (is.data.frame(dfb[[j]])) {
+          for (i in 1:ncol(x)) {
+            dfb[[j]][, i] <- dfb[[j]][, i] * units::as_units("mol h-1")
+          }
+        } else {
+          dfb[[j]] <- dfb[[j]] * units::as_units("mol h-1")
         }
       }
 
@@ -357,22 +376,26 @@ speciate <- function(x = 1,
 
     # nmhc ####
   } else if (spec == "nmhc") {
-    nmhc <- sysdata$nmhc
+    # same profiles as sysdata$nmhc plus the Chinese ones (eu "OM...",
+    # "urban", "highway") documented above
+    nmhc <- as.data.frame(sysdata$mech)
+    nmhc$voc <- NULL
+    nmhc <- nmhc[!is.na(nmhc$x), ]
 
     if(!veh %in% unique(nmhc$veh)) {
-      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      choice <- .spec_menu(unique(nmhc$veh), title="Choose veh")
       veh <- unique(nmhc$veh)[choice]
     }
     nmhc <- nmhc[nmhc$veh == veh , ]
 
     if(!fuel %in% unique(nmhc$fuel)) {
-      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      choice <- .spec_menu(unique(nmhc$fuel), title="Choose fuel")
       fuel <- unique(nmhc$fuel)[choice]
     }
     nmhc <- nmhc[nmhc$fuel == fuel , ]
 
     if(!eu %in% unique(nmhc$eu)) {
-      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      choice <- .spec_menu(unique(nmhc$eu), title="Choose eu")
       eu <- unique(nmhc$eu)[choice]
     }
     df <- nmhc[nmhc$eu == eu , ]
@@ -401,14 +424,14 @@ speciate <- function(x = 1,
     nmhc <- as.data.frame(nmhc)
 
     if(!veh %in% unique(nmhc$veh)) {
-      choice <- utils::menu(unique(nmhc$veh),
+      choice <- .spec_menu(unique(nmhc$veh),
                             title="Choose veh")
       veh <- unique(nmhc$veh)[choice]
     }
     nmhc <- nmhc[nmhc$veh == veh , ]
 
     if(!fuel %in% unique(nmhc$fuel)) {
-      choice <- utils::menu(unique(nmhc$fuel),
+      choice <- .spec_menu(unique(nmhc$fuel),
                             title="Choose fuel")
       fuel <- unique(nmhc$fuel)[choice]
     }
@@ -416,7 +439,7 @@ speciate <- function(x = 1,
     nmhc <- nmhc[nmhc$fuel == fuel , ]
 
     if(!eu %in% unique(nmhc$eu)) {
-      choice <- utils::menu(unique(nmhc$eu),
+      choice <- .spec_menu(unique(nmhc$eu),
                             title="Choose eu")
       eu <- unique(nmhc$eu)[choice]
     }
@@ -452,19 +475,19 @@ speciate <- function(x = 1,
     nmhc <- sysdata$pah
 
     if(!veh %in% unique(nmhc$veh)) {
-      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      choice <- .spec_menu(unique(nmhc$veh), title="Choose veh")
       veh <- unique(nmhc$veh)[choice]
     }
     nmhc <- nmhc[nmhc$veh == veh , ]
 
     if(!fuel %in% unique(nmhc$fuel)) {
-      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      choice <- .spec_menu(unique(nmhc$fuel), title="Choose fuel")
       fuel <- unique(nmhc$fuel)[choice]
     }
     nmhc <- nmhc[nmhc$fuel == fuel , ]
 
     if(!eu %in% unique(nmhc$eu)) {
-      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      choice <- .spec_menu(unique(nmhc$eu), title="Choose eu")
       eu <- unique(nmhc$eu)[choice]
     }
     df <- nmhc[nmhc$eu == eu , ]
@@ -492,19 +515,19 @@ speciate <- function(x = 1,
     nmhc$x <- nmhc$x*1e-12
 
     if(!veh %in% unique(nmhc$veh)) {
-      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      choice <- .spec_menu(unique(nmhc$veh), title="Choose veh")
       veh <- unique(nmhc$veh)[choice]
     }
     nmhc <- nmhc[nmhc$veh == veh , ]
 
     if(!fuel %in% unique(nmhc$fuel)) {
-      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      choice <- .spec_menu(unique(nmhc$fuel), title="Choose fuel")
       fuel <- unique(nmhc$fuel)[choice]
     }
     nmhc <- nmhc[nmhc$fuel == fuel , ]
 
     if(!eu %in% unique(nmhc$eu)) {
-      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      choice <- .spec_menu(unique(nmhc$eu), title="Choose eu")
       eu <- unique(nmhc$eu)[choice]
     }
     df <- nmhc[nmhc$eu == eu , ]
@@ -532,19 +555,19 @@ speciate <- function(x = 1,
     nmhc <- sysdata$metals
 
     if(!veh %in% unique(nmhc$veh)) {
-      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      choice <- .spec_menu(unique(nmhc$veh), title="Choose veh")
       veh <- unique(nmhc$veh)[choice]
     }
     nmhc <- nmhc[nmhc$veh == veh , ]
 
     if(!fuel %in% unique(nmhc$fuel)) {
-      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      choice <- .spec_menu(unique(nmhc$fuel), title="Choose fuel")
       fuel <- unique(nmhc$fuel)[choice]
     }
     nmhc <- nmhc[nmhc$fuel == fuel , ]
 
     if(!eu %in% unique(nmhc$eu)) {
-      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      choice <- .spec_menu(unique(nmhc$eu), title="Choose eu")
       eu <- unique(nmhc$eu)[choice]
     }
     df <- nmhc[nmhc$eu == eu , ]
@@ -553,7 +576,7 @@ speciate <- function(x = 1,
     if (list == T) {
 
       dfb <- lapply(1:nrow(df), function(i) {
-        df[i, ]$x
+        df[i, ]$x*x
       })
       names(dfb) <- df$species
 
@@ -576,19 +599,19 @@ speciate <- function(x = 1,
                          "cm2/km"," N/km")
 
     if(!veh %in% unique(nmhc$veh)) {
-      choice <- utils::menu(unique(nmhc$veh), title="Choose veh")
+      choice <- .spec_menu(unique(nmhc$veh), title="Choose veh")
       veh <- unique(nmhc$veh)[choice]
     }
     nmhc <- nmhc[nmhc$veh == veh , ]
 
     if(!fuel %in% unique(nmhc$fuel)) {
-      choice <- utils::menu(unique(nmhc$fuel), title="Choose fuel")
+      choice <- .spec_menu(unique(nmhc$fuel), title="Choose fuel")
       fuel <- unique(nmhc$fuel)[choice]
     }
     nmhc <- nmhc[nmhc$fuel == fuel , ]
 
     if(!eu %in% unique(nmhc$eu)) {
-      choice <- utils::menu(unique(nmhc$eu), title="Choose eu")
+      choice <- .spec_menu(unique(nmhc$eu), title="Choose eu")
       eu <- unique(nmhc$eu)[choice]
     }
     df <- nmhc[nmhc$eu == eu , ]
@@ -608,13 +631,15 @@ speciate <- function(x = 1,
                    pol = df$species[i],
                    unit = df$units[i])
       }))
-      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol")
+      if(!is.null(names(x))) names(dfb) <- c(names(x), "pol", "unit")
     }
 
     # nox ####
   } else if (spec == "nox") {
     bcom <- sysdata$nox
-    df <- bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ]
+    df <- unique(bcom[bcom$VEH == veh & bcom$FUEL == fuel & bcom$STANDARD == eu, ])
+    if (nrow(df) != 1) stop("No unique 'nox' speciation for veh = '", veh,
+                            "', fuel = '", fuel, "' and eu = '", eu, "'")
     dfb <- Emissions(data.frame(
       NO2 = x * df$NO2,
       NO = x * df$NO
@@ -631,7 +656,7 @@ speciate <- function(x = 1,
       x <- sf::st_as_sf(x)
       x <- sf::st_set_geometry(x, NULL)
     }
-    x$id <- NULL
+    if (is.data.frame(x)) x$id <- NULL
 
     # x (g / Xkm^2 / h)
     # x <- x*1000000 # g to micro grams
@@ -760,4 +785,13 @@ speciate <- function(x = 1,
     stop("Selelect another `spec`")
   }
   return(dfb)
+}
+
+# utils::menu() in interactive sessions, informative error otherwise
+.spec_menu <- function(choices, title) {
+  if (!interactive()) {
+    stop(sub("Choose ", "", title), " must be one of: ",
+         paste(choices, collapse = ", "), call. = FALSE)
+  }
+  utils::menu(choices, title = title)
 }

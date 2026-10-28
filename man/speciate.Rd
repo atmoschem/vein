@@ -168,6 +168,14 @@ represents BRAZILIAN fuel
 
 pmiag2 pass the mass only on j fraction
 
+"nmhc" and "voc" use the same profiles (in \% of NMHC), including the
+Chinese ones (eu "OM...", "urban" and "highway"). "metals" multiplies x
+(fuel consumption) also when list = TRUE. Specs "pmiag", "pmneu",
+"pmneu2", "pm2023" and "pm2025" accept numeric x. When a veh, fuel or eu is
+not available in a non-interactive session, speciate stops listing the
+options. "petroiag_cb05v2" with fuel "E" and eu "Exhaust" stops, because
+its profile is not physically possible.
+
 spec \strong{"voc"} splits nmhc into the 25 VOC
 groups according: Huang et al 2019, "Speciation of anthropogenic
 emissions of non-methane volatile

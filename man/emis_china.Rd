@@ -42,11 +42,12 @@ emis_china(
 
 \item{s}{Sulhur in ppm}
 
-\item{speed}{Speed  (length nrow x)}
+\item{speed}{Speed in km/h, data.frame with nrow(x) rows and one column for
+each element of tfs (a single column is repeated for every hour)}
 
 \item{te}{Temperature (length tfs)}
 
-\item{hu}{Humidity (length tfs)}
+\item{hu}{Humidity in percent (length tfs)}
 
 \item{h}{Altitude (length nrow x)}
 

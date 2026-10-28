@@ -1,5 +1,5 @@
 options(encoding = "UTF-8")
-library(colorout)
+if (requireNamespace("colorout", quietly = TRUE)) library(colorout)
 library(vein) # vein
 library(sf) # spatial data
 library(cptcity) # 7120 colour palettes
@@ -8,7 +8,7 @@ library(data.table) # faster data.frames
 sessionInfo()
 
 
-roads_path <- "/home/sibarra/BR/brazil_roads"
+roads_path <- "../../brazil_roads/" # cloned by the project main.R
 crs <- 3857
 osm_name <- "highway"
 language <- "spanish" # english spanish portuguese

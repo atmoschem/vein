@@ -7,8 +7,8 @@
 #' @param lkm Length of each link in miles
 #' @param ef emission factors from EmissionRates_running exported from MOVES
 #' @param fuel_type Data.frame of fuelSubtypeID exported by MOVES.
-#' @param profile Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-#' the week
+#' @param profile Data.frame or Matrix with one row per hour and one column
+#' per vehicle, named as metadata$vehicles. A column "Hour" is ignored.
 #' @param agemax Integer; max age for the fleet, assuming the same for all vehicles.
 #' @param net Road network class sf
 #' @param simplify Logical, to return the whole object or processed by streets and veh
@@ -35,6 +35,7 @@ moves_rpsy_meta <- function(metadata,
                             colk,
                             colkt = F){
 
+  profile <- as.data.frame(profile)
   profile$Hour <- sourceTypeID <- fuelTypeID <- pollutantID <- processID <- NULL
 
   `:` <- NULL
@@ -87,7 +88,7 @@ moves_rpsy_meta <- function(metadata,
           # hours
           data.table::rbindlist(lapply(1:nrow(profile), function(i) {
 
-            seq_horas <- rep(1:24, nrow(profile)/24)
+            hour_i <- (i - 1) %% 24 + 1
 
             hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
 
@@ -105,7 +106,7 @@ moves_rpsy_meta <- function(metadata,
             #   def <- def[hourID == 9, ]
             #   def$EF <- def$EF*0
             # } else {
-            def <- def[hourID == seq_horas[i], ]
+            def <- def[hourID == hour_i, ]
 
             if(nrow(def) == 0) return()
             # }
@@ -185,7 +186,7 @@ moves_rpsy_meta <- function(metadata,
             lx <- data.table::rbindlist(
               lapply(1:agemax,
                      function(n) {
-                       data.table::data.table(emi = EF[[n]] * veh[[n]] *  lkm * profile[i, n],
+                       data.table::data.table(emi = EF[[n]] * veh[[n]] *  lkm * profile[i, nveh],
                                               id = 1:length(lkm),
                                               age = n,
                                               hour = i)

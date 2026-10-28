@@ -8,9 +8,12 @@
 #' @param veh Vehicles data.frame
 #' @param lkm Distance per street-link in miles
 #' @param tfs vector to project activity by hour
-#' @param speed Speed data.frame in miles/hour
+#' @param speed Speed data.frame in miles/hour, with columns "S1", "S2", ...
+#' one for each element of tfs. Each link uses the EF of the highest EMFAC speed
+#' bin not above its speed (speeds below the first bin use the first bin).
 #' @param vehname numeric vector for heavy good vehicles or trucks
-#' @param pol character, "CO_RUNEX"
+#' @param pol character, "CO_RUNEX". When ef has a column `pollutant`, only
+#' this pollutant is used.
 #' @param modelyear numeric vector, 2021:1982
 #' @param vkm logical, to return vkm
 #' @param verbose logical, to show more information
@@ -55,6 +58,14 @@ emis_emfac <- function(ef,
     stop("ef must one `vehicles` category. There is: ",
          unique(ef$vehicles))
   }
+  ef <- data.table::as.data.table(ef)
+  # keep only the pollutant pol (ef_emfac() returns all pollutants)
+  if ("pollutant" %in% names(ef)) {
+    if (!pol %in% ef$pollutant) {
+      stop("pol '", pol, "' not found in ef$pollutant")
+    }
+    ef <- ef[as.character(ef$pollutant) == pol]
+  }
 
 
   ModelYear <- NULL
@@ -68,6 +79,10 @@ emis_emfac <- function(ef,
       data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
 
         efx <- ef[ModelYear == modelyear[k]]$gmiles
+        if (length(efx) != 1) {
+          stop("ef must have one value per ModelYear when speed is missing; found ",
+               length(efx), " for ModelYear ", modelyear[k])
+        }
         eeff <- Emissions(efx,
                           mass = "g",
                           dist = "miles")
@@ -75,8 +90,9 @@ emis_emfac <- function(ef,
         vv <- Vehicles(as.numeric(veh[[k]]*tfs[l]),
                        time = "1/h")
 
-        dx <- data.table::data.table(id = 1:length(efx),
-                                     emi = eeff*lkm* vv,
+        emi <- eeff*lkm* vv
+        dx <- data.table::data.table(id = seq_along(emi),
+                                     emi = emi,
                                      age = k,
                                      vehicles = vehname,
                                      pollutant = pol,
@@ -104,25 +120,22 @@ emis_emfac <- function(ef,
       data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
 
         efx <- ef[ModelYear == modelyear[k]]
+        if (anyDuplicated(efx$Speed)) {
+          stop("ef has more than one value per Speed for ModelYear ", modelyear[k])
+        }
 
-        breaks = unique(efx$Speed)
+        breaks <- sort(unique(efx$Speed))
 
-        interval <- findInterval(as.numeric(speed[[hours[l]]]),
-                                 breaks)
+        # speed bin of each link (speeds below the first bin use the first bin)
+        interval <- pmax(findInterval(as.numeric(speed[[hours[l]]]),
+                                      breaks), 1)
 
-        dfspeed <- data.table::data.table(Speed = breaks[interval])
+        # match() keeps the order of the links
+        gm <- efx$gmiles[match(breaks[interval], efx$Speed)]
 
-        # match Speed with real speed
-        dfspeed <- merge(dfspeed,
-                         efx[, c("Speed", "gmiles"),
-                             with = F],
-                         by = "Speed",
-                         all.x = TRUE,
-                         allow.cartesian = TRUE)
-
-        eeff <- EmissionFactors(dfspeed$gmiles,
-                                mass = "g",
-                                dist = "miles")
+        eeff <- Emissions(gm,
+                          mass = "g",
+                          dist = "miles")
 
         vv <- Vehicles(as.numeric(veh[[k]]*tfs[l]),
                        time = "1/h")

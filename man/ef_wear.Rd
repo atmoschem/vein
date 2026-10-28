@@ -24,7 +24,10 @@ ef_wear(
 
 \item{pol}{Character; pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"}
 
-\item{speed}{Data.frame of speeds}
+\item{speed}{Data.frame, matrix or numeric vector of average speeds
+(km/h). Each column is usually one hour. Not needed when \code{wear = "road"}.
+The speed correction of the EMEP/EEA guidebook is applied here, so
+\code{\link{emis_wear}} must not apply it again.}
 
 \item{load}{Load of the HDV}
 
@@ -42,6 +45,20 @@ emission factors grams/km
 \description{
 \code{\link{ef_wear}} estimates wear emissions.
 The sources are tyres, breaks and road surface.
+}
+\note{
+Speed corrections (EMEP/EEA guidebook, 1.A.3.b.vi, equations 5 and 8),
+with V the mean trip speed in km/h:
+
+Tyre: 1.39 for V < 40; -0.00974 V + 1.78 for 40 <= V <= 90; 0.902 for V > 90.
+
+Brake: 1.67 for V < 40; -0.0270 V + 2.75 for 40 <= V <= 95; 0.185 for V > 95.
+
+Heavy duty vehicles: tyre TSP = axle/2 * (1.41 + 1.38 load) * 0.0107 and
+brake TSP = 3.13 * (1 + 0.79 load) * 0.0075 (the passenger car factor).
+Before vein 2.0.0 the speed correction was inverted (low speeds received
+the high speed factor) and the HDV brake factor used the two-wheeler value
+(0.0037).
 }
 \examples{
 {

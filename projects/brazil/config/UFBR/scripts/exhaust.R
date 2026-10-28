@@ -30,6 +30,7 @@ if(plot_ef){
                            veh = ln[[i]],
                            year = year,
                            agemax = 40, 
+                           scale = scale,
                            sppm = metadata[metadata$vehicles %in%ln[[i]], ]$sppm,
                            verbose = verbose), 
                  pol = pol[j])
@@ -106,6 +107,7 @@ for(k in seq_along(reg)) {
                       veh = metadata$vehicles[i],
                       year = year_selected,
                       agemax = ncol(x),
+                      scale = scale,
                       sppm = metadata$sppm[i],
                       verbose = verbose)
       

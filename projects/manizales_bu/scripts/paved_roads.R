@@ -1,6 +1,8 @@
+suppressWarnings(file.remove("emi/paved_roads.csv"))
+
 # identicar nomes de grupos
 nveh <- names(veh)
-n_PC <- nveh[grep(pattern = "PC", x = nveh)]
+n_PC <- nveh[grep(pattern = "PC|TAXI", x = nveh)] # taxis are passenger cars
 n_LCV <- nveh[grep(pattern = "LCV", x = nveh)]
 n_TRUCKS <- nveh[grep(pattern = "TRUCKS", x = nveh)]
 n_BUS <- nveh[grep(pattern = "BUS", x = nveh)]
@@ -35,11 +37,12 @@ MC <- rowSums(do.call("cbind", MC))
 
 
 # Fluxo semanal horario vezes veiculo equivalente (veh eq)
-tf_PC <- tfs$PC_MINI_G
-tf_LCV <-tfs$LCV_NI_G
-tf_TRUCKS <- tfs$TRUCKS_RT_7_D
-tf_BUS <- tfs$BUS_UB_15_18_D
-tf_MC <- tfs$MC_2S_50_G
+# profiles set in main.R (tf_PC, ...) are used when they exist in `tfs`
+if (!exists("tf_PC") || is.null(tf_PC)) tf_PC <- tfs$PC_MINI_G
+if (!exists("tf_LCV") || is.null(tf_LCV)) tf_LCV <- tfs$LCV_NI_G
+if (!exists("tf_TRUCKS") || is.null(tf_TRUCKS)) tf_TRUCKS <- tfs$TRUCKS_RT_7_D
+if (!exists("tf_BUS") || is.null(tf_BUS)) tf_BUS <- tfs$BUS_UB_15_18_D
+if (!exists("tf_MC") || is.null(tf_MC)) tf_MC <- tfs$MC_2S_50_G
 
 vkpc <- temp_fact(q = PC, pro = tf_PC)
 vklcv <- temp_fact(LCV, pro = tf_LCV)

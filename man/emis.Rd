@@ -9,7 +9,7 @@ emis(
   lkm,
   ef,
   speed,
-  agemax = ifelse(is.data.frame(veh), ncol(veh), ncol(veh[[1]])),
+  agemax = if (!inherits(veh, "list")) ncol(veh) else ncol(veh[[1]]),
   profile,
   simplify = FALSE,
   fortran = FALSE,
@@ -25,13 +25,21 @@ as number of columns matching the age distribution of that ype of vehicle.
 The number of rows is equal to the number of streets link. If this is a list,
 the length of the list is the vehicles for each hour.}
 
-\item{lkm}{Length of each link in km}
+\item{lkm}{Length of each link with units of length (class 'units'). It is
+converted to km with \code{units::set_units}.}
 
-\item{ef}{List of functions of emission factors}
+\item{ef}{List of functions of emission factors ("EmissionFactorsList"),
+or numeric emission factors with one value for each column of `veh`.
+Emission factors with units are converted to 'g/km'. When `ef` is a
+data.frame with the same number of rows of `veh`, it is applied by street
+(only in the R calculation). When the length of `ef` is lower than the
+number of columns of `veh`, the last emission factor is repeated, also in
+the top-down approach.}
 
 \item{speed}{Speed data-frame with number of columns as hours. The default value is 34km/h}
 
-\item{agemax}{Age of oldest vehicles for that category}
+\item{agemax}{Age of oldest vehicles for that category. Only the first
+`agemax` columns of `veh` are used, in the R and fortran calculations.}
 
 \item{profile}{Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
 the week}
@@ -52,12 +60,15 @@ of rows of argument profile}
 \item{verbose}{Logical; To show more information}
 
 \item{nt}{Integer; Number of threads wich must be lower than max available.
-See \code{\link{check_nt}}. Only when fortran = TRUE}
+See \code{\link{check_nt}}. Only when fortran = TRUE. The fortran
+calculation supports outputs up to \code{.Machine$integer.max} elements.}
 }
 \value{
 If the user applies a top-down approach, the resulting units will be
 according its own data. For instance, if the vehicles are veh/day, the units
-of the emissions implicitly will be g/day.
+of the emissions implicitly will be g/day. The EmissionsArray always has
+the dimensions streets x categories x hours (x days), also when there is
+only one street.
 }
 \description{
 \code{\link{emis}} estimates vehicular emissions as the product of the

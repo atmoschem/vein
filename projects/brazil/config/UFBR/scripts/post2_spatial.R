@@ -1,8 +1,12 @@
 
 
-UF_select          <- basename(getwd())
-
-g <- readRDS(paste0("../../../rds/g_", UF_select, ".rds"))
+# grid: `g` from main.R or the national grid made by scripts/grid.R
+if (!exists("g")) {
+  if (!file.exists("../../rds/grid_003.rds")) {
+    stop("../../rds/grid_003.rds not found: run scripts/grid.R in the project root or define `g` in main.R")
+  }
+  g <- readRDS("../../rds/grid_003.rds")
+}
 
 # df
 df <- rbind(

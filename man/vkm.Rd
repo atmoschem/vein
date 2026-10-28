@@ -17,7 +17,8 @@ vkm(
 \arguments{
 \item{veh}{Numeric vector with number of vehicles per street}
 
-\item{lkm}{Length of each link (km)}
+\item{lkm}{Length of each link (km). If it has class "units" (e.g. from
+\code{sf::st_length}, in m) it is converted to km.}
 
 \item{profile}{Numerical or dataframe with nrows equal to 24 and ncol 7 day of the week}
 

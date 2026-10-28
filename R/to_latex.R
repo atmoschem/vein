@@ -20,68 +20,49 @@ to_latex <- function (df,
                       file,
                       caption = "My table",
                       label = "tab:df"){
+  if(inherits(df, "sf")) df <- sf::st_set_geometry(df, NULL)
+  df <- as.data.frame(df)
+  # escape LaTeX special characters
+  esc <- function(x) {
+    x <- gsub("\\", "\001", x, fixed = TRUE)
+    x <- gsub("([&%$#_{}])", "\\\\\\1", x)
+    x <- gsub("~", "\\textasciitilde{}", x, fixed = TRUE)
+    x <- gsub("^", "\\textasciicircum{}", x, fixed = TRUE)
+    gsub("\001", "\\textbackslash{}", x, fixed = TRUE)
+  }
   lo <- unlist(lapply(df, is.numeric))
   order <- paste0(ifelse(lo == TRUE, "r", "l"))
+
+  body <- as.data.frame(lapply(df, function(x) {
+    if(is.numeric(x)) as.character(as.numeric(x)) else esc(as.character(x))
+  }), stringsAsFactors = FALSE)
+  rows <- apply(body, 1, paste, collapse = " & ")
+  rows <- paste0(rows, " \\\\ ")
+  rows[length(rows)] <- paste0(rows[length(rows)], " \\bottomrule")
+
+  out <- c(
+    paste0("% Generated with vein ", packageVersion("vein")),
+    "% Please add the following required packages to your document preamble:",
+    "% \\usepackage{booktabs}",
+    "% \\usepackage{graphicx}",
+    "\\begin{table}[]",
+    paste0("\\caption{", caption, "}"),
+    paste0("\\label{", label, "}"),
+    "\\resizebox{\\textwidth}{!}{%",
+    paste0("\\begin{tabular}{@{} ", paste(order, collapse = " "), " @{}}"),
+    "\\toprule",
+    paste0(paste(esc(names(df)), collapse = " & "), " \\\\ \\midrule"),
+    rows,
+    "\\end{tabular}%",
+    "}",
+    "\\end{table}"
+  )
+
   if(missing(file)){
-    cat(paste0("% Generated with vein ", packageVersion("vein"), "\n"))
-    cat("% Please add the following required packages to your document preamble:\n")
-    cat("% \\usepackage{booktabs}\n")
-    cat("% \\usepackage{graphicx}\n")
-    cat("\\begin{table}[]\n")
-    cat(paste0("\\caption{", caption, "}\n"))
-    cat(paste0("\\label{", label, "}\n"))
-    cat("\\resizebox{\\textwidth}{!}{%\n")
-    cat("\\begin{tabular}{@{}", order, "@{}}\n")
-    cat("\\toprule\n")
-    nn <- names(df)
-    # top
-    top <- paste0(nn[1:(length(nn) - 1)],
-                  rep(" & ", ncol(df) - 1))
-    cat(top, nn[length(nn)], "\\\\ \\midrule\n")
-    # body
-    for(i in 1:(ncol(df) - 1)){
-      df[, i] <- paste0(df[, i], " & ")
-    }
-    df[, ncol(df)] <- paste0(df[, ncol(df)], " \\\\ ")
-    df[nrow(df), ncol(df)] <- paste0(df[nrow(df), ncol(df)], " \\bottomrule")
-    names(df) <- NULL
-    for(i in 1:nrow(df)) cat(unlist(df[i, ]), "\n")
-    # bottom
-    cat("\\end{tabular}%\n")
-    cat("}\n")
-    cat("\\end{table}\n")
+    cat(out, sep = "\n")
   } else {
     cat(file, "\n")
-    sink(file)
-    cat(paste0("% Generated with vein ", packageVersion("vein"), "\n"))
-    cat("% Please add the following required packages to your document preamble:\n")
-    cat("% \\usepackage{booktabs}\n")
-    cat("% \\usepackage{graphicx}\n")
-    cat("\\begin{table}[]\n")
-    cat(paste0("\\caption{", caption, "}\n"))
-    cat(paste0("\\label{", label, "}\n"))
-    cat("\\resizebox{\\textwidth}{!}{%\n")
-    cat("\\begin{tabular}{@{}", order, "@{}}\n")
-    cat("\\toprule\n")
-    nn <- names(df)
-    # top
-    top <- paste0(nn[1:(length(nn) - 1)],
-                  rep(" & ", ncol(df) - 1))
-    cat(top, nn[length(nn)], "\\\\ \\midrule\n")
-    # body
-    for(i in 1:(ncol(df) - 1)){
-      df[, i] <- paste0(df[, i], " & ")
-    }
-    df[, ncol(df)] <- paste0(df[, ncol(df)], " \\\\ ")
-    df[nrow(df), ncol(df)] <- paste0(df[nrow(df), ncol(df)], " \\bottomrule")
-    names(df) <- NULL
-    for(i in 1:nrow(df)) cat(unlist(df[i, ]), "\n")
-    # bottom
-    cat("\\end{tabular}%\n")
-    cat("}\n")
-    cat("\\end{table}\n")
-    sink()
+    writeLines(out, file)
   }
-
+  invisible(out)
 }
-

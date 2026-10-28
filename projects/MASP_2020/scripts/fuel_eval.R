@@ -1,4 +1,6 @@
 # calibração combustivel http://dadosenergeticos.energia.sp.gov.br/portalcev2/intranet/PetroGas/index.html
+# merge_emis(): replacement for vein::emis_merge (removed from vein)
+source("scripts/merge_emis.R", encoding = "UTF-8")
 names(met)
 year
 month <- met$Month
@@ -13,7 +15,10 @@ numberOfDays <- function(date) {
   return(as.integer(format(date - 1, format="%d")))
 }
 
-factor_emi <- numberOfDays(date = date) # daily to month
+# tfs is hourly and already spans the whole month (744 rows for March 2020),
+# so sums over tfs are monthly. Scale the period covered by tfs to the month:
+# 1 here, 31 only if tfs were a single day. The old "* days" counted 31 times.
+factor_emi <- numberOfDays(date = date) * 24 / nrow(tfs) # tfs period to month
 
 # tfs
 tfs <- as.data.frame(tfs)
@@ -34,7 +39,7 @@ for (i in seq_along(metadata$vehicles)) {
       p = pol[j],
       veh = metadata$vehicles[i],
       year = year,
-      agemax = nrow(x),
+      agemax = ncol(x), # number of ages, not of streets
       verbose = verbose,
       scale = scale
     )
@@ -84,7 +89,7 @@ switch(language,
 dt <- data.table::rbindlist(
   lapply(seq_along(pol), function(i) {
     pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-    emis_merge(pols, what = "DF.rds", FALSE, verbose = FALSE)
+    merge_emis(pols, what = "DF.rds", streets = FALSE, verbose = FALSE)
   })
 )
 dt$pollutant <- as.character(dt$pollutant)
@@ -136,7 +141,7 @@ for (i in seq_along(metadata$vehicles)) {
       p = pol[j],
       veh = metadata$vehicles[i],
       year = year,
-      agemax = nrow(x),
+      agemax = ncol(x), # number of ages, not of streets
       verbose = verbose,
       scale = scale
     )
@@ -186,7 +191,7 @@ switch(language,
 dt <- data.table::rbindlist(
   lapply(seq_along(pol), function(i) {
     pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-    emis_merge(pols, what = "DF.rds", FALSE, verbose = FALSE)
+    merge_emis(pols, what = "DF.rds", streets = FALSE, verbose = FALSE)
   })
 )
 dt$pollutant <- as.character(dt$pollutant)

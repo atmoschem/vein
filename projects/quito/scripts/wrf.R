@@ -197,7 +197,7 @@ a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
                  col.regions = cpt(rev = T),
-                 main = paste(names(a), "mol/km/h"),
+                 main = paste(names(a), "mol/km²/h"),
                  scales = list(Draw = T)
 ))
 dev.off()
@@ -212,7 +212,7 @@ a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
                  col.regions = cpt(rev = T),
-                 main = paste(names(a), "mol/km/h"),
+                 main = paste(names(a), "mol/km²/h"),
                  scales = list(Draw = T)
 ))
 dev.off()
@@ -227,7 +227,7 @@ a <- a[[1]]
 a[] <- ifelse(a[] <= 0, NA, a[])
 print(sp::spplot(a,
                  col.regions = cpt(rev = T),
-                 main = paste(names(a), "mol/km/h"),
+                 main = paste(names(a), "mol/km²/h"),
                  scales = list(Draw = T)
 ))
 dev.off()

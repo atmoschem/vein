@@ -1,4 +1,5 @@
 library(vein)
+library(data.table)
 metadata <- readxl::read_excel("config/inventory_all.xlsx", "metadata")
 setDT(metadata)
 data(fkm)

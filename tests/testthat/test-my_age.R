@@ -76,7 +76,7 @@ test_that("my_age works", {
                             y = dpc,
                             name = "PC_E25_1400",
                             agemax = 5)[1,1]),
-               Vehicles(19))
+               Vehicles(124))
 })
 
 

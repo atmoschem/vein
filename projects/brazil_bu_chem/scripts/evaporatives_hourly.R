@@ -15,6 +15,8 @@ tem <- ifelse(
     te > bb & te <= cc, "10_25",
     "20_35"))
 
+nmonth <- ifelse(nchar(seq_along(te)) < 2, paste0(0, seq_along(te)), seq_along(te))
+
 # filtrando veiculos otto
 meta_ev <- metadata[metadata$fuel != "D", ]
 veh_ev <- meta_ev$vehicles
@@ -208,7 +210,7 @@ for (i in seq_along(veh_ev)) {
       
       x_STREETS <- emis_post(
         arra = array_x,
-        pollutant = veh_ev[j],
+        pollutant = "NMHC",
         by = "streets"
       )
       

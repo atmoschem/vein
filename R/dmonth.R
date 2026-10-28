@@ -1,6 +1,6 @@
 #' Number of days of the month
 #'
-#' \code{\link{ef_ldv_speed}} return the number of days of the month
+#' \code{\link{dmonth}} return the number of days of the month
 #'
 #'
 #' @param year Numeric

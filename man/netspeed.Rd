@@ -18,15 +18,18 @@ netspeed(
 )
 }
 \arguments{
-\item{q}{Data-frame of traffic flow to each hour (veh/h)}
+\item{q}{Data-frame (or numeric vector, for one hour) of traffic flow to
+each hour (veh/h)}
 
-\item{ps}{Peak speed (km/h)}
+\item{ps}{Peak speed (km/h). Only used when \code{scheme = TRUE}.}
 
 \item{ffs}{Free flow speed (km/h)}
 
-\item{cap}{Capacity of link (veh/h)}
+\item{cap}{Capacity of link (veh/h). Links with \code{cap <= 0} return NA
+with a warning.}
 
-\item{lkm}{Distance of link (km)}
+\item{lkm}{Distance of link (km). Links with \code{lkm <= 0} return NA
+with a warning.}
 
 \item{alpha}{Parameter of BPR curves}
 
@@ -38,7 +41,10 @@ netspeed(
 default  profile. It needs ffs and ps:}
 
 \item{dist}{String indicating the units of the resulting distance in speed.
-Default is units from peak speed `ps`
+Default is "km". When \code{ps} and \code{ffs} have class "units", they
+are converted to \code{dist}/h before the estimation. When they are
+numeric, they are assumed to be in \code{dist}/h.
+The hours of \code{scheme = TRUE} are:
 \tabular{rl}{
   00:00-06:00 \tab ffs\cr
   06:00-07:00 \tab average between ffs and ps\cr
@@ -50,7 +56,9 @@ Default is units from peak speed `ps`
 }}
 }
 \value{
-dataframe speeds with units or sf.
+dataframe speeds with units or sf. The speed is estimated with the
+BPR curve: ffs / (1 + alpha * (q / cap)^beta). The names of the columns
+are "S1", "S2", ..., one for each hour.
 }
 \description{
 \code{netspeed} Creates a dataframe of speeds for different hours

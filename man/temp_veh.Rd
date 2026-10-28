@@ -24,7 +24,7 @@ vehicles with temporal factor
 \dontrun{
 data(net)
 data(pc_profile)
-x <- age_ldv(x = net$ldv)
+x <- age_veh(x = net$ldv)
 dx <- temp_veh(x = x, tfs = pc_profile[[1]])
 plot(Vehicles(as.data.frame(dx[, 1:50])))
 dx2 <- temp_veh(x = x,

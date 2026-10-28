@@ -16,6 +16,11 @@
 #' @importFrom data.table rbindlist
 #' @note This function cannot be used to account for deterioration, therefore,
 #' it is restricted to values between 0 and 1.
+#'
+#' Equations from the EMEP/EEA guidebook (1.A.3.b.i-iv, Tables 3-82 to 3-84).
+#' Corrected in vein 2.0.0: \code{LDVD$PM} returned the NOx factor, the
+#' gasoline VOC (COV) factor ignored the user \code{e150}, and the HDV CO
+#' equation used +0.0001706 T95 instead of -0.00087 T95.
 #' Parameters for gasoline (g):
 #'
 #' O2 = Oxygenates in %
@@ -97,7 +102,7 @@ fuel_corr <- function(euro,
         1 - 0.015*(450 - s)/100)}
 
     f_co_hdv <- function(den, pah, cn, t95) {
-      2.24407 - 0.0011*den + 0.00007*pah - 0.00768*cn + 0.0001706*t95}
+      2.24407 - 0.0011*den + 0.00007*pah - 0.00768*cn - 0.00087*t95}
     f_cov_hdv <- function(den, pah, cn, t95) {
       1.61466 - 0.00123*den + 0.00133*pah - 0.00181*cn - 0.00068*t95}
     f_nox_hdv <- function(den, pah, cn, t95) {
@@ -122,7 +127,7 @@ fuel_corr <- function(euro,
                                 s = g[["s"]],
                                 olefin = g[["olefin"]],
                                 o2 = g[["o2"]],
-                                e150 = bg1996[["e150"]])/
+                                e150 = g[["e150"]])/
         f_cov_ldv_g(aro = bg1996[["aro"]],
                     e100 = bg1996[["e100"]],
                     s = bg1996[["s"]],
@@ -157,7 +162,7 @@ fuel_corr <- function(euro,
                                 s = g[["s"]],
                                 olefin = g[["olefin"]],
                                 o2 = g[["o2"]],
-                                e150 = bg2000[["e150"]])/
+                                e150 = g[["e150"]])/
         f_cov_ldv_g(aro = bg2000[["aro"]],
                     e100 = bg2000[["e100"]],
                     s = bg2000[["s"]],
@@ -192,7 +197,7 @@ fuel_corr <- function(euro,
                                 s = g[["s"]],
                                 olefin = g[["olefin"]],
                                 o2 = g[["o2"]],
-                                e150 = bg2005[["e150"]])/
+                                e150 = g[["e150"]])/
         f_cov_ldv_g(aro = bg2005[["aro"]],
                     e100 = bg2005[["e100"]],
                     s = bg2005[["s"]],
@@ -444,7 +449,7 @@ fuel_corr <- function(euro,
       LDVD = list(CO = list(fif(fco_ldv_d)),
                   COV = list(fif(fcov_ldv_d)),
                   NOx = list(fif(fnox_ldv_d)),
-                  PM = list(fif(fnox_ldv_d))),
+                  PM = list(fif(fpm_ldv_d))),
       HDV = list(CO = list(fif(fco_hdv)),
                  COV = list(fif(fcov_hdv)),
                  NOx = list(fif(fnox_hdv)),

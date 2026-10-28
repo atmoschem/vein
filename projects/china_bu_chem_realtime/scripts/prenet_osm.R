@@ -1,6 +1,5 @@
 library(sf)
 library(data.table)
-language <- "english" # portuguese english spanish
 
 switch(language,
        "portuguese" = cat("\nLendo: traffic_volume\n"),
@@ -8,6 +7,9 @@ switch(language,
        "spanish" = cat("Leyendo: traffic_volume\n")
 )
 
+if (!file.exists("network/shenyang_osm_epsg3857.gpkg")) {
+  stop("network/shenyang_osm_epsg3857.gpkg not found: run network/get_osm.R first")
+}
 net <- st_read("network/shenyang_osm_epsg3857.gpkg",
                crs = 3857)
 

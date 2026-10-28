@@ -26,11 +26,14 @@ emis_emfac(
 
 \item{tfs}{vector to project activity by hour}
 
-\item{speed}{Speed data.frame in miles/hour}
+\item{speed}{Speed data.frame in miles/hour, with columns "S1", "S2", ...
+one for each element of tfs. Each link uses the EF of the highest EMFAC speed
+bin not above its speed (speeds below the first bin use the first bin).}
 
 \item{vehname}{numeric vector for heavy good vehicles or trucks}
 
-\item{pol}{character, "CO_RUNEX"}
+\item{pol}{character, "CO_RUNEX". When ef has a column `pollutant`, only
+this pollutant is used.}
 
 \item{modelyear}{numeric vector, 2021:1982}
 

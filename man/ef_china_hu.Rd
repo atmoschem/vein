@@ -7,7 +7,7 @@
 ef_china_hu(hu, v = "PV", t = "Small", f = "G", standard, p)
 }
 \arguments{
-\item{hu}{numeric humidity}
+\item{hu}{numeric relative humidity in percent (0-100)}
 
 \item{v}{Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"}
 

@@ -26,7 +26,9 @@ profile of age of use of vehicle. When 'y' is 'numeric' the vehicles
 has the same age distribution to all streets. When 'y' is a data.frame,
 the distribution by age of use varies the streets.}
 
-\item{agemax}{Integer; age of oldest vehicles for that category}
+\item{agemax}{Integer; age of oldest vehicles for that category. The
+profile 'y' is truncated (or filled with zeros) to 'agemax' ages before
+normalising, so the total number of vehicles x*k is preserved.}
 
 \item{name}{Character; of vehicle assigned to columns of dataframe.}
 
@@ -34,7 +36,8 @@ the distribution by age of use varies the streets.}
 
 \item{pro_street}{Character; each category of profile for each street.
 The length of this character vector must be equal to the length of 'x'. The
-names of the data.frame 'y' must have the same content of 'pro_street'}
+names of the data.frame 'y' must have the same content of 'pro_street'.
+Categories of 'pro_street' not present in names of 'y' produce an error.}
 
 \item{net}{SpatialLinesDataFrame or Spatial Feature of "LINESTRING"}
 
@@ -55,12 +58,11 @@ The functions age* produce distribution of the circulating fleet by age of use.
 The order of using these functions is:
 
 1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
-2. If you know the sales of vehicles, or (the regis)*better) the registry of new vehicles,
+2. If you know the sales of vehicles, or (better) the registry of new vehicles,
 use \code{\link{age}} to apply a survival function.
-3. If you know the theoretical shape of the circulating fleet and you can use
-\code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
-you dont know the sales or registry of vehicles, but somehow you know
-the shape of this curve.
+3. If you know the theoretical shape of the circulating fleet use
+\code{\link{age_veh}}. For instance, you dont know the sales or registry
+of vehicles, but somehow you know the shape of this curve.
 4. You can use/merge/transform/adapt any of these functions.
 }
 \examples{

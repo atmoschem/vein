@@ -67,6 +67,7 @@ met <- readRDS("config/met.rds")
 net <- readRDS("network/net.rds")
 lkm <- net$lkm
 verbose <- FALSE
+year <- 2018 # base year, as in the configuration block
 s <- readRDS("config/s.rds")
 
 # Fuel eval
@@ -87,6 +88,7 @@ veh <- readRDS("config/fleet_age.rds")
 met <- readRDS("config/met.rds")
 net <- readRDS("network/net.rds")
 lkm <- net$lkm
+year <- 2018 # base year, as in the configuration block
 scale <- "tunnel"
 verbose <- FALSE
 s <- readRDS("config/s.rds")
@@ -121,6 +123,7 @@ met <- readRDS("config/met.rds")
 net <- readRDS("network/net.rds")
 lkm <- net$lkm
 verbose <- FALSE
+year <- 2018 # base year, as in the configuration block
 source("scripts/evaporatives.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
@@ -176,7 +179,8 @@ for (k in seq_along(mech)) {
   g <- eixport::wrf_grid("wrf/wrfinput_d02")
   type <- 'grids' #streets
   pol <- c("CO", "NO", "NO2", "SO2", "NH3")
-  mol <- c(12 + 16, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
+  # g/mol; vein NO is NO2-equivalent mass (NO = NOx * (1 - fNO2), NOx as NO2), so NO uses 46
+  mol <- c(12 + 16, 14 + 16 * 2, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
   aer <- "pm2023" # pmiag, pmneu
   source("scripts/mech2.R", encoding = "UTF-8")
 }

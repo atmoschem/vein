@@ -8,8 +8,9 @@
 #' @param ef emission factors from EmissionRates_running exported from MOVES
 #' @param fuel_type Data.frame of fuelSubtypeID exported by MOVES.
 #' @param speed_bin Data.frame or vector of avgSpeedBinID as defined by MOVES.
-#' @param profile Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-#' the week
+#' @param profile Data.frame or Matrix with one row per hour (ncol(speed_bin)
+#' rows) and one column per vehicle, named as metadata$vehicles. A column
+#' "Hour" is ignored.
 #' @param agemax Integer; max age for the fleet, assuming the same for all vehicles.
 #' @param net Road network class sf
 #' @param simplify Logical, to return the whole object or processed by streets and veh
@@ -34,6 +35,7 @@ moves_rpdy_meta <- function(metadata,
                             simplify = TRUE,
                             verbose = FALSE){
 
+  profile <- as.data.frame(profile)
   profile$Hour <- NULL
 
   `:` <- NULL
@@ -42,7 +44,8 @@ age_total <- lxstart <- NULL
 
   data.table::rbindlist(lapply(1:ncol(speed_bin), function(i) {
 
-    seq_horas <- rep(1:24, ncol(speed_bin)/24)
+    # hour of the day for any number of days
+    hour_i <- (i - 1) %% 24 + 1
 
     hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
 
@@ -67,7 +70,7 @@ age_total <- lxstart <- NULL
         # 3 filter by process l
         uni_process <- unique(def$processID)
 
-        data.table::rbindlist(lapply(seq_along(uni_fuel), function(l) {
+        data.table::rbindlist(lapply(seq_along(uni_process), function(l) {
 
           if(verbose) cat(paste0("Process: ", uni_process[l], "\n"))
 
@@ -83,7 +86,7 @@ age_total <- lxstart <- NULL
             def <- def[sourceTypeID == uni_source[m]]
 
             # 5) filtrar horas
-            def <- def[hourID == seq_horas[i], ]
+            def <- def[hourID == hour_i, ]
 
             data.table::setorderv(def,
                                   cols = "modelYearID",
@@ -133,12 +136,16 @@ age_total <- lxstart <- NULL
             }
 
 
-            dt <- data.table::data.table(avgSpeedBinID = speed_bin[[j]])
+            # speed bins of hour i; id keeps the order of the links
+            dt <- data.table::data.table(id = seq_along(speed_bin[[i]]),
+                                         avgSpeedBinID = speed_bin[[i]])
 
             df_net_ef <- merge(dt,
                                def_veh,
                                by = "avgSpeedBinID",
                                all.x = T)
+            df_net_ef <- df_net_ef[order(df_net_ef$id), ]
+            df_net_ef$id <- NULL
 
             EF <- df_net_ef[, 2:ncol(df_net_ef)]
 

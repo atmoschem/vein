@@ -25,12 +25,12 @@ test_that("netspeed works", {
 })
 
 test_that("netspeed stops", {
-  expect_equal(netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)$V1[1],
+  expect_equal(netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE)$S1[1],
                round(Speed(60)))
 })
 
 test_that("netspeed stops", {
   expect_equal(netspeed(ps = net$ps, ffs = net$ffs, scheme = TRUE,
-                        net = net)$V1[1],
+                        net = net)$S1[1],
                round(Speed(60)))
 })

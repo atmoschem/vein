@@ -23,29 +23,10 @@ x <- merge(x,
 x
 unique(x$MES)
 
-x[, m :=  fifelse(
-  MES == "MAI", 5,
-  fifelse(
-    MES == "ABR", 4,
-    fifelse(
-      MES == "JUN", 6,
-      fifelse(
-        MES == "JAN", 1,
-        fifelse(
-          MES == "MAR", 3,
-          fifelse(
-            MES == "AGO", 8,
-            fifelse(
-              MES == "JUL",7,
-              fifelse(
-                MES == "FEV", 2,
-                fifelse(
-                  MES == "OUT", 10,
-                  fifelse(
-                    MES == "DEZ",12,
-                    fifelse(
-                      MES == "SET", 7, 
-                      13)))))))))))]
+x[, m := match(MES, c("JAN", "FEV", "MAR", "ABR", "MAI", "JUN",
+                      "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"))]
+if (anyNA(x$m)) stop("Unknown month in MES: ",
+                     paste(unique(x$MES[is.na(x$m)]), collapse = ", "))
 
 unique(x$PRODUTO)
 x[, fuel := fifelse(
@@ -58,9 +39,8 @@ x[, fuel := fifelse(
 
 x <- x[Year < 2023 & fuel != "OTHER"]
 
-setorderv(x, 
-          cols = c("ESTADO", "Year", "m"), 
-          order = c(1, -1, 1))
+# chronological order (Jan..Dec) for each state and fuel
+setorderv(x, cols = c("ESTADO", "fuel", "Year", "m"))
 
 
 x$m3 <- units::set_units(x$m3, m^3)

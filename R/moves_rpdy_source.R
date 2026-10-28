@@ -49,8 +49,8 @@ moves_rpdy_sf <- function (veh,
     hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
 
     # ensuring hours with length of any number of days
-    seq_horas <- rep(1:24, ncol(speed_bin)/24)
-    ef <- ef[hourID == seq_horas[i]]
+    hour_i <- (i - 1) %% 24 + 1
+    ef <- ef[hourID == hour_i]
 
     # k process ####
     pros <- unique(ef$processID)
@@ -98,12 +98,16 @@ moves_rpdy_sf <- function (veh,
           data.table::setorderv(def_veh, cols = "avgSpeedBinID")
         }
 
-        dt <- data.table::data.table(avgSpeedBinID = speed_bin[[j]])
+        # speed bins of hour i; id keeps the order of the links
+        dt <- data.table::data.table(id = seq_along(speed_bin[[i]]),
+                                     avgSpeedBinID = speed_bin[[i]])
 
         df_net_ef <- merge(dt,
                            def_veh,
                            by = "avgSpeedBinID",
                            all.x = T)
+        df_net_ef <- df_net_ef[order(df_net_ef$id), ]
+        df_net_ef$id <- NULL
 
         #EmissionFactors
         EF <- df_net_ef[,2:ncol(df_net_ef)]
@@ -169,7 +173,7 @@ moves_rpdy_sf <- function (veh,
                               processID)
   ]
 
-  by_street$age_total <- rowSums(by_street[, 4:(agemax + 3)])
+  by_street$age_total <- rowSums(by_street[, paste0("age_", 1:agemax), with = FALSE])
 
   age_total <- NULL
 
@@ -194,7 +198,7 @@ moves_rpdy_sf <- function (veh,
 
   by_veh <- lxspeed[, -"id"][,
                              lapply(.SD, sum, na.rm = T),
-                             .SDcols = 2:32,
+                             .SDcols = paste0("age_", 1:agemax),
                              by = .(hour,
                                     veh,
                                     veh_type,

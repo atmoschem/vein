@@ -83,7 +83,7 @@ for(k in 1:12) {
     dtpol <- unique(dt$polf)
 
     for(j in seq_along(dtpol)) {
-      if(dtpol[j] %in% c("NMHC_D")) {
+      if(startsWith(dtpol[j], "NMHC_D_")) {
         # assuming most of NMHC_D comes from heavy vehicles
         x[[dtpol[j]]] <- dt[polf == dtpol[j]]$V1*x$lengthHDV/sum(x$lengthHDV)
       } else {

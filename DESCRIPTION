@@ -1,8 +1,8 @@
 Package: vein
 Type: Package
 Title: Vehicular Emissions Inventories
-Version: 2.0.0
-Date: 2026-09-29
+Version: 2.1.0
+Date: 2026-10-27
 Authors@R: c( 
   person(given = "Sergio", family = "Ibarra-Espinosa",
          role = c("aut", "cre"),
@@ -23,7 +23,10 @@ Authors@R: c(
   person(given="Karl", family="Ropkins", 
          role="ctb", 
          email="k.ropkins@its.leeds.ac.uk",
-         comment = c(ORCID = "0000-0002-0294-6997"))) 
+         comment = c(ORCID = "0000-0002-0294-6997")),
+  person(given = "German Aerospace Center (DLR) and others",
+         role = "cph",
+         comment = "Eclipse SUMO HBEFA emission models ported in R/ef_hbefa.R and sysdata$hbefa, see inst/COPYRIGHTS"))
 Description: Elaboration of vehicular emissions inventories,
     consisting in four stages, pre-processing activity data, preparing 
     emissions factors, estimating the emissions and post-processing of emissions 
@@ -32,6 +35,7 @@ Description: Elaboration of vehicular emissions inventories,
     the combination of type of vehicles, size and fuel of the fleet. Then, it is recommended to
     start with the project to download a template to create a structure of directories and scripts.
 License: MIT + file LICENSE
+Copyright: See file inst/COPYRIGHTS
 URL: https://github.com/atmoschem/vein
 BugReports: https://github.com/atmoschem/vein/issues
 LazyData: no

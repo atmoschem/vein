@@ -1,10 +1,13 @@
 #' Return speed bins according to US/EPA MOVES model
 #'
 #' @description \code{speed_moves} return an object of average speed bins as defined by
-#' US EPA MOVES. The input must be speed as miles/h (mph)
+#' US EPA MOVES. Speeds with units are converted to miles/h (mph); numeric
+#' speeds are assumed in mph.
 #'
-#' @param x Object with class, "sf",  "data.frame", "matrix" or "numeric" with speeds
-#' in miles/h (mph)
+#' @param x Object with class, "sf",  "data.frame", "matrix", "list", "units"
+#' or "numeric" with speeds
+#' @note Bins are lower inclusive: 1 for speeds below 2.5 mph, 2 for
+#' [2.5, 7.5), ..., 16 for 72.5 mph or more, and 0 for speeds <= 0.1 mph.
 #' @param net optional  spatial dataframe of class "sf".
 #' it is transformed to "sf".
 #' @importFrom sf st_sf st_set_geometry st_geometry
@@ -18,42 +21,21 @@
 #' moves_speed(net["ps"])
 #' }
 moves_speed <- function(x, net) {
-  x <- remove_units(x)
+  # convert speeds with units to mph before removing units
+  to_mph <- function(v) {
+    if (inherits(v, "units")) {
+      as.numeric(units::set_units(v, "miles/h", mode = "standard"))
+    } else {
+      v
+    }
+  }
+  # MOVES avgSpeedBinID: 1 below 2.5 mph, k in [5(k-1) - 2.5, 5(k-1) + 2.5)
+  # and 16 from 72.5 mph; 0 for speeds <= 0.1 mph
   fx <- function(sp) {
-    data.table::fifelse(
-      sp <= 0.1, 0,
-      data.table::fifelse(
-        sp > 0.1 & sp <= 2.5, 1,
-        data.table::fifelse(
-          sp > 2.5 & sp <= 7.5, 2,
-          data.table::fifelse(
-            sp >= 7.5 & sp <= 12.5, 3,
-            data.table::fifelse(
-              sp >= 12.5 & sp <= 17.5, 4,
-              data.table::fifelse(
-                sp >= 17.5 & sp <= 22.5, 5,
-                data.table::fifelse(
-                  sp >= 22.5 & sp <= 27.5, 6,
-                  data.table::fifelse(
-                    sp >= 27.5 & sp <= 32.5, 7,
-                    data.table::fifelse(
-                      sp >= 32.5 & sp <= 37.5, 8,
-                      data.table::fifelse(
-                        sp >= 37.5 & sp <= 42.5, 9,
-                        data.table::fifelse(
-                          sp >= 42.5 & sp <= 47.5, 10,
-                          data.table::fifelse(
-                            sp >= 47.5 & sp <= 52.5, 11,
-                            data.table::fifelse(
-                              sp >= 52.5 & sp <= 57.5, 12,
-                              data.table::fifelse(
-                                sp >= 57.5 & sp <= 62.5, 13,
-                                data.table::fifelse(
-                                  sp >= 62.5 & sp <= 67.5, 14,
-                                  data.table::fifelse(
-                                    sp >= 67.5 & sp <= 72.5, 15,
-                                    16))))))))))))))))
-
+    sp <- as.numeric(sp)
+    b <- as.numeric(findInterval(sp, seq(2.5, 72.5, 5)) + 1)
+    b[!is.na(sp) & sp <= 0.1] <- 0
+    b
   }
 
   if(inherits(x = x, what = "sf")) {
@@ -64,24 +46,18 @@ moves_speed <- function(x, net) {
   if  ( is.matrix(x) ) {
     spd <- as.data.frame(x)
     for(i in 1:ncol(spd)){
-      spd[[i]] <- fx(spd[[i]])
+      spd[[i]] <- fx(to_mph(spd[[i]]))
     }
   } else if ( is.data.frame(x) ) {
-    spd <- x
+    spd <- as.data.frame(x)
+    class(spd) <- "data.frame"
     for(i in 1:ncol(spd)){
-      spd[[i]] <- fx(spd[[i]])
+      spd[[i]] <- fx(to_mph(spd[[i]]))
     }
   } else if ( is.list(x) ) {
-    for(i in 1:length(spd)){
-      spd[[i]] <- fx(spd[[i]])
-    }
-  } else if(inherits(x, "units")){
-    message("Converting original units to mph")
-  spd <- Speed(x, dist = "miles")
-      spd <- fx(spd)
+    spd <- lapply(x, function(v) fx(to_mph(v)))
   } else {
-    spd <- x
-    spd <- fx(spd)
+    spd <- fx(to_mph(x))
   }
 
   if(!missing(net)) {

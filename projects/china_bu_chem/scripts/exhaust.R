@@ -40,6 +40,7 @@ for (i in seq_along(metadata$vehicles)) {
                           te = met$Temperature,
                           hu = met$Humidity,
                           h = h$h,
+                          yeardet = year,
                           p = pol[j],
                           array = T,
                           verbose =verbose)

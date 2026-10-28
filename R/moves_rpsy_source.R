@@ -49,8 +49,8 @@ moves_rpsy_sf <- function (veh,
     hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
 
     # ensuring hours with length of any number of days
-    seq_horas <- rep(1:24, length(profile)/24)
-    ef <- ef[hourID == seq_horas[i]]
+    hour_i <- (i - 1) %% 24 + 1
+    ef <- ef[hourID == hour_i]
 
     # k process ####
     pros <- unique(ef$processID)
@@ -138,7 +138,7 @@ moves_rpsy_sf <- function (veh,
                               processID)
   ]
 
-  by_street$age_total <- rowSums(by_street[, 4:(agemax + 3)])
+  by_street$age_total <- rowSums(by_street[, paste0("age_", 1:agemax), with = FALSE])
 
   age_total <- NULL
 
@@ -149,7 +149,7 @@ moves_rpsy_sf <- function (veh,
                                  hour)]
 
   streets <- data.table::dcast.data.table(by_street2,
-                                          formula = id + pollutant ~ hour,
+                                          formula = id + pollutantID ~ hour,
                                           value.var = "V1")
   names(streets)[3:ncol(streets)] <- paste0("H", names(streets)[3:ncol(streets)])
 
@@ -161,7 +161,7 @@ moves_rpsy_sf <- function (veh,
 
   by_veh <- lxspeed[, -"id"][,
                              lapply(.SD, sum, na.rm = T),
-                             .SDcols = 2:32,
+                             .SDcols = paste0("age_", 1:agemax),
                              by = .(hour,
                                     veh,
                                     veh_type,

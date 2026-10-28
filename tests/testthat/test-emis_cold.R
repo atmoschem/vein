@@ -45,7 +45,7 @@ test_that("emis_cold works", {
               beta = pcf,
               speed = speed,
               profile = pc_profile[, 1])[10],
-    0.1012673 + 4.51e-08)
+    0.1175283, tolerance = 1e-6)
 
   expect_equal(
     round(emis_cold(veh = list(pc1, pc1),
@@ -56,7 +56,7 @@ test_that("emis_cold works", {
                     speed = speed,
                     hour = 2,
                     day = 1)[10],2),
-    0.64)
+    0.74)
 
   expect_error(
     emis_cold(veh = pc1,
@@ -68,9 +68,26 @@ test_that("emis_cold works", {
               profile = pc_profile[, 1])[10],
     "lkm.?\\(?")
 
-  expect_error(
+  # lkm in m is converted to km
+  expect_equal(
     emis_cold(veh = pc1,
               lkm = units::set_units(net$lkm, "m"),
+              ef = lef,
+              efcold = lefec,
+              beta = pcf,
+              speed = speed,
+              profile = pc_profile[, 1])[10],
+    emis_cold(veh = pc1,
+              lkm = net$lkm,
+              ef = lef,
+              efcold = lefec,
+              beta = pcf,
+              speed = speed,
+              profile = pc_profile[, 1])[10])
+
+  expect_error(
+    emis_cold(veh = pc1,
+              lkm = units::set_units(as.numeric(net$lkm), "h"),
               ef = lef,
               efcold = lefec,
               beta = pcf,
@@ -123,7 +140,7 @@ test_that("emis_cold stops", {
               beta = pcf,
               speed = speed,
               profile = pc_profile[, 1])[10],
-    0.1012673 + 4.51e-08)
+    0.1175283, tolerance = 1e-6)
 
     expect_error(
     emis_cold(veh = pc1,
@@ -158,7 +175,7 @@ test_that("emis_cold message", {
                     beta = pcf,
                     speed = speed,
                     profile = pc_profile[, 1])[10], 3),
-    0.101)
+    0.118)
 })
 
 
@@ -172,7 +189,7 @@ test_that("emis_cold works", {
                     speed = speed,
                     hour = 2,
                     day = 1)[10],2),
-    0.64)
+    0.74)
 })
 
 test_that("emis_cold message", {

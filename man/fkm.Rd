@@ -5,7 +5,7 @@
 \alias{fkm}
 \title{List of functions of mileage in km fro Brazilian fleet}
 \format{
-A data frame with 288 rows and 12 variables:
+A list of 13 functions of age of use, returning mileage in km:
 \describe{
   \item{KM_PC_E25}{Mileage in km of Passenger Cars using Gasoline with 25\% Ethanol}
   \item{KM_PC_E100}{Mileage in km of Passenger Cars using Ethanol 100\%}

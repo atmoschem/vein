@@ -1,6 +1,6 @@
 ###########################################################
 ###                                                    ####
-###   ANNUAL EMISSIONS INVENTORY FOR QUITO, ECUADOR    ####
+###   ANNUAL EMISSIONS INVENTORY FOR MANIZALES, COLOMBIA ####
 ###                                                    ####
 ###########################################################
 options(encoding = "UTF-8")
@@ -45,7 +45,8 @@ gc()
 
 # 1) Network ####
 net <- st_read("network/manizales_simu.gpkg")
-net <- net[1:100, ]
+# net <- net[1:100, ] # debug subset (first 100 links only), disabled: the fuel
+# calibration needs the whole network
 crs <- 4326
 categories <- c(
   "pc",
@@ -120,7 +121,7 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 verbose <- FALSE
-year <- 2019
+year <- 2017
 nt <- 1 # check_nt() / 2
 remove_fuel <- c("ELEC", "HY", "GLP")
 
@@ -149,7 +150,7 @@ pol <- c(
   "NMHC",
   "HC",
   "NO",
-  "NO"
+  "NO2"
 )
 source("scripts/cold_start_eea.R", encoding = "UTF-8")
 # rm(list = ls())
@@ -166,6 +167,7 @@ met <- readRDS("config/met.rds")
 euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
+tfs <- readRDS("config/tfs.rds")
 verbose <- FALSE
 year <- 2017
 source("scripts/evaporatives_eea.R", encoding = "UTF-8")
@@ -180,11 +182,11 @@ tfs <- readRDS("config/tfs.rds")
 net <- readRDS("network/net.rds")
 veh <- readRDS("config/fleet_age.rds")
 lkm <- net$lkm
-tf_PC <- tfs$PC_G
-tf_LCV <- tfs$LCV_G
-tf_TRUCKS <- tfs$TRUCKS_L_D
-tf_BUS <- tfs$BUS_URBAN_D
-tf_MC <- tfs$MC_150_G
+tf_PC <- tfs$PC_MINI_G # hourly profiles (columns of config/tfs.rds)
+tf_LCV <- tfs$LCV_NI_G
+tf_TRUCKS <- tfs$TRUCKS_RT_7_D
+tf_BUS <- tfs$BUS_UB_15_18_D
+tf_MC <- tfs$MC_2S_50_G
 sL1 <- 2.4 # silt [g/m^2] se ADT < 500 (CENMA CHILE) i
 sL2 <- 0.7 # silt [g/m^2] se 500 < ADT < 5000 (CENMA CHILE)
 sL3 <- 0.6 # silt [g/m^2] se 5000 < ADT < 10000 (CENMA CHILE)
@@ -204,6 +206,7 @@ euro <- readRDS("config/euro.rds")
 tech <- readRDS("config/tech.rds")
 fuel_spec <- readRDS("config/fuel_spec.rds")
 tfs <- readRDS("config/tfs.rds")
+speed <- readRDS("network/speed.rds")
 verbose <- FALSE
 year <- 2017
 nt <- 1 # check_nt() / 2
@@ -217,7 +220,7 @@ g <- eixport::wrf_grid("wrf/wrfinput_d03")
 factor_emi <- 365 / (nrow(tfs) / 24) # hourly to annual
 # Number of lat points 100
 # Number of lon points 110
-crs <- 31983
+crs <- 32618 # WGS 84 / UTM zone 18N (Manizales)
 years <- 2017
 source("scripts/post.R", encoding = "UTF-8")
 rm(list = ls())
@@ -249,7 +252,9 @@ for (z in seq_along(mechs)) {
   net <- readRDS("network/net.rds")
   g <- eixport::wrf_grid("wrf/wrfinput_d03")
   pol <- c("CO", "NO", "NO2")
-  mol <- c(12, 14 + 16, 14 + 16 * 2)
+  # g/mol: CO = 28; vein NO is NO2-equivalent mass (NO = NOx*(1-fNO2), with
+  # NOx expressed as NO2), so NO also uses 46; NO2 = 46
+  mol <- c(12 + 16, 14 + 16 * 2, 14 + 16 * 2)
   aer <- "pmneu2" # pmiag, pmneu
   mech <- mechs[z]
   source("scripts/mech2.R", encoding = "UTF-8")

@@ -84,7 +84,7 @@ dtxx <- function(x, tfs, rmf = FALSE) {
 # CO
 x <- list.files(
   path = "emi/",
-  pattern = "CO.csv",
+  pattern = "(^|_)CO\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -99,7 +99,7 @@ saveRDS(x_st, "post/streets/CO.rds")
 # NOx
 x <- list.files(
   path = "emi/",
-  pattern = "NO.csv",
+  pattern = "(^|_)NOx\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -113,7 +113,7 @@ saveRDS(x_st, "post/streets/NOx.rds")
 # NO
 x <- list.files(
   path = "emi/",
-  pattern = "NO.csv",
+  pattern = "(^|_)NO\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -127,7 +127,7 @@ saveRDS(x_st, "post/streets/NO.rds")
 # NO2
 x <- list.files(
   path = "emi/",
-  pattern = "NO2.csv",
+  pattern = "(^|_)NO2\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -141,7 +141,7 @@ saveRDS(x_st, "post/streets/NO2.rds")
 # PM2.5
 x <- list.files(
   path = "emi/",
-  pattern = "PM.csv",
+  pattern = "(^|_)PM\\.csv$", # exhaust PM (PM2.5), wear and road dust PM2.5
   recursive = T,
   full.names = T
 )
@@ -152,10 +152,10 @@ x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/PM2.5.rds")
 
-# PM10
+# PM10 = wear and road dust PM10 + exhaust PM (exhaust PM is all < 2.5 um)
 x <- list.files(
   path = "emi/",
-  pattern = "PM10.csv",
+  pattern = "(^|_)PM10\\.csv$|^PM\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -166,6 +166,22 @@ x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/PM10.rds")
 
+
+# GHG ####
+# greenhouse gases gridded like the other pollutants (hot exhaust only)
+ghg_pols <- c("CO2")
+for (gp in ghg_pols) {
+  x <- list.files(
+    path = "emi/",
+    pattern = paste0("(^|_)", gp, "\\.csv$"),
+    recursive = T,
+    full.names = T
+  )
+  if (length(x) == 0) next
+  dtxx(x, tfs) -> x_st
+  x_st <- st_sf(x_st, geometry = net$geom)
+  saveRDS(x_st, paste0("post/streets/", gp, ".rds"))
+}
 
 # NMHC
 x <- list.files(path = "emi/", pattern = "NMHC", recursive = T, full.names = T)
@@ -221,7 +237,7 @@ for (i in 1:nrow(tfs)) {
   )
 }
 
-xx <- xx[!fuel %in% c("ELEC", "GLP", "HY")] # 0
+xx <- xx[!fuel %in% c("D", "ELEC", "GLP", "HY")] # 0, D: no evaporative emissions in diesel
 unique(xx$fuel)
 ln <- split(xx, xx$fuel)
 names(ln)
@@ -231,6 +247,9 @@ for (i in seq_along(ln)) {
   x_st <- st_sf(x_st, geometry = net$geom)
   saveRDS(x_st, paste0("post/streets/NMHC_EVAP_", names(ln)[i], ".rds"))
 }
+
+# diesel evaporative does not exist: remove stale files from previous runs ####
+unlink(c("post/streets/NMHC_EVAP_D.rds", "post/grids/NMHC_EVAP_D.rds"))
 
 
 # grids ####

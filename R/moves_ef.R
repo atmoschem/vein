@@ -40,6 +40,11 @@ moves_ef <- function(ef,
                       sourceTypeID == source_type_id[i] &
                       fuelTypeID == fuel_type_id[i] &
                       roadTypeID == road_type_id, ]
+          if (anyDuplicated(def$avgSpeedBinID)) {
+            stop("ef has more than one ratePerDistance per avgSpeedBinID ",
+                 "(e.g. several modelYearID) for hourID ", j,
+                 ". Filter or aggregate ef first, or use moves_rpdy")
+          }
 
           dt <- data.table::data.table(id =1:nrow(speed_bin),
                                        sourceTypeID = source_type_id[i],

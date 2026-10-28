@@ -12,15 +12,17 @@
 #'
 #' @param veh "Vehicles" data-frame or spatial feature, where columns are the
 #'  age distribution of that vehicle. and rows each simple feature or region.
-#' @param lkm Numeric; mileage by the age of use of each vehicle.
-#' @param ef Numeric or data.frame; emission factors. When it is a data.frame
+#' @param lkm Numeric; mileage by the age of use of each vehicle, with units of
+#' length (converted to km).
+#' @param ef Numeric or data.frame; emission factors with units (converted to
+#' 'g/km', e.g. 'mg/km' is divided by 1000). When it is a data.frame
 #' number of rows can be for each region, or also, each region repeated
 #' along 12 months. For instance, if you have 10 regions the number
 #' of rows of ef can also be 120 (10 * 120).
 #' when you have emission factors that varies with month, see \code{\link{ef_china}}.
 #' @param pro_month Numeric or data.frame; monthly profile to distribute annual mileage
 #' in each month. When it is a data.frame, each region (row) can have a different
-#' monthly profile.
+#' monthly profile. A data.frame with one row is applied to all rows of `veh`.
 #' @param params List of parameters; Add columns with information to returning data.frame
 #' @param verbose Logical; To show more information
 #' @param fortran Logical; to try the fortran calculation.
@@ -248,41 +250,29 @@ emis_hot_td <- function(veh,
     veh[, i] <- as.numeric(veh[, i])
   }
 
-  # Check units
-  if (!inherits(lkm, "units")) {
-    stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
-  }
-  if (units(lkm) == units(units::as_units("m"))) {
-    stop("Units of lkm is 'm' ")
-  }
-  if (units(lkm) == units(units::as_units("km"))) {
-    lkm <- as.numeric(lkm)
-  }
+  # lkm can have any length unit, it is converted to km
+  lkm <- vein_as_km(lkm, "lkm")
   if (length(lkm) != ncol(veh)) stop("Length of 'lkm' must be the as the number of columns of 'veh'")
 
-  # Checking ef
+  # Checking ef, converted to g/km
   if (is.matrix(ef) | is.data.frame(ef)) {
     ef <- as.data.frame(ef)
     if (!inherits(ef[, 1], "units")) {
       stop("columns of ef must has class 'units' in 'g/km'. Please, check ?EmissionFactors")
     }
-    if (units(ef[, 1])$numerator == "g" | units(ef[, 1])$denominator == "km") {
-      for (i in 1:ncol(veh)) {
-        ef[, i] <- as.numeric(ef[, i])
-      }
+    for (i in 1:ncol(veh)) {
+      ef[, i] <- vein_as_gkm(ef[, i], "ef")
     }
     # When row = 1, transform to vector.
     if (nrow(ef) == 1) {
       if (verbose) message("Transforming 1 row data.frame into numeric")
-      ef <- as.numeric(ef)
+      ef <- as.numeric(unlist(ef[1, 1:ncol(veh)]))
     }
   } else {
     if (!inherits(ef, "units")) {
       stop("ef must has class 'units' in 'g/km'. Please, check ?EmissionFactors")
     }
-    if (units(ef)$numerator == "g" | units(ef)$denominator == "km") {
-      ef <- as.numeric(ef)
-    }
+    ef <- vein_as_gkm(ef, "ef")
   }
 
   # pro_month
@@ -315,7 +305,7 @@ emis_hot_td <- function(veh,
 
         if (nrow(pro_month) == 1) {
           message("Replicating one-row matrix to match number of rows of `veh`")
-          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month))
+          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month), byrow = TRUE)
         }
 
         if (nrow(ef) != nrow(veh)) stop("Number of rows of 'veh' and 'ef' must be equal")
@@ -327,6 +317,7 @@ emis_hot_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(ncol(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef <- as.matrix(ef[, 1:ncol(veh)])
           month <- as.matrix(pro_month)
@@ -388,9 +379,9 @@ emis_hot_td <- function(veh,
 
           e <- data.frame(emissions = a)
           e <- Emissions(e)
-          e$rows <- rep(row.names(veh), each = ncolv * pmonth) # i
-          e$age <- rep(seq(1, ncolv), nrowv * pmonth) # j
-          e$month <- rep(seq(1, pmonth), ncolv * nrowv) # k
+          e$rows <- rep(row.names(veh), ncolv * pmonth) # i
+          e$age <- rep(rep(seq(1, ncolv), each = nrowv), pmonth) # j
+          e$month <- rep(seq(1, pmonth), each = ncolv * nrowv) # k
         } else {
           e <- do.call("rbind", lapply(1:12, function(k) {
             dfi <- unlist(lapply(1:ncol(veh), function(j) {
@@ -417,6 +408,7 @@ emis_hot_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef <- as.matrix(ef[, 1:ncol(veh)])
           month <- as.numeric(pro_month)
@@ -547,8 +539,12 @@ emis_hot_td <- function(veh,
       } else if (is.data.frame(pro_month) & nrow(ef) == 12 * nrow(veh)) {
         if (verbose) message("'pro_month' is data.frame and number of rows of 'ef' is 12*number of rows 'veh'")
 
+        if (nrow(pro_month) == 1) {
+          message("Replicating one-row matrix to match number of rows of `veh`")
+          pro_month <- as.data.frame(matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month), byrow = TRUE))
+        }
         if (nrow(pro_month) != nrow(veh)) stop("Number of rows of 'pmonth' and 'veh' must be equal")
-        if (length(ef2) != length(unlist(veh)) * pmonth) stop("length of `ef` and `veh`*`months` must be equal be equal")
+        if (ncol(pro_month) != 12) stop("'pro_month' must have 12 columns")
         if (length(lkm) != ncol(veh)) stop("length of `lkm` must be equal to number of columns of `veh`")
 
 
@@ -556,6 +552,7 @@ emis_hot_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(ncol(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef$month <- rep(1:12, each = nrow(veh))
           ef2 <- split(ef[, 1:ncol(veh)], ef$month)
@@ -648,6 +645,7 @@ emis_hot_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           ef$month <- rep(1:12, each = nrow(veh))
           ef2 <- split(ef[, 1:ncol(veh)], ef$month)
           ef2 <- as.numeric(unlist(lapply(ef2, unlist)))
@@ -765,7 +763,7 @@ emis_hot_td <- function(veh,
 
         if (nrow(pro_month) == 1) {
           message("Replicating one-row matrix to match number of rows of `veh`")
-          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month))
+          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month), byrow = TRUE)
         }
 
         if (length(ef) != ncol(veh)) stop("Length of `ef` and number of cols of `veh` must be equal")
@@ -776,6 +774,7 @@ emis_hot_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(ncol(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef <- as.numeric(ef)
           month <- as.matrix(pro_month)
@@ -865,6 +864,7 @@ emis_hot_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           month <- as.numeric(pro_month)
           ef <- as.numeric(ef)
@@ -1040,7 +1040,7 @@ emis_hot_td <- function(veh,
         e <- as.data.frame(a)
         names(e) <- "emissions"
         e <- Emissions(e)
-        e$rows <- row.names(e)
+        e$rows <- rep(row.names(veh), ncol(veh))
         e$age <- rep(1:ncol(veh), each = nrow(veh))
       } else {
         e <- unlist(lapply(1:ncol(veh), function(j) {
@@ -1049,7 +1049,7 @@ emis_hot_td <- function(veh,
         e <- as.data.frame(e)
         names(e) <- "emissions"
         e <- Emissions(e)
-        e$rows <- row.names(e)
+        e$rows <- rep(row.names(veh), ncol(veh))
         e$age <- rep(1:ncol(veh), each = nrow(veh))
       }
       # ef is data.frame
@@ -1062,7 +1062,7 @@ emis_hot_td <- function(veh,
       e <- as.data.frame(e)
       names(e) <- "emissions"
       e <- Emissions(e)
-      e$rows <- row.names(e)
+      e$rows <- rep(row.names(veh), ncol(veh))
       e$age <- rep(1:ncol(veh), each = nrow(veh))
     }
 

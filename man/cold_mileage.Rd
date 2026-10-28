@@ -7,9 +7,11 @@
 cold_mileage(ltrip, ta)
 }
 \arguments{
-\item{ltrip}{Numeric; Length of trip. It must be in 'units' km.}
+\item{ltrip}{Numeric; Length of trip. It must have class 'units' with a
+length unit; it is converted to km.}
 
-\item{ta}{Numeric or data.frame; average monthly temperature Celsius. It if is a
+\item{ta}{Numeric or data.frame; average monthly temperature with class
+'units' (converted to Celsius, e.g. 'K' is accepted). It if is a
 data.frame, it is convenient that each column is each month.}
 }
 \description{

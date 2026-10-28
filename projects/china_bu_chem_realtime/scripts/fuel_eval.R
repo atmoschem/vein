@@ -105,7 +105,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
   x <- readRDS(paste0("veh/", metadata_cold$vehicles[i], ".rds"))
   
   # euro
-  std1 <- std[[metadata$vehicles[i]]]
+  std1 <- std[[metadata_cold$vehicles[i]]]
   
   ltrip <- add_lkm(metadata_cold$km_cycle[i])
   ta <- mean(met$Temperature)

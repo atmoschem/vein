@@ -15,8 +15,9 @@ add_polid(polyg, street, by)
 }
 \description{
 Sometimes you need to add polygon id into your streets road network.
-\code{\link{add_polid}} add add_polid id into your road network cropping your
-network by.
+\code{\link{add_polid}} add add_polid id into your road network intersecting
+(\code{\link[sf]{st_intersection}}) your network with each polygon.
+Streets crossing polygon boundaries are split.
 
 For instance, you have open street maps road network the you have the
 polygon of your regions. This function adds the id of your polygon

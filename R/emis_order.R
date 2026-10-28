@@ -94,6 +94,8 @@ emis_order <- function(x, # 24 hours or one week
     x <- sf::st_set_geometry(x, NULL)
   }
   # x <- remove_units(x)
+  if (inherits(x, "Spatial")) x <- sf::st_set_geometry(sf::st_as_sf(x), NULL)
+  if (is.matrix(x)) x <- as.data.frame(x)
 
   x$id <- NULL
 
@@ -143,7 +145,11 @@ emis_order <- function(x, # 24 hours or one week
   df_x$nx <- names(x)
 
   df <- merge(x = dwrf, y = df_x, by = "cutc", all.x = T)
-  x <- x[, df$nx] * k
+  if (anyNA(df$nx)) {
+    stop("Some hours of start_utc_time do not match hours of the emissions. ",
+         "Check 'seconds', it must keep the emissions in exact hours")
+  }
+  x <- x[, df$nx, drop = FALSE] * k
 
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)

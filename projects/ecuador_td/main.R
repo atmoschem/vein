@@ -102,7 +102,9 @@ source("scripts/fuel_eval_eea.R", encoding = "UTF-8")
 
 # Exhaust ####
 language <- "spanish" # english spanish portuguese
-provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
+fuel <- readRDS("config/fuel.rds")
+provincia <- unique(fuel$region)[1]
+# provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
 mileage <- readRDS("config/mileage.rds")
 veh <- readRDS("config/fleet_age.rds")
@@ -132,6 +134,7 @@ source("scripts/cold_start_eea.R", encoding = "UTF-8")
 
 # Evaporatives ####
 language <- "spanish" # english spanish portuguese
+fuel <- readRDS("config/fuel.rds")
 provincia <- unique(fuel$region)[1]
 # provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
@@ -152,6 +155,7 @@ source("scripts/evaporatives_eea.R", encoding = "UTF-8")
 
 # Wear ####
 language <- "spanish" # english spanish portuguese
+fuel <- readRDS("config/fuel.rds")
 provincia <- unique(fuel$region)[1]
 # provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")
@@ -170,6 +174,7 @@ source("scripts/wear_eea.R", encoding = "UTF-8")
 
 # plots
 language <- "spanish" # english spanish portuguese
+fuel <- readRDS("config/fuel.rds")
 provincia <- unique(fuel$region)[1]
 # provincia <- unique(fuel$region)[as.numeric(basename(getwd()))]
 metadata <- readRDS("config/metadata.rds")

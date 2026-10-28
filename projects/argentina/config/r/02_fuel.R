@@ -61,18 +61,17 @@ xy <- x[, lapply(.SD, sum),
                   "m3"),
        by = .(fuel, region, Year)]
 
-setorderv(xy, "Year", order = -1)
-
-setorderv(df,
+# annual fuel by region (sum of the months)
+setorderv(xy,
 c("region",
   "Year",
   "fuel"),
 order = c(1, 1, 1))
 
-saveRDS(df, "config/rds/fuel.rds")
-writexl::write_xlsx(df, "config/xlsx/fuel.xlsx")
+saveRDS(xy, "config/rds/fuel.rds")
+writexl::write_xlsx(xy, "config/xlsx/fuel.xlsx")
 
-ggplot(df,
+ggplot(xy,
   aes(x = Year,
       y = consumption_t,
       colour = fuel)) +

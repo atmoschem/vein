@@ -17,10 +17,10 @@ dt$t <- units::set_units(dt$g, "t")
 fwrite(dt, "post/DF/emissions.csv.gz")
 saveRDS(dt, "post/DF/emissions.rds")
 
-# Agregando emisses por categoria ####
+# Agregando emissões por categoria ####
 switch(
   language,
-  "portuguese" = message("\nAgregando emisses por categoria\n"),
+  "portuguese" = message("\nAgregando emissões por categoria\n"),
   "english" = message("\nAggregating emissions by category...\n"),
   "spanish" = message("\nAgregando emisiones por categoria...\n")
 )
@@ -54,7 +54,7 @@ data.table::fwrite(df3, "csv/emissions_by_age.csv", row.names = FALSE)
 dir.create("post/streets")
 switch(
   language,
-  "portuguese" = message("\nAgregando emisses por rua...\n"),
+  "portuguese" = message("\nAgregando emissões por rua...\n"),
   "english" = message("\nAgregating emissions by street...\n"),
   "spanish" = message("\nAgregando emisiones por calle...\n")
 )
@@ -84,7 +84,7 @@ dtxx <- function(x, tfs, rmf = FALSE) {
 # CO
 x <- list.files(
   path = "emi/",
-  pattern = "CO.csv",
+  pattern = "(^|_)CO\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -99,7 +99,7 @@ saveRDS(x_st, "post/streets/CO.rds")
 # NOx
 x <- list.files(
   path = "emi/",
-  pattern = "NOx.csv",
+  pattern = "(^|_)NOx\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -113,7 +113,7 @@ saveRDS(x_st, "post/streets/NOx.rds")
 # NO
 x <- list.files(
   path = "emi/",
-  pattern = "NO.csv",
+  pattern = "(^|_)NO\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -127,7 +127,7 @@ saveRDS(x_st, "post/streets/NO.rds")
 # NO2
 x <- list.files(
   path = "emi/",
-  pattern = "NO2.csv",
+  pattern = "(^|_)NO2\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -141,7 +141,7 @@ saveRDS(x_st, "post/streets/NO2.rds")
 # PM2.5
 x <- list.files(
   path = "emi/",
-  pattern = "PM.csv",
+  pattern = "(^|_)PM\\.csv$", # exhaust PM (PM2.5), wear and road dust PM2.5
   recursive = T,
   full.names = T
 )
@@ -152,10 +152,10 @@ x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/PM2.5.rds")
 
-# PM10
+# PM10 = wear and road dust PM10 + exhaust PM (exhaust PM is all < 2.5 um)
 x <- list.files(
   path = "emi/",
-  pattern = "PM10.csv",
+  pattern = "(^|_)PM10\\.csv$|^PM\\.csv$",
   recursive = T,
   full.names = T
 )
@@ -166,6 +166,22 @@ x_st <- st_sf(x_st, geometry = net$geom)
 
 saveRDS(x_st, "post/streets/PM10.rds")
 
+
+# GHG ####
+# greenhouse gases gridded like the other pollutants (hot exhaust only)
+ghg_pols <- c("CO2")
+for (gp in ghg_pols) {
+  x <- list.files(
+    path = "emi/",
+    pattern = paste0("(^|_)", gp, "\\.csv$"),
+    recursive = T,
+    full.names = T
+  )
+  if (length(x) == 0) next
+  dtxx(x, tfs) -> x_st
+  x_st <- st_sf(x_st, geometry = net$geom)
+  saveRDS(x_st, paste0("post/streets/", gp, ".rds"))
+}
 
 # NMHC
 x <- list.files(path = "emi/", pattern = "NMHC", recursive = T, full.names = T)
@@ -240,7 +256,7 @@ unlink(c("post/streets/NMHC_EVAP_D.rds", "post/grids/NMHC_EVAP_D.rds"))
 dir.create("post/grids")
 switch(
   language,
-  "portuguese" = message("\nAgregando emisses por grade\n"),
+  "portuguese" = message("\nAgregando emissões por grade\n"),
   "english" = message("\nAgregating emissions by grid...\n"),
   "spanish" = message("\nAgregando emisiones por grilla...\n")
 )

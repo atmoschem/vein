@@ -30,11 +30,14 @@ emis_cold(
 as number of columns matching the age distribution of that type of vehicle.
 The number of rows is equal to the number of streets link}
 
-\item{lkm}{Length of each link}
+\item{lkm}{Length of each link with units of length (class 'units'),
+converted to km.}
 
 \item{ef}{List of functions of emission factors of vehicular categories}
 
-\item{efcold}{List of functions of cold start emission factors of vehicular categories}
+\item{efcold}{List of functions of cold start emission factors of vehicular
+categories. As `ef`, when it is shorter than the number of columns of `veh`,
+the last function is repeated.}
 
 \item{beta}{Dataframe with the hourly cold-start distribution to each day
 of the period. Number of rows are hours and columns are days}

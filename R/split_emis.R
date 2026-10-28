@@ -55,7 +55,8 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   geo <- sf::st_geometry(gnet)
   gnet <- as.data.frame(sf::st_set_geometry(gnet, NULL))
   gnet[, ncolnet] <- gnet[, ncolnet] * as.numeric(gnet$LKM2/gnet$LKM)
-  gnet <- as.data.frame(gnet[, ncolnet])
+  gnet <- as.data.frame(gnet[, ncolnet, drop = FALSE])
+  names(gnet) <- ncolnet
   if(verbose){
     sumemis <- sum(gnet, na.rm = T)/1000
     cat("Total Emissions", sumemis, " kg \n")
@@ -66,8 +67,7 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
       gnet[[add_column[i]]] <- nc[[i]]
     }
   }
-names(gnet) <- ncolnet
-  gnet$id <- 1:nrow(gnet)
+  gnet$id <- seq_len(nrow(gnet))
   gnet <- sf::st_sf(gnet, geometry = geo)
   return(gnet)
 }

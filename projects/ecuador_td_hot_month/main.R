@@ -9,14 +9,13 @@ sessionInfo()
 
 # 0 Configuration
 language <- "spanish" # spanish portuguese english
-path_to_moves <- "../"
 path <- "config/inventory_ecuador.xlsx"
 readxl::excel_sheets(path)
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
 mileage <- readxl::read_xlsx(path = path, sheet = "mileage")
 tfs <- readxl::read_xlsx(path = path, sheet = "tfs")
 veh <- readxl::read_xlsx(path = path, sheet = "fleet_age")
-fuel <- readxl::read_xlsx(path = path, sheet = "fuel")
+fuel <- readxl::read_xlsx(path = path, sheet = "fuel_month") # monthly fuel sales, needed by the monthly calibration
 pmonth <- readxl::read_xlsx(path = path, sheet = "pmonth")
 met <- readxl::read_xlsx(path = path, sheet = "met")
 euro <- readxl::read_xlsx(path = path, sheet = "euro")
@@ -93,6 +92,7 @@ provincia <- "Imbabura"
 source("scripts/exhaust_eea.R", encoding = "UTF-8")
 
 # plots
+language <- "spanish" # english spanish portuguese
 metadata <- readRDS("config/metadata.rds")
 tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")

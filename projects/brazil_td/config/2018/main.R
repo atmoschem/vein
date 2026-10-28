@@ -108,6 +108,9 @@ verbose <- FALSE
 maxage <- 40
 scale <- "tunnel2018"
 plot_ef <- F
+# temperature scenario for evaporatives: NULL = every scenario of the year,
+# each labelled in type_emi (future years have several, e.g. "SSP 4.5")
+evap_scenario <- NULL
 
 source("scripts/evaporatives4.R", encoding = "UTF-8", echo = F)
 rm(list = ls())
@@ -175,7 +178,8 @@ language <- "portuguese" # english spanish
 mech <- "RADM2"
 aer <- "pm2023" # pmiag, pmneu
 pol <- c("CO", "NO", "NO2", "SO2", "NH3")
-mw <- c(12 + 16, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
+# g/mol; vein NO is NO2-equivalent mass (NO = NOx * (1 - fNO2), NOx as NO2), so NO uses 46
+mw <- c(12 + 16, 14 + 16 * 2, 14 + 16 * 2, 32 + 16 * 2, 14 + 3)
 suppressWarnings(source(
   "scripts/mech_spatial.R",
   encoding = "UTF-8",

@@ -10,5 +10,5 @@ units::install_unit("veh")  #nocov
 
 
 # .onUnload <- function(libpath){
-  units::remove_unit("veh") #nocov
+#   units::remove_unit("veh") #nocov
 # }

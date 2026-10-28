@@ -2,7 +2,7 @@ file.remove("emi/exhaust.csv")
 
 # Escapamento ####
 switch(language,
-       "portuguese" = cat("Estimando emisses\n"),
+       "portuguese" = cat("Estimando emissões\n"),
        "english" = cat("Estimating emissions\n"),
        "spanish" = cat("Estimando emisiones\n")
 )
@@ -109,16 +109,18 @@ for (i in seq_along(metadata_cold$vehicles)) {
                                     t = metadata_cold$t_eea_old[i],
                                     cc = metadata_cold$cc_eea_old[i],
                                     f = metadata_cold$fuel_eea_old[i],   
-                                    p = "FC",
+                                    p = pol[j],
                                     eu = cate,
                                     speed = Speed(metadata_cold$speed[i])))
                 
+                # cold/hot ratio: NO and NO2 use NOx, NMHC uses HC
                 (efcold <- ef_ldv_cold(ta = matrix(ta, nrow = 1),
                                        cc = ifelse(metadata_cold$cc_eea_old[i] == "<3.5",
                                                    ">2000",
                                                    metadata_cold$cc_eea_old[i]),
                                        f = metadata_cold$fuel_eea_old[i],   
-                                       p = "FC",
+                                       p = ifelse(pol[j] %in% c("NO", "NO2"), "NOx",
+                                                  ifelse(pol[j] == "NMHC", "HC", pol[j])),
                                        eu = cate,
                                        speed = Speed(metadata_cold$speed[i])))
                 

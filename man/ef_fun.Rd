@@ -8,7 +8,7 @@ ef_fun(
   ef,
   type = "logistic",
   x = 1:length(ef),
-  x0 = mean(ef),
+  x0 = mean(x),
   k = 1/4,
   L = max(ef),
   verbose = TRUE
@@ -21,7 +21,9 @@ ef_fun(
 
 \item{x}{Numeric; vector for ages of use.}
 
-\item{x0}{Numeric;  the x-value of the sigmoid's midpoint,}
+\item{x0}{Numeric;  the x-value (age) of the sigmoid's midpoint. Default is
+the mean of \code{x}; before vein 2.0.0 it was \code{mean(ef)}, an
+emission factor value used as an age.}
 
 \item{k}{Numeric; the steepness of the curve.}
 

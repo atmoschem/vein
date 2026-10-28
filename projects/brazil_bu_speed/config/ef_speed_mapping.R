@@ -50,13 +50,16 @@ ef_cetesb_speed <- function(veh, pol, year = 2018, agemax = 40,
                     scale = scale, full = TRUE, sppm = sppm)
   eu <- full[[m$eu_col]]
   dfcol <- as.numeric(full[[pol]])
+  # CO2 follows the speed curve of FC (EMEP/EEA derive CO2 from FC), so that
+  # CO2/FC keeps the CETESB ratio at every speed
+  pcurve <- if (pol == "CO2") "FC" else pol
   if (m$engine == "ldv") {
     ef_ldv_scaled(dfcol = dfcol, SDC = SDC, v = m$v, t = m$t,
-                  cc = m$cc, f = m$f, eu = eu, p = pol,
+                  cc = m$cc, f = m$f, eu = eu, p = pcurve,
                   programs_only = programs_only)
   } else {
     ef_hdv_scaled(dfcol = dfcol, SDC = SDC, v = m$v, t = m$t,
-                  g = m$g, eu = eu, gr = 0, l = 0.5, p = pol,
+                  g = m$g, eu = eu, gr = 0, l = 0.5, p = pcurve,
                   programs_only = programs_only)
   }
 }

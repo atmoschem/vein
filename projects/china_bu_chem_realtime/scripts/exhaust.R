@@ -3,6 +3,19 @@ suppressWarnings(file.remove("emi/DF_EXHAUST_STREETS.csv"))
 
 
 
+# met row of the snapshot hour (met$Hour is 0-23)
+ih <- which(met$Hour == hour_snapshot)
+if (length(ih) != 1) stop("hour_snapshot ", hour_snapshot, " not found in met$Hour")
+
+# altitude per street: config h must have one row per street of net
+if (length(h$h) == nrow(net)) {
+  hh <- h$h
+} else {
+  warning("config h has ", length(h$h), " rows but net has ", nrow(net),
+          " streets: using the median altitude for all streets")
+  hh <- median(h$h, na.rm = TRUE)
+}
+
 # Exhaust ####
 switch(language,
        "portuguese" = cat("Estimando emissões\n"),
@@ -47,7 +60,7 @@ for (i in seq_along(metadata$vehicles)) {
                                 f = metadata$f[i], 
                                 standard = std1,
                                 p = pol[j],
-                                yeardet = 2018)
+                                yeardet = year)
     
     ef_base_speed <- ef_china_speed(speed = speed[[1]],
                      f = metadata$f[i],
@@ -55,20 +68,20 @@ for (i in seq_along(metadata$vehicles)) {
                      p = pol[j], 
                      long = TRUE)
     
-    ef_base_temp <- ef_china_te(te = met$Temperature[1],
+    ef_base_temp <- ef_china_te(te = met$Temperature[ih],
                                 v = metadata$v[i],
                                 t = metadata$t[i],
                                 f = metadata$f[i], 
                                 p = pol[j])
     
-    ef_base_hu <- ef_china_hu(hu = met$Humidity[1],
+    ef_base_hu <- ef_china_hu(hu = met$Humidity[ih],
                               v = metadata$v[i],
                               t = metadata$t[i],
                               f = metadata$f[i], 
                               p = pol[j])
     
-    ef_base_th <- ef_china_th(hu = met$Humidity[1],
-                              te = met$Temperature[1],
+    ef_base_th <- ef_china_th(hu = met$Humidity[ih],
+                              te = met$Temperature[ih],
                               v = metadata$v[i],
                               t = metadata$t[i],
                               f = metadata$f[i], 
@@ -76,23 +89,26 @@ for (i in seq_along(metadata$vehicles)) {
     
     efmet <- ef_base_temp * ef_base_hu * ef_base_th
 
-    ef_base_h <- ef_china_h(h = h$h[1],
+    ef_base_h <- ef_china_h(h = hh,
                             v = metadata$v[i],
                             t = metadata$t[i],
                             f = metadata$f[i], 
                             p = pol[j])
     
-    ef_base_speedv2 <- ef_base_h*
-      ef_base_speed *
-      remove_units(ef_base) *
-      ef_base_det*
-      ef_base_s *
+    # base EF, deterioration and sulphur have one value per age: apply them
+    # across the age columns with sweep() (a plain product recycles them down
+    # the street rows). Speed varies by street and age, altitude by street,
+    # and the weather factor efmet is one value for the snapshot hour,
+    # applied once.
+    ef_age <- as.numeric(remove_units(ef_base)) * ef_base_det * ef_base_s
+    if (length(ef_age) != ncol(ef_base_speed)) {
+      warning(metadata$vehicles[i], " ", pol[j], ": base/deterioration/sulphur ",
+              "factors for ", length(ef_age), " of ", ncol(ef_base_speed),
+              " ages (standards missing in vein's China tables)")
+    }
+    ef_base_speedv2 <- sweep(as.matrix(ef_base_speed), 2, ef_age, "*") *
+      ef_base_h *
       efmet
-    
-    
-    efmet <- ef_base_temp * ef_base_hu * ef_base_th
-
-    ef_base_speedv2 <- ef_base_speedv2*efmet
     
     E <- Emissions(do.call("cbind", lapply(1:ncol(x), function(i) {
       ef_base_speedv2[, i] * x[, i] * net$lkm
@@ -125,7 +141,6 @@ for (i in seq_along(metadata$vehicles)) {
     x_STREETS <- data.frame(
       id = net$id,
       g = rowSums(E, na.rm  = T),
-      pollutant = pol[j],
         veh = metadata$vehicles[i],
         size = metadata$t[i],
         fuel = metadata$f[i],

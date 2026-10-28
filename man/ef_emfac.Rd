@@ -25,7 +25,8 @@ ef_emfac(
 
 \item{dcng}{Numeric density of CNG, default 0.8 kg/m3}
 
-\item{fill_missing}{Logical to fill and correct ef = 0}
+\item{fill_missing}{Logical to fill and correct ef = 0, with the mean of the
+non-zero ef of the same vehicles, pollutant and ModelYear}
 
 \item{verbose}{Logical, to show more information}
 }

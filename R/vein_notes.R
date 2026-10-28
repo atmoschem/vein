@@ -75,8 +75,9 @@ vein_notes <- function (notes,
   cat(paste0("R version = ", paste0(version$major, ".", version$minor), "\n"))
   cat(paste0("nickname = ", version$nickname, "\n"))
   cat(paste0("Memory used = ",
-             format(sum(sapply(environment(), object.size)),
-                    units = " Mb"), "Mb \n"))
+             format(structure(sum(vapply(as.list(globalenv()), object.size, numeric(1))),
+                              class = "object_size"),
+                    units = "Mb"), "\n"))
   cat("========================================\n") # 40
   cat("\n")
   cat(paste0("VEIN version = ", packageVersion("vein"), "\n"))

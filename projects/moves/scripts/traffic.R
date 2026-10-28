@@ -134,10 +134,10 @@ cat("sum: ", sum(unlist(l_pc)), "\n\n")
 
 # fuel
 metadata[metadata$vein_name == "PC", ]$fuel
-kf <- c(k_G,   #diesel
+kf <- c(k_G,   #gasoline
         1,     #eletric
         k_E85, #E85
-        k_D)   #gasoline
+        k_D)   #diesel
 
 # colplot
 lPC <- list()
@@ -164,10 +164,10 @@ cat("sum: ", sum(unlist(l_pt)), "\n\n")
 
 # fuel
 metadata[metadata$family == "PT", ]$fuel
-kf <- c(k_G,   #diesel
+kf <- c(k_G,   #gasoline
         1,     #eletric
         k_E85, #E85
-        k_D)   #gasoline
+        k_D)   #diesel
 
 # colplot
 lPT <- list()
@@ -194,10 +194,10 @@ cat("sum: ", sum(unlist(l_lct)), "\n\n")
 
 # fuel
 metadata[metadata$vein_name == "LCT", ]$fuel
-kf <- c(k_G,   #diesel
+kf <- c(k_G,   #gasoline
         1,     #eletric
         k_E85, #E85
-        k_D)   #gasoline
+        k_D)   #diesel
 
 # colplot
 lLCT <- list()

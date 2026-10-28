@@ -28,8 +28,9 @@ moves_rpdy_meta(
 
 \item{speed_bin}{Data.frame or vector of avgSpeedBinID as defined by MOVES.}
 
-\item{profile}{Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-the week}
+\item{profile}{Data.frame or Matrix with one row per hour (ncol(speed_bin)
+rows) and one column per vehicle, named as metadata$vehicles. A column
+"Hour" is ignored.}
 
 \item{agemax}{Integer; max age for the fleet, assuming the same for all vehicles.}
 

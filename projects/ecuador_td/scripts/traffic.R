@@ -215,7 +215,7 @@ switch(language,
        "spanish" = cat("Plotando flota \n")
 )
 
-n_veh <- list(n_PC, n_LCV, n_TRUCKS, n_BUS, n_MC)
+n_veh <- list(PC = n_PC, LCV = n_LCV, TRUCKS = n_TRUCKS, BUS = n_BUS, MC = n_MC)
 
 for (i in seq_along(n_veh)) {
   df_x <- df[, n_veh[[i]]]

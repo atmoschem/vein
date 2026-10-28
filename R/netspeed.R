@@ -3,18 +3,24 @@
 #' @description \code{netspeed} Creates a dataframe of speeds for different hours
 #' and each link based on morning rush traffic data
 #'
-#' @param q Data-frame of traffic flow to each hour (veh/h)
-#' @param ps Peak speed (km/h)
+#' @param q Data-frame (or numeric vector, for one hour) of traffic flow to
+#' each hour (veh/h)
+#' @param ps Peak speed (km/h). Only used when \code{scheme = TRUE}.
 #' @param ffs Free flow speed (km/h)
-#' @param cap Capacity of link (veh/h)
-#' @param lkm Distance of link (km)
+#' @param cap Capacity of link (veh/h). Links with \code{cap <= 0} return NA
+#' with a warning.
+#' @param lkm Distance of link (km). Links with \code{lkm <= 0} return NA
+#' with a warning.
 #' @param alpha Parameter of BPR curves
 #' @param beta Parameter of BPR curves
 #' @param net SpatialLinesDataFrame or Spatial Feature of "LINESTRING"
 #' @param scheme Logical to create a Speed data-frame with 24 hours and a
 #' default  profile. It needs ffs and ps:
 #' @param dist String indicating the units of the resulting distance in speed.
-#' Default is units from peak speed `ps`
+#' Default is "km". When \code{ps} and \code{ffs} have class "units", they
+#' are converted to \code{dist}/h before the estimation. When they are
+#' numeric, they are assumed to be in \code{dist}/h.
+#' The hours of \code{scheme = TRUE} are:
 #' \tabular{rl}{
 #'   00:00-06:00 \tab ffs\cr
 #'   06:00-07:00 \tab average between ffs and ps\cr
@@ -24,7 +30,9 @@
 #'   20:00-22:00 \tab average between ffs and ps\cr
 #'   22:00-00:00 \tab ffs\cr
 #' }
-#' @return dataframe speeds with units or sf.
+#' @return dataframe speeds with units or sf. The speed is estimated with the
+#' BPR curve: ffs / (1 + alpha * (q / cap)^beta). The names of the columns
+#' are "S1", "S2", ..., one for each hour.
 #' @importFrom sf st_sf st_as_sf
 #' @export
 #' @examples {
@@ -58,54 +66,74 @@ netspeed <- function (q = 1,
                       net,
                       scheme = FALSE,
                       dist = "km"){
+  to_dist <- function(v) {
+    if(inherits(v, "units")) {
+      v <- units::set_units(v, paste0(dist, "/h"), mode = "standard")
+    }
+    as.numeric(v)
+  }
+
   if (scheme == FALSE & missing(q)){
     stop("No vehicles on 'q'")
   } else if (scheme == FALSE){
-    qq <- as.data.frame(q)
+    qq <- as.data.frame(remove_units(q))
     for (i  in 1:ncol(qq) ) {
       qq[,i] <- as.numeric(qq[,i])
     }
-    ps <- as.numeric(ps)
-    ffs <- as.numeric(ffs)
-    cap <- as.numeric(cap)
-    lkm <- as.numeric(lkm)
+    nl <- nrow(qq)
+    ffs <- rep_len(to_dist(ffs), nl)
+    cap <- rep_len(as.numeric(cap), nl)
+
+    bad <- !is.na(cap) & cap <= 0
+    if(any(bad)) {
+      warning(sum(bad), " link(s) with 'cap' <= 0, returning NA speed")
+    }
+    if(!missing(lkm)) {
+      lkm <- rep_len(as.numeric(lkm), nl)
+      badl <- !is.na(lkm) & lkm <= 0
+      if(any(badl)) {
+        warning(sum(badl), " link(s) with 'lkm' <= 0, returning NA speed")
+      }
+      bad <- bad | badl
+    }
+    cap[bad] <- NA
+
+    # BPR: lkm / (lkm/ffs*(1 + alpha*(q/cap)^beta)) = ffs/(1 + alpha*(q/cap)^beta)
     dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(qq), function(i) {
-      lkm/(lkm/ffs*(1 + alpha*(qq[,i]/cap)^beta))
+      sp <- ffs/(1 + alpha*(qq[,i]/cap)^beta)
+      sp[bad] <- NA
+      sp
     }))))
-    names(dfv) <- unlist(lapply(1:ncol(q), function(i) paste0("S",i)))
+    names(dfv) <- paste0("S", 1:ncol(qq))
 
     df_speed <- Speed(dfv, dist = dist)
 
-    } else {
-      ps <- as.numeric(ps)
-      ffs <- as.numeric(ffs)
+  } else {
+    ps <- to_dist(ps)
+    ffs <- to_dist(ffs)
+    n <- max(length(ps), length(ffs))
+    ps <- rep_len(ps, n)
+    ffs <- rep_len(ffs, n)
+    avs <- 0.5*(ps + ffs)
 
-      dfv <- cbind(replicate(5, ffs),
-                   replicate(1, 0.5*(ps + ffs) ),
-                   replicate(3, ps),
-                   replicate(7, 0.5*(ps + ffs)),
-                   replicate(3, ps),
-                   replicate(2, 0.5*(ps + ffs)),
-                   replicate(3, ffs))
+    # hours 00-06 ffs, 06-07 avg, 07-10 ps, 10-17 avg, 17-20 ps, 20-22 avg,
+    # 22-24 ffs
+    hs <- c(rep("ffs", 6), "avs", rep("ps", 3), rep("avs", 7), rep("ps", 3),
+            rep("avs", 2), rep("ffs", 2))
+    lv <- list(ffs = ffs, avs = avs, ps = ps)
 
-      names(dfv) <- c(rep("FSS",5),
-                      "AS",
-                      rep("PS", 3),
-                      rep("AS", 7),
-                      rep("PS", 3),
-                      rep("AS", 2),
-                      rep("FSS",3))
+    dfv <- as.data.frame(matrix(unlist(lv[hs]), nrow = n, ncol = 24))
+    names(dfv) <- paste0("S", 1:24)
 
-      df_speed <- Speed(as.data.frame(dfv),
-                        dist = dist)
+    df_speed <- Speed(dfv, dist = dist)
 
-    }
-    if(!missing(net)){
-      netsf <- sf::st_as_sf(net)
-      df_speedsf <- sf::st_sf(df_speed,
-                              geometry = sf::st_geometry(netsf))
-      return(df_speedsf)
-    } else {
-      return(df_speed)
-    }
   }
+  if(!missing(net)){
+    netsf <- sf::st_as_sf(net)
+    df_speedsf <- sf::st_sf(df_speed,
+                            geometry = sf::st_geometry(netsf))
+    return(df_speedsf)
+  } else {
+    return(df_speed)
+  }
+}

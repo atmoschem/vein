@@ -1,5 +1,8 @@
 suppressWarnings(file.remove("emi/exhaust.csv"))
 
+# det_factor()
+source("scripts/deterioration.R", encoding = "UTF-8")
+
 setDT(pmonth)
 
 # Escapamento ####
@@ -69,25 +72,22 @@ for (i in seq_along(metadata$vehicles)) {
   for (j in seq_along(pol)) {
     cat(pol[j], " ")
     
-    f_fcorr <- fcorr[veh == metadata$v_eea_old_fuel[i] &
-                       pol == pol[j]]
+    # local names that are not columns of fcorr (data.table scoping)
+    pj <- pol[j]
+    vj <- metadata$v_eea_old_fuel[i]
+    f_fcorr <- fcorr[veh == vj & pol == pj]
     
     
-    # deterioration factor
-    if(pol[j] %in% c("CO", "NO", "NO2", "HC", "NMHC")) {
-      
-      (efdet <- emis_det(po = ifelse(
-        pol[j] %in% c("NO", "NOx", "NO2"),"NOx",
-        ifelse(
-          pol[j] %in% c("NMHC", "HC"),"HC",
-          "CO"
-        )),
-        cc = "<=1400",
-        eu = cate[1:ncol(veh)], 
-        km = cumsum(mileage[[metadata$vehicles[i]]])))
-    } else {
-      efdet <- 1
-    }
+    # deterioration factor, one per age (scripts/deterioration.R);
+    # multiplies the one-row EF below, column by column
+    efdet <- det_factor(
+      p = pol[j],
+      family = metadata$family[i],
+      fuel = metadata$fuel_eea_old[i],
+      cc = metadata$cc_eea_old[i],
+      eu = cate[1:ncol(veh)],
+      km = cumsum(mileage[[metadata$vehicles[i]]])[1:ncol(veh)]
+    )
     
     
     if(metadata$v_eea_old[i] %in% c("PC", "LCV", "Motorcycle")) {
@@ -113,7 +113,7 @@ for (i in seq_along(metadata$vehicles)) {
                          l = 0.5,
                          p = pol[j],
                          speed = Speed(metadata$speed[i]), 
-                         fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr)
+                         fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr$value)
     }
     
     if(IM) {
@@ -123,21 +123,25 @@ for (i in seq_along(metadata$vehicles)) {
       im_nox <- readRDS("config/im_nox.rds")
       im_pm <- readRDS("config/im_pm.rds")
       
-      ok <- im_ok[[metadata$vehicles[i]]][1:ncol(x)]
+      ok <- im_ok[[metadata$vehicles[i]]][1:ncol(veh)]
       nok <- 1 - ok
       
-      if(pol[j] == "CO")fim <- im_co[[metadata$vehicles[i]]][1:ncol(x)]
+      # pollutants without IM factor keep fim = 1
+      fim <- rep(1, ncol(veh))
       
-      if(pol[j] %in% c("HC", "NMHC")) fim <- im_hc[[metadata$vehicles[i]]][1:ncol(x)]
+      if(pol[j] == "CO")fim <- im_co[[metadata$vehicles[i]]][1:ncol(veh)]
       
-      if(pol[j] %in% c("NO", "NO2", "NOx")) fim <- im_nox[[metadata$vehicles[i]]][1:ncol(x)]
+      if(pol[j] %in% c("HC", "NMHC")) fim <- im_hc[[metadata$vehicles[i]]][1:ncol(veh)]
       
-      if(pol[j] %in% c("PM")) fim <- im_pm[[metadata$vehicles[i]]][1:ncol(x)]
+      if(pol[j] %in% c("NO", "NO2", "NOx")) fim <- im_nox[[metadata$vehicles[i]]][1:ncol(veh)]
+      
+      if(pol[j] %in% c("PM")) fim <- im_pm[[metadata$vehicles[i]]][1:ncol(veh)]
       
       # check that fim is only 1
       
-      if(unique(fim) == 1) ok <- 1
-      ef <- EmissionFactors(matrix(as.numeric(ef)*ok + as.numeric(ef)*fim*nok, nrow = 1))
+      if(all(fim == 1)) ok <- 1
+      efn <- as.numeric(unlist(ef[, 1:ncol(veh)]))
+      ef <- EmissionFactors(matrix(efn*ok + efn*fim*nok, nrow = 1))
     }
     
     array_x <- emis_hot_td(
@@ -146,7 +150,8 @@ for (i in seq_along(metadata$vehicles)) {
       ef = ef[, 1:ncol(veh)],
       fortran = TRUE,
       nt = nt,
-      pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+      # monthly profile of the fuel used by the vehicle (diesel or gasoline)
+      pro_month = pmonth[fuel == ifelse(metadata$fuel[i] == "D", "D", "G")]$consumption_lt,
       verbose = verbose,
       params = list(
         veh = metadata$vehicles[i],

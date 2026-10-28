@@ -76,7 +76,8 @@ moves_rpdy_meta(
         simplify = F) -> emi
 
 
-metadata$vtype <- c(rep("LDV", 13), rep("HDV", 39-14))
+# light (MC, PC, PT, LCT) or heavy (BUS, TRUCKS) from metadata, not from row positions
+metadata$vtype <- ifelse(metadata$family %in% c("MC", "PC", "PT", "LCT"), "LDV", "HDV")
 id_ldv <- unique(metadata[vtype == "LDV"]$sourceTypeID)
 id_hdv <- unique(metadata[vtype == "HDV"]$sourceTypeID)
 

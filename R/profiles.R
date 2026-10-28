@@ -32,6 +32,6 @@
 #'   \item{HGV_JANUARY_2013}{168 hours}
 #'   \item{HGV_JANUARY_2014}{168 hours}
 #' }
-#' @usage data(pc_profile)
+#' @usage data(profiles)
 #' @docType data
 "profiles"

@@ -1,15 +1,8 @@
-if(Sys.info()[["sysname"]] == "Windows") {
-  dropb <- "C:/Users/Sergio/"
-} else {
-  dropb <- "~/"
-}
-# eea
-readxl::excel_sheets(paste0(dropb,
-                            "Dropbox/buildvein/eea/1.A.3.b.i-ivRoadTransportAppendix4EmissionFactors_2020Sept.xlsx"))
+# EEA guidebook appendix 4 (hot emission factor parameters), copied into config/
+file_eea <- "config/1.A.3.b.i-ivRoadTransportAppendix4EmissionFactors_2020Sept.xlsx"
+readxl::excel_sheets(file_eea)
 
-eea <- readxl::read_excel(paste0(dropb,
-                                 "Dropbox/buildvein/eea/1.A.3.b.i-ivRoadTransportAppendix4EmissionFactors_2020Sept.xlsx"),
-                          "HOT_EMISSIONS_PARAMETERS")
+eea <- readxl::read_excel(file_eea, "HOT_EMISSIONS_PARAMETERS")
 library(data.table)
 setDT(eea)
 
@@ -98,7 +91,7 @@ ef_eea <- function(
   
   # load
   u_load <- unique(ef$Load)
-  if(any(!slope %in% u_slope)) {
+  if(any(!load %in% u_load)) {
     stop("Select categories from:\n", paste(u_load, collapse = "\n"))
   }
   ef <- ef[Load %in% load]

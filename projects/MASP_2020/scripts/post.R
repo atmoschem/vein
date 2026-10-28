@@ -1,3 +1,6 @@
+# merge_emis(): replacement for vein::emis_merge (removed from vein)
+source("scripts/merge_emis.R", encoding = "UTF-8")
+
 met <- readRDS("config/met.rds")
 names(met)
 year
@@ -14,7 +17,10 @@ numberOfDays <- function(date) {
         return(as.integer(format(date - 1, format = "%d")))
 }
 
-factor_emi <- numberOfDays(date = date) # daily to month
+# tfs is hourly and already spans the whole month (744 rows for March 2020),
+# so sums over tfs are monthly. Scale the period covered by tfs to the month:
+# 1 here, 31 only if tfs were a single day. The old "* days" counted 31 times.
+factor_emi <- numberOfDays(date = date) * 24 / nrow(tfs) # tfs period to month
 
 #
 # factor_emi <- 365 / (nrow(tfs) / 24) # daily to annual
@@ -29,12 +35,27 @@ switch(language,
 
 for (i in seq_along(pol)) {
         pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-        x <- emis_merge(
-                pol = pols,
-                path = "emi",
-                net = net,
-                k = units::set_units(1, "1/h")
-        )
+        if (pols == "PM10") {
+                # PM10 = resuspension PM10 + exhaust PM (exhaust PM is fine
+                # particles). Without the exhaust part PM10 < PM in many cells
+                # and the coarse fraction PM10 - PM (mech2.R) is negative.
+                fs <- list.files(path = "emi", pattern = "STREETS.rds",
+                                 full.names = TRUE, recursive = TRUE)
+                fs_exhaust_pm <- grep("_PM_STREETS.rds",
+                                      grep("PAVED_ROADS", fs, value = TRUE, invert = TRUE),
+                                      value = TRUE)
+                x <- merge_emis(
+                        pol = pols,
+                        files = c(grep("PM10_", fs, value = TRUE), fs_exhaust_pm),
+                        net = net
+                )
+        } else {
+                x <- merge_emis(
+                        pol = pols,
+                        path = "emi",
+                        net = net
+                )
+        }
         saveRDS(x, paste0(
                 "post/streets/",
                 ifelse(pols == "_HC", "HC", pols), ".rds"

@@ -5,7 +5,7 @@
 \alias{net}
 \title{Road network of the west part of Sao Paulo city}
 \format{
-A Spatial data.frame (sf) with 1796 rows and 1 variables:
+A Spatial data.frame (sf) with 1505 rows and 9 variables:
 \describe{
   \item{ldv}{Light Duty Vehicles (veh/h)}
   \item{hdv}{Heavy Duty Vehicles (veh/h)}

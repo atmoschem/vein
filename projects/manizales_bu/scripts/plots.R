@@ -260,7 +260,7 @@ for (i in seq_along(pole)) {
     geom_bar(stat = "identity", col = "black") +
     labs(
       y = "t/ano",
-      title = paste0(pol[i], ": ", tit)
+      title = paste0(pole[i], ": ", tit)
     ) +
     theme_bw()
   

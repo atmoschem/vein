@@ -9,7 +9,8 @@
 #' @param dd Numeric density of diesel, default 850 kg/m3
 #' @param dhy Numeric density of hybrids, default 750 kg/m3
 #' @param dcng Numeric density of CNG, default 0.8 kg/m3
-#' @param fill_missing Logical to fill and correct ef = 0
+#' @param fill_missing Logical to fill and correct ef = 0, with the mean of the
+#' non-zero ef of the same vehicles, pollutant and ModelYear
 #' @param verbose Logical, to show more information
 #' @return data.table with emission estimation in long format
 #' @note Fuel consumption must be present
@@ -108,8 +109,9 @@ ef_emfac <- function(efpath,
     gmiles <- vehicles <- NULL
     . <- pollutant <- ModelYear <- NULL
 
+    # mean of the non-zero values (zeros are the missing values)
     full <- def[,
-                mean(gmiles, na.rm = TRUE),
+                if (any(gmiles > 0, na.rm = TRUE)) mean(gmiles[gmiles > 0], na.rm = TRUE) else 0,
                 by = .(vehicles,
                        pollutant,
                        ModelYear)]
@@ -136,7 +138,12 @@ ef_emfac <- function(efpath,
     # if 0 is for SO2 CNG, will be 0
   }
 
-  data.table::setorderv(def, "ModelYear", -1)
+  # sorted by model year (newest first), then speed
+  if (is.numeric(def$Speed)) {
+    data.table::setorderv(def, c("ModelYear", "pollutant", "Speed"), c(-1, 1, 1))
+  } else {
+    data.table::setorderv(def, "ModelYear", -1)
+  }
 
   # vehicles <- pollutant <- i <- j <- k <- l <- NULL
   return(def)

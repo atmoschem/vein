@@ -33,6 +33,11 @@ nota degradation function.
 \note{
 This function cannot be used to account for deterioration, therefore,
 it is restricted to values between 0 and 1.
+
+Equations from the EMEP/EEA guidebook (1.A.3.b.i-iv, Tables 3-82 to 3-84).
+Corrected in vein 2.0.0: \code{LDVD$PM} returned the NOx factor, the
+gasoline VOC (COV) factor ignored the user \code{e150}, and the HDV CO
+equation used +0.0001706 T95 instead of -0.00087 T95.
 Parameters for gasoline (g):
 
 O2 = Oxygenates in %

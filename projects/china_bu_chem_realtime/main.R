@@ -70,7 +70,7 @@ year <- 2022
 verbose <- FALSE
 remove_fuel <- c("ELEC", "HY")
 
-# Exhaust
+# Fuel consumption
 language <- "english" # portuguese english spanish
 source("scripts/fuel_eval.R", encoding = "UTF-8")
 rm(list = ls())
@@ -90,6 +90,9 @@ verbose <- FALSE
 year <- 2022
 verbose <- FALSE
 remove_fuel <- c("ELEC", "HY")
+# hour of the traffic snapshot (network/2023-06-12_09-04-06_traffic_volume.csv,
+# 09:04): selects the met row (met$Hour is 0-23) for temperature and humidity
+hour_snapshot <- 9
 pol <- c(
   "CO", "HC",  "NOx",# "CO2", "SO2",
   "PM10","PM2.5"
@@ -113,6 +116,9 @@ verbose <- FALSE
 year <- 2022
 verbose <- FALSE
 remove_fuel <- c("ELEC", "HY")
+# hour of the traffic snapshot (network/2023-06-12_09-04-06_traffic_volume.csv,
+# 09:04): selects the met row (met$Hour is 0-23) for temperature and humidity
+hour_snapshot <- 9
 pol <- c("Evaporative_driving",
          "Evaporative_parking")
 source("scripts/evaporatives.R", encoding = "UTF-8")

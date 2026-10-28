@@ -4,7 +4,7 @@
 \alias{grid_emis}
 \title{Allocate emissions gridded emissions into streets (grid to emis street)}
 \usage{
-grid_emis(spobj, g, top_down = FALSE, sr, pro, char, verbose = FALSE)
+grid_emis(spobj, g, top_down = FALSE, sr, pro, char = "V", verbose = FALSE)
 }
 \arguments{
 \item{spobj}{A spatial dataframe of class "sp" or "sf". When class is "sp"
@@ -23,15 +23,18 @@ it is better to use top_down = FALSE. In this way all the hourly emissions
 are considered, however, each hourly emissions has to have the name "V" and the
 number of the hour like "V1"}
 
-\item{sr}{Spatial reference e.g: 31983. It is required if spobj and g are
-not projected. Please, see http://spatialreference.org/.}
+\item{sr}{Spatial reference e.g: 31983, "EPSG:31983" or "+init=epsg:31983".
+It is required if spobj and g are not projected. When the crs of spobj and
+g are different, spobj is transformed to the crs of g.
+Please, see http://spatialreference.org/.}
 
 \item{pro}{Numeric, Matrix or data-frame profiles, for instance, pc_profile.}
 
 \item{char}{Character, name of the first letter of hourly emissions. New variables in R
 start with the letter "V", for your hourly emissions might start with the letter "h". This option
 applies when top_down is FALSE. For instance, if your hourly emissions are: "h1", "h2",
-"h3"... `char`` can be "h"}
+"h3"... `char`` can be "h". Default is "V". Only columns named `char` plus a
+number are used.}
 
 \item{verbose}{Logical; to show more info.}
 }

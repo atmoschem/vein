@@ -73,7 +73,7 @@ class(lt)
 vlt <- Vehicles(lt)
 class(vlt)
 plot(vlt)
-LT_B5 <- age_hdv(x = lt,name = "LT_B5")
+LT_B5 <- age_veh(x = lt, type = "hdv", name = "LT_B5")
 summary(LT_B5)
 plot(LT_B5)
 }

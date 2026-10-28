@@ -4,18 +4,32 @@
 \alias{age}
 \title{Applies a survival rate to numeric new vehicles}
 \usage{
-age(x, type = "weibull", a = 14.46, b = 4.79, agemax, verbose = FALSE)
+age(
+  x,
+  type = "weibull",
+  a = switch(type, gompertz = 1.798, double_logistic = 0.19, weibull = 14.46, weibull2 =
+    26),
+  b = switch(type, gompertz = -0.137, double_logistic = 21, weibull = 4.79, weibull2 =
+    11),
+  agemax,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{x}{Numeric; numerical vector of sales or registrations for each year}
 
 \item{type}{Character; any of "gompertz", "double_logistic", "weibull" and "weibull2"}
 
-\item{a}{Numeric; parameter of survival equation}
+\item{a}{Numeric; parameter of survival equation. Default depends on
+\code{type}: gompertz 1.798, double_logistic 0.19, weibull 14.46,
+weibull2 26.}
 
-\item{b}{Numeric; parameter of survival equation}
+\item{b}{Numeric; parameter of survival equation. Default depends on
+\code{type}: gompertz -0.137, double_logistic 21, weibull 4.79,
+weibull2 11.}
 
-\item{agemax}{Integer; age of oldest vehicles for that category}
+\item{agemax}{Integer; age of oldest vehicles for that category. If it is
+larger than the length of x, the missing ages are filled with zero.}
 
 \item{verbose}{Logical;  message with average age and total numer of vehicles
 regions or streets.}
@@ -33,10 +47,9 @@ The order of using these functions is:
 1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
 2. If you know the sales of vehicles, or the registry of new vehicles,
 use \code{\link{age}} to apply a survival function.
-3. If you know the theoretical shape of the circulating fleet and you can use
-\code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
-you dont know the sales or registry of vehicles, but somehow you know
-the shape of this curve.
+3. If you know the theoretical shape of the circulating fleet use
+\code{\link{age_veh}}. For instance, you dont know the sales or registry
+of vehicles, but somehow you know the shape of this curve.
 4. You can use/merge/transform/dapt any of these functions.
 
 

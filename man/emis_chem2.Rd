@@ -12,7 +12,9 @@ emis_chem2(df, mech, nx, na.rm = FALSE)
 \item{mech}{Character, "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11",
 "S11D","S16C","S18B","RADM2", "RACM2","MOZT1", "CBMZ", "CB05opt2"}
 
-\item{nx}{Character, colnames for emissions data, for instance "V1", "V2"...}
+\item{nx}{Character, colnames for emissions data, for instance "V1", "V2"...
+Numeric emissions are assumed in grams and returned in mol; emissions with
+units are divided by the molar mass (e.g. g/h -> mol/h).}
 
 \item{na.rm}{Logical, to remove lines with NA from group}
 }

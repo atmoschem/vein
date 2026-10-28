@@ -47,7 +47,7 @@ test_that("emis_cold works", {
                                   efcold = efc[1:10, ],
                                   beta = cold_lkm[,1],
                                   verbose = TRUE)$emissions[1]),
-               Emissions(108))
+               Emissions(152))
   expect_output(emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc[1:10, ],
                              beta = cold_lkm[,1], verbose = TRUE),
                 "S.?")
@@ -58,10 +58,10 @@ test_that("emis_cold works", {
                                   beta = cold_lkm[,1], verbose = TRUE,
                                   params = list(paste0("data_", 1:10),
                                                 "moredata"))$emissions[1]),
-               Emissions(108))
+               Emissions(152))
   expect_equal(round(emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
                                   beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
-               Emissions(7))
+               Emissions(10))
   efhh <- as.data.frame(
     matrix(seq_along(veh), nrow =  nrow(veh), ncol = ncol(veh)))
   expect_equal(round(emis_cold_td(veh = veh,
@@ -72,10 +72,10 @@ test_that("emis_cold works", {
                                   beta = cold_lkm,
                                   pro_month = veh_month,
                                   verbose = T)$emissions[1]),
-               Emissions(30))
+               Emissions(43))
   expect_equal(round(emis_cold_td(veh = veh, lkm = lkm, ef = EmissionFactors(efhh), efcold = efc, fortran = T,
                                   beta = cold_lkm, pro_month = veh_month, verbose = T)$emissions[1]),
-               Emissions(30))
+               Emissions(43))
   expect_message(round(emis_cold_td(veh = veh, lkm = lkm, ef = efh, efcold = efc,
                                     beta = cold_lkm,
                                     pro_month = veh_month,
@@ -100,7 +100,7 @@ test_that("emis_cold works", {
                        pro_month = veh_month,
                        verbose = FALSE,
                        params = list(paste0("data_", 1:10), "moredata"))$emissions[1]),
-    Emissions(7))
+    Emissions(10))
 })
 
 
@@ -156,7 +156,7 @@ test_that("emis_cold works", {
                                   beta = cold_lkm,
                                   pro_month = df_month,
                                   verbose = T)$emissions[1]),
-               Emissions(7))
+               Emissions(10))
 
   expect_equal(round(emis_cold_td(veh = veh,
                                   lkm = lkm,
@@ -165,7 +165,7 @@ test_that("emis_cold works", {
                                   beta = cold_lkm,
                                   pro_month = df_month,
                                   verbose = T)$emissions[1]),
-               Emissions(7))
+               Emissions(10))
 
   expect_equal(round(emis_cold_td(veh = veh,
                                   lkm = lkm,
@@ -175,7 +175,7 @@ test_that("emis_cold works", {
                                   pro_month = df_month,
                                   verbose = T,
                                   fortran = TRUE)$emissions[1]),
-               Emissions(7))
+               Emissions(10))
 
   expect_equal(round(emis_cold_td(veh = veh,
                                   lkm = lkm,
@@ -185,7 +185,7 @@ test_that("emis_cold works", {
                                   pro_month = df_month,
                                   verbose = T,
                                   fortran = TRUE)$emissions[1]),
-               Emissions(7))
+               Emissions(10))
 
   expect_error(emis_cold_td(veh = veh,
                             lkm = lkm,
@@ -207,7 +207,7 @@ test_that("emis_cold works", {
                                   beta = cold_lkm,
                                   pro_month = df_month,
                                   verbose = T)$emissions[1]),
-               Emissions(30))
+               Emissions(43))
   expect_equal(round(emis_cold_td(veh = veh,
                                   lkm = lkm,
                                   ef = EmissionFactors(efhh),
@@ -216,7 +216,7 @@ test_that("emis_cold works", {
                                   beta = cold_lkm,
                                   pro_month = df_month,
                                   verbose = T)$emissions[1]),
-               Emissions(30))
+               Emissions(43))
 })
 
 

@@ -2,7 +2,9 @@
 #'
 #' @family age
 #'
-#' @description \code{\link{age_ldv}} returns amount of vehicles at each age
+#' @description \code{\link{age_ldv}} is deprecated. It warns and calls
+#' \code{\link{age_veh}} with \code{type = "ldv"}, returning the amount of
+#' vehicles at each age.
 #'
 #' @param x Numeric; numerical vector of vehicles with length equal to lines features of road network
 #' @param name Character; of vehicle assigned to columns of dataframe
@@ -26,19 +28,18 @@
 #' 1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
 #' 2. If you know the sales of vehicles, or the registry of new vehicles,
 #' use \code{\link{age}} to apply a survival function.
-#' 3. If you know the theoretical shape of the circulating fleet and you can use
-#' \code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
-#' you dont know the sales or registry of vehicles, but somehow you know
-#' the shape of this curve.
+#' 3. If you know the theoretical shape of the circulating fleet use
+#' \code{\link{age_veh}}. For instance, you dont know the sales or registry
+#' of vehicles, but somehow you know the shape of this curve.
 #' 4. You can use/merge/transform/adapt any of these functions.
 #' @export
 #' @note It consists in a Gompertz equation with default parameters from
 #' 1 national emissions inventory for green housegases in Brazil, MCT 2006
 #' @examples \dontrun{
 #' data(net)
-#' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
+#' PC_E25_1400 <- age_veh(x = net$ldv, name = "PC_E25_1400")
 #' plot(PC_E25_1400)
-#' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
+#' PC_E25_1400 <- age_veh(x = net$ldv, name = "PC_E25_1400", net = net)
 #' plot(PC_E25_1400)
 #' }
 age_ldv <- function (x,
@@ -54,4 +55,6 @@ age_ldv <- function (x,
                      namerows,
                      time){
   .Deprecated("age_veh")
+  args <- lapply(as.list(match.call())[-1], eval, parent.frame())
+  do.call(age_veh, c(list(type = "ldv"), args))
 }

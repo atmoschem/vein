@@ -88,7 +88,7 @@ rm(list = ls())
 gc()
 
 # 3) Estimation ####
-print("Estimacin de consumo de combustible")
+print("Estimación de consumo de combustible")
 language <- "spanish" # english spanish portuguese
 tfs <- readRDS("config/tfs.rds")
 metadata <- readRDS("config/metadata.rds")
@@ -155,7 +155,7 @@ pol <- c(
   "NMHC",
   "HC",
   "NO",
-  "NO"
+  "NO2"
 )
 source("scripts/cold_start_eea.R", encoding = "UTF-8")
 rm(list = ls())
@@ -188,11 +188,11 @@ tfs <- readRDS("config/tfs.rds")
 net <- readRDS("network/net.rds")
 veh <- readRDS("config/fleet_age.rds")
 lkm <- net$lkm
-tf_PC <- tfs$PC_G
-tf_LCV <- tfs$LCV_G
-tf_TRUCKS <- tfs$TRUCKS_L_D
-tf_BUS <- tfs$BUS_URBAN_D
-tf_MC <- tfs$MC_150_G
+tf_PC <- tfs$PC_MINI_G # hourly profiles (columns of config/tfs.rds)
+tf_LCV <- tfs$LCV_NI_G
+tf_TRUCKS <- tfs$TRUCKS_RT_7_D
+tf_BUS <- tfs$BUS_UB_15_18_D
+tf_MC <- tfs$MC_2S_50_G
 sL1 <- 2.4 # silt [g/m^2] se ADT < 500 (CENMA CHILE) i
 sL2 <- 0.7 # silt [g/m^2] se 500 < ADT < 5000 (CENMA CHILE)
 sL3 <- 0.6 # silt [g/m^2] se 5000 < ADT < 10000 (CENMA CHILE)
@@ -224,6 +224,7 @@ rm(list = ls())
 gc()
 
 # Post-estimation ####
+# GHG species are listed in `ghg_pols` in scripts/post.R (currently CO2).
 print("pos-estimacion")
 language <- "spanish" # english spanish portuguese
 net <- readRDS("network/net.rds")
@@ -263,6 +264,9 @@ pal <- "mpl_viridis" # procura mais paletas com ?cptcity::find_cpt
 breaks <- "quantile" # "sd" "quantile" "pretty"
 tit <- "Emisiones en Quito, Ecuador"
 source("scripts/plots.R")
+
+# plots2 ####
+source("scripts/plots2.R", encoding = "UTF-8")
 rm(list = ls())
 gc()
 
@@ -276,31 +280,33 @@ for (z in seq_along(mechs)) {
   net <- readRDS("network/net.rds")
   g <- eixport::wrf_grid("wrf/wrfinput_d04")
   pol <- c("CO", "NO", "NO2")
-  mol <- c(12, 14 + 16, 14 + 16 * 2)
+  # g/mol: CO = 28; vein NO is NO2-equivalent mass (NO = NOx*(1-fNO2), with
+  # NOx expressed as NO2), so NO also uses 46; NO2 = 46
+  mol <- c(12 + 16, 14 + 16 * 2, 14 + 16 * 2)
   aer <- "pmneu2" # pmiag, pmneu
   mech <- mechs[z]
   source("scripts/mech2.R", encoding = "UTF-8")
 }
 
 #for this part need a lot of memory
- # WRF CHEM ####
- mechs <- c("CBMZ", "S99", "RADM2", "CB05")
- mechs <- "CBMZ"
- for (z in seq_along(mechs)) {
-   print(mechs[z])
-   mech <- mechs[z]
-   language <- "english" # english spanish
-   tfs <- readRDS("config/tfs.rds")
-   net <- readRDS("network/net.rds")
-   cols <- 141
-   rows <- 141
-   wrf_times <- 24 # ?
-   dir_wrfinput <- "wrf"
-   dir_wrfchemi <- "wrf"
-   domain <- 4
-   hours <- 0
-   io_style_emissions <- 1 # 2 for all the hours, 1 for two emission files 0-12z
-   n_aero <- 15 # number of PM species
-   rotate <- "cols" # see ?GriddedEmissionsArray
-   source("scripts/wrf.R", encoding = "UTF-8")
- }
+# WRF CHEM ####
+mechs <- c("CBMZ", "S99", "RADM2", "CB05")
+mechs <- "CBMZ"
+for (z in seq_along(mechs)) {
+  print(mechs[z])
+  mech <- mechs[z]
+  language <- "english" # english spanish
+  tfs <- readRDS("config/tfs.rds")
+  net <- readRDS("network/net.rds")
+  cols <- 141
+  rows <- 141
+  wrf_times <- 24 # ?
+  dir_wrfinput <- "wrf"
+  dir_wrfchemi <- "wrf"
+  domain <- 4
+  hours <- 0
+  io_style_emissions <- 1 # 2 for all the hours, 1 for two emission files 0-12z
+  n_aero <- 11 # PM species (10 from pmneu2 + E_PM_10; re-checked in scripts/wrf.R)
+  rotate <- "cols" # see ?GriddedEmissionsArray
+  source("scripts/wrf.R", encoding = "UTF-8")
+}

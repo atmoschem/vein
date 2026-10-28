@@ -62,7 +62,7 @@ source("scripts/fuel_eval.R", encoding = "UTF-8")
 # Exhaust
 pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
-  "PM", "NO2", "NO", "SO2", "CH4", "NH3", "CH4", "N2O"
+  "PM", "NO2", "NO", "SO2", "CH4", "NH3", "N2O"
 )
 scale <- "tunnel2018"
 plot_ef <- FALSE

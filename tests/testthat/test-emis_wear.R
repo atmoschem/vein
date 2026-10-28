@@ -12,7 +12,7 @@ test_that("emis_wear works", {
                          ef = ef,
                          speed = df,
                          profile = pc_profile[, 1])[1],
-               0.03503776)
+               0.02663664, tolerance = 1e-6)
 })
 
 

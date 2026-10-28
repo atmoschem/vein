@@ -8,7 +8,7 @@ if (length(wear_old) > 0) file.remove(wear_old)
 
 # Escapamento ####
 switch(language,
-       "portuguese" = cat("Estimando emisses Wear\n"),
+       "portuguese" = cat("Estimando emissões Wear\n"),
        "english" = cat("Estimating emissions Wear\n"),
        "spanish" = cat("Estimando emisiones Wear\n")
 )
@@ -105,7 +105,7 @@ for (i in seq_along(metadata$vehicles)) {
 
 
 switch(language,
-       "portuguese" = message("\nEmisses em: /emi/wear.csv:"),
+       "portuguese" = message("\nEmissões em: /emi/wear.csv:"),
        "english" = message("\nEmissions in: /emi/wear.csv"),
        "spanish" = message("\nEmisiones en: /emi/wear.csv")
 )

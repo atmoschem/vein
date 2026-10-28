@@ -2,22 +2,23 @@ context("ef_ldv_speed")
 pol <- c("CO", "NOx", "HC", "NMHC", "CH4", "FC", "PM", "CO2", "Pb", "SO2")
 test_that("ef_ldv_speed works", {
   expect_equal(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G", eu = "PRE",
-                            p = "CO", show.equation = FALSE)(10), 65.87283)
+                            p = "CO", show.equation = FALSE)(10), 66.496106,
+               tolerance = 1e-7)
 })
 
 test_that("ef_ldv_speed works", {
   expect_equal(sapply(1:length(pol), function(i){
     ef_ldv_speed("PC", "4S", "<=1400", "G", "PRE", pol[i], x = 10)(30)}),
-    c(3.297007e+01 + 4.57e-06,
+    c(3.310804e+01,
       1.722000e+00,
-      2.873231e+00 + 2.27e-08,
-      2.742231e+00 + 2.27e-08,
+      2.873169e+00,
+      2.742169e+00,
       1.310000e-01,
-      7.916123e+01 + 2.66e-06,
-      0.000000e+00,
-      2.519344e+02 + 2.77e-05,
-      3.320000e-05 + 0.000561,
-      1.583225e-03))
+      7.946088e+01,
+      3.220000e-03,
+      2.518496e+02,
+      5.959566e-04,
+      1.589218e-03), tolerance = 1e-6)
 })
 
 # NMHC
@@ -89,10 +90,10 @@ ef_ldv_speed("PC", "4S", "<=1400", "D", "I", "NMHC", k = 18.2163)(30)
 
 vect <-
   c(0.33, 0.11, 0.11, 0.07, 0.04, 0.52, 0, 0.2, 0.25, 0.45, 0.67, 0.12,
-    0.22, 1.18, 0.2, 2.15, 17.91, 0.65, 10.97, 3.6, 0, 0, 1.11, 0.52, 0.97,
-    0, 0, 0, 0, 0, 0, 2.34, 12, 6.47, 3.58, 0.86, 1.1, 0.77, 0.85, 2.09, 1.77,
-    0.16, 0.11, 0.41, 0.24, 0.34, 0.35, 2.94, 1.2, 0.69, 0.29, 0.31, 0.31,
-    0.27, 0.25, 0.57, 0.31, 0.37, 1.98, 0.78, 0, 13.37)
+    0.22, 1.18, 0.2, 2.16, 17.98, 0.65, 11.01, 3.61, 0, 0, 1.11, 0.52, 0.97,
+    0, 0, 0, 0, 0, 0, 2.35, 12.04, 6.49, 3.59, 0.86, 1.1, 0.77, 0.85, 2.1, 1.78,
+    0.16, 0.11, 0.41, 0.24, 0.34, 0.35, 2.95, 1.2, 0.69, 0.29, 0.31, 0.31,
+    0.27, 0.25, 0.57, 0.31, 0.37, 1.99, 0.78, 0, 13.42)
 
 expect_equal(
   sapply(1:length(pol), function(i){
@@ -139,21 +140,13 @@ EF <- sapply(1:3, function(j){
     ef_ldv_speed("PC", "4S", "<=1400", "G", df_st[i], pol[j])(100) })
 })
 
-ef <- units::set_units(c(10.3, rep(13, 2), rep(2.7, 5)), pg)
-ef <- units::set_units(ef, g)
-ef1 <- as.numeric(ef)
-round(EF[, 1] -  ef1, 2)
-ef <- units::set_units(c(21.12, rep(19, 2), rep(4.1, 5)), pg)
-ef <- units::set_units(ef, g)
-ef2 <- as.numeric(ef)
-round(EF[, 2] -  ef2, 2)
-ef <- units::set_units(c(rep(6.4, 2), rep(1.36, 6)), pg)
-ef <- units::set_units(ef, g)
-ef3 <- as.numeric(ef)
-round(EF[, 3] -  ef3, 2)
+# EMEP/EEA 2026 Table 3-76, petrol PC, pg/km
+ef1 <- c(10.3, rep(13, 2), rep(2.7, 5))
+ef2 <- c(21.2, rep(19, 2), rep(4.1, 5))
+ef3 <- c(rep(6.4, 3), rep(1.36, 5))
 
-test_that("ef_ldv_speed works", {
-  expect_equal(EF,
+test_that("ef_ldv_speed PCDD, PCDF and PCB follow Table 3-76", {
+  expect_equal(unname(EF) * 1e12,
     matrix(c(ef1, ef2, ef3), ncol =3))
 })
 
@@ -162,7 +155,8 @@ test_that("ef_ldv_speed works", {
   expect_equal(ef_ldv_speed(v = "PC",t = "4S", cc = "<=1400", f = "G",
                             eu = data.frame("PRE"),
                             p = "CO", show.equation = FALSE,
-                            speed = Speed(10))$V1, EmissionFactors(65.87283))
+                            speed = Speed(10))$V1, EmissionFactors(66.496106),
+               tolerance = 1e-7)
 })
 
 test_that("ef_ldv_speed works", {

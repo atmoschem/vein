@@ -83,9 +83,11 @@ emis_speed <- function(veh,
   if (inherits(veh, "sf")) veh <- sf::st_set_geometry(veh, NULL)
   veh <- remove_units(veh)
   veh <- as.matrix(veh)
-  lkm <- as.numeric(remove_units(lkm))
-  speed <- remove_units(speed)
-  speed <- as.matrix(speed)
+  if (inherits(lkm, "units")) {
+    lkm <- units::set_units(lkm, "km", mode = "standard")
+  }
+  lkm <- as.numeric(lkm)
+  speed <- as.matrix(.speed_kmh(speed))
 
   S <- nrow(veh)
   A <- ncol(veh)
@@ -94,7 +96,11 @@ emis_speed <- function(veh,
   if (S != nrow(speed)) stop("nrow(veh) must equal nrow(speed)")
   if (length(lkm) != S) stop("length(lkm) must equal nrow(veh)")
 
-  agemax <- min(agemax, A, prog$n)
+  if (agemax > prog$n) {
+    stop("`ef` has ", prog$n, " ages but ", agemax, " are needed. ",
+         "Provide one emission factor per age column of `veh` or set `agemax`.")
+  }
+  agemax <- min(agemax, A)
   if (agemax < A) {
     veh <- veh[, seq_len(agemax), drop = FALSE]
     A <- agemax

@@ -24,20 +24,23 @@ ef_ldv_cold(
 ta is a data.frame, one option is that the number of rows should be the number of
 rows of your  Vehicles data.frame. This is convenient for top-down approach
 when each simple feature can be a polygon, with a monthly average temperature for
-each simple feature. In this case, the number of columns can be the 12 months.}
+each simple feature. In this case, the number of columns can be the 12 months.
+A numeric vector with more than one value is treated as a data.frame with
+one row and one column per value (e.g. 12 monthly means); \code{speed} is
+then needed.}
 
 \item{cc}{Character; Size of engine in cc: "<=1400",  "1400_2000" or ">2000"}
 
 \item{f}{Character; Type of fuel: "G", "D" or "LPG"}
 
 \item{eu}{Character or data.frame of Characters; Euro standard: "PRE", "I",
-"II", "III",  "IV", "V", "VI" or "VIc". When 'eu' is a data.frame and
+"II", "III",  "IV", "V", "VI", "VIc", "VId" or "VII". When 'eu' is a data.frame and
 'ta' is also a data.frame both has to have the same number of rows. For instance,
 When you want that each simple feature or region has a different emission standard.}
 
 \item{p}{Character; Pollutant: "CO", "FC", "NOx", "HC" or "PM"}
 
-\item{k}{Numeric; Multiplication factor}
+\item{k}{Numeric; Multiplication factor (ignored before vein 2.0.0)}
 
 \item{show.equation}{Option to see or not the equation parameters}
 
@@ -56,6 +59,13 @@ and ambient temperature. g/km
 average speed. The emission factors comes from the guidelines  EMEP/EEA air pollutant
 emission inventory guidebook
 https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
+}
+\note{
+The values are the cold/hot quotients eCOLD/eHOT of the EMEP/EEA
+guidebook. For Euro 2 and later petrol vehicles the beta-reduction factors
+(bc) are included as 1 + bc * (eCOLD/eHOT - 1), so that
+\code{\link{emis_cold}}, which uses (eCOLD/eHOT - 1), applies bc to the
+excess emission as in the guidebook.
 }
 \examples{
 \dontrun{

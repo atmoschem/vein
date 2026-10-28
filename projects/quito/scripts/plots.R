@@ -1,7 +1,7 @@
 # check hours
 if (length(hours) > nrow(tfs)) {
   switch(language,
-         "portuguese" = stop("\nEscolhe um nmero de horas menor ou igual que numero de horas de tfs\n"),
+         "portuguese" = stop("\nEscolhe um número de horas menor ou igual que numero de horas de tfs\n"),
          "english" = stop("\nChoose a number of hours less than or equal to the number of hours of tfs\n"),
          "spanish" = stop("\nEscoje un numero de horas menor o igual que el numero de horas de tfs\n")
   )

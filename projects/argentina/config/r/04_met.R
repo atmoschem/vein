@@ -11,11 +11,10 @@ x[,
   by = .(region, capitals, date, Year, Month)] -> mett
 
 names(mett)[ncol(mett)] <- "Temperature"
-unique(mett$scenario)
 
 
 saveRDS(mett, "config/rds/met.rds")
-writexl::write_xlsx(met, "config/xlsx/met.xlsx")
+writexl::write_xlsx(mett, "config/xlsx/met.xlsx")
 
 # rain ####
 x <- readxl::read_excel("config/inventory.xlsx",

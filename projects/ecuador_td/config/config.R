@@ -175,7 +175,7 @@ if (!"region" %in% names(fuel)) {
 
 setDT(pmonth)
 provincia <- toupper(provincia)
-pmonth <- pmonth[region == provincia]
+pmonth <- pmonth[region == provincia & Year == year] # 12 months of the base year
 
 
 setDT(fuel)
@@ -495,7 +495,7 @@ switch(language,
 )
 
 for (i in seq_along(n_veh)) {
-  df_x <- im_co[, n_veh[[i]]]
+  df_x <- im_nox[, n_veh[[i]]]
   png(
     paste0(
       "images/IM_REP_APR_NOx_",
@@ -621,7 +621,7 @@ vein_notes(
         notes = c("Notas proyecto ecuador_td",
                   "Para el perfil mensual fueron usada la hoja fuel_month de inventory.xlsx",
                   "De esta forma, el programa filtra la provincia y el combustible y aplica el perfil mensual",
-                  "Para vehiculos a diesle, o gasolina para todos los otros."),
+                  "Para vehiculos a diesel, o gasolina para todos los otros."),
         file = "notes/README",
         title = paste0("Ecuador province ", year),
         approach = "Top-Down",
@@ -633,7 +633,7 @@ vein_notes(
         cold_start = "EEA",
         evaporative = "EEA",
         standards = "Euro",
-        mileage = "Bruni and Bales 2013, Brazil"
+        mileage = "Curvas de kilometraje tomadas de Bruni and Bales 2013, Brasil"
 )
 # saveRDS
 

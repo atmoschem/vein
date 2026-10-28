@@ -49,7 +49,7 @@ pol <- c(
   "NMHC",
   "HC",
   "NO",
-  "NO"
+  "NO2"
 )
 source("scripts/cold_start_eea.R", encoding = "UTF-8")
 rm(list = ls())

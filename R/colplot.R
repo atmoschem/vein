@@ -6,7 +6,7 @@
 #' @param xlab a label for the x axis, defaults to a description of x.
 #' @param ylab a label for the x axis, defaults to a description of x.
 #' @param xlim x limits
-#' @param ylim y limits
+#' @param ylim y limits. Default (NULL) is from 0 to the maximum value.
 #' @param main Character, a main title for the plot, see also \code{\link{title}}.
 #' @param theme Character; "black", "dark", "clean", "ink"
 #' @param col Colors. Default are cptcity colour palette "kst_18_pastels"
@@ -18,6 +18,8 @@
 #' @param pch plotting ‘character’, i.e., symbol to use.
 #' @param familyfont "Character" to specify font, default is"", options "serif",
 #'  "sans", "mono" or more according device
+#' @param all_values Logical; when FALSE (default) values equal to 0 are not
+#' plotted.
 #' @param ... plot arguments
 #' @family helpers
 #' @return a nice plot
@@ -39,7 +41,7 @@ colplot <- function (df,
                      xlab = "",
                      ylab = "",
                      xlim = c(1, nrow(df)),
-                     ylim = range(unlist(df[[cols]]), na.rm = TRUE),
+                     ylim = NULL,
                      main = NULL,
                      theme = "black",
                      col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4],
@@ -48,6 +50,7 @@ colplot <- function (df,
                      lwd = 2,
                      pch = 1:ncol(df),
                      familyfont = "",
+                     all_values = FALSE,
                      ...){
 
 
@@ -134,13 +137,15 @@ colplot <- function (df,
   if (!missing(cols)) df <- df[cols]
 
   df <- remove_units(df)
-  df[df == 0] <- NA
+  if(!all_values) df[df == 0] <- NA
+  if(is.null(ylim)) ylim <- c(0, max(df, na.rm = TRUE))
   # ldf <- as.list(df)
 
   # c(5, 4, 1.4, 0.2)
 
   plot(df[[1]],
-       ylim = c(0, max(df, na.rm = TRUE)),
+       xlim = xlim,
+       ylim = ylim,
        type = type,
        pch = pch[1],
        col = col[1],

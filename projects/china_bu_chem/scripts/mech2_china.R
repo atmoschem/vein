@@ -1,5 +1,6 @@
 dir.create("post/mech/", showWarnings = FALSE)
-dir.create(paste0("post/mech/", mech[k]), showWarnings = FALSE)
+# mech is a single mechanism name (main.R); there is no loop index k here
+dir.create(paste0("post/mech/", mech), showWarnings = FALSE)
 
 if(!type %in% c("streets", "grids")) {
   stop("type must be `streets` or `grids`")
@@ -14,7 +15,7 @@ g$id <- 1:nrow(g)
 
 if(remove_mech_files ){
   
-  mechdir <- paste0("post/mech/", mech[k])
+  mechdir <- paste0("post/mech/", mech)
   
   fs <- list.files(
     path = mechdir,
@@ -24,6 +25,10 @@ if(remove_mech_files ){
   )
   file.remove(fs)
 }
+# The SPECIATE "OM-00x" profiles listed in ?speciate are not shipped in
+# vein's sysdata$nmhc, so speciate() would stop asking for a profile
+# interactively. The closest available profiles are used instead.
+
 # Gasoline Exhaust
 x <- st_set_geometry(readRDS(paste0("post/",
                                     type,
@@ -41,7 +46,7 @@ dx <- speciate(
   spec = "nmhc",
   fuel = "G",
   veh = "LDV",
-  eu = "OM-001"
+  eu = "I"
 )
 
 dx$id <- rep(id, length(unique(dx$pol)))
@@ -99,7 +104,7 @@ dx <- speciate(
   spec = "nmhc",
   fuel = "D",
   veh = "HDV",
-  eu = "OM-003"
+  eu = "all"
 )
 
 dx$id <- rep(id, length(unique(dx$pol)))
@@ -126,9 +131,9 @@ x$id <- NULL
 dx <- speciate(
   x = x,
   spec = "nmhc",
-  fuel = "ALL",
-  veh = "LPG",
-  eu = "OM-005"
+  fuel = "CNG",
+  veh = "LDV",
+  eu = "Exhaust"
 )
 
 dx$id <- rep(id, length(unique(dx$pol)))
@@ -167,9 +172,8 @@ names(voc)
 for (i in seq_along(names(voc))) {
   g_x <- g
   g_x <- merge(g, voc[[names(voc)[i]]], by = "id", all = T)
-  x <- st_sf(x, geometry = st_geometry(g))
   g_x$group <- NULL
-  saveRDS(g_x, file = paste0("post/spec_grid/", mech,"/", 
+  saveRDS(g_x, file = paste0("post/mech/", mech,"/", 
                              names(voc)[i], ".rds"))
 }
 
@@ -180,7 +184,7 @@ for (j in seq_along(pol)) {
   mm_x <- units::set_units(mol[j], "g/mol") # mm: massa molar
   for (i in 2:ncol(x)) x[, i] <- x[, i] * (mm_x)^-1
   x <- st_sf(x, geometry = st_geometry(g))
-  saveRDS(x, paste0("post/spec_grid/", mech,"/", pol[j], ".rds"))
+  saveRDS(x, paste0("post/mech/", mech,"/E_", pol[j], ".rds"))
 }
 
 # PM
@@ -203,7 +207,7 @@ if(type == "streets") {
     gPMx <- st_sf(gPM1[[i]],
                   geometry = st_geometry(g))
     saveRDS(gPMx, paste0("post/mech/", 
-                         mech[k], "/",
+                         mech, "/",
                          toupper(names(gPM1))[i], 
                          ".rds"))
     
@@ -239,7 +243,7 @@ if(type == "streets") {
     gPMx <- st_sf(gPM1[[i]],
                   geometry = g$geometry)
     saveRDS(gPMx, paste0("post/mech/", 
-                         mech[k], "/",
+                         mech, "/",
                          toupper(names(gPM1))[i], 
                          ".rds"))
   }
@@ -256,19 +260,23 @@ if(type == "streets") {
 }
 
 
-# gPM2510 are in g/km/h
-# need to change units to ug/m2/s
-gPM2510 <- gPM10# - gPM
-gPM2510 <- st_sf(gPM2510, geometry = g$g)
+# coarse fraction PM10 - PM2.5 in ug/m2/s. E_PM_10 must not be the full PM10:
+# PM2.5 is already in the pmneu2 species above. Negative values (PM2.5 > PM10
+# in a cell) are set to 0.
+gPM2510 <- gPM10 - gPM
+for (i in 1:ncol(gPM2510)) {
+  gPM2510[[i]] <- gPM2510[[i]] * as.numeric(as.numeric(gPM2510[[i]]) > 0)
+}
+gPM2510 <- st_sf(gPM2510, geometry = st_geometry(g))
 saveRDS(gPM2510, paste0("post/mech/",
-                        mech[k],
+                        mech,
                         "/E_PM_10.rds"))
 
 
 switch(language,
-       "portuguese" = message(paste0("\npost/mech/", mech[k])),
-       "english" = message(paste0("\npost/mech/", mech[k])),
-       "spanish" = message(paste0("\npost/mech/", mech[k]))
+       "portuguese" = message(paste0("\npost/mech/", mech)),
+       "english" = message(paste0("\npost/mech/", mech)),
+       "spanish" = message(paste0("\npost/mech/", mech))
 )
 ls()
 suppressWarnings(

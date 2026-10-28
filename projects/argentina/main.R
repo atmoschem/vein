@@ -18,7 +18,10 @@ gc()
 # rm(list = ls())
 # gc()
 
+# estimation ####
+# inventory template (tar.gz of a vein project) unpacked into estimation/<year>/
 uf <- "config/argentina.tar.gz"
+if (!file.exists(uf)) stop(uf, " not found: copy the inventory template there")
 #dir.create("estimation")
 unlink("estimation", recursive = T)
 dir.create("estimation")

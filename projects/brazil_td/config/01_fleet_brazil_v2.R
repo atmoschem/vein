@@ -166,7 +166,7 @@ fleet$Year <- fleet$Y
 
 # 1979 - 2018
 
-m <- readxl::read_xlsx("/home/sibarra/BR/tables/inventory.xlsx",
+m <- readxl::read_xlsx("config/inventory.xlsx",
                        "fleet_age")
 
 setDT(m)

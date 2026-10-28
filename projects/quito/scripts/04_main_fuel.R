@@ -7,7 +7,7 @@ library(eixport) # create wrfchemi
 library(data.table) # faster data.frames
 
 # 3) Estimation ####
-print("Estimacin de consumo de combustible")
+print("Estimación de consumo de combustible")
 language <- "spanish" # english spanish portuguese
 tfs <- readRDS("config/tfs.rds")
 metadata <- readRDS("config/metadata.rds")

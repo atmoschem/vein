@@ -4,31 +4,36 @@
 #' The projects are available on Github.com/atmoschem/vein/projects
 #'
 #' @param directory Character; Path to an existing or a new directory to be created.
-#' @param case Character; One of  of the following:
+#' @param case Character; One of  of the following (aliases in parentheses):
 #' \tabular{llll}{
 #'   \strong{case}  \tab \strong{Description}\tab  \strong{EF} \tab \strong{Notes}   \cr
 #'   argentina  \tab top down\tab COPERT \tab  .rds\cr
 #'   emislacovid  \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
-#'   brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
-#'   brazil_bu_speed    \tab Bottom-up hourly speed-dependent (EMEP/EEA scaled)\tab CETESB+tunnel\tab  .rds\cr
-#'   brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
-#'   brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
+#'   brazil_bu_chem (brazil, brasil, brazil_bu, brasil_bu, brazil_bu_csvgz,
+#'   brazil_bu_csv, brazil_bu_cb05, brazil_mech, brazil_bu_chem_month,
+#'   brazil_bu_chem_im)    \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
+#'   brazil_bu_speed (brazil_speed, brazil_bu_scaled)   \tab Bottom-up hourly speed-dependent (EMEP/EEA scaled)\tab CETESB+tunnel\tab  .rds\cr
+#'   brazil_bu_chem_streets (brazil_bu_chem_streets_im) \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
+#'   brazil_td_chem (brazil_td, brazil_country)    \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
 #'   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   amazon2014     \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
 #'   curitiba       \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
-#'   ecuador     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
-#'   ecuador_mdpi     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
+#'   ecuador (ecuador_td)    \tab Top-down\tab EEA\tab  csv and.rds\cr
+#'   ecuador_mdpi     \tab Top-down\tab EEA\tab  csv and.rds\cr
 #'   quito     \tab Bottom-up \tab EEA\tab  csv and.rds\cr
-#'   moves_bu         \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
-#'   manizales_bu     \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
+#'   moves_bu (moves)        \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
+#'   manizales_bu (manizales)    \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
 #'   eu_bu_chem       \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
 #'   eu_bu_chem_simple\tab Bottom-up  chemical mechanisms 7 veh\tab EEA 2019\tab  .rds\cr
 #'   china_bu_chem    \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
 #'   china_bu_chem_1h    \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
 #' }
-#' @param url String, with the URL to download VEIN project
+#' @param url String, with the URL of a project to download. When provided,
+#' \code{case} is ignored. The file is downloaded and extracted into
+#' \code{directory}. Supported formats are ".tar.gz", ".tgz", ".tar" and ".zip".
 #' @note  All projects include option to apply survival functions
 #' In Sao Paulo the IM programs was functioning until 2011.
+#' @return Invisibly, the path of \code{directory}.
 #' @importFrom utils download.file untar
 #' @export
 #' @examples \dontrun{
@@ -42,205 +47,181 @@ get_project <- function(directory, case, url) {
   } #nocov start
 
   if (missing(case) && missing(url)) {
-    stop("Please, sleect a case. run ?vein::get_project")
+    stop("Please, select a case. run ?vein::get_project")
   }
 
-  if (missing(url)) {
-    # brazil ####
-    if (
-      case %in%
-        c(
-          "brasil",
-          "brazil",
-          "brazil_bu",
-          "brasil_bu",
-          "brazil_bu_chem",
-          "brazil_bu_csvgz",
-          "brazil_bu_csv",
-          "brazil_bu_cb05",
-          "brazil_mech",
-          "brazil_bu_chem_month",
-          "brazil_bu_chem_im"
-        )
-    ) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
+  gh <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/"
+  gl <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/"
 
-      # brazil_bu_speed ####
-    } else if (
-      case %in% c("brazil_bu_speed", "brazil_speed", "brazil_bu_scaled")
-    ) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_speed.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
+  dl <- function(URL, destfile) {
+    utils::download.file(url = URL, destfile = destfile, mode = "wb")
+  }
 
-      # moves_bu ####
-    } else if (case %in% c("moves_bu", "moves")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/moves.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
+  dl_untar <- function(URL, exdir = directory) {
+    tf <- paste0(tempfile(), ".tar.gz")
+    on.exit(unlink(tf), add = TRUE)
+    dl(URL, tf)
+    utils::untar(tarfile = tf, exdir = exdir)
+  }
 
-      # emislacovid ####
-    } else if (case == "emislacovid") {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/emislacovid.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
-
-      # brazil_country ####
-    } else if (case %in% c("brazil_country", "brazil_td")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_td.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      # manizales_bu ####
-    } else if (case %in% c("manizales_bu", "manizales")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/manizales_bu.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
-    } else if (case %in% c("quito")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/quito.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-
-      # argentina ####
-    } else if (case %in% c("argentina")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/argentina.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/wrf_argentina/wrfinput_d01"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(
-        url = URL,
-        destfile = paste0(directory, "/wrfinput_d01")
-      )
-
-      message("Your directory is in ", directory)
-
-      # brazil_bu_chem_streets ####
-    } else if (
-      case %in% c("brazil_bu_chem_streets", "brazil_bu_chem_streets_im")
-    ) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/brazil_bu_chem.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-
-      x <- readLines(paste0(directory, "/main.R"))[1:153]
-      x <- gsub(
-        pattern = "type <- 'grids'",
-        replacement = "type <- 'streets'",
-        x = x
-      )
-      writeLines(x, paste0(directory, "/main.R"))
-
-      message("Your directory is in ", directory)
-
-      # masp2020 ####
-    } else if (case %in% c("masp2020")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/MASP_2020.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
-
-      # ecuador ####
-    } else if (case %in% c("ecuador", "ecuador_td")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_td.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-
-      message("Your directory is in ", directory)
-
-      # ecuador ####
-    } else if (case %in% "ecuador_mdpi") {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/ecuador_mdpi.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-
-      message("Your directory is in ", directory)
-
-      # amazon2014 ####
-    } else if (case %in% c("amazon2014")) {
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/amazonas2014.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory is in ", directory)
-
-      # eu_bu_chem ####
-    } else if (case %in% c("eu_bu_chem")) {
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/eu_bu_chem.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory for vehicular emissions is in ", directory)
-
-      # eu_bu_chem_simple ####
-    } else if (case %in% c("eu_bu_chem_simple")) {
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/eu_bu_chem_simple.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory for vehicular emissions is in ", directory)
-
-      # china_bu_chem ####
-    } else if (case %in% c("china_bu_chem")) {
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/china_bu_chem.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory for vehicular emissions is in ", directory)
-
-      # china_bu_chem_realtime ####
-    } else if (case %in% c("china_bu_chem_1h")) {
-      URL <- "https://raw.githubusercontent.com/atmoschem/vein/master/projects/china_bu_chem_realtime.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory for vehicular emissions is in ", directory)
-
-      # curitiba ####
-    } else if (case %in% c("curitiba")) {
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/curitiba.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = directory)
-      message("Your directory for vehicular emissions is in ", directory)
-
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/gtfs_cur.zip"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(
-        url = URL,
-        destfile = paste0(directory, "/network/gtfs_cur.zip")
-      )
-
-      message("GTFS Curitba is in  ", paste0(directory, "/network"))
-
-      URL <- "https://gitlab.com/ibarraespinosa/veinextras/-/raw/master/curitiba_all/curitiba_industrial.tar.gz"
-      tf <- paste0(tempfile(), ".tar.gz")
-      utils::download.file(url = URL, destfile = tf)
-      utils::untar(tarfile = tf, exdir = paste0(directory, "/industry"))
-      message("Your directory for industrial emissions is in ", directory)
-    } else {
-      stop("Other cases not supported yet")
+  if (!missing(url)) {
+    is_zip <- grepl("\\.zip$", url, ignore.case = TRUE)
+    is_tar <- grepl("\\.(tar\\.gz|tgz|tar|tar\\.bz2|tar\\.xz)$", url,
+                    ignore.case = TRUE)
+    if (!is_zip && !is_tar) {
+      stop("'url' must point to a .tar.gz, .tgz, .tar or .zip file")
     }
-  } else {
-    URL <- url
+    tf <- tempfile(fileext = paste0(".", basename(url)))
+    on.exit(unlink(tf), add = TRUE)
+    dl(url, tf)
+    if (is_zip) {
+      utils::unzip(zipfile = tf, exdir = directory)
+    } else {
+      utils::untar(tarfile = tf, exdir = directory)
+    }
+    message("Your directory is in ", directory)
+    return(invisible(directory))
   }
+
+  # brazil ####
+  if (
+    case %in%
+      c(
+        "brasil",
+        "brazil",
+        "brazil_bu",
+        "brasil_bu",
+        "brazil_bu_chem",
+        "brazil_bu_csvgz",
+        "brazil_bu_csv",
+        "brazil_bu_cb05",
+        "brazil_mech",
+        "brazil_bu_chem_month",
+        "brazil_bu_chem_im"
+      )
+  ) {
+    dl_untar(paste0(gh, "brazil_bu_chem.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # brazil_bu_speed ####
+  } else if (
+    case %in% c("brazil_bu_speed", "brazil_speed", "brazil_bu_scaled")
+  ) {
+    dl_untar(paste0(gh, "brazil_bu_speed.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # moves_bu ####
+  } else if (case %in% c("moves_bu", "moves")) {
+    dl_untar(paste0(gh, "moves.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # emislacovid ####
+  } else if (case == "emislacovid") {
+    dl_untar(paste0(gh, "emislacovid.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # brazil_country ####
+  } else if (case %in% c("brazil_country", "brazil_td", "brazil_td_chem")) {
+    dl_untar(paste0(gh, "brazil_td.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # manizales_bu ####
+  } else if (case %in% c("manizales_bu", "manizales")) {
+    dl_untar(paste0(gh, "manizales_bu.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # quito ####
+  } else if (case %in% c("quito")) {
+    dl_untar(paste0(gh, "quito.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # argentina ####
+  } else if (case %in% c("argentina")) {
+    dl_untar(paste0(gh, "argentina.tar.gz"))
+    dl(paste0(gl, "wrf_argentina/wrfinput_d01"),
+       file.path(directory, "wrfinput_d01"))
+    message("Your directory is in ", directory)
+
+    # brazil_bu_chem_streets ####
+  } else if (
+    case %in% c("brazil_bu_chem_streets", "brazil_bu_chem_streets_im")
+  ) {
+    dl_untar(paste0(gh, "brazil_bu_chem.tar.gz"))
+
+    # switch every "type <- 'grids'" in main scripts and scripts/ to streets
+    rf <- c(
+      list.files(directory, pattern = "^main.*\\.R$", full.names = TRUE),
+      list.files(file.path(directory, "scripts"), pattern = "\\.R$",
+                 full.names = TRUE)
+    )
+    for (f in rf) {
+      x <- readLines(f, warn = FALSE)
+      x <- gsub(
+        pattern = "\\btype\\s*<-\\s*['\"]grids['\"]",
+        replacement = "type <- 'streets'",
+        x = x,
+        perl = TRUE
+      )
+      writeLines(x, f)
+    }
+    message("Your directory is in ", directory)
+
+    # masp2020 ####
+  } else if (case %in% c("masp2020")) {
+    dl_untar(paste0(gh, "MASP_2020.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # ecuador ####
+  } else if (case %in% c("ecuador", "ecuador_td")) {
+    dl_untar(paste0(gh, "ecuador_td.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # ecuador ####
+  } else if (case %in% "ecuador_mdpi") {
+    dl_untar(paste0(gh, "ecuador_mdpi.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # amazon2014 ####
+  } else if (case %in% c("amazon2014")) {
+    dl_untar(paste0(gl, "amazonas2014.tar.gz"))
+    message("Your directory is in ", directory)
+
+    # eu_bu_chem ####
+  } else if (case %in% c("eu_bu_chem")) {
+    dl_untar(paste0(gl, "eu_bu_chem.tar.gz"))
+    message("Your directory for vehicular emissions is in ", directory)
+
+    # eu_bu_chem_simple ####
+  } else if (case %in% c("eu_bu_chem_simple")) {
+    dl_untar(paste0(gl, "eu_bu_chem_simple.tar.gz"))
+    message("Your directory for vehicular emissions is in ", directory)
+
+    # china_bu_chem ####
+  } else if (case %in% c("china_bu_chem")) {
+    dl_untar(paste0(gh, "china_bu_chem.tar.gz"))
+    message("Your directory for vehicular emissions is in ", directory)
+
+    # china_bu_chem_realtime ####
+  } else if (case %in% c("china_bu_chem_1h")) {
+    dl_untar(paste0(gh, "china_bu_chem_realtime.tar.gz"))
+    message("Your directory for vehicular emissions is in ", directory)
+
+    # curitiba ####
+  } else if (case %in% c("curitiba")) {
+    dl_untar(paste0(gl, "curitiba_all/curitiba.tar.gz"))
+    message("Your directory for vehicular emissions is in ", directory)
+
+    dir.create(file.path(directory, "network"), showWarnings = FALSE,
+               recursive = TRUE)
+    dl(paste0(gl, "curitiba_all/gtfs_cur.zip"),
+       file.path(directory, "network", "gtfs_cur.zip"))
+    message("GTFS Curitba is in  ", file.path(directory, "network"))
+
+    dl_untar(paste0(gl, "curitiba_all/curitiba_industrial.tar.gz"),
+             exdir = file.path(directory, "industry"))
+    message("Your directory for industrial emissions is in ", directory)
+  } else {
+    stop("Other cases not supported yet")
+  }
+  invisible(directory)
 }

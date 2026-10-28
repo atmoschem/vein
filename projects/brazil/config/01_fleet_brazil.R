@@ -155,8 +155,9 @@ fleet <- data.table(Year = dxr_final$y,
 uve <- unique(metadata$family)
 for(j in seq_along(uve)) {
   ve <- metadata[family == uve[j]]$vehicles
+  pf <- metadata[family == uve[j]]$prop_fam # proportions within this family
   for(i in seq_along(ve)){
-    fleet[[ve[i]]] <- dxr_final[[tolower(uve[j])]]*metadata$prop_fam[i]
+    fleet[[ve[i]]] <- dxr_final[[tolower(uve[j])]]*pf[i]
   }
 }
 

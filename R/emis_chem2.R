@@ -7,6 +7,8 @@
 #' @param mech Character, "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11",
 #' "S11D","S16C","S18B","RADM2", "RACM2","MOZT1", "CBMZ", "CB05opt2"
 #' @param nx Character, colnames for emissions data, for instance "V1", "V2"...
+#' Numeric emissions are assumed in grams and returned in mol; emissions with
+#' units are divided by the molar mass (e.g. g/h -> mol/h).
 #' @param na.rm Logical, to remove lines with NA from group
 #' @return data.frame with lumped groups by chemical mechanism.
 #' @importFrom data.table setDF as.data.table setDT setorderv melt
@@ -80,7 +82,8 @@
 #'                        nx = c("V1", "V2"))
 #' }
 emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
-  chem <- sysdata$chem
+  # copies: do not modify sysdata or the user's df by reference
+  chem <- data.table::as.data.table(sysdata$chem)
   if (!any(grepl("id", names(df)))) {
     stop("Add 'id' column")
   }
@@ -90,7 +93,6 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
   if (missing(nx)) {
     stop("Add colnames of emissions data")
   }
-  data.table::setDT(chem)
   pol <- mol <- NULL
   if (mech %in% c("CB05", "CB4", "CBMZ", "CB05opt2")) {
     cheml <- suppressWarnings(
@@ -132,13 +134,28 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
   # important
   # df$id <- rep(id, length(unique(df$pol)))
 
-  data.table::setDT(df)
-  data.table::setDT(cheml)
+  df <- data.table::as.data.table(df)
+  cheml <- data.table::as.data.table(cheml)
+  # duplicated species in chem would be counted twice
+  cheml <- unique(cheml, by = c("pol", "mech"))
+
+  nomw <- unique(cheml$pol[is.na(cheml$Mwt) & cheml$pol %in% df$pol])
+  if (length(nomw)) {
+    warning("Molar mass not available for: ", paste(nomw, collapse = ", "),
+            ". Their moles are NA.")
+  }
 
   y <- merge(x = df, y = cheml, by = "pol", all = TRUE, allow.cartesian = TRUE)
-  # key! Use := with .SD for idiomatic and memory-efficient in-place modification
   Mwt <- factor <- NULL
-  y[, (nx) := lapply(.SD, function(x) x / Mwt * factor), .SDcols = nx]
+  # x in g (numeric or units) -> mol
+  to_mol <- function(x, Mwt, factor) {
+    if (inherits(x, "units")) {
+      x / Mwt * factor
+    } else {
+      units::set_units(x / as.numeric(Mwt) * factor, "mol", mode = "standard")
+    }
+  }
+  y[, (nx) := lapply(.SD, to_mol, Mwt = Mwt, factor = factor), .SDcols = nx]
 
   mech_name <- mech
   data.table::set(

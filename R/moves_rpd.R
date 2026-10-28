@@ -10,8 +10,9 @@
 #' @param ef emission factors from EmissionRates_running exported from MOVES
 #' @param fuel_type Data.frame of fuelSubtypeID exported by MOVES.
 #' @param speed_bin Data.frame or vector of avgSpeedBinID as defined by MOVES.
-#' @param profile Data.frame or Matrix with nrows equal to 24 and ncol 7 day of
-#' the week
+#' @param profile Data.frame or Matrix with one row per hour (ncol(speed_bin)
+#' rows) and one column per vehicle category, in the same order as veh. A
+#' column "Hour" is ignored.
 #' @param source_type_id Number to identify type of vehicle as defined by MOVES.
 #' @param fuel_type_id Number to identify type of fuel as defined by MOVES.
 #' @param pollutant_id  Number to identify type of pollutant as defined by MOVES.
@@ -50,6 +51,8 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
                       path_all, #path to save RDS
                       verbose = FALSE) {
 
+  has_fuel <- !missing(fuel_type)
+  profile <- as.data.frame(profile)
   profile$Hour <- NULL
 
   ll <- if(is.data.frame(veh)) 1 else seq_along(veh)
@@ -73,29 +76,38 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
                       sourceTypeID == source_type_id[i] &
                       fuelTypeID == fuel_type_id[i] &
                       roadTypeID == road_type_id, ]
+          if (anyDuplicated(def$avgSpeedBinID)) {
+            stop("ef has more than one ratePerDistance per avgSpeedBinID ",
+                 "(e.g. several modelYearID) for hourID ", j,
+                 ". Filter or aggregate ef first, or use moves_rpdy")
+          }
 
-          data.table::as.data.table(fuel_type)[,
-                                               lapply(.SD, mean, na.rm = T),
-                                               .SDcols = c("carbonContent",
-                                                           "humidityCorrectionCoeff",
-                                                           "energyContent",
-                                                           "fuelDensity"),
-                                               by = fuelTypeID] -> df_fuel
+          dcols <- c("avgSpeedBinID", "ratePerDistance")
+          if (pollutant_id == 91) {
+            if (!has_fuel) stop("Please, add `fuel_type` data.frame from MOVES")
+            data.table::as.data.table(fuel_type)[,
+                                                 lapply(.SD, mean, na.rm = T),
+                                                 .SDcols = c("carbonContent",
+                                                             "humidityCorrectionCoeff",
+                                                             "energyContent",
+                                                             "fuelDensity"),
+                                                 by = fuelTypeID] -> df_fuel
 
-          def <- merge(def, df_fuel, by = "fuelTypeID")
+            def <- merge(def, df_fuel, by = "fuelTypeID")
+            dcols <- c(dcols, "carbonContent", "humidityCorrectionCoeff",
+                       "energyContent", "fuelDensity")
+          }
 
-          dt <- data.table::data.table(sourceTypeID = source_type_id[i],
+          # id keeps the order of the links after merge()
+          dt <- data.table::data.table(id = seq_along(speed_bin[[j]]),
+                                       sourceTypeID = source_type_id[i],
                                        avgSpeedBinID = speed_bin[[j]])
 
           df_net_ef <- merge(dt,
-                             def[, c("avgSpeedBinID",
-                                     "ratePerDistance",
-                                     "carbonContent",
-                                     "humidityCorrectionCoeff",
-                                     "energyContent",
-                                     "fuelDensity")],
+                             def[, dcols, with = FALSE],
                              by = "avgSpeedBinID",
                              all.x = T)
+          df_net_ef <- df_net_ef[order(df_net_ef$id), ]
 
           if(pollutant_id == 91) {
             df_net_ef$ef <- df_net_ef$ratePerDistance/1000*1/df_net_ef$energyContent*1/df_net_ef$fuelDensity
@@ -176,7 +188,7 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
 
   by_veh <- lxspeed[, -"id"][,
                              lapply(.SD, sum, na.rm = T),
-                             .SDcols = 2:32,
+                             .SDcols = paste0("age_", 1:agemax),
                              by = .(hour,
                                     veh,
                                     veh_type,

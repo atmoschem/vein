@@ -7,15 +7,20 @@
 moves_speed(x, net)
 }
 \arguments{
-\item{x}{Object with class, "sf",  "data.frame", "matrix" or "numeric" with speeds
-in miles/h (mph)}
+\item{x}{Object with class, "sf",  "data.frame", "matrix", "list", "units"
+or "numeric" with speeds}
 
 \item{net}{optional  spatial dataframe of class "sf".
 it is transformed to "sf".}
 }
 \description{
 \code{speed_moves} return an object of average speed bins as defined by
-US EPA MOVES. The input must be speed as miles/h (mph)
+US EPA MOVES. Speeds with units are converted to miles/h (mph); numeric
+speeds are assumed in mph.
+}
+\note{
+Bins are lower inclusive: 1 for speeds below 2.5 mph, 2 for
+[2.5, 7.5), ..., 16 for 72.5 mph or more, and 0 for speeds <= 0.1 mph.
 }
 \examples{
 {

@@ -51,53 +51,55 @@ test_that("ef_evap works", {
                        kmday = units::set_units(1, "m"),
                        ca = "no"),
                ".?")
-  expect_equal(ef_evap(ef = "erhotc",
+  # kmday converts the diurnal factor (g/day) to g/km
+  expect_error(ef_evap(ef = "erhotc",
                        v = "PC",
                        cc = "<=1400",
                        dt = "0_15",
                        kmday = units::set_units(1, "km"),
-                       ca = "no")$g,
-               EmissionFactors(2.39))
+                       ca = "no"),
+               "ed")
+  expect_equal(ef_evap(ef = "ed",
+                       v = "PC",
+                       cc = "<=1400",
+                       dt = "0_15",
+                       kmday = units::set_units(1, "km"),
+                       ca = "no"),
+               EmissionFactors(9.1))
 
-  expect_equal(ef_evap(ef = "erhotc",
+  expect_equal(ef_evap(ef = "ed",
                        v = "PC",
                        cc = "<=1400",
                        dt = 30,
                        kmday = units::set_units(1, "km"),
-                       ca = "no")$g,
-               EmissionFactors(5.42))
+                       ca = "no"),
+               EmissionFactors(20.7))
 
-  expect_equal(ef_evap(ef = c("erhotc", "erhotc"),
+  # kmday with several diurnal factors (show = FALSE returns the g/km vector)
+  expect_equal(ef_evap(ef = c("ed", "ed"),
                        v = "PC",
                        cc = "<=1400",
                        dt = 30:31,
                        kmday = units::set_units(1, "km"),
-                       ca = "no")$g[1],
-               EmissionFactors(5.42))
+                       ca = "no")[1],
+               EmissionFactors(20.7))
 
-  expect_equal(ef_evap(ef = c("erhotc", "erhotc"),
+  expect_equal(ef_evap(ef = c("ed", "ed"),
                        v = "PC",
                        cc = "<=1400",
                        dt = 30,
                        kmday = units::set_units(1, "km"),
-                       ca = "no")$g[1],
-               EmissionFactors(5.42))
+                       ca = "no")[1],
+               EmissionFactors(20.7))
 
-  expect_equal(ef_evap(ef = c("erhotc", "erhotc"),
-                       v = "PC",
-                       cc = "<=1400",
-                       dt = 30:31,
-                       kmday = units::set_units(1, "km"),
-                       ca = "no")$g[1],
-               EmissionFactors(5.42))
-  expect_equal(ef_evap(ef = c("erhotc", "erhotc"),
+  expect_equal(ef_evap(ef = c("ed", "ed"),
                        v = "PC",
                        cc = "<=1400",
                        dt = 30:31,
                        kmday = units::set_units(1, "km"),
                        ca = "no",
                        show = TRUE)$g[1],
-               EmissionFactors(5.42))
+               EmissionFactors(20.7))
 
   expect_error(ef_evap(ef = "ed",
                        v = "PC",

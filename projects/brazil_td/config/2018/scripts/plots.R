@@ -1,6 +1,6 @@
-year <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 6, stop = nchar(getwd()) - 3))
+year <- as.numeric(substr(x = getwd(), start = nchar(getwd()) - 3, stop = nchar(getwd())))
 
-tit <- paste0("Emissões veiculares em ", basename(getwd()), year)
+tit <- paste0("Emissões veiculares no Brasil ", year)
 
 switch (language,
         "portuguese" = cat("\nPlotando ruas\n"),
@@ -193,14 +193,17 @@ switch (language,
         "english" = cat("\nPlotting grid\n"),
         "spanish" = cat("\nPlotando grilla\n"))
 
-dt <- readRDS("post/emi_grid.rds")
-names(dt)
+# post/emi_grid.rds only exists when scripts/post2_spatial.R was run
+if (file.exists("post/emi_grid.rds")) {
+  dt <- readRDS("post/emi_grid.rds")
+  names(dt)
 
-png(filename =  paste0("images/GRID_", names(dt)[2], ".png"),
-    width = 2100, height = 1500, units = "px", pointsize = 12,
-    bg = "white",  res = 300)
-plot(dt[names(dt)[2]], lty = 0, pal = cpt(colorRampPalette = T, rev = T), breaks = "sd")
-dev.off()
+  png(filename =  paste0("images/GRID_", names(dt)[2], ".png"),
+      width = 2100, height = 1500, units = "px", pointsize = 12,
+      bg = "white",  res = 300)
+  plot(dt[names(dt)[2]], lty = 0, pal = cpt(colorRampPalette = T, rev = T), breaks = "sd")
+  dev.off()
+}
 
 
 switch (language,

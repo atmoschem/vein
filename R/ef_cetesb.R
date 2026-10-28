@@ -66,6 +66,8 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
 
   # deterioration ####
   ef <- ef[ef$Year <= year, ]
+  # age of use relative to the requested year, not to the newest table year
+  ef$Age <- year - ef$Year + 1
 
 
   det <- sysdata$cetesbdet
@@ -227,12 +229,15 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
                det2$pol == "CO" &
                det2$veh == "PC_G", ]$ef160
 
-  det2$ef160 <- ifelse(
-    det2$veh == "PC_G" &
-      det2$pol == "CO" &
-      det2$Year < 1984,
-    xx,
-    det2$ef160)
+  # when year < 1984 there is no 1984 row to cap with
+  if (length(xx) == 1) {
+    det2$ef160 <- ifelse(
+      det2$veh == "PC_G" &
+        det2$pol == "CO" &
+        det2$Year < 1984,
+      xx,
+      det2$ef160)
+  }
   det2[is.na(det2)]<- 0
 
   # 8 ef det ####
@@ -263,6 +268,8 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
   ve4s <- c("PC_G","PC_E", "PC_FG","PC_FE",
             "LCV_G","LCV_E", "LCV_FG","LCV_FE")
 
+  # "<pol>" holds the deteriorated EF and "<pol>_0km" the original (new
+  # vehicle) EF from the table
   efnoxd <- efnox <- ef[ef$Pollutant == "NOx", ]
   efnox$Pollutant <-  "NOx_0km"
   for(i in seq_along(ve4s)) efnoxd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
@@ -270,7 +277,7 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
 
   efnod <- efno <- ef[ef$Pollutant == "NO", ]
   efno$Pollutant <-  "NO_0km"
-  for(i in seq_along(ve4s)) efnox[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
+  for(i in seq_along(ve4s)) efnod[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
                                                        det2$pol == "NO", ]$efd
 
   efno2d <- efno2 <- ef[ef$Pollutant == "NO2", ]
@@ -279,17 +286,17 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
                                                         det2$pol == "NO2", ]$efd
 
   efcod <- efco <- ef[ef$Pollutant == "CO", ]
-  efcod$Pollutant <-  "CO_0km"
+  efco$Pollutant <-  "CO_0km"
   for(i in seq_along(ve4s)) efcod[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
                                                        det2$pol == "CO", ]$efd
 
   efnmhcd <- efnmhc <- ef[ef$Pollutant == "NMHC", ]
-  efnmhcd$Pollutant <-  "NMHC_0km"
+  efnmhc$Pollutant <-  "NMHC_0km"
   for(i in seq_along(ve4s)) efnmhcd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
                                                          det2$pol == "NMHC", ]$efd
 
   efhcd <- efhc <- ef[ef$Pollutant == "HC", ]
-  efhcd$Pollutant <-  "HC_0km"
+  efhc$Pollutant <-  "HC_0km"
   for(i in seq_along(ve4s)) efhcd[[ve4s[i]]] <- det2[det2$veh == ve4s[i] &
                                                        det2$pol == "HC", ]$efd
 
@@ -330,7 +337,7 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
                           NA)
   pmef2[, nHDV] <- ifelse(pmef2[, nHDV]>0,
                           1*pmdf[pmdf$pol == "PM" &
-                                   pmdf$veh == "HDV", ]$gst,
+                                   pmdf$veh == "TRUCKS", ]$gst,
                           NA)
   pmef2[, nBUS] <- ifelse(pmef2[, nBUS]>0,
                           1*pmdf[pmdf$pol == "PM" &
@@ -348,7 +355,7 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
                            NA)
   pmef10[, nHDV] <- ifelse(pmef10[, nHDV]>0,
                            1*pmdf[pmdf$pol == "PM10" &
-                                    pmdf$veh == "HDV", ]$gst,
+                                    pmdf$veh == "TRUCKS", ]$gst,
                            NA)
   pmef10[, nBUS] <- ifelse(pmef10[, nBUS]>0,
                            1*pmdf[pmdf$pol == "PM10" &
@@ -588,8 +595,19 @@ ef_cetesb_prepare <- function(year, scale, efinput = NULL, verbose = FALSE) {
 #' PC_ELEC, LCV_ELEC, TRUCKS_ELEC, BUS_ELEC,
 #' MC_150_ELEC, MC_150_500_ELEC, MC_500_ELEC
 #'
-#' If pollutant is "SO2", it needs sppm. It is designed when veh has length 1, if it has length 2 or more,
-#' it will show a warning
+#' If pollutant is "SO2", it needs sppm, with the same length as veh. Each
+#' vehicle uses its own sppm (SO2 = FC * 2 * sppm * 1e-6) and ethanol vehicles
+#' ("PC_E", "PC_FE", "LCV_E", "LCV_FE", "MC_150_FE", "MC_150_500_FE",
+#' "MC_500_FE") get 0.
+#'
+#' For "CO", "HC", "NMHC", "NOx", "NO", "NO2" and "RCHO" of otto PC and LCV,
+#' the pollutant name returns the deteriorated emission factor and the
+#' suffix "_0km" the emission factor of new vehicles (in earlier versions "CO",
+#' "HC" and "NMHC" were swapped with their "_0km" versions, "NOx_0km" held
+#' deteriorated NO and "NO" was not deteriorated).
+#'
+#' When agemax is larger than the available ages (50), the oldest emission
+#' factor is repeated.
 #'
 #' \strong{Emission factor for vehicles older than the reported by CETESB were filled with las highest EF}
 #'
@@ -685,26 +703,27 @@ ef_cetesb <- function(p,
             "M_FE_150", "M_FE_150_500", "M_FE_500")
   if(any(veh %in% oldt)) {
     message("I guess you wanted this:")
-    veh <- switch(veh,
-                  "SLT" = "TRUCKS_SL_D",
-                  "LT" = "TRUCKS_L_D",
-                  "MT" = "TRUCKS_M_D",
-                  "SHT" = "TRUCKS_SH_D",
-                  "HT" = "TRUCKS_H_D",
-                  "UB" = "BUS_URBAN_D",
-                  "SUB" = "BUS_MICRO_D",
-                  "COACH" = "BUS_COACH_D",
-                  "ARTIC" = "BUS_ARTIC_D",
-                  "M_G_150" = "MC_150_G",
-                  "M_G_150_500" = "MC_150_500_G",
-                  "M_G_500" = "MC_500_G",
-                  "M_FG_150" = "MC_150_FG",
-                  "M_FG_150_500" = "MC_150_500_FG",
-                  "M_FG_500" = "MC_500_FG",
-                  "M_FE_150" = "MC_150_FE",
-                  "M_FE_150_500" = "MC_150_500_FE",
-                  "M_FE_500" = "MC_500_FE")
-    message(veh)
+    newt <- c("SLT" = "TRUCKS_SL_D",
+              "LT" = "TRUCKS_L_D",
+              "MT" = "TRUCKS_M_D",
+              "SHT" = "TRUCKS_SH_D",
+              "HT" = "TRUCKS_H_D",
+              "UB" = "BUS_URBAN_D",
+              "SUB" = "BUS_MICRO_D",
+              "COACH" = "BUS_COACH_D",
+              "ARTIC" = "BUS_ARTIC_D",
+              "M_G_150" = "MC_150_G",
+              "M_G_150_500" = "MC_150_500_G",
+              "M_G_500" = "MC_500_G",
+              "M_FG_150" = "MC_150_FG",
+              "M_FG_150_500" = "MC_150_500_FG",
+              "M_FG_500" = "MC_500_FG",
+              "M_FE_150" = "MC_150_FE",
+              "M_FE_150_500" = "MC_150_500_FE",
+              "M_FE_500" = "MC_500_FE")
+    veh <- ifelse(veh %in% oldt, newt[veh], veh)
+    veh <- unname(veh)
+    message(paste(veh, collapse = " "))
   }
   year1 <- ef$Year[1]
 
@@ -741,14 +760,30 @@ ef_cetesb <- function(p,
   }
 
   pol <- p
-  k <- ifelse(p == "SO2", sppm*2*1e-06, 1)
   p <- ifelse(p == "SO2", "FC", p)
+  # one multiplier per vehicle (column), SO2 = FC * 2 * S
+  if (pol == "SO2") {
+    k <- sppm*2*1e-06
+    k[veh %in% s0] <- 0
+  } else {
+    k <- rep(1, length(veh))
+  }
 
+  sel <- ef[ef$Pollutant == p, ]
+  # repeat the oldest EF when agemax exceeds the available ages
+  if (!is.null(agemax) && agemax > nrow(sel)) {
+    sel <- sel[c(seq_len(nrow(sel)), rep(nrow(sel), agemax - nrow(sel))), ]
+    sel$Age <- seq_len(nrow(sel))
+    sel$Year <- year - sel$Age + 1
+  }
+  efv <- sel[, veh, drop = FALSE]
+  for (i in seq_along(veh)) efv[[i]] <- efv[[i]] * k[i]
+  if (length(veh) == 1) efv <- efv[[1]]
 
   if(full) {
     if(p %in% c(evapd, evap)){
-      df1 <- ef[ef$Pollutant == p, 1:11]
-      df2 <- ef[ef$Pollutant == p, veh]
+      df1 <- sel[, 1:11]
+      df2 <- efv
       if(length(veh) == 1) {
         df2 <- units::as_units(df2, "g")
       } else {
@@ -757,21 +792,17 @@ ef_cetesb <- function(p,
 
       df <- cbind(df1, df2)
 
-      names(df)[ncol(df)] <- p
+      if(length(veh) == 1) names(df)[ncol(df)] <- p
 
     } else {
-      if(pol == "SO2" &
-         length(veh) == 1){
-        if(veh %in% s0) k = 0
-      }
-      df <- cbind(ef[ef$Pollutant == p, 1:11],
-                  EmissionFactors(ef[ef$Pollutant == p, veh]*k)  )
-      names(df)[ncol(df)] <- p
+      df <- cbind(sel[, 1:11],
+                  EmissionFactors(efv))
+      if(length(veh) == 1) names(df)[ncol(df)] <- p
     }
 
   } else {
     if(p %in% c(evapd, evap)){
-      df <- ef[ef$Pollutant == p, veh]
+      df <- efv
 
       if(length(veh) == 1) {
         df <- units::as_units(df, "g")
@@ -780,10 +811,7 @@ ef_cetesb <- function(p,
       }
 
     } else {
-      if(pol == "SO2" & length(veh) == 1){
-        if(veh %in% s0) k = 0
-      }
-      df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh]*k)
+      df <- vein::EmissionFactors(efv)
     }
   }
 

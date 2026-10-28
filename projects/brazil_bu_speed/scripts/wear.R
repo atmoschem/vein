@@ -20,9 +20,6 @@ for (i in seq_along(metadata$vehicles)) {
   
   x <- readRDS(paste0("veh/", metadata$vehicles[i], ".rds"))
   
-  pro <- tfs[[metadata$vehicles[i]]]
-  veh <- temp_veh(x = x, tfs = pro)
-  
   for (j in seq_along(pol)) {
     cat(" ",pol[j], " ")
     
@@ -65,7 +62,7 @@ for (i in seq_along(metadata$vehicles)) {
       
       x_STREETS <- emis_post(
         arra = array_x,
-        pollutant = veh_ev[j],
+        pollutant = pol[j],
         by = "streets"
       )
       

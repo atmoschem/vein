@@ -3,7 +3,11 @@
 #' @description \code{EmissionFactorsList} returns a transformed object with
 #' class"EmissionsFactorsList".
 #'
-#' @return Objects of class "EmissionFactorsList"
+#' @return Objects of class "EmissionFactorsList". For numeric, matrix or
+#' data.frame inputs each element is a function of speed V that returns the
+#' constant emission factor. For matrix and data.frame inputs the result is a
+#' list (one element per column) of lists (one function per row); before vein
+#' 2.0.0 it was wrongly given the class "data.frame".
 #'
 #' @param x Object with class "list"
 #' @param object Object with class "EmissionFactorsList"
@@ -26,19 +30,26 @@
 #' }
 #' @export
 EmissionFactorsList <- function(x, ...) {
+  # constant emission factor (does not depend on speed V)
+  const <- function(val) {
+    force(val)
+    function(V) val
+  }
   if ( is.matrix(x) || is.data.frame(x) ) {
     efx <- lapply(1:ncol(x), function(i) {
       lapply(1:nrow(x), function(j) {
-        function(V) x[j,i]
+        const(x[j,i])
       })
     })
-    class(efx) <- c("EmissionFactorsList",class(x))
+    class(efx) <- c("EmissionFactorsList", "list")
   } else  if ( is.numeric(x) ) {
-    efx <- lapply(1:length(x), function(i) {function(V) x[i] })
+    efx <- lapply(1:length(x), function(i) const(x[i]))
     class(efx) <- c("EmissionFactorsList",class(efx))
   } else if ( is.list(x) && is.function(x[[1]]) ) {
     efx <- x
-    class(efx) <- c("EmissionFactorsList",class(x))
+    class(efx) <- unique(c("EmissionFactorsList",class(x)))
+  } else {
+    stop("'x' must be numeric, matrix, data.frame or a list of functions")
   }
   return(efx)
 }

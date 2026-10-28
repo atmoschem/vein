@@ -5,7 +5,9 @@
 #' @param ef Numeric; numeric vector of emission factors.
 #' @param type Character; "logistic"  by default so far.
 #' @param x Numeric; vector for ages of use.
-#' @param x0 Numeric;  the x-value of the sigmoid's midpoint,
+#' @param x0 Numeric;  the x-value (age) of the sigmoid's midpoint. Default is
+#' the mean of \code{x}; before vein 2.0.0 it was \code{mean(ef)}, an
+#' emission factor value used as an age.
 #' @param k Numeric; the steepness of the curve.
 #' @param L Integer; the curve's maximum value.
 #' @param verbose Logical; to show the equation.
@@ -21,7 +23,7 @@
 ef_fun <- function(ef,
                    type = "logistic",
                    x = 1:length(ef),
-                   x0 = mean(ef),
+                   x0 = mean(x),
                    k = 1/4,
                    L = max(ef),
                    verbose = TRUE) {

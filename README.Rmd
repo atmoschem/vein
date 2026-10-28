@@ -55,9 +55,28 @@ laptop, which makes country-scale hourly inventories (hundreds of thousands of
 links) feasible. See the `brazil_bu_speed` project and the step-by-step article
 [Understanding speed-dependent inventories with emis_speed](https://atmoschem.github.io/vein/articles/speed.html).
 
+### Emission factors
+
+Light-duty hot emission factors (`ef_ldv_speed()`, `ef_ldv_scaled()`,
+`emis_speed()`, `ef_eea()`) come from the EMEP/EEA air pollutant emission
+inventory guidebook 2023 - update 2026 (Appendix 4, July 2026). Fuel
+consumption is derived from the energy consumption factors, and CO2 from fuel
+with the carbon balance, so CO2/FC is constant. Other sources are CETESB
+(Brazil), the Chinese guidelines, MOVES and EMFAC.
+
+### HBEFA
+
+`emis_hbefa()`, `ef_hbefa()`, `ef_hbefa_cycle()` and `hbefa_classes()` are an
+R port of the HBEFA-based emission models (HBEFA v4.2, v3.1 and v2.1) of
+[Eclipse SUMO](https://eclipse.dev/sumo/), with 962 vehicle classes. They give
+instantaneous emissions from speed and acceleration, constant-speed factors,
+and averages over driving cycles, as an alternative to COPERT/EMEP-EEA for
+European projects. These files are EPL-2.0 OR GPL-2.0-or-later, see
+`inst/COPYRIGHTS`, and the article
+[HBEFA emission models](https://atmoschem.github.io/vein/articles/hbefa.html).
+
 ### TODO
 
-- Add EF from HBEFA?
 - See issues [GitHub](https://github.com/atmoschem/vein/issues)
 - Second edition of my book
 

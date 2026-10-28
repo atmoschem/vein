@@ -26,6 +26,8 @@ names(tfs_week_list) <- metadata$vehicles
 # zero accumulators per pollutant --------------------------------------------
 street_pol <- lapply(pol, function(x) matrix(0, nrow = S, ncol = H))
 names(street_pol) <- pol
+# the same by fuel ("<fuel>_<pol>"), used by post_speed.R for NMHC by fuel
+street_pol_fuel <- list()
 df_all <- list()
 
 speed_ready <- function(veh, pol) {
@@ -121,6 +123,12 @@ for (i in seq_along(metadata$vehicles)) {
     }
 
     street_pol[[pj]] <- street_pol[[pj]] + streets
+    kf <- paste0(metadata$fuel[i], "_", pj)
+    street_pol_fuel[[kf]] <- if (is.null(street_pol_fuel[[kf]])) {
+      streets
+    } else {
+      street_pol_fuel[[kf]] + streets
+    }
 
     df_all[[length(df_all) + 1]] <- data.table::data.table(
       veh = veh_i,
@@ -142,6 +150,7 @@ for (i in seq_along(metadata$vehicles)) {
 for (pj in pol) {
   saveRDS(street_pol[[pj]], paste0("emi/EXHAUST_SPEED_", pj, ".rds"))
 }
+saveRDS(street_pol_fuel, "emi/EXHAUST_SPEED_BY_FUEL.rds")
 
 df_out <- data.table::rbindlist(df_all)
 data.table::fwrite(df_out, "emi/EXHAUST_SPEED_DF.csv")

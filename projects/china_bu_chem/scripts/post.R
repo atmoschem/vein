@@ -1,5 +1,8 @@
 file.remove(list.files(path = "post/", recursive = T, full.names = T))
 
+# merge_emis(): replacement for vein::emis_merge (removed from vein)
+source("scripts/merge_emis.R", encoding = "UTF-8")
+
 dt <- fread("emi/DF_EXHAUST.csv")
 
 dt$g <- units::set_units(dt$g, "g")
@@ -34,8 +37,6 @@ print(dt0)
 # dt04$model <- "Beijing S Zhang - 2021"
 
 
-stop()
-
 # streets  ####
 switch(language,
         "portuguese" = message("\nAgregando emissões por rua...\n"),
@@ -45,7 +46,7 @@ switch(language,
 
 for (i in seq_along(pol)) {
         pols <- ifelse(pol[i] == "HC", "_HC", pol[i])
-        x <- emis_merge(pol = pols, path = "emi", net = net, k = units::set_units(1, "1/h"))
+        x <- merge_emis(pol = pols, path = "emi", net = net)
         saveRDS(x, paste0(
                 "post/streets/",
                 ifelse(pols == "_HC", "HC", pols), ".rds"
@@ -59,36 +60,47 @@ switch(language,
 )
 
 #Special for future speciation
-x <- emis_merge(pol = "_G", 
-                what = "HC_STREETS.rds",
-                path = "emi", 
-                net = net, 
-                k = units::set_units(1, "1/h")*0.95
+# NMHC by fuel from the exhaust HC street files of each vehicle. Vehicles are
+# selected with metadata (fuel and f) so that hybrids are included: G HY with
+# gasoline and D HY D with diesel. emis_merge(pol = "_G") missed them because
+# their names (e.g. PV_TAXI_HY) do not contain the fuel.
+meta_post <- readRDS("config/metadata.rds")
+hc_files <- function(v) {
+  fs <- paste0("emi/", v, "/", v, "_HC_STREETS.rds")
+  fs[file.exists(fs)]
+}
+v_g <- meta_post$vehicles[meta_post$fuel == "G" | meta_post$f == "G HY"]
+v_d <- meta_post$vehicles[meta_post$fuel == "D" | meta_post$f == "D HY D"]
+v_cng <- meta_post$vehicles[meta_post$fuel == "CNG"]
+
+x <- merge_emis(pol = "G_NMHC",
+                files = hc_files(v_g),
+                net = net,
+                k = 0.95
                 ) # assumming 95% of HC is NMHC
 saveRDS(x, "post/streets/G_NMHC.rds")
 
-x <- emis_merge(pol = "_D", 
-                what = "HC_STREETS.rds",
-                path = "emi", 
-                net = net, 
-                k = units::set_units(1, "1/h")*0.95
+x <- merge_emis(pol = "D_NMHC",
+                files = hc_files(v_d),
+                net = net,
+                k = 0.95
 ) # assumming 95% of HC is NMHC
 saveRDS(x, "post/streets/D_NMHC.rds")
 
-x <- emis_merge(pol = "_CNG", 
-                what = "HC_STREETS.rds",
-                path = "emi", 
-                net = net, 
-                k = units::set_units(1, "1/h")*0.95
-) # assumming 95% of HC is NMHC
+# CNG exhaust HC is mostly methane (about 90% of THC for CNG engines in the
+# EMEP/EEA guidebook), so 95% NMHC is not valid here. Assumed 10% NMHC.
+x <- merge_emis(pol = "CNG_NMHC",
+                files = hc_files(v_cng),
+                net = net,
+                k = 0.10
+) # assumming 10% of HC is NMHC
 saveRDS(x, "post/streets/CNG_NMHC.rds")
 
-x <- emis_merge(pol = "Evaporative", 
+x <- merge_emis(pol = "Evaporative", 
                 what = "STREETS.rds",
                 path = "emi", 
-                net = net, 
-                k = units::set_units(1, "1/h")
-) # assumming 95% of HC is NMHC
+                net = net
+) # evaporative HC is all NMHC
 saveRDS(x, "post/streets/EVAP_G_NMHC.rds")
 
 switch(language,
@@ -97,20 +109,20 @@ switch(language,
        "spanish" = message("\nIdentificando NO and NO2 manualmenten")
 )
 
-x <- emis_merge(pol = "NOx", 
+x <- merge_emis(pol = "NOx", 
                 what = "STREETS.rds",
                 path = "emi", 
                 net = net, 
-                k = units::set_units(1, "1/h")*0.9
-) # assumming 90% of NOx is NO
+                k = 0.9
+) # assumming 90% of NOx is NO (NO2-equivalent mass)
 saveRDS(x, "post/streets/NO.rds")
 
 
-x <- emis_merge(pol = "NOx", 
+x <- merge_emis(pol = "NOx", 
                 what = "STREETS.rds",
                 path = "emi", 
                 net = net, 
-                k = units::set_units(1, "1/h")*0.1
+                k = 0.1
 ) # assumming 10% of NOx is NO2
 saveRDS(x, "post/streets/NO2.rds")
 

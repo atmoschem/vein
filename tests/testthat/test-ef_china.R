@@ -1,5 +1,18 @@
 context("ef_china")
 
+# deterioration factors applied to gasoline CO, HC and NOx
+# (det_china, baseyear_det = 2016, standards PRE, I, II, III, IV, V)
+det16 <- list(
+  group1 = list(CO = c(1.17, 1.35, 1, 1.14, 1, 1),
+                HC = c(1.14, 1.18, 1.18, 1.04, 1, 1),
+                NOx = c(1.03, 1, 1.08, 1.32, 1, 1)),
+  group2 = list(CO = c(1.12, 1.06, 1.06, 1.11, 1.2, 1.2),
+                HC = c(1.12, 1.06, 1.06, 1.11, 1.2, 1.2),
+                NOx = c(1.03, 1.03, 1.07, 1.07, 1.11, 1.11)),
+  Taxi = list(CO = c(1.27, 1.57, 1.59, 1.46, 1.62, 1.62),
+              HC = c(1.24, 1.45, 1.58, 1.39, 1.52, 1.52),
+              NOx = c(1.06, 1.41, 1.51, 1.36, 1.67, 1.67)))
+
 df_st <- rev(c(as.character(as.roman(5:1)), "PRE"))
 v <- "PV"
 f = "G"
@@ -18,13 +31,13 @@ load_factor = 0.5
 # Mini G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(25.72, 6.71, 2.52, 1.18, 0.68, 0.46)))})
+               EmissionFactors(c(25.72, 6.71, 2.52, 1.18, 0.68, 0.46) * det16$group1$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(t = "Mini", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(2.685, 0.663, 0.314, 0.191, 0.075, 0.056)))})
+               EmissionFactors(c(2.685, 0.663, 0.314, 0.191, 0.075, 0.056) * det16$group1$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(t = "Mini", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(1.971, 0.409, 0.324, 0.1, 0.032, 0.017)))})
+               EmissionFactors(c(1.971, 0.409, 0.324, 0.1, 0.032, 0.017) * det16$group1$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(t = "Mini", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.028, 0.026, 0.011, 0.007, 0.003, 0.003)))})
@@ -35,13 +48,13 @@ test_that("ef_china works", {# PM10
 # Small G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(t = "Small", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(39.13, 21.43, 15.37, 4.33, 1.98, 1.98)))})
+               EmissionFactors(c(39.13, 21.43, 15.37, 4.33, 1.98, 1.98) * det16$group1$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(t = "Small", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(3.695, 2.567, 1.443, 0.373, 0.107, 0.107)))})
+               EmissionFactors(c(3.695, 2.567, 1.443, 0.373, 0.107, 0.107) * det16$group1$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(t = "Small", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(2.938, 1.781, 1.461, 0.474, 0.196, 0.147)))})
+               EmissionFactors(c(2.938, 1.781, 1.461, 0.474, 0.196, 0.147) * det16$group1$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(t = "Small", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.099, 0.06, 0.018, 0.011, 0.006, 0.006)))})
@@ -51,13 +64,13 @@ test_that("ef_china works", {# PM10
 # Medium G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(t = "Medium", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(39.13, 21.43, 15.37, 4.33, 1.98, 1.98)))})
+               EmissionFactors(c(39.13, 21.43, 15.37, 4.33, 1.98, 1.98) * det16$group2$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(t = "Medium", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(3.695, 2.567, 1.443, 0.373, 0.107, 0.107)))})
+               EmissionFactors(c(3.695, 2.567, 1.443, 0.373, 0.107, 0.107) * det16$group2$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(t = "Medium", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(2.938, 1.781, 1.461, 0.474, 0.196, 0.147)))})
+               EmissionFactors(c(2.938, 1.781, 1.461, 0.474, 0.196, 0.147) * det16$group2$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(t = "Medium", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.099, 0.06, 0.018, 0.011, 0.006, 0.006)))})
@@ -67,13 +80,13 @@ test_that("ef_china works", {# PM10
 # Large G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(t = "Large", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(100.74, 62.09, 16.64, 8.25, 3.77, 3.77)))})
+               EmissionFactors(c(100.74, 62.09, 16.64, 8.25, 3.77, 3.77) * det16$group2$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(t = "Large", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(5.144, 5.255, 1.98, 0.869, 0.418, 0.418)))})
+               EmissionFactors(c(5.144, 5.255, 1.98, 0.869, 0.418, 0.418) * det16$group2$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(t = "Large", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(5.156, 2.645, 2.562, 1.52, 0.775, 0.582)))})
+               EmissionFactors(c(5.156, 2.645, 2.562, 1.52, 0.775, 0.582) * det16$group2$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(t = "Large", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.293, 0.159, 0.072, 0.044, 0.044, 0.044)))})
@@ -83,13 +96,13 @@ test_that("ef_china works", {# PM10
 # Light Trucks G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "Trucks", t = "Mini", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(47.83, 26.16, 21.54, 5.61, 2.37, 2.37)))})
+               EmissionFactors(c(47.83, 26.16, 21.54, 5.61, 2.37, 2.37) * det16$group1$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(v = "Trucks", t = "Mini", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(4.987, 3.324, 2.21, 0.61, 0.169, 0.169)))})
+               EmissionFactors(c(4.987, 3.324, 2.21, 0.61, 0.169, 0.169) * det16$group1$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(v = "Trucks", t = "Mini", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(3.31, 2.006, 1.656, 0.534, 0.229, 0.172)))})
+               EmissionFactors(c(3.31, 2.006, 1.656, 0.534, 0.229, 0.172) * det16$group1$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(v = "Trucks", t = "Mini", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.099, 0.06, 0.018, 0.011, 0.006, 0.006)))})
@@ -99,13 +112,13 @@ test_that("ef_china works", {# PM10
 # Light Trucks G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "Trucks", t = "Medium", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(123.13, 75.79, 23.32, 10.71, 4.5, 4.5)))})
+               EmissionFactors(c(123.13, 75.79, 23.32, 10.71, 4.5, 4.5) * det16$group2$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(v = "Trucks", t = "Medium", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(6.884, 6.777, 3.023, 1.371, 0.573, 0.573)))})
+               EmissionFactors(c(6.884, 6.777, 3.023, 1.371, 0.573, 0.573) * det16$group2$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(v = "Trucks", t = "Medium", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(5.807, 2.979, 2.905, 1.713, 0.907, 0.68)))})
+               EmissionFactors(c(5.807, 2.979, 2.905, 1.713, 0.907, 0.68) * det16$group2$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(v = "Trucks", t = "Medium", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.293, 0.159, 0.072, 0.044, 0.044, 0.044)))})
@@ -115,13 +128,13 @@ test_that("ef_china works", {# PM10
 # Heavy Trucks G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "Trucks", t = "Heavy", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(123.13, 75.79, 23.32, 10.71, 4.5, 4.5)))})
+               EmissionFactors(c(123.13, 75.79, 23.32, 10.71, 4.5, 4.5) * det16$group2$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(v = "Trucks", t = "Heavy", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(6.749, 6.759, 3.006, 1.354, 0.555, 0.555)))})
+               EmissionFactors(c(6.749, 6.759, 3.006, 1.354, 0.555, 0.555) * det16$group2$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(v = "Trucks", t = "Heavy", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(5.807, 2.979, 2.905, 1.713, 0.907, 0.68)))})
+               EmissionFactors(c(5.807, 2.979, 2.905, 1.713, 0.907, 0.68) * det16$group2$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(v = "Trucks", t = "Heavy", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.293, 0.159, 0.072, 0.044, 0.044, 0.044)))})
@@ -131,13 +144,13 @@ test_that("ef_china works", {# PM10
 # Taxi G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "PV", t = "Taxi", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(36.96, 16.12, 7.27, 3.03, 2.45, 2.45)))})
+               EmissionFactors(c(36.96, 16.12, 7.27, 3.03, 2.45, 2.45) * det16$Taxi$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(v = "PV", t = "Taxi", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(3.84, 1.368, 0.963, 0.454, 0.277, 0.257)))})
+               EmissionFactors(c(3.84, 1.368, 0.963, 0.454, 0.277, 0.257) * det16$Taxi$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(v = "PV", t = "Taxi", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(2.159, 0.767, 0.81, 0.204, 0.135, 0.095)))})
+               EmissionFactors(c(2.159, 0.767, 0.81, 0.204, 0.135, 0.095) * det16$Taxi$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(v = "PV", t = "Taxi", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.028, 0.026, 0.011, 0.007, 0.003, 0.003)))})
@@ -147,13 +160,13 @@ test_that("ef_china works", {# PM10
 # BUS G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "PV", t = "Bus", f = "G", standard = df_st, p = "CO"),
-               EmissionFactors(c(100.74, 62.09, 16.64, 8.25, 3.77, 3.77)))})
+               EmissionFactors(c(100.74, 62.09, 16.64, 8.25, 3.77, 3.77) * det16$group2$CO[1:6]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(v = "PV", t = "Bus", f = "G", standard = df_st, p = "HC"),
-               EmissionFactors(c(5.144, 5.255, 1.980, 0.869, 0.418, 0.418)))})
+               EmissionFactors(c(5.144, 5.255, 1.980, 0.869, 0.418, 0.418) * det16$group2$HC[1:6]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(v = "PV", t = "Bus", f = "G", standard = df_st, p = "NOx"),
-               EmissionFactors(c(5.156, 2.645, 2.562, 1.52, 0.775, 0.582)))})
+               EmissionFactors(c(5.156, 2.645, 2.562, 1.52, 0.775, 0.582) * det16$group2$NOx[1:6]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(v = "PV", t = "Bus", f = "G", standard = df_st, p = "PM2.5"),
                EmissionFactors(c(0.293, 0.159, 0.072, 0.044, 0.044, 0.044)))})
@@ -163,13 +176,13 @@ test_that("ef_china works", {# PM10
 # MC G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "PV", t = "Motorcycles", f = "G", standard = df_st[1:4], p = "CO"),
-               EmissionFactors(c(14.2, 8.96, 2.58, 1.11)))})
+               EmissionFactors(c(14.2, 8.96, 2.58, 1.11) * det16$group2$CO[1:4]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(v = "PV", t = "Motorcycles", f = "G", standard = df_st[1:4], p = "HC"),
-               EmissionFactors(c(2.01, 0.99, 0.53, 0.21)))})
+               EmissionFactors(c(2.01, 0.99, 0.53, 0.21) * det16$group2$HC[1:4]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(v = "PV", t = "Motorcycles", f = "G", standard = df_st[1:4], p = "NOx"),
-               EmissionFactors(c(0.13, 0.14, 0.15, 0.1)))})
+               EmissionFactors(c(0.13, 0.14, 0.15, 0.1) * det16$group2$NOx[1:4]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(v = "PV", t = "Motorcycles", f = "G", standard = df_st[1:4], p = "PM2.5"),
                EmissionFactors(c(0.03, 0.018, 0.008, 0.003)))})
@@ -182,13 +195,13 @@ test_that("ef_china works", {# PM10
 # Moped G
 test_that("ef_china works", {# CO
   expect_equal(ef_china(v = "PV", t = "Moped", f = "G", standard = df_st[1:4], p = "CO"),
-               EmissionFactors(c(9.6, 4.18, 1.97, 0.82)))})
+               EmissionFactors(c(9.6, 4.18, 1.97, 0.82) * det16$group2$CO[1:4]))})
 test_that("ef_china works", {# HC
   expect_equal(ef_china(v = "PV", t = "Moped", f = "G", standard = df_st[1:4], p = "HC"),
-               EmissionFactors(c(5.4, 2.15, 1.65, 0.88)))})
+               EmissionFactors(c(5.4, 2.15, 1.65, 0.88) * det16$group2$HC[1:4]))})
 test_that("ef_china works", {# NOx
   expect_equal(ef_china(v = "PV", t = "Moped", f = "G", standard = df_st[1:4], p = "NOx"),
-               EmissionFactors(c(0.12, 0.11, 0.11, 0.07)))})
+               EmissionFactors(c(0.12, 0.11, 0.11, 0.07) * det16$group2$NOx[1:4]))})
 test_that("ef_china works", {# PM2.5
   expect_equal(ef_china(v = "PV", t = "Moped", f = "G", standard = df_st[1:4], p = "PM2.5"),
                EmissionFactors(c(0.03, 0.018, 0.008, 0.003)))})
@@ -421,13 +434,14 @@ test_that("ef_china cat", {# CO
 test_that("ef_china works", {# CO
   expect_equal(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
                          correction_only = TRUE)[1],
-                1)
+                det16$group1$CO[1]) # deterioration is a correction
+
 })
 
 test_that("ef_china works", {# CO
   expect_equal(round(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
                         ta = celsius(25))[1]),
-               EmissionFactors(26))
+               EmissionFactors(30))
 })
 test_that("ef_china works", {# CO
   expect_equal(round(ef_china(t = "Mini", f = "D", standard = df_st, p = "CO",
@@ -439,7 +453,7 @@ test_that("ef_china works", {# CO
   expect_equal(round(ef_china(t = "Mini", f = "G", standard = df_st, p = "CO",
                               ta = celsius(25),
                               altitude = 1600)[1]),
-               EmissionFactors(41))
+               EmissionFactors(48))
 })
 
 test_that("ef_china works", {# CO
@@ -790,7 +804,7 @@ test_that("ef_china stop", {
                               altitude = 2000,
                               speed = Speed(55),
                               sulphur = 400))$V1[1],
-               EmissionFactors(13))
+               EmissionFactors(5)) # diesel light NOx altitude factor 1.35
 })
 
 
@@ -838,7 +852,7 @@ test_that("ef_china stop", {
                               altitude = 2000,
                               speed = Speed(55),
                               sulphur = 400))$V1[1],
-               EmissionFactors(16))
+               EmissionFactors(6)) # diesel light NOx altitude factor 1.35
 })
 
 

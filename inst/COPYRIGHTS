@@ -1,0 +1,98 @@
+vein: copyright and licence information
+=======================================
+
+vein is distributed under the MIT licence (see the files LICENSE and
+DESCRIPTION), with the exception of the components listed below.
+
+
+1. HBEFA-based emission models ported from Eclipse SUMO
+-------------------------------------------------------
+
+Files / objects:
+  - R/ef_hbefa.R (functions hbefa_classes(), emis_hbefa(), ef_hbefa(),
+    ef_hbefa_cycle() and their internal helpers)
+  - the coefficient table sysdata$hbefa stored in R/sysdata.rda
+    (built from the SUMO source code by
+     buildvein/hbefa/parse_sumo.py and buildvein/hbefa/build_hbefa.R)
+
+These are an R translation of the formulas and a copy of the coefficient
+tables of Eclipse SUMO, files src/utils/emissions/HelpersHBEFA.h,
+HelpersHBEFA.cpp, HelpersHBEFA3.h, HelpersHBEFA3.cpp, HelpersHBEFA4.h,
+HelpersHBEFA4.cpp and PollutantsInterface.cpp, at commit
+25bdc3b9f7b1ee05e9dda40f3b8f6266736f005b (2026-10-07):
+  https://github.com/eclipse-sumo/sumo/tree/25bdc3b9f7b1ee05e9dda40f3b8f6266736f005b/src/utils/emissions
+
+Original copyright and licence notice (verbatim from the SUMO files):
+
+  // Eclipse SUMO, Simulation of Urban MObility; see https://eclipse.dev/sumo
+  // Copyright (C) 2001-2026 German Aerospace Center (DLR) and others.
+  // This program and the accompanying materials are made available under the
+  // terms of the Eclipse Public License 2.0 which is available at
+  // https://www.eclipse.org/legal/epl-2.0/
+  // This Source Code may also be made available under the following Secondary
+  // Licenses when the conditions for such availability set forth in the Eclipse
+  // Public License 2.0 are satisfied: GNU General Public License, version 2
+  // or later which is available at
+  // https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
+  // SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+
+(PollutantsInterface.cpp: "Copyright (C) 2013-2026 German Aerospace Center
+(DLR) and others", same licence.)
+
+Authors of the SUMO files: Daniel Krajzewicz, Jakob Erdmann, Michael Behrisch
+(German Aerospace Center, DLR). HBEFA4 coefficients fitted by Peter Wagner
+(DLR) and converted by tools/emissions/hbefa2sumo.py (Michael Behrisch).
+
+Consequently R/ef_hbefa.R and sysdata$hbefa are distributed under the
+Eclipse Public License 2.0 OR the GNU General Public License version 2 or
+later (SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later), not under MIT.
+The R port was written by the vein authors (2026) and is made available under
+the same terms.
+
+Licence texts:
+  EPL-2.0: https://www.eclipse.org/legal/epl-2.0/
+  GPL-2.0: https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
+
+Changes with respect to the SUMO code: translation from C++ to R; pollutant
+names mapped to vein names (fuel -> FC, PMx -> PM, electricity -> EC);
+outputs converted from mg/s to g/s with 'units'; added functions for
+constant-speed (cruise) and driving-cycle emission factors in g/km.
+
+
+2. Origin of the HBEFA coefficients
+-----------------------------------
+
+The coefficients are continuous reformulations (polynomial fits made by DLR)
+of the Handbook Emission Factors for Road Transport (HBEFA) versions 2.1, 3.1
+and 4.2. HBEFA is developed on behalf of the environmental agencies of
+Germany, Switzerland, Austria, Sweden, Norway and France and coordinated by
+INFRAS (Bern, Switzerland), https://www.hbefa.net/ , hbefa@infras.ch.
+
+SUMO describes the models as (https://sumo.dlr.de/docs/Models/Emissions.html):
+  "HBEFA v2.1-based: A continuous reformulation of the HBEFA v2.1 emissions
+   data base (open source); HBEFA v3.1-based: A continuous reformulation of
+   the HBEFA v3.1 emissions data base (open source); HBEFA v4.2-based: A
+   continuous reformulation of the HBEFA v4.2 emissions data base
+   (open source)"
+and SUMO's NOTICE.md does not list HBEFA as third-party content, i.e. the
+tables are distributed as part of SUMO under EPL-2.0 OR GPL-2.0-or-later.
+No statement about an agreement with INFRAS regarding the redistribution of
+these fits was found in the SUMO repository or documentation.
+
+HBEFA itself is licensed by INFRAS (https://www.hbefa.net/en/software#licensing):
+  "A simple use license is required for own (internal) use. [...]
+   Commercial use: A commercial license for the Handbook of Emission Factors
+   awards the right to reproduce contents of the Handbook and to integrate
+   them in third-party products (software tools)."
+vein does not contain HBEFA data tables or software; it contains only the
+SUMO fits described above. Users needing the original HBEFA emission factors
+(traffic situations, cold starts, etc.) must obtain HBEFA from INFRAS.
+
+References:
+  Krajzewicz, D., Behrisch, M., Wagner, P., Luz, R., Krumnow, M. (2015).
+  Second Generation of Pollutant Emission Models for SUMO. In: Behrisch, M.,
+  Weber, M. (eds) Modeling Mobility with Open Data. Lecture Notes in
+  Mobility. Springer, Cham. https://doi.org/10.1007/978-3-319-15024-6_12
+  SUMO documentation: https://sumo.dlr.de/docs/Models/Emissions/HBEFA4-based.html,
+  https://sumo.dlr.de/docs/Models/Emissions/HBEFA3-based.html,
+  https://sumo.dlr.de/docs/Models/Emissions/HBEFA-based.html

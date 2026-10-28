@@ -23,7 +23,7 @@ for (kk in seq_along(gs)) {
     # mol/km^2/h
     x[[pol[i]]] <- x[[pol[i]]] /
       mw[i] /
-      units::set_units(dmonth(year_selected, kk) / 24, "h")
+      units::set_units(dmonth(year_selected, kk) * 24, "h")
   }
 
   # voc
@@ -34,7 +34,7 @@ for (kk in seq_along(gs)) {
   for (i in seq_along(ny)) {
     # mol/km^2/s
     y[[ny[i]]] <- y[[ny[i]]] /
-      units::set_units(dmonth(year_selected, kk) / 24 / 3600, "s")
+      units::set_units(dmonth(year_selected, kk) * 24 * 3600, "s")
     # molec/km^2/s
     y[[ny[i]]] <- y[[ny[i]]] * units::set_units(6.022e23, "molec/mol")
 

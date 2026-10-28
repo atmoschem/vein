@@ -14,6 +14,13 @@ df$pollutant <- ifelse(df$pollutant == "PM2.5", "PM", df$pollutant)
 df$emissions <- units::set_units(df$emissions, "g")
 df$t <- units::set_units(df$emissions, "t")
 
+evs <- unique(df[grepl("^Evaporatives", type_emi)]$type_emi)
+if (length(evs) > 1) {
+  warning("evaporatives for ", length(evs), " temperature scenarios (",
+          paste(evs, collapse = ", "), "): totals by pollutant add them ",
+          "together; set `evap_scenario` in main.R")
+}
+
 # datatable ####
 suppressWarnings(file.remove("post/emi_table.rds"))
 switch(language,

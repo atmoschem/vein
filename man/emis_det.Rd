@@ -17,21 +17,28 @@ emis_det(
 \arguments{
 \item{po}{Character; Pollutant "CO", "NOx" or "HC"}
 
-\item{cc}{Character; Size of engine in cc covering "<=1400", "1400_2000" or ">2000"}
+\item{cc}{Character; Size of engine in cc covering "<=1400", "1400_2000" or
+">2000". If numeric, cc <= 1400 is "<=1400", 1400 < cc <= 2000 is
+"1400_2000" and cc > 2000 is ">2000".}
 
-\item{eu}{Character; Euro standard:  "I", "II", "III", "III", "IV", "V", "VI", "VIc"}
+\item{eu}{Character; Euro standard: "PRE", "I", "II", "III", "IV", "V",
+"VI", "VIc", "VId" or "VII". It can be a data.frame (rows of streets,
+columns of ages).}
 
-\item{speed}{Numeric; Speed to return Number of emission factor and not a function.
-It needs units in km/h}
+\item{speed}{Speed in km/h (class "Speed" or "units"). Default 18.9 km/h,
+which gives the urban curve.}
 
-\item{km}{Numeric; accumulated mileage in km.}
+\item{km}{Accumulated mileage with class "units" (e.g. km), one value per
+age (per element of \code{eu}, or per column when \code{eu} is a data.frame).}
 
 \item{verbose}{Logical; To show more information}
 
 \item{show.equation}{Option to see or not the equation parameters}
 }
 \value{
-It returns a numeric vector representing the increase in emissions due to normal deterioring
+A dimensionless multiplier (>= 1) for each element of \code{km},
+i.e. one value per age. With more than one speed the result is a
+data.frame with one column per age and a column speed.
 }
 \description{
 \code{\link{emis_det}} returns deterioration factors. The emission
@@ -41,11 +48,20 @@ https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 This function subset an internal database of emission factors with each argument
 }
 \note{
-The deterioration factors functions are available for technologies
-euro "II", "III" and "IV". In order to cover all euro technologies, this
-function assumes that the deterioration function of "III" and "IV" applies
-for "V", "VI" and "VIc". However, as these technologies are relative
-new,  accumulated milage is low and hence, deteerioration factors small.
+The deterioration functions of the guidebook cover petrol catalyst
+passenger cars (and are commonly used for petrol light commercial
+vehicles). Pre-Euro vehicles return 1. They should not be applied to
+diesel vehicles, motorcycles or heavy-duty vehicles.
+
+The guidebook gives functions for Euro I to IV; "V", "VI", "VIc", "VId"
+and "VII" use the functions of "III"/"IV".
+
+\strong{How to apply them}: the result has one value per age, and the
+vehicle data.frame has one row per street and one column per age. Multiply
+column by column, e.g. \code{sweep(veh, 2, det, "*")}. \code{veh * det}
+recycles the factors down the rows (streets) and is wrong. Apply them only
+to the pollutants they belong to (CO, HC/NMHC, NOx and NO/NO2), without
+overwriting \code{veh} inside a loop over pollutants.
 }
 \examples{
 \dontrun{
@@ -56,9 +72,6 @@ km <- units::set_units(pckma[1:11], km)
 emis_det(po = "CO", cc = "<=1400", eu = "III", km = km[5], show.equation = TRUE)
 # length eu = length km = 1, length speed > 1
 emis_det(po = "CO", cc = "<=1400", eu = "III", km = km[5], speed = Speed(1:10))
-# length km != length eu error
-# (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(30),
-# km = km[4]))
 # length eu = 1 length km > 1
 emis_det(po = "CO", cc = "<=1400", eu = "III", km = km)
 # length eu = 2, length km = 2 (if different length, error!)
@@ -67,15 +80,18 @@ emis_det(po = "CO", cc = "<=1400", eu = "III", km = km)
 (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = c("III", "IV"), speed = Speed(0:130),
 km = km[4:5]))
 euros <- c("V","V","V", "IV", "IV", "IV", "III", "III", "III", "III")
-# length eu = 2, length km = 2, length speed > 1
 (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, speed = Speed(1:100),
 km = km[1:10]))
-cod1 <- as.matrix(cod1[, 1:11])
+cod1 <- as.matrix(cod1[, 1:10])
 filled.contour(cod1, col = cptcity::cpt(6277, n = 20))
-filled.contour(cod1, col = cptcity::lucky(n = 19))
 euro <- c(rep("V", 5), rep("IV", 5), "III")
 euros <- rbind(euro, euro)
 (cod1 <- emis_det(po = "CO", cc = "<=1400", eu = euros, km = km))
+
+# applying the factors to vehicles by age
+veh <- age_veh(x = c(100, 200), agemax = 11)
+det <- emis_det(po = "CO", cc = "<=1400", eu = euro, km = km)
+veh_det <- sweep(remove_units(veh), 2, det, "*")
 }
 }
 \keyword{deterioration}

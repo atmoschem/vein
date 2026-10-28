@@ -26,20 +26,40 @@
 #' 1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
 #' 2. If you know the sales of vehicles, or the registry of new vehicles,
 #' use \code{\link{age}} to apply a survival function.
-#' 3. If you know the theoretical shape of the circulating fleet and you can use
-#' \code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
-#' you dont know the sales or registry of vehicles, but somehow you know
-#' the shape of this curve.
+#' 3. If you know the theoretical shape of the circulating fleet use
+#' \code{\link{age_veh}} (\code{\link{age_ldv}}, \code{\link{age_hdv}} and
+#' \code{\link{age_moto}} are deprecated wrappers of \code{\link{age_veh}}).
+#' For instance, you dont know the sales or registry of vehicles, but somehow
+#' you know the shape of this curve.
 #' 4. You can use/merge/transform/adapt any of these functions.
+#'
+#' The shape is built from a survival curve S(t), evaluated at the ages
+#' \code{agemin:agemax}: for type "ldv" a Gompertz curve
+#' S(t) = 1 - exp(-exp(a + b*t)) (defaults a = 1.698, b = -0.2, from the
+#' 1st Brazilian national GHG inventory, MCT 2006) and for "hdv" and "mc" a
+#' double logistic curve S(t) = 1/(1 + exp(a*(t + b))) + 1/(1 + exp(a*(t - b)))
+#' (defaults a = 0.2, b = 17).
+#' The fraction of vehicles at each age is NOT S(t) but the decrease of
+#' survival between consecutive ages, d(t) = S(t) - S(t + 1)
+#' (i.e. \code{-diff(S)}); the last age repeats the value of the previous one.
+#' Because sum(d) is usually lower than 1, the remainder (1 - sum(d)) is added
+#' in equal parts to every age (or subtracted, when negative), so that the
+#' distribution sums 1 and the total number of vehicles x*k is preserved.
+#' Hence, when \code{agemax} is small (i.e. the survival curve is truncated
+#' well before it reaches zero), most of the fleet is spread uniformly among
+#' the ages. With the default parameters, the "ldv" distribution peaks around
+#' age 8 and the "hdv"/"mc" distribution around age 16.
+#' Ages lower than \code{agemin} are filled with zero. The factor \code{k}
+#' is applied once.
 #' @export
-#' @note It consists in a Gompertz equation with default parameters from
-#' 1 national emissions inventory for green housegases in Brazil, MCT 2006
 #' @examples \dontrun{
 #' data(net)
-#' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
+#' PC_E25_1400 <- age_veh(x = net$ldv, name = "PC_E25_1400")
 #' plot(PC_E25_1400)
-#' PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
+#' PC_E25_1400 <- age_veh(x = net$ldv, name = "PC_E25_1400", net = net)
 #' plot(PC_E25_1400)
+#' LT_B5 <- age_veh(x = net$hdv, type = "hdv", name = "LT_B5")
+#' plot(LT_B5)
 #' }
 age_veh <- function (x,
                      type = "ldv",
@@ -62,51 +82,46 @@ age_veh <- function (x,
   x <- as.numeric(x)
 
   # length k
-  if(length(k)  > 1 & length(k) < length(x)){
-    stop("length of 'k' must be 1 ore equal to length of 'x'")
+  if(length(k) != 1 && length(k) != length(x)){
+    stop("length of 'k' must be 1 or equal to length of 'x'")
   }
+  k <- as.numeric(k)
 
   #check agemax
-  if(agemax < 1) stop("Agemax should be bigger than 1")
+  if(agemax < 1) stop("'agemax' must be >= 1")
+  if(agemin < 1) stop("'agemin' must be >= 1")
+  if(agemin > agemax) stop("'agemin' must be <= 'agemax'")
 
+  # distribution by age from a survival curve
+  # -diff(S) and the remainder distributed uniformly so that sum is 1
+  dist_age <- function(fx, anos) {
+    if(length(anos) == 1) return(1)
+    d <- (-1)*diff(fx(anos))
+    d[length(d)+1] <- d[length(d)]
+    d + (1 - sum(d))/length(d)
+  }
+
+  anos <- seq(agemin, agemax)
 
   #bystreet = TRUE
   if (bystreet == T){
     if(length(x) != length(a)){
       stop("Lengths of veh and age must be the same")
     }
-
-    # functions
-    if(type == "ldv") {
-      fx <- function (t) {1 - exp(-exp(a[i] + b[i]*t))}
-    } else {
-      fx <- function (t) {1/(1 + exp(a[i]*(t+b[i])))+1/(1 + exp(a[i]*(t-b[i])))}
+    if(length(b) == 1) b <- rep(b, length(x))
+    if(length(x) != length(b)){
+      stop("length of 'b' must be 1 or equal to length of 'x'")
     }
 
-
-    d <- suca <- list()
-    for (i in seq_along(x)) {
-      suca[[i]] <- fx
-      anos <- seq(agemin,agemax)
-      d[[i]] <- (-1)*diff(suca[[i]](anos))
-      d[[i]][length(d[[i]])+1] <- d[[i]][length(d[[i]])]
-      d[[i]] <- d[[i]] + (1 - sum(d[[i]]))/length(d[[i]])
-      d[[i]] <- d[[i]]*x[i]
-    }
-    df <- as.data.frame(matrix(0,ncol=length(anos), nrow=1))
-    for (i in seq_along(x)) {
-      df[i,] <- d[[i]]
-    }
-
-    df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
-                                                   nrow=length(x))),
-                              df))
-
-    names(df) <- paste(name,seq(1,agemax),sep="_")
-
-    df <- df*k
-
-
+    d <- lapply(seq_along(x), function(i) {
+      if(type == "ldv") {
+        fx <- function (t) {1 - exp(-exp(a[i] + b[i]*t))}
+      } else {
+        fx <- function (t) {1/(1 + exp(a[i]*(t+b[i])))+1/(1 + exp(a[i]*(t-b[i])))}
+      }
+      dist_age(fx, anos)*x[i]
+    })
+    df <- as.data.frame(do.call("rbind", d))
 
     #bystreet = FALSE
   } else {
@@ -117,22 +132,18 @@ age_veh <- function (x,
       fx <- function (t) {1/(1 + exp(a*(t+b)))+1/(1 + exp(a*(t-b)))}
     }
 
-    suca <- fx
-    anos <- seq(agemin,agemax)
-    d <- (-1)*diff(suca(anos))
-    d[length(d)+1] <- d[length(d)]
-    d <- d + (1 - sum(d))/length(d)
+    d <- dist_age(fx, anos)
     df <- as.data.frame(as.matrix(x) %*%matrix(d,ncol=length(anos), nrow=1))
-
-    df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
-                                                   nrow=length(x))),
-                              df))
-
-    names(df) <- paste(name,seq(1,agemax),sep="_")
-
-    df <- df*k
-
   }
+
+  df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
+                                                 nrow=length(x))),
+                            df))
+
+  names(df) <- paste(name,seq(1,agemax),sep="_")
+
+  # k is applied only once
+  df <- df*k
 
   if(verbose){
     message(paste("Average age of",name, "is",
@@ -150,20 +161,17 @@ age_veh <- function (x,
     row.names(df) <- namerows
   }
 
+  if(!missing(time)){
+    veh <- Vehicles(df, time = time)
+  } else {
+    veh <- Vehicles(df)
+  }
+
   if(!missing(net)){
     netsf <- sf::st_as_sf(net)
-    if(!missing(time)){
-      dfsf <- sf::st_sf(Vehicles(df*k, time = time), geometry = sf::st_geometry(netsf))
-    } else {
-      dfsf <- sf::st_sf(Vehicles(df*k), geometry = sf::st_geometry(netsf))
-    }
-    return(dfsf)
+    return(sf::st_sf(veh, geometry = sf::st_geometry(netsf)))
   } else {
-    if(!missing(time)){
-      return(Vehicles(df*k, time = time))
-    } else {
-      return(Vehicles(df*k))
-    }
+    return(veh)
   }
 
 }

@@ -20,12 +20,14 @@
 #' "Pb", Lead in fuel in ppm.
 #' @param k Multiplication factor
 #' @param show.equation Option to see or not the equation parameters
-#' @param speed Numeric; Speed to return Number of emission factor and not a function.
-#' It needs units in km/h
+#' @param speed Speed in km/h with class "Speed" or "units", to return the
+#' emission factor at that speed instead of a function.
 #' @param fcorr Numeric; Correction by fuel properties by euro technology.
 #' See \code{\link{fuel_corr}}. The order from first to last is
-#' "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1
-#' @return an emission factor function which depends of the average speed V  g/km
+#' "PRE", "I", "II", "III", "IV", "V", "VI" and any later standard. Default is 1
+#' @return an emission factor function which depends of the average speed V  g/km.
+#' The speed is limited to the validity range of the equation and negative
+#' values are set to 0.
 #' @keywords speed emission factors
 #' @note
 #' \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
@@ -94,6 +96,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
                          show.equation = FALSE, speed, fcorr = rep(1, 8)){
   p_cri <- as.character(unique(sysdata$hdv_criteria$POLLUTANT))
   p_ghg <- as.character(unique(sysdata$hdv_ghg$POLLUTANT))
+  xx <- if (missing(x)) NULL else x
 
   #Check eu
   if(is.matrix(eu) | is.data.frame(eu)){
@@ -107,107 +110,49 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
     ef_hdv <- sysdata$hdv_criteria
   } else if(p %in% p_ghg){
     ef_hdv <- sysdata$hdv_ghg
+  } else {
+    stop("Pollutant '", p, "' not available. Use one of: ",
+         paste(unique(c(p_cri, p_ghg)), collapse = ", "))
   }
   # Check speed
   if(!missing(speed)){
-    if(!inherits(speed, "units")){
-      stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
-    }
-    if(units(speed) != units(units::as_units("km/h"))){
-      stop("Units of speed must be 'km/h' ")
-    }
-    if(units(speed) == units(units::as_units("km/h"))){
-      speed <- as.numeric(speed)
-    }
+    speed <- .speed_kmh(speed)
+    if (is.data.frame(speed)) stop("'speed' must be a vector")
   }
-  #Function to case when
-  lala <- function(x) {
-    ifelse(x == "PRE", fcorr[1],
-           ifelse(
-             x == "I", fcorr[2],
-             ifelse(
-               x == "II", fcorr[3],
-               ifelse(
-                 x == "III", fcorr[4],
-                 ifelse(
-                   x == "IV", fcorr[5],
-                   ifelse(
-                     x == "V", fcorr[6],
-                     ifelse(
-                       x == "VI", fcorr[7],
-                       fcorr[8])))))))
+
+  # EF function for one euro standard
+  fun_eu <- function(e) {
+    what <- paste(v, t, g, e, "gr =", gr, "l =", l, p)
+    df <- .ef_row(ef_hdv,
+                  list(VEH = v, TYPE = t, GW = g, EURO = e, GRA = gr,
+                       LOAD = l, POLLUTANT = p),
+                  what)
+    .ef_speed_fun(df, k = k, k2 = .fcorr_k2(e, fcorr), x = xx, what = what)
   }
 
   # fun starts
   if(!is.data.frame(eu)){
     if(length(eu) == 1){
-      df <- ef_hdv[ef_hdv$VEH == v &
-                     ef_hdv$TYPE == t &
-                     ef_hdv$GW == g &
-                     ef_hdv$EURO == eu &
-                     ef_hdv$GRA == gr &
-                     ef_hdv$LOAD == l &
-                     ef_hdv$POLLUTANT == p, ]
-      k2 <- lala(eu)
-
+      f1 <- fun_eu(eu)
       if (show.equation == TRUE) {
+        df <- .ef_row(ef_hdv,
+                      list(VEH = v, TYPE = t, GW = g, EURO = eu, GRA = gr,
+                           LOAD = l, POLLUTANT = p),
+                      p)
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
                    ", e = ", df$e, ", f = ", df$f, "\n"))
-        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "*", k2, "\n"))
-      }
-      if(p %in% c("SO2","Pb")){
-        f1 <- function(V){
-          a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
-          V <- ifelse(V < df$MINV, df$MINV,
-                      ifelse(V > df$MAXV, df$MAXV, V))
-          eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
-        }
-      } else {
-        f1 <- function(V){
-          a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
-          V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-          eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
-        }
+        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "*",
+                   .fcorr_k2(eu, fcorr), "\n"))
       }
       if(!missing(speed)){
-          f1 <- EmissionFactors(f1(speed))
-        return(f1)
+        return(EmissionFactors(f1(speed)))
       } else {
         return(f1)
       }
 
     } else if(length(eu) > 1) {
       if(missing(speed)) stop("if length(eu) > 1, 'speed' is needed")
-      dff <- do.call("cbind", lapply(1:length(eu), function(i){
-        df <- ef_hdv[ef_hdv$VEH == v &
-                       ef_hdv$TYPE == t &
-                       ef_hdv$GW == g &
-                       ef_hdv$EURO == eu[i] &
-                       ef_hdv$GRA == gr &
-                       ef_hdv$LOAD == l &
-                       ef_hdv$POLLUTANT == p, ]
-        k2 <- lala(eu[i])
-
-        if(p %in% c("SO2","Pb")){
-          f1 <- function(V){
-            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
-            V <- ifelse(V < df$MINV, df$MINV,
-                        ifelse(V > df$MAXV, df$MAXV, V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                   0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) )
-          }
-        } else {
-          f1 <- function(V){
-            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
-            V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                   0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
-          }
-        }
-        f1(speed)
-      }))
+      dff <- do.call("cbind", lapply(eu, function(e) fun_eu(e)(speed)))
       dff <- EmissionFactors(dff)
       names(dff) <- paste0(eu, "_", 1:length(eu))
       dff$speed <- speed
@@ -218,35 +163,7 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
     if(missing(speed)) stop("Add 'speed' please for each row")
     dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
       do.call("cbind", lapply(1:ncol(eu), function(i){
-
-        df <- ef_hdv[ef_hdv$VEH == v &
-                       ef_hdv$TYPE == t &
-                       ef_hdv$GW == g &
-                       ef_hdv$EURO == eu[j,i][[1]] &
-                       ef_hdv$GRA == gr &
-                       ef_hdv$LOAD == l &
-                       ef_hdv$POLLUTANT == p, ]
-        k2 <- lala(eu[j,i][[1]])
-
-        if(p %in% c("SO2","Pb")){
-          f1 <- function(V){
-            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f; x <- x
-            V <- ifelse(V < df$MINV, df$MINV,
-                        ifelse(V > df$MAXV, df$MAXV, V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                   0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) )
-          }
-        } else {
-          f1 <- function(V){
-            a <- df$a; b <- df$b; c <- df$c; d <- df$d; e <- df$e; f <- df$f
-            V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                   0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
-          }
-        }
-        f1(speed)
+        fun_eu(eu[j,i][[1]])(speed)
       }))
     }))
     dff <- EmissionFactors(dff)
@@ -254,8 +171,4 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
     dff$row_eu <- rep(1:nrow(eu), each = length(speed))
     return(dff)
   }
-
-
-
 }
-

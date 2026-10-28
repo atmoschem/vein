@@ -7,9 +7,6 @@ switch(language,
 )
 
 net <- st_transform(net, crs)
-# A composição veicular da CETESB tem 28 tipos de categories
-# Em teoría, poderiamos ter 28 fluxos ou mais na rede net
-
 # The number of traffic flow vehicles can be the same from vehicular composition
 #
 categories <- metadata$vehicles

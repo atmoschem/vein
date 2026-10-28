@@ -19,9 +19,11 @@ emis_hot_td(
 \item{veh}{"Vehicles" data-frame or spatial feature, where columns are the
 age distribution of that vehicle. and rows each simple feature or region.}
 
-\item{lkm}{Numeric; mileage by the age of use of each vehicle.}
+\item{lkm}{Numeric; mileage by the age of use of each vehicle, with units of
+length (converted to km).}
 
-\item{ef}{Numeric or data.frame; emission factors. When it is a data.frame
+\item{ef}{Numeric or data.frame; emission factors with units (converted to
+'g/km', e.g. 'mg/km' is divided by 1000). When it is a data.frame
 number of rows can be for each region, or also, each region repeated
 along 12 months. For instance, if you have 10 regions the number
 of rows of ef can also be 120 (10 * 120).
@@ -29,7 +31,7 @@ when you have emission factors that varies with month, see \code{\link{ef_china}
 
 \item{pro_month}{Numeric or data.frame; monthly profile to distribute annual mileage
 in each month. When it is a data.frame, each region (row) can have a different
-monthly profile.}
+monthly profile. A data.frame with one row is applied to all rows of `veh`.}
 
 \item{params}{List of parameters; Add columns with information to returning data.frame}
 

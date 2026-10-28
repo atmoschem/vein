@@ -35,14 +35,14 @@ test_that("emis_hot_td works", {
                                  lkm = lkm,
                                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
                                  verbose = TRUE)$emissions[1]),
-               Emissions(395))
+               Emissions(396))
 
   expect_equal(round(emis_hot_td(veh = veh,
                                  lkm = lkm,
                                  ef = EmissionFactors(as.numeric(efh[, 1:8])),
                                  verbose = TRUE,
                                  fortran = TRUE)$emissions[1]),
-               Emissions(395))
+               Emissions(396))
 
   expect_equal(round(emis_hot_td(veh = veh,
                                  lkm = lkm,
@@ -50,7 +50,7 @@ test_that("emis_hot_td works", {
                                  verbose = TRUE,
                                  params = list(paste0("data_", 1:10),
                                                "moredata"))$emissions[1]),
-               Emissions(395))
+               Emissions(396))
 
   expect_message(round(emis_hot_td(veh = veh,
                                    lkm = lkm,
@@ -282,12 +282,15 @@ test_that("emis_hot_td works", {
                                  verbose = TRUE)$emissions[1]),
                ".?")
 
-  expect_error(round(emis_hot_td(veh = veh[1, ],
-                                 lkm = lkm,
-                                 ef = EmissionFactors(cbind(efm, efm)),
-                                 pro_month = veh_month,
-                                 verbose = TRUE)$emissions[1]),
-               ".?")
+  # extra columns of a one-row ef are ignored, as with multi-row ef
+  expect_equal(emis_hot_td(veh = veh[1, ],
+                           lkm = lkm,
+                           ef = EmissionFactors(cbind(efm, efm)),
+                           pro_month = veh_month)$emissions,
+               emis_hot_td(veh = veh[1, ],
+                           lkm = lkm,
+                           ef = EmissionFactors(efm),
+                           pro_month = veh_month)$emissions)
 
   expect_error(round(emis_hot_td(veh = veh[1, ],
                                  lkm = c(lkm,lkm),

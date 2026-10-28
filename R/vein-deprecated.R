@@ -27,7 +27,7 @@ long_to_wide <- function(...) {
 #' @rdname vein-deprecated
 #' @export
 wide_to_long <- function(...) {
-  .Deprecated("melt::dcast.data.table")
+  .Deprecated("data.table::melt.data.table")
   "Use data.table::melt.data.table"
 }
 
@@ -72,6 +72,6 @@ Evaporative <- function() {
 #' @rdname vein-deprecated
 #' @export
 inventory <- function(...) {
-  .Deprecated("")
+  .Deprecated("get_project")
   "inventory"
 }

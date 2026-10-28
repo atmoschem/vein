@@ -155,8 +155,8 @@ for (i in seq_along(veh_ev)) {
                 x_DF <- emis_post(
                         arra = array_x,
                         veh = veh_ev[i],
-                        size = metadata$size[i],
-                        fuel = metadata$fuel[i],
+                        size = meta_ev$size[i], # i indexes veh_ev / meta_ev
+                        fuel = meta_ev$fuel[i],
                         pollutant = "NMHC",
                         type_emi = "Evaporative",
                         by = "veh"
@@ -167,7 +167,7 @@ for (i in seq_along(veh_ev)) {
                 
                 x_STREETS <- emis_post(
                         arra = array_x,
-                        pollutant = veh_ev[j],
+                        pollutant = "NMHC",
                         by = "streets"
                 )
                 saveRDS(x_STREETS,
@@ -232,8 +232,8 @@ for (i in seq_along(veh_ev)) {
                 x_DF <- emis_post(
                         arra = array_x,
                         veh = veh_ev[i],
-                        size = metadata$size[i],
-                        fuel = metadata$fuel[i],
+                        size = meta_ev$size[i], # i indexes veh_ev / meta_ev
+                        fuel = meta_ev$fuel[i],
                         pollutant = "NMHC",
                         type_emi = "Evaporative",
                         by = "veh"
@@ -244,7 +244,7 @@ for (i in seq_along(veh_ev)) {
                 
                 x_STREETS <- emis_post(
                         arra = array_x,
-                        pollutant = veh_ev[j],
+                        pollutant = "NMHC",
                         by = "streets"
                 )
                 saveRDS(x_STREETS,
@@ -307,8 +307,8 @@ for (i in seq_along(veh_ev)) {
                 x_DF <- emis_post(
                         arra = array_x,
                         veh = veh_ev[i],
-                        size = metadata$size[i],
-                        fuel = metadata$fuel[i],
+                        size = meta_ev$size[i], # i indexes veh_ev / meta_ev
+                        fuel = meta_ev$fuel[i],
                         pollutant = "NMHC",
                         type_emi = "Evaporative",
                         by = "veh"
@@ -319,7 +319,7 @@ for (i in seq_along(veh_ev)) {
                 
                 x_STREETS <- emis_post(
                         arra = array_x,
-                        pollutant = veh_ev[j],
+                        pollutant = "NMHC",
                         by = "streets"
                 )
                 saveRDS(x_STREETS,

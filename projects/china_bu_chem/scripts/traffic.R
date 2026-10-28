@@ -73,6 +73,9 @@ if(survival){
 lx <- list()
 for (i in seq_along(metadata$vehicles)) {
   
+  # age distribution of this vehicle (after survival), as in china_bu_chem_realtime
+  xage <- veh[[metadata$vehicles[i]]]
+  
   x <- my_age(
     x = net[[metadata$vehicles[i]]],
     y = xage, 

@@ -5,7 +5,7 @@
 \alias{fe2015}
 \title{Emission factors from Environmental Agency of Sao Paulo CETESB}
 \format{
-A data frame with 288 rows and 12 variables:
+A data frame with 288 rows and 10 variables:
 \describe{
   \item{Age}{Age of use}
   \item{Year}{Year of emission factor}

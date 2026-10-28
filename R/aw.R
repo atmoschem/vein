@@ -71,7 +71,6 @@ aw <- function(pc, lcv, hgv, bus, mc,
   if(!missing(net)) {
     net <- sf::st_as_sf(net)
     W <- sf::st_sf(W, geometry = sf::st_geometry(net))
-  } else {
-    return(W)
   }
+  return(W)
 }

@@ -1,5 +1,10 @@
 suppressWarnings(file.remove("emi/wear.csv"))
 
+if (is.null(metadata$speed)) {
+  stop("metadata has no column `speed` (mean speed by vehicle, km/h), needed by ",
+       "ef_wear(): add it to sheet 'metadata' of the inventory xlsx")
+}
+
 year_select  <- as.numeric(substr(x = getwd(), 
                                   start = nchar(getwd()) - 3, 
                                   stop = nchar(getwd()) ))

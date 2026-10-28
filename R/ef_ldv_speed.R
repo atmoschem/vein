@@ -1,49 +1,69 @@
 #' Emissions factors for Light Duty Vehicles and Motorcycles
 #'
 #' \code{\link{ef_ldv_speed}} returns speed dependent emission factors, data.frames or
-#' list of emission factors. The emission factors
-#'  comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
+#' list of emission factors. The hot emission factors come from the
+#' EMEP/EEA air pollutant emission inventory guidebook 2023 - update 2026,
+#' chapter 1.A.3.b.i-iv, Appendix 4 (July 2026)
 #' https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 #'
 #' The argument of this functions have several options which results in
-#' different combinations that returns emission factors. If a combination of
-#' any option is wrong it will return an empty value. Therefore, it is
-#' important ti know the combinations.
-#'
+#' different combinations that returns emission factors. If a combination is
+#' not available the function stops with an error that shows the combination.
 #'
 #' @param v Character; category vehicle: "PC", "LCV", "Motorcycle" or "Moped
-#' @param t Character; sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
-#' "ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
-#' "2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"
-#' @param cc Character; size of engine in cc:  PC: "<=1400", ">1400", "1400_2000", ">2000",
-#' "<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
-#' Moped: "<=50". LCV :  "<3.5" for gross weight.
-#' @param f Character; type of fuel: "G", "D", "LPG" or "FH" (Gasoline Full Hybrid).
-#' Full hybrid vehicles cannot be charged from the grid and recharge; only its own engine
-#' may recharge tis batteries.
+#' @param t Character; sub-category of of vehicle.
+#' PC petrol: "4S" (port fuel injection from Euro 3), "GDI" (gasoline direct
+#' injection, Euro 3 and later), "GDI_GPF" (GDI with particle filter, "VIc"
+#' and later), "2S" (2-stroke, only conventional technology exists) and the
+#' pre-Euro sub-technologies "ECE_1501", "ECE_1502", "ECE_1503", "ECE_1504",
+#' "IMPROVED_CONVENTIONAL", "OPEN_LOOP" (with eu = "PRE").
+#' PC diesel: "4S" (Euro 3 to 5 with DPF, Euro 6 and later DPF+SCR),
+#' "DPF_SWU" (Euro 5 with software update), "DPF", "LNT_DPF", "DPF_SCR"
+#' (Euro 6 and later). LCV: "4S". Motorcycle: "2S" or "4S". Moped: "2S" or "4S"
+#' @param cc Character; size of engine in cc: PC: "<=800" (Mini, Euro 4 and
+#' later), "<=1400" (Small), "1400_2000" (Medium), ">2000" (Large-SUV-Executive).
+#' Motorcycle: ">=50" (for "2S"), "<=250", "250_750", ">=750".
+#' Moped: "<=50". LCV: "<3.5" (equal to N1-III), "N1-I", "N1-II" or "N1-III".
+#' @param f Character; type of fuel: "G", "D", "LPG" (bifuel in LPG mode),
+#' "CNG" (bifuel in CNG mode, Euro 4 and later), "FH" (petrol full hybrid,
+#' Euro 4 and later), "PHEV_G" and "PHEV_D" (plug-in hybrids in fuel mode,
+#' Euro 6 and later). Full hybrid vehicles cannot be charged from the grid;
+#' only its own engine recharges the batteries.
 #' @param eu Character or data.frame of characters; euro standard:
-#'  "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
-#' When the pollutan is active surface or number of particles, eu can also be "III+DISI"
-#' @param p Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
-#' "CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
-#' polycyclic aromatic hydrocarbons (PAHs), persistent organi pollutants (POPs),
-#' and Number of particles and Active Surface.
+#'  "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" (Euro 6 a/b/c),
+#'  "VIc" (Euro 6 d-temp), "VId" (Euro 6 d/e) or "VII" (Euro 7).
+#'  Motorcycles and mopeds: "PRE" and "I" to "V".
+#' @param p Character; pollutant: "CO", "FC", "EC" (energy consumption, MJ/km),
+#' "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4", "CO2", "SO2", "Pb",
+#' "BC", "OM", "SPN23" (solid particle number > 23 nm, #/km, where available),
+#' "N2O" and "NH3" (L-category only), metals ("As", "Cd", "Cr", "Cu", "Hg",
+#' "Ni", "Se", "Zn"), NMHC species, polycyclic aromatic hydrocarbons (PAHs),
+#' persistent organic pollutants (POPs), number of particles and active surface.
+#' Only when p is "SO2" or "Pb" x is needed.
 #' @param x Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 #' "Pb", Lead in fuel in ppm.
 #' @param k Numeric; multiplication factor
-#' @param show.equation Logical; option to see or not the equation parameters.
-#' @param speed Numeric; Speed to return Number of emission factor and not a function.
+#' @param show.equation Logical; option to see or not the equation parameters
+#' and the EEA row used.
+#' @param speed Speed in km/h with class "Speed" or "units", to return the
+#' emission factor at that speed instead of a function.
 #' @param fcorr Numeric; Correction by fuel properties by euro technology.
 #' See \code{\link{fuel_corr}}. The order from first to last is
-#' "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1
+#' "PRE", "I", "II", "III", "IV", "V", "VI" and any later standard. Default is 1
 #' @return An emission factor function which depends of the average speed V  g/km
 #' @keywords speed emission factors
-#' @note t = "ALL" and cc == "ALL" works for several pollutants because emission
-#' fators are the same. Some exceptions are with NOx and FC because size of engine.
+#' @note Every path returns non-negative values: the speed is limited to the
+#' validity range of the equation and negative values are set to 0.
 #'
-#' \strong{Hybrid cars}: the only cover "PC" and according to EMEP/EEA air pollutant emission inventory
-#' guidebook 2016 (Ntziachristos and Samaras, 2016) only for euro IV. When new literature
-#' is available, I will update these factors.
+#' Emission factors given by EEA per driving mode (e.g. CH4 and PM of recent
+#' petrol cars) use Urban for V < 50 km/h, Rural for 50 <= V < 90 and Highway
+#' for V >= 90 km/h.
+#'
+#' FC comes from the energy consumption factors and the calorific values of
+#' Table 3-28 of the guidebook. CO2 = FC * 44.011 / (12.011 + 1.008 rH:C +
+#' 16 rO:C) with the ratios of Table 3-29, so CO2/FC is constant. NO2 and NO
+#' use the f-NO2 fractions of Table 3-87, with NO expressed as NO2-equivalent
+#' mass (NO = NOx * (1 - f-NO2)); use 46 g/mol for NO when converting to moles.
 #'
 #' \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 #' "Pb", "FC".
@@ -231,15 +251,7 @@ ef_ldv_speed <- function(
     "N_50_100nm_rural",
     "N_100_1000nm_highway"
   )
-
-  # try to solve error of negative values present in EEA guidelines
-  if (v == "LCV" && any(eu %in% "V")) {
-    warning(
-      "When `v` is 'LCV' and `eu` is 'V', I replaces `v` by 'PC' and `cc` by >'2000' see issue #204"
-    )
-    v <- "PC"
-    cc <- ">2000"
-  }
+  xx <- if (missing(x)) NULL else x
 
   #Check eu
   if (is.matrix(eu) | is.data.frame(eu)) {
@@ -253,45 +265,7 @@ ef_ldv_speed <- function(
 
   # Check speed
   if (!missing(speed)) {
-    if (!class(speed)[1] %in% c("units", "Speed")) {
-      stop(
-        "speed neeeds to has class 'Speed' or 'units' in 'km/h'. Please, check package '?units::set_units'"
-      )
-    }
-    speed <- remove_units(speed)
-  }
-
-  #Function to case when
-  lala <- function(x) {
-    ifelse(
-      x == "PRE",
-      fcorr[1],
-      ifelse(
-        x == "I",
-        fcorr[2],
-        ifelse(
-          x == "II",
-          fcorr[3],
-          ifelse(
-            x == "III",
-            fcorr[4],
-            ifelse(
-              x == "IV",
-              fcorr[5],
-              ifelse(
-                x == "V",
-                fcorr[6],
-                ifelse(
-                  x == "VI",
-                  fcorr[7],
-                  fcorr[8]
-                )
-              )
-            )
-          )
-        )
-      )
-    )
+    speed <- .speed_kmh(speed)
   }
 
   # Message for units
@@ -303,254 +277,69 @@ ef_ldv_speed <- function(
     }
   }
 
+  # EF function for one euro standard
+  fun_eu <- function(e) {
+    what <- paste(v, t, cc, f, e, p)
+    df <- .ef_row(ef_ldv,
+                  list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = e,
+                       POLLUTANT = p),
+                  what)
+    .ef_speed_fun(df, k = k, k2 = .fcorr_k2(e, fcorr), x = xx, what = what)
+  }
+
   # fun starts
   if (!is.data.frame(eu)) {
     if (length(eu) == 1) {
-      df <- ef_ldv[
-        ef_ldv$VEH == v &
-          ef_ldv$TYPE == t &
-          ef_ldv$CC == cc &
-          ef_ldv$FUEL == f &
-          ef_ldv$EURO == eu &
-          ef_ldv$POLLUTANT == p,
-      ]
-      k2 <- lala(eu)
-
+      f1 <- fun_eu(eu)
       if (show.equation == TRUE) {
+        df <- .ef_row(ef_ldv,
+                      list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = eu,
+                           POLLUTANT = p),
+                      paste(v, t, cc, f, eu, p))
         cat(paste0(
-          "a = ",
-          df$a,
-          ", b = ",
-          df$b,
-          ", c = ",
-          df$c,
-          ", d = ",
-          df$d,
-          ", e = ",
-          df$e,
-          ", f = ",
-          df$f,
-          "\n"
+          "a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
+          ", e = ", df$e, ", f = ", df$f, "\n"
         ))
         cat(paste0(
-          "Equation = ",
-          "(",
-          as.character(df$Y),
-          ")",
-          "*",
-          k,
-          "*",
-          k2,
-          "\n"
+          "Equation = (", as.character(df$Y), ")*", k, "*",
+          .fcorr_k2(eu, fcorr), "\n"
         ))
-      }
-      if (p %in% c("SO2", "Pb")) {
-        f1 <- function(V) {
-          a <- df$a
-          b <- df$b
-          c <- df$c
-          d <- df$d
-          e <- df$e
-          f <- df$f
-          x <- x
-          V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
-          eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k)))
-        }
-      } else {
-        f1 <- function(V) {
-          a <- df$a
-          b <- df$b
-          c <- df$c
-          d <- df$d
-          e <- df$e
-          f <- df$f
-          V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
-          eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k)))
-        }
+        if (!is.null(df$REF)) cat(paste0("Reference = ", df$REF, "\n"))
       }
 
       # check for speed as numeric or data.frame
       if (!missing(speed)) {
-        if (is.numeric(speed)) {
-          f1 <- EmissionFactors(f1(speed))
-          return(f1)
-        } else if (is.data.frame(speed)) {
-          f1 <- EmissionFactors(sapply(speed, f1))
-          return(f1)
+        if (is.data.frame(speed)) {
+          return(EmissionFactors(as.data.frame(lapply(speed, f1))))
         }
-      } else {
-        return(f1)
+        return(EmissionFactors(f1(speed)))
       }
+      return(f1)
     } else if (length(eu) > 1) {
+      lf <- lapply(eu, fun_eu)
       if (!missing(speed)) {
-        if (is.numeric(speed)) {
-          dff <- do.call(
-            "cbind",
-            lapply(1:length(eu), function(i) {
-              df <- ef_ldv[
-                ef_ldv$VEH == v &
-                  ef_ldv$TYPE == t &
-                  ef_ldv$CC == cc &
-                  ef_ldv$FUEL == f &
-                  ef_ldv$EURO == eu[i] &
-                  ef_ldv$POLLUTANT == p,
-              ]
-              k2 <- lala(eu[i])
-
-              if (p %in% c("SO2", "Pb")) {
-                f1 <- function(V) {
-                  a <- df$a
-                  b <- df$b
-                  c <- df$c
-                  d <- df$d
-                  e <- df$e
-                  f <- df$f
-                  x <- x
-                  V <- ifelse(
-                    V < df$MINV,
-                    df$MINV,
-                    ifelse(V > df$MAXV, df$MAXV, V)
-                  )
-                  ifelse(
-                    eval(parse(
-                      text = paste0(
-                        "(",
-                        as.character(df$Y),
-                        ")",
-                        "*",
-                        k,
-                        "*",
-                        k2
-                      )
-                    )) <
-                      0,
-                    0,
-                    eval(parse(
-                      text = paste0(
-                        "(",
-                        as.character(df$Y),
-                        ")",
-                        "*",
-                        k,
-                        "*",
-                        k2
-                      )
-                    ))
-                  )
-                }
-              } else {
-                f1 <- function(V) {
-                  a <- df$a
-                  b <- df$b
-                  c <- df$c
-                  d <- df$d
-                  e <- df$e
-                  f <- df$f
-                  V <- ifelse(
-                    V < df$MINV,
-                    df$MINV,
-                    ifelse(V > df$MAXV, df$MAXV, V)
-                  )
-                  ifelse(
-                    eval(parse(
-                      text = paste0(
-                        "(",
-                        as.character(df$Y),
-                        ")",
-                        "*",
-                        k,
-                        "*",
-                        k2
-                      )
-                    )) <
-                      0,
-                    0,
-                    eval(parse(
-                      text = paste0(
-                        "(",
-                        as.character(df$Y),
-                        ")",
-                        "*",
-                        k,
-                        "*",
-                        k2
-                      )
-                    ))
-                  )
-                }
-              }
-              f1(speed)
-            })
+        if (is.data.frame(speed)) {
+          stop(
+            "When length(eu) > 1, 'speed' must be a numeric vector. ",
+            "For speeds by street and hour use 'eu' as data.frame or ",
+            "one call per euro standard."
           )
-          dff <- EmissionFactors(dff)
-          names(dff) <- paste0(eu, 1:length(eu))
-          dff$speed <- speed
-          return(dff)
-        } else if (is.data.frame(speed)) {}
-      } else {
-        dff <- lapply(1:length(eu), function(i) {
-          df <- ef_ldv[
-            ef_ldv$VEH == v &
-              ef_ldv$TYPE == t &
-              ef_ldv$CC == cc &
-              ef_ldv$FUEL == f &
-              ef_ldv$EURO == eu[i] &
-              ef_ldv$POLLUTANT == p,
-          ]
-          k2 <- lala(eu[i])
-
-          if (p %in% c("SO2", "Pb")) {
-            f1 <- function(V) {
-              a <- df$a
-              b <- df$b
-              c <- df$c
-              d <- df$d
-              e <- df$e
-              f <- df$f
-              x <- x
-              V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
-              ifelse(
-                eval(parse(
-                  text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                )) <
-                  0,
-                0,
-                eval(parse(
-                  text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                ))
-              )
-            }
-          } else {
-            f1 <- function(V) {
-              a <- df$a
-              b <- df$b
-              c <- df$c
-              d <- df$d
-              e <- df$e
-              f <- df$f
-              V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
-              ifelse(
-                eval(parse(
-                  text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                )) <
-                  0,
-                0,
-                eval(parse(
-                  text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                ))
-              )
-            }
-          }
-          f1
-        })
+        }
+        dff <- do.call("cbind", lapply(lf, function(fi) fi(speed)))
+        dff <- EmissionFactors(dff)
         names(dff) <- paste0(eu, 1:length(eu))
-        return(EmissionFactorsList(dff))
+        dff$speed <- speed
+        return(dff)
       }
+      names(lf) <- paste0(eu, 1:length(eu))
+      return(EmissionFactorsList(lf))
     }
-    # New stuffs!
   } else if (is.data.frame(eu)) {
     if (missing(speed)) {
       stop("Add 'speed' please")
+    }
+    if (is.data.frame(speed)) {
+      stop("When 'eu' is a data.frame, 'speed' must be a numeric vector")
     }
     dff <- do.call(
       "rbind",
@@ -558,67 +347,7 @@ ef_ldv_speed <- function(
         do.call(
           "cbind",
           lapply(1:ncol(eu), function(i) {
-            df <- ef_ldv[
-              ef_ldv$VEH == v &
-                ef_ldv$TYPE == t &
-                ef_ldv$CC == cc &
-                ef_ldv$FUEL == f &
-                ef_ldv$EURO == eu[j, i][[1]] &
-                ef_ldv$POLLUTANT == p,
-            ]
-            k2 <- lala(eu[j, i][[1]])
-
-            if (p %in% c("SO2", "Pb")) {
-              f1 <- function(V) {
-                a <- df$a
-                b <- df$b
-                c <- df$c
-                d <- df$d
-                e <- df$e
-                f <- df$f
-                x <- x
-                V <- ifelse(
-                  V < df$MINV,
-                  df$MINV,
-                  ifelse(V > df$MAXV, df$MAXV, V)
-                )
-                ifelse(
-                  eval(parse(
-                    text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                  )) <
-                    0,
-                  0,
-                  eval(parse(
-                    text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                  ))
-                )
-              }
-            } else {
-              f1 <- function(V) {
-                a <- df$a
-                b <- df$b
-                c <- df$c
-                d <- df$d
-                e <- df$e
-                f <- df$f
-                V <- ifelse(
-                  V < df$MINV,
-                  df$MINV,
-                  ifelse(V > df$MAXV, df$MAXV, V)
-                )
-                ifelse(
-                  eval(parse(
-                    text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                  )) <
-                    0,
-                  0,
-                  eval(parse(
-                    text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
-                  ))
-                )
-              }
-            }
-            f1(speed)
+            fun_eu(eu[j, i][[1]])(speed)
           })
         )
       })

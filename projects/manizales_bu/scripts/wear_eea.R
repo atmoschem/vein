@@ -1,5 +1,11 @@
 suppressWarnings(file.remove("emi/wear.csv"))
 
+# remove per-vehicle WEAR_* files from previous runs (fwrite append = TRUE) ####
+wear_old <- list.files(
+  path = "emi", pattern = "^WEAR_", recursive = TRUE, full.names = TRUE
+)
+if (length(wear_old) > 0) file.remove(wear_old)
+
 # Escapamento ####
 switch(language,
        "portuguese" = cat("Estimando emissões Wear\n"),

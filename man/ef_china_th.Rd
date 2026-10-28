@@ -7,7 +7,7 @@
 ef_china_th(hu, te, v = "PV", t = "Small", f = "G", p)
 }
 \arguments{
-\item{hu}{numeric humidity}
+\item{hu}{numeric relative humidity in percent (0-100)}
 
 \item{te}{numeric temperature in celsius}
 

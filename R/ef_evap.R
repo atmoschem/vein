@@ -15,7 +15,10 @@
 #' @param dt Character or Numeric: Average monthly temperature variation: "-5_10", "0_15", "10_25"
 #' and "20_35". This argument can vector with several elements. dt can also be data.frame,
 #' but it is recommended that the number of columns are each month. So that dt
-#' varies in each row and each column.
+#' varies in each row and each column. Numeric temperatures (Celsius) are
+#' assigned to the class with the nearest mid-point (2.5, 7.5, 17.5 and 27.5),
+#' i.e. < 5: "-5_10", 5 - 12.5: "0_15", 12.5 - 22.5: "10_25" and >= 22.5:
+#' "20_35". Before vein 2.0.0 the class mid-points were used as limits.
 #' @param ca Size of canister: "no" meaning no canister, "small", "medium" and
 #' "large".
 #' @param pollutant Character indicating any of the covered pollutants: "NMHC",
@@ -28,7 +31,7 @@
 #' @param ltrip Numeric; Length of trip. Experimental feature to conter g/trip
 #' and g/proced (assuming proced similar to trip) in g/km.
 #' @param kmday Numeric; average daily mileage. Experimental option
-#' to convert g/day in g/km.
+#' to convert g/day in g/km. Only for the diurnal factor "ed".
 #' it is an information more solid than to know the average number of trips per day.
 #' @param k multiplication factor
 #' @param show when TRUE shows row of table with respective emission factor.
@@ -81,6 +84,12 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
   tb <- "0_15"
   tc <- "10_25"
   td <- "20_35"
+  # numeric temperature -> class with the nearest centre (2.5, 7.5, 17.5, 27.5)
+  classdt <- function(x) {
+    ifelse(x < (a + b)/2, ta,
+           ifelse(x < (b + c)/2, tb,
+                  ifelse(x < (c + d)/2, tc, td)))
+  }
   ef_ev <- sysdata$ev
   efs <- as.character(unique(ef_ev$ef))
   if(any(!ef %in% efs)) {
@@ -131,10 +140,7 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
     #   stop("Please, enter numeric or character")
     # }
     if(is.numeric(dt)){
-      dt = ifelse(dt < a, ta,
-                  ifelse(dt >=a & dt < b, tb,
-                         ifelse(dt >= b & dt < c, tc, td
-                         )))
+      dt <- classdt(dt)
     }
 
     if(length(dt) == 1 & length(ef) == 1){
@@ -196,16 +202,15 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
       }
 
     } else if (!missing(kmday)){
-      if (any(!ef  %in%  c("eshotfi", "eswarmc", "eshotc",
-                           "erhotfi", "erwarmc", "erhotc"))){
-        stop ("ef must cannot be Diurnal Evaporative ed")
+      if (any(!ef  %in%  "ed")){
+        stop ("kmday converts g/day to g/km, so ef must be the diurnal 'ed'")
       }
       df$g <- EmissionFactors(df$g*k/kmday)
       df$units <- NULL
       if(show){
         return(df)
       } else {
-        return(df)
+        return(df$g)
       }
     }
 
@@ -220,10 +225,7 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
   } else if (is.data.frame(dt)){
     if(is.numeric(dt[, 1])){
       for(i in 1:ncol(dt)){
-        dt[, i] = ifelse(dt[, i] < a, ta,
-                         ifelse(dt[, i] >=a & dt[, i] < b, tb,
-                                ifelse(dt[, i] >= b & dt[, i] < c, tc, td
-                                )))
+        dt[, i] <- classdt(dt[, i])
       }
     }
     if(length(v) > 1 | length(cc) > 1 | length(ca) > 1){
@@ -237,7 +239,8 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
                               ef_ev$veh == v &
                               ef_ev$cc == cc &
                               ef_ev$dt == unlist(dt)[i] &
-                              ef_ev$canister == ca, ]$g
+                              ef_ev$canister == ca &
+                              ef_ev$pollutant == pollutant, ]$g
                     }))
       if(!missing(ltrip)){
         return(EmissionFactors(df*k/ltrip))

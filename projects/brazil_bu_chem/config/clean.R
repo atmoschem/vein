@@ -1,4 +1,6 @@
 # apagando dados
+# restore scripts rewritten by older versions of config/config.R
+if (file.exists("scripts/backup_exhaust.R")) {
 file.copy("scripts/backup_evaporatives.R",
           "scripts/evaporatives.R", 
           overwrite = TRUE)
@@ -14,6 +16,7 @@ file.copy("scripts/backup_fuel_eval.R",
 file.remove(c("scripts/backup_evaporatives.R",
               "scripts/backup_exhaust.R",
               "scripts/backup_fuel_eval.R"))
+}
 
 
 a <- list.files(path = "config", pattern = ".rds", full.names = T)

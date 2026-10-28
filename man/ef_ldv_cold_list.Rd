@@ -7,7 +7,9 @@
 ef_ldv_cold_list(df, v = "LDV", ta, cc, f, eu, p)
 }
 \arguments{
-\item{df}{Dataframe with local emission factor}
+\item{df}{Deprecated and ignored; the number of functions is
+\code{length(eu)}. Before vein 2.0.0 it was \code{nrow(df)}, which gave
+NA functions when it did not match the number of euro standards.}
 
 \item{v}{Category vehicle: "LDV"}
 

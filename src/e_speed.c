@@ -165,8 +165,10 @@ SEXP emis_speed_engine(SEXP speed, SEXP veh, SEXP lkm, SEXP profile,
           double v = spd;
           if (v < mn[g]) v = mn[g];
           else if (v > mx[g]) v = mx[g];
-          shp[g] = eval_rpn(cd + coff[g], cl[g], cs + so[g], v,
-                            cf + (size_t) g * 6, xp[g]);
+          double e = eval_rpn(cd + coff[g], cl[g], cs + so[g], v,
+                              cf + (size_t) g * 6, xp[g]);
+          /* same rule as the R functions: no negative emission factors */
+          shp[g] = (e < 0.0) ? 0.0 : e;
         }
         double sacc = 0.0;
         for (int a = 0; a < A; a++) {

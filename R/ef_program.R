@@ -51,7 +51,7 @@
 # Compile an emission-factor expression string to RPN bytecode
 compile_ef_expr <- function(Y) {
   if (is.na(Y) || !nzchar(trimws(Y))) {
-    return(list(code = c(.OP_CONST, 0L), consts = 0))
+    stop("ef_program: emission factor not available (empty equation)")
   }
   key <- Y
   if (!is.null(.vein_prog_cache[[key]])) {
@@ -113,20 +113,14 @@ compile_ef_expr <- function(Y) {
   out
 }
 
-# Fuel correction factor by euro standard (same as internal lala)
+# Fuel correction factor by euro standard (see .fcorr_k2 in ef_speed_eval.R)
 fcorr_factor <- function(eu, fcorr = rep(1, 8)) {
-  idx <- match(as.character(eu), c("PRE", "I", "II", "III", "IV", "V", "VI", "VIc"))
-  idx[is.na(idx)] <- 8L
-  fcorr[idx]
+  .fcorr_k2(eu, fcorr)
 }
 
 # Build one LDV program (one age)
 ef_ldv_program <- function(v, t = "4S", cc, f, eu, p, x = 0, k = 1,
                            fcorr = rep(1, 8)) {
-  if (v == "LCV" && any(eu %in% "V")) {
-    v <- "PC"
-    cc <- ">2000"
-  }
   eu <- as.character(eu)
   df <- sysdata$ldv
   row <- df[
@@ -181,25 +175,13 @@ ef_ldv_programs <- function(v, t = "4S", cc, f, eu, p, x = 0, k = 1,
   n <- length(eu)
   kk <- rep(as.numeric(k), length.out = n) * fcorr_factor(eu, fcorr)
   df <- sysdata$ldv
-  # LCV euro V is taken from PC >2000 (issue #204), applied per age as in
-  # ef_ldv_speed()
-  remap <- v == "LCV" & (eu %in% "V")
   tab <- df[
     df$VEH == v & df$TYPE == t & df$CC == cc & df$FUEL == f &
       df$POLLUTANT == p,
   ]
   if (nrow(tab) == 0) stop(paste("ef_ldv_programs: no EF for", v, t, cc, f, p))
-  tab_pc <- NULL
-  if (any(remap)) {
-    tab_pc <- df[
-      df$VEH == "PC" & df$TYPE == t & df$CC == ">2000" & df$FUEL == f &
-        df$POLLUTANT == p,
-    ]
-    if (nrow(tab_pc) == 0) stop("ef_ldv_programs: no PC >2000 EF for LCV euro V")
-  }
   lapply(seq_len(n), function(i) {
-    tb <- if (remap[i]) tab_pc else tab
-    row <- tb[tb$EURO == eu[i], , drop = FALSE]
+    row <- tab[tab$EURO == eu[i], , drop = FALSE]
     if (nrow(row) == 0) {
       stop(paste("ef_ldv_programs: no EF for", v, t, cc, f, eu[i], p))
     }

@@ -1,6 +1,21 @@
 NEWS
 ===========
 
+### vein 2.1.0 (date: 2026-10-27)
+
+- Light-duty hot emission factors (`ef_ldv_speed()`, `emis_speed()`) rebuilt
+  from the EMEP/EEA guidebook 2026 (Appendix 4, July 2026). Fixes fuel
+  consumption of pre-Euro petrol cars 1400_2000 and >2000 cc (`a*V+b`
+  instead of `a*V^b`, up to 57 kg/km); CO2 = FC * 3.169 for every class.
+  Light-duty inventories change; use vein 2.0.0 to reproduce older results.
+- HBEFA alternative to COPERT, ported from Eclipse SUMO: `emis_hbefa()`,
+  `ef_hbefa()`, `ef_hbefa_cycle()`, `hbefa_classes()`; `hbefa_eea()` maps
+  EMEP/EEA categories to HBEFA4 classes and `ef_hbefa_speed()` takes the
+  arguments of `ef_ldv_speed()`/`ef_hdv_speed()`. Vignette "hbefa".
+- Bug fixes in emission factor, emission and utility functions.
+- Projects: deterioration applied per age column (CO2 was x5 in Quito);
+  `main_split.R` in all projects.
+
 ### vein 2.0.0 (date: 2026-09-29)
 
 - New `emis_speed()` for fast speed-dependent bottom-up inventories. The

@@ -26,7 +26,11 @@ prints messages with description of list}
 \item{object}{Object with class "EmissionFactorsList"}
 }
 \value{
-Objects of class "EmissionFactorsList"
+Objects of class "EmissionFactorsList". For numeric, matrix or
+data.frame inputs each element is a function of speed V that returns the
+constant emission factor. For matrix and data.frame inputs the result is a
+list (one element per column) of lists (one function per row); before vein
+2.0.0 it was wrongly given the class "data.frame".
 }
 \description{
 \code{EmissionFactorsList} returns a transformed object with

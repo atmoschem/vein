@@ -22,14 +22,17 @@ emis_cold_td(
  age distribution of that vehicle. and rows each simple feature or region.
 The number of rows is equal to the number of streets link}
 
-\item{lkm}{Numeric; mileage by the age of use of each vehicle.}
+\item{lkm}{Numeric; mileage by the age of use of each vehicle, with units
+of length (converted to km).}
 
-\item{ef}{Numeric; emission factor with}
+\item{ef}{Numeric; emission factor with units (converted to 'g/km').}
 
 \item{efcold}{Data.frame. When it is a data.frame, each column is for each
 type of vehicle by age of use, rows are are each simple feature. When you have
 emission factors for each month, the order should a data.frame ina long format,
-as rurned by \code{\link{ef_ldv_cold}}.}
+as rurned by \code{\link{ef_ldv_cold}}: the first `nrow(veh)` rows are
+for month 1, the next ones for month 2, etc. Columns with units are
+converted to 'g/km'.}
 
 \item{beta}{Data.frame with the fraction of cold starts. The rows are the fraction
 for each spatial feature or subregion, the columns are the age of use of vehicle.}

@@ -26,8 +26,8 @@ ef_eea(
 \item{fuel}{String;  "G", "G HY", "G PHEV G",
 "G PHEV ELEC",  "D", "D PHEV D",
 "D PHEV ELEC", "LPG BIFUEL LPG", "LPG BIFUEL G",
-"CNG BIFUEL CNG", "CNG BIFUEL G", "D HY D",
-"D HY ELEC", "CNG", "BIO D"}
+"CNG BIFUEL CNG", "CNG BIFUEL G", "CNG", "BIO D" and others (a wrong value
+shows the available ones).}
 
 \item{segment}{String for type of vehicle (try different, the function will show values).}
 
@@ -35,32 +35,44 @@ ef_eea(
 "PRE", "IMPROVED CONVENTIONAL", "OPEN LOOP",
 "ECE 15/00-01", "ECE 15/02", "ECE 15/03", "ECE 15/04".
 "I", "II", "III", "IV", "V",
-"VI A/B/C", "VI D", "VI D-TEMP", "VI D/E",
-"EEV".}
+"VI A/B/C" (also "VI"), "VI D-TEMP", "VI D/E", "VII", "EEV".}
 
 \item{tech}{String; technology:
 "DPF", "DPF With S/W Update", "DPF+SCR"
-"EGR", "GDI", "GDI+GPF", "LNT+DPF", "PFI", "SCR".}
+"EGR", "GDI", "GDI+GPF", "LNT+DPF", "PFI", "SCR", or NA.}
 
-\item{pol}{String; "CO", "NOx", "NMHC" (VOC), "PM" (PM Exhaust), "EC", "CH4", "NH3", "N2O"}
+\item{pol}{String; "CO", "NOx", "NMHC" (VOC), "PM" (PM Exhaust),
+"EC" (energy consumption, MJ/km), "CH4", "NH3", "N2O", "SPN23".}
 
-\item{mode}{String; "Urban Peak", "Urban Off Peak", "Rural", "Highway", NA.}
+\item{mode}{String; "Urban Peak", "Urban Off Peak", "Rural", "Highway", NA.
+NA means "Urban Peak" for the factors that depend on the mode.}
 
-\item{slope}{Numeric; 0.00, -0.06, -0.04, -0.02,  0.02,  0.04,  0.06, or NA}
+\item{slope}{Numeric; 0.00, -0.06, -0.04, -0.02,  0.02,  0.04,  0.06, or NA (0)}
 
-\item{load}{Numeric; 0.0,0.5, 1.0 or NA}
+\item{load}{Numeric; 0.0,0.5, 1.0 or NA (0)}
 
 \item{speed}{Numeric; optional numeric in km/h.}
 
 \item{fcorr}{Numeric; Correction by fuel properties by euro technology.
 See \code{\link{fuel_corr}}. The order from first to last is
-"PRE", "I", "II", "III", "IV", "V", "VI", "or other VI. Default is 1}
+"PRE", "I", "II", "III", "IV", "V", "VI", and any other standard. Default is 1}
 }
 \value{
-Return a function depending of speed or numeric (g/km)
+Return a function depending of speed or numeric (g/km). The speed
+is limited to the validity range and negative values are set to 0.
 }
 \description{
-\code{\link{ef_cetesb}} returns a vector or data.frame of Brazilian emission factors.
+\code{\link{ef_eea}} returns hot emission factors of the EMEP/EEA air
+pollutant emission inventory guidebook 2023 - update 2026, chapter
+1.A.3.b.i-iv, Appendix 4 (July 2026), for any combination of category,
+fuel, segment, euro standard, technology, pollutant, mode, slope and load
+available in the guidebook.
+}
+\note{
+EF = (Alpha V^2 + Beta V + Gamma + Delta/V) /
+(Epsilon V^2 + Zita V + Hta) * (1 - RF). The reduction factor RF is a
+fraction (the header of the EEA table says "\%", but the tabulated EF are
+reproduced with fractions).
 }
 \examples{
 {

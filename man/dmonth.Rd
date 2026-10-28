@@ -15,7 +15,7 @@ dmonth(year, month)
 days of the month
 }
 \description{
-\code{\link{ef_ldv_speed}} return the number of days of the month
+\code{\link{dmonth}} return the number of days of the month
 }
 \examples{
 \dontrun{

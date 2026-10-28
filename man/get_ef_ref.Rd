@@ -9,6 +9,10 @@ get_ef_ref(ref)
 \arguments{
 \item{ref}{Character; The ef model required (e.g. "eea" for ef_eea)}
 }
+\value{
+A data.table copy of the reference table. Modifying it does not
+change the tables used by vein.
+}
 \description{
 Get the reference data used to build the emission factor (ef)
 model applied by vein.

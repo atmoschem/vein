@@ -18,13 +18,16 @@
 #' it is better to use top_down = FALSE. In this way all the hourly emissions
 #' are considered, however, each hourly emissions has to have the name "V" and the
 #'number of the hour like "V1"
-#' @param sr Spatial reference e.g: 31983. It is required if spobj and g are
-#' not projected. Please, see http://spatialreference.org/.
+#' @param sr Spatial reference e.g: 31983, "EPSG:31983" or "+init=epsg:31983".
+#' It is required if spobj and g are not projected. When the crs of spobj and
+#' g are different, spobj is transformed to the crs of g.
+#' Please, see http://spatialreference.org/.
 #' @param pro Numeric, Matrix or data-frame profiles, for instance, pc_profile.
 #' @param char Character, name of the first letter of hourly emissions. New variables in R
 #' start with the letter "V", for your hourly emissions might start with the letter "h". This option
 #' applies when top_down is FALSE. For instance, if your hourly emissions are: "h1", "h2",
-#' "h3"... `char`` can be "h"
+#' "h3"... `char`` can be "h". Default is "V". Only columns named `char` plus a
+#' number are used.
 #'
 #' @param verbose Logical; to show more info.
 #' @importFrom sf st_sf st_as_sf st_transform st_set_geometry st_length  st_intersection st_geometry
@@ -77,35 +80,31 @@
 #' }
 #' }
 grid_emis <- function(spobj, g,  top_down = FALSE,
-                      sr, pro, char, verbose = FALSE){
+                      sr, pro, char = "V", verbose = FALSE){
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   netdata <- sf::st_set_geometry(net, NULL)
   g <- sf::st_as_sf(g)
   g$id <- NULL
   g$id <- 1:nrow(g)
-  net$lkm1 <- as.numeric(sf::st_length(net))
-
-  geo <- sf::st_geometry(net)
-  xg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
 
   if(sf::st_crs(g) != sf::st_crs(net)){
     if(verbose) message("Changing CRS of 'spobj' to match 'g'") #nocov
-    net <- sf::st_transform(net, st_crs(g))
+    net <- sf::st_transform(net, sf::st_crs(g))
   }
-  for(i in 1:length(netdata)){
+  for(i in seq_along(netdata)){
     netdata[, i] <- as.numeric(netdata[, i])
   }
   net <- sf::st_sf(netdata, geometry = sf::st_geometry(net))
 
   if(!missing(sr)){
-    if(inherits(sr, "character")){
-      sr <- as.numeric(substr(sr, 12, nchar(sr)))
-    }
+    sr <- vein_crs(sr)
     if(verbose) message("Transforming spatial objects to 'sr' ") #nocov
     net <- sf::st_transform(net, sr)
     g <- sf::st_transform(g, sr)
   }
+  net$lkm1 <- as.numeric(sf::st_length(net))
+  xg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
 
   if(!top_down) {
     net$id <- NULL
@@ -115,7 +114,8 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
     total_lkm <- lm <- id <- NULL
     df[, total_lkm := sum(lm), by = id]
 
-    vars <- names(g)[grep(pattern = char, x = names(g))]
+    vars <- grep(pattern = paste0("^", char, "[0-9]+$"), x = names(g), value = TRUE)
+    if (length(vars) == 0) stop("'g' has no columns named '", char, "' plus the hour, like '", char, "1'")
     cdf <- colSums(sf::st_set_geometry(g, NULL)[vars], na.rm = T)
     for(i in 1:length(cdf)) {
       df[[vars[i]]] <- df[[vars[i]]]*df$lm/df$total_lkm

@@ -1,9 +1,12 @@
 
 suppressWarnings(file.remove("emi/cold.csv"))
 
+# det_factor() and apply_det()
+source("scripts/deterioration.R", encoding = "UTF-8")
+
 # Escapamento ####
 switch(language,
-       "portuguese" = cat("Estimando emisses Cold Start\n"),
+       "portuguese" = cat("Estimando emissões Cold Start\n"),
        "english" = cat("Estimating emissions Cold Start\n"),
        "spanish" = cat("Estimando emisiones Cold Start\n")
 )
@@ -53,24 +56,20 @@ for (i in seq_along(metadata_cold$vehicles)) {
   
   for (j in seq_along(pol)) {
     
-    f_fcorr <- fcorr[veh == metadata_cold$v_eea_old_fuel[i] &
-                       pol == pol[j]]
+    # local names that are not columns of fcorr (data.table scoping)
+    pj <- pol[j]
+    vj <- metadata_cold$v_eea_old_fuel[i]
+    f_fcorr <- fcorr[veh == vj & pol == pj]
     
-    # deterioration factor
-    if(pol[j] %in% c("CO", "NO", "NO2", "HC", "NMHC")) {
-      
-      (efdet <- emis_det(po = ifelse(
-        pol[j] %in% c("NO", "NOx", "NO2"),"NOx",
-        ifelse(
-          pol[j] %in% c("NMHC", "HC"),"HC",
-          "CO"
-        )),
-        cc = "<=1400",
-        eu = cate[1:ncol(veh)], 
-        km = cumsum(mileage[[metadata_cold$vehicles[i]]])))
-    } else {
-      efdet <- 1
-    }
+    # deterioration factor, one per age (scripts/deterioration.R)
+    efdet <- det_factor(
+      p = pol[j],
+      family = metadata_cold$family[i],
+      fuel = metadata_cold$fuel_eea_old[i],
+      cc = metadata_cold$cc_eea_old[i],
+      eu = cate[1:ncol(veh)],
+      km = cumsum(mileage[[metadata_cold$vehicles[i]]])[1:ncol(veh)]
+    )
     
     cat(pol[j], " ")
     
@@ -88,21 +87,16 @@ for (i in seq_along(metadata_cold$vehicles)) {
                        # speed = Speed(metadata$speed[i]),
                        fcorr = if(nrow(f_fcorr) == 0) rep(1, 8) else f_fcorr$value)
       })
-    veh <- veh*efdet
-    k <- 1
+    # applied across the age columns; `veh` itself is not modified
+    veh_j <- apply_det(veh, efdet)
     
+    # cold/hot ratios exist for NOx and HC: NO and NO2 use the NOx ratio,
+    # NMHC the HC ratio (the hot EF above is already pollutant specific)
     poly <- ifelse(
       pol[j] %in% c("NO", "NO2"), "NOx",
       ifelse(
         pol[j] %in% c("NMHC"), "HC",
         pol[j]
-      ))
-    
-    k <- ifelse(
-      pol[j] %in% c("NO", "NMHC"), 0.9,
-      ifelse(
-        pol[j] %in% c("NO2"), 0.1,
-        1
       ))
     
     
@@ -121,18 +115,14 @@ for (i in seq_along(metadata_cold$vehicles)) {
     ef$speed <- NULL
     
     if(IM) {
-      ok <- im_ok[[metadata_cold$vehicles[i]]][1:ncol(veh)]
-      nok <- 1 - ok
-      if(pol == "CO")fim <- im_co[[metadata_cold$vehicles[i]]][1:ncol(veh)]
-      if(pol %in% c("HC", "NMHC")) fim <- im_hc[[metadata_cold$vehicles[i]]][1:ncol(veh)]
-      if(pol %in% c("NO", "NO2", "NOx")) fim <- im_nox[[metadata_cold$vehicles[i]]][1:ncol(veh)]
-      if(pol %in% c("PM")) fim <- im_pm[[metadata_cold$vehicles[i]]][1:ncol(veh)]
-      ef <- EmissionFactors(matrix(as.numeric(ef)*ok + as.numeric(ef)*fim*nok, nrow = 1))
+      # ef is a list of speed functions here, so the IM correction used in the
+      # top-down projects (ef * ok + ef * fim * nok) cannot be applied as is
+      stop("Aun no ha sido implementado el efecto de IM :(")
     }
     
     
     array_x <- emis_cold(
-      veh = veh, 
+      veh = veh_j, 
       lkm = net$lkm, 
       ef = ef, 
       efcold = efcold, 
@@ -175,7 +165,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
 
 
 switch(language,
-       "portuguese" = message("\nEmisses em: /emi/exhaust.csv:"),
+       "portuguese" = message("\nEmissões em: /emi/exhaust.csv:"),
        "english" = message("\nEmissions in: /emi/exhaust.csv"),
        "spanish" = message("\nEmisiones en: /emi/exhaust.csv")
 )

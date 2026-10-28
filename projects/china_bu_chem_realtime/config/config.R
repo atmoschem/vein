@@ -60,17 +60,17 @@ if (!length(intersect(metadata$vehicles, names(tfs))) == length(metadata$vehicle
   switch(language,
          "portuguese" = stop(
            "Precisa adicionar coluna ",
-           setdiff(metadata$vehicles, names(mileage)),
+           setdiff(metadata$vehicles, names(tfs)),
            " em `tfs`"
          ),
          "english" = stop(
            "You need to add column ",
-           setdiff(metadata$vehicles, names(mileage)),
+           setdiff(metadata$vehicles, names(tfs)),
            " in `tfs`"
          ),
          "spanish" = stop(
            "Necesitas agregar la columna ",
-           setdiff(metadata$vehicles, names(mileage)),
+           setdiff(metadata$vehicles, names(tfs)),
            " en `tfs`"
          )
   )
@@ -81,17 +81,17 @@ if (!length(intersect(metadata$vehicles, names(veh))) == length(metadata$vehicle
   switch(language,
          "portuguese" = stop(
            "Precisa adicionar coluna ",
-           setdiff(metadata$vehicles, names(mileage)),
+           setdiff(metadata$vehicles, names(veh)),
            " em `veh`"
          ),
          "english" = stop(
            "You need to add column ",
-           setdiff(metadata$vehicles, names(mileage)),
+           setdiff(metadata$vehicles, names(veh)),
            " in `veh`"
          ),
          "spanish" = stop(
            "Necesitas agregar la columna ",
-           setdiff(metadata$vehicles, names(mileage)),
+           setdiff(metadata$vehicles, names(veh)),
            " en `veh`"
          )
   )
@@ -124,7 +124,7 @@ if (veh$Year[1] != year) {
 if (mileage$Year[1] != year) {
   switch(language,
          "portuguese" = stop(paste0("O ano base é ", year, " mas o primeiro ano em `mileage` é ", mileage$Year[1])),
-         "english" = stop(paste0("The base year is ", year, " but the first year in `mileage` is ", veh$Year[1])),
+         "english" = stop(paste0("The base year is ", year, " but the first year in `mileage` is ", mileage$Year[1])),
          "spanish" = stop(paste0("El año base es ", year, " pero el primer año de `mileage` es ", mileage$Year[1]))
   )
 }
@@ -425,15 +425,15 @@ switch(language,
 vein_notes(
   notes = c("Default notes for vein::get_project"),
   file = "notes/README",
-  title = paste0("Beijing ", year),
+  title = paste0("Shenyang real-time traffic ", year),
   approach = "Bottom-up",
-  traffic = "Samples of travel demand models for MASP",
+  traffic = "Real-time traffic volume 2023-06-12 09:04 on OSM network",
   composition = "MEE",
   ef = "MEE ",
   cold_start = "Not Applicable",
   evaporative = "Running Losses, Diurnal and Hot Soak",
   standards = "MEE",
-  mileage = "Ibarra-Espinosa et al., 2019: 10.1016/j.atmosenv.2020.117952"
+  mileage = "config/inventory_chn_bu_v5.xlsx, sheet mileage"
 )
 # saveRDS
 

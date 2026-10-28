@@ -1,4 +1,4 @@
-tit <- paste0("Emisiones vehiculares en  em ", provincia, " [t/mes]")
+tit <- paste0("Emisiones vehiculares en ", provincia)
 
 # category ####
 dt <- fread("emi/exhaust.csv")
@@ -54,7 +54,7 @@ for (i in seq_along(pol)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/mes",
+      y = "t/año",
       title = paste0(pol[i], ": ", tit)
     ) +
     scale_fill_gradientn(pol[i], colours = cpt()) +
@@ -95,7 +95,7 @@ for (i in seq_along(pole)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/mes",
+      y = "t/año",
       title = paste0(pole[i], ": ", tit)
     ) +
     scale_fill_gradientn(pole[i], colours = cpt()) +
@@ -131,7 +131,7 @@ for (i in seq_along(pol)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/mes",
+      y = "t/año",
       title = paste0(pol[i], ": ", tit)
     ) +
     scale_x_discrete(limits = rev(metadata$vehicles)) +
@@ -203,9 +203,9 @@ for (i in seq_along(pol)) {
   ) +
     geom_bar(stat = "identity", col = "black") +
     labs(
-      y = "t/mes",
+      y = "t/año",
       title = ifelse(pol[i] == "PM",
-                     paste0(pol[i], ": ", tit, " sem ressuspenssao "),
+                     paste0(pol[i], ": ", tit, " sin resuspension "),
                      paste0(pol[i], ": ", tit)
       )
     ) +

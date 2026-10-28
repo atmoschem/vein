@@ -2,13 +2,10 @@
 #'
 #' A data.frame descriptors to use MOVES functions
 #'
-#' @format A data frame with 69 rows and 4 columns:
-#' \describe{
-#'   \item{CategoryField}{dayID, sourceTypID, roadTypeID, pollutantID and procesID}
-#'   \item{pollutantID}{Associated number}
-#'   \item{Description}{Associatd description}
-#'   \item{V4}{pollutants}
-#' }
+#' @format A list of data.frames with the MOVES IDs (column ID) and their
+#' descriptions: regulatory_class, activity_type, emission_process,
+#' source_type, fuel_type, road_type, day_id, speed_bin, running_mode,
+#' starts_mode, hotelling_mode and pollutants.
 #' @source US/EPA MOVES
 #' @usage data(decoder)
 #' @docType data

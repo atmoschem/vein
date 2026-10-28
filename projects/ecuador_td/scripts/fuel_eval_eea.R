@@ -60,7 +60,7 @@ for (i in seq_along(metadata$vehicles)) {
       ef = ef[, 1:ncol(x)],
       fortran = TRUE,
       nt = nt,
-      pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+      pro_month = pmonth[fuel == ifelse(metadata$fuel[i] == "D", "D", "G")]$consumption_lt,
       verbose = verbose,
       params = list(
         veh = metadata$vehicles[i],
@@ -133,7 +133,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
       fortran = TRUE,
       beta = matrix(a, nrow = 1),
       nt = nt,
-      pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+      pro_month = pmonth[fuel == ifelse(metadata_cold$fuel[i] == "D", "D", "G")]$consumption_lt,
       verbose = verbose,
       params = list(
         veh = metadata_cold$vehicles[i],
@@ -257,7 +257,7 @@ for (i in seq_along(metadata$vehicles)) {
       ef = ef[, 1:ncol(x)],
       fortran = TRUE,
       nt = nt,
-      pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+      pro_month = pmonth[fuel == ifelse(metadata$fuel[i] == "D", "D", "G")]$consumption_lt,
       verbose = verbose,
       params = list(
         veh = metadata$vehicles[i],
@@ -329,7 +329,7 @@ for (i in seq_along(metadata_cold$vehicles)) {
       fortran = TRUE,
       beta = matrix(a, nrow = 1),
       nt = nt,
-      pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+      pro_month = pmonth[fuel == ifelse(metadata_cold$fuel[i] == "D", "D", "G")]$consumption_lt,
       verbose = verbose,
       params = list(
         veh = metadata_cold$vehicles[i],

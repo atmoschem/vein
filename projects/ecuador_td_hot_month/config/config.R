@@ -130,7 +130,7 @@ if (!"region" %in% names(fuel)) {
 
 setDT(fuel)
 fuel <- fuel[region == toupper(provincia) & 
-               Year == year] #all the months!
+               Year == year] # the 12 months (sheet fuel_month)
 
 saveRDS(metadata, "config/metadata.rds")
 saveRDS(mileage, "config/mileage.rds")
@@ -389,7 +389,9 @@ switch(language,
 )
 
 vein_notes(
-        notes = c("Default notes for vein::get_project"),
+        notes = c("Notas proyecto ecuador_td_hot_month",
+                  "Inventario top-down mensual: la flota se calibra mes a mes con la hoja fuel_month",
+                  "Solo emisiones de escape en caliente (sin arranque en frio ni evaporativas)"),
         file = "notes/README",
         title = paste0("Ecuador province ", year),
         approach = "Top-Down",
@@ -401,7 +403,7 @@ vein_notes(
         cold_start = "NO",
         evaporative = "NO",
         standards = "Euro",
-        mileage = "Bruni and Bales 2013, Brazil"
+        mileage = "Curvas de kilometraje tomadas de Bruni and Bales 2013, Brasil"
 )
 # saveRDS
 

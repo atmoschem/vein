@@ -29,12 +29,14 @@ ef_china(
 "Large", "Taxi", "Motorcycles", "Moped", PV Diesel: "Mediumbus", "Largebus",
  "3-Wheel". Trucks: "Mini", "Light" , "Medium", "Heavy"}
 
-\item{f}{Character;fuel: "G", "D", "CNG", "ALL"}
+\item{f}{Character;fuel: "G", "D", "CNG", "G HY", "D HY D". Speed and
+sulphur corrections of "G" are used for "CNG" and "G HY" and of "D" for
+"D HY D"; "ALL" is not supported.}
 
-\item{standard}{Character or data.frame; "PRE", "I", "II", "III", "IV", "V". When
-it is a data.frame, it each row is a different region and ta, humidity,
+\item{standard}{Character or data.frame; "PRE", "I", "II", "III", "IV", "V", "VI".
+When it is a data.frame, it each row is a different region and ta, humidity,
 altitud, speed, sulphur and load_factor lengths have the same as the number of
-rows.}
+rows (humidity can also have length 1).}
 
 \item{p}{Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 or "Evaporative_parking"}
@@ -44,7 +46,7 @@ or "Evaporative_parking"}
 \item{ta}{Numeric; temperature of ambient in celcius degrees. When standard is a
 data.frame, the length must be equal to the number of rows of standard.}
 
-\item{humidity}{Numeric; relative humidity. When standard is a
+\item{humidity}{Numeric; relative humidity as fraction (0-1). When standard is a
 data.frame, the length must be equal to the number of rows of standard.}
 
 \item{altitude}{Numeric; altitude in meters. When standard is a
@@ -53,7 +55,9 @@ data.frame, the length must be equal to the number of rows of standard.}
 \item{speed}{Numeric; altitude in km/h When standard is a
 data.frame, the length must be equal to the number of rows of standard.}
 
-\item{baseyear_det}{Integer; any of 2014, 2015, 2016, 2017, 2018}
+\item{baseyear_det}{Integer; any of 2015, 2016, 2017, 2018. Deterioration
+is applied to gasoline CO, HC and NOx (it was ignored when standard was a
+character vector in earlier versions).}
 
 \item{sulphur}{Numeric; sulphur in ppm. When standard is a
 data.frame, the length must be equal to the number of rows of standard.}
@@ -114,7 +118,12 @@ Combination of vehicles:
   Trucks   \tab Mini   \tab   D   \cr
 }
 
-standard VI is assumed as V
+standard VI is assumed as V for the base emission factor and deterioration.
+
+load_factor classes: 0, (0, 0.5), 0.5, (0.5, 0.6], (0.6, 0.75] and > 0.75
+(earlier versions compared sulphur instead of load_factor for the classes
+above 0.5). Speeds of 80 km/h or more use the S80 correction (80 km/h
+returned 0 in earlier versions).
 }
 \examples{
 \dontrun{

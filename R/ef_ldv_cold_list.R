@@ -3,7 +3,9 @@
 #' This function creates a list of functions of cold start emission factors
 #' considering different euro emission standard to the elements of the list.
 #'
-#' @param df Dataframe with local emission factor
+#' @param df Deprecated and ignored; the number of functions is
+#' \code{length(eu)}. Before vein 2.0.0 it was \code{nrow(df)}, which gave
+#' NA functions when it did not match the number of euro standards.
 #' @param v Category vehicle: "LDV"
 #' @param ta ambient temperature. Montly average van be used
 #' @param cc Size of engine in cc: <=1400", "1400_2000" and ">2000"
@@ -27,11 +29,14 @@
 #' eu = eu, p = "CO")
 #' length(l_cold)
 #' }
-ef_ldv_cold_list <- function(df,v = "LDV", ta, cc, f, eu, p) {
-   lista <- lapply(1:length(df[,1]), function(i)  {
-    funIN <- ef_ldv_cold(v = "LDV", ta, cc, f,
-                         eu = as.character(eu[i]), p = p, k = 1,
-                         show.equation = FALSE)
-   })
+ef_ldv_cold_list <- function(df, v = "LDV", ta, cc, f, eu, p) {
+  if(!missing(df) && NROW(df) != length(eu) && NCOL(df) != length(eu)) {
+    warning("'df' is ignored; the list has one function per element of 'eu'")
+  }
+  lista <- lapply(seq_along(eu), function(i)  {
+    ef_ldv_cold(v = v, ta = ta, cc = cc, f = f,
+                eu = as.character(eu[i]), p = p, k = 1,
+                show.equation = FALSE)
+  })
   return(lista)
 }

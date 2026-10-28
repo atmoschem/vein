@@ -5,16 +5,26 @@
 #'
 #' @param veh Object of class "Vehicles"
 #' @param lkm Length of the road in km.
-#' @param ef list of emission factor functions class "EmissionFactorsList",
-#' length equals to hours.
-#' @param what Character for indicating "tyre", "break" or "road"
-#' @param speed Speed data-frame with number of columns as hours
+#' @param ef Emission factors from \code{\link{ef_wear}}: a data.frame with
+#' one column per hour (hour x day columns), or a single value (e.g. road wear)
+#' used for all hours.
+#' @param what Character for indicating "tyre", "break" or "road". Kept for
+#' compatibility; it is not used because the speed correction is applied by
+#' \code{\link{ef_wear}}.
+#' @param speed Speed data-frame with number of columns as hours. Kept for
+#' compatibility; it is not used because the speed correction is applied by
+#' \code{\link{ef_wear}}.
 #' @param agemax Age of oldest vehicles for that category
 #' @param profile Numerical or dataframe with nrows equal to 24 and ncol
 #' 7 day of the week
 #' @param hour Number of considered hours in estimation
 #' @param day Number of considered days in estimation
 #' @return emission estimation  g/h
+#' @note \code{ef} must be the output of \code{\link{ef_wear}}, with one column
+#' per hour (hour x day columns). The speed correction factor is part of
+#' \code{ef}. Before vein 2.0.0, \code{emis_wear} applied the speed correction
+#' a second time (using the brake curve for tyres and vice versa) and
+#' always read the speed of the first day.
 #' @references Ntziachristos and Boulter 2016. Automobile tyre and break wear
 #' and road abrasion. In: EEA, EMEP. EEA air pollutant emission inventory
 #' guidebook-2009. European Environment Agency, Copenhagen, 2016
@@ -40,7 +50,7 @@ emis_wear <- function (veh,
                        profile,
                        hour = nrow(profile),
                        day = ncol(profile)) {
-  if(units(lkm)$numerator == "m" ){
+  if(inherits(lkm, "units") && units(lkm)$numerator == "m" ){
     stop("Units of lkm is 'm'")
   }
   veh <- as.data.frame(veh)
@@ -48,74 +58,28 @@ emis_wear <- function (veh,
   for (i  in 1:ncol(veh) ) {
     veh[,i] <- as.numeric(veh[,i])
   }
-  for (i  in 1:ncol(speed) ) {
-    speed[,i] <- as.numeric(speed[, i])
-  }
   #profile
   if(is.vector(profile)){
     profile <- matrix(as.numeric(profile), ncol = 1)
   } # if it is data.frame or matrix, OK
-  # if(!missing(profile) & is.vector(profile)){
-  #   profile <- matrix(profile, ncol = 1)
-  # }
 
-  # ncol ef
-  if(ncol(ef)/24 != day){
-    stop("Number of days of ef and profile must be the same")
+  if(is.null(dim(ef)) && length(ef) == 1) {
+    ef <- as.data.frame(matrix(as.numeric(ef), nrow = 1, ncol = hour*day))
+  }
+  ef <- as.data.frame(ef)
+  if(ncol(ef) != hour*day){
+    stop("Number of days of ef and profile must be the same: ncol(ef) must be ",
+         "nrow(profile) * ncol(profile)")
   }
 
-  lef <- lapply(1:day, function(i){
-    as.list(ef[, (24*(i-1) + 1):(24*i)])
-  })
-
-  # lapply(ef, as.list)
-  if (what == "tyre"){
-    d <-  simplify2array(
-      lapply(1:day,function(j){
-        simplify2array(
-          lapply(1:hour,function(i){
-            simplify2array(
-              lapply(1:agemax, function(k){
-                ifelse(
-                  speed[,i] < 40,
-                  veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*1.67,
-                  ifelse(
-                    speed[,i] >= 40 & speed[,i] <= 95,
-                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.0270*speed[, i] + 2.75),
-                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*0.185
-                  )) })) })) }))
-  } else if(what == "break"){
-    d <-  simplify2array(
-      lapply(1:day,function(j){
-        simplify2array(
-          lapply(1:hour,function(i){
-            simplify2array(
-              lapply(1:agemax, function(k){
-                ifelse(
-                  speed[,i] < 40,
-                  veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*1.39,
-                  ifelse(
-                    speed[,i] >= 40 & speed[,i] < 80,
-                    veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.00974*speed[, i] + 1.78),
-                    ifelse(
-                      speed[,i] == 80,
-                      veh[, k]*profile[i,j]*lkm*lef[[j]][[i]],
-                      ifelse(
-                        speed[,i] > 80 & speed[,i] <= 90,
-                        veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*(-0.00974*speed[, i] + 1.78),
-                        veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]*0.902
-                      )))) })) })) }))
-
-  } else if (what == "road"){
-    d <-  simplify2array(
-      lapply(1:day,function(j){
-        simplify2array(
-          lapply(1:hour,function(i){
-            simplify2array(
-              lapply(1:agemax, function(k){
-                veh[, k]*profile[i,j]*lkm*lef[[j]][[i]]
-              })) })) }))
-
-  }
+  d <-  simplify2array(
+    lapply(1:day,function(j){
+      simplify2array(
+        lapply(1:hour,function(i){
+          efi <- as.numeric(ef[, hour*(j - 1) + i])
+          simplify2array(
+            lapply(1:agemax, function(k){
+              veh[, k]*profile[i,j]*lkm*efi
+            })) })) }))
   return(EmissionsArray(d))
 }

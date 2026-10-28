@@ -3,6 +3,7 @@
 #' \code{\link{remove_units}} Remove units from sf,  data.frames, matrix or units.
 #'
 #' @param x Object with class "sf",  "data.frame", "matrix" or "units"
+#' (including arrays with units, which keep their dimensions)
 #' @param verbose Logical, to print more information
 #' @return "sf", data.frame", "matrix" or numeric
 #' @keywords units
@@ -58,6 +59,8 @@ remove_units <- function(x, verbose = FALSE){
       ef[[cols[i]]] <- as.numeric(ef[[cols[i]]])
     }
 
+  } else if(inherits(x, "units") && is.array(x)){
+    ef <- units::drop_units(x)
   } else if(is.character(x) | is.list(x) | is.array(x)){
     ef <- x
     #nada

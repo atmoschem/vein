@@ -25,7 +25,12 @@
 #' or an EmissionFactor
 #' @keywords cumileage emission factors
 #' @note if length of eu is bigger than 1, cumileage can have values  of length 1
-#' or length equal to length of eu
+#' or length equal to length of eu. When the length is equal to the length of
+#' eu, each euro is evaluated at its own accumulated mileage and a data.frame
+#' with one row is returned. Otherwise, each euro is evaluated at all values of
+#' cumileage, with one row per value and a column `cumileage`.
+#'
+#' \code{fcorr} is applied (it was ignored before vein 2.0.0).
 #' @importFrom units as_units
 #' @export
 #' @examples \dontrun{
@@ -104,20 +109,21 @@ ef_nitro <- function(v,
                  ef$POLLUTANT  == p, ]
       k2 <- lala(eu)
 
-      Equation = paste0("(",as.character(df$Y), ")", "*", k)
+      Equation = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
-                   ", e = ", df$e, ", f = ", df$f,  ", ef = ", df$eff, "\n"))
+                   ", e = ", df$e, ", f = ", df$f,  ", ef = ", df$ef, "\n"))
         cat(paste0("Equation = ", Equation, "\n"))
       }
 
       f1 <- function(km){
         a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
         cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
-        eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+        S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
+        eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
       }
       if(!missing(cumileage)){
-        f1 <- EmissionFactors(f1(cumileage))
+        f1 <- EmissionFactors(rep_len(f1(cumileage), length(cumileage)))
         return(f1)
       } else {
         return(f1)
@@ -125,6 +131,8 @@ ef_nitro <- function(v,
 
     } else if(length(eu) > 1){
       if(!missing(cumileage)){
+        # one mileage per euro (e.g. by age) or the same mileages for all
+        per_eu <- length(cumileage) == length(eu)
         dff <- do.call("cbind", lapply(1:length(eu), function(i){
           df <- ef[ef$VEH        == v &
                      ef$TYPE       == t &
@@ -139,15 +147,18 @@ ef_nitro <- function(v,
           f1 <- function(km){
             a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
             cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
-            eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+            S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
+            eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
           }
-          ifelse(length(cumileage) == 1,
-                 f1(cumileage),
-                 f1(cumileage[i]))
+          if(per_eu) {
+            rep_len(f1(cumileage[i]), 1)
+          } else {
+            rep_len(f1(cumileage), length(cumileage))
+          }
         }))
-        dff <- EmissionFactors(dff)
+        dff <- EmissionFactors(as.data.frame(dff))
         names(dff) <- paste0(eu, 1:length(eu))
-        dff$cumileage <- cumileage
+        if(!per_eu) dff$cumileage <- cumileage
         return(dff)
       } else {
         dff <- lapply(1:length(eu), function(i){
@@ -164,7 +175,8 @@ ef_nitro <- function(v,
           f1 <- function(km){
             a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
             cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
-            eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+            S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
+            eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
           }
           f1
         })
@@ -189,11 +201,10 @@ ef_nitro <- function(v,
         f1 <- function(km){
           a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
           cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
-          eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k)))
+          S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
+          eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
         }
-        ifelse(length(cumileage) == 1,
-               f1(cumileage),
-               f1(cumileage[i]))
+        if(length(cumileage) == 1) f1(cumileage) else f1(cumileage[i])
       }))
     }))
     dff <- EmissionFactors(dff)

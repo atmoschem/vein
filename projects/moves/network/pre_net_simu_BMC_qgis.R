@@ -150,7 +150,7 @@ net$PC <- (net$V19T_1 + net$V6T_1 +net$V7T_1 +net$V8T_1 +net$V9T_1 +net$V10T_1)*
 
 PT_LCT <-  pop[sourceTypeID %in% c(31, 32), sum(sourceTypePopulation)]
 per_PT <- pop[sourceTypeID %in% c(31), sum(sourceTypePopulation)]/PT_LCT
-per_LCT <- pop[sourceTypeID %in% c(31), sum(sourceTypePopulation)]/PT_LCT
+per_LCT <- pop[sourceTypeID %in% c(32), sum(sourceTypePopulation)]/PT_LCT
 
 # assuming V20T are PT
 net$PT <- (net$V20T_1 + net$ALL*df$F3)*per_PT

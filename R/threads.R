@@ -4,7 +4,6 @@
 #'
 #' @return Integer with the max number of threads
 #'
-#' @useDynLib vein
 #' @export
 #' @examples
 #' {

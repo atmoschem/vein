@@ -25,7 +25,8 @@ GriddedEmissionsArray(x, ..., cols, rows, times = ncol(x), rotate = "default")
 
 \item{rows}{Number of rows}
 
-\item{times}{Number of times}
+\item{times}{Number of times. Default is the number of columns of `x`
+without `id` and geometry. Only the first `times` columns are used.}
 
 \item{rotate}{Character, rotate array:"default",  "left", "right",
 "cols","rows", "both", "br", "colsbr", "rowsbr", "bothbr".

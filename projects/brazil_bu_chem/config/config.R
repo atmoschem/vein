@@ -65,17 +65,17 @@ if (
     language,
     "portuguese" = stop(
       "Precisa adicionar coluna ",
-      setdiff(metadata$vehicles, names(mileage)),
+      setdiff(metadata$vehicles, names(tfs)),
       " em `tfs`"
     ),
     "english" = stop(
       "You need to add column ",
-      setdiff(metadata$vehicles, names(mileage)),
+      setdiff(metadata$vehicles, names(tfs)),
       " in `tfs`"
     ),
     "spanish" = stop(
       "Necesitas agregar la columna ",
-      setdiff(metadata$vehicles, names(mileage)),
+      setdiff(metadata$vehicles, names(tfs)),
       " en `tfs`"
     )
   )
@@ -89,17 +89,17 @@ if (
     language,
     "portuguese" = stop(
       "Precisa adicionar coluna ",
-      setdiff(metadata$vehicles, names(mileage)),
+      setdiff(metadata$vehicles, names(veh)),
       " em `veh`"
     ),
     "english" = stop(
       "You need to add column ",
-      setdiff(metadata$vehicles, names(mileage)),
+      setdiff(metadata$vehicles, names(veh)),
       " in `veh`"
     ),
     "spanish" = stop(
       "Necesitas agregar la columna ",
-      setdiff(metadata$vehicles, names(mileage)),
+      setdiff(metadata$vehicles, names(veh)),
       " en `veh`"
     )
   )
@@ -160,7 +160,7 @@ if (mileage$Year[1] != year) {
       "The base year is ",
       year,
       " but the first year in `mileage` is ",
-      veh$Year[1]
+      mileage$Year[1]
     )),
     "spanish" = stop(paste0(
       "El año base es ",
@@ -485,7 +485,7 @@ switch(
 )
 
 for (i in seq_along(n_veh)) {
-  df_x <- im_co[, n_veh[[i]]]
+  df_x <- im_nox[, n_veh[[i]]]
   png(
     paste0(
       "images/IM_REP_APR_NOx_",
@@ -683,59 +683,6 @@ switch(
   "spanish" = message("\nFiguras en /images\n")
 )
 
-
-switch(
-  language,
-  "portuguese" = message(
-    "\nAdicionando ano ",
-    year,
-    " e scale ",
-    scale,
-    " em:"
-  ),
-  "english" = message("\nAdding year ", year, " amd scale ", scale, " in:"),
-  "spanish" = message("\nAgregando año ", year, " y scale ", scale, " en:")
-)
-
-message(
-  "scripts/exhaust.R\n",
-  "scripts/evaporatives.R\n",
-  "scripts/fuel_eval.R\n"
-)
-
-x <- c("scripts/exhaust.R", "scripts/evaporatives.R", "scripts/fuel_eval.R")
-
-for (i in seq_along(x)) {
-  file.copy(from = x[i], to = gsub("scripts/", "scripts/backup_", x[i]))
-  l <- readLines(x[i])
-
-  # year
-  l <- gsub(
-    pattern = "year = year",
-    replacement = paste0("year = ", year),
-    x = l
-  )
-
-  l <- gsub(
-    pattern = "year <- year",
-    replacement = paste0("year <- ", year),
-    x = l
-  )
-  # scale
-  l <- gsub(
-    pattern = "scale = scale",
-    replacement = paste0("scale = ", shQuote(scale)),
-    x = l
-  )
-
-  l <- gsub(
-    pattern = "scale <- scale",
-    replacement = paste0("scale <- ", shQuote(scale)),
-    x = l
-  )
-  # write
-  writeLines(text = l, con = x[i])
-}
 
 
 switch(

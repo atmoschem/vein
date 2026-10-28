@@ -4,7 +4,9 @@
 #' model applied by vein.
 #'
 #' @param ref Character; The ef model required (e.g. "eea" for ef_eea)
-#' @importFrom data.table setDT
+#' @return A data.table copy of the reference table. Modifying it does not
+#' change the tables used by vein.
+#' @importFrom data.table as.data.table
 #' @note This function is a shortcut to access unexported ef model information
 #' in vein.
 #'
@@ -14,7 +16,10 @@
 #' }
 get_ef_ref <- function(ref){
   #to access vein:::sysdata outside vein
-  data.table::setDT(sysdata[[ref]])
+  if (!ref %in% names(sysdata)) {
+    stop("'ref' must be one of: ", paste(names(sysdata), collapse = ", "))
+  }
+  data.table::as.data.table(sysdata[[ref]])
 }
 
 

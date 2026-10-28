@@ -88,16 +88,19 @@ beepr::beep(2)
 
 # Exhaust
 language <- "english" # portuguese english spanish
+# fuel_eval.R leaves a filtered (no ELEC/HY) and modified metadata in the workspace
+metadata <- readRDS("config/metadata.rds")
+year <- 2022 # also the deterioration year (yeardet) in emis_china
 pol <- c(
     "CO", "HC",  "NOx",# "CO2", "SO2",
     "PM10","PM2.5"
 )
-pol <- "CO"
 source("scripts/exhaust.R", encoding = "UTF-8")
 beepr::beep(2)
 
 # Evaporatives
 metadata <- readRDS("config/metadata.rds")
+year <- 2022 # also the deterioration year (yeardet) in emis_china
 pol <- c("Evaporative_driving",
          "Evaporative_parking")
 source("scripts/evaporatives.R", encoding = "UTF-8")
@@ -123,7 +126,6 @@ tfs <- readRDS("config/tfs.rds")
 pol <- c(
     "CO", "HC", "NOx", 
     "PM2.5", "PM10") #generate NMHC by fuel
-pol <- "CO"
 g <- make_grid(net, 100)
 # Number of lon points: 46
 # Number of lat points: 28
@@ -154,7 +156,9 @@ net <- readRDS("network/net.rds")
 evap <- c("Evaporative")
 g <- make_grid(net, 100)
 pol <- c("CO", "NO", "NO2")
-mol <- c(12 + 16, 14 + 16, 14 + 16 * 2)
+# g/mol: CO, NO, NO2. NO is NOx * 0.9 (post.R) and NOx mass is NO2-equivalent,
+# so NO mass is NO2-equivalent too and is converted to moles with 46, not 30
+mol <- c(12 + 16, 14 + 16 * 2, 14 + 16 * 2)
 save_species <- TRUE
 type <- "streets" # "grids"
 aer <- "pmneu2" # pmiag, pmneu

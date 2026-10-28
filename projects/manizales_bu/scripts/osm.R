@@ -5,12 +5,13 @@ dir.create("OSM")
 head(urlgeo)
 names(urlgeo)
 # convert to data.table
-# search africa
-af <- grep("Ecuador", urlgeo$Subregion)
+# search Colombia
+af <- grep("Colombia", urlgeo$Subregion)
 urlgeo[af, ]
 
-download.file(url = "https://download.geofabrik.de/south-america/ecuador-210101-free.shp.zip", 
-              destfile = "OSM/ecuador.shp.zip")
+file_down <- "OSM/colombia"
+download.file(url = "https://download.geofabrik.de/south-america/colombia-latest-free.shp.zip", 
+              destfile = paste0(file_down, ".shp.zip"))
 
 unzip(
   zipfile = paste0(

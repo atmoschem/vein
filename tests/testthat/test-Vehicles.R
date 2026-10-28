@@ -5,7 +5,7 @@ nett <- net[1, "ldv"]
 nett$ldv <- remove_units(nett$ldv)
 
 test_that("Vehicles works", {
-  expect_equal(Vehicles(as.numeric(ef_cetesb("CO_0km", "PC_G")))[[1]],
+  expect_equal(Vehicles(as.numeric(ef_cetesb("CO", "PC_G")))[[1]],
                Vehicles(0.1612112))
   expect_error(Vehicles(units::set_units(1, "g")),
                  "u.?")

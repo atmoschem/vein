@@ -60,7 +60,12 @@ https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 }
 \note{
 if length of eu is bigger than 1, cumileage can have values  of length 1
-or length equal to length of eu
+or length equal to length of eu. When the length is equal to the length of
+eu, each euro is evaluated at its own accumulated mileage and a data.frame
+with one row is returned. Otherwise, each euro is evaluated at all values of
+cumileage, with one row per value and a column `cumileage`.
+
+\code{fcorr} is applied (it was ignored before vein 2.0.0).
 }
 \examples{
 \dontrun{

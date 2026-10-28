@@ -24,10 +24,10 @@ for(kk in seq_along(gs)){
     # g/km^2/s
     x[[df_gas$gas[i]]] <- x[[df_gas$gas[i]]]*units::set_units(1,
                                                               "g")/units::set_units(dmonth(year_selected,
-                                                                                           kk)/24/3600,
+                                                                                           kk)*24*3600,
                                                                                     "s")
     # molec/km^2/s
-    x[[df_gas$gas[i]]] <- x[[df_gas$gas[i]]]/df_gas$mw*units::set_units(6.022e23, "molec/mol")
+    x[[df_gas$gas[i]]] <- x[[df_gas$gas[i]]]/df_gas$mw[i]*units::set_units(6.022e23, "molec/mol")
 
     # molec / cm^2 / s
     x[[df_gas$gas[i]]] <- units::set_units(x[[df_gas$gas[i]]], "molec/cm^2/s")
@@ -44,7 +44,7 @@ for(kk in seq_along(gs)){
 
     # mol/km^2/s
     y[[ny[i]]] <- y[[ny[i]]]/units::set_units(dmonth(year_selected,
-                                                     kk)/24/3600,
+                                                     kk)*24*3600,
                                               "s")
     # molec/km^2/s
     y[[ny[i]]] <- y[[ny[i]]]*units::set_units(6.022e23, "molec/mol")

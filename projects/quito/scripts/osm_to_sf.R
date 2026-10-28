@@ -11,7 +11,9 @@ streets <- x[!is.na(x$highway), ]
 dim(streets)
 # now getting provinces
 
-pro <- st_read("C:/Users/sibarrae/Documents/ecuador_mdpi/template/network/ecuador_provincias.gpkg")
+# provinces of Ecuador (same file as projects/ecuador_td/network/ecuador_provincias.gpkg)
+file_provincias <- "network/ecuador_provincias.gpkg"
+pro <- st_read(file_provincias)
 pro <- pro[pro$DPA_DESPRO == "PICHINCHA", ]
 
 stpi <- st_crop(st_transform(x, st_crs(pro)), pro)

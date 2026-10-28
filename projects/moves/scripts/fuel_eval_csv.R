@@ -82,6 +82,11 @@ dim(ef)
 names(ef)
 names(ef)[ncol(ef)] <- "EF" 
 
+# WARNING (methodological, not fixed): MOVES rates per vehicle (starts,
+# evaporative, hotelling; g/vehicle/hour) are applied here to the traffic flow
+# of every street link (lkm = 1). A vehicle is then counted on every link it
+# drives through, so these emissions scale with network density rather than
+# with the vehicle population. Expect an overestimate.
 moves_rpsy_meta(
   metadata = metadata, 
   lkm = rep(1, length(lkm)), 
@@ -149,11 +154,12 @@ net <- readRDS("network/net.rds")
 tfs <- readRDS("config/tfs.rds")
 veh <- readRDS("config/fleet_age.rds")
 categories <- unique(metadata$vein_name) # in net
-year <- 2017
+year <- 2019
 theme <- "dark" # dark clean ink
 
 verbose  <- FALSE
 speed <- FALSE
+survival <- FALSE # traffic.R needs it; same value as the traffic block of main.R
 fuel <- readRDS("config/fuel.rds")
 source("scripts/traffic.R", encoding = "UTF-8")
 
@@ -219,6 +225,11 @@ ef[pollutantID == 91 &
 dim(ef)
 names(ef)[ncol(ef)] <- "EF" 
 
+# WARNING (methodological, not fixed): MOVES rates per vehicle (starts,
+# evaporative, hotelling; g/vehicle/hour) are applied here to the traffic flow
+# of every street link (lkm = 1). A vehicle is then counted on every link it
+# drives through, so these emissions scale with network density rather than
+# with the vehicle population. Expect an overestimate.
 moves_rpsy_meta(
   metadata = metadata, 
   lkm = rep(1, length(lkm)), 

@@ -228,12 +228,14 @@ x[is.na(x)] <- 0
 id <- x$id
 x$id <- NULL
 
+# vein has an exhaust NMHC profile for CNG (LDV CNG Exhaust); the E85
+# evaporative profile used before is unrelated to CNG
 dx <- speciate(
   x = x,
   spec = "nmhc",
-  fuel = "E85",
+  fuel = "CNG",
   veh = "LDV",
-  eu = "Evaporative"
+  eu = "Exhaust"
 )
 
 dx$id <- rep(id, length(unique(dx$pol)))

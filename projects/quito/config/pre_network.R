@@ -1,3 +1,7 @@
+# NOTE: template from the Manizales project (network/manizales.gpkg with
+# Manizales count columns). It is not used for Quito: main.R reads
+# network/net_sumo_v2.gpkg (or network/synthetic_quito.gpkg from
+# scripts/osm_to_sf.R). Kept as an example of how to build the network.
 library(sf)
 net <- st_read("network/manizales.gpkg")
 

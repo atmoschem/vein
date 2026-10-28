@@ -95,8 +95,8 @@ vocE100EX <- emis_chem2(
   na.rm = TRUE
 )
 
-# Etanol Evap
-x <- st_set_geometry(readRDS(paste0("post/grids/", evap[1], ".rds")), NULL)
+# Etanol Evap (evap[2] = E_EVAP_01; evap[1] is gasoline)
+x <- st_set_geometry(readRDS(paste0("post/grids/", evap[2], ".rds")), NULL)
 x[is.na(x)] <- 0
 x$id <- NULL
 dx <- speciate(
@@ -195,10 +195,14 @@ gPM10$id <- NULL
 for (i in 1:ncol(gPM10)) gPM10[, i] <- units::set_units(gPM10[, i], "ug/m^2/s")
 
 
-# gPM2510 are in g/km/h
-# need to change units to ug/m2/s
+# coarse fraction PM10 - PM2.5 in ug/m2/s (PM10 in post.R includes exhaust PM,
+# so the difference is the resuspension coarse part). Negative values are set
+# to 0.
 gPM2510 <- gPM10 - gPM
-gPM2510 <- st_sf(gPM2510, geometry = g$g)
+for (i in 1:ncol(gPM2510)) {
+  gPM2510[[i]] <- gPM2510[[i]] * as.numeric(as.numeric(gPM2510[[i]]) > 0)
+}
+gPM2510 <- st_sf(gPM2510, geometry = g$geometry)
 saveRDS(gPM2510, paste0("post/", mech, "/E_PM_10.rds"))
 
 

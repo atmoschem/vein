@@ -9,30 +9,37 @@ get_project(directory, case, url)
 \arguments{
 \item{directory}{Character; Path to an existing or a new directory to be created.}
 
-\item{case}{Character; One of  of the following:
+\item{case}{Character; One of  of the following (aliases in parentheses):
 \tabular{llll}{
   \strong{case}  \tab \strong{Description}\tab  \strong{EF} \tab \strong{Notes}   \cr
   argentina  \tab top down\tab COPERT \tab  .rds\cr
   emislacovid  \tab Bottom-up March 2020\tab CETESB \tab  .rds\cr
-  brazil_bu_chem     \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
-  brazil_bu_speed    \tab Bottom-up hourly speed-dependent (EMEP/EEA scaled)\tab CETESB+tunnel\tab  .rds\cr
-  brazil_bu_chem_streets \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
-  brazil_td_chem     \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
+  brazil_bu_chem (brazil, brasil, brazil_bu, brasil_bu, brazil_bu_csvgz,
+  brazil_bu_csv, brazil_bu_cb05, brazil_mech, brazil_bu_chem_month,
+  brazil_bu_chem_im)    \tab Bottom-up  chemical mechanisms\tab CETESB+tunnel\tab  .rds\cr
+  brazil_bu_speed (brazil_speed, brazil_bu_scaled)   \tab Bottom-up hourly speed-dependent (EMEP/EEA scaled)\tab CETESB+tunnel\tab  .rds\cr
+  brazil_bu_chem_streets (brazil_bu_chem_streets_im) \tab Bottom-up  chemical mechanisms for streets and MUNICH\tab CETESB+tunnel\tab  .rds\cr
+  brazil_td_chem (brazil_td, brazil_country)    \tab Top-down with chemical mechanisms\tab CETESB\tab  .csv and .rds\cr
   masp2020       \tab Bottom-down\tab CETESB+tunnel\tab  csv and.rds\cr
   amazon2014     \tab Top-down Amazon\tab CETESB+tunnel\tab  csv and.rds\cr
   curitiba       \tab Bottom-down +GTFS\tab CETESB+tunnel\tab  csv and.rds\cr
-  ecuador     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
-  ecuador_mdpi     \tab Top-down. Renamed ecuador_td_im\tab EEA\tab  csv and.rds\cr
+  ecuador (ecuador_td)    \tab Top-down\tab EEA\tab  csv and.rds\cr
+  ecuador_mdpi     \tab Top-down\tab EEA\tab  csv and.rds\cr
   quito     \tab Bottom-up \tab EEA\tab  csv and.rds\cr
-  moves_bu         \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
-  manizales_bu     \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
+  moves_bu (moves)        \tab Bottom-up\tab US/EPA MOVES \tab  csv and.rds (requires MOVES >=3.0 on Windows)\cr
+  manizales_bu (manizales)    \tab Bottom-up  chemical mechanisms\tab EEA\tab  csv, csv.gz, .rds\cr
   eu_bu_chem       \tab Bottom-up  chemical mechanisms\tab EEA 2019\tab  .rds\cr
   eu_bu_chem_simple\tab Bottom-up  chemical mechanisms 7 veh\tab EEA 2019\tab  .rds\cr
   china_bu_chem    \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
   china_bu_chem_1h    \tab Bottom-up  chemical mechanisms\tab MEE China\tab  .rds\cr
 }}
 
-\item{url}{String, with the URL to download VEIN project}
+\item{url}{String, with the URL of a project to download. When provided,
+\code{case} is ignored. The file is downloaded and extracted into
+\code{directory}. Supported formats are ".tar.gz", ".tgz", ".tar" and ".zip".}
+}
+\value{
+Invisibly, the path of \code{directory}.
 }
 \description{
 \code{\link{get_project}} downloads a project for running vein.

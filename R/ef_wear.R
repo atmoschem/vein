@@ -8,7 +8,10 @@
 #' @param type Character; type of vehicle: "2W", "MC", "Motorcycle", "PC",
 #'  "LCV", 'HDV", "BUS", "TRUCKS"
 #' @param pol Character; pollutant: "TSP", "PM10", "PM2.5", "PM1" and "PM0.1"
-#' @param speed Data.frame of speeds
+#' @param speed Data.frame, matrix or numeric vector of average speeds
+#' (km/h). Each column is usually one hour. Not needed when \code{wear = "road"}.
+#' The speed correction of the EMEP/EEA guidebook is applied here, so
+#' \code{\link{emis_wear}} must not apply it again.
 #' @param load Load of the HDV
 #' @param axle Number of axle of the HDV
 #' @param road Type of road "urban", "rural", "motorway".
@@ -16,6 +19,18 @@
 #' @param verbose Logical to show more information.
 #' Only applies when type is "E6DV" or "BEV"
 #' @return emission factors grams/km
+#' @note Speed corrections (EMEP/EEA guidebook, 1.A.3.b.vi, equations 5 and 8),
+#' with V the mean trip speed in km/h:
+#'
+#' Tyre: 1.39 for V < 40; -0.00974 V + 1.78 for 40 <= V <= 90; 0.902 for V > 90.
+#'
+#' Brake: 1.67 for V < 40; -0.0270 V + 2.75 for 40 <= V <= 95; 0.185 for V > 95.
+#'
+#' Heavy duty vehicles: tyre TSP = axle/2 * (1.41 + 1.38 load) * 0.0107 and
+#' brake TSP = 3.13 * (1 + 0.79 load) * 0.0075 (the passenger car factor).
+#' Before vein 2.0.0 the speed correction was inverted (low speeds received
+#' the high speed factor) and the HDV brake factor used the two-wheeler value
+#' (0.0037).
 #' @references Ntziachristos and Boulter 2016. Automobile tyre and break wear
 #' and road abrasion. In: EEA, EMEP. EEA air pollutant emission inventory
 #' guidebook-2009. European Environment Agency, Copenhagen, 2016
@@ -56,11 +71,13 @@ ef_wear <- function (wear,
   if(length(type) > 1) stop("only 1 type")
   if(!type %in% c("E6DV", "BEV")) {
 
-    if(is.vector(speed)){
-      speed <- matrix(as.numeric(speed), ncol = 1)
+    types <- c("2W", "MC", "Motorcycle", "PC", "LCV", "HDV", "BUS", "TRUCKS")
+    if(!type %in% types) {
+      stop("Select type from:\n", paste(types, collapse = "\n"))
     }
-    for (i  in 1:ncol(speed) ) {
-      speed[, i] <- as.numeric(speed[, i])
+    pols <- c("TSP", "PM10", "PM2.5", "PM1", "PM0.1")
+    if(!pol %in% pols) {
+      stop("Select pol from:\n", paste(pols, collapse = "\n"))
     }
 
     if (wear %in% c("tyre", "tire")) {
@@ -70,29 +87,14 @@ ef_wear <- function (wear,
           type=="PC",0.0107,
           ifelse(
             type=="LCV", 0.0109,
-            ifelse(
-              type %in% c("HDV", "BUS", "TRUCKS"),
-              (axle/2)*(1.41 + 1.38*load)*0.0107))))
+            (axle/2)*(1.41 + 1.38*load)*0.0107)))
 
-      f <- ifelse(
-        pol=="TSP", 1,
-        ifelse(
-          pol=="PM10", 0.6,
-          ifelse(
-            pol=="PM2.5", 0.42,
-            ifelse(
-              pol=="PM1",0.06,
-              ifelse(
-                pol=="PM0.1",0.048,"pol")))))
+      f <- c(TSP = 1, PM10 = 0.6, PM2.5 = 0.42, PM1 = 0.06, PM0.1 = 0.048)[[pol]]
 
-      sv <- do.call("cbind",lapply(1:ncol(speed), function(i){
-        ifelse(
-          speed[, i] > 40, 1.39,
-          ifelse(
-            speed[, i] >= 40 & speed <= 90,
-            -0.00974*speed[, i] + 1.78, 0.902))
-      }))
-
+      scf <- function(V) {
+        ifelse(V < 40, 1.39,
+               ifelse(V <= 90, -0.00974*V + 1.78, 0.902))
+      }
 
     } else if (wear %in% c("break", "brake")){
       ef <- ifelse(
@@ -101,52 +103,43 @@ ef_wear <- function (wear,
           type=="PC",0.0075,
           ifelse(
             type=="LCV", 0.0117,
-            ifelse(
-              type %in% c("HDV", "BUS", "TRUCKS"),
-              3.13*(1 + 0.79*load)*0.0037))))
+            3.13*(1 + 0.79*load)*0.0075)))
 
-      f <- ifelse(
-        pol=="TSP", 1,
-        ifelse(
-          pol=="PM10",0.98,
-          ifelse(
-            pol=="PM2.5", 0.39,
-            ifelse(
-              pol=="PM1",0.1,
-              ifelse(
-                pol=="PM0.1",0.08,"pol")))))
+      f <- c(TSP = 1, PM10 = 0.98, PM2.5 = 0.39, PM1 = 0.1, PM0.1 = 0.08)[[pol]]
 
-      sv <- do.call("cbind",lapply(1:ncol(speed), function(i){
-        ifelse(
-          speed[, i] > 40, 1.67,
-          ifelse(
-            speed[, i] >= 40 & speed <= 90,
-            -0.0270*speed[, i] + 2.75, 0.185))
-      }))
+      scf <- function(V) {
+        ifelse(V < 40, 1.67,
+               ifelse(V <= 95, -0.0270*V + 2.75, 0.185))
+      }
 
     } else if (wear == "road"){
-      sv <- 1
       ef <- ifelse(
         type%in% c("2W", "MC", "Motorcycle"), 0.0060,
         ifelse(
           type=="PC",0.0150,
           ifelse(
             type=="LCV", 0.0150,
-            ifelse(
-              type %in% c("HDV", "BUS", "TRUCKS"),
-              0.0760))))
+            0.0760)))
 
-      f <- ifelse(
-        pol=="TSP", 1,
-        ifelse(
-          pol=="PM10",0.5,
-          ifelse(
-            pol=="PM2.5", 0.27,
-            ifelse(
-              pol=="PM1", 0.27,
-              ifelse(
-                pol=="PM0.1", 0.27,"pol")))))
+      f <- c(TSP = 1, PM10 = 0.5, PM2.5 = 0.27, PM1 = 0.27, PM0.1 = 0.27)[[pol]]
+      return(EmissionFactors(ef*f))
+    } else {
+      stop("wear must be 'tyre', 'tire', 'break', 'brake' or 'road'")
     }
+
+    if(missing(speed)) stop("'speed' is needed for tyre and brake wear")
+    if(inherits(speed, "sf")) speed <- sf::st_set_geometry(speed, NULL)
+    kmh <- function(x) {
+      if(inherits(x, "units")) x <- units::set_units(x, "km/h", mode = "standard")
+      as.numeric(x)
+    }
+    if(is.null(dim(speed))){
+      speed <- matrix(kmh(speed), ncol = 1)
+    }
+    sv <- do.call("cbind", lapply(seq_len(ncol(speed)), function(i){
+      scf(kmh(speed[, i]))
+    }))
+
     efw <- EmissionFactors(ef*f*sv)
     return(efw)
 

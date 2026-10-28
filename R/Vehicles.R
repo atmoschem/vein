@@ -34,7 +34,7 @@
 #' vlt <- Vehicles(lt)
 #' class(vlt)
 #' plot(vlt)
-#' LT_B5 <- age_hdv(x = lt,name = "LT_B5")
+#' LT_B5 <- age_veh(x = lt, type = "hdv", name = "LT_B5")
 #' summary(LT_B5)
 #' plot(LT_B5)
 #' }
@@ -51,7 +51,7 @@ Vehicles <- function(x, ..., time=NULL) {
       e[,i] <- e[,i]*units::as_units("veh")
     }
 
-    if(!missing(time)){
+    if(!is.null(time)){
       for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
     }
     veh <- sf::st_sf(e, geometry = geo)
@@ -65,8 +65,8 @@ Vehicles <- function(x, ..., time=NULL) {
       veh[,i] <- veh[,i]*units::as_units("veh")
     }
 
-    if(!missing(time)){
-      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    if(!is.null(time)){
+      for(i in 1:ncol(veh)) veh[,i] <- veh[,i]*units::as_units(1, time)
     }
 
     class(veh) <- c("Vehicles",class(veh))
@@ -79,8 +79,8 @@ Vehicles <- function(x, ..., time=NULL) {
       veh[,i] <- veh[,i]*units::as_units("veh")
     }
 
-    if(!missing(time)){
-      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    if(!is.null(time)){
+      for(i in 1:ncol(veh)) veh[,i] <- veh[,i]*units::as_units(1, time)
     }
 
     class(veh) <- c("Vehicles",class(x))
@@ -89,16 +89,18 @@ Vehicles <- function(x, ..., time=NULL) {
 
     veh <- x
 
-    if(units(x)$numerator != "veh") stop("units are not 'veh'")
+    if(!identical(units(x)$numerator, "veh")) stop("units are not 'veh'")
 
-  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
+  } else if( is.numeric(x) ) {
 
     veh <- x*units::as_units("veh")
 
-    if(!missing(time)){
+    if(!is.null(time)){
       veh <- veh*units::as_units(1, time)
     }
 
+  } else {
+    stop("'x' must be of class 'sf', 'matrix', 'data.frame', 'units', 'numeric' or 'integer'")
   }
   return(veh)
 }
@@ -107,14 +109,14 @@ Vehicles <- function(x, ..., time=NULL) {
 #' @method print Vehicles
 #' @export
 print.Vehicles <- function(x, ...) {
-  nr <- ifelse(nrow(x) <= 5, nrow(x), 5)
+  nr <- min(nrow(x), 5)
   if(ncol(x) == 1) {
     ndf <- names(x)
-    df <- data.frame(ndf = x[1:nr, ])
+    df <- data.frame(ndf = x[seq_len(nr), ])
     names(df) <- ndf
     print.data.frame(df)
   } else {
-    print.data.frame(x[1:nr, ])
+    print.data.frame(x[seq_len(nr), , drop = FALSE])
   }
   if(nrow(x) > 5)     cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
 }

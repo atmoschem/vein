@@ -61,22 +61,41 @@ The order of using these functions is:
 1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
 2. If you know the sales of vehicles, or the registry of new vehicles,
 use \code{\link{age}} to apply a survival function.
-3. If you know the theoretical shape of the circulating fleet and you can use
-\code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
-you dont know the sales or registry of vehicles, but somehow you know
-the shape of this curve.
+3. If you know the theoretical shape of the circulating fleet use
+\code{\link{age_veh}} (\code{\link{age_ldv}}, \code{\link{age_hdv}} and
+\code{\link{age_moto}} are deprecated wrappers of \code{\link{age_veh}}).
+For instance, you dont know the sales or registry of vehicles, but somehow
+you know the shape of this curve.
 4. You can use/merge/transform/adapt any of these functions.
 
-It consists in a Gompertz equation with default parameters from
-1 national emissions inventory for green housegases in Brazil, MCT 2006
+The shape is built from a survival curve S(t), evaluated at the ages
+\code{agemin:agemax}: for type "ldv" a Gompertz curve
+S(t) = 1 - exp(-exp(a + b*t)) (defaults a = 1.698, b = -0.2, from the
+1st Brazilian national GHG inventory, MCT 2006) and for "hdv" and "mc" a
+double logistic curve S(t) = 1/(1 + exp(a*(t + b))) + 1/(1 + exp(a*(t - b)))
+(defaults a = 0.2, b = 17).
+The fraction of vehicles at each age is NOT S(t) but the decrease of
+survival between consecutive ages, d(t) = S(t) - S(t + 1)
+(i.e. \code{-diff(S)}); the last age repeats the value of the previous one.
+Because sum(d) is usually lower than 1, the remainder (1 - sum(d)) is added
+in equal parts to every age (or subtracted, when negative), so that the
+distribution sums 1 and the total number of vehicles x*k is preserved.
+Hence, when \code{agemax} is small (i.e. the survival curve is truncated
+well before it reaches zero), most of the fleet is spread uniformly among
+the ages. With the default parameters, the "ldv" distribution peaks around
+age 8 and the "hdv"/"mc" distribution around age 16.
+Ages lower than \code{agemin} are filled with zero. The factor \code{k}
+is applied once.
 }
 \examples{
 \dontrun{
 data(net)
-PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400")
+PC_E25_1400 <- age_veh(x = net$ldv, name = "PC_E25_1400")
 plot(PC_E25_1400)
-PC_E25_1400 <- age_ldv(x = net$ldv, name = "PC_E25_1400", net = net)
+PC_E25_1400 <- age_veh(x = net$ldv, name = "PC_E25_1400", net = net)
 plot(PC_E25_1400)
+LT_B5 <- age_veh(x = net$hdv, type = "hdv", name = "LT_B5")
+plot(LT_B5)
 }
 }
 \seealso{

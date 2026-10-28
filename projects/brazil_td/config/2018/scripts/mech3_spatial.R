@@ -20,11 +20,15 @@ for(j in seq_along(mech)) {
 cat(mech[j], " ")
   
 x <- readRDS("post/emi_table.rds")
+if (length(unique(x[grepl("^Evaporatives", type_emi)]$type_emi)) > 1) {
+  stop("emi_table has evaporatives for several temperature scenarios: ",
+       "set `evap_scenario` in main.R")
+}
 gx <- x[type_emi == "Exhaust" &
           fuel == "G" &
           pollutant == "NMHC", 
         sum(emissions, na.rm = T),
-        by = month]
+        keyby = month]
 
 dx <- speciate(
   x = Emissions(matrix(gx$V1, nrow = 1)),
@@ -45,11 +49,11 @@ vocE25EX <- emis_chem2(
 
 
 # Gasoline Evap ####
-gx <- x[type_emi == "Evaporatives" &
+gx <- x[grepl("^Evaporatives", type_emi) &
           fuel == "G" &
           pollutant == "NMHC", 
         sum(emissions, na.rm = T),
-        by = month]
+        keyby = month]
 
 dx <- speciate(
   x = Emissions(matrix(gx$V1, nrow = 1)),
@@ -74,7 +78,7 @@ gx <- x[type_emi == "Exhaust" &
           fuel == "E" &
           pollutant == "NMHC", 
         sum(emissions, na.rm = T),
-        by = month]
+        keyby = month]
 
 dx <- speciate(
   x = Emissions(matrix(gx$V1, nrow = 1)),
@@ -95,11 +99,11 @@ vocE100EX <- emis_chem2(
 )
 
 # Etanol Evap ####
-gx <- x[type_emi == "Evaporatives" &
+gx <- x[grepl("^Evaporatives", type_emi) &
           fuel == "E" &
           pollutant == "NMHC", 
         sum(emissions, na.rm = T),
-        by = month]
+        keyby = month]
 
 dx <- speciate(
   x = Emissions(matrix(gx$V1, nrow = 1)),
@@ -123,7 +127,7 @@ gx <- x[type_emi == "Exhaust" &
           fuel == "D" &
           pollutant == "NMHC", 
         sum(emissions, na.rm = T),
-        by = month]
+        keyby = month]
 
 dx <- speciate(
   x = Emissions(matrix(gx$V1, nrow = 1)),
@@ -177,23 +181,31 @@ dfpol <- dcast(dfpol, formula = pollutant ~ month)
 names(dfpol)[1:13] <- c("group", names(dfvoc)[2:13])
 
 
-# PM
+# PM2.5: exhaust PM + wear PM2.5 (both "PM" in emi_table)
 gxpm <- x[pollutant %in% c("PM"), 
         sum(emissions, na.rm = T),
-        by = .(month)]
+        keyby = .(month)]
 
+# coarse PM = PM10 - PM2.5 of wear, the only source with PM10
 gxpm10res <- x[pollutant %in% c("PM10"), 
           sum(emissions, na.rm = T),
-          by = .(month)]
+          keyby = .(month)]
+gxpm25res <- x[pollutant %in% c("PM") & type_emi == "Wear", 
+          sum(emissions, na.rm = T),
+          keyby = .(month)]
 
 gxpm10coarse <- gxpm10res
-gxpm10coarse$V1 <- abs(gxpm10res$V1 - gxpmres$V1)
+gxpm10coarse$V1 <- gxpm10res$V1 - gxpm25res$V1
 
+# aerosol species split PM2.5; coarse goes to E_PM_10
 lpm <- lapply(seq_along(aer), function(i) {
   data.frame(month = 1:12, 
              group = toupper(rep(names(aer)[i], 12)), 
-             V1 = gxpm10coarse$V1*aer[i])
+             V1 = gxpm$V1*aer[i])
 })
+lpm[[length(lpm) + 1]] <- data.frame(month = 1:12, 
+                                     group = "E_PM_10", 
+                                     V1 = gxpm10coarse$V1)
 lpm <- rbindlist(lpm)
 dfpm <- dcast(lpm, formula = group ~ month, value.var="V1")
 

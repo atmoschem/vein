@@ -16,6 +16,9 @@
 #' The second column must have the name "VAL" indicating the associated values
 #' to each category of street
 #' @param verbose Logical; to show more info.
+#' @return sf with the same rows and order of `streets`, adding one column
+#' for each column of `dfemis` (except `by`). Streets whose `by` is not
+#' present in `dfemis` receive 0 emissions.
 #' @importFrom sf st_geometry st_as_sf st_length st_set_geometry
 #' @export
 #' @seealso \code{\link{add_polid}}
@@ -48,54 +51,48 @@ emis_to_streets <- function(streets,
   if(inherits(dfemis, "sf")) {
     dfemis <- sf::st_set_geometry(dfemis, NULL)
   }
-  outersect <- function(x, y) {
-    sort(c(setdiff(x, y),
-           setdiff(y, x)))
-  }
-  rn <- row.names(streets)
+  dfemis <- as.data.frame(dfemis)
+  if (!by %in% names(dfemis)) stop("'dfemis' must have the column '", by, "'")
   streets <- sf::st_as_sf(streets)
-  nstreets <- names(sf::st_set_geometry(streets, NULL))
+  if (!by %in% names(streets)) stop("'streets' must have the column '", by, "'")
   geo <- sf::st_geometry(streets)
-  streets$length <- sf::st_length(streets)
-  streets <- sf::st_set_geometry(streets, NULL)
+  dfa <- sf::st_set_geometry(streets, NULL)
+  w <- as.numeric(sf::st_length(streets))
 
   # check stpro
   if(!missing(stpro)) {
     if(names(stpro)[1] != "stpro") stop("First name of data.frame stpro must be 'stpro'")
     if(names(stpro)[2] != "VAL") stop("Second name of data.frame stpro must be 'VAL'")
-    streets <- merge(streets, stpro, by = "stpro", all.x = T)
-    streets$VAL <- ifelse(is.na(streets$VAL), 1, streets$VAL)
-    dfa <- do.call("rbind",lapply(1:nrow(dfemis), function(i){
-      if(verbose)   message(paste0("filtering ", dfemis[[by]][i]))
-      dfstreets <- streets[streets[[by]] == dfemis[[by]][i], ]
-      dfstreets$length <- dfstreets$length*dfstreets$VAL
-      dfstreets$p_length <- as.numeric(dfstreets$length)/sum(as.numeric(dfstreets$length))
-      dfs <- unlist(dfemis[dfemis[[by]] == dfemis[[by]][i], 1:(ncol(dfemis) - 1)])
-      dft <- as.matrix(dfstreets$p_length)  %*%  matrix(as.numeric(dfs), nrow = 1)
-      a <- as.data.frame(cbind(dfstreets, dft))
-      a
-    }))
-    dfa$VAL <- NULL
-  } else {
-
-    dfa <- do.call("rbind",lapply(1:nrow(dfemis), function(i){
-      if(verbose)   message(paste0("filtering ", dfemis[[by]][i]))
-      dfstreets <- streets[streets[[by]] == dfemis[[by]][i], ]
-      dfstreets$p_length <- as.numeric(dfstreets$length)/sum(as.numeric(dfstreets$length))
-      dfs <- unlist(dfemis[dfemis[[by]] == dfemis[[by]][i], 1:(ncol(dfemis) - 1)])
-      dft <- as.matrix(dfstreets$p_length)  %*%  matrix(as.numeric(dfs), nrow = 1)
-      a <- as.data.frame(cbind(dfstreets, dft))
-      a
-    }))
+    if(!"stpro" %in% names(dfa)) stop("'streets' must have the column 'stpro'")
+    val <- stpro$VAL[match(dfa$stpro, stpro$stpro)]
+    val[is.na(val)] <- 1
+    w <- w * val
   }
-  dfa$length <- NULL
-  dfa$p_length <- NULL
-  ndfemis <- outersect(names(dfemis), by)
-  ldfa <- length(names(dfa))
-  lndfemis <- length(ndfemis)
-   ll <- ldfa - lndfemis
-  names(dfa) <- c(names(dfa)[1:ll], ndfemis)
+
+  # emissions columns, in the order of dfemis
+  vars <- setdiff(names(dfemis), by)
+  out <- matrix(0, nrow = nrow(dfa), ncol = length(vars))
+  for (i in seq_len(nrow(dfemis))) {
+    if(verbose)   message(paste0("filtering ", dfemis[[by]][i]))
+    idx <- which(dfa[[by]] == dfemis[[by]][i])
+    if (length(idx) == 0) {
+      warning("There are no streets with ", by, " = ", dfemis[[by]][i])
+      next
+    }
+    p <- w[idx] / sum(w[idx])
+    vals <- vapply(vars, function(v) as.numeric(dfemis[[v]][i]), numeric(1))
+    out[idx, ] <- out[idx, , drop = FALSE] + p %o% vals
+  }
+  nomatch <- !dfa[[by]] %in% dfemis[[by]]
+  if (any(nomatch)) {
+    warning(sum(nomatch), " streets have a '", by,
+            "' not present in 'dfemis', their emissions are 0")
+  }
+  for (j in seq_along(vars)) {
+    x <- out[, j]
+    if (inherits(dfemis[[vars[j]]], "units")) units(x) <- units(dfemis[[vars[j]]])
+    dfa[[vars[j]]] <- x
+  }
   dfa <- sf::st_sf(dfa, geometry = geo)
   return(dfa)
 }
-

@@ -1,5 +1,5 @@
 library(data.table)
-library(colorout)
+if (requireNamespace("colorout", quietly = TRUE)) library(colorout)
 
 list.files()
 

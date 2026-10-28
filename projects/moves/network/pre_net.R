@@ -5,7 +5,7 @@ library(ggplot2)
 net <- sf::st_read("../maryland_email.gpkg")
 net <- st_transform(net, 6487)
 names(net)
-net$lanes <- as.numeric(as.character(net$SINGLE_UNIT_AADT))
+net$lanes <- as.numeric(as.character(net$NUM_LANES))
 
 metadata <- readxl::read_excel("../excel_inventory/inventory_MD.xlsx", "metadata")
 setDT(metadata)
@@ -29,7 +29,7 @@ setDT(pop)
 class(net$MOTORCYCLE_AADT)
 net$MC <- net$MOTORCYCLE_AADT
 
-LDV <- pop[sourceTypeID %in% c(21, 32), sum(sourceTypePopulation)]
+LDV <- pop[sourceTypeID %in% c(21, 31), sum(sourceTypePopulation)] # PC + PT
 per_PC <- pop[sourceTypeID %in% c(21), sum(sourceTypePopulation)]/LDV
 per_PT <- pop[sourceTypeID %in% c(31), sum(sourceTypePopulation)]/LDV
 class(net$CAR_AADT)
@@ -51,13 +51,13 @@ net$BUS_SCHOOL <- net$BUS_AADT*per_SBUS
 
 TRUCKS_SU <- pop[sourceTypeID %in% 51:54, sum(sourceTypePopulation)]
 per_T_REFUSE <- pop[sourceTypeID %in% c(51), sum(sourceTypePopulation)]/TRUCKS_SU
-per_T_SU_SW <- pop[sourceTypeID %in% c(52), sum(sourceTypePopulation)]/TRUCKS_SU
-per_T_SU_LW <- pop[sourceTypeID %in% c(53), sum(sourceTypePopulation)]/TRUCKS_SU
+per_T_SU_SH <- pop[sourceTypeID %in% c(52), sum(sourceTypePopulation)]/TRUCKS_SU
+per_T_SU_LH <- pop[sourceTypeID %in% c(53), sum(sourceTypePopulation)]/TRUCKS_SU
 per_T_MH <- pop[sourceTypeID %in% c(54), sum(sourceTypePopulation)]/TRUCKS_SU
 class(net$SINGLE_UNIT_AADT)
 net$TRUCKS_REFUSE <- net$SINGLE_UNIT_AADT*per_T_REFUSE
-net$TRUCKS_SU_SW <- net$SINGLE_UNIT_AADT*per_T_SU_SW
-net$TRUCKS_SU_LW <- net$SINGLE_UNIT_AADT*per_T_SU_LW
+net$TRUCKS_SU_SH <- net$SINGLE_UNIT_AADT*per_T_SU_SH
+net$TRUCKS_SU_LH <- net$SINGLE_UNIT_AADT*per_T_SU_LH
 net$TRUCKS_MH <- net$SINGLE_UNIT_AADT*per_T_MH
 
 class(net$COMBINATION_UNIT_AADT)
@@ -79,7 +79,7 @@ pbapply::pblapply(seq_along(ids), function(i) {
                     "PC", "PT", 
                     "LCT",
                     "BUS_INTERCITY", "BUS_TRANSIT", "BUS_SCHOOL",
-                    "TRUCKS_REFUSE", "TRUCKS_SU_SW", "TRUCKS_SU_LW", "TRUCKS_MH",
+                    "TRUCKS_REFUSE", "TRUCKS_SU_SH", "TRUCKS_SU_LH", "TRUCKS_MH",
                     "TRUCKS_CU_SH", "TRUCKS_CU_LH")], 
              na.rm = T)
   df <- data.frame(MC = sum(xt$MC, na.rm = T)/TOT,
@@ -90,8 +90,8 @@ pbapply::pblapply(seq_along(ids), function(i) {
                    BUS_TRANSIT = sum(xt$BUS_TRANSIT, na.rm = T)/TOT,
                    BUS_SCHOOL = sum(xt$BUS_SCHOOL, na.rm = T)/TOT,
                    TRUCKS_REFUSE = sum(xt$TRUCKS_REFUSE, na.rm = T)/TOT,
-                   TRUCKS_SU_SW = sum(xt$TRUCKS_SU_SW, na.rm = T)/TOT,
-                   TRUCKS_SU_LW = sum(xt$TRUCKS_SU_LW, na.rm = T)/TOT,
+                   TRUCKS_SU_SH = sum(xt$TRUCKS_SU_SH, na.rm = T)/TOT,
+                   TRUCKS_SU_LH = sum(xt$TRUCKS_SU_LH, na.rm = T)/TOT,
                    TRUCKS_MH = sum(xt$TRUCKS_MH, na.rm = T)/TOT,
                    TRUCKS_CU_SH = sum(xt$TRUCKS_CU_SH, na.rm = T)/TOT,
                    TRUCKS_CU_LH = sum(xt$TRUCKS_CU_LH, na.rm = T)/TOT
@@ -159,15 +159,15 @@ net[,
 
 
 net[,
-    TRUCKS_SU_SW_FINAL := fifelse(is.na(TRUCKS_SU_SW), 
-                                  BUF_TRUCKS_SU_SW*AADT_2018, 
-                                  TRUCKS_SU_SW)]
+    TRUCKS_SU_SH_FINAL := fifelse(is.na(TRUCKS_SU_SH), 
+                                  BUF_TRUCKS_SU_SH*AADT_2018, 
+                                  TRUCKS_SU_SH)]
 
 
 net[,
-    TRUCKS_SU_LW_FINAL := fifelse(is.na(TRUCKS_SU_LW), 
-                                  BUF_TRUCKS_SU_LW*AADT_2018, 
-                                  TRUCKS_SU_LW)]
+    TRUCKS_SU_LH_FINAL := fifelse(is.na(TRUCKS_SU_LH), 
+                                  BUF_TRUCKS_SU_LH*AADT_2018, 
+                                  TRUCKS_SU_LH)]
 
 
 net[,
@@ -206,7 +206,7 @@ net_final <- net[, c(paste0(c("MC",
                               "PC", "PT", 
                               "LCT",
                               "BUS_INTERCITY", "BUS_TRANSIT", "BUS_SCHOOL",
-                              "TRUCKS_REFUSE","TRUCKS_SU_SW", "TRUCKS_SU_LW", "TRUCKS_MH",
+                              "TRUCKS_REFUSE","TRUCKS_SU_SH", "TRUCKS_SU_LH", "TRUCKS_MH",
                               "TRUCKS_CU_SH", "TRUCKS_CU_LH"),
                             "_FINAL"), "NUM_LANES", "AAWDT_2018")]
   names(net_final) <- gsub("_FINAL", "", names(net_final))
@@ -219,4 +219,3 @@ st_write(net_final, "network/net.gpkg")
 # edit inventory.xlsx
 rm(list = ls())
 gc()
-´

@@ -1,6 +1,12 @@
 # grade
 g <- st_transform(g, crs)
 
+# outputs of this step are rewritten from scratch (post/grids is filled from
+# every file in post/streets)
+for (d in c("post/streets", "post/grids")) {
+  suppressWarnings(file.remove(list.files(d, pattern = "\\.rds$", full.names = TRUE)))
+}
+
 # streets  ####
 switch(
   language,
@@ -9,12 +15,17 @@ switch(
   "spanish" = message("\nAgregando emisiones por calle...\n")
 )
 
+x_ex <- fread("emi/EXHAUST_STREETS.csv")
 x <- rbind(
-  fread("emi/EXHAUST_STREETS.csv"),
+  x_ex,
   fread("emi/EVAP_STREETS.csv"),
   fread("emi/WEAR_STREETS.csv")
 )
 
+# exhaust PM is fine (PM2.5) and also part of PM10:
+# PM2.5 = exhaust PM + wear PM2.5; PM10 = exhaust PM + wear PM10
+x <- rbind(x, x_ex[pol == "PM"][, pol := "PM10"])
+rm(x_ex)
 x[, pol := fifelse(pol == "PM", "PM2.5", pol)]
 unique(x$pol)
 na <- paste0("V", 1:nrow(tfs))
@@ -123,11 +134,17 @@ switch(
 )
 
 
+dt_ex <- fread("emi/EXHAUST_DF.csv")
 dt <- rbind(
-  fread("emi/EXHAUST_DF.csv"),
+  dt_ex,
   fread("emi/EVAP_DF.csv"),
   fread("emi/WEAR_DF.csv")
 )
+# same PM naming as the streets: PM2.5 = exhaust PM + wear PM2.5,
+# PM10 = exhaust PM + wear PM10
+dt <- rbind(dt, dt_ex[pollutant == "PM"][, pollutant := "PM10"])
+rm(dt_ex)
+dt[, pollutant := fifelse(pollutant == "PM", "PM2.5", pollutant)]
 # Agregando emissões por categoria ####
 switch(
   language,

@@ -46,15 +46,17 @@ Number of particles and Active Surface.}
 
 \item{show.equation}{Option to see or not the equation parameters}
 
-\item{speed}{Numeric; Speed to return Number of emission factor and not a function.
-It needs units in km/h}
+\item{speed}{Speed in km/h with class "Speed" or "units", to return the
+emission factor at that speed instead of a function.}
 
 \item{fcorr}{Numeric; Correction by fuel properties by euro technology.
 See \code{\link{fuel_corr}}. The order from first to last is
-"PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1}
+"PRE", "I", "II", "III", "IV", "V", "VI" and any later standard. Default is 1}
 }
 \value{
-an emission factor function which depends of the average speed V  g/km
+an emission factor function which depends of the average speed V  g/km.
+The speed is limited to the validity range of the equation and negative
+values are set to 0.
 }
 \description{
 This function returns speed dependent emission factors. The emission factors

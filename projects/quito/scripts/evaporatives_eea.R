@@ -243,7 +243,7 @@ for (i in seq_along(metadata_evap$vehicles)) {
 
 
 switch(language,
-       "portuguese" = message("\nEmisses em: /emi/evaporative.csv:"),
+       "portuguese" = message("\nEmissões em: /emi/evaporative.csv:"),
        "english" = message("\nEmissions in: /emi/evaporative.csv"),
        "spanish" = message("\nEmisiones en: /emi/evaporative.csv")
 )

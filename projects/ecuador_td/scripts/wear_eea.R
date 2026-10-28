@@ -51,7 +51,7 @@ for (i in seq_along(metadata$vehicles)) {
       ef = if(pol[j, ]$wear == "road") rep(ef, ncol(veh)) else rep(ef$V1, ncol(veh)),
       fortran = TRUE,
       nt = nt,
-      pro_month = pmonth[fuel == ifelse(metadata$vehicles[i] == "D", "D", "G")]$consumption_lt,
+      pro_month = pmonth[fuel == ifelse(metadata$fuel[i] == "D", "D", "G")]$consumption_lt,
       verbose = verbose,
       params = list(
         veh = metadata$vehicles[i],

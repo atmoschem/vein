@@ -10,13 +10,23 @@ suppressWarnings(file.remove("emi/evaporatives.csv"))
 meta_ev <- metadata[metadata$fuel != "D", ]
 veh_ev <- meta_ev$vehicles
 
-# temperature
+# temperature: one estimate per scenario. Scenarios are labelled in type_emi;
+# set `evap_scenario` in main.R to keep only one (several scenarios in the same
+# table must not be added together)
+if (exists("evap_scenario") && !is.null(evap_scenario)) {
+  meto <- meto[scenario %in% evap_scenario]
+  if (nrow(meto) == 0) {
+    stop("`evap_scenario` (", paste(evap_scenario, collapse = ", "),
+         ") not found in met for year ", year_selected)
+  }
+}
 t_sc <- split(meto, meto$scenario)
 sc <- names(t_sc)
 
-reg <- unique(meto$region)
+# regions in the row order of veh/*.rds (written by scripts/traffic.R)
+reg <- readRDS(paste0("veh/", veh_ev[1], ".rds"))$region
 
-dfreg <- data.table(region = reg, rows = seq_along(reg))
+dfreg <- data.table(region = reg, rows = as.character(seq_along(reg)))
 
 switch(
   language,
@@ -28,7 +38,21 @@ switch(
 
 # tt <- rr <- mm <- i <- eva <- 1
 for (tt in seq_along(t_sc)) {
-  met <- t_sc[[tt]]
+  # monthly temperature per region (repeated rows averaged). Rows are
+  # month-major with the regions in the row order of veh/*.rds: this is the
+  # layout emis_hot_td expects when nrow(ef) == 12 * nrow(veh)
+  met <- t_sc[[tt]][
+    region %in% reg,
+    .(Temperature = mean(Temperature)),
+    by = .(region, Month)
+  ]
+  met <- met[order(Month, match(region, reg))]
+  if (nrow(met) != 12 * length(reg)) {
+    stop(
+      "met for scenario ", sc[tt], " must have 12 months for each of the ",
+      length(reg), " regions"
+    )
+  }
 
   te <- met$Temperature
   bb <- (0 + 15) / 2
@@ -55,13 +79,7 @@ for (tt in seq_along(t_sc)) {
 
   dd <- list(met$ef_d, met$ef_rl, met$ef_hs)
 
-  names(dd) <- c("Diurnal", "Running Losses", "Hoat Soak")
-
-  tdf <- c(
-    rep("Diurnal", length(met$ef_d)),
-    rep("Running Losses", length(met$ef_rl)),
-    rep("Hoat Soak", length(met$ef_hs))
-  )
+  names(dd) <- c("Diurnal", "Running Losses", "Hot Soak")
 
   for (eva in seq_along(dd)) {
     cat("\n", names(dd)[eva], "\n")
@@ -71,7 +89,12 @@ for (tt in seq_along(t_sc)) {
 
       x[is.na(x)] <- 0
 
-      pmonth[fuel == meta_ev$fuel[i], mean(m3), by = m]$V1 -> dm
+      if (!identical(x$region, reg)) {
+        stop("veh/", veh_ev[i], ".rds rows are not in the region order of veh/", veh_ev[1], ".rds")
+      }
+
+      # national monthly profile, Jan..Dec
+      dm <- as.numeric(pmonth[fuel == meta_ev$fuel[i], mean(as.numeric(m3)), keyby = m]$V1)
 
       rbindlist(lapply(seq_along(dd[[eva]]), function(efef) {
         xx <- ef_cetesb(
@@ -102,7 +125,6 @@ for (tt in seq_along(t_sc)) {
       #print(head(lef))
 
       x <- as.data.frame(x)
-      array
       array_x <- emis_hot_td(
         veh = x[, 1:maxage],
         lkm = mileage[[veh_ev[i]]],

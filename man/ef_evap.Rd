@@ -34,7 +34,10 @@ Only engines of >750 has canister.}
 \item{dt}{Character or Numeric: Average monthly temperature variation: "-5_10", "0_15", "10_25"
 and "20_35". This argument can vector with several elements. dt can also be data.frame,
 but it is recommended that the number of columns are each month. So that dt
-varies in each row and each column.}
+varies in each row and each column. Numeric temperatures (Celsius) are
+assigned to the class with the nearest mid-point (2.5, 7.5, 17.5 and 27.5),
+i.e. < 5: "-5_10", 5 - 12.5: "0_15", 12.5 - 22.5: "10_25" and >= 22.5:
+"20_35". Before vein 2.0.0 the class mid-points were used as limits.}
 
 \item{ca}{Size of canister: "no" meaning no canister, "small", "medium" and
 "large".}
@@ -53,7 +56,7 @@ varies in each row and each column.}
 and g/proced (assuming proced similar to trip) in g/km.}
 
 \item{kmday}{Numeric; average daily mileage. Experimental option
-to convert g/day in g/km.
+to convert g/day in g/km. Only for the diurnal factor "ed".
 it is an information more solid than to know the average number of trips per day.}
 
 \item{show}{when TRUE shows row of table with respective emission factor.}

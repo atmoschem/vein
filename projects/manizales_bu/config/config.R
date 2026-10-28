@@ -185,7 +185,7 @@ fuel <- fuel[region == toupper(provincia) &
 setDT(met)
 met <- met[region == toupper(provincia) & 
              Year == year &
-             Month == month] #all the months!
+             Month == month] # only the month `month`: one temperature for cold start and evaporatives
 
 saveRDS(metadata, "config/metadata.rds")
 saveRDS(mileage, "config/mileage.rds")
@@ -535,7 +535,7 @@ switch(language,
 )
 
 for (i in seq_along(n_veh)) {
-  df_x <- im_co[, n_veh[[i]]]
+  df_x <- im_nox[, n_veh[[i]]]
   png(
     paste0(
       "images/IM_NOx_",
@@ -625,19 +625,20 @@ switch(language,
 vein_notes(
   notes = c("Notas proyecto manizales_bu_im",
             "bu es de bottom-up",
-            "im significa que tiene incluido el efecto de IM con dados de Ecuador",
+            "im: las hojas im_* tienen datos de IM de Ecuador, pero el efecto de IM no esta activado (IM <- FALSE en main.R)",
             "La hoja de fleet_age deberia ser ajustada para dar los porcentajes de la composicion",
             "Fue simulado free flow speed y capacity pero tiene que ser obtenido ese dato!"),
   file = "notes/README",
-  title = paste0("Manizales province ", year),
+  title = paste0("Manizales, Colombia ", year),
   approach = "Bottom-up",
   traffic = "Flota",
-  composition = "Ecuador",
+  composition = "Ecuador (composicion de flota tomada de Ecuador)",
   ef = "EEA, vehiculos pesados con gasolina, asumidos PC grandes. 
         Vehiculos hibridos asumidos PC Euro 4 (es el unico disponible en los EF).
         Es necesario colocar 0 en estos vehiculos donde no estaban en circulacion.
-        Aqui fue incorporado el efecto del IM.
-        El FE final es:
+        Factores de deterioro (EEA) solo para PC y LCV a gasolina Euro I o posterior.
+        El efecto del IM aun no esta implementado en la version bottom-up.
+        Cuando se implemente, el FE final sera:
         FE = FE*%IM_OK + FE*IM_FACTOR*(1-IM_OK)
         Por ejemplo,si el factor es 1, y 85% aprueba IM
         y el factor es 5 y 15% reprueva, el factor final es
@@ -645,7 +646,7 @@ vein_notes(
   cold_start = "EEA",
   evaporative = "EEA",
   standards = "Euro",
-  mileage = "Bruni and Bales 2013, Brazil"
+  mileage = "Curvas de kilometraje tomadas de Bruni and Bales 2013, Brasil"
 )
 # saveRDS
 

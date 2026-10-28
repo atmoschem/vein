@@ -7,7 +7,9 @@
 add_lkm(x)
 }
 \arguments{
-\item{x}{Object with class "data.frame", "matrix",  "numeric" or "integer"}
+\item{x}{Object with class "data.frame", "matrix",  "numeric", "integer"
+or "units". Objects (or columns) with class "units" are converted to
+'km'.}
 }
 \value{
 Objects of class "data.frame" or "units"

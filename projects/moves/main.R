@@ -10,7 +10,7 @@ sessionInfo()
 
 
 # 0 Configuration
-language <- "english" # portuguese spanishx'x'
+language <- "english" # portuguese spanish
 path <- "config/inventory_MD.xlsx"
 readxl::excel_sheets(path)
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
@@ -35,7 +35,7 @@ path <- "config/inventory_MD.xlsx"
 metadata <- readxl::read_xlsx(path = path, sheet = "metadata")
 net <- sf::st_read("network/net_baltimore_city.gpkg")
 crs <- 6487
-tit <- "Travel demand model outptus from Baltimore 2019 (veh/h)"
+tit <- "Travel demand model outputs from Baltimore 2019 (veh/h)"
 names(net)
 categories <- unique(metadata$vein_name) # in network/net.gpkg
 source("scripts/net.R", encoding = "UTF-8")

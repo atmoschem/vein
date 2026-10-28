@@ -75,7 +75,7 @@ met <- readRDS("config/met.rds")
 verbose <- FALSE
 pol <- c(
   "CO", "HC", "NMHC", "NOx", "CO2",
-  "PM", "NO2", "NO", "SO2", "CH4", "NH3", "CH4", "N2O"
+  "PM", "NO2", "NO", "SO2", "CH4", "NH3", "N2O"
 )
 scale <- "tunnel2018"
 plot_ef <- FALSE
@@ -94,6 +94,9 @@ verbose <- FALSE
 maxage <- 40
 scale <- "tunnel2018"
 plot_ef <- F
+# temperature scenario for evaporatives: NULL = every scenario of the year,
+# each labelled in type_emi (future years have several, e.g. "SSP 4.5")
+evap_scenario <- NULL
 
 source("scripts/evaporatives.R", encoding = "UTF-8", echo = F)
 rm(list = ls())
@@ -105,7 +108,6 @@ language <- "english" #portuguese english spanish
 metadata <- readRDS("config/metadata.rds")
 mileage  <- readRDS("config/mileage.rds")
 tfs      <- readRDS("config/tfs.rds")
-net      <- readRDS("network/net.rds")
 veh      <- readRDS("config/fleet_age.rds")
 pmonth <- readRDS("config/pmonth.rds")
 pol      <- c("PM2.5", "PM10")
@@ -117,7 +119,6 @@ gc()
 
 
 #4) Post-estimation ####
-roads <- readRDS("network/net.rds")
 crs <- 3857
 osm_name <- "highway"
 language <- "spanish" # english spanish portuguese
@@ -126,11 +127,11 @@ rm(list = ls())
 gc()
 
 # #4) Post-estimation spatial ####
-# roads <- readRDS("network/net.rds")
+# roads <- readRDS("network/net.rds") # network/ is empty in UFBR.tar.gz: add net.rds first
 # crs <- 3857
 # osm_name <- "highway"
 # language <- "spanish" # english spanish portuguese
-# source("scripts/post2_spatial.RR", encoding = "UTF-8")
+# source("scripts/post2_spatial.R", encoding = "UTF-8")
 # rm(list = ls())
 # gc()
 
@@ -162,7 +163,8 @@ gc()
 #   e_ecj = 0.01974#,h2o = 0.277
 # )
 # pol <- c("CO", "NO", "NO2", "SO2", "CO2", "NH3", "CH4", "N2O")
-# mol <- c(12, 14 + 16, 14 + 16 * 2, 32 + 16 * 2, 12 + 16 * 2, 14 + 3, 14 * 2 + 16, 14*2 + 16)
+# # g/mol; vein NO is NO2-equivalent mass (NO = NOx * (1 - fNO2), NOx as NO2), so NO uses 46
+# mol <- c(12 + 16, 14 + 16 * 2, 14 + 16 * 2, 32 + 16 * 2, 12 + 16 * 2, 14 + 3, 12 + 4, 14 * 2 + 16)
 # mech <- c("CB05", "S99", "RADM2", "MOZT1", "RACM2") # actually RACM
 # suppressWarnings(source("scripts/mech3_spatial.R", encoding = "UTF-8", echo = F))
 # rm(list = ls())

@@ -5,8 +5,6 @@
 \title{Chinese emission factors by emissions standard}
 \usage{
 ef_china_long(v = "PV", t = "Small", f = "G", standard, p)
-
-ef_china_long(v = "PV", t = "Small", f = "G", standard, p)
 }
 \arguments{
 \item{v}{Character; category vehicle: "PV" for Passenger Vehicles or 'Trucks"}
@@ -17,27 +15,19 @@ ef_china_long(v = "PV", t = "Small", f = "G", standard, p)
 
 \item{f}{Character;fuel: "G", "D", "CNG", "ALL"}
 
-\item{standard}{Character vector; "PRE", "I", "II", "III", "IV", "V".}
+\item{standard}{Character vector; "PRE", "I", "II", "III", "IV", "V", "VI".
+Standard "VI" is assumed as "V".}
 
 \item{p}{Character; pollutant: "CO", "NOx","HC", "PM", "Evaporative_driving"
 or "Evaporative_parking"}
 }
 \value{
-long data.frame
-
-long data.frame
+EmissionFactors with one value per standard
 }
 \description{
 Chinese emission factors in long format
-
-Correction of Chinese emission
 }
 \examples{
-{
-\dontrun{
-# Do not run
-}
-}
 {
 ef_china_long(standard = "I", p = "CO")
 }

@@ -8,10 +8,18 @@
 #' as number of columns matching the age distribution of that ype of vehicle.
 #' The number of rows is equal to the number of streets link. If this is a list,
 #' the length of the list is the vehicles for each hour.
-#' @param lkm Length of each link in km
-#' @param ef List of functions of emission factors
+#' @param lkm Length of each link with units of length (class 'units'). It is
+#' converted to km with \code{units::set_units}.
+#' @param ef List of functions of emission factors ("EmissionFactorsList"),
+#' or numeric emission factors with one value for each column of `veh`.
+#' Emission factors with units are converted to 'g/km'. When `ef` is a
+#' data.frame with the same number of rows of `veh`, it is applied by street
+#' (only in the R calculation). When the length of `ef` is lower than the
+#' number of columns of `veh`, the last emission factor is repeated, also in
+#' the top-down approach.
 #' @param speed Speed data-frame with number of columns as hours. The default value is 34km/h
-#' @param agemax Age of oldest vehicles for that category
+#' @param agemax Age of oldest vehicles for that category. Only the first
+#' `agemax` columns of `veh` are used, in the R and fortran calculations.
 #' @param profile Dataframe or Matrix with nrows equal to 24 and ncol 7 day of
 #' the week
 #' @param simplify Logical; to determine if EmissionsArray should les dimensions,
@@ -25,11 +33,14 @@
 #' @param day Number of considered days in estimation
 #' @param verbose Logical; To show more information
 #' @param nt Integer; Number of threads wich must be lower than max available.
-#' See \code{\link{check_nt}}. Only when fortran = TRUE
+#' See \code{\link{check_nt}}. Only when fortran = TRUE. The fortran
+#' calculation supports outputs up to \code{.Machine$integer.max} elements.
 #' @useDynLib  vein, .registration = TRUE
 #' @return If the user applies a top-down approach, the resulting units will be
 #' according its own data. For instance, if the vehicles are veh/day, the units
-#' of the emissions implicitly will be g/day.
+#' of the emissions implicitly will be g/day. The EmissionsArray always has
+#' the dimensions streets x categories x hours (x days), also when there is
+#' only one street.
 #' @export
 #' @importFrom sf st_set_geometry
 #' @importFrom dotCall64 .C64 vector_dc
@@ -176,9 +187,7 @@ emis <- function(veh,
                  lkm,
                  ef,
                  speed,
-                 agemax = ifelse(is.data.frame(veh), ncol(veh),
-                   ncol(veh[[1]])
-                 ),
+                 agemax = if (!inherits(veh, "list")) ncol(veh) else ncol(veh[[1]]),
                  profile,
                  simplify = FALSE,
                  fortran = FALSE,
@@ -186,21 +195,9 @@ emis <- function(veh,
                  day = ncol(profile),
                  verbose = FALSE,
                  nt = ifelse(check_nt() == 1, 1, check_nt() / 2)) {
-  # Check units
-  if (!inherits(lkm,  "units")) {
-    stop("lkm neeeds to has class 'units' in 'km'. Please, check package 'units'")
-  }
-  if (units(lkm) == units(units::as_units("m"))) {
-    stop("Units of lkm is 'm'. Please, check package '?units::set_units'")
-  }
-  # At least, on e of these
-  # ommented because I need to evaluate withinherits and I will do it someday
-  # if (any(!class(ef) %in% c(
-  #   "list", "units", "EmissionFactorsList",
-  #   "EmissionFactors", "data.frame"
-  # ))) {
-  #   stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
-  # }
+  # lkm can have any length unit, it is converted to km
+  lkm <- vein_as_km(lkm, "lkm")
+
   # Checking sf
   if (inherits(veh, "sf")) {
     if (verbose) message("Converting sf to data.frame")
@@ -210,13 +207,28 @@ emis <- function(veh,
     warning("Arguments hour and day will be deprecated, they will derived from profile")
   }
 
-  lkm <- as.numeric(lkm)
   # veh is "Vehicles" data-frame ####
   if (!inherits(x = veh, what = "list")) {
-    veh <- remove_units(veh)
+    veh <- as.data.frame(remove_units(veh))
+    if (agemax > ncol(veh)) {
+      stop("'agemax' (", agemax, ") cannot be higher than the number of columns of 'veh' (", ncol(veh), ")")
+    }
+    if (agemax < ncol(veh)) {
+      if (verbose) message("Using the first ", agemax, " columns of 'veh' ('agemax')")
+      veh <- veh[, seq_len(agemax), drop = FALSE]
+    }
+    nr <- nrow(veh)
+    nc <- ncol(veh)
 
-    # top down sin perfil, FE numerico
-    if (missing(profile) & is.numeric(ef)) {
+    # emission factors that are not functions: numeric vector (one ef by
+    # column of veh) or matrix (one ef by street and column of veh)
+    if (!inherits(ef, "list")) {
+      ef <- vein_ef_gkm(ef, nr)
+      ef <- vein_adjust_ef(ef, nc, verbose)
+    }
+
+    # top down sin perfil ####
+    if (missing(profile) && !inherits(ef, "list")) {
       if (verbose) {
         message(
           paste0(
@@ -225,18 +237,18 @@ emis <- function(veh,
           )
         )
       }
+      if (nr != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`` ")
 
-      if (nrow(veh) != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`` ")
-
+      if (fortran && is.matrix(ef)) {
+        message("fortran is not implemented when 'ef' varies by street, changing to default")
+        fortran <- FALSE
+      }
       if (fortran) {
         veh <- as.matrix(veh)
-        lkm <- as.numeric(lkm)
-        ef <- as.numeric(ef)
-        nrowv <- as.integer(nrow(veh))
-        ncolv <- as.integer(ncol(veh))
-
-        if (length(lkm) != nrow(veh)) stop("length of `lkm` must be equal to number of rows of `veh`")
-        if (length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+        storage.mode(veh) <- "double"
+        nrowv <- as.integer(nr)
+        ncolv <- as.integer(nc)
+        vein_check_size(nrowv, ncolv)
         # emis(i, j) = veh(i,j) * lkm(i) * ef(j)
         if (!missing(nt)) {
           if (nt >= check_nt()) {
@@ -260,7 +272,7 @@ emis <- function(veh,
             lkm = lkm,
             ef = ef,
             nt = as.integer(nt),
-            emis = dotCall64::vector_dc("double",nrowv * ncolv),
+            emis = dotCall64::vector_dc("double", nrowv * ncolv),
             INTENT = c(
               "r", "r",
               "r", "r", "r",
@@ -282,7 +294,7 @@ emis <- function(veh,
             veh = veh,
             lkm = lkm,
             ef = ef,
-            emis = dotCall64::vector_dc("double",nrowv * ncolv),
+            emis = dotCall64::vector_dc("double", nrowv * ncolv),
             INTENT = c(
               "r", "r",
               "r", "r", "r",
@@ -292,138 +304,93 @@ emis <- function(veh,
             VERBOSE = 1
           )$emis
         }
-
         e <- matrix(a, nrow = nrowv, ncol = ncolv)
         return(Emissions(e))
       } else {
-        a <- lapply(1:ncol(veh), function(i) {
-          veh[, i] * as.numeric(lkm) * as.numeric(ef)[i]
-        })
-        a <- Emissions(do.call("cbind", a))
-        return(a)
+        return(Emissions(vein_vkmef(veh, lkm, ef)))
       }
 
-      # top down sin perfil, FE lista y con velocidad
-    } else if (missing(profile) & inherits(ef, "EmissionFactorsList")) {
+      # top down sin perfil, FE lista y con velocidad ####
+    } else if (missing(profile) && inherits(ef, "list")) {
       # Check speed
       if (missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
       speed <- remove_units(speed)
 
-      if (nrow(veh) != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`")
-      if (nrow(veh) != length(unlist(speed))) stop("Number of rows of `veh` must be the same rows of `speed`")
+      if (nr != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`")
+      if (nr != length(unlist(speed))) stop("Number of rows of `veh` must be the same rows of `speed`")
 
       if (fortran) message("Not implemented yet when ef is 'EmissionsFactorsList`, changing to default")
-      a <- lapply(1:ncol(veh), function(i) {
-        veh[, i] * as.numeric(lkm) * ef[[i]](speed)
-      })
-      a <- Emissions(do.call("cbind", a))
-      return(a)
+      ef <- vein_adjust_eflist(ef, nc, verbose)
+      a <- matrix(NA_real_, nrow = nr, ncol = nc)
+      for (i in seq_len(nc)) {
+        a[, i] <- veh[, i] * lkm * as.numeric(unlist(ef[[i]](speed)))
+      }
+      return(Emissions(a))
     }
 
+    # bottom up ####
+    if (length(lkm) == 1 && nr > 1) lkm <- rep(lkm, nr)
+    if (nr != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`")
 
-    # bottom up
-    if (!missing(profile) & is.vector(profile)) {
-      profile <- matrix(profile, ncol = 1)
+    profile <- remove_units(profile)
+    if (is.vector(profile)) {
+      profile <- matrix(as.numeric(profile), ncol = 1)
+    } else {
+      profile <- as.matrix(profile)
+      storage.mode(profile) <- "double"
     }
+    nh <- nrow(profile)
+    nd <- ncol(profile)
 
     if (inherits(x = ef, what = "list")) {
       if (verbose) message("Emission factors inherits from list")
 
-      # Check length
-      if (ncol(veh) != length(ef)) {
-        if (verbose) {
-          message(
-            paste0(
-              "Number of columns of 'veh' is different than length of 'ef'\n",
-              "adjusting length of ef to the number of colums of 'veh'\n"
-            )
-          )
-        }
-        if (ncol(veh) > length(ef)) {
-          for (i in (length(ef) + 1):ncol(veh)) {
-            ef[[i]] <- ef[[length(ef)]]
-          }
-        } else if (ncol(veh) < length(ef)) {
-          ff <- list()
-          for (i in 1:ncol(veh)) {
-            ff[[i]] <- ef[[i]]
-          }
-          ef <- ff
-        }
-      }
+      ef <- vein_adjust_eflist(ef, nc, verbose)
       # Check speed
       if (missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
       speed <- remove_units(speed)
+      if (fortran) message("Not implemented yet when ef is 'EmissionsFactorsList`, changing to default")
 
-      # simplify?
+      # speed is passed unevaluated to the ef functions, as many of them
+      # (e.g. constant emission factors) do not use it
       if (simplify) {
-        if (fortran) message("Not implemented yet when ef is 'EmissionsFactorsList`, changing to default")
-        d <- simplify2array(
-          lapply(1:length(unlist(profile)), function(j) { # 7 dias
-            simplify2array(
-              lapply(1:agemax, function(k) { # categorias
-                veh[, k] * unlist(profile)[j] * lkm * ef[[k]](speed[, j])
-              })
-            )
-          })
-        )
+        pro <- as.numeric(profile)
+        d <- array(NA_real_, dim = c(nr, nc, length(pro)))
+        for (j in seq_along(pro)) { # hours x days
+          for (k in seq_len(nc)) { # categorias
+            d[, k, j] <- veh[, k] * pro[j] * lkm * as.numeric(ef[[k]](speed[, j]))
+          }
+        }
       } else {
-        if (fortran) message("Not implemented yet when ef is 'EmissionsFactorsList`, changing to default")
-        d <- simplify2array(
-          lapply(1:ncol(profile), function(j) { # 7 dias
-            simplify2array(
-              lapply(1:nrow(profile), function(i) { # 24 horas
-                simplify2array(
-                  lapply(1:agemax, function(k) { # categorias
-                    veh[, k] * profile[i, j] * lkm * ef[[k]](speed[, (1:nrow(profile))[i] + nrow(profile) * (j - 1)])
-                  })
-                )
-              })
-            )
-          })
-        )
+        d <- array(NA_real_, dim = c(nr, nc, nh, nd))
+        for (j in seq_len(nd)) { # 7 dias
+          for (i in seq_len(nh)) { # 24 horas
+            for (k in seq_len(nc)) { # categorias
+              d[, k, i, j] <- veh[, k] * profile[i, j] * lkm *
+                as.numeric(ef[[k]](speed[, i + nh * (j - 1)]))
+            }
+          }
+        }
       }
     } else {
       if (verbose) message("Emission factors does not inherits from list")
-
-      # Check length
-      if (ncol(veh) != length(ef)) {
-        if (verbose) {
-          message(
-            paste0(
-              "Number of columns of 'veh' is different than length of 'ef'\n",
-              "adjusting length of ef to the number of colums of 'veh'\n"
-            )
-          )
-        }
-        if (ncol(veh) > length(ef)) {
-          for (i in (length(ef) + 1):ncol(veh)) {
-            ef[[i]] <- ef[[length(ef)]]
-          }
-        } else if (ncol(veh) < length(ef)) {
-          ff <- list()
-          for (i in 1:ncol(veh)) {
-            ff[[i]] <- ef[i]
-          }
-          ef <- unlist(ff)
-        }
-      }
       # Check speed
       if (!missing(speed)) warning("When ef is not EmissionFactorsList, speed is not needed")
+      if (fortran && is.matrix(ef)) {
+        message("fortran is not implemented when 'ef' varies by street, changing to default")
+        fortran <- FALSE
+      }
 
       # simplify?
       if (simplify) {
         if (fortran) {
           veh <- as.matrix(veh)
-          lkm <- as.numeric(lkm)
-          ef <- as.numeric(ef)
-          profile <- as.numeric(unlist(profile))
-          nrowv <- as.integer(nrow(veh))
-          ncolv <- as.integer(ncol(veh))
-          prok <- as.integer(length(unlist(profile)))
-
-          if (length(lkm) != nrow(veh)) stop("length of `lkm` must be equal to number of rows of `veh`")
-          if (length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+          storage.mode(veh) <- "double"
+          profile <- as.numeric(profile)
+          nrowv <- as.integer(nr)
+          ncolv <- as.integer(nc)
+          prok <- as.integer(length(profile))
+          vein_check_size(nrowv, ncolv, prok)
           # emis(i, j, k) = veh(i, j) * lkm(i) * ef(j)*pro(k)
 
           if (!missing(nt)) {
@@ -450,7 +417,7 @@ emis <- function(veh,
               ef = ef,
               pro = profile,
               nt = as.integer(nt),
-              emis = dotCall64::vector_dc("double",nrowv * ncolv * prok),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * prok),
               INTENT = c(
                 "r", "r", "r",
                 "r", "r", "r", "r",
@@ -474,7 +441,7 @@ emis <- function(veh,
               lkm = lkm,
               ef = ef,
               pro = profile,
-              emis = dotCall64::vector_dc("double",nrowv * ncolv * prok),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * prok),
               INTENT = c(
                 "r", "r", "r",
                 "r", "r", "r", "r",
@@ -484,31 +451,21 @@ emis <- function(veh,
               VERBOSE = 1
             )$emis
           }
-          # fortran
-          # do concurrent(i= 1:nrowv, j = 1:ncolv, k = 1:prok)
-          # emis(i, j,k) = veh(i,j) * lkm(i) * ef(j)*pro(k)
-          # end do
           e <- array(a, dim = c(nrowv, ncolv, prok))
           return(EmissionsArray(e))
         } else {
-          vkm <- veh * lkm
-          vkmef <- t(t(vkm) * ef)
-          d <- simplify2array(lapply(unlist(profile), "*", vkmef))
+          # streets x categories x (hours * days)
+          d <- outer(vein_vkmef(veh, lkm, ef), as.numeric(profile))
         }
       } else {
         if (fortran) {
           veh <- as.matrix(veh)
-          profile <- as.matrix(profile)
-          lkm <- as.numeric(lkm)
-          ef <- as.numeric(ef)
-          nrowv <- as.integer(nrow(veh))
-          ncolv <- as.integer(ncol(veh))
-          proh <- as.integer(nrow(profile))
-          prod <- as.integer(ncol(profile))
-
-
-          if (length(lkm) != nrow(veh)) stop("length of `lkm` must be equal to number of rows of `veh`")
-          if (length(ef) != ncol(veh)) stop("length of `ef` and number of cols of `veh` must be equal")
+          storage.mode(veh) <- "double"
+          nrowv <- as.integer(nr)
+          ncolv <- as.integer(nc)
+          proh <- as.integer(nh)
+          prod <- as.integer(nd)
+          vein_check_size(nrowv, ncolv, proh, prod)
           # emis(i, j, k, l) = veh(i,j) * lkm(i) * ef(j)*pro(k,l)
 
           if (!missing(nt)) {
@@ -537,7 +494,7 @@ emis <- function(veh,
               ef = ef,
               pro = profile,
               nt = as.integer(nt),
-              emis = dotCall64::vector_dc("double",nrowv * ncolv * proh * prod),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * proh * prod),
               INTENT = c(
                 "r", "r", "r", "r",
                 "r", "r", "r", "r",
@@ -562,7 +519,7 @@ emis <- function(veh,
               lkm = lkm,
               ef = ef,
               pro = profile,
-              emis = dotCall64::vector_dc("double",nrowv * ncolv * proh * prod),
+              emis = dotCall64::vector_dc("double", nrowv * ncolv * proh * prod),
               INTENT = c(
                 "r", "r", "r", "r",
                 "r", "r", "r", "r",
@@ -575,20 +532,8 @@ emis <- function(veh,
           e <- array(a, dim = c(nrowv, ncolv, proh, prod))
           return(EmissionsArray(e))
         } else {
-          d <- simplify2array(
-            lapply(1:ncol(profile), function(j) { # 7 dias
-              simplify2array(
-                lapply(1:nrow(profile), function(i) { # 24 horas
-                  simplify2array(
-                    lapply(1:agemax, function(k) { # categorias
-                      veh[, k] * profile[i, j] * lkm * ef[k]
-                    })
-                  )
-                })
-              )
-            })
-          )
-          # checked with for(j in 1:7) for(i in 1:24) print((1:24)[i] + 24*(j - 1))
+          # streets x categories x hours x days
+          d <- outer(vein_vkmef(veh, lkm, ef), profile)
         }
       }
     }
@@ -599,56 +544,145 @@ emis <- function(veh,
     # veh is a list of "Vehicles" data-frames
     # each member of the list is an hour
   } else {
-    if (ncol(veh[[1]]) != length(ef)) {
-      # check speed
-      speed <- as.data.frame(speed)
-      for (i in 1:ncol(speed)) {
-        speed[, i] <- as.numeric(speed[, i])
-      }
+    if (missing(speed)) stop("Add speed to be read by the EmissionFactorsList")
+    speed <- as.data.frame(remove_units(speed))
+    for (j in seq_along(veh)) {
+      veh[[j]] <- as.data.frame(remove_units(veh[[j]]))
+    }
+    nr <- nrow(veh[[1]])
+    nc <- agemax
+    if (nc > ncol(veh[[1]])) {
+      stop("'agemax' (", nc, ") cannot be higher than the number of columns of 'veh' (", ncol(veh[[1]]), ")")
+    }
+    if (length(lkm) == 1 && nr > 1) lkm <- rep(lkm, nr)
+    if (nr != length(lkm)) stop("Number of rows of `veh` must be the same as the length of `lkm`")
+    ef <- vein_adjust_eflist(ef, ncol(veh[[1]]), verbose)
 
-      if (verbose) {
-        message(
-          paste0(
-            "Number of columns of 'veh' is different than length of 'ef'\n",
-            "adjusting length of ef to the number of colums of 'veh'\n"
-          )
-        )
-      }
-      if (ncol(veh[[1]]) > length(ef)) {
-        for (i in (length(ef) + 1):ncol(veh[[1]])) {
-          ef[[i]] <- ef[[length(ef)]]
-        }
-      } else if (ncol(veh[[1]]) < length(ef)) {
-        ff <- list()
-        for (i in 1:ncol(veh[[1]])) {
-          ff[[i]] <- ef[[i]]
-        }
-        ef <- ff
+    d <- array(NA_real_, dim = c(nr, nc, length(veh)))
+    for (i in seq_along(veh)) {
+      for (k in seq_len(nc)) {
+        d[, k, i] <- veh[[i]][, k] * lkm * as.numeric(ef[[k]](speed[, i]))
       }
     }
-    for (j in 1:length(veh)) {
-      for (i in 1:ncol(veh[[j]])) {
-        veh[[j]][, i] <- as.numeric(veh[[j]][, i])
-      }
-    }
-    # if(array == F){
-    #   lista <- lapply(1:length(veh),function(i){
-    #     lapply(1:agemax, function(k){
-    #       veh[[i]][, k]*lkm*ef[[k]](speed[, i])
-    #     } ) } )
-    #   return(EmissionsList(lista))
-    # } else {
-    d <- simplify2array(
-      lapply(1:length(veh), function(i) {
-        simplify2array(
-          lapply(1:agemax, function(k) {
-            veh[[i]][, k] * lkm * ef[[k]](speed[, i])
-          })
-        )
-      })
-    )
     if (verbose) message(round(sum(d, na.rm = T) / 1000, 2), " kg emissions ")
     return(EmissionsArray(d))
-    # }
   }
+}
+
+# Internal helpers shared by the emission functions ####
+
+#' Converts a length with units into numeric km
+#' @noRd
+vein_as_km <- function(x, name = "lkm") {
+  if (!inherits(x, "units")) {
+    stop(name, " needs to has class 'units' in 'km'. Please, check package 'units'")
+  }
+  x <- tryCatch(
+    units::set_units(x, "km", mode = "standard"),
+    error = function(e) {
+      stop("Units of ", name, " must be a length, e.g. 'km': ",
+           conditionMessage(e), call. = FALSE)
+    }
+  )
+  as.numeric(x)
+}
+
+#' Converts a vector with units into numeric g/km
+#' @noRd
+vein_as_gkm <- function(x, name = "ef") {
+  if (!inherits(x, "units")) return(as.numeric(x))
+  x <- tryCatch(
+    units::set_units(x, "g/km", mode = "standard"),
+    error = function(e) {
+      stop("Units of ", name, " must be convertible to 'g/km': ",
+           conditionMessage(e), call. = FALSE)
+    }
+  )
+  as.numeric(x)
+}
+
+#' Numeric emission factors for emis: vector (one by column of veh) or
+#' matrix (one by street and column of veh)
+#' @noRd
+vein_ef_gkm <- function(ef, nr) {
+  if (is.data.frame(ef) || is.matrix(ef)) {
+    if (inherits(ef, "sf")) ef <- sf::st_set_geometry(ef, NULL)
+    ef <- as.data.frame(ef)
+    m <- vapply(ef, vein_as_gkm, numeric(nrow(ef)))
+    m <- matrix(m, nrow = nrow(ef))
+    if (nrow(m) == 1) {
+      return(as.numeric(m))
+    } else if (nrow(m) == nr) {
+      return(m)
+    } else {
+      stop("When 'ef' is a data.frame it must have 1 row or the same number of rows of 'veh'")
+    }
+  }
+  vein_as_gkm(ef)
+}
+
+#' Adjust numeric ef to the number of columns of veh
+#' @noRd
+vein_adjust_ef <- function(ef, nc, verbose = FALSE) {
+  n <- if (is.matrix(ef)) ncol(ef) else length(ef)
+  if (n == nc) return(ef)
+  if (verbose) {
+    message(
+      paste0(
+        "Number of columns of 'veh' is different than length of 'ef'\n",
+        "adjusting length of ef to the number of colums of 'veh'\n"
+      )
+    )
+  }
+  idx <- pmin(seq_len(nc), n)
+  if (is.matrix(ef)) ef[, idx, drop = FALSE] else ef[idx]
+}
+
+#' Adjust list of ef functions to the number of columns of veh
+#' @noRd
+vein_adjust_eflist <- function(ef, nc, verbose = FALSE) {
+  n <- length(ef)
+  if (n == nc) return(ef)
+  if (verbose) {
+    message(
+      paste0(
+        "Number of columns of 'veh' is different than length of 'ef'\n",
+        "adjusting length of ef to the number of colums of 'veh'\n"
+      )
+    )
+  }
+  cl <- class(ef)
+  ef <- unclass(ef)[pmin(seq_len(nc), n)]
+  class(ef) <- cl
+  ef
+}
+
+#' veh * lkm * ef as a numeric matrix streets x categories
+#' @noRd
+vein_vkmef <- function(veh, lkm, ef) {
+  vkm <- as.matrix(veh) * lkm
+  storage.mode(vkm) <- "double"
+  if (is.matrix(ef)) {
+    e <- vkm * ef
+  } else {
+    e <- sweep(vkm, 2, ef, "*")
+  }
+  dimnames(e) <- NULL
+  e
+}
+
+#' Stops when the number of elements of a Fortran array is too big for
+#' the integer arguments of the Fortran subroutines
+#' @noRd
+vein_check_size <- function(...) {
+  n <- prod(as.numeric(c(...)))
+  if (n > .Machine$integer.max) {
+    stop(
+      "The output would have ", format(n, big.mark = ","), " elements, more than ",
+      format(.Machine$integer.max, big.mark = ","), " supported by fortran = TRUE. ",
+      "Use fortran = FALSE or split 'veh' in chunks of streets",
+      call. = FALSE
+    )
+  }
+  invisible(n)
 }

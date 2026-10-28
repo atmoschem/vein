@@ -15,6 +15,9 @@
 #' The third element covers 'primary' and 'primary_link'.
 #' The fourth element covers 'secondary' and 'secondary_link'.
 #' The fifth element covers 'tertiary' and 'tertiary_link'.
+#' Streets of other types are not used. When there are no streets for one
+#' category, `osm` is normalized with the categories present, so that the sum
+#' of the emissions is always `gy`.
 #' @param verbose Logical; to show more info.
 #' @importFrom sf st_sf st_as_sf  st_length st_geometry_type st_set_geometry
 #' @importFrom units as_units
@@ -51,8 +54,7 @@ emis_dist <- function(gy,
   # PROFILE SECTION
   if(missing(pro) & missing(osm)){
     if(verbose) message("Selecting column geometry")
-    net <- net[, "geometry"]
-    net$emission <- e_street
+    net <- sf::st_sf(emission = e_street, geometry = geo)
     if(verbose) cat("Columns:", names(net), "\n")
     return(net)
   }
@@ -67,81 +69,48 @@ emis_dist <- function(gy,
 
     return(net)
   }
-  if(missing(pro) & !missing(osm)){
-    if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
-    if(verbose) message("Selecting column highway")
-    net <- net[,c("highway", "lkm1")]
-    st <-  c("motorway", "motorway_link",
-             "trunk", "trunk_link",
-             "primary", "primary_link",
-             "secondary", "secondary_link",
-             "tertiary", "tertiary_link")
-    if(verbose) cat("Selecting:", st, "\n")
-    net <- net[net$highway %in% st, ]
-    # if(length(osm) != 5) stop("length of osm must be 5")
-    osm <- osm/sum(osm)
-    #motorway
-    net_m <- net[net$highway %in% st[1:2], ]
-    net_m$gy <- net_m$lkm1 / sum(net_m$lkm1) * gy * osm[1]
-    #trunk
-    net_t <- net[net$highway %in% st[3:4], ]
-    net_t$gy <- net_t$lkm1 / sum(net_t$lkm1) * gy * osm[2]
-    #primary
-    net_p <- net[net$highway %in% st[5:6], ]
-    net_p$gy <- net_p$lkm1 / sum(net_p$lkm1) * gy * osm[3]
-    #secondary
-    net_s <- net[net$highway %in% st[7:8], ]
-    net_s$gy <- net_s$lkm1 / sum(net_s$lkm1) * gy * osm[4]
-    #tertiary
-    net_te <- net[net$highway %in% st[9:10], ]
-    net_te$gy <- net_te$lkm1 / sum(net_te$lkm1) * gy * osm[5]
-    net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
-    net_all <- net_all[, c("gy", "highway")]
-    names(net_all) <- c("emission", "highway", "geometry")
+
+  # osm
+  if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
+  if(verbose) message("Selecting column highway")
+  st <-  c("motorway", "motorway_link",
+           "trunk", "trunk_link",
+           "primary", "primary_link",
+           "secondary", "secondary_link",
+           "tertiary", "tertiary_link")
+  if(verbose) cat("Selecting:", st, "\n")
+  if(length(osm) != 5) stop("length of osm must be 5")
+  net <- net[net$highway %in% st, ]
+  # category of each street: 1 motorway, 2 trunk, 3 primary, 4 secondary, 5 tertiary
+  cat_st <- ceiling(match(net$highway, st) / 2)
+  present <- sort(unique(cat_st))
+  if (length(present) == 0) stop("There are no streets of the types: ", paste(st, collapse = ", "))
+  if (any(osm[-present] > 0)) {
+    warning("There are no streets for the 'osm' categories ",
+            paste(c("motorway", "trunk", "primary", "secondary", "tertiary")[setdiff(which(osm > 0), present)],
+                  collapse = ", "),
+            "; 'osm' is normalized with the categories present")
+  }
+  osm <- osm[present] / sum(osm[present])
+  net$gy <- 0
+  for (i in seq_along(present)) {
+    idx <- cat_st == present[i]
+    net$gy[idx] <- net$lkm1[idx] / sum(net$lkm1[idx]) * as.numeric(gy) * osm[i]
+  }
+  # same order as before: motorway, trunk, primary, secondary, tertiary
+  net <- net[order(cat_st), ]
+
+  if(missing(pro)){
+    net_all <- sf::st_sf(emission = net$gy,
+                         highway = net$highway,
+                         geometry = sf::st_geometry(net))
     if(verbose) cat("Columns:", names(net_all), "\n")
     return(net_all)
-  }
-  if(!missing(pro) & !missing(osm)){
-    if(!"highway" %in% names(net)) stop("Need OpenStreetMap network with colum highway")
-    if(verbose) message("Selecting column highway")
-    net <- net[,c("highway", "lkm1")]
-    st <-  c("motorway", "motorway_link",
-             "trunk", "trunk_link",
-             "primary", "primary_link",
-             "secondary", "secondary_link",
-             "tertiary", "tertiary_link")
-    if(verbose) cat("Selecting:", st, "\n")
-    net <- net[net$highway %in% st, ]
-
+  } else {
     pro <- pro/sum(pro)
-
-    # if(length(osm) != 5) stop("length of osm must be 5")
-    osm <- osm/sum(osm)
-    #motorway
-    net_m <- net[net$highway %in% st[1:2], ]
-
-    net_m$gy <- net_m$lkm1 / sum(net_m$lkm1) * gy * osm[1]
-
-    #trunk
-    net_t <- net[net$highway %in% st[3:4], ]
-    net_t$gy <- net_t$lkm1 / sum(net_t$lkm1) * gy * osm[2]
-
-    #primary
-    net_p <- net[net$highway %in% st[5:6], ]
-    net_p$gy <- net_p$lkm1 / sum(net_p$lkm1) * gy * osm[3]
-    #secondary
-    net_s <- net[net$highway %in% st[7:8], ]
-    net_s$gy <- net_s$lkm1 / sum(net_s$lkm1) * gy * osm[4]
-    #tertiary
-    net_te <- net[net$highway %in% st[9:10], ]
-    net_te$gy <- net_te$lkm1 / sum(net_te$lkm1) * gy * osm[5]
-    net_all <- rbind(net_m, net_t, net_p, net_s, net_te)
-
-    df <- as.data.frame(as.matrix(net_all$gy) %*% matrix(unlist(pro), nrow = 1))
-    df$highway <- net_all$highway
-
-    net_all <- sf::st_sf(df, geometry = sf::st_geometry(net_all))
-
+    df <- as.data.frame(as.matrix(net$gy) %*% matrix(unlist(pro), nrow = 1))
+    df$highway <- net$highway
+    net_all <- sf::st_sf(df, geometry = sf::st_geometry(net))
     if(verbose) {
       cat("Columns: ", names(net_all), "\n")
     }

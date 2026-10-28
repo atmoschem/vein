@@ -7,6 +7,7 @@ library(eixport) # create wrfchemi
 library(data.table) # faster data.frames
 
 # Post-estimation ####
+# GHG species are listed in `ghg_pols` in scripts/post.R (currently CO2).
 print("pos-estimacion")
 language <- "spanish" # english spanish portuguese
 net <- readRDS("network/net.rds")

@@ -52,8 +52,9 @@ y <- fraction_bus * ( pop[!sourceTypeID %in% 42:43, sum(sourceTypePopulation)]) 
 sum(x$bus * y, na.rm = T) / (pop[!sourceTypeID %in% 42:43, sum(sourceTypePopulation)])
 
 x$bus <- x$bus * y
-x$BUS_TRANSIT <- x$bus * pop[!sourceTypeID %in% 42, sum(sourceTypePopulation)] /  pop[!sourceTypeID %in% 42:43, sum(sourceTypePopulation)]
-x$BUS_SCHOOL <- x$bus * pop[!sourceTypeID %in% 43, sum(sourceTypePopulation)] /  pop[!sourceTypeID %in% 42:43, sum(sourceTypePopulation)]
+# split local buses into transit (42) and school (43) by their population shares
+x$BUS_TRANSIT <- x$bus * pop[sourceTypeID %in% 42, sum(sourceTypePopulation)] /  pop[sourceTypeID %in% 42:43, sum(sourceTypePopulation)]
+x$BUS_SCHOOL <- x$bus * pop[sourceTypeID %in% 43, sum(sourceTypePopulation)] /  pop[sourceTypeID %in% 42:43, sum(sourceTypePopulation)]
 net <- x
 
 

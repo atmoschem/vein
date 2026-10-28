@@ -3,7 +3,10 @@
 #' @description EmissionFactors returns a transformed object with class
 #' "EmissionFactors" and units g/km.
 #'
-#' @return Objects of class "EmissionFactors" or "units"
+#' @return Objects of class "EmissionFactors" or "units". Inputs that already
+#' have units are converted to \code{mass/dist} (before vein 2.0.0 a units
+#' vector was not converted and data.frame columns with units were multiplied
+#' again, giving g^2/km^2).
 #'
 #' @param x Object with class "data.frame", "matrix" or "numeric"
 #' @param mass Character to be the time units as numerator, default "g" for grams
@@ -34,32 +37,39 @@ EmissionFactors <- function(x,
                             mass = "g",
                             dist = "km",
                             ...) {
+  u <- paste0(mass, " ", dist, "-1")
+  # multiply plain numbers by the units, convert columns that already have units
+  set_ef <- function(z) {
+    if (inherits(z, "units")) {
+      units::set_units(z, u, mode = "standard")
+    } else {
+      if (is.logical(z)) z <- as.numeric(z)
+      z * units::as_units(u)
+    }
+  }
   if ( is.matrix(x) ) {
     ef <- as.data.frame(x)
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i]*units::as_units(paste0(mass, " ", dist, "-1"))
+      ef[,i] <- set_ef(ef[,i])
     }
     class(ef) <- c("EmissionFactors",class(ef))
-    efx <- ef
   } else if ( is.data.frame(x) ) {
     ef <- x
     for(i in 1:ncol(ef)){
-      ef[,i] <- ef[,i]*units::as_units(paste0(mass, " ", dist, "-1"))
+      ef[,i] <- set_ef(ef[,i])
     }
-    class(ef) <- c("EmissionFactors",class(ef))
+    class(ef) <- unique(c("EmissionFactors",class(ef)))
   } else if ( inherits(x, "units")) {
-    ef <- x
-
-    ef <- x
-    if(as.character(units(ef)) != paste0(mass, "/", dist) ){
-      message("Converting ", as.character(units(ef)), " to ", mass, "/", dist)
-      spd <- units::as_units(ef, paste0(mass, " ", dist, "-1"))
+    if(as.character(units(x)) != paste0(mass, "/", dist) ){
+      message("Converting ", as.character(units(x)), " to ", mass, "/", dist)
     } else {
       message("Units are the same and no cerversions will be made")
     }
-
-  } else if( inherits(x, "numeric") | inherits(x, "integer" )) {
-    ef <- x*units::as_units(paste0(mass, " ", dist, "-1"))
+    ef <- set_ef(x)
+  } else if( is.numeric(x) || is.logical(x) ) {
+    ef <- set_ef(x)
+  } else {
+    stop("'x' must be numeric, matrix, data.frame or units")
   }
   return(ef)
 }

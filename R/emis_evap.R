@@ -160,9 +160,10 @@ emis_evap <- function(veh,
           if(length(pro_month) != 12) stop("Length of pro_month must be 12")
           mes <- ifelse(nchar(1:12)<2, paste0(0, 1:12), 1:12)
 
-          warmc$month <- hotc$month <- rep(1:12, each = nrow(veh))
+          warmc$month <- hotc$month <- hotfi$month <- rep(1:12, each = nrow(veh))
           warmc <- split(warmc, warmc$month)
-          hotc <- split(hotc, warmc$month)
+          hotc <- split(hotc, hotc$month)
+          hotfi <- split(hotfi, hotfi$month)
 
           if(is.data.frame(pro_month)){
             e <- do.call("rbind", lapply(1:12, function(j){
@@ -258,7 +259,7 @@ emis_evap <- function(veh,
 
         } else {
           if(!is.data.frame(hotfi)) stop("'hotfi' must be a data.frame")
-          e <- as.data.frame(unlist("rbind",lapply(1:ncol(veh), function(i){
+          e <- as.data.frame(unlist(lapply(1:ncol(veh), function(i){
             veh[, i]*x[i]*hotfi[, i]
           })))
           names(e) <- "emissions"

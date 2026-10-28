@@ -13,12 +13,15 @@
 #' @param veh "Vehicles" data-frame or spatial feature, wwhere columns are the
 #'  age distribution of that vehicle. and rows each simple feature or region.
 #' The number of rows is equal to the number of streets link
-#' @param lkm Numeric; mileage by the age of use of each vehicle.
-#' @param ef Numeric; emission factor with
+#' @param lkm Numeric; mileage by the age of use of each vehicle, with units
+#' of length (converted to km).
+#' @param ef Numeric; emission factor with units (converted to 'g/km').
 #' @param efcold Data.frame. When it is a data.frame, each column is for each
 #' type of vehicle by age of use, rows are are each simple feature. When you have
 #' emission factors for each month, the order should a data.frame ina long format,
-#' as rurned by \code{\link{ef_ldv_cold}}.
+#' as rurned by \code{\link{ef_ldv_cold}}: the first `nrow(veh)` rows are
+#' for month 1, the next ones for month 2, etc. Columns with units are
+#' converted to 'g/km'.
 #' @param beta Data.frame with the fraction of cold starts. The rows are the fraction
 #' for each spatial feature or subregion, the columns are the age of use of vehicle.
 #' @param pro_month Numeric; montly profile to distribuite annual mileage in each month.
@@ -122,65 +125,45 @@ emis_cold_td <- function(veh,
                          verbose = FALSE,
                          fortran = FALSE,
                          nt = ifelse(check_nt() == 1, 1, check_nt() / 2)) {
-  # Check units
-  if (!inherits(lkm,"units")) {
-    stop("lkm neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
+  # Checking sf
+  if (inherits(veh, "sf")) {
+    if (verbose) message("converting sf to data.frame")
+    veh <- sf::st_set_geometry(veh, NULL)
   }
-  if (units(lkm) == units(units::as_units("m"))) {
-    stop("Units of lkm is 'm', change to 'km'")
-  }
-  if (units(lkm) == units(units::as_units("km"))) {
-    lkm <- as.numeric(lkm)
-  }
+  veh <- as.data.frame(veh)
+
+  # lkm can have any length unit, it is converted to km
+  lkm <- vein_as_km(lkm, "lkm")
   if (length(lkm) != ncol(veh)) stop("Length of 'lkm' must be the as the number of columns of 'veh'")
-  # Checking ef
+  # Checking ef, converted to g/km
   if (is.matrix(ef) | is.data.frame(ef)) {
     ef <- as.data.frame(ef)
     if (!inherits(ef[, 1], "units")) {
       stop("columns of ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
-    if (units(ef[, 1]) != units(units::as_units("g/km"))) {
-      stop("Units of ef must be 'g/km' ")
-    }
-    if (units(ef[, 1]) == units(units::as_units("g/km"))) {
-      for (i in 1:ncol(veh)) {
-        ef[, i] <- as.numeric(ef[, i])
-      }
+    for (i in 1:ncol(veh)) {
+      ef[, i] <- vein_as_gkm(ef[, i], "ef")
     }
   } else {
     if (!inherits(ef, "units")) {
       stop("ef must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
     }
-    if (units(ef) != units(units::as_units("g/km"))) {
-      stop("Units of ef must be 'g/km' ")
-    }
-    # if(units(ef)$numerator == "g" || units(ef)$denominator == "km"){ # not tested
-    # ef <- as.numeric(ef)
-    # }
+    ef <- vein_as_gkm(ef, "ef")
   }
 
-  # Checking ef cold
+  # Checking ef cold, converted to g/km
+  efcold <- as.data.frame(efcold)
   if (!inherits(efcold[, 1],  "units")) {
     stop("columns of efcold must has class 'units' in 'g/km'. Please, check package '?units::set_units'")
   }
-  if (units(efcold[, 1]) != units(units::as_units("g/km"))) {
-    stop("Units of efcold must be 'g/km' ")
-  }
-  if (units(efcold[, 1]) == units(units::as_units("g/km"))) {
-    for (i in 1:ncol(veh)) {
-      efcold[, i] <- as.numeric(efcold[, i])
-    }
+  for (i in 1:ncol(veh)) {
+    efcold[, i] <- vein_as_gkm(efcold[, i], "efcold")
   }
   # Checking veh
   for (i in 1:ncol(veh)) {
     veh[, i] <- as.numeric(veh[, i])
   }
 
-  # Checking sf
-  if (inherits(veh, "sf")) {
-    if (verbose) message("converting sf to data.frame")
-    veh <- sf::st_set_geometry(veh, NULL)
-  }
   # checking beta
   beta <- as.data.frame(beta)
 
@@ -213,7 +196,7 @@ emis_cold_td <- function(veh,
       if (is.data.frame(pro_month)) {
         if (nrow(pro_month) == 1) {
           message("Replicating one-row matrix to match number of rows of `veh`")
-          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month))
+          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month), byrow = TRUE)
         }
 
         if (fortran) {
@@ -224,6 +207,7 @@ emis_cold_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(ncol(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef <- as.matrix(ef)
 
@@ -323,6 +307,7 @@ emis_cold_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef <- as.matrix(ef[, 1:ncol(veh)])
           efcold$month <- rep(1:12, each = nrow(veh))
@@ -440,13 +425,14 @@ emis_cold_td <- function(veh,
       if (is.data.frame(pro_month)) {
         if (nrow(pro_month) == 1) {
           message("Replicating one-row matrix to match number of rows of `veh`")
-          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month))
+          pro_month <- matrix(as.numeric(pro_month), nrow = nrow(veh), ncol = ncol(pro_month), byrow = TRUE)
         }
 
         if (fortran) {
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(ncol(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef <- as.numeric(ef)
           efcold$month <- rep(1:12, each = nrow(veh))
@@ -548,9 +534,11 @@ emis_cold_td <- function(veh,
           nrowv <- as.integer(nrow(veh))
           ncolv <- as.integer(ncol(veh))
           pmonth <- as.integer(length(pro_month))
+          vein_check_size(nrowv, ncolv, pmonth)
           lkm <- as.numeric(lkm)
           ef <- as.numeric(ef)
-          efcold <- split(efcold[, 1:ncol(veh)], efcold[ncol(efcold)])
+          efcold$month <- rep(1:12, each = nrow(veh))
+          efcold <- split(efcold[, 1:ncol(veh)], efcold$month)
           efcold <- as.numeric(unlist(lapply(efcold, unlist)))
           month <- as.numeric(pro_month)
           beta <- as.matrix(beta)
@@ -632,7 +620,6 @@ emis_cold_td <- function(veh,
           e <- do.call("rbind", lapply(1:12, function(k) {
             dfi <- unlist(lapply(1:ncol(veh), function(j) {
               beta[, k] * lkm[j] * veh[, j] * pro_month[k] * ef[j] * efcold[[k]][, j]
-              t
             }))
             dfi <- as.data.frame(dfi)
             names(dfi) <- "emissions"
@@ -658,6 +645,10 @@ emis_cold_td <- function(veh,
     }
   } else {
     if (verbose) message("Estimation without monthly profile")
+    if (is.data.frame(ef)) {
+      if (nrow(ef) != 1) stop("Without 'pro_month', 'ef' must be numeric or a data.frame with one row")
+      ef <- as.numeric(unlist(ef[1, 1:ncol(veh)]))
+    }
     if (fortran) {
       nrowv <- as.integer(nrow(veh))
       ncolv <- as.integer(ncol(veh))
@@ -733,6 +724,7 @@ emis_cold_td <- function(veh,
       e$rows <- rep(row.names(veh), ncolv)
       e$age <- rep(seq(1, ncolv), each = nrowv)
     } else {
+      if (length(unlist(beta)) != nrow(veh)) stop("length of 'beta' and number of rows of 'veh' must be equal")
       e <- unlist(lapply(1:ncol(veh), function(j) {
         unlist(beta) * as.numeric(lkm[j]) * veh[, j] * as.numeric(ef[j]) * as.numeric(efcold[, j])
       }))

@@ -2,7 +2,9 @@
 #'
 #' @family age
 #'
-#' @description \code{\link{age_moto}} returns amount of vehicles at each age
+#' @description \code{\link{age_moto}} is deprecated. It warns and calls
+#' \code{\link{age_veh}} with \code{type = "mc"}, returning the amount of
+#' vehicles at each age.
 #' @param x Numeric; numerical vector of vehicles with length equal to lines features of road network
 #' @param name Character; of vehicle assigned to columns of dataframe
 #' @param a Numeric; parameter of survival equation
@@ -25,17 +27,16 @@
 #' 1. If you know the distribution of the vehicles by age of use , use:  \code{\link{my_age}}
 #' 2. If you know the sales of vehicles, or the registry of new vehicles,
 #' use \code{\link{age}} to apply a survival function.
-#' 3. If you know the theoretical shape of the circulating fleet and you can use
-#' \code{\link{age_ldv}}, \code{\link{age_hdv}} or \code{\link{age_moto}}. For instance,
-#' you dont know the sales or registry of vehicles, but somehow you know
-#' the shape of this curve.
+#' 3. If you know the theoretical shape of the circulating fleet use
+#' \code{\link{age_veh}}. For instance, you dont know the sales or registry
+#' of vehicles, but somehow you know the shape of this curve.
 #' 4. You can use/merge/transform/adapt any of these functions.
 #' @export
 #' @examples \dontrun{
 #' data(net)
-#' MOTO_E25_500 <- age_moto(x = net$ldv, name = "M_E25_500", k = 0.4)
+#' MOTO_E25_500 <- age_veh(type = "mc", x = net$ldv, name = "M_E25_500", k = 0.4)
 #' plot(MOTO_E25_500)
-#' MOTO_E25_500 <- age_moto(x = net$ldv, name = "M_E25_500", k = 0.4, net = net)
+#' MOTO_E25_500 <- age_veh(type = "mc", x = net$ldv, name = "M_E25_500", k = 0.4, net = net)
 #' plot(MOTO_E25_500)
 #' }
 age_moto <- function (x,
@@ -51,4 +52,6 @@ age_moto <- function (x,
                       namerows,
                       time){
   .Deprecated("age_veh")
+  args <- lapply(as.list(match.call())[-1], eval, parent.frame())
+  do.call(age_veh, c(list(type = "mc"), args))
 }

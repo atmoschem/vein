@@ -18,7 +18,7 @@ switch(language,
 for (i in seq_along(pol)) {
   for (j in seq_along(hours)) {
     x <- readRDS(paste0("post/streets/", pol[i], ".rds"))
-    cn <- names(x)[hours + 1]
+    cn <- paste0("V", hours) # hour columns V1, V2, ... (grids also have `id`)
 
     png(
       filename = paste0("images/STREETS_", pol[i], "_", hh[j], ".png"),
@@ -45,7 +45,7 @@ switch(language,
 for (i in seq_along(pol)) {
   for (j in seq_along(hours)) {
     x <- readRDS(paste0("post/grids/", pol[i], ".rds"))
-    cn <- names(x)[hours + 1]
+    cn <- paste0("V", hours) # hour columns V1, V2, ... (grids also have `id`)
 
     png(
       filename = paste0("images/GRIDS_", pol[i], "_", hh[j], ".png"),

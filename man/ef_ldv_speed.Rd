@@ -21,62 +21,83 @@ ef_ldv_speed(
 \arguments{
 \item{v}{Character; category vehicle: "PC", "LCV", "Motorcycle" or "Moped}
 
-\item{t}{Character; sub-category of of vehicle: PC:  "ECE_1501", "ECE_1502",
-"ECE_1503", "ECE_1504" , "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "ALL",
-"2S"  or "4S". LCV: "4S", Motorcycle: "2S" or "4S". Moped: "2S" or "4S"}
+\item{t}{Character; sub-category of of vehicle.
+PC petrol: "4S" (port fuel injection from Euro 3), "GDI" (gasoline direct
+injection, Euro 3 and later), "GDI_GPF" (GDI with particle filter, "VIc"
+and later), "2S" (2-stroke, only conventional technology exists) and the
+pre-Euro sub-technologies "ECE_1501", "ECE_1502", "ECE_1503", "ECE_1504",
+"IMPROVED_CONVENTIONAL", "OPEN_LOOP" (with eu = "PRE").
+PC diesel: "4S" (Euro 3 to 5 with DPF, Euro 6 and later DPF+SCR),
+"DPF_SWU" (Euro 5 with software update), "DPF", "LNT_DPF", "DPF_SCR"
+(Euro 6 and later). LCV: "4S". Motorcycle: "2S" or "4S". Moped: "2S" or "4S"}
 
-\item{cc}{Character; size of engine in cc:  PC: "<=1400", ">1400", "1400_2000", ">2000",
-"<=800", "<=2000". Motorcycle:  ">=50" (for "2S"), "<=250", "250_750", ">=750".
-Moped: "<=50". LCV :  "<3.5" for gross weight.}
+\item{cc}{Character; size of engine in cc: PC: "<=800" (Mini, Euro 4 and
+later), "<=1400" (Small), "1400_2000" (Medium), ">2000" (Large-SUV-Executive).
+Motorcycle: ">=50" (for "2S"), "<=250", "250_750", ">=750".
+Moped: "<=50". LCV: "<3.5" (equal to N1-III), "N1-I", "N1-II" or "N1-III".}
 
-\item{f}{Character; type of fuel: "G", "D", "LPG" or "FH" (Gasoline Full Hybrid).
-Full hybrid vehicles cannot be charged from the grid and recharge; only its own engine
-may recharge tis batteries.}
+\item{f}{Character; type of fuel: "G", "D", "LPG" (bifuel in LPG mode),
+"CNG" (bifuel in CNG mode, Euro 4 and later), "FH" (petrol full hybrid,
+Euro 4 and later), "PHEV_G" and "PHEV_D" (plug-in hybrids in fuel mode,
+Euro 6 and later). Full hybrid vehicles cannot be charged from the grid;
+only its own engine recharges the batteries.}
 
 \item{eu}{Character or data.frame of characters; euro standard:
- "PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" or "VIc".
-When the pollutan is active surface or number of particles, eu can also be "III+DISI"}
+"PRE", "I", "II", "III", "III+DPF", "IV", "V", "VI" (Euro 6 a/b/c),
+"VIc" (Euro 6 d-temp), "VId" (Euro 6 d/e) or "VII" (Euro 7).
+Motorcycles and mopeds: "PRE" and "I" to "V".}
 
-\item{p}{Character; pollutant: "CO", "FC", "NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4",
-"CO2",  "SO2" or "Pb". Only when p is "SO2" pr "Pb" x is needed. Also
-polycyclic aromatic hydrocarbons (PAHs), persistent organi pollutants (POPs),
-and Number of particles and Active Surface.}
+\item{p}{Character; pollutant: "CO", "FC", "EC" (energy consumption, MJ/km),
+"NOx", "NO", "NO2", "HC", "PM", "NMHC", "CH4", "CO2", "SO2", "Pb",
+"BC", "OM", "SPN23" (solid particle number > 23 nm, #/km, where available),
+"N2O" and "NH3" (L-category only), metals ("As", "Cd", "Cr", "Cu", "Hg",
+"Ni", "Se", "Zn"), NMHC species, polycyclic aromatic hydrocarbons (PAHs),
+persistent organic pollutants (POPs), number of particles and active surface.
+Only when p is "SO2" or "Pb" x is needed.}
 
 \item{x}{Numeric; if pollutant is "SO2", it is sulphur in fuel in ppm, if is
 "Pb", Lead in fuel in ppm.}
 
 \item{k}{Numeric; multiplication factor}
 
-\item{speed}{Numeric; Speed to return Number of emission factor and not a function.}
+\item{speed}{Speed in km/h with class "Speed" or "units", to return the
+emission factor at that speed instead of a function.}
 
-\item{show.equation}{Logical; option to see or not the equation parameters.}
+\item{show.equation}{Logical; option to see or not the equation parameters
+and the EEA row used.}
 
 \item{fcorr}{Numeric; Correction by fuel properties by euro technology.
 See \code{\link{fuel_corr}}. The order from first to last is
-"PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1}
+"PRE", "I", "II", "III", "IV", "V", "VI" and any later standard. Default is 1}
 }
 \value{
 An emission factor function which depends of the average speed V  g/km
 }
 \description{
 \code{\link{ef_ldv_speed}} returns speed dependent emission factors, data.frames or
-list of emission factors. The emission factors
- comes from the guidelines  EMEP/EEA air pollutant emission inventory guidebook
+list of emission factors. The hot emission factors come from the
+EMEP/EEA air pollutant emission inventory guidebook 2023 - update 2026,
+chapter 1.A.3.b.i-iv, Appendix 4 (July 2026)
 https://www.eea.europa.eu/en/analysis/publications/emep-eea-guidebook-2023
 }
 \details{
 The argument of this functions have several options which results in
-different combinations that returns emission factors. If a combination of
-any option is wrong it will return an empty value. Therefore, it is
-important ti know the combinations.
+different combinations that returns emission factors. If a combination is
+not available the function stops with an error that shows the combination.
 }
 \note{
-t = "ALL" and cc == "ALL" works for several pollutants because emission
-fators are the same. Some exceptions are with NOx and FC because size of engine.
+Every path returns non-negative values: the speed is limited to the
+validity range of the equation and negative values are set to 0.
 
-\strong{Hybrid cars}: the only cover "PC" and according to EMEP/EEA air pollutant emission inventory
-guidebook 2016 (Ntziachristos and Samaras, 2016) only for euro IV. When new literature
-is available, I will update these factors.
+Emission factors given by EEA per driving mode (e.g. CH4 and PM of recent
+petrol cars) use Urban for V < 50 km/h, Rural for 50 <= V < 90 and Highway
+for V >= 90 km/h.
+
+FC comes from the energy consumption factors and the calorific values of
+Table 3-28 of the guidebook. CO2 = FC * 44.011 / (12.011 + 1.008 rH:C +
+16 rO:C) with the ratios of Table 3-29, so CO2/FC is constant. NO2 and NO
+use the f-NO2 fractions of Table 3-87, with NO expressed as NO2-equivalent
+mass (NO = NOx * (1 - f-NO2)); use 46 g/mol for NO when converting to moles.
 
 \strong{Pollutants (g/km)}: "CO", "NOx", "HC", "PM", "CH4", "NMHC", "CO2", "SO2",
 "Pb", "FC".

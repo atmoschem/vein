@@ -11,14 +11,17 @@
 #' rows of your  Vehicles data.frame. This is convenient for top-down approach
 #' when each simple feature can be a polygon, with a monthly average temperature for
 #' each simple feature. In this case, the number of columns can be the 12 months.
+#' A numeric vector with more than one value is treated as a data.frame with
+#' one row and one column per value (e.g. 12 monthly means); \code{speed} is
+#' then needed.
 #' @param cc Character; Size of engine in cc: "<=1400",  "1400_2000" or ">2000"
 #' @param f Character; Type of fuel: "G", "D" or "LPG"
 #' @param eu Character or data.frame of Characters; Euro standard: "PRE", "I",
-#'  "II", "III",  "IV", "V", "VI" or "VIc". When 'eu' is a data.frame and
+#'  "II", "III",  "IV", "V", "VI", "VIc", "VId" or "VII". When 'eu' is a data.frame and
 #'  'ta' is also a data.frame both has to have the same number of rows. For instance,
 #'  When you want that each simple feature or region has a different emission standard.
 #' @param p Character; Pollutant: "CO", "FC", "NOx", "HC" or "PM"
-#' @param k Numeric; Multiplication factor
+#' @param k Numeric; Multiplication factor (ignored before vein 2.0.0)
 #' @param show.equation Option to see or not the equation parameters
 #' @param speed Numeric; Speed to return Number of emission factor and not a function.
 #' @param fcorr Numeric; Correction by fuel properties by euro technology.
@@ -26,6 +29,11 @@
 #' "PRE", "I", "II", "III", "IV", "V", VI, "VIc". Default is 1
 #' @return an emission factor function which depends of the average speed V
 #' and ambient temperature. g/km
+#' @note The values are the cold/hot quotients eCOLD/eHOT of the EMEP/EEA
+#' guidebook. For Euro 2 and later petrol vehicles the beta-reduction factors
+#' (bc) are included as 1 + bc * (eCOLD/eHOT - 1), so that
+#' \code{\link{emis_cold}}, which uses (eCOLD/eHOT - 1), applies bc to the
+#' excess emission as in the guidebook.
 #' @keywords cold emission factors
 #' @seealso \code{\link{fuel_corr}}
 #' @importFrom units as_units
@@ -89,6 +97,23 @@ ef_ldv_cold <- function(v = "LDV",
   if(is.matrix(ta)){
     ta <- as.data.frame(ta)
   }
+  # numeric vector of temperatures (e.g. 12 monthly means): one row, one
+  # column per value, as when ta is a data.frame
+  if(!is.data.frame(ta) && length(ta) > 1){
+    ta <- as.data.frame(matrix(as.numeric(ta), nrow = 1))
+  }
+  cold_row <- function(e) {
+    df <- ef_ldv[ef_ldv$VEH == v &
+                   ef_ldv$CC == cc &
+                   ef_ldv$FUEL == f &
+                   ef_ldv$EURO == e &
+                   ef_ldv$POLLUTANT == p, ]
+    if(nrow(df) == 0) {
+      stop("No cold-start emission factor for v = ", v, ", cc = ", cc,
+           ", f = ", f, ", eu = ", e, ", p = ", p)
+    }
+    df[1, ]
+  }
   #Function to case when
   lala <- function(x) {
     ifelse(x == "PRE", fcorr[1],
@@ -117,25 +142,21 @@ ef_ldv_cold <- function(v = "LDV",
     }
 
     if (is.numeric(ta) & length(ta) == 1 & length(eu) == 1){
-      df <- ef_ldv[ef_ldv$VEH == v &
-                     ef_ldv$CC == cc &
-                     ef_ldv$FUEL == f &
-                     ef_ldv$EURO == eu &
-                     ef_ldv$POLLUTANT == p, ]
-      k <- lala(eu)
+      df <- cold_row(eu)
+      k2 <- lala(eu)
 
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
                    ", e = ", df$e, ", f = ", df$f, "\n"))
-        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k))
+        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "*", k2))
       }
       f1 <- function(V){
         a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
         g <- df$g; h <- df$h; i <- df$i
         V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-        ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+        ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                0,
-               eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+               eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
       }
       if(!missing(speed)) {
         return(EmissionFactors(f1(speed)))
@@ -145,20 +166,16 @@ ef_ldv_cold <- function(v = "LDV",
 
     } else if(is.numeric(ta) & length(ta) == 1 & length(eu) > 1){
       dff <- do.call("cbind", lapply(1:length(eu), function(i){
-        df <- ef_ldv[ef_ldv$VEH == v &
-                       ef_ldv$CC == cc &
-                       ef_ldv$FUEL == f &
-                       ef_ldv$EURO == eu[i] &
-                       ef_ldv$POLLUTANT == p, ]
+        df <- cold_row(eu[i])
 
         f1 <- function(V){
-          k <- lala(eu[i])
+          k2 <- lala(eu[i])
           a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
           g <- df$g; h <- df$h; i <- df$i
           V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-          ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+          ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                  0,
-                 eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+                 eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
         }
         f1(speed)
       }))
@@ -169,31 +186,27 @@ ef_ldv_cold <- function(v = "LDV",
       return(dff)
 
     } else if(is.data.frame(ta)){
-      dff <- do.call("rbind", lapply(1:ncol(ta), function(k){
+      dff <- do.call("rbind", lapply(1:ncol(ta), function(kk){
         do.call("rbind", lapply(1:nrow(ta), function(j){
           dff <- do.call("cbind", lapply(1:length(eu), function(i){
-            df <- ef_ldv[ef_ldv$VEH == v &
-                           ef_ldv$CC == cc &
-                           ef_ldv$FUEL == f &
-                           ef_ldv$EURO == eu[i] &
-                           ef_ldv$POLLUTANT == p, ]
+            df <- cold_row(eu[i])
 
             f1 <- function(V){
-              ta <- ta[j, k]
-              k <- lala(eu[i])
+              ta <- ta[j, kk]
+              k2 <- lala(eu[i])
               a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
               g <- df$g; h <- df$h; i <- df$i
               V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                      0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
             }
             f1(speed)
           }))
           dff <- EmissionFactors(dff)
           names(dff) <- paste0(eu, "_", 1:length(eu))
           dff$speed <- speed
-          dff$ta <- ta[j,k]
+          dff$ta <- ta[j,kk]
           dff
         }))
       }))
@@ -209,20 +222,16 @@ ef_ldv_cold <- function(v = "LDV",
     if(is.numeric(ta) & length(ta) == 1){
       dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
         dff <- do.call("cbind", lapply(1:ncol(eu), function(i){
-          df <- ef_ldv[ef_ldv$VEH == v &
-                         ef_ldv$CC == cc &
-                         ef_ldv$FUEL == f &
-                         ef_ldv$EURO == eu[j,i][[1]] &
-                         ef_ldv$POLLUTANT == p, ]
+          df <- cold_row(eu[j,i][[1]])
 
           f1 <- function(V){
-            k <- lala(eu[j,i][[1]])
+            k2 <- lala(eu[j,i][[1]])
             a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
             g <- df$g; h <- df$h; i <- df$i
             V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                    0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
           }
           f1(speed)
         }))
@@ -240,30 +249,26 @@ ef_ldv_cold <- function(v = "LDV",
       #   cat("Number of rows of 'ta': ", nrow(ta), "\n")
       #   stop("Number of rows of 'eu' and 'ta' must be the same")
       # }
-      dff <- do.call("rbind", lapply(1:ncol(ta), function(k){
+      dff <- do.call("rbind", lapply(1:ncol(ta), function(kk){
         do.call("rbind", lapply(1:nrow(ta), function(j){
           dff <- do.call("cbind", lapply(1:ncol(eu), function(i){
-            df <- ef_ldv[ef_ldv$VEH == v &
-                           ef_ldv$CC == cc &
-                           ef_ldv$FUEL == f &
-                           ef_ldv$EURO == eu[j,i][[1]] &
-                           ef_ldv$POLLUTANT == p, ]
+            df <- cold_row(eu[j,i][[1]])
 
             f1 <- function(V){
-              ta <- ta[j, k]
-              k <- lala(eu[j,i][[1]])
+              ta <- ta[j, kk]
+              k2 <- lala(eu[j,i][[1]])
               a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
               g <- df$g; h <- df$h; i <- df$i
               V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))) < 0,
+              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
                      0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k))))
+                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
             }
             f1(speed)
           }))
           dff <- EmissionFactors(dff)
           dff$speed <- speed
-          dff$ta <- ta[j,k]
+          dff$ta <- ta[j,kk]
           dff$row_eu <- j
           dff
         }))

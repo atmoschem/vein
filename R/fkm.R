@@ -5,7 +5,7 @@
 #' Curvas de intensidade de uso por tipo de veiculo automotor da frota da cidade de Sao Paulo
 #' This functions depends on the age of use of the vehicle
 #'
-#' @format A data frame with 288 rows and 12 variables:
+#' @format A list of 13 functions of age of use, returning mileage in km:
 #' \describe{
 #'   \item{KM_PC_E25}{Mileage in km of Passenger Cars using Gasoline with 25\% Ethanol}
 #'   \item{KM_PC_E100}{Mileage in km of Passenger Cars using Ethanol 100\%}
@@ -20,7 +20,7 @@
 #'   \item{KM_ATRUCKS_B5}{Mileage in km of Articulated Trucks using Diesel with 5\% biodiesel}
 #'   \item{KM_MOTO_E25}{Mileage in km of Motorcycles using Gasoline with 25\% Ethanol}
 #'   \item{KM_LDV_GNV}{Mileage in km of Light Duty Vehicles using Natural Gas}
-##' }
+#' }
 #' @source CETESB
 #' @usage data(fkm)
 #' @docType data

@@ -18,7 +18,10 @@
 #' @param full Logical; To return a data.frame instead or a vector adding
 #' Age, Year, Brazilian emissions standards and its euro equivalents.
 #' @param project Character showing the method for projecting emission factors in
-#' future. Currently the only value is "constant"
+#' future. Currently the only value is "constant". When \code{year} is after
+#' the newest year of \code{ef}, the newest emission factor is repeated for
+#' the new ages, also when \code{full = TRUE} (ignored before vein 2.0.0); in
+#' that case the columns \code{Age} and \code{Year} are recomputed.
 #' @param verbose Logical; To show more information
 #' @return A vector of Emission Factor or a data.frame
 #' @keywords  emission factors
@@ -67,7 +70,8 @@ ef_local <- function(p,
   ef <- ef[ef$Year <= year, ]
 
   if(!p %in% pols){
-    stop(cat("\nPlease, choose one of the following pollutants:\n", pols, "\n"))
+    stop("Please, choose one of the following pollutants:\n",
+         paste(pols, collapse = ", "))
   }
 
   if(full) {
@@ -92,7 +96,10 @@ ef_local <- function(p,
         eff <- do.call("rbind",(lapply(1:dif, function(i){
           df[1, ]
         })))
-        edff <- rbind(eff, df[1:(agemax - dif), ])
+        df <- rbind(eff, df[seq_len(max(0, agemax - dif)), ])
+        row.names(df) <- NULL
+        if("Age" %in% names(df)) df$Age <- seq_len(nrow(df))
+        if("Year" %in% names(df)) df$Year <- year - seq_len(nrow(df)) + 1
       }
     }
 
@@ -111,7 +118,7 @@ ef_local <- function(p,
       if(year > year1){
         dif <- year - year1
         eff <- rep(df[1], dif)
-        df <- c(eff, df[1:(agemax - dif)])
+        df <- c(eff, df[seq_len(max(0, agemax - dif))])
       }
     }
 

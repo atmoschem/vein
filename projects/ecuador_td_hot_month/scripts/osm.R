@@ -5,8 +5,8 @@ dir.create("OSM")
 head(urlgeo)
 names(urlgeo)
 # convert to data.table
-# search africa
-af <- grep("Africa", urlgeo$Subregion)
+# search Ecuador
+af <- grep("Ecuador", urlgeo$Subregion)
 urlgeo[af, ]
 
 if (download_osm) {
