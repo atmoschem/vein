@@ -17,8 +17,13 @@ Run from any working directory:
 
 ```sh
 python3 data-raw/moves/bootstrap.py
-python3 data-raw/moves/generate_reference.py
+python3 data-raw/moves/generate_reference.py reference
+python3 data-raw/moves/generate_reference.py events
 ```
+
+The `reference` mode produces distance-based running-exhaust factors. The
+`events` mode produces start-exhaust factors (RatePerStart) and evaporative
+factors (RatePerVehicle/RatePerProfile) from `events.mrs`.
 
 By default the private work directory is `../moves_work/` relative to the VEIN
 repository. Set `MOVES_WORK_DIR` and `MOVES_SOURCE_DIR` to use other locations.
@@ -30,12 +35,16 @@ not part of this workflow.
 ## Scenario
 
 `reference.mrs` requests default-scale rates for Washtenaw County, Michigan
-(26161), inventory year 2025, January weekday, passenger cars, road type 5
-(urban unrestricted). MOVES6 requires all applicable fuel types in the RunSpec;
-the published reference export selects gasoline (fuelTypeID 1).
+(26161), inventory year 2025, January weekday, road type 5 (urban unrestricted).
+It includes all 13 MOVES on-road source types and all 48 valid source/fuel
+combinations: gasoline, diesel, E-85, CNG and electricity where applicable.
+MOVES6 requires every valid fuel type for a selected source type; the RunSpec
+therefore lists all 48 combinations.
 
-Only running-exhaust CO and NOx are requested. Model years 2000--2025 are
-exported, with all 16 positive speed bins. An optional input table overrides
+The running-exhaust mode requests CO and NOx for model years 2000--2025, with
+all 16 positive speed bins. The separate `events` mode uses `events.mrs` to
+request start-exhaust CO/NOx and evaporative THC (permeation, vapor venting and
+leaks). Both modes use the same U.S. reference fleet and meteorological points. An optional input table overrides
 temperature/humidity only: hour 1 = 20 C, hour 2 = 10 C, hour 3 = 30 C, all at
 50% relative humidity. These hours represent meteorological grid points, not
 a measured diurnal cycle. Other model inputs remain EPA U.S. defaults.
@@ -44,11 +53,17 @@ a measured diurnal cycle. Other model inputs remain EPA U.S. defaults.
 
 Exports are saved in the private work directory's `exports/` folder:
 
-- `rateperdistance.csv`: raw selected output, retaining every dimension.
-- `movesrun.csv`: corresponding run record, units and model/database provenance.
-- `moveserror.csv`: the error table for the current run (must be empty).
+- `rateperdistance.csv`: raw selected running output, retaining every dimension.
+- `movesrun.csv`: running-run record, units and model/database provenance.
+- `moveserror.csv`: running-run error table (must be empty).
+- `rateperstart.csv`: start exhaust in g/start.
+- `ratepervehicle.csv`: permeation and fuel-leak rates in g/vehicle.
+- `rateperprofile.csv`: vapor-venting rates and temperature-profile IDs.
+- `movesrun_events.csv`: start/evaporative run record.
+- `moveserror_events.csv`: start/evaporative error table (must be empty).
 - `zonemonthhour.csv`: the actual meteorological input points.
 - `avgspeedbin.csv`: the EPA speed-bin definitions.
+- `vehicles.csv`: valid source/fuel names and IDs.
 - `SHA256.json`: hashes of the exported CSV files.
 
 The generator rejects runs with reported errors or no distance rates. Before

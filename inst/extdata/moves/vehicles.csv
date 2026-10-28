@@ -1,0 +1,49 @@
+fuelTypeID,fuelTypeDesc,sourceTypeID,sourceTypeName
+1,Gasoline,11,Motorcycle
+1,Gasoline,21,Passenger Car
+2,Diesel Fuel,21,Passenger Car
+5,Ethanol (E-85),21,Passenger Car
+9,Electricity,21,Passenger Car
+1,Gasoline,31,Passenger Truck
+2,Diesel Fuel,31,Passenger Truck
+5,Ethanol (E-85),31,Passenger Truck
+9,Electricity,31,Passenger Truck
+1,Gasoline,32,Light Commercial Truck
+2,Diesel Fuel,32,Light Commercial Truck
+5,Ethanol (E-85),32,Light Commercial Truck
+9,Electricity,32,Light Commercial Truck
+1,Gasoline,41,Other Buses
+2,Diesel Fuel,41,Other Buses
+3,Compressed Natural Gas (CNG),41,Other Buses
+9,Electricity,41,Other Buses
+1,Gasoline,42,Transit Bus
+2,Diesel Fuel,42,Transit Bus
+3,Compressed Natural Gas (CNG),42,Transit Bus
+9,Electricity,42,Transit Bus
+1,Gasoline,43,School Bus
+2,Diesel Fuel,43,School Bus
+3,Compressed Natural Gas (CNG),43,School Bus
+9,Electricity,43,School Bus
+1,Gasoline,51,Refuse Truck
+2,Diesel Fuel,51,Refuse Truck
+3,Compressed Natural Gas (CNG),51,Refuse Truck
+9,Electricity,51,Refuse Truck
+1,Gasoline,52,Single Unit Short-haul Truck
+2,Diesel Fuel,52,Single Unit Short-haul Truck
+3,Compressed Natural Gas (CNG),52,Single Unit Short-haul Truck
+9,Electricity,52,Single Unit Short-haul Truck
+1,Gasoline,53,Single Unit Long-haul Truck
+2,Diesel Fuel,53,Single Unit Long-haul Truck
+3,Compressed Natural Gas (CNG),53,Single Unit Long-haul Truck
+9,Electricity,53,Single Unit Long-haul Truck
+1,Gasoline,54,Motor Home
+2,Diesel Fuel,54,Motor Home
+3,Compressed Natural Gas (CNG),54,Motor Home
+9,Electricity,54,Motor Home
+1,Gasoline,61,Combination Short-haul Truck
+2,Diesel Fuel,61,Combination Short-haul Truck
+3,Compressed Natural Gas (CNG),61,Combination Short-haul Truck
+9,Electricity,61,Combination Short-haul Truck
+2,Diesel Fuel,62,Combination Long-haul Truck
+3,Compressed Natural Gas (CNG),62,Combination Long-haul Truck
+9,Electricity,62,Combination Long-haul Truck

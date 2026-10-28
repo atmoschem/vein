@@ -4,7 +4,7 @@
 \alias{moves_factors}
 \title{Portable MOVES running-exhaust factor data}
 \usage{
-moves_factors(rates, runs)
+moves_factors(rates, runs, vehicles)
 }
 \arguments{
 \item{rates}{A data.frame or path to a CSV/TSV (optionally gzip compressed)
@@ -13,10 +13,15 @@ export of RatePerDistance. Omit both arguments to load the reference data.}
 \item{runs}{A data.frame or file containing the corresponding MOVESRun rows,
 including MOVESRunID, massUnits, distanceUnits, masterVersion and
 defaultDatabaseUsed. Run IDs must uniquely identify runs within this input.}
+
+\item{vehicles}{Optional data.frame or file with sourceTypeID, sourceTypeName,
+fuelTypeID and fuelTypeDesc. Omit for the bundled dataset or when names are
+unavailable; \code{\link{moves_vehicles}} then lists numeric IDs.}
 }
 \value{
-A \code{MOVESFactors} list with \code{rates}, \code{runs} and
-\code{schema_version}. The rate table retains the original columns and adds
+A \code{MOVESFactors} list with \code{rates}, \code{runs},
+\code{vehicles}, \code{basis} and \code{schema_version}. The rate table
+retains the original columns and adds
 \code{gkm} (grams per vehicle-kilometre) and \code{temperature_C}. When linkID
 is present, \code{locationID} preserves location while decoding the virtual
 speed-bin links of Default/County scale runs. Save/load
@@ -34,9 +39,10 @@ starts, idle, evaporation and energy consumption. Zero rates are retained;
 missing, negative or duplicate rates are rejected. No fleet or scenario
 averaging is performed. MOVES temperature values are degrees Fahrenheit.
 
-The bundled reference data describe a limited U.S. scenario; inspect
-\code{x$runs} and \code{x$rates} before selecting factors. They are not a
-calibrated Ecuador fleet. Additional datasets can use the same format.
+The bundled reference data describe a U.S. scenario covering all 13 on-road
+source types and their valid MOVES6 fuels. Inspect \code{\link{moves_vehicles}}
+and \code{x$runs} before selecting factors. They are not a calibrated Ecuador
+fleet. Additional datasets can use the same format.
 }
 \examples{
 x <- moves_factors()

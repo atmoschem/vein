@@ -16,6 +16,30 @@ factors. It runs in R on Linux, macOS and Windows. There is no database connecti
 SQL query, Java process, network download or MOVES installation involved in
 evaluating factors.
 
+## Vehicle type, fuel and age
+
+These inputs are explicit arguments of `ef_moves()`:
+
+| Argument | Meaning | Bundled reference data |
+| --- | --- | --- |
+| `source_type_id` | MOVES vehicle category | all 13 on-road types |
+| `fuel_type_id` | MOVES fuel type | every valid combination (names accepted) |
+| `model_year` | Vehicle manufacturing year | 2000--2025 |
+| `road_type_id` | MOVES road category | `5`: urban unrestricted |
+| `temperature` | Temperature in degrees C | 10, 20 or 30 |
+| `rel_humidity` | Relative humidity in percent | 50 |
+
+Use `moves_vehicles()` to list the available source-type and fuel combinations
+with their names and IDs. The bundled data include 38 of the 48 MOVES6-valid
+vehicle/fuel combinations. The five fuels are gasoline, diesel, E-85, CNG and
+electricity; not every fuel is valid for every vehicle type. Combinations with
+no modelled running-exhaust output, such as heavy electric trucks and CNG or
+electric motor homes, are not listed.
+
+Vehicle age is the inventory year minus `model_year`. The bundled inventory
+year is 2025, so `model_year = 2020` represents a five-year-old vehicle.
+For other datasets, choose the inventory year with `select = list(yearID = ...)`.
+
 ## Use the reference factors
 
 The small dataset shipped with VEIN contains MOVES6 running-exhaust rates for a
@@ -26,9 +50,24 @@ vehicle age. They must not be interchanged.
 ```{r}
 library(vein)
 x <- moves_factors()
+moves_vehicles()
 x$runs[, c("masterVersion", "defaultDatabaseUsed", "massUnits", "distanceUnits")]
 unique(x$rates[, c("yearID", "hourID", "temperature_C", "relHumidity")])
 range(x$rates$modelYearID)
+```
+
+Select a vehicle and fuel by name or numeric ID. This example is a model-year
+2020 diesel combination long-haul truck:
+
+```{r}
+ef_moves(
+  pollutant = "NOx",
+  source_type_id = "Combination Long-haul Truck",
+  fuel_type_id = "Diesel Fuel",
+  model_year = 2020,
+  speed = c(20, 40, 60),
+  temperature = 20
+)
 ```
 
 Here is NOx from a model-year 2020 gasoline passenger car at the hour-1 reference
@@ -92,6 +131,38 @@ attr(f, "moves_metadata")$scenario
 
 Meteorology, model year and vehicle category are selected exactly; this first
 version does not interpolate those dimensions.
+
+## Start and evaporative factors
+
+Start exhaust is **grams per engine start**, not g/km. Use the separate start
+data and function; there is deliberately no speed argument:
+
+```{r}
+starts <- moves_start_factors()
+ef_moves_start(
+  "NOx", model_year = 2020,
+  source_type_id = "Passenger Car", fuel_type_id = "Gasoline",
+  select = list(hourID = 1)
+)
+```
+
+The evaporative data contain THC permeation (process 11), fuel vapor venting
+(process 12) and fuel leaks (process 13). Permeation and leaks are **g/vehicle**;
+venting is **per profile event** and retains its MOVES temperature-profile ID.
+
+```{r}
+evap <- moves_evap_factors()
+ef_moves_evap(
+  "THC", model_year = 2020, process = "all",
+  source_type_id = "Passenger Car", fuel_type_id = "Gasoline",
+  select = list(hourID = 1)
+)
+```
+
+These event-based factors cannot be passed to `emis()`, whose factors are g/km.
+Multiply them by matching start or vehicle activity, and handle venting with its
+temperature profile. Start and evaporative data are separate MOVES runs; their
+provenance is recorded in `movesrun_events.csv`.
 
 ## Supply additional local data
 

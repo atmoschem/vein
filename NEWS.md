@@ -8,10 +8,15 @@ NEWS
   optional bounded linear interpolation. Evaluation needs only R and the factor
   data, with no MariaDB, SQL, Java or MOVES runtime. Speed functions work with
   `EmissionFactorsList()` and `emis()`.
-- Includes 2,496 genuine MOVES6 reference factors: running-exhaust CO/NOx,
-  gasoline passenger cars, model years 2000--2025, inventory year 2025,
-  16 speed bins and three temperatures. Provenance and scope are documented
-  in `inst/extdata/moves/`; production scripts are in `data-raw/moves/`.
+- Includes genuine MOVES6 reference factors for all 13 on-road vehicle types:
+  running-exhaust CO/NOx in g/km, plus start-exhaust CO/NOx in g/start and
+  evaporative THC in g/vehicle (permeation, venting and leaks). Provenance and
+  scope are documented in `inst/extdata/moves/`; production scripts are in
+  `data-raw/moves/`.
+- `moves_start_factors()` / `ef_moves_start()` and
+  `moves_evap_factors()` / `ef_moves_evap()` evaluate event-based factors
+  locally, without SQL. `moves_vehicles()` lists source/fuel combinations by
+  name, and `ef_moves()` accepts names as well as numeric IDs.
 
 ### vein 2.1.0 (date: 2026-10-27)
 

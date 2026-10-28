@@ -56,22 +56,161 @@ emis_speed](https://atmoschem.github.io/vein/articles/speed.html).
 ### Emission factors
 
 Light-duty hot emission factors (`ef_ldv_speed()`, `ef_ldv_scaled()`,
-`emis_speed()`, `ef_eea()`) come from the EMEP/EEA air pollutant emission
-inventory guidebook 2023 - update 2026 (Appendix 4, July 2026). Fuel
-consumption is derived from the energy consumption factors, and CO2 from fuel
-with the carbon balance, so CO2/FC is constant. Other sources are CETESB
-(Brazil), the Chinese guidelines, MOVES and EMFAC.
+`emis_speed()`, `ef_eea()`) come from the EMEP/EEA air pollutant
+emission inventory guidebook 2023 - update 2026 (Appendix 4, July 2026).
+Fuel consumption is derived from the energy consumption factors, and CO2
+from fuel with the carbon balance, so CO2/FC is constant. Other sources
+are CETESB (Brazil), the Chinese guidelines, MOVES and EMFAC.
 
 ### HBEFA
 
-`emis_hbefa()`, `ef_hbefa()`, `ef_hbefa_cycle()` and `hbefa_classes()` are an
-R port of the HBEFA-based emission models (HBEFA v4.2, v3.1 and v2.1) of
-[Eclipse SUMO](https://eclipse.dev/sumo/), with 962 vehicle classes. They give
-instantaneous emissions from speed and acceleration, constant-speed factors,
-and averages over driving cycles, as an alternative to COPERT/EMEP-EEA for
-European projects. These files are EPL-2.0 OR GPL-2.0-or-later, see
-`inst/COPYRIGHTS`, and the article
-[HBEFA emission models](https://atmoschem.github.io/vein/articles/hbefa.html).
+`emis_hbefa()`, `ef_hbefa()`, `ef_hbefa_cycle()` and `hbefa_classes()`
+are an R port of the HBEFA-based emission models (HBEFA v4.2, v3.1 and
+v2.1) of [Eclipse SUMO](https://eclipse.dev/sumo/), with 962 vehicle
+classes. They give instantaneous emissions from speed and acceleration,
+constant-speed factors, and averages over driving cycles, as an
+alternative to COPERT/EMEP-EEA for European projects. These files are
+EPL-2.0 OR GPL-2.0-or-later, see `inst/COPYRIGHTS`, and the article
+[HBEFA emission
+models](https://atmoschem.github.io/vein/articles/hbefa.html).
+
+### MOVES factors without a database
+
+`moves_factors()` loads local MOVES data and `ef_moves()` evaluates
+running-exhaust factors in R on Linux, macOS and Windows. Evaluation
+needs no MariaDB, SQL, Java or MOVES installation.
+
+Select the vehicle with `source_type_id`, the fuel with `fuel_type_id`,
+and its manufacturing year with `model_year`. Both MOVES numeric IDs and
+exact names are accepted. For example:
+
+``` r
+vein::ef_moves(
+  pollutant = "NOx",
+  source_type_id = "Passenger Car",
+  fuel_type_id = "Gasoline",
+  model_year = 2020,
+  speed = c(20, 40, 60),  # km/h
+  temperature = 20        # degrees C
+)
+#> Units: [g/km]
+#> [1] 0.011671836 0.010784581 0.009399917
+```
+
+The bundled reference data cover **all 13 MOVES on-road vehicle types**
+and 38 vehicle/fuel combinations with running-exhaust output (gasoline,
+diesel, E-85, CNG and electricity), for **CO and NOx**, model years
+**2000–2025**, inventory year **2025**, and an urban unrestricted road.
+They include 16 speed bins and temperatures of 10, 20 and 30 degrees C
+at 50% relative humidity, using a documented U.S. reference scenario.
+Vehicle age is inventory year minus model year: a model-year 2020 car is
+five years old in this dataset.
+
+Use `moves_vehicles()` to list the available source-type and fuel IDs by
+name. For example, a diesel combination long-haul truck:
+
+``` r
+vein::moves_vehicles()
+#>    sourceTypeID               sourceTypeName fuelTypeID
+#> 1            11                   Motorcycle          1
+#> 2            21                Passenger Car          1
+#> 3            21                Passenger Car          2
+#> 4            21                Passenger Car          5
+#> 5            21                Passenger Car          9
+#> 6            31              Passenger Truck          1
+#> 7            31              Passenger Truck          2
+#> 8            31              Passenger Truck          5
+#> 9            31              Passenger Truck          9
+#> 10           32       Light Commercial Truck          1
+#> 11           32       Light Commercial Truck          2
+#> 12           32       Light Commercial Truck          5
+#> 13           32       Light Commercial Truck          9
+#> 14           41                  Other Buses          1
+#> 15           41                  Other Buses          2
+#> 16           41                  Other Buses          3
+#> 17           42                  Transit Bus          1
+#> 18           42                  Transit Bus          2
+#> 19           42                  Transit Bus          3
+#> 20           43                   School Bus          1
+#> 21           43                   School Bus          2
+#> 22           43                   School Bus          3
+#> 23           51                 Refuse Truck          1
+#> 24           51                 Refuse Truck          2
+#> 25           51                 Refuse Truck          3
+#> 26           52 Single Unit Short-haul Truck          1
+#> 27           52 Single Unit Short-haul Truck          2
+#> 28           52 Single Unit Short-haul Truck          3
+#> 29           53  Single Unit Long-haul Truck          1
+#> 30           53  Single Unit Long-haul Truck          2
+#> 31           53  Single Unit Long-haul Truck          3
+#> 32           54                   Motor Home          1
+#> 33           54                   Motor Home          2
+#> 34           61 Combination Short-haul Truck          1
+#> 35           61 Combination Short-haul Truck          2
+#> 36           61 Combination Short-haul Truck          3
+#> 37           62  Combination Long-haul Truck          2
+#> 38           62  Combination Long-haul Truck          3
+#>                    fuelTypeDesc
+#> 1                      Gasoline
+#> 2                      Gasoline
+#> 3                   Diesel Fuel
+#> 4                Ethanol (E-85)
+#> 5                   Electricity
+#> 6                      Gasoline
+#> 7                   Diesel Fuel
+#> 8                Ethanol (E-85)
+#> 9                   Electricity
+#> 10                     Gasoline
+#> 11                  Diesel Fuel
+#> 12               Ethanol (E-85)
+#> 13                  Electricity
+#> 14                     Gasoline
+#> 15                  Diesel Fuel
+#> 16 Compressed Natural Gas (CNG)
+#> 17                     Gasoline
+#> 18                  Diesel Fuel
+#> 19 Compressed Natural Gas (CNG)
+#> 20                     Gasoline
+#> 21                  Diesel Fuel
+#> 22 Compressed Natural Gas (CNG)
+#> 23                     Gasoline
+#> 24                  Diesel Fuel
+#> 25 Compressed Natural Gas (CNG)
+#> 26                     Gasoline
+#> 27                  Diesel Fuel
+#> 28 Compressed Natural Gas (CNG)
+#> 29                     Gasoline
+#> 30                  Diesel Fuel
+#> 31 Compressed Natural Gas (CNG)
+#> 32                     Gasoline
+#> 33                  Diesel Fuel
+#> 34                     Gasoline
+#> 35                  Diesel Fuel
+#> 36 Compressed Natural Gas (CNG)
+#> 37                  Diesel Fuel
+#> 38 Compressed Natural Gas (CNG)
+vein::ef_moves(
+  pollutant = "NOx",
+  source_type_id = "Combination Long-haul Truck",
+  fuel_type_id = "Diesel Fuel",
+  model_year = 2020, speed = c(20, 40, 60), temperature = 20
+)
+#> Units: [g/km]
+#> [1] 6.788542 3.318675 2.208248
+```
+
+Start exhaust (`ef_moves_start()`) and evaporative factors
+(`ef_moves_evap()`) are separate event-based data in **g/start** and
+**g/vehicle**. They cannot be used as g/km factors in `emis()`; multiply
+them by the corresponding start or vehicle activity. Use
+`moves_start_factors()` and `moves_evap_factors()` to load them.
+
+Other scenarios, pollutants or model years require additional factor
+data. Omit `speed` to obtain a function for `EmissionFactorsList()` and
+`emis()`, or use `method = "linear"` for bounded interpolation between
+speed-bin factors. See [MOVES emission factors in
+R](https://atmoschem.github.io/vein/articles/moves_factors.html) for the
+arguments, available conditions, examples and data provenance.
 
 ### TODO
 
@@ -113,10 +252,10 @@ library(vein)
 ``` r
 awesome_city <- tempdir()
 awesome_city
-#> [1] "/tmp/RtmpQ9FRLO"
+#> [1] "/tmp/RtmpYYM6af"
 get_project(directory = awesome_city,
 case = "brazil_bu_chem")
-#> Your directory is in /tmp/RtmpQ9FRLO
+#> Your directory is in /tmp/RtmpYYM6af
 ```
 
 ``` r

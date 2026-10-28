@@ -20,7 +20,8 @@ ef_moves(
 }
 \arguments{
 \item{pollutant}{MOVES numeric pollutant ID or CO, NOx, THC (also HC), CO2,
-PM2.5 or PM10. PM names denote primary exhaust particulate matter.}
+PM2.5 or PM10. PM names denote primary exhaust particulate matter. The
+bundled reference data contain CO and NOx; other pollutants need extra data.}
 
 \item{model_year}{One vehicle model year, selected exactly (no age filling).}
 
@@ -31,9 +32,13 @@ Omit to return a function of speed yielding numeric g/km, suitable for
 \item{factors}{A \code{MOVESFactors} object from \code{\link{moves_factors}}.
 Defaults to the bundled reference dataset.}
 
-\item{source_type_id}{MOVES source type ID; default 21 (passenger car).}
+\item{source_type_id}{MOVES source type ID or exact name, e.g. 21 or
+"Passenger Car". Default 21. Use \code{\link{moves_vehicles}} to list all
+combinations in the data.}
 
-\item{fuel_type_id}{MOVES fuel type ID; default 1 (gasoline).}
+\item{fuel_type_id}{MOVES fuel type ID or exact name, e.g. 1 or "Gasoline".
+Default 1. The bundled data include gasoline, diesel, E-85, CNG and
+electricity where valid.}
 
 \item{road_type_id}{MOVES road type ID; default 5 (urban unrestricted).}
 
@@ -77,5 +82,6 @@ f <- ef_moves("NOx", model_year = 2020, select = list(hourID = 1))
 f(c(20, 40, 60))
 }
 \seealso{
-\code{\link{moves_factors}}, \code{\link{emis}}
+\code{\link{moves_factors}}, \code{\link{moves_vehicles}},
+\code{\link{emis}}
 }

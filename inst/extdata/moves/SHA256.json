@@ -1,7 +1,13 @@
 {
-  "rateperdistance.csv": "8d7a76b7004432faf9c464a8c650e8c6eb85bfd4b01ad7017bcbfba1b2bd3307",
-  "movesrun.csv": "718ec4b60bfe3d82b02dbb54518d55338a2f33e3821a060aad836ccb34c69736",
+  "avgspeedbin.csv": "b2985d1d34329608a2813df7c0eee4999cedd1283dd886f3c01b1ad6ffbeb9ad",
   "moveserror.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "zonemonthhour.csv": "9bac9a0eacd7ee96fd64b813e7159be8b803fa0922a63eab18ece410dc71516c",
-  "avgspeedbin.csv": "b2985d1d34329608a2813df7c0eee4999cedd1283dd886f3c01b1ad6ffbeb9ad"
+  "moveserror_events.csv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "movesrun.csv": "10c75a9b18010ccbd0984fa1efa41a62cae62783ca0b80e6c3dd46a15b65818c",
+  "movesrun_events.csv": "1d72ed1ac5b40b12e0d5b854f7067680a7e2b2118b6c2c6afa4309861a44507b",
+  "rateperdistance.csv": "4d1d3d88928eebf795eef100ac4bdec5301621add4817ea35e70eac34154218d",
+  "rateperprofile.csv": "6aec713abd01ceee28c08b47f3e635e2b6517eaf849edbe4df12c092dde4f22e",
+  "rateperstart.csv": "5c51482ae31382fd78807fb2f5289384a5e6ecde3cc5fafeb49e087342282f7d",
+  "ratepervehicle.csv": "dc56309643da8b3feb7b76927d502f0d574fb191c7f0c091db0e197d2dd77676",
+  "vehicles.csv": "0ef6027d4a630b40d5ac7d0fee1c12bb24946006c7ea8854bddcec207db2d914",
+  "zonemonthhour.csv": "9bac9a0eacd7ee96fd64b813e7159be8b803fa0922a63eab18ece410dc71516c"
 }

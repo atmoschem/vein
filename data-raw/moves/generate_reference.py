@@ -13,6 +13,7 @@ from pathlib import Path
 import shutil
 import socket
 import subprocess
+import sys
 import time
 import xml.etree.ElementTree as ET
 import zipfile
@@ -124,34 +125,71 @@ local_infile=1
         paths = ['.'] + [node.attrib['location'] for node in
                          ET.parse(str(MODEL / 'build.xml')).find("path[@id='classpath']")]
         cp = os.pathsep.join(paths)
-        print('Executing MOVES6 reference RunSpec...', flush=True)
+        mode = sys.argv[1] if len(sys.argv) > 1 else 'reference'
+        if mode == 'reference':
+            runspec, output = 'reference.mrs', 'vein_reference_output'
+        elif mode == 'events':
+            runspec, output = 'events.mrs', 'vein_events_output'
+        else:
+            raise ValueError('Mode must be reference or events')
+        shutil.copy2(str(HERE / runspec), str(ROOT / runspec))
+        print('Executing MOVES6 ' + mode + ' RunSpec...', flush=True)
         subprocess.run(['java', '-Xmx512m', '-cp', cp,
                         'gov.epa.otaq.moves.master.commandline.MOVESCommandLine',
-                        '-r', str(ROOT / 'reference.mrs')], cwd=str(MODEL), env=ENV,
+                        '-r', str(ROOT / runspec)], cwd=str(MODEL), env=ENV,
                        check=True, timeout=3600)
-        run_id = int(sql('SELECT MAX(MOVESRunID) FROM vein_reference_output.MOVESRun').splitlines()[-1])
+        run_id = int(sql('SELECT MAX(MOVESRunID) FROM ' + output + '.MOVESRun').splitlines()[-1])
         where = ' WHERE MOVESRunID=' + str(run_id)
-        errors = sql('SELECT * FROM vein_reference_output.MOVESError' + where)
+        errors = sql('SELECT * FROM ' + output + '.MOVESError' + where)
         print(errors, flush=True)
         if len(errors.splitlines()) > 1:
             raise RuntimeError('MOVES reported errors for the current run')
-        count = sql('SELECT COUNT(*) FROM vein_reference_output.rateperdistance' + where).splitlines()[-1]
-        if int(count) == 0:
-            raise RuntimeError('MOVES produced no distance rates; see model/moveslog.txt')
         (ROOT / 'exports').mkdir(exist_ok=True)
-        export('SELECT * FROM vein_reference_output.rateperdistance' + where +
-               ' AND processID=1 AND roadTypeID=5 AND fuelTypeID=1 AND modelYearID BETWEEN 2000 AND 2025 '
-               'ORDER BY MOVESRunID,pollutantID,modelYearID,hourID,avgSpeedBinID', 'rateperdistance.csv')
-        export('SELECT * FROM vein_reference_output.MOVESRun' + where, 'movesrun.csv')
-        export('SELECT * FROM vein_reference_output.MOVESError' + where, 'moveserror.csv')
+        if mode == 'reference':
+            count = sql('SELECT COUNT(*) FROM ' + output + '.rateperdistance' + where).splitlines()[-1]
+            if int(count) == 0:
+                raise RuntimeError('MOVES produced no distance rates; see model/moveslog.txt')
+            export('SELECT * FROM ' + output + '.rateperdistance' + where +
+                   ' AND processID=1 AND roadTypeID=5 AND modelYearID BETWEEN 2000 AND 2025 '
+                   'ORDER BY MOVESRunID,pollutantID,modelYearID,hourID,avgSpeedBinID',
+                   'rateperdistance.csv')
+            export('SELECT * FROM movesdb20260729.avgspeedbin ORDER BY avgSpeedBinID',
+                   'avgspeedbin.csv')
+        else:
+            for table, query in (
+                    ('rateperstart',
+                     'SELECT * FROM ' + output + '.rateperstart' + where +
+                     ' AND processID=2 AND modelYearID BETWEEN 2000 AND 2025 '
+                     'ORDER BY MOVESRunID,pollutantID,modelYearID,hourID,sourceTypeID,fuelTypeID'),
+                    ('ratepervehicle',
+                     'SELECT * FROM ' + output + '.ratepervehicle' + where +
+                     ' AND processID IN (11,13) AND modelYearID BETWEEN 2000 AND 2025 '
+                     'ORDER BY MOVESRunID,pollutantID,processID,modelYearID,hourID'),
+                    ('rateperprofile',
+                     'SELECT * FROM ' + output + '.rateperprofile' + where +
+                     ' AND processID=12 AND modelYearID BETWEEN 2000 AND 2025 '
+                     'ORDER BY MOVESRunID,pollutantID,modelYearID,hourID')):
+                count = sql('SELECT COUNT(*) FROM ' + output + '.' + table + where).splitlines()[-1]
+                if int(count) == 0:
+                    raise RuntimeError('MOVES produced no ' + table + ' rates')
+                export(query, table + '.csv')
+        suffix = '' if mode == 'reference' else '_events'
+        export('SELECT * FROM ' + output + '.MOVESRun' + where,
+               'movesrun' + suffix + '.csv')
+        export('SELECT * FROM ' + output + '.MOVESError' + where,
+               'moveserror' + suffix + '.csv')
         export('SELECT * FROM vein_reference_input.zonemonthhour '
                'WHERE monthID=1 AND hourID<=3 ORDER BY zoneID,hourID', 'zonemonthhour.csv')
-        export('SELECT * FROM movesdb20260729.avgspeedbin ORDER BY avgSpeedBinID', 'avgspeedbin.csv')
+        export('SELECT DISTINCT ft.fuelTypeID,ft.fuelTypeDesc,sut.sourceTypeID,'
+               'sut.sourceTypeName FROM movesdb20260729.fueltype ft,'
+               'movesdb20260729.sourceusetype sut,movesdb20260729.fuelengtechassoc feta '
+               'WHERE ft.fuelTypeID=feta.fuelTypeID AND sut.sourceTypeID=feta.sourceTypeID '
+               'ORDER BY sut.sourceTypeID,ft.fuelTypeID', 'vehicles.csv')
         manifest = {}
         for path in (ROOT / 'exports').glob('*.csv'):
             manifest[path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
         (ROOT / 'exports/SHA256.json').write_text(json.dumps(manifest, indent=2) + '\n')
-        print('Reference export complete: ' + str(ROOT / 'exports'), flush=True)
+        print(mode.capitalize() + ' export complete: ' + str(ROOT / 'exports'), flush=True)
     finally:
         subprocess.run([str(MARIA / 'bin/mariadb-admin'), '--no-defaults',
                         '--socket=' + SOCKET, '--user=root', 'shutdown'], timeout=30)

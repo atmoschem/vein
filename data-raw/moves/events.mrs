@@ -1,0 +1,108 @@
+<runspec version="MOVES6.0.0">
+  <description><![CDATA[VEIN portable start and evaporative factor reference. MOVES6.0.0, Washtenaw County MI defaults, calendar 2025, all 13 onroad vehicle types and valid fuels, January weekday. Start exhaust CO/NOx and evaporative THC (permeation, vapor venting, leaks). Temperatures are artificial lookup grid points: hour 1=20 C, 2=10 C, 3=30 C, RH=50%. U.S. reference, not an Ecuador calibration.]]></description>
+  <models><model value="ONROAD"/></models>
+  <modelscale value="Rates"/>
+  <modeldomain value="DEFAULT"/>
+  <geographicselections>
+    <geographicselection type="COUNTY" key="26161" description="MICHIGAN - Washtenaw County"/>
+  </geographicselections>
+  <timespan>
+    <year key="2025"/><month id="1"/><day id="2"/>
+    <beginhour id="1"/><endhour id="3"/><aggregateBy key="Hour"/>
+  </timespan>
+  <onroadvehicleselections>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="11" sourcetypename="Motorcycle"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="21" sourcetypename="Passenger Car"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="21" sourcetypename="Passenger Car"/>
+    <onroadvehicleselection fueltypeid="5" fueltypedesc="Ethanol (E-85)" sourcetypeid="21" sourcetypename="Passenger Car"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="21" sourcetypename="Passenger Car"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="31" sourcetypename="Passenger Truck"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="31" sourcetypename="Passenger Truck"/>
+    <onroadvehicleselection fueltypeid="5" fueltypedesc="Ethanol (E-85)" sourcetypeid="31" sourcetypename="Passenger Truck"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="31" sourcetypename="Passenger Truck"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="32" sourcetypename="Light Commercial Truck"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="32" sourcetypename="Light Commercial Truck"/>
+    <onroadvehicleselection fueltypeid="5" fueltypedesc="Ethanol (E-85)" sourcetypeid="32" sourcetypename="Light Commercial Truck"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="32" sourcetypename="Light Commercial Truck"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="41" sourcetypename="Other Buses"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="41" sourcetypename="Other Buses"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="41" sourcetypename="Other Buses"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="41" sourcetypename="Other Buses"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="42" sourcetypename="Transit Bus"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="42" sourcetypename="Transit Bus"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="42" sourcetypename="Transit Bus"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="42" sourcetypename="Transit Bus"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="43" sourcetypename="School Bus"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="43" sourcetypename="School Bus"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="43" sourcetypename="School Bus"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="43" sourcetypename="School Bus"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="51" sourcetypename="Refuse Truck"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="51" sourcetypename="Refuse Truck"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="51" sourcetypename="Refuse Truck"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="51" sourcetypename="Refuse Truck"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="52" sourcetypename="Single Unit Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="52" sourcetypename="Single Unit Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="52" sourcetypename="Single Unit Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="52" sourcetypename="Single Unit Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="53" sourcetypename="Single Unit Long-haul Truck"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="53" sourcetypename="Single Unit Long-haul Truck"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="53" sourcetypename="Single Unit Long-haul Truck"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="53" sourcetypename="Single Unit Long-haul Truck"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="54" sourcetypename="Motor Home"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="54" sourcetypename="Motor Home"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="54" sourcetypename="Motor Home"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="54" sourcetypename="Motor Home"/>
+    <onroadvehicleselection fueltypeid="1" fueltypedesc="Gasoline" sourcetypeid="61" sourcetypename="Combination Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="61" sourcetypename="Combination Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="61" sourcetypename="Combination Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="61" sourcetypename="Combination Short-haul Truck"/>
+    <onroadvehicleselection fueltypeid="2" fueltypedesc="Diesel Fuel" sourcetypeid="62" sourcetypename="Combination Long-haul Truck"/>
+    <onroadvehicleselection fueltypeid="3" fueltypedesc="Compressed Natural Gas (CNG)" sourcetypeid="62" sourcetypename="Combination Long-haul Truck"/>
+    <onroadvehicleselection fueltypeid="9" fueltypedesc="Electricity" sourcetypeid="62" sourcetypename="Combination Long-haul Truck"/>
+  </onroadvehicleselections>
+  <roadtypes>
+    <roadtype roadtypeid="1" roadtypename="Off-Network" modelCombination="M1"/>
+    <roadtype roadtypeid="2" roadtypename="Rural Restricted Access" modelCombination="M1"/>
+    <roadtype roadtypeid="3" roadtypename="Rural Unrestricted Access" modelCombination="M1"/>
+    <roadtype roadtypeid="4" roadtypename="Urban Restricted Access" modelCombination="M1"/>
+    <roadtype roadtypeid="5" roadtypename="Urban Unrestricted Access" modelCombination="M1"/>
+  </roadtypes>
+  <pollutantprocessassociations>
+    <pollutantprocessassociation pollutantkey="2" pollutantname="Carbon Monoxide (CO)" processkey="2" processname="Start Exhaust"/>
+    <pollutantprocessassociation pollutantkey="3" pollutantname="Oxides of Nitrogen (NOx)" processkey="2" processname="Start Exhaust"/>
+    <pollutantprocessassociation pollutantkey="1" pollutantname="Total Gaseous Hydrocarbons" processkey="11" processname="Evap Permeation"/>
+    <pollutantprocessassociation pollutantkey="1" pollutantname="Total Gaseous Hydrocarbons" processkey="12" processname="Evap Fuel Vapor Venting"/>
+    <pollutantprocessassociation pollutantkey="1" pollutantname="Total Gaseous Hydrocarbons" processkey="13" processname="Evap Fuel Leaks"/>
+  </pollutantprocessassociations>
+  <databaseselections>
+    <databaseselection servername="localhost" databasename="vein_reference_input" description="Temperature grid only; all other inputs from EPA defaults"/>
+  </databaseselections>
+  <internalcontrolstrategies/>
+  <inputdatabase servername="" databasename="" description=""/>
+  <geographicoutputdetail description="COUNTY"/>
+  <outputemissionsbreakdownselection>
+    <modelyear selected="true"/><fueltype selected="true"/>
+    <fuelsubtype selected="false"/><emissionprocess selected="true"/>
+    <onroadoffroad selected="false"/><roadtype selected="true"/>
+    <sourceusetype selected="true"/><movesvehicletype selected="false"/>
+    <onroadscc selected="false"/>
+    <estimateuncertainty selected="false" numberOfIterations="2" keepSampledData="false" keepIterations="false"/>
+    <sector selected="false"/>
+    <engtechid selected="false"/><hpclass selected="false"/><regclassid selected="false"/>
+  </outputemissionsbreakdownselection>
+  <outputdatabase servername="localhost" databasename="vein_events_output" description="Portable factor reference"/>
+  <outputtimestep value="Hour"/>
+  <outputvmtdata value="true"/><outputsho value="true"/>
+  <outputsh value="false"/><outputshp value="false"/>
+  <outputshidling value="false"/><outputstarts value="false"/><outputpopulation value="false"/>
+  <scaleinputdatabase servername="" databasename="" description=""/>
+  <outputfactors>
+    <timefactors selected="true" units="Hours"/>
+    <distancefactors selected="true" units="Miles"/>
+    <massfactors selected="true" units="Grams" energyunits="Joules"/>
+  </outputfactors>
+  <savedata/><donotexecute/>
+  <generatordatabase shouldsave="false" servername="" databasename="" description=""/>
+  <donotperformfinalaggregation selected="false"/>
+  <lookuptableflags scenarioid="vein-events-2025" truncateoutput="true" truncateactivity="true" truncatebaserates="true"/>
+</runspec>

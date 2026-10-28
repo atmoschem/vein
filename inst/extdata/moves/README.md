@@ -13,14 +13,27 @@ SQL, Java, a MOVES executable or a network connection.
 | Default database | `movesdb20260729` |
 | Inventory year | 2025 |
 | Geography | Washtenaw County, Michigan, USA (26161), zone 261610 |
-| Source / fuel | Passenger car (21), gasoline (1) |
+| Source / fuel | All 13 on-road types; 38 vehicle/fuel combinations |
 | Pollutants | CO (2), NOx (3) |
 | Process / road | Running exhaust (1), urban unrestricted access (5) |
-| Vehicle model years | 2000--2025, inclusive |
+| Vehicle model years | 2000--2025 where MOVES reports that combination |
 | Average speed bins | All 16 MOVES positive-speed bins |
 | Meteorology | 20, 10 and 30 degrees C for hours 1, 2 and 3 respectively; RH 50% |
 | Time / fuel context | January weekday, with EPA default fuel and other inputs |
-| Rows | 2 pollutants x 26 model years x 3 temperatures x 16 bins = 2,496 |
+| Rows | 86,304 (every group has 16 speed bins) |
+
+Start exhaust is a separate event-based table: 5,394 rows of CO/NOx in g/start,
+covering all 13 source types and five fuels. Evaporative THC has 2,124 rows
+for permeation/leaks in g/vehicle and 1,062 profile rows for vapor venting.
+MOVES reports evaporative output for 12 source types and gasoline/E85
+combinations in this scenario; combination long-haul trucks and diesel, CNG or
+electric evaporative factors are not included.
+
+The RUNSPEC lists 48 vehicle/fuel combinations because MOVES6 requires every
+valid fuel for each selected source type. Ten combinations have no modelled
+running-exhaust output in this scenario and are not in the distance table:
+heavy electric buses/trucks, and CNG/electric motor homes.
+`moves_vehicles()` lists the 38 combinations that have distance factors.
 
 The three hours are artificial meteorological lookup points, not an observed
 diurnal cycle. Fleet technology, fuel and other assumptions are EPA defaults
@@ -29,16 +42,25 @@ calibration or coverage of all MOVES vehicles/pollutants/conditions.
 
 ## Files and provenance
 
-- `rateperdistance.csv`: raw selected EPA output, in g/mile.
-- `movesrun.csv`: the original run record, including output units, model and
-  database versions, date and description. Run ID 3 is local to the producing
-  output database, not a globally unique model identifier.
+- `rateperdistance.csv`: running-exhaust EPA output in g/mile.
+- `rateperstart.csv`: start-exhaust EPA output in g/start.
+- `ratepervehicle.csv`: evaporative permeation and fuel-leak output in g/vehicle.
+- `rateperprofile.csv`: evaporative vapor-venting output, including MOVES
+  `temperatureProfileID`; its rate is per profile event, not g/km.
+- `movesrun.csv`: running-exhaust run record and output units.
+- `movesrun_events.csv`: start/evaporative run record and output units.
+- `moveserror.csv`, `moveserror_events.csv`: empty because the successful runs
+  had no reported errors.
 - `avgspeedbin.csv`: native speed-bin definitions exported from the default DB.
+- `vehicles.csv`: all valid source/fuel names and IDs.
 - `zonemonthhour.csv`: the exact meteorological overrides.
-- `moveserror.csv`: empty because the successful run had no reported errors.
-- `reference.mrs`: the executed RunSpec. All applicable passenger-car fuel types
-  were included as required by MOVES6; the published table selects gasoline.
+- `reference.mrs` and `events.mrs`: executed RunSpecs. All applicable fuel types
+  were included as required by MOVES6.
 - `SHA256.json`: SHA-256 hashes of the original CSV exports.
+
+Start and evaporative factors are event-based. Do not pass them to `emis()` as
+g/km factors. Start factors require start activity; permeation/leaks require
+vehicle activity; vapor venting additionally requires its temperature profile.
 
 Generated on Linux on 2026-10-28 using the EPA source, Java 11, Go 1.26.10,
 MariaDB 10.11.14 and one local worker. The successful run retrieved all 32
@@ -57,7 +79,9 @@ The default bin evaluator uses the intervals in `avgspeedbin.csv`. In
 particular, exactly 2.5 mph falls in bin 2, while bin 1's nominal speed for
 linear interpolation is 2.5 mph. Reference tests evaluate bin 1 at 1.25 mph
 and the other bins at their nominal speeds; linear interpolation is checked
-at all nominal speeds. All 2,496 exported values are covered.
+at all nominal speeds. All 86,304 exported values are checked by the reference
+test, which evaluates bins 1--16 for every pollutant, source/fuel combination
+and one representative model year/hour.
 
 ## Sources
 

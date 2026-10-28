@@ -75,6 +75,60 @@ European projects. These files are EPL-2.0 OR GPL-2.0-or-later, see
 `inst/COPYRIGHTS`, and the article
 [HBEFA emission models](https://atmoschem.github.io/vein/articles/hbefa.html).
 
+### MOVES factors without a database
+
+`moves_factors()` loads local MOVES data and `ef_moves()` evaluates running-exhaust
+factors in R on Linux, macOS and Windows. Evaluation needs no MariaDB, SQL, Java
+or MOVES installation.
+
+Select the vehicle with `source_type_id`, the fuel with `fuel_type_id`, and its
+manufacturing year with `model_year`. Both MOVES numeric IDs and exact names
+are accepted. For example:
+
+```{r moves-example}
+vein::ef_moves(
+  pollutant = "NOx",
+  source_type_id = "Passenger Car",
+  fuel_type_id = "Gasoline",
+  model_year = 2020,
+  speed = c(20, 40, 60),  # km/h
+  temperature = 20        # degrees C
+)
+```
+
+The bundled reference data cover **all 13 MOVES on-road vehicle types** and 38
+vehicle/fuel combinations with running-exhaust output (gasoline, diesel, E-85,
+CNG and electricity), for **CO and NOx**, model years **2000--2025**, inventory
+year **2025**, and an urban unrestricted road. They include 16 speed bins and temperatures of 10, 20 and
+30 degrees C at 50% relative humidity, using a documented U.S. reference
+scenario. Vehicle age is inventory year minus model year: a model-year 2020 car
+is five years old in this dataset.
+
+Use `moves_vehicles()` to list the available source-type and fuel IDs by name.
+For example, a diesel combination long-haul truck:
+
+```{r moves-truck}
+vein::moves_vehicles()
+vein::ef_moves(
+  pollutant = "NOx",
+  source_type_id = "Combination Long-haul Truck",
+  fuel_type_id = "Diesel Fuel",
+  model_year = 2020, speed = c(20, 40, 60), temperature = 20
+)
+```
+
+Start exhaust (`ef_moves_start()`) and evaporative factors
+(`ef_moves_evap()`) are separate event-based data in **g/start** and
+**g/vehicle**. They cannot be used as g/km factors in `emis()`; multiply them by
+the corresponding start or vehicle activity. Use `moves_start_factors()` and
+`moves_evap_factors()` to load them.
+
+Other scenarios, pollutants or model years require additional factor data.
+Omit `speed` to obtain a function for `EmissionFactorsList()` and `emis()`, or
+use `method = "linear"` for bounded interpolation between speed-bin factors. See
+[MOVES emission factors in R](https://atmoschem.github.io/vein/articles/moves_factors.html)
+for the arguments, available conditions, examples and data provenance.
+
 ### TODO
 
 - See issues [GitHub](https://github.com/atmoschem/vein/issues)

@@ -27,7 +27,10 @@
   if (anyDuplicated(tolower(names(x)))) stop(label, " has duplicate column names")
   i <- match(tolower(names(x)), tolower(.moves_columns))
   names(x)[!is.na(i)] <- .moves_columns[i[!is.na(i)]]
-  x[] <- lapply(x, function(z) if (is.factor(z)) as.character(z) else z)
+  x[] <- lapply(x, function(z) {
+    if (inherits(z, "integer64")) return(as.numeric(as.character(z)))
+    if (is.factor(z)) as.character(z) else z
+  })
   x
 }
 
@@ -72,8 +75,12 @@
 #' @param runs A data.frame or file containing the corresponding MOVESRun rows,
 #' including MOVESRunID, massUnits, distanceUnits, masterVersion and
 #' defaultDatabaseUsed. Run IDs must uniquely identify runs within this input.
-#' @return A \code{MOVESFactors} list with \code{rates}, \code{runs} and
-#' \code{schema_version}. The rate table retains the original columns and adds
+#' @param vehicles Optional data.frame or file with sourceTypeID, sourceTypeName,
+#' fuelTypeID and fuelTypeDesc. Omit for the bundled dataset or when names are
+#' unavailable; \code{\link{moves_vehicles}} then lists numeric IDs.
+#' @return A \code{MOVESFactors} list with \code{rates}, \code{runs},
+#' \code{vehicles}, \code{basis} and \code{schema_version}. The rate table
+#' retains the original columns and adds
 #' \code{gkm} (grams per vehicle-kilometre) and \code{temperature_C}. When linkID
 #' is present, \code{locationID} preserves location while decoding the virtual
 #' speed-bin links of Default/County scale runs. Save/load
@@ -84,9 +91,10 @@
 #' missing, negative or duplicate rates are rejected. No fleet or scenario
 #' averaging is performed. MOVES temperature values are degrees Fahrenheit.
 #'
-#' The bundled reference data describe a limited U.S. scenario; inspect
-#' \code{x$runs} and \code{x$rates} before selecting factors. They are not a
-#' calibrated Ecuador fleet. Additional datasets can use the same format.
+#' The bundled reference data describe a U.S. scenario covering all 13 on-road
+#' source types and their valid MOVES6 fuels. Inspect \code{\link{moves_vehicles}}
+#' and \code{x$runs} before selecting factors. They are not a calibrated Ecuador
+#' fleet. Additional datasets can use the same format.
 #' @references EPA MOVES6 technical guidance, section 4.2.2:
 #' \url{https://www.epa.gov/moves/latest-version-motor-vehicle-emission-simulator-moves}
 #' @seealso \code{\link{ef_moves}}
@@ -95,11 +103,14 @@
 #' x <- moves_factors()
 #' x$runs[, c("masterVersion", "defaultDatabaseUsed")]
 #' head(x$rates)
-moves_factors <- function(rates, runs) {
+moves_factors <- function(rates, runs, vehicles) {
+  has_vehicles <- !missing(vehicles)
   if (missing(rates) && missing(runs)) {
     directory <- system.file("extdata", "moves", package = "vein")
     rates <- file.path(directory, "rateperdistance.csv")
     runs <- file.path(directory, "movesrun.csv")
+    if (!has_vehicles) vehicles <- file.path(directory, "vehicles.csv")
+    has_vehicles <- TRUE
   } else if (missing(rates) || missing(runs)) {
     stop("Supply both rates and runs, or omit both for the reference dataset")
   }
@@ -148,6 +159,33 @@ moves_factors <- function(rates, runs) {
     .moves_unit_scale(runs$massUnits[run], "mass") /
     .moves_unit_scale(runs$distanceUnits[run], "distance")
   rates$temperature_C <- (rates$temperature - 32) * 5 / 9
+  unavailable <- !has_vehicles ||
+    (is.character(vehicles) && (length(vehicles) != 1L || !file.exists(vehicles))) ||
+    (is.data.frame(vehicles) && !nrow(vehicles))
+  if (unavailable) {
+    if (has_vehicles) {
+      warning("vehicles data unavailable; listing numeric source/fuel IDs only")
+    }
+    vehicles <- unique(rates[c("sourceTypeID", "fuelTypeID")])
+    vehicles$sourceTypeName <- NA_character_
+    vehicles$fuelTypeDesc <- NA_character_
+    vehicles <- vehicles[c("sourceTypeID", "sourceTypeName", "fuelTypeID", "fuelTypeDesc")]
+    vehicles <- vehicles[order(vehicles$sourceTypeID, vehicles$fuelTypeID), ]
+    rownames(vehicles) <- NULL
+  } else {
+    vehicles <- .moves_table(vehicles, "vehicles")
+    .moves_required(vehicles, c("sourceTypeID", "sourceTypeName",
+                                "fuelTypeID", "fuelTypeDesc"), "vehicles")
+    .moves_numeric(vehicles$sourceTypeID, "vehicles$sourceTypeID", integer = TRUE)
+    .moves_numeric(vehicles$fuelTypeID, "vehicles$fuelTypeID", integer = TRUE)
+    if (anyDuplicated(vehicles[c("sourceTypeID", "fuelTypeID")])) {
+      stop("vehicles has duplicate source/fuel combinations")
+    }
+  }
+  available <- paste(rates$sourceTypeID, rates$fuelTypeID)
+  vehicles <- vehicles[paste(vehicles$sourceTypeID, vehicles$fuelTypeID) %in% available, ]
+  rownames(vehicles) <- NULL
+  if (!nrow(vehicles)) stop("No vehicle/fuel names match the rate data")
   if ("linkID" %in% names(rates)) {
     .moves_numeric(rates$linkID[!is.na(rates$linkID)], "linkID", integer = TRUE)
     rates$locationID <- ifelse(is.na(rates$linkID), NA_character_,
@@ -164,8 +202,25 @@ moves_factors <- function(rates, runs) {
       rates$locationID[virtual] <- paste0("zone:", floor(link / 1000))
     }
   }
-  structure(list(rates = rates, runs = runs, schema_version = 1L),
+  structure(list(rates = rates, runs = runs, vehicles = vehicles,
+                 schema_version = 1L, basis = "distance"),
             class = "MOVESFactors")
+}
+
+.moves_id <- function(value, vehicles, id, name, label) {
+  if (is.numeric(value) && length(value) == 1L && !is.na(value)) return(value)
+  if (!is.character(value) || length(value) != 1L || is.na(value)) {
+    stop(label, " must be one numeric ID or one name")
+  }
+  if (is.null(vehicles) || !nrow(vehicles)) {
+    stop("No vehicle names are available; supply a numeric ", label)
+  }
+  key <- tolower(trimws(value))
+  found <- unique(vehicles[[id]][!is.na(vehicles[[name]]) &
+                                    tolower(trimws(vehicles[[name]])) == key])
+  if (!length(found)) stop("Unknown ", label, " '", value, "'; see moves_vehicles()")
+  if (length(found) > 1L) stop("Ambiguous ", label, " '", value, "'; use its numeric ID")
+  found
 }
 
 .moves_pollutant <- function(x) {
@@ -178,20 +233,54 @@ moves_factors <- function(rates, runs) {
   out
 }
 
+#' List vehicle and fuel combinations in MOVES factors
+#'
+#' @description Returns the source type and fuel combinations present in a
+#' portable MOVES dataset, with names when available. Use the IDs in
+#' \code{\link{ef_moves}}.
+#' @param factors A \code{MOVESFactors} object from \code{\link{moves_factors}}.
+#' @return A data.frame with sourceTypeID, sourceTypeName, fuelTypeID and
+#' fuelTypeDesc, ordered by source type and fuel.
+#' @seealso \code{\link{ef_moves}}, \code{\link{moves_factors}}
+#' @export
+#' @examples
+#' moves_vehicles()
+moves_vehicles <- function(factors = moves_factors()) {
+  if (!inherits(factors, "MOVESFactors")) {
+    stop("factors must be created by moves_factors()")
+  }
+  vehicles <- factors$vehicles
+  if (is.null(vehicles) || !nrow(vehicles)) {
+    vehicles <- unique(factors$rates[c("sourceTypeID", "fuelTypeID")])
+    vehicles$sourceTypeName <- NA_character_
+    vehicles$fuelTypeDesc <- NA_character_
+  }
+  vehicles <- vehicles[c("sourceTypeID", "sourceTypeName",
+                         "fuelTypeID", "fuelTypeDesc")]
+  vehicles <- vehicles[order(vehicles$sourceTypeID, vehicles$fuelTypeID), ]
+  rownames(vehicles) <- NULL
+  vehicles
+}
+
 #' Evaluate MOVES emission factors without a database
 #'
 #' @description Selects one running-exhaust scenario from portable MOVES data
 #' and returns factors in g/km or a speed-dependent function for vein inventories.
 #' @param pollutant MOVES numeric pollutant ID or CO, NOx, THC (also HC), CO2,
-#' PM2.5 or PM10. PM names denote primary exhaust particulate matter.
+#' PM2.5 or PM10. PM names denote primary exhaust particulate matter. The
+#' bundled reference data contain CO and NOx; other pollutants need extra data.
 #' @param model_year One vehicle model year, selected exactly (no age filling).
 #' @param speed Numeric speed vector in km/h, or a vector with speed units.
 #' Omit to return a function of speed yielding numeric g/km, suitable for
 #' \code{\link{EmissionFactorsList}} and \code{\link{emis}}.
 #' @param factors A \code{MOVESFactors} object from \code{\link{moves_factors}}.
 #' Defaults to the bundled reference dataset.
-#' @param source_type_id MOVES source type ID; default 21 (passenger car).
-#' @param fuel_type_id MOVES fuel type ID; default 1 (gasoline).
+#' @param source_type_id MOVES source type ID or exact name, e.g. 21 or
+#' "Passenger Car". Default 21. Use \code{\link{moves_vehicles}} to list all
+#' combinations in the data.
+#' @param fuel_type_id MOVES fuel type ID or exact name, e.g. 1 or "Gasoline".
+#' Default 1. The bundled data include gasoline, diesel, E-85, CNG and
+#' electricity where valid.
 #' @param road_type_id MOVES road type ID; default 5 (urban unrestricted).
 #' @param temperature Optional scalar temperature in degrees Celsius, matched
 #' to an existing temperature point. No meteorological interpolation is performed.
@@ -211,7 +300,8 @@ moves_factors <- function(rates, runs) {
 #' @details Zero speed is rejected because distance-based factors cannot describe
 #' stationary idle. NA speeds propagate. Categorical attributes and model years
 #' are selected exactly. Valid zero emission rates remain zero.
-#' @seealso \code{\link{moves_factors}}, \code{\link{emis}}
+#' @seealso \code{\link{moves_factors}}, \code{\link{moves_vehicles}},
+#' \code{\link{emis}}
 #' @export
 #' @examples
 #' x <- moves_factors()
@@ -225,10 +315,15 @@ ef_moves <- function(pollutant, model_year, speed, factors = moves_factors(),
                       source_type_id = 21, fuel_type_id = 1, road_type_id = 5,
                       temperature, rel_humidity, select = list(),
                       method = c("bin", "linear")) {
-  if (!inherits(factors, "MOVESFactors") || !identical(factors$schema_version, 1L)) {
+  if (!inherits(factors, "MOVESFactors") || !identical(factors$schema_version, 1L) ||
+      !identical(factors$basis, "distance")) {
     stop("factors must be created by moves_factors()")
   }
   method <- match.arg(method)
+  source_type_id <- .moves_id(source_type_id, factors$vehicles,
+                              "sourceTypeID", "sourceTypeName", "source_type_id")
+  fuel_type_id <- .moves_id(fuel_type_id, factors$vehicles,
+                            "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
   filters <- list(pollutantID = .moves_pollutant(pollutant),
                   modelYearID = model_year, sourceTypeID = source_type_id,
                   fuelTypeID = fuel_type_id, roadTypeID = road_type_id, processID = 1L)

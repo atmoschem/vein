@@ -22,6 +22,26 @@ portable_moves_fixture <- function() {
   list(rates = rates, runs = runs)
 }
 
+test_that("vehicle/fuel combinations are discoverable with and without names", {
+  a <- portable_moves_fixture()
+  d <- moves_factors(a$rates, a$runs)
+  v <- moves_vehicles(d)
+  expect_equal(nrow(v), 1)
+  expect_identical(names(v), c("sourceTypeID", "sourceTypeName", "fuelTypeID", "fuelTypeDesc"))
+  expect_true(is.na(v$sourceTypeName))
+  named <- data.frame(sourceTypeID = 21L, sourceTypeName = "Passenger Car",
+                      fuelTypeID = 1L, fuelTypeDesc = "Gasoline")
+  d <- moves_factors(a$rates, a$runs, named)
+  expect_equal(moves_vehicles(d), named)
+  expect_equal(ef_moves("NOx", 2020, speed = 50, factors = d,
+                        source_type_id = "passenger car",
+                        fuel_type_id = "GASOLINE"),
+               ef_moves("NOx", 2020, speed = 50, factors = d))
+  expect_error(ef_moves("NOx", 2020, speed = 50, factors = d,
+                        source_type_id = "Truck"), "Unknown source_type_id")
+  expect_error(moves_factors(a$rates, a$runs, rbind(named, named[1, ])), "duplicate")
+})
+
 test_that("portable factors convert units per run and preserve their provenance", {
   a <- portable_moves_fixture()
   b <- a$rates
