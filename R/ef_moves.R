@@ -1,6 +1,8 @@
 # Portable MOVES rate tables. All evaluation is in R; the database is used only
 # by the external data-production workflow, never by these functions.
 
+.moves_cache <- new.env(parent = emptyenv())
+
 .moves_columns <- c("MOVESScenarioID", "MOVESRunID", "yearID", "monthID",
                     "dayID", "hourID", "linkID", "pollutantID", "processID",
                     "sourceTypeID", "regClassID", "SCC", "fuelTypeID",
@@ -105,6 +107,10 @@
 #' head(x$rates)
 moves_factors <- function(rates, runs, vehicles) {
   has_vehicles <- !missing(vehicles)
+  cache <- missing(rates) && missing(runs) && missing(vehicles)
+  if (cache && exists("distance", .moves_cache, inherits = FALSE)) {
+    return(get("distance", .moves_cache, inherits = FALSE))
+  }
   if (missing(rates) && missing(runs)) {
     directory <- system.file("extdata", "moves", package = "vein")
     rates <- file.path(directory, "rateperdistance.csv")
@@ -202,9 +208,11 @@ moves_factors <- function(rates, runs, vehicles) {
       rates$locationID[virtual] <- paste0("zone:", floor(link / 1000))
     }
   }
-  structure(list(rates = rates, runs = runs, vehicles = vehicles,
-                 schema_version = 1L, basis = "distance"),
-            class = "MOVESFactors")
+  result <- structure(list(rates = rates, runs = runs, vehicles = vehicles,
+                           schema_version = 1L, basis = "distance"),
+                      class = "MOVESFactors")
+  if (cache) assign("distance", result, envir = .moves_cache)
+  result
 }
 
 .moves_id <- function(value, vehicles, id, name, label) {

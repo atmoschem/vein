@@ -92,6 +92,10 @@
 #'                source_type_id = "Passenger Car",
 #'                fuel_type_id = "Gasoline", select = list(hourID = 1))
 moves_start_factors <- function(rates, runs, vehicles) {
+  cache <- missing(rates) && missing(runs) && missing(vehicles)
+  if (cache && exists("start", .moves_cache, inherits = FALSE)) {
+    return(get("start", .moves_cache, inherits = FALSE))
+  }
   if (missing(rates) && missing(runs)) {
     directory <- system.file("extdata", "moves", package = "vein")
     rates <- file.path(directory, "rateperstart.csv")
@@ -100,8 +104,10 @@ moves_start_factors <- function(rates, runs, vehicles) {
   } else if (missing(rates) || missing(runs)) {
     stop("Supply both rates and runs, or omit both for bundled data")
   }
-  .moves_event_table(rates, runs, vehicles, "start", 2L,
-                     "ratePerStart", "gperstart")
+  result <- .moves_event_table(rates, runs, vehicles, "start", 2L,
+                               "ratePerStart", "gperstart")
+  if (cache) assign("start", result, envir = .moves_cache)
+  result
 }
 
 #' Portable MOVES evaporative factors
@@ -125,6 +131,10 @@ moves_start_factors <- function(rates, runs, vehicles) {
 #'               source_type_id = "Passenger Car",
 #'               fuel_type_id = "Gasoline", select = list(hourID = 1))
 moves_evap_factors <- function(rates, profile, runs, vehicles) {
+  cache <- missing(rates) && missing(profile) && missing(runs) && missing(vehicles)
+  if (cache && exists("evap", .moves_cache, inherits = FALSE)) {
+    return(get("evap", .moves_cache, inherits = FALSE))
+  }
   has_runs <- !missing(runs)
   has_profile <- !missing(profile)
   if (missing(rates) && !has_runs) {
@@ -158,6 +168,7 @@ moves_evap_factors <- function(rates, profile, runs, vehicles) {
                                    base$rates$modelYearID, base$rates$hourID), ]
     rownames(base$rates) <- NULL
   }
+  if (cache) assign("evap", base, envir = .moves_cache)
   base
 }
 
