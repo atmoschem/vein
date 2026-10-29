@@ -210,3 +210,43 @@ test_that("MOVES curves integrate with vein emis in g/km with correct link and a
   # bin 2: 1 and 2 g/km. bin 3: 2 and 4 g/km. Multiply by veh and km.
   expect_equal(as.numeric(out[, , 1]), as.numeric(matrix(c(2, 12, 8, 40), 2, 2)))
 })
+
+test_that("brake, tire and driving evaporative factors load and select by process", {
+  a <- portable_moves_fixture()
+  run <- a$rates
+  brake <- a$rates
+  brake$processID <- 9L
+  brake$pollutantID <- 116L
+  brake$ratePerDistance <- brake$ratePerDistance * 2
+  tire <- a$rates
+  tire$processID <- 10L
+  tire$pollutantID <- 107L
+  evap <- a$rates
+  evap$processID <- 12L
+  evap$pollutantID <- 1L
+  d <- moves_factors(rbind(run, brake, tire, evap), a$runs)
+  expect_equal(sort(unique(d$rates$processID)), c(1L, 9L, 10L, 12L))
+  nox <- ef_moves("NOx", 2020, speed = 50, factors = d)
+  pm <- ef_moves("PM2.5", 2020, speed = 50, factors = d, process = "brake")
+  expect_equal(as.numeric(pm), 2 * as.numeric(nox))
+  expect_equal(as.numeric(ef_moves("PM10", 2020, speed = 50, factors = d, process = 10)),
+               as.numeric(nox))
+  expect_equal(as.numeric(ef_moves("THC", 2020, speed = 50, factors = d,
+                                   process = "venting")), as.numeric(nox))
+  expect_error(ef_moves("NOx", 2020, speed = 50, factors = d, process = "brake"),
+               "No MOVES rates")
+  expect_error(ef_moves("NOx", 2020, speed = 50, factors = d, process = 2), "process must")
+  expect_error(ef_moves("NOx", 2020, speed = 50, factors = d, process = "idle"),
+               "Unknown process")
+})
+
+test_that("pollutant names cover the movesr pollutants", {
+  expect_equal(vein:::.moves_pollutant("VOC"), 87L)
+  expect_equal(vein:::.moves_pollutant("co2e"), 98L)
+  expect_equal(vein:::.moves_pollutant("PM2.5"), 110L)
+  expect_equal(vein:::.moves_pollutant("PM2.5", 9L), 116L)
+  expect_equal(vein:::.moves_pollutant("PM10", 9L), 106L)
+  expect_equal(vein:::.moves_pollutant("PM2.5", 10L), 117L)
+  expect_equal(vein:::.moves_pollutant("PM10", 10L), 107L)
+  expect_error(vein:::.moves_pollutant("XYZ"), "Unknown pollutant")
+})

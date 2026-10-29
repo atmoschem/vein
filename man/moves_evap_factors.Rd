@@ -18,13 +18,21 @@ bundled reference or use only vehicle-based processes.}
 }
 \value{
 A \code{MOVESFactors} object with \code{basis = "evap"} and a
-\code{gpervehicle} column. The \code{processID} identifies permeation (11),
-vapor venting (12) or fuel leaks (13).
+\code{gpervehicle} column (g per vehicle in the hour). The
+\code{processID} identifies permeation (11), vapor venting (12) or fuel
+leaks (13).
 }
 \description{
 Loads local RatePerVehicle and RatePerProfile rates for
-permeation, fuel leaks and fuel vapor venting. Rates are grams per vehicle
-(or per profile event for venting); they are not distance factors.
+permeation, fuel leaks and fuel vapor venting of parked vehicles. All three
+are grams per vehicle in the hour: MOVES divides the hourly emissions by the
+vehicle population. Vapor venting is written to RatePerProfile only because
+MOVES labels it with the temperature profile; its rate has the same basis.
+They are not distance factors; evaporative emissions while driving are
+distance factors (\code{\link{moves_factors}}, processes 11--13). Rates for
+any county, month and weather can be generated with movesr
+(\url{https://github.com/atmoschem/movesr}, \code{movesr_evap()} and
+\code{movesr_export_vein()}).
 }
 \examples{
 evap <- moves_evap_factors()

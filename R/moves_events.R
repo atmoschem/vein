@@ -77,7 +77,10 @@
 #' Portable MOVES start-exhaust factors
 #'
 #' @description Loads local MOVES RatePerStart rates in grams per engine start.
-#' No database, Java or MOVES runtime is used by these functions.
+#' No database, Java or MOVES runtime is used by these functions. Rates for
+#' other scenarios can be generated with movesr
+#' (\url{https://github.com/atmoschem/movesr}) and written with
+#' \code{movesr_export_vein()}.
 #' @param rates A data.frame or path to a RatePerStart CSV/TSV export. Omit
 #' both arguments to load the bundled reference data.
 #' @param runs MOVESRun rows with output units and model provenance.
@@ -113,16 +116,24 @@ moves_start_factors <- function(rates, runs, vehicles) {
 #' Portable MOVES evaporative factors
 #'
 #' @description Loads local RatePerVehicle and RatePerProfile rates for
-#' permeation, fuel leaks and fuel vapor venting. Rates are grams per vehicle
-#' (or per profile event for venting); they are not distance factors.
+#' permeation, fuel leaks and fuel vapor venting of parked vehicles. All three
+#' are grams per vehicle in the hour: MOVES divides the hourly emissions by the
+#' vehicle population. Vapor venting is written to RatePerProfile only because
+#' MOVES labels it with the temperature profile; its rate has the same basis.
+#' They are not distance factors; evaporative emissions while driving are
+#' distance factors (\code{\link{moves_factors}}, processes 11--13). Rates for
+#' any county, month and weather can be generated with movesr
+#' (\url{https://github.com/atmoschem/movesr}, \code{movesr_evap()} and
+#' \code{movesr_export_vein()}).
 #' @param rates A RatePerVehicle data.frame or file.
 #' @param profile Optional RatePerProfile data.frame or file. Omit to load the
 #' bundled reference or use only vehicle-based processes.
 #' @param runs MOVESRun rows with output units and model provenance.
 #' @param vehicles Optional source/fuel name table.
 #' @return A \code{MOVESFactors} object with \code{basis = "evap"} and a
-#' \code{gpervehicle} column. The \code{processID} identifies permeation (11),
-#' vapor venting (12) or fuel leaks (13).
+#' \code{gpervehicle} column (g per vehicle in the hour). The
+#' \code{processID} identifies permeation (11), vapor venting (12) or fuel
+#' leaks (13).
 #' @seealso \code{\link{ef_moves_evap}}
 #' @export
 #' @examples
@@ -246,8 +257,10 @@ ef_moves_start <- function(pollutant = "CO", model_year,
 #' Evaluate MOVES evaporative factors
 #'
 #' @description Selects local MOVES evaporative factors for permeation, fuel
-#' leaks or vapor venting. Rates are grams per vehicle for processes 11 and 13
-#' and per profile event for process 12; they are not g/km.
+#' leaks or vapor venting of parked vehicles. Rates are grams per vehicle in
+#' the hour (hourly emissions divided by the vehicle population) for all three
+#' processes; multiply by the number of vehicles for each hour. They are not
+#' g/km.
 #' @param pollutant MOVES pollutant ID or name; bundled data contain THC (1).
 #' @param model_year One manufacturing year.
 #' @param process Character vector: "permeation", "venting", "leaks" or "all".
@@ -258,7 +271,8 @@ ef_moves_start <- function(pollutant = "CO", model_year,
 #' @param rel_humidity Optional relative humidity in percent.
 #' @param select Named list of additional filters.
 #' @return A data.frame with the selected dimensions, \code{processID},
-#' \code{basis} and \code{gpervehicle}.
+#' \code{basis} (source table: "vehicle" for RatePerVehicle, "profile" for
+#' RatePerProfile) and \code{gpervehicle} (g/vehicle/h).
 #' @seealso \code{\link{moves_evap_factors}}
 #' @export
 #' @examples
@@ -293,6 +307,6 @@ ef_moves_evap <- function(pollutant = "THC", model_year,
   out <- .moves_event_filter(factors$rates, filters)
   if (!nrow(out)) stop("No MOVES evaporative rates match the requested vehicle/scenario")
   out$basis <- ifelse(out$processID == 12L, "profile", "vehicle")
-  attr(out, "units") <- "g/vehicle"
+  attr(out, "units") <- "g/vehicle/h"
   out
 }

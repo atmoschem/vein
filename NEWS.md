@@ -3,6 +3,24 @@ NEWS
 
 ### Development version
 
+- MOVES functions aligned with movesr (https://github.com/atmoschem/movesr),
+  the standalone R port of the MOVES rate engine whose
+  `movesr_export_vein()` writes factor tables for any county, year, month,
+  weather and fuel:
+  - `moves_factors()` accepts all distance-based processes: running exhaust
+    (1), brakewear (9), tirewear (10) and evaporative permeation, vapor venting
+    and leaks while driving (11--13); `ef_moves()` gains `process`
+    (`"running"`, `"brake"`, `"tire"`, `"permeation"`, `"venting"`,
+    `"leaks"` or the ID). PM2.5/PM10 resolve to brake (116/106) or tire
+    (117/107) particles for those processes.
+  - Pollutant names CH4, N2O, NH3, SO2, NMHC, NMOG, TOG, VOC, CO2e, OC, EC
+    and SO4 are accepted.
+  - Evaporative factors are documented as grams per vehicle in the hour for
+    all three processes (MOVES divides hourly emissions by the population;
+    RatePerProfile venting has the same basis, not "per profile event");
+    `ef_moves_evap()` units attribute is now `"g/vehicle/h"`.
+  - Documented that MOVES builds vapor venting only from the hours selected
+    in a run, so the bundled three-hour venting values are illustrative.
 - `moves_factors()` and `ef_moves()` provide portable, local MOVES running-exhaust
   factors with explicit units and scenario selection, exact speed-bin lookup and
   optional bounded linear interpolation. Evaluation needs only R and the factor

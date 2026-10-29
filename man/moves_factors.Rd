@@ -2,7 +2,7 @@
 % Please edit documentation in R/ef_moves.R
 \name{moves_factors}
 \alias{moves_factors}
-\title{Portable MOVES running-exhaust factor data}
+\title{Portable MOVES distance-based factor data}
 \usage{
 moves_factors(rates, runs, vehicles)
 }
@@ -31,11 +31,18 @@ the object with \code{saveRDS}/\code{readRDS} on any operating system.
 Imports exported MOVES RatePerDistance and MOVESRun tables or
 loads the small reference dataset distributed with vein. All subsequent use
 is local R computation, with no SQL server, Java or MOVES installation.
+The tables can come from MOVES itself or from the movesr package
+(\url{https://github.com/atmoschem/movesr}), a standalone R port of the MOVES
+rate engine whose \code{movesr_export_vein()} writes these files for any
+county, year, month, weather and fuel.
 }
 \details{
-This first interface supports pollutant mass for running exhaust
-(processID 1) on road types 2--5. Export these processes separately from
-starts, idle, evaporation and energy consumption. Zero rates are retained;
+Supports pollutant mass per distance on road types 2--5 for running
+exhaust (processID 1), brakewear (9), tirewear (10) and evaporative
+permeation, vapor venting and fuel leaks while driving (11, 12, 13). Starts
+and parked evaporative emissions are event/vehicle factors
+(\code{\link{moves_start_factors}}, \code{\link{moves_evap_factors}});
+energy consumption is not a mass factor. Zero rates are retained;
 missing, negative or duplicate rates are rejected. No fleet or scenario
 averaging is performed. MOVES temperature values are degrees Fahrenheit.
 

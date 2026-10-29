@@ -37,12 +37,15 @@ ef_moves_evap(
 }
 \value{
 A data.frame with the selected dimensions, \code{processID},
-\code{basis} and \code{gpervehicle}.
+\code{basis} (source table: "vehicle" for RatePerVehicle, "profile" for
+RatePerProfile) and \code{gpervehicle} (g/vehicle/h).
 }
 \description{
 Selects local MOVES evaporative factors for permeation, fuel
-leaks or vapor venting. Rates are grams per vehicle for processes 11 and 13
-and per profile event for process 12; they are not g/km.
+leaks or vapor venting of parked vehicles. Rates are grams per vehicle in
+the hour (hourly emissions divided by the vehicle population) for all three
+processes; multiply by the number of vehicles for each hour. They are not
+g/km.
 }
 \examples{
 ef_moves_evap("THC", 2020, source_type_id = "Passenger Car",

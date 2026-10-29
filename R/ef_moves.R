@@ -67,11 +67,15 @@
   out
 }
 
-#' Portable MOVES running-exhaust factor data
+#' Portable MOVES distance-based factor data
 #'
 #' @description Imports exported MOVES RatePerDistance and MOVESRun tables or
 #' loads the small reference dataset distributed with vein. All subsequent use
 #' is local R computation, with no SQL server, Java or MOVES installation.
+#' The tables can come from MOVES itself or from the movesr package
+#' (\url{https://github.com/atmoschem/movesr}), a standalone R port of the MOVES
+#' rate engine whose \code{movesr_export_vein()} writes these files for any
+#' county, year, month, weather and fuel.
 #' @param rates A data.frame or path to a CSV/TSV (optionally gzip compressed)
 #' export of RatePerDistance. Omit both arguments to load the reference data.
 #' @param runs A data.frame or file containing the corresponding MOVESRun rows,
@@ -87,9 +91,12 @@
 #' is present, \code{locationID} preserves location while decoding the virtual
 #' speed-bin links of Default/County scale runs. Save/load
 #' the object with \code{saveRDS}/\code{readRDS} on any operating system.
-#' @details This first interface supports pollutant mass for running exhaust
-#' (processID 1) on road types 2--5. Export these processes separately from
-#' starts, idle, evaporation and energy consumption. Zero rates are retained;
+#' @details Supports pollutant mass per distance on road types 2--5 for running
+#' exhaust (processID 1), brakewear (9), tirewear (10) and evaporative
+#' permeation, vapor venting and fuel leaks while driving (11, 12, 13). Starts
+#' and parked evaporative emissions are event/vehicle factors
+#' (\code{\link{moves_start_factors}}, \code{\link{moves_evap_factors}});
+#' energy consumption is not a mass factor. Zero rates are retained;
 #' missing, negative or duplicate rates are rejected. No fleet or scenario
 #' averaging is performed. MOVES temperature values are degrees Fahrenheit.
 #'
@@ -136,8 +143,10 @@ moves_factors <- function(rates, runs, vehicles) {
   if (anyDuplicated(runs$MOVESRunID)) stop("runs has duplicate MOVESRunID values")
   run <- match(rates$MOVESRunID, runs$MOVESRunID)
   if (anyNA(run)) stop("Every rate must match a MOVESRunID in runs")
-  if (any(rates$processID != 1L) || any(!rates$roadTypeID %in% 2:5)) {
-    stop("Select running exhaust (processID 1) on roadTypeID 2--5")
+  if (any(!rates$processID %in% .moves_distance_processes) ||
+      any(!rates$roadTypeID %in% 2:5)) {
+    stop("Select distance-based processes (running exhaust 1, brakewear 9, ",
+         "tirewear 10, evaporative 11--13) on roadTypeID 2--5")
   }
   if (any(rates$pollutantID %in% 91:94)) {
     stop("Energy consumption rates are not mass factors; export pollutants separately")
@@ -231,13 +240,44 @@ moves_factors <- function(rates, runs, vehicles) {
   found
 }
 
-.moves_pollutant <- function(x) {
+# Processes reported per distance on roads (RatePerDistance).
+.moves_distance_processes <- c(1L, 9L, 10L, 11L, 12L, 13L)
+
+.moves_process <- function(x) {
+  if (length(x) != 1L || anyNA(x)) stop("process must be one name or MOVES ID")
+  if (is.numeric(x)) {
+    if (!x %in% .moves_distance_processes) {
+      stop("process must be one of ", paste(.moves_distance_processes, collapse = ", "))
+    }
+    return(as.integer(x))
+  }
+  map <- c(running = 1L, brake = 9L, brakewear = 9L, tire = 10L, tirewear = 10L,
+           permeation = 11L, venting = 12L, leaks = 13L)
+  out <- unname(map[tolower(as.character(x))])
+  if (is.na(out)) {
+    stop("Unknown process; use running, brake, tire, permeation, venting, leaks ",
+         "or a numeric MOVES ID")
+  }
+  out
+}
+
+.moves_pollutant <- function(x, process = 1L) {
   if (length(x) != 1L || anyNA(x)) stop("pollutant must be one name or MOVES ID")
   if (is.numeric(x) && is.finite(x) && x > 0 && x == floor(x)) return(x)
-  map <- c(CO = 2L, NOX = 3L, HC = 1L, THC = 1L, CO2 = 90L,
-           `PM2.5` = 110L, PM10 = 100L)
-  out <- unname(map[toupper(as.character(x))])
-  if (is.na(out)) stop("Unknown pollutant; use CO, NOx, THC, CO2, PM2.5, PM10 or a numeric MOVES ID")
+  map <- c(CO = 2L, NOX = 3L, HC = 1L, THC = 1L, CH4 = 5L, N2O = 6L, NH3 = 30L,
+           SO2 = 31L, NMHC = 79L, NMOG = 80L, TOG = 86L, VOC = 87L, CO2 = 90L,
+           CO2E = 98L, PM10 = 100L, `PM2.5` = 110L, OC = 111L, EC = 112L,
+           SO4 = 115L)
+  key <- toupper(as.character(x))
+  out <- unname(map[key])
+  # Brake and tire wear particulate matter have their own pollutant IDs.
+  if (key %in% c("PM2.5", "PM10") && process %in% c(9L, 10L)) {
+    out <- c(`PM2.5` = 116L, PM10 = 106L)[[key]] + (process == 10L)
+  }
+  if (is.na(out)) {
+    stop("Unknown pollutant; use CO, NOx, THC, CH4, N2O, NH3, SO2, NMHC, NMOG, ",
+         "TOG, VOC, CO2, CO2e, PM2.5, PM10, OC, EC, SO4 or a numeric MOVES ID")
+  }
   out
 }
 
@@ -272,11 +312,15 @@ moves_vehicles <- function(factors = moves_factors()) {
 
 #' Evaluate MOVES emission factors without a database
 #'
-#' @description Selects one running-exhaust scenario from portable MOVES data
-#' and returns factors in g/km or a speed-dependent function for vein inventories.
-#' @param pollutant MOVES numeric pollutant ID or CO, NOx, THC (also HC), CO2,
-#' PM2.5 or PM10. PM names denote primary exhaust particulate matter. The
-#' bundled reference data contain CO and NOx; other pollutants need extra data.
+#' @description Selects one distance-based scenario (running exhaust by
+#' default) from portable MOVES data and returns factors in g/km or a
+#' speed-dependent function for vein inventories.
+#' @param pollutant MOVES numeric pollutant ID or CO, NOx, THC (also HC), CH4,
+#' N2O, NH3, SO2, NMHC, NMOG, TOG, VOC, CO2, CO2e, PM2.5, PM10, OC, EC or SO4.
+#' PM2.5 and PM10 denote exhaust particulate matter, or brake/tire wear
+#' particles (116/106, 117/107) when \code{process} is brake or tire. The
+#' bundled reference data contain CO and NOx; other pollutants need extra data,
+#' e.g. from movesr.
 #' @param model_year One vehicle model year, selected exactly (no age filling).
 #' @param speed Numeric speed vector in km/h, or a vector with speed units.
 #' Omit to return a function of speed yielding numeric g/km, suitable for
@@ -302,6 +346,9 @@ moves_vehicles <- function(factors = moves_factors()) {
 #' speeds (2.5, 5, 10, ..., 75 mph) and requires both adjacent native bins.
 #' Interpolation is an approximation to exported MOVES output, not an EPA model
 #' equation. No extrapolation or missing-bin filling is performed.
+#' @param process MOVES process: 1 or "running" (default), 9 "brake",
+#' 10 "tire", 11 "permeation", 12 "venting", 13 "leaks" (evaporative emissions
+#' while driving).
 #' @return With speed, a units vector in g/km. Without speed, a function returning
 #' numeric g/km, with \code{moves_metadata} recording the selected scenario,
 #' source run, original rates, interpolation method and model version.
@@ -322,7 +369,7 @@ moves_vehicles <- function(factors = moves_factors()) {
 ef_moves <- function(pollutant, model_year, speed, factors = moves_factors(),
                       source_type_id = 21, fuel_type_id = 1, road_type_id = 5,
                       temperature, rel_humidity, select = list(),
-                      method = c("bin", "linear")) {
+                      method = c("bin", "linear"), process = 1L) {
   if (!inherits(factors, "MOVESFactors") || !identical(factors$schema_version, 1L) ||
       !identical(factors$basis, "distance")) {
     stop("factors must be created by moves_factors()")
@@ -332,9 +379,11 @@ ef_moves <- function(pollutant, model_year, speed, factors = moves_factors(),
                               "sourceTypeID", "sourceTypeName", "source_type_id")
   fuel_type_id <- .moves_id(fuel_type_id, factors$vehicles,
                             "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
-  filters <- list(pollutantID = .moves_pollutant(pollutant),
+  process <- .moves_process(process)
+  filters <- list(pollutantID = .moves_pollutant(pollutant, process),
                   modelYearID = model_year, sourceTypeID = source_type_id,
-                  fuelTypeID = fuel_type_id, roadTypeID = road_type_id, processID = 1L)
+                  fuelTypeID = fuel_type_id, roadTypeID = road_type_id,
+                  processID = process)
   if (!missing(temperature)) filters$temperature_C <- temperature
   if (!missing(rel_humidity)) filters$relHumidity <- rel_humidity
   if (!is.list(select) || (length(select) &&

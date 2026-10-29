@@ -16,6 +16,13 @@ factors. It runs in R on Linux, macOS and Windows. There is no database connecti
 SQL query, Java process, network download or MOVES installation involved in
 evaluating factors.
 
+VEIN evaluates factors; it does not run MOVES. The bundled data are a small
+reference set. To produce factors for other counties, years, months, weather,
+fuels, pollutants or processes, use
+[movesr](https://github.com/atmoschem/movesr), a standalone R port of the MOVES
+rate engine that writes these tables with `movesr_export_vein()` (see
+[Generate factors with movesr](#generate-factors-with-movesr)).
+
 ## Vehicle type, fuel and age
 
 These inputs are explicit arguments of `ef_moves()`:
@@ -147,8 +154,10 @@ ef_moves_start(
 ```
 
 The evaporative data contain THC permeation (process 11), fuel vapor venting
-(process 12) and fuel leaks (process 13). Permeation and leaks are **g/vehicle**;
-venting is **per profile event** and retains its MOVES temperature-profile ID.
+(process 12) and fuel leaks (process 13) of parked vehicles. All three are
+**grams per vehicle in the hour**: MOVES divides each hour's emissions by the
+vehicle population. MOVES writes venting to a separate table (RatePerProfile)
+labelled with its temperature-profile ID, but its rate has the same basis.
 
 ```{r}
 evap <- moves_evap_factors()
@@ -160,14 +169,69 @@ ef_moves_evap(
 ```
 
 These event-based factors cannot be passed to `emis()`, whose factors are g/km.
-Multiply them by matching start or vehicle activity, and handle venting with its
-temperature profile. Start and evaporative data are separate MOVES runs; their
-provenance is recorded in `movesrun_events.csv`.
+Multiply start factors by the number of starts, and evaporative factors by the
+number of vehicles in each hour. Start and evaporative data are separate MOVES
+runs; their provenance is recorded in `movesrun_events.csv`.
+
+MOVES builds vapor venting only from the hours selected in a run: a vehicle
+whose cold soak started outside those hours contributes nothing. The bundled
+venting comes from a three-hour run with artificial temperatures and is
+illustrative only; generate full-day factors (all 24 hours) for inventories.
+
+## Brake, tire and evaporative emissions while driving
+
+Brakewear (process 9), tirewear (10) and evaporative emissions while driving
+(11--13) are also distance factors in MOVES `RatePerDistance`. Select them with
+`process`; PM2.5 and PM10 then refer to brake or tire particles (pollutants
+116/106 and 117/107). The bundled reference set has running exhaust only, so
+this example needs factors exported by movesr or MOVES:
+
+```{r eval=FALSE}
+x <- moves_factors("factors/rateperdistance.csv", "factors/movesrun.csv",
+                   "factors/vehicles.csv")
+ef_moves("PM2.5", model_year = 2020, speed = 50, factors = x,
+         process = "brake", select = list(hourID = 16))
+ef_moves("THC", model_year = 2020, speed = 50, factors = x,
+         process = "venting", select = list(hourID = 16))
+```
+
+## Generate factors with movesr
+
+[movesr](https://github.com/atmoschem/movesr) reproduces MOVES6 rates in R
+(running and start exhaust, brake and tire wear, evaporative permeation, vapor
+venting and leaks, HC species, CO2, SO2 and PM species) from the MOVES default
+database stored as Parquet, without Java, MariaDB or MOVES. It reproduces the
+running and start factors bundled with VEIN. Local weather, fuel supply, barometric pressure
+and I/M program can replace the U.S. county defaults.
+
+```{r eval=FALSE}
+# remotes::install_github("atmoschem/movesr")
+library(movesr)
+db <- movesr_database("movesdb-parquet")
+met <- movesr_default_meteorology(db, county_id = 11001, month_id = 7)
+running <- movesr_running_rates(db, county_id = 11001, month_id = 7,
+                                meteorology = met, pollutant_id = c(2, 3, 87))
+start <- movesr_start_rates(db, county_id = 11001, month_id = 7,
+                            meteorology = met, pollutant_id = c(2, 3, 87))
+evap <- movesr_evap(db, county_id = 11001, month_id = 7)
+movesr_export_vein("factors", running = running, start = start, evap = evap,
+                   database = db)
+
+x <- vein::moves_factors("factors/rateperdistance.csv", "factors/movesrun.csv",
+                         "factors/vehicles.csv")
+s <- vein::moves_start_factors("factors/rateperstart.csv",
+                               "factors/movesrun_events.csv",
+                               "factors/vehicles.csv")
+e <- vein::moves_evap_factors("factors/ratepervehicle.csv",
+                              "factors/rateperprofile.csv",
+                              "factors/movesrun_events.csv",
+                              "factors/vehicles.csv")
+```
 
 ## Supply additional local data
 
-Data producers can run MOVES once and export running-exhaust `RatePerDistance`
-and `MOVESRun` tables. R users only need those local files or a saved RDS object.
+Data producers can run MOVES (or movesr) once and export `RatePerDistance` and
+`MOVESRun` tables. R users only need those local files or a saved RDS object.
 The importer reads units from `MOVESRun`, preserves all original rate-table
 dimensions, converts pollutant mass rates to g/km, and checks for duplicate keys
 and missing provenance. It supports plain or gzip-compressed CSV and TSV files.
@@ -182,11 +246,12 @@ f <- ef_moves("NOx", model_year = 2020, factors = x,
               select = list(MOVESRunID = 1, yearID = 2025, hourID = 1))
 ```
 
-This interface currently accepts running exhaust (process 1), road types 2--5,
-and pollutant mass rates. Starts, evaporation, stationary idle and energy need
-their own rate bases and activity denominators. MOVES base operating-mode rates
-also need activity weighting and adjustments before they become distance-based
-factors.
+This interface accepts the distance-based processes (running exhaust 1,
+brakewear 9, tirewear 10 and evaporative 11--13 while driving), road types
+2--5, and pollutant mass rates. Starts and parked evaporative emissions have
+their own functions; stationary idle and energy need their own rate bases and
+activity denominators. MOVES base operating-mode rates also need activity
+weighting and adjustments before they become distance-based factors.
 
 EPA describes external use of rate tables in section 4.2.2 of the
 [MOVES6 technical guidance](https://www.epa.gov/moves/latest-version-motor-vehicle-emission-simulator-moves).

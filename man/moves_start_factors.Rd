@@ -20,7 +20,10 @@ A \code{MOVESFactors} object with \code{basis = "start"} and a
 }
 \description{
 Loads local MOVES RatePerStart rates in grams per engine start.
-No database, Java or MOVES runtime is used by these functions.
+No database, Java or MOVES runtime is used by these functions. Rates for
+other scenarios can be generated with movesr
+(\url{https://github.com/atmoschem/movesr}) and written with
+\code{movesr_export_vein()}.
 }
 \examples{
 start <- moves_start_factors()

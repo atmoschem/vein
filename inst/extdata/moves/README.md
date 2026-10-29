@@ -24,7 +24,8 @@ SQL, Java, a MOVES executable or a network connection.
 
 Start exhaust is a separate event-based table: 5,394 rows of CO/NOx in g/start,
 covering all 13 source types and five fuels. Evaporative THC has 2,124 rows
-for permeation/leaks in g/vehicle and 1,062 profile rows for vapor venting.
+for permeation/leaks and 1,062 profile rows for vapor venting, all in grams per
+vehicle in the hour (MOVES divides each hour's emissions by the population).
 MOVES reports evaporative output for 12 source types and gasoline/E85
 combinations in this scenario; combination long-haul trucks and diesel, CNG or
 electric evaporative factors are not included.
@@ -44,9 +45,10 @@ calibration or coverage of all MOVES vehicles/pollutants/conditions.
 
 - `rateperdistance.csv`: running-exhaust EPA output in g/mile.
 - `rateperstart.csv`: start-exhaust EPA output in g/start.
-- `ratepervehicle.csv`: evaporative permeation and fuel-leak output in g/vehicle.
+- `ratepervehicle.csv`: evaporative permeation and fuel-leak output in grams
+  per vehicle in the hour.
 - `rateperprofile.csv`: evaporative vapor-venting output, including MOVES
-  `temperatureProfileID`; its rate is per profile event, not g/km.
+  `temperatureProfileID`; same basis (grams per vehicle in the hour), not g/km.
 - `movesrun.csv`: running-exhaust run record and output units.
 - `movesrun_events.csv`: start/evaporative run record and output units.
 - `moveserror.csv`, `moveserror_events.csv`: empty because the successful runs
@@ -59,8 +61,20 @@ calibration or coverage of all MOVES vehicles/pollutants/conditions.
 - `SHA256.json`: SHA-256 hashes of the original CSV exports.
 
 Start and evaporative factors are event-based. Do not pass them to `emis()` as
-g/km factors. Start factors require start activity; permeation/leaks require
-vehicle activity; vapor venting additionally requires its temperature profile.
+g/km factors. Start factors require start activity; evaporative factors require
+the number of vehicles in each hour.
+
+MOVES builds vapor venting only from the hours selected in the RunSpec (the
+worker's `HourDay` holds just those hours), so a vehicle whose cold soak began
+outside hours 1--3 contributes nothing here, and the three hours carry
+artificial temperatures. The bundled venting values illustrate the format; they
+are not full-day factors.
+
+These running and start factors are reproduced by movesr
+(https://github.com/atmoschem/movesr), a standalone R port of the MOVES rate
+engine: all 86,304 running and 5,394 start rows within 7.2e-6 (MOVES prints 6
+significant digits). Use `movesr_export_vein()` to write the same tables for
+other counties, years, months, weather, fuels, pollutants and processes.
 
 Generated on Linux on 2026-10-28 using the EPA source, Java 11, Go 1.26.10,
 MariaDB 10.11.14 and one local worker. The successful run retrieved all 32

@@ -48,7 +48,7 @@ test_that("evaporative factors combine permeation/leaks and venting profiles", {
   expect_equal(sort(unique(d$rates$processID)), c(11L, 12L, 13L))
   out <- ef_moves_evap("THC", 2020, factors = d, temperature = 20)
   expect_equal(sort(unique(out$processID)), c(11L, 12L, 13L))
-  expect_equal(attr(out, "units"), "g/vehicle")
+  expect_equal(attr(out, "units"), "g/vehicle/h")
   expect_equal(out$gpervehicle[out$processID == 13L],
                2 * out$gpervehicle[out$processID == 11L])
   expect_equal(unique(out$basis[out$processID == 12L]), "profile")

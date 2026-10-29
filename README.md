@@ -201,12 +201,19 @@ vein::ef_moves(
 
 Start exhaust (`ef_moves_start()`) and evaporative factors
 (`ef_moves_evap()`) are separate event-based data in **g/start** and
-**g/vehicle**. They cannot be used as g/km factors in `emis()`; multiply
-them by the corresponding start or vehicle activity. Use
-`moves_start_factors()` and `moves_evap_factors()` to load them.
+**g/vehicle per hour**. They cannot be used as g/km factors in `emis()`;
+multiply them by the number of starts or vehicles. Use
+`moves_start_factors()` and `moves_evap_factors()` to load them. Brake
+and tire wear and evaporative emissions while driving are distance
+factors: select them in `ef_moves()` with `process = "brake"`, `"tire"`,
+`"permeation"`, `"venting"` or `"leaks"`.
 
 Other scenarios, pollutants or model years require additional factor
-data. Omit `speed` to obtain a function for `EmissionFactorsList()` and
+data, which [movesr](https://github.com/atmoschem/movesr) generates: a
+standalone R port of the MOVES rate engine (no Java, MariaDB or MOVES)
+whose `movesr_export_vein()` writes the tables read by `moves_factors()`,
+`moves_start_factors()` and `moves_evap_factors()` for any county, year,
+month, weather and fuel. Omit `speed` to obtain a function for `EmissionFactorsList()` and
 `emis()`, or use `method = "linear"` for bounded interpolation between
 speed-bin factors. See [MOVES emission factors in
 R](https://atmoschem.github.io/vein/articles/moves_factors.html) for the

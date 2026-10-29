@@ -15,13 +15,17 @@ ef_moves(
   temperature,
   rel_humidity,
   select = list(),
-  method = c("bin", "linear")
+  method = c("bin", "linear"),
+  process = 1L
 )
 }
 \arguments{
-\item{pollutant}{MOVES numeric pollutant ID or CO, NOx, THC (also HC), CO2,
-PM2.5 or PM10. PM names denote primary exhaust particulate matter. The
-bundled reference data contain CO and NOx; other pollutants need extra data.}
+\item{pollutant}{MOVES numeric pollutant ID or CO, NOx, THC (also HC), CH4,
+N2O, NH3, SO2, NMHC, NMOG, TOG, VOC, CO2, CO2e, PM2.5, PM10, OC, EC or SO4.
+PM2.5 and PM10 denote exhaust particulate matter, or brake/tire wear
+particles (116/106, 117/107) when \code{process} is brake or tire. The
+bundled reference data contain CO and NOx; other pollutants need extra data,
+e.g. from movesr.}
 
 \item{model_year}{One vehicle model year, selected exactly (no age filling).}
 
@@ -57,6 +61,10 @@ supported if their bin exists. "linear" interpolates between nominal bin
 speeds (2.5, 5, 10, ..., 75 mph) and requires both adjacent native bins.
 Interpolation is an approximation to exported MOVES output, not an EPA model
 equation. No extrapolation or missing-bin filling is performed.}
+
+\item{process}{MOVES process: 1 or "running" (default), 9 "brake",
+10 "tire", 11 "permeation", 12 "venting", 13 "leaks" (evaporative emissions
+while driving).}
 }
 \value{
 With speed, a units vector in g/km. Without speed, a function returning
@@ -64,8 +72,9 @@ numeric g/km, with \code{moves_metadata} recording the selected scenario,
 source run, original rates, interpolation method and model version.
 }
 \description{
-Selects one running-exhaust scenario from portable MOVES data
-and returns factors in g/km or a speed-dependent function for vein inventories.
+Selects one distance-based scenario (running exhaust by
+default) from portable MOVES data and returns factors in g/km or a
+speed-dependent function for vein inventories.
 }
 \details{
 Zero speed is rejected because distance-based factors cannot describe
