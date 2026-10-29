@@ -23,20 +23,20 @@
 #' }
 temp_veh <- function(x,
                      tfs,
-                     array = FALSE){
+                     array = FALSE) {
   lapply(seq_along(tfs), function(i) {
-    x <- x*tfs[i]
-    if(!array) x$Hour <- seq_along(tfs)[i]
+    x <- x * tfs[i]
+    if (!array) x$Hour <- seq_along(tfs)[i]
     x
   }) -> xx
 
-  if(array) {
+  if (array) {
     lx <- unlist(lapply(xx, unlist))
 
     a <- array(data = lx,
-               dim = c(nrow(x),
-                       ncol(x),
-                       length(tfs)))
+      dim = c(nrow(x),
+        ncol(x),
+        length(tfs)))
 
     return(a)
   } else {

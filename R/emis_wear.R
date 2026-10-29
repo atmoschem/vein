@@ -41,45 +41,47 @@
 #'                  profile = pc_profile[, 1])
 #' emi
 #' }
-emis_wear <- function (veh,
-                       lkm,
-                       ef,
-                       what = "tyre",
-                       speed,
-                       agemax = ncol(veh),
-                       profile,
-                       hour = nrow(profile),
-                       day = ncol(profile)) {
-  if(inherits(lkm, "units") && units(lkm)$numerator == "m" ){
+emis_wear <- function(veh,
+                      lkm,
+                      ef,
+                      what = "tyre",
+                      speed,
+                      agemax = ncol(veh),
+                      profile,
+                      hour = nrow(profile),
+                      day = ncol(profile)) {
+  if (inherits(lkm, "units") && units(lkm)$numerator == "m") {
     stop("Units of lkm is 'm'")
   }
   veh <- as.data.frame(veh)
   lkm <- as.numeric(lkm)
-  for (i  in 1:ncol(veh) ) {
-    veh[,i] <- as.numeric(veh[,i])
+  for (i  in 1:ncol(veh)) {
+    veh[, i] <- as.numeric(veh[, i])
   }
-  #profile
-  if(is.vector(profile)){
+  # profile
+  if (is.vector(profile)) {
     profile <- matrix(as.numeric(profile), ncol = 1)
   } # if it is data.frame or matrix, OK
 
-  if(is.null(dim(ef)) && length(ef) == 1) {
-    ef <- as.data.frame(matrix(as.numeric(ef), nrow = 1, ncol = hour*day))
+  if (is.null(dim(ef)) && length(ef) == 1) {
+    ef <- as.data.frame(matrix(as.numeric(ef), nrow = 1, ncol = hour * day))
   }
   ef <- as.data.frame(ef)
-  if(ncol(ef) != hour*day){
+  if (ncol(ef) != hour * day) {
     stop("Number of days of ef and profile must be the same: ncol(ef) must be ",
-         "nrow(profile) * ncol(profile)")
+      "nrow(profile) * ncol(profile)")
   }
 
   d <-  simplify2array(
-    lapply(1:day,function(j){
+    lapply(1:day, function(j) {
       simplify2array(
-        lapply(1:hour,function(i){
-          efi <- as.numeric(ef[, hour*(j - 1) + i])
+        lapply(1:hour, function(i) {
+          efi <- as.numeric(ef[, hour * (j - 1) + i])
           simplify2array(
-            lapply(1:agemax, function(k){
-              veh[, k]*profile[i,j]*lkm*efi
-            })) })) }))
+            lapply(1:agemax, function(k) {
+              veh[, k] * profile[i, j] * lkm * efi
+            }))
+        }))
+    }))
   return(EmissionsArray(d))
 }

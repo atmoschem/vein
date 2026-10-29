@@ -73,18 +73,18 @@ GriddedEmissionsArray <- function(x, ...,
                                   rows,
                                   times = ncol(x),
                                   rotate = "default") {
-  if(inherits(x, "Spatial")){
+  if (inherits(x, "Spatial")) {
     df <- sf::st_as_sf(x)
     df <- sf::st_set_geometry(df, NULL)
-  } else if(inherits(x, "sf")){
+  } else if (inherits(x, "sf")) {
     df <- sf::st_set_geometry(x, NULL)
   } else {
     df <- as.data.frame(x)
   }
   df$id <- NULL
   # default: all columns, without id and geometry
-  if(missing(times)) times <- ncol(df)
-  if(times > ncol(df)) stop("`times` cannot be higher than number of columns of `x` without x$id")
+  if (missing(times)) times <- ncol(df)
+  if (times > ncol(df)) stop("`times` cannot be higher than number of columns of `x` without x$id")
   for (i in 1:ncol(df)) {
     df[, i] <- as.numeric(df[, i])
   }
@@ -93,94 +93,98 @@ GriddedEmissionsArray <- function(x, ...,
 
   # array
   # https://stackoverflow.com/a/42882677/2418532
-  #first reverse, then transpose, it's the same as rotate 90 degrees
-  rotate_clockwise         <- function(x) { t(     apply(x, 2, rev))}
-  #first transpose, then reverse, it's the same as rotate -90 degrees:
-  rotate_counter_clockwise <- function(x) { apply(     t(x),2, rev)}
-  #1 default####
-  if(rotate == "default") {
+  # first reverse, then transpose, it's the same as rotate 90 degrees
+  rotate_clockwise         <- function(x) {
+    t(apply(x, 2, rev))
+  }
+  # first transpose, then reverse, it's the same as rotate -90 degrees:
+  rotate_counter_clockwise <- function(x) {
+    apply(t(x), 2, rev)
+  }
+  # 1 default####
+  if (rotate == "default") {
     l <- lapply(1:times, function(i) {
       m <- t(matrix(df[, i],
-                    ncol = cols,
-                    nrow = rows,
-                    byrow = TRUE))
+        ncol = cols,
+        nrow = rows,
+        byrow = TRUE))
     })
-    #2 left ####
-  } else if(rotate == "left"){
+    # 2 left ####
+  } else if (rotate == "left") {
     l <- lapply(1:times, function(i) {
       m <- t(matrix(df[, i],
-                    ncol = cols,
-                    nrow = rows,
-                    byrow = TRUE))
+        ncol = cols,
+        nrow = rows,
+        byrow = TRUE))
       rotate_counter_clockwise(m)
     })
-    #3 right####
-  } else if(rotate == "right"){
+    # 3 right####
+  } else if (rotate == "right") {
     l <- lapply(1:times, function(i) {
       m <- t(matrix(df[, i],
-                    ncol = cols,
-                    nrow = rows,
-                    byrow = TRUE))
+        ncol = cols,
+        nrow = rows,
+        byrow = TRUE))
       rotate_clockwise(m)
     })
-    #4 cols####
-  } else if(rotate == "cols"){
-    l <- lapply(1:times, function(j){
+    # 4 cols####
+  } else if (rotate == "cols") {
+    l <- lapply(1:times, function(j) {
       mx <- matrix(df[, j],
-                   nrow = rows,
-                   ncol = cols)
+        nrow = rows,
+        ncol = cols)
       mx <- mx[, ncol(mx):1]
     })
-    #5 rows####
-  } else if(rotate == "rows"){
-    l <- lapply(1:times, function(j){
+    # 5 rows####
+  } else if (rotate == "rows") {
+    l <- lapply(1:times, function(j) {
       mx <- matrix(df[, j],
-                   nrow = rows,
-                   ncol = cols)
+        nrow = rows,
+        ncol = cols)
       mx <- mx[nrow(mx):1, ]
     })
-    #6 both####
-  } else if(rotate == "both"){
-    l <- lapply(1:times, function(j){
+    # 6 both####
+  } else if (rotate == "both") {
+    l <- lapply(1:times, function(j) {
       mx <- matrix(df[, j],
-                   nrow = rows,
-                   ncol = cols)
+        nrow = rows,
+        ncol = cols)
       mx <- mx[nrow(mx):1, ncol(mx):1]
 
     })
-    #7 br####
-  } else if(rotate == "br"){
-    l <- lapply(1:times, function(j){
+    # 7 br####
+  } else if (rotate == "br") {
+    l <- lapply(1:times, function(j) {
       mx <- matrix(df[, j],
-                   nrow = rows,
-                   ncol = cols,
-                   byrow = TRUE)
+        nrow = rows,
+        ncol = cols,
+        byrow = TRUE)
     })
-    #8 colsbr####
-  } else if(rotate == "colsbr"){
-    l <- lapply(1:times, function(j){
+    # 8 colsbr####
+  } else if (rotate == "colsbr") {
+    l <- lapply(1:times, function(j) {
       mx <- matrix(df[, j],
-                   nrow = rows,
-                   ncol = cols,
-                   byrow = TRUE)
+        nrow = rows,
+        ncol = cols,
+        byrow = TRUE)
       mx <- mx[, ncol(mx):1]
     })
-    #9 rowsbr####
-  } else if(rotate == "rowsbr"){
-    l <- lapply(1:times, function(j){
+    # 9 rowsbr####
+  } else if (rotate == "rowsbr") {
+    l <- lapply(1:times, function(j) {
       mx <- matrix(df[, j],
-                   nrow = rows,
-                   ncol = cols,
-                   byrow = TRUE)
+        nrow = rows,
+        ncol = cols,
+        byrow = TRUE)
       mx <- mx[nrow(mx):1, ]
     })
-    #10 bothbr####
-  } else if(rotate == "bothbr"){
-    l <- lapply(1:times, function(j){
+    # 10 bothbr####
+  } else if (rotate == "bothbr") {
+    l <- lapply(1:times, function(j) {
       mx <- matrix(df[, j],
-                   nrow = rows,
-                   ncol = cols,
-                   byrow = TRUE)
+        nrow = rows,
+        ncol = cols,
+        byrow = TRUE)
       mx <- mx[nrow(mx):1, ncol(mx):1]
     })
   }
@@ -188,7 +192,7 @@ GriddedEmissionsArray <- function(x, ...,
 
   e <- simplify2array(l)
 
-  class(e) <- c("GriddedEmissionsArray",class(e))
+  class(e) <- c("GriddedEmissionsArray", class(e))
   return(e)
 }
 
@@ -197,10 +201,10 @@ GriddedEmissionsArray <- function(x, ...,
 #' @export
 print.GriddedEmissionsArray <- function(x,  ...) {
   e <- x
-  cat(paste0("This GriddedEmissionsArray has:\n", #nocov start
-             dim(e)[1], " lat points\n",
-             dim(e)[2], " lon points\n",
-             dim(e)[3],  " hours\n"))  #nocov end
+  cat(paste0("This GriddedEmissionsArray has:\n", # nocov start
+    dim(e)[1], " lat points\n",
+    dim(e)[2], " lon points\n",
+    dim(e)[3],  " hours\n"))  # nocov end
   print(utils::head(e))
 }
 
@@ -219,5 +223,5 @@ plot.GriddedEmissionsArray <- function(x, ..., times = 1) {
   oldpar <- par(no.readonly = TRUE)       # code line i
   on.exit(par(oldpar))                    # code line i + 1
   e <- x
-  graphics::image(e[ , , times], ...)
+  graphics::image(e[, , times], ...)
 }

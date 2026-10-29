@@ -15,10 +15,10 @@ for (i in 1:2) for (k in 1:3) for (h in 1:2) for (d in 1:2) {
 
 test_that("emis_cold 4D and 3D results", {
   expect_equal(unclass(emis_cold(veh, lkm, ef, efc, beta, speed = sp, profile = prof)),
-               ref, check.attributes = FALSE)
+    ref, check.attributes = FALSE)
   expect_equal(unclass(emis_cold(veh, lkm, ef, efc, beta, speed = sp, profile = prof,
-                                 simplify = TRUE)),
-               array(ref, c(2, 3, 4)), check.attributes = FALSE)
+    simplify = TRUE)),
+  array(ref, c(2, 3, 4)), check.attributes = FALSE)
 })
 
 test_that("emis_cold keeps the street dimension with one street", {
@@ -36,6 +36,6 @@ test_that("emis_cold pads efcold as ef", {
 
 test_that("emis_cold converts lkm units", {
   expect_equal(unclass(emis_cold(veh, units::set_units(lkm, "m"), ef, efc, beta,
-                                 speed = sp, profile = prof)),
-               ref, check.attributes = FALSE)
+    speed = sp, profile = prof)),
+  ref, check.attributes = FALSE)
 })

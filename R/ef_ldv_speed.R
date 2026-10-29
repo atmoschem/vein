@@ -229,17 +229,17 @@
 #'  plot(def)
 #' }
 ef_ldv_speed <- function(
-  v,
-  t = "4S",
-  cc,
-  f,
-  eu,
-  p,
-  x,
-  k = 1,
-  speed,
-  show.equation = FALSE,
-  fcorr = rep(1, 8)
+                         v,
+                         t = "4S",
+                         cc,
+                         f,
+                         eu,
+                         p,
+                         x,
+                         k = 1,
+                         speed,
+                         show.equation = FALSE,
+                         fcorr = rep(1, 8)
 ) {
   ef_ldv <- sysdata$ldv
   xas <- c("AS_urban", "AS_rural", "AS_highway")
@@ -253,7 +253,7 @@ ef_ldv_speed <- function(
   )
   xx <- if (missing(x)) NULL else x
 
-  #Check eu
+  # Check eu
   if (is.matrix(eu) | is.data.frame(eu)) {
     eu <- as.data.frame(eu)
     for (i in 1:ncol(eu)) {
@@ -281,9 +281,9 @@ ef_ldv_speed <- function(
   fun_eu <- function(e) {
     what <- paste(v, t, cc, f, e, p)
     df <- .ef_row(ef_ldv,
-                  list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = e,
-                       POLLUTANT = p),
-                  what)
+      list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = e,
+        POLLUTANT = p),
+      what)
     .ef_speed_fun(df, k = k, k2 = .fcorr_k2(e, fcorr), x = xx, what = what)
   }
 
@@ -293,9 +293,9 @@ ef_ldv_speed <- function(
       f1 <- fun_eu(eu)
       if (show.equation == TRUE) {
         df <- .ef_row(ef_ldv,
-                      list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = eu,
-                           POLLUTANT = p),
-                      paste(v, t, cc, f, eu, p))
+          list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = eu,
+            POLLUTANT = p),
+          paste(v, t, cc, f, eu, p))
         cat(paste0(
           "a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
           ", e = ", df$e, ", f = ", df$f, "\n"

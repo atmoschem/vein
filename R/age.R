@@ -74,62 +74,64 @@
 #' dff <- data.frame(PV_Minia, PV_Minib, PV_Minic, PV_Minid)
 #' colplot(dff)
 #' }
-age <- function (x,
-                 type = "weibull",
-                 a = switch(type,
-                            gompertz = 1.798,
-                            double_logistic = 0.19,
-                            weibull = 14.46,
-                            weibull2 = 26),
-                 b = switch(type,
-                            gompertz = -0.137,
-                            double_logistic = 21,
-                            weibull = 4.79,
-                            weibull2 = 11),
-                 agemax,
-                 verbose = FALSE){
+age <- function(x,
+                type = "weibull",
+                a = switch(type,
+                  gompertz = 1.798,
+                  double_logistic = 0.19,
+                  weibull = 14.46,
+                  weibull2 = 26),
+                b = switch(type,
+                  gompertz = -0.137,
+                  double_logistic = 21,
+                  weibull = 4.79,
+                  weibull2 = 11),
+                agemax,
+                verbose = FALSE) {
   type <- match.arg(type, c("gompertz", "double_logistic", "weibull", "weibull2"))
 
   # check agemax
-  if(!missing(agemax)) x <- x[seq_len(agemax)]
+  if (!missing(agemax)) x <- x[seq_len(agemax)]
 
   # gompertz ####
-  if(type == "gompertz") {
-    surv <- function (time, a, b) {1 - exp(-exp(a + b*time))}
+  if (type == "gompertz") {
+    surv <- function(time, a, b) {
+      1 - exp(-exp(a + b * time))
+    }
     anos <- 1:length(x)
     d <- surv(time = anos, a = a, b = b)
-    df <- x*d
+    df <- x * d
     # double logistic ####
-  } else if(type == "double_logistic"){
-    surv <- function (time, a, b) {
-      1/(1 + exp(a*(time + b))) + 1/(1 + exp(a*(time - b)))
+  } else if (type == "double_logistic") {
+    surv <- function(time, a, b) {
+      1 / (1 + exp(a * (time + b))) + 1 / (1 + exp(a * (time - b)))
     }
     anos <- 1:length(x)
     d <- surv(time = anos, a = a, b = b)
-    df <- x*d
+    df <- x * d
     # weibull ####
-  } else if(type == "weibull"){
-    surv <- function (time, a, b) {
-      exp(-(time/a)^b)
+  } else if (type == "weibull") {
+    surv <- function(time, a, b) {
+      exp(-(time / a)^b)
     }
     anos <- 1:length(x)
     d <- surv(time = anos, a = a, b = b)
-    df <- x*d
-  } else if(type == "weibull2"){
-    surv <- function (time, a, b) {
-      exp(-((time + b)/a)^b )
+    df <- x * d
+  } else if (type == "weibull2") {
+    surv <- function(time, a, b) {
+      exp(-((time + b) / a)^b)
     }
     anos <- 1:length(x)
     d <- surv(time = anos, a = a, b = b)
-    df <- x*d
+    df <- x * d
   }
   # data.frame ####
-  if(verbose){
+  if (verbose) {
     # message(paste("Average age of is",
     #               round(sum(anos*sum(df, na.rm = T)/sum(df, na.rm = T)), 2),
     #               sep=" "))
-    message(paste("Number of vehicles is", round(sum(df, na.rm = T)/1000, 2),
-                  "* 10^3 veh", sep=" ")
+    message(paste("Number of vehicles is", round(sum(df, na.rm = T) / 1000, 2),
+      "* 10^3 veh", sep = " ")
     )
     cat("\n")
   }

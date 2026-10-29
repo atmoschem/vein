@@ -17,8 +17,8 @@ portable_moves_fixture <- function() {
   rates$ratePerDistance <- (rates$avgSpeedBinID - 1) * 1.609344 *
     ifelse(rates$modelYearID == 2010L, 2, 1)
   runs <- data.frame(MOVESRunID = 1L, massUnits = "g", distanceUnits = "mi",
-                     masterVersion = "MOVES6.0.0", defaultDatabaseUsed = "fixture",
-                     stringsAsFactors = FALSE)
+    masterVersion = "MOVES6.0.0", defaultDatabaseUsed = "fixture",
+    stringsAsFactors = FALSE)
   list(rates = rates, runs = runs)
 }
 
@@ -30,15 +30,15 @@ test_that("vehicle/fuel combinations are discoverable with and without names", {
   expect_identical(names(v), c("sourceTypeID", "sourceTypeName", "fuelTypeID", "fuelTypeDesc"))
   expect_true(is.na(v$sourceTypeName))
   named <- data.frame(sourceTypeID = 21L, sourceTypeName = "Passenger Car",
-                      fuelTypeID = 1L, fuelTypeDesc = "Gasoline")
+    fuelTypeID = 1L, fuelTypeDesc = "Gasoline")
   d <- moves_factors(a$rates, a$runs, named)
   expect_equal(moves_vehicles(d), named)
   expect_equal(ef_moves("NOx", 2020, speed = 50, factors = d,
-                        source_type_id = "passenger car",
-                        fuel_type_id = "GASOLINE"),
-               ef_moves("NOx", 2020, speed = 50, factors = d))
+    source_type_id = "passenger car",
+    fuel_type_id = "GASOLINE"),
+  ef_moves("NOx", 2020, speed = 50, factors = d))
   expect_error(ef_moves("NOx", 2020, speed = 50, factors = d,
-                        source_type_id = "Truck"), "Unknown source_type_id")
+    source_type_id = "Truck"), "Unknown source_type_id")
   expect_error(moves_factors(a$rates, a$runs, rbind(named, named[1, ])), "duplicate")
 })
 
@@ -206,7 +206,7 @@ test_that("MOVES curves integrate with vein emis in g/km with correct link and a
   lkm <- units::set_units(c(1, 2), "km")
   speed <- data.frame(H1 = c(5, 10) * 1.609344)
   out <- emis(veh, lkm, ef = curves, speed = speed, profile = matrix(1, 1, 1),
-              simplify = TRUE, verbose = FALSE)
+    simplify = TRUE, verbose = FALSE)
   # bin 2: 1 and 2 g/km. bin 3: 2 and 4 g/km. Multiply by veh and km.
   expect_equal(as.numeric(out[, , 1]), as.numeric(matrix(c(2, 12, 8, 40), 2, 2)))
 })
@@ -230,14 +230,14 @@ test_that("brake, tire and driving evaporative factors load and select by proces
   pm <- ef_moves("PM2.5", 2020, speed = 50, factors = d, process = "brake")
   expect_equal(as.numeric(pm), 2 * as.numeric(nox))
   expect_equal(as.numeric(ef_moves("PM10", 2020, speed = 50, factors = d, process = 10)),
-               as.numeric(nox))
+    as.numeric(nox))
   expect_equal(as.numeric(ef_moves("THC", 2020, speed = 50, factors = d,
-                                   process = "venting")), as.numeric(nox))
+    process = "venting")), as.numeric(nox))
   expect_error(ef_moves("NOx", 2020, speed = 50, factors = d, process = "brake"),
-               "No MOVES rates")
+    "No MOVES rates")
   expect_error(ef_moves("NOx", 2020, speed = 50, factors = d, process = 2), "process must")
   expect_error(ef_moves("NOx", 2020, speed = 50, factors = d, process = "idle"),
-               "Unknown process")
+    "Unknown process")
 })
 
 test_that("pollutant names cover the movesr pollutants", {

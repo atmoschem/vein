@@ -59,98 +59,113 @@ ef_nitro <- function(v,
                      fcorr = rep(1, 8)) {
   ef <- sysdata$nitro
 
-  #Check eu
-  if(is.matrix(eu) | is.data.frame(eu)){
+  # Check eu
+  if (is.matrix(eu) | is.data.frame(eu)) {
     eu <- as.data.frame(eu)
-    for(i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
+    for (i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
   } else {
     eu = as.character(eu)
   }
 
   # Check cumileage
-  if(!missing(cumileage)){
-    if(!inherits(cumileage, "units")){
+  if (!missing(cumileage)) {
+    if (!inherits(cumileage, "units")) {
       stop("cumileage neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
-    if(units(cumileage) != units(units::as_units("km"))){
+    if (units(cumileage) != units(units::as_units("km"))) {
       stop("Units of cumileage must be 'km' ")
     }
-    if(units(cumileage) == units(units::as_units("km"))){
+    if (units(cumileage) == units(units::as_units("km"))) {
       cumileage <- as.numeric(cumileage)
     }
   }
 
-  #Function to case when
+  # Function to case when
   lala <- function(x) {
     ifelse(x == "PRE", fcorr[1],
-           ifelse(
-             x == "I", fcorr[2],
-             ifelse(
-               x == "II", fcorr[3],
-               ifelse(
-                 x == "III", fcorr[4],
-                 ifelse(
-                   x == "IV", fcorr[5],
-                   ifelse(
-                     x == "V", fcorr[6],
-                     ifelse(
-                       x == "VI", fcorr[7],
-                       fcorr[8])))))))}
+      ifelse(
+        x == "I", fcorr[2],
+        ifelse(
+          x == "II", fcorr[3],
+          ifelse(
+            x == "III", fcorr[4],
+            ifelse(
+              x == "IV", fcorr[5],
+              ifelse(
+                x == "V", fcorr[6],
+                ifelse(
+                  x == "VI", fcorr[7],
+                  fcorr[8])))))))
+  }
 
   # fun starts
-  if(!is.data.frame(eu)){
-    if(length(eu) == 1){
+  if (!is.data.frame(eu)) {
+    if (length(eu) == 1) {
       df <- ef[ef$VEH        == v &
-                 ef$TYPE       == t &
-                 ef$CONDITION  == cond &
-                 ef$CC         == cc &
-                 ef$FUEL       == f &
-                 ef$EURO       == eu &
-                 ef$POLLUTANT  == p, ]
+        ef$TYPE       == t &
+        ef$CONDITION  == cond &
+        ef$CC         == cc &
+        ef$FUEL       == f &
+        ef$EURO       == eu &
+        ef$POLLUTANT  == p, ]
       k2 <- lala(eu)
 
-      Equation = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)
+      Equation = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
-                   ", e = ", df$e, ", f = ", df$f,  ", ef = ", df$ef, "\n"))
+          ", e = ", df$e, ", f = ", df$f,  ", ef = ", df$ef, "\n"))
         cat(paste0("Equation = ", Equation, "\n"))
       }
 
-      f1 <- function(km){
-        a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
-        cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
+      f1 <- function(km) {
+        a  = df$a
+        b  = df$b
+        ab = df$ab
+        c  = df$c
+        d  = df$d
+        cd = df$cd
+        e  = df$e
+        f  = df$f
+        ef = df$ef
         S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
-        eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
+        eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)))
       }
-      if(!missing(cumileage)){
+      if (!missing(cumileage)) {
         f1 <- EmissionFactors(rep_len(f1(cumileage), length(cumileage)))
         return(f1)
       } else {
         return(f1)
       }
 
-    } else if(length(eu) > 1){
-      if(!missing(cumileage)){
+    } else if (length(eu) > 1) {
+      if (!missing(cumileage)) {
         # one mileage per euro (e.g. by age) or the same mileages for all
         per_eu <- length(cumileage) == length(eu)
-        dff <- do.call("cbind", lapply(1:length(eu), function(i){
+        dff <- do.call("cbind", lapply(1:length(eu), function(i) {
           df <- ef[ef$VEH        == v &
-                     ef$TYPE       == t &
-                     ef$CONDITION  == cond &
-                     ef$CC         == cc &
-                     ef$FUEL       == f &
-                     ef$EURO       == eu[i] &
-                     ef$POLLUTANT  == p, ]
+            ef$TYPE       == t &
+            ef$CONDITION  == cond &
+            ef$CC         == cc &
+            ef$FUEL       == f &
+            ef$EURO       == eu[i] &
+            ef$POLLUTANT  == p, ]
 
           k2 <- lala(eu[i])
 
-          f1 <- function(km){
-            a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
-            cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
+          f1 <- function(km) {
+            a  = df$a
+            b  = df$b
+            ab = df$ab
+            c  = df$c
+            d  = df$d
+            cd = df$cd
+            e  = df$e
+            f  = df$f
+            ef = df$ef
             S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
-            eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
+            eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)))
           }
-          if(per_eu) {
+          if (per_eu) {
             rep_len(f1(cumileage[i]), 1)
           } else {
             rep_len(f1(cumileage), length(cumileage))
@@ -158,25 +173,32 @@ ef_nitro <- function(v,
         }))
         dff <- EmissionFactors(as.data.frame(dff))
         names(dff) <- paste0(eu, 1:length(eu))
-        if(!per_eu) dff$cumileage <- cumileage
+        if (!per_eu) dff$cumileage <- cumileage
         return(dff)
       } else {
-        dff <- lapply(1:length(eu), function(i){
+        dff <- lapply(1:length(eu), function(i) {
           df <- ef[ef$VEH        == v &
-                     ef$TYPE       == t &
-                     ef$CONDITION  == cond &
-                     ef$CC         == cc &
-                     ef$FUEL       == f &
-                     ef$EURO       == eu[i] &
-                     ef$POLLUTANT  == p, ]
+            ef$TYPE       == t &
+            ef$CONDITION  == cond &
+            ef$CC         == cc &
+            ef$FUEL       == f &
+            ef$EURO       == eu[i] &
+            ef$POLLUTANT  == p, ]
 
           k2 <- lala(eu[i])
 
-          f1 <- function(km){
-            a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
-            cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
+          f1 <- function(km) {
+            a  = df$a
+            b  = df$b
+            ab = df$ab
+            c  = df$c
+            d  = df$d
+            cd = df$cd
+            e  = df$e
+            f  = df$f
+            ef = df$ef
             S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
-            eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
+            eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)))
           }
           f1
         })
@@ -185,26 +207,33 @@ ef_nitro <- function(v,
       }
     }
     # New stuffs!
-  } else if (is.data.frame(eu)){
-    if(missing(cumileage)) stop("Add 'cumileage' please")
-    dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
-      do.call("cbind", lapply(1:ncol(eu), function(i){
+  } else if (is.data.frame(eu)) {
+    if (missing(cumileage)) stop("Add 'cumileage' please")
+    dff <- do.call("rbind", lapply(1:nrow(eu), function(j) {
+      do.call("cbind", lapply(1:ncol(eu), function(i) {
         df <- ef[ef$VEH        == v &
-                   ef$TYPE       == t &
-                   ef$CONDITION  == cond &
-                   ef$CC         == cc &
-                   ef$FUEL       == f &
-                   ef$EURO == eu[j,i][[1]] &
-                   ef$POLLUTANT  == p, ]
-        k2 <- lala(eu[j,i][[1]])
+          ef$TYPE       == t &
+          ef$CONDITION  == cond &
+          ef$CC         == cc &
+          ef$FUEL       == f &
+          ef$EURO == eu[j, i][[1]] &
+          ef$POLLUTANT  == p, ]
+        k2 <- lala(eu[j, i][[1]])
 
-        f1 <- function(km){
-          a  = df$a; b  = df$b; ab = df$ab; c  = df$c; d  = df$d
-          cd = df$cd; e  = df$e; f  = df$f; ef = df$ef
+        f1 <- function(km) {
+          a  = df$a
+          b  = df$b
+          ab = df$ab
+          c  = df$c
+          d  = df$d
+          cd = df$cd
+          e  = df$e
+          f  = df$f
+          ef = df$ef
           S <- rep_len(S, length(km)) # ifelse(S...) must keep length(km)
-          eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2)))
+          eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2)))
         }
-        if(length(cumileage) == 1) f1(cumileage) else f1(cumileage[i])
+        if (length(cumileage) == 1) f1(cumileage) else f1(cumileage[i])
       }))
     }))
     dff <- EmissionFactors(dff)

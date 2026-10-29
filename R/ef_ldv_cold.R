@@ -73,109 +73,123 @@ ef_ldv_cold <- function(v = "LDV",
                         cc, f,
                         eu, # can vary horizontally
                         p, k = 1,
-                        show.equation = FALSE, speed, fcorr = rep(1, 8)){
+                        show.equation = FALSE, speed, fcorr = rep(1, 8)) {
   ef_ldv <- sysdata$cold
-  #Check eu
-  if(is.matrix(eu) | is.data.frame(eu)){
+  # Check eu
+  if (is.matrix(eu) | is.data.frame(eu)) {
     eu <- as.data.frame(eu)
-    for(i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
+    for (i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
   } else {
     eu = as.character(eu)
   }
   # Check speed
-  if(!missing(speed)){
-    if(!inherits(speed, "units")){
+  if (!missing(speed)) {
+    if (!inherits(speed, "units")) {
       stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
     }
-    if(units(speed) != units(units::as_units("km/h"))){
+    if (units(speed) != units(units::as_units("km/h"))) {
       stop("Units of speed must be 'km/h' ")
     }
-    if(units(speed) == units(units::as_units("km/h"))){
+    if (units(speed) == units(units::as_units("km/h"))) {
       speed <- as.numeric(speed)
     }
   }
-  if(is.matrix(ta)){
+  if (is.matrix(ta)) {
     ta <- as.data.frame(ta)
   }
   # numeric vector of temperatures (e.g. 12 monthly means): one row, one
   # column per value, as when ta is a data.frame
-  if(!is.data.frame(ta) && length(ta) > 1){
+  if (!is.data.frame(ta) && length(ta) > 1) {
     ta <- as.data.frame(matrix(as.numeric(ta), nrow = 1))
   }
   cold_row <- function(e) {
     df <- ef_ldv[ef_ldv$VEH == v &
-                   ef_ldv$CC == cc &
-                   ef_ldv$FUEL == f &
-                   ef_ldv$EURO == e &
-                   ef_ldv$POLLUTANT == p, ]
-    if(nrow(df) == 0) {
+      ef_ldv$CC == cc &
+      ef_ldv$FUEL == f &
+      ef_ldv$EURO == e &
+      ef_ldv$POLLUTANT == p, ]
+    if (nrow(df) == 0) {
       stop("No cold-start emission factor for v = ", v, ", cc = ", cc,
-           ", f = ", f, ", eu = ", e, ", p = ", p)
+        ", f = ", f, ", eu = ", e, ", p = ", p)
     }
     df[1, ]
   }
-  #Function to case when
+  # Function to case when
   lala <- function(x) {
     ifelse(x == "PRE", fcorr[1],
-           ifelse(
-             x == "I", fcorr[2],
-             ifelse(
-               x == "II", fcorr[3],
-               ifelse(
-                 x == "III", fcorr[4],
-                 ifelse(
-                   x == "IV", fcorr[5],
-                   ifelse(
-                     x == "V", fcorr[6],
-                     ifelse(
-                       x == "VI", fcorr[7],
-                       fcorr[8])))))))
+      ifelse(
+        x == "I", fcorr[2],
+        ifelse(
+          x == "II", fcorr[3],
+          ifelse(
+            x == "III", fcorr[4],
+            ifelse(
+              x == "IV", fcorr[5],
+              ifelse(
+                x == "V", fcorr[6],
+                ifelse(
+                  x == "VI", fcorr[7],
+                  fcorr[8])))))))
   }
 
 
 
   # When eu is not a data.frame!
-  if(!is.data.frame(eu)){
+  if (!is.data.frame(eu)) {
     # Check ta, eu and speed
-    if(is.data.frame(ta) | length(eu) > 1){
-      if(missing(speed)) stop("when 'ta' is data.frame or eu > 1, 'speed' is needed")
+    if (is.data.frame(ta) | length(eu) > 1) {
+      if (missing(speed)) stop("when 'ta' is data.frame or eu > 1, 'speed' is needed")
     }
 
-    if (is.numeric(ta) & length(ta) == 1 & length(eu) == 1){
+    if (is.numeric(ta) & length(ta) == 1 & length(eu) == 1) {
       df <- cold_row(eu)
       k2 <- lala(eu)
 
       if (show.equation == TRUE) {
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
-                   ", e = ", df$e, ", f = ", df$f, "\n"))
-        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "*", k2))
+          ", e = ", df$e, ", f = ", df$f, "\n"))
+        cat(paste0("Equation = ", "(", as.character(df$Y), ")", "*", k, "*", k2))
       }
-      f1 <- function(V){
-        a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
-        g <- df$g; h <- df$h; i <- df$i
-        V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-        ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-               0,
-               eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
+      f1 <- function(V) {
+        a <- df$a
+        b <- df$b
+        c <- df$c
+        d <- df$d
+        e <- df$e
+        f <- df$f
+        g <- df$g
+        h <- df$h
+        i <- df$i
+        V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
+        ifelse(eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))) < 0,
+          0,
+          eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))))
       }
-      if(!missing(speed)) {
+      if (!missing(speed)) {
         return(EmissionFactors(f1(speed)))
       } else {
         return(f1)
       }
 
-    } else if(is.numeric(ta) & length(ta) == 1 & length(eu) > 1){
-      dff <- do.call("cbind", lapply(1:length(eu), function(i){
+    } else if (is.numeric(ta) & length(ta) == 1 & length(eu) > 1) {
+      dff <- do.call("cbind", lapply(1:length(eu), function(i) {
         df <- cold_row(eu[i])
 
-        f1 <- function(V){
+        f1 <- function(V) {
           k2 <- lala(eu[i])
-          a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
-          g <- df$g; h <- df$h; i <- df$i
-          V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-          ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                 0,
-                 eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
+          a <- df$a
+          b <- df$b
+          c <- df$c
+          d <- df$d
+          e <- df$e
+          f <- df$f
+          g <- df$g
+          h <- df$h
+          i <- df$i
+          V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
+          ifelse(eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))) < 0,
+            0,
+            eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))))
         }
         f1(speed)
       }))
@@ -185,53 +199,67 @@ ef_ldv_cold <- function(v = "LDV",
       dff$ta <- ta
       return(dff)
 
-    } else if(is.data.frame(ta)){
-      dff <- do.call("rbind", lapply(1:ncol(ta), function(kk){
-        do.call("rbind", lapply(1:nrow(ta), function(j){
-          dff <- do.call("cbind", lapply(1:length(eu), function(i){
+    } else if (is.data.frame(ta)) {
+      dff <- do.call("rbind", lapply(1:ncol(ta), function(kk) {
+        do.call("rbind", lapply(1:nrow(ta), function(j) {
+          dff <- do.call("cbind", lapply(1:length(eu), function(i) {
             df <- cold_row(eu[i])
 
-            f1 <- function(V){
+            f1 <- function(V) {
               ta <- ta[j, kk]
               k2 <- lala(eu[i])
-              a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
-              g <- df$g; h <- df$h; i <- df$i
-              V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                     0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
+              a <- df$a
+              b <- df$b
+              c <- df$c
+              d <- df$d
+              e <- df$e
+              f <- df$f
+              g <- df$g
+              h <- df$h
+              i <- df$i
+              V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
+              ifelse(eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))) < 0,
+                0,
+                eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))))
             }
             f1(speed)
           }))
           dff <- EmissionFactors(dff)
           names(dff) <- paste0(eu, "_", 1:length(eu))
           dff$speed <- speed
-          dff$ta <- ta[j,kk]
+          dff$ta <- ta[j, kk]
           dff
         }))
       }))
       return(dff)
     }
     # This is new!!!!!!!!
-  } else if(is.data.frame(eu) | is.matrix(eu)){
+  } else if (is.data.frame(eu) | is.matrix(eu)) {
     # Check ta, eu and speed
-    if(is.data.frame(ta) | length(eu) > 1){
-      if(missing(speed)) stop("when 'ta' is data.frame or eu > 1, 'speed' is needed")
+    if (is.data.frame(ta) | length(eu) > 1) {
+      if (missing(speed)) stop("when 'ta' is data.frame or eu > 1, 'speed' is needed")
     }
 
-    if(is.numeric(ta) & length(ta) == 1){
-      dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
-        dff <- do.call("cbind", lapply(1:ncol(eu), function(i){
-          df <- cold_row(eu[j,i][[1]])
+    if (is.numeric(ta) & length(ta) == 1) {
+      dff <- do.call("rbind", lapply(1:nrow(eu), function(j) {
+        dff <- do.call("cbind", lapply(1:ncol(eu), function(i) {
+          df <- cold_row(eu[j, i][[1]])
 
-          f1 <- function(V){
-            k2 <- lala(eu[j,i][[1]])
-            a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
-            g <- df$g; h <- df$h; i <- df$i
-            V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-            ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                   0,
-                   eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
+          f1 <- function(V) {
+            k2 <- lala(eu[j, i][[1]])
+            a <- df$a
+            b <- df$b
+            c <- df$c
+            d <- df$d
+            e <- df$e
+            f <- df$f
+            g <- df$g
+            h <- df$h
+            i <- df$i
+            V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
+            ifelse(eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))) < 0,
+              0,
+              eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))))
           }
           f1(speed)
         }))
@@ -243,32 +271,39 @@ ef_ldv_cold <- function(v = "LDV",
       }))
       return(dff)
 
-    } else if(is.data.frame(ta)){
+    } else if (is.data.frame(ta)) {
       # if(nrow(ta) != nrow(eu)) {
       #   cat("Number of rows of 'eu': ", nrow(eu), "\n")
       #   cat("Number of rows of 'ta': ", nrow(ta), "\n")
       #   stop("Number of rows of 'eu' and 'ta' must be the same")
       # }
-      dff <- do.call("rbind", lapply(1:ncol(ta), function(kk){
-        do.call("rbind", lapply(1:nrow(ta), function(j){
-          dff <- do.call("cbind", lapply(1:ncol(eu), function(i){
-            df <- cold_row(eu[j,i][[1]])
+      dff <- do.call("rbind", lapply(1:ncol(ta), function(kk) {
+        do.call("rbind", lapply(1:nrow(ta), function(j) {
+          dff <- do.call("cbind", lapply(1:ncol(eu), function(i) {
+            df <- cold_row(eu[j, i][[1]])
 
-            f1 <- function(V){
+            f1 <- function(V) {
               ta <- ta[j, kk]
-              k2 <- lala(eu[j,i][[1]])
-              a <- df$a; b <- df$b; c <- df$c;  d <- df$d; e <- df$e;  f <- df$f
-              g <- df$g; h <- df$h; i <- df$i
-              V <- ifelse(V<df$MINV,df$MINV,ifelse(V>df$MAXV,df$MAXV,V))
-              ifelse(eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))) < 0,
-                     0,
-                     eval(parse(text = paste0("(",as.character(df$Y), ")", "*", k, "*", k2))))
+              k2 <- lala(eu[j, i][[1]])
+              a <- df$a
+              b <- df$b
+              c <- df$c
+              d <- df$d
+              e <- df$e
+              f <- df$f
+              g <- df$g
+              h <- df$h
+              i <- df$i
+              V <- ifelse(V < df$MINV, df$MINV, ifelse(V > df$MAXV, df$MAXV, V))
+              ifelse(eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))) < 0,
+                0,
+                eval(parse(text = paste0("(", as.character(df$Y), ")", "*", k, "*", k2))))
             }
             f1(speed)
           }))
           dff <- EmissionFactors(dff)
           dff$speed <- speed
-          dff$ta <- ta[j,kk]
+          dff$ta <- ta[j, kk]
           dff$row_eu <- j
           dff
         }))

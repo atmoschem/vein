@@ -581,7 +581,7 @@ vein_as_km <- function(x, name = "lkm") {
     units::set_units(x, "km", mode = "standard"),
     error = function(e) {
       stop("Units of ", name, " must be a length, e.g. 'km': ",
-           conditionMessage(e), call. = FALSE)
+        conditionMessage(e), call. = FALSE)
     }
   )
   as.numeric(x)
@@ -595,7 +595,7 @@ vein_as_gkm <- function(x, name = "ef") {
     units::set_units(x, "g/km", mode = "standard"),
     error = function(e) {
       stop("Units of ", name, " must be convertible to 'g/km': ",
-           conditionMessage(e), call. = FALSE)
+        conditionMessage(e), call. = FALSE)
     }
   )
   as.numeric(x)

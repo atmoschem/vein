@@ -14,12 +14,10 @@
 #' @examples \dontrun{
 #' get_ef_ref("eea")
 #' }
-get_ef_ref <- function(ref){
-  #to access vein:::sysdata outside vein
+get_ef_ref <- function(ref) {
+  # to access vein:::sysdata outside vein
   if (!ref %in% names(sysdata)) {
     stop("'ref' must be one of: ", paste(names(sysdata), collapse = ", "))
   }
   data.table::as.data.table(sysdata[[ref]])
 }
-
-

@@ -79,27 +79,38 @@ compile_ef_expr <- function(Y) {
         rec(x[[2]])
         if (op == "-") code <<- c(code, .OP_NEG)
       } else if (op %in% c("+", "-", "*", "/", "^")) {
-        rec(x[[2]]); rec(x[[3]])
+        rec(x[[2]])
+        rec(x[[3]])
         code <<- c(code, switch(op,
           "+" = .OP_ADD, "-" = .OP_SUB, "*" = .OP_MUL,
           "/" = .OP_DIV, "^" = .OP_POW
         ))
       } else if (op %in% c("<", "<=", ">", ">=", "==", "!=")) {
-        rec(x[[2]]); rec(x[[3]])
+        rec(x[[2]])
+        rec(x[[3]])
         code <<- c(code, switch(op,
           "<" = .CMP_LT, "<=" = .CMP_LE, ">" = .CMP_GT,
           ">=" = .CMP_GE, "==" = .CMP_EQ, "!=" = .CMP_NE
         ))
       } else if (op == "&") {
-        rec(x[[2]]); rec(x[[3]]); code <<- c(code, .OP_AND)
+        rec(x[[2]])
+        rec(x[[3]])
+        code <<- c(code, .OP_AND)
       } else if (op == "|") {
-        rec(x[[2]]); rec(x[[3]]); code <<- c(code, .OP_OR)
+        rec(x[[2]])
+        rec(x[[3]])
+        code <<- c(code, .OP_OR)
       } else if (op == "exp") {
-        rec(x[[2]]); code <<- c(code, .FN_EXP)
+        rec(x[[2]])
+        code <<- c(code, .FN_EXP)
       } else if (op == "log") {
-        rec(x[[2]]); code <<- c(code, .FN_LOG)
+        rec(x[[2]])
+        code <<- c(code, .FN_LOG)
       } else if (op == "ifelse") {
-        rec(x[[2]]); rec(x[[3]]); rec(x[[4]]); code <<- c(code, .IFELSE)
+        rec(x[[2]])
+        rec(x[[3]])
+        rec(x[[4]])
+        code <<- c(code, .IFELSE)
       } else {
         stop(paste("ef_program: unknown operator", op))
       }

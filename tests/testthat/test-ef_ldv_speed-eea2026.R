@@ -16,7 +16,7 @@ test_that("PRE gasoline PC FC is plausible", {
   }
   # values reported in the QA after correcting the equation
   expect_equal(ef_ldv_speed("PC", "4S", "1400_2000", "G", "PRE", "FC")(c(10, 50)),
-               c(178.6, 69.3), tolerance = 1e-3)
+    c(178.6, 69.3), tolerance = 1e-3)
 })
 
 test_that("EC and CO reproduce Appendix 4 (PC petrol Medium Euro 4 PFI)", {
@@ -26,12 +26,12 @@ test_that("EC and CO reproduce Appendix 4 (PC petrol Medium Euro 4 PFI)", {
     (p[1] * V^2 + p[2] * V + p[3] + p[4] / V) / (p[5] * V^2 + p[6] * V + p[7]) * (1 - p[8])
   }
   p_ec <- c(0.0001317230068, 0.005485959295, 2.619195051, 1.727746124e-09,
-            -8.504150127e-05, 0.02358438407, 0.3442975778, 0.2319672923)
+    -8.504150127e-05, 0.02358438407, 0.3442975778, 0.2319672923)
   p_co <- c(5.496706977e-12, -0.03341761208, 5.109834522, -1.043727103e-07,
-            0.001871536276, -0.5288309062, 37.50573903, 0)
+    0.001871536276, -0.5288309062, 37.50573903, 0)
   r <- vein:::sysdata$ldv
   r <- r[r$VEH == "PC" & r$TYPE == "4S" & r$CC == "1400_2000" & r$FUEL == "G" &
-           r$EURO == "IV" & r$POLLUTANT == "EC", ]
+    r$EURO == "IV" & r$POLLUTANT == "EC", ]
   expect_equal(nrow(r), 1)
   expect_match(r$REF, "Passenger Cars | Petrol | Medium | Euro 4 | PFI | EC", fixed = TRUE)
   V <- c(10, 30, 50, 80, 120)
@@ -49,7 +49,7 @@ test_that("CO2/FC is constant for every LDV row", {
   set.seed(1)
   keys <- keys[sample(nrow(keys), 40), ]
   ratio <- c(G = 3.169, D = 3.169, FH = 3.169, PHEV_G = 3.169, PHEV_D = 3.169,
-             LPG = 3.024, CNG = 2.743)
+    LPG = 3.024, CNG = 2.743)
   for (i in seq_len(nrow(keys))) {
     k <- keys[i, ]
     co2 <- ef_ldv_speed(k$VEH, k$TYPE, k$CC, k$FUEL, k$EURO, "CO2")(c(10, 50, 100))
@@ -107,5 +107,5 @@ test_that("get_ef_ref returns a copy", {
   expect_false(vein:::sysdata$ldv$VEH[1] == "HACKED")
   expect_false(data.table::is.data.table(vein:::sysdata$ldv))
   expect_equal(ef_ldv_speed("PC", "4S", "<=1400", "G", "III", "CO")(50),
-               ef_ldv_speed("PC", "4S", "<=1400", "G", "III", "CO")(50))
+    ef_ldv_speed("PC", "4S", "<=1400", "G", "III", "CO")(50))
 })

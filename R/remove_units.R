@@ -15,13 +15,13 @@
 #' sapply(ef1, class)
 #' (a <- remove_units(ef1))
 #' }
-remove_units <- function(x, verbose = FALSE){
+remove_units <- function(x, verbose = FALSE) {
 
-  if(inherits(x, "sf")) {
+  if (inherits(x, "sf")) {
     geo <- sf::st_geometry(x)
     ef <- sf::st_set_geometry(x, NULL)
 
-    if(verbose) cat("Finding numeric columns")
+    if (verbose) cat("Finding numeric columns")
     sapply(ef, is.numeric) -> isn
 
     disn <- as.data.frame(isn)
@@ -30,22 +30,22 @@ remove_units <- function(x, verbose = FALSE){
 
     cols <- disn[disn$isn == TRUE, ]$cols
 
-    for(i in seq_along(cols)){
+    for (i in seq_along(cols)) {
       ef[[cols[i]]] <- as.numeric(ef[[cols[i]]])
     }
 
     ef <- sf::st_sf(ef, geometry = geo)
-  } else if ( is.matrix(x) ) {
+  } else if (is.matrix(x)) {
     ef <- as.data.frame(x)
 
-    for(i in 1:ncol(ef)){
-      ef[,i] <- as.numeric(ef[,i])
+    for (i in 1:ncol(ef)) {
+      ef[, i] <- as.numeric(ef[, i])
     }
 
-  } else if ( is.data.frame(x) ) {
+  } else if (is.data.frame(x)) {
     ef <- x
 
-    if(verbose) cat("Finding numeric columns")
+    if (verbose) cat("Finding numeric columns")
 
     sapply(ef, is.numeric) -> isn
 
@@ -55,15 +55,15 @@ remove_units <- function(x, verbose = FALSE){
 
     cols <- disn[disn$isn == TRUE, ]$cols
 
-    for(i in seq_along(cols)){
+    for (i in seq_along(cols)) {
       ef[[cols[i]]] <- as.numeric(ef[[cols[i]]])
     }
 
-  } else if(inherits(x, "units") && is.array(x)){
+  } else if (inherits(x, "units") && is.array(x)) {
     ef <- units::drop_units(x)
-  } else if(is.character(x) | is.list(x) | is.array(x)){
+  } else if (is.character(x) | is.list(x) | is.array(x)) {
     ef <- x
-    #nada
+    # nada
   } else {
     ef <- as.numeric(x)
   }

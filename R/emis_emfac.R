@@ -32,31 +32,31 @@ emis_emfac <- function(ef,
                        pol = "CO_RUNEX",
                        modelyear = 2021:1982,
                        vkm = TRUE,
-                       verbose = TRUE){
+                       verbose = TRUE) {
 
   hours = paste0("S", seq_along(tfs))
 
-  if(!inherits(lkm, "units")){
+  if (!inherits(lkm, "units")) {
     stop("lkm neeeds to has class 'units' in 'miles'. Please, check package 'units'")
   }
-  if(units(lkm) == units(units::as_units("km"))){
+  if (units(lkm) == units(units::as_units("km"))) {
     stop("Units of lkm is 'km', change to 'miles'")
   }
-  if(units(lkm) == units(units::as_units("miles"))) {
+  if (units(lkm) == units(units::as_units("miles"))) {
     lkm <- as.numeric(lkm)
   }
 
   # ef
-  if(is.character(ef)) {
+  if (is.character(ef)) {
     ef <- ef_emfac(ef)
   }
-  if(!any(names(ef) %in% "vehicles")) {
+  if (!any(names(ef) %in% "vehicles")) {
     stop("Add column `vehicles` with one category")
   }
 
-  if(length(unique(ef$vehicles)) > 1) {
+  if (length(unique(ef$vehicles)) > 1) {
     stop("ef must one `vehicles` category. There is: ",
-         unique(ef$vehicles))
+      unique(ef$vehicles))
   }
   ef <- data.table::as.data.table(ef)
   # keep only the pollutant pol (ef_emfac() returns all pollutants)
@@ -70,10 +70,10 @@ emis_emfac <- function(ef,
 
   ModelYear <- NULL
 
-  if(missing(speed) | is.character(ef$Speed)){
+  if (missing(speed) | is.character(ef$Speed)) {
 
     # estimation
-    if(verbose) cat("Estimating emissions of", pol, " for", vehname, "\n")
+    if (verbose) cat("Estimating emissions of", pol, " for", vehname, "\n")
     data.table::rbindlist(lapply(seq_along(hours), function(l) {
 
       data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
@@ -81,40 +81,40 @@ emis_emfac <- function(ef,
         efx <- ef[ModelYear == modelyear[k]]$gmiles
         if (length(efx) != 1) {
           stop("ef must have one value per ModelYear when speed is missing; found ",
-               length(efx), " for ModelYear ", modelyear[k])
+            length(efx), " for ModelYear ", modelyear[k])
         }
         eeff <- Emissions(efx,
-                          mass = "g",
-                          dist = "miles")
+          mass = "g",
+          dist = "miles")
 
-        vv <- Vehicles(as.numeric(veh[[k]]*tfs[l]),
-                       time = "1/h")
+        vv <- Vehicles(as.numeric(veh[[k]] * tfs[l]),
+          time = "1/h")
 
-        emi <- eeff*lkm* vv
+        emi <- eeff * lkm * vv
         dx <- data.table::data.table(id = seq_along(emi),
-                                     emi = emi,
-                                     age = k,
-                                     vehicles = vehname,
-                                     pollutant = pol,
-                                     hour = l)
+          emi = emi,
+          age = k,
+          vehicles = vehname,
+          pollutant = pol,
+          hour = l)
         dx
       }))
     }))   -> emii
 
   } else {
 
-    if(!inherits(speed, "Speed")){
+    if (!inherits(speed, "Speed")) {
       stop("speed neeeds to has class 'Speed' with col-units'miles/h'")
     }
-    if(units(speed[[1]]) != units(units::as_units("miles/h"))){
+    if (units(speed[[1]]) != units(units::as_units("miles/h"))) {
       stop("Units of speed must be 'miles/h' ")
     }
-    if(units(speed[[1]]) == units(units::as_units("miles/h"))){
+    if (units(speed[[1]]) == units(units::as_units("miles/h"))) {
       speed <- remove_units(speed)
     }
 
     # estimation
-    if(verbose) cat("Estimating emissions of", pol, " for", vehname, "\n")
+    if (verbose) cat("Estimating emissions of", pol, " for", vehname, "\n")
     data.table::rbindlist(lapply(seq_along(hours), function(l) {
 
       data.table::rbindlist(lapply(seq_along(modelyear), function(k) {
@@ -128,24 +128,24 @@ emis_emfac <- function(ef,
 
         # speed bin of each link (speeds below the first bin use the first bin)
         interval <- pmax(findInterval(as.numeric(speed[[hours[l]]]),
-                                      breaks), 1)
+          breaks), 1)
 
         # match() keeps the order of the links
         gm <- efx$gmiles[match(breaks[interval], efx$Speed)]
 
         eeff <- Emissions(gm,
-                          mass = "g",
-                          dist = "miles")
+          mass = "g",
+          dist = "miles")
 
-        vv <- Vehicles(as.numeric(veh[[k]]*tfs[l]),
-                       time = "1/h")
+        vv <- Vehicles(as.numeric(veh[[k]] * tfs[l]),
+          time = "1/h")
 
         dx <- data.table::data.table(id = 1:length(eeff),
-                                     emi = eeff*lkm* vv,
-                                     age = k,
-                                     vehicles = vehname,
-                                     pollutant = pol,
-                                     hour = l)
+          emi = eeff * lkm * vv,
+          age = k,
+          vehicles = vehname,
+          pollutant = pol,
+          hour = l)
         dx
       }))
     }))   -> emii

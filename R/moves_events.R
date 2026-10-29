@@ -6,14 +6,14 @@
   rates <- .moves_table(rates, "rates")
   runs <- .moves_table(runs, "runs")
   required <- c("MOVESRunID", "yearID", "pollutantID", "processID",
-                "sourceTypeID", "fuelTypeID", "modelYearID",
-                "temperature", "relHumidity", rate_column)
+    "sourceTypeID", "fuelTypeID", "modelYearID",
+    "temperature", "relHumidity", rate_column)
   .moves_required(rates, required, "rates")
   .moves_required(runs, c("MOVESRunID", "massUnits", "masterVersion",
-                          "defaultDatabaseUsed"), "runs")
+    "defaultDatabaseUsed"), "runs")
   for (name in required) {
     .moves_numeric(rates[[name]], name,
-                   integer = !name %in% c("temperature", "relHumidity", rate_column))
+      integer = !name %in% c("temperature", "relHumidity", rate_column))
   }
   .moves_numeric(runs$MOVESRunID, "runs$MOVESRunID", integer = TRUE)
   if (anyDuplicated(runs$MOVESRunID)) stop("runs has duplicate MOVESRunID values")
@@ -23,7 +23,7 @@
     stop("Unexpected processID for the ", basis, " rate table")
   }
   if (any(rates$sourceTypeID <= 0 | rates$fuelTypeID <= 0 |
-          rates$modelYearID <= 0 | rates$yearID < rates$modelYearID)) {
+    rates$modelYearID <= 0 | rates$yearID < rates$modelYearID)) {
     stop("Export disaggregated source, fuel and model year; modelYearID must not exceed yearID")
   }
   if (any(rates$relHumidity < 0 | rates$relHumidity > 100)) {
@@ -53,11 +53,11 @@
     vehicles$sourceTypeName <- NA_character_
     vehicles$fuelTypeDesc <- NA_character_
     vehicles <- vehicles[c("sourceTypeID", "sourceTypeName",
-                           "fuelTypeID", "fuelTypeDesc")]
+      "fuelTypeID", "fuelTypeDesc")]
   } else {
     vehicles <- .moves_table(vehicles, "vehicles")
     .moves_required(vehicles, c("sourceTypeID", "sourceTypeName",
-                                "fuelTypeID", "fuelTypeDesc"), "vehicles")
+      "fuelTypeID", "fuelTypeDesc"), "vehicles")
     .moves_numeric(vehicles$sourceTypeID, "vehicles$sourceTypeID", integer = TRUE)
     .moves_numeric(vehicles$fuelTypeID, "vehicles$fuelTypeID", integer = TRUE)
     if (anyDuplicated(vehicles[c("sourceTypeID", "fuelTypeID")])) {
@@ -70,8 +70,8 @@
   rownames(vehicles) <- NULL
   if (!nrow(vehicles)) stop("No vehicle/fuel names match the rate data")
   structure(list(rates = rates, runs = runs, vehicles = vehicles,
-                 schema_version = 1L, basis = basis),
-            class = "MOVESFactors")
+    schema_version = 1L, basis = basis),
+  class = "MOVESFactors")
 }
 
 #' Portable MOVES start-exhaust factors
@@ -108,7 +108,7 @@ moves_start_factors <- function(rates, runs, vehicles) {
     stop("Supply both rates and runs, or omit both for bundled data")
   }
   result <- .moves_event_table(rates, runs, vehicles, "start", 2L,
-                               "ratePerStart", "gperstart")
+    "ratePerStart", "gperstart")
   if (cache) assign("start", result, envir = .moves_cache)
   result
 }
@@ -163,11 +163,11 @@ moves_evap_factors <- function(rates, profile, runs, vehicles) {
     if (!is.data.frame(rates)) stop("rates must be a file or data.frame")
   }
   base <- .moves_event_table(rates, runs, vehicles, "evap", c(11L, 13L),
-                             "ratePerVehicle", "gpervehicle")
+    "ratePerVehicle", "gpervehicle")
   if (has_profile && !is.null(profile) &&
-      (!is.character(profile) || file.exists(profile))) {
+    (!is.character(profile) || file.exists(profile))) {
     extra <- .moves_event_table(profile, runs, vehicles, "evap", 12L,
-                                "ratePerVehicle", "gpervehicle")
+      "ratePerVehicle", "gpervehicle")
     for (name in setdiff(names(extra$rates), names(base$rates))) {
       base$rates[[name]] <- NA
     }
@@ -176,7 +176,7 @@ moves_evap_factors <- function(rates, profile, runs, vehicles) {
     }
     base$rates <- rbind(base$rates, extra$rates[names(base$rates)])
     base$rates <- base$rates[order(base$rates$processID, base$rates$pollutantID,
-                                   base$rates$modelYearID, base$rates$hourID), ]
+      base$rates$modelYearID, base$rates$hourID), ]
     rownames(base$rates) <- NULL
   }
   if (cache) assign("evap", base, envir = .moves_cache)
@@ -188,8 +188,8 @@ moves_evap_factors <- function(rates, profile, runs, vehicles) {
     value <- filters[[name]]
     multiple <- name %in% c("processID", "hourID")
     if ((!multiple && length(value) != 1L) || !length(value) || anyNA(value) ||
-        inherits(value, "units") || !is.atomic(value) ||
-        (is.numeric(value) && any(!is.finite(value)))) {
+      inherits(value, "units") || !is.atomic(value) ||
+      (is.numeric(value) && any(!is.finite(value)))) {
       stop("Select valid value(s) without units for ", name)
     }
     keep <- if (name %in% c("temperature_C", "temperature", "relHumidity")) {
@@ -233,12 +233,12 @@ ef_moves_start <- function(pollutant = "CO", model_year,
     stop("factors must be created by moves_start_factors()")
   }
   source_type_id <- .moves_id(source_type_id, factors$vehicles,
-                              "sourceTypeID", "sourceTypeName", "source_type_id")
+    "sourceTypeID", "sourceTypeName", "source_type_id")
   fuel_type_id <- .moves_id(fuel_type_id, factors$vehicles,
-                            "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
+    "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
   filters <- list(pollutantID = .moves_pollutant(pollutant),
-                  modelYearID = model_year, sourceTypeID = source_type_id,
-                  fuelTypeID = fuel_type_id, processID = 2L)
+    modelYearID = model_year, sourceTypeID = source_type_id,
+    fuelTypeID = fuel_type_id, processID = 2L)
   if (!missing(temperature)) filters$temperature_C <- temperature
   if (!missing(rel_humidity)) filters$relHumidity <- rel_humidity
   if (length(intersect(names(filters), names(select)))) {
@@ -288,14 +288,14 @@ ef_moves_evap <- function(pollutant = "THC", model_year,
   }
   process <- match.arg(process)
   process <- switch(process, all = 11:13, permeation = 11L,
-                    venting = 12L, leaks = 13L)
+    venting = 12L, leaks = 13L)
   source_type_id <- .moves_id(source_type_id, factors$vehicles,
-                              "sourceTypeID", "sourceTypeName", "source_type_id")
+    "sourceTypeID", "sourceTypeName", "source_type_id")
   fuel_type_id <- .moves_id(fuel_type_id, factors$vehicles,
-                            "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
+    "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
   filters <- list(pollutantID = .moves_pollutant(pollutant),
-                  modelYearID = model_year, sourceTypeID = source_type_id,
-                  fuelTypeID = fuel_type_id, processID = process)
+    modelYearID = model_year, sourceTypeID = source_type_id,
+    fuelTypeID = fuel_type_id, processID = process)
   if (!missing(temperature)) filters$temperature_C <- temperature
   if (!missing(rel_humidity)) filters$relHumidity <- rel_humidity
   if (length(intersect(names(filters), names(select)))) {

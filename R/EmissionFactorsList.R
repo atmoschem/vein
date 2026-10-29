@@ -35,19 +35,19 @@ EmissionFactorsList <- function(x, ...) {
     force(val)
     function(V) val
   }
-  if ( is.matrix(x) || is.data.frame(x) ) {
+  if (is.matrix(x) || is.data.frame(x)) {
     efx <- lapply(1:ncol(x), function(i) {
       lapply(1:nrow(x), function(j) {
-        const(x[j,i])
+        const(x[j, i])
       })
     })
     class(efx) <- c("EmissionFactorsList", "list")
-  } else  if ( is.numeric(x) ) {
+  } else  if (is.numeric(x)) {
     efx <- lapply(1:length(x), function(i) const(x[i]))
-    class(efx) <- c("EmissionFactorsList",class(efx))
-  } else if ( is.list(x) && is.function(x[[1]]) ) {
+    class(efx) <- c("EmissionFactorsList", class(efx))
+  } else if (is.list(x) && is.function(x[[1]])) {
     efx <- x
-    class(efx) <- unique(c("EmissionFactorsList",class(x)))
+    class(efx) <- unique(c("EmissionFactorsList", class(x)))
   } else {
     stop("'x' must be numeric, matrix, data.frame or a list of functions")
   }
@@ -58,14 +58,14 @@ EmissionFactorsList <- function(x, ...) {
 #' @method print EmissionFactorsList
 #' @export
 print.EmissionFactorsList <- function(x, ..., default = FALSE) {
-  if ( default ) {
+  if (default) {
     print.default(x)
-  } else if ( is.function( x[[1]] ) ){
+  } else if (is.function(x[[1]])) {
     cat("This EmissionFactorsList has ", length(x),
-        " functions")
-  } else if ( is.list(x) && is.list(x[[1]]) ) {
+      " functions")
+  } else if (is.list(x) && is.list(x[[1]])) {
     cat("This EmissionFactorsList has ", length(x), " lists\n")
-    cat("First has ",length(x[[1]]), " functions\n")
+    cat("First has ", length(x[[1]]), " functions\n")
     cat("Last has ", length(x[[length(x)]]), " functions")
   }
 }
@@ -75,12 +75,12 @@ print.EmissionFactorsList <- function(x, ..., default = FALSE) {
 #' @export
 summary.EmissionFactorsList <- function(object, ...) {
   ef <- object
-  if ( is.function( ef[[1]] ) ){
+  if (is.function(ef[[1]])) {
     cat("This EmissionFactorsList has", length(ef),
-        "functions")
-  } else if ( is.list(ef) && is.list(ef[[1]]) ) {
+      "functions")
+  } else if (is.list(ef) && is.list(ef[[1]])) {
     cat("This EmissionFactorsList has ", length(ef), "lists\n")
-    cat("First has",length(ef[[1]]), "functions\n")
+    cat("First has", length(ef[[1]]), "functions\n")
     cat("Last has", length(ef[[length(ef)]]), "functions")
   }
 }
@@ -90,14 +90,12 @@ summary.EmissionFactorsList <- function(object, ...) {
 #' @export
 plot.EmissionFactorsList <- function(x, ...) {
   ef <- x
-  if ( is.function( ef[[1]] ) ){
+  if (is.function(ef[[1]])) {
     cat("This EmissionFactorsList has", length(ef),
-        "functions")
-    graphics::plot(unlist(lapply(1:length(ef), function(i) ef[[i]](34) )),
-                   ylab = "Emission factors at 34 [km/h]")
+      "functions")
+    graphics::plot(unlist(lapply(1:length(ef), function(i) ef[[i]](34))),
+      ylab = "Emission factors at 34 [km/h]")
   } else  {
     cat("Try other methods")
   }
 }
-
-

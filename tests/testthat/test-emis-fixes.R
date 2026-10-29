@@ -17,26 +17,26 @@ nt_ok <- check_nt() > 2
 
 test_that("emis R and fortran give the same 4D results", {
   expect_equal(unclass(emis(veh, lkm, efn, profile = prof)), ref4,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
   expect_equal(unclass(emis(veh, lkm, efn, profile = prof, fortran = TRUE)), ref4,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
   expect_equal(unclass(emis(veh, lkm, efn, profile = as.data.frame(prof))), ref4,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
   expect_equal(unclass(emis(veh, lkm, efn, profile = as.data.frame(prof), fortran = TRUE)), ref4,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
   skip_if_not(nt_ok)
   expect_equal(unclass(emis(veh, lkm, efn, profile = prof, fortran = TRUE, nt = 2)), ref4,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
 })
 
 test_that("emis R and fortran give the same 3D results", {
   expect_equal(unclass(emis(veh, lkm, efn, profile = prof, simplify = TRUE)), ref3,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
   expect_equal(unclass(emis(veh, lkm, efn, profile = prof, simplify = TRUE, fortran = TRUE)), ref3,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
   skip_if_not(nt_ok)
   expect_equal(unclass(emis(veh, lkm, efn, profile = prof, simplify = TRUE, fortran = TRUE, nt = 2)), ref3,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
 })
 
 test_that("emis top-down R and fortran are equal", {
@@ -56,9 +56,9 @@ test_that("emis with EmissionFactorsList uses the speed of each hour and day", {
     refl[i, j, h, d] <- veh[i, j] * as.numeric(lkm)[i] * j * sp[i, h + 3 * (d - 1)] * prof[h, d]
   }
   expect_equal(unclass(emis(veh, lkm, lef, speed = sp, profile = prof)), refl,
-               check.attributes = FALSE)
+    check.attributes = FALSE)
   expect_equal(unclass(emis(veh, lkm, lef, speed = sp, profile = prof, simplify = TRUE)),
-               array(refl, c(ns, na, 6)), check.attributes = FALSE)
+    array(refl, c(ns, na, 6)), check.attributes = FALSE)
   # list of vehicles
   lv <- list(veh, veh * 2)
   refv <- array(NA_real_, c(ns, na, 2))
@@ -74,7 +74,7 @@ test_that("emis keeps the street dimension with one street", {
   expect_equal(dim(emis(veh[1, ], lkm[1], efn, profile = prof, simplify = TRUE)), c(1, 3, 6))
   lef <- EmissionFactorsList(list(function(V) 1, function(V) 1, function(V) 1))
   expect_equal(dim(emis(veh[1, ], lkm[1], lef, speed = data.frame(1, 1, 1, 1, 1, 1),
-                        profile = prof)), c(1, 3, 3, 2))
+    profile = prof)), c(1, 3, 3, 2))
 })
 
 test_that("emis uses agemax in R and fortran", {

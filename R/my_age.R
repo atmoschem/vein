@@ -55,15 +55,15 @@
 #' x <- c(100,5000, 3)                               # vehiculos
 #' my_age(x = x, y =  yy, pro_street = pro_street)
 #' }
-my_age <- function (x,
-                    y,
-                    agemax,
-                    name = "vehicle",
-                    k = 1,
-                    pro_street,
-                    net,
-                    verbose = FALSE,
-                    namerows){
+my_age <- function(x,
+                   y,
+                   agemax,
+                   name = "vehicle",
+                   k = 1,
+                   pro_street,
+                   net,
+                   verbose = FALSE,
+                   namerows) {
 
   # start
   if (missing(x) || is.null(x)) {
@@ -72,30 +72,30 @@ my_age <- function (x,
   x <- as.numeric(x)
 
   # length k
-  if(length(k) != 1 && length(k) != length(x)){
+  if (length(k) != 1 && length(k) != length(x)) {
     stop("length of 'k' must be 1 or equal to length of 'x'")
   }
 
   # check y
-  if(!is.data.frame(y)){
+  if (!is.data.frame(y)) {
     y <- as.numeric(y)
     y[is.na(y)] <- 0
   } else {
     y <- as.data.frame(y)
-    for(i in 1:ncol(y)) y[, i] <- as.numeric( y[, i])
+    for (i in 1:ncol(y)) y[, i] <- as.numeric(y[, i])
     y[is.na(y)] <- 0
   }
 
   # truncate/extend profile to agemax before normalising
-  if(!missing(agemax)) {
-    if(agemax < 1) stop("'agemax' must be >= 1")
-    if(is.data.frame(y)) {
+  if (!missing(agemax)) {
+    if (agemax < 1) stop("'agemax' must be >= 1")
+    if (is.data.frame(y)) {
       ny <- nrow(y)
       y <- y[seq_len(min(agemax, ny)), , drop = FALSE]
-      if(agemax > ny) {
+      if (agemax > ny) {
         y <- rbind(y, as.data.frame(matrix(0, ncol = ncol(y),
-                                           nrow = agemax - ny,
-                                           dimnames = list(NULL, names(y)))))
+          nrow = agemax - ny,
+          dimnames = list(NULL, names(y)))))
       }
       row.names(y) <- NULL
     } else {
@@ -103,57 +103,57 @@ my_age <- function (x,
     }
   }
 
-  if(!missing(pro_street)){
-    if(!inherits(y, "data.frame")){
+  if (!missing(pro_street)) {
+    if (!inherits(y, "data.frame")) {
       stop("'y' must be 'data.frame'")
     }
     pro_street <- as.character(pro_street)
-    if(length(pro_street) != length(x)) {
+    if (length(pro_street) != length(x)) {
       stop("length of 'pro_street' must be equal to length of 'x'")
     }
-    if(!all(pro_street %in% names(y))) {
+    if (!all(pro_street %in% names(y))) {
       stop("Categories of 'pro_street' not found in names of 'y': ",
-           paste(unique(pro_street[!pro_street %in% names(y)]),
-                 collapse = ", "))
+        paste(unique(pro_street[!pro_street %in% names(y)]),
+          collapse = ", "))
     }
-    for(i in 1:ncol(y)) y[, i] <-  y[, i]/sum( y[, i])
+    for (i in 1:ncol(y)) y[, i] <-  y[, i] / sum(y[, i])
 
     my <- t(as.matrix(y)[, match(pro_street, names(y)), drop = FALSE])
     df <- as.data.frame(x * my)
-    names(df) <- paste(name, seq(1, length(df)), sep="_")
+    names(df) <- paste(name, seq(1, length(df)), sep = "_")
     row.names(df) <- NULL
   } else {
-    if(mode(y) != "numeric") stop("When there is no 'pro_street', 'y' must be 'numeric'")
-    d <- matrix(data = y/sum(y), nrow = 1, ncol=length(y))
-    df <- as.data.frame(as.matrix(x) %*%d)
-    names(df) <- paste(name, seq(1, length(df)), sep="_")
+    if (mode(y) != "numeric") stop("When there is no 'pro_street', 'y' must be 'numeric'")
+    d <- matrix(data = y / sum(y), nrow = 1, ncol = length(y))
+    df <- as.data.frame(as.matrix(x) %*% d)
+    names(df) <- paste(name, seq(1, length(df)), sep = "_")
   }
   # check k
-  df <- df*as.numeric(k)
+  df <- df * as.numeric(k)
 
   # verbose
-  if(verbose){
+  if (verbose) {
     secu <- seq(1, ncol(df))
     colus <- colSums(df, na.rm = T)
     sumdf <- sum(df, na.rm = T)
     message(paste("Average age of", name, "is",
-                  round(sum(secu*colus/sumdf, na.rm = T), 2),
-                  sep=" "))
-    message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T), 3),
-                  " [veh]",
-                  sep=" "))
+      round(sum(secu * colus / sumdf, na.rm = T), 2),
+      sep = " "))
+    message(paste("Number of", name, "is",
+      round(sum(df, na.rm = T), 3),
+      " [veh]",
+      sep = " "))
     cat("\n")
   }
   # replace NA and NaN
   df[is.na(df)] <- 0
   # ending
   df <- Vehicles(df)
-  if(!missing(namerows)) {
-    if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
+  if (!missing(namerows)) {
+    if (length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
     row.names(df) <- namerows
   }
-  if(!missing(net)){
+  if (!missing(net)) {
     netsf <- sf::st_as_sf(net)
     df <- sf::st_sf(df, geometry = sf::st_geometry(netsf))
   }

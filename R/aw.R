@@ -59,16 +59,16 @@ aw <- function(pc, lcv, hgv, bus, mc,
 
   fleet <-  df_pc + df_lcv + df_hgv + df_bus + df_mc
 
-  df_pc_w <- vein::temp_fact(q = pc*w_pc, pro = p_pc)
-  df_lcv_w <- vein::temp_fact(q = lcv*w_lcv, pro = p_lcv)
-  df_hgv_w <- vein::temp_fact(q = hgv*w_hgv, pro = p_hgv)
-  df_bus_w <- vein::temp_fact(q = bus*w_bus, pro = p_bus)
-  df_mc_w <- vein::temp_fact(q = mc*w_mc, pro = p_mc)
+  df_pc_w <- vein::temp_fact(q = pc * w_pc, pro = p_pc)
+  df_lcv_w <- vein::temp_fact(q = lcv * w_lcv, pro = p_lcv)
+  df_hgv_w <- vein::temp_fact(q = hgv * w_hgv, pro = p_hgv)
+  df_bus_w <- vein::temp_fact(q = bus * w_bus, pro = p_bus)
+  df_mc_w <- vein::temp_fact(q = mc * w_mc, pro = p_mc)
 
-  W <- (df_pc_w + df_lcv_w + df_hgv_w + df_bus_w + df_mc_w)/fleet
+  W <- (df_pc_w + df_lcv_w + df_hgv_w + df_bus_w + df_mc_w) / fleet
   W <- remove_units(W)
   W[is.na(W)] <- 0
-  if(!missing(net)) {
+  if (!missing(net)) {
     net <- sf::st_as_sf(net)
     W <- sf::st_sf(W, geometry = sf::st_geometry(net))
   }

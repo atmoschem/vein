@@ -24,7 +24,7 @@ ef_emfac <- function(efpath,
                      dhy = 750,
                      dcng = 0.8,
                      fill_missing = TRUE,
-                     verbose = TRUE){
+                     verbose = TRUE) {
 
   # ef
   ModelYear <- NULL
@@ -35,15 +35,15 @@ ef_emfac <- function(efpath,
   names(ef) <- gsub(" ", "", names(ef))
 
   process <- c("RUNEX",   # Running Exhaust Emissions
-               "STREX",   # Idle Exhaust Emissions
-               "IDLEX",   # Start Exhaust Tailpipe Emissions
-               "DIURN",   # Diurnal Evaporative HC Emissions
-               "RESTLOSS",# Resting Evaporative Losses (permeation through rubber and plastic)
-               "HOTSOAK", # Hot Soak Evaporative HC Emissions
-               "RUNLOSS", # Running Loss Evaporative HC Emissions
-               "PMTW",    # Tire Wear
-               "PMBW",    # Brake Wear
-               "FuelConsumption")  # FC
+    "STREX",   # Idle Exhaust Emissions
+    "IDLEX",   # Start Exhaust Tailpipe Emissions
+    "DIURN",   # Diurnal Evaporative HC Emissions
+    "RESTLOSS", # Resting Evaporative Losses (permeation through rubber and plastic)
+    "HOTSOAK", # Hot Soak Evaporative HC Emissions
+    "RUNLOSS", # Running Loss Evaporative HC Emissions
+    "PMTW",    # Tire Wear
+    "PMBW",    # Brake Wear
+    "FuelConsumption")  # FC
 
   mval <- unlist(lapply(process, grep, names(ef), value = T))
 
@@ -58,21 +58,21 @@ ef_emfac <- function(efpath,
           ifelse(
             ef$Fuel == "Plug-in Hybrid", "HY",
             "caca"
-          )))))
+  )))))
 
   unique(ef$fuel)
 
   ef$vehicles <- paste0(ef$VehicleCategory,  "_", ef$fuel)
 
   def <- data.table::melt.data.table(data = ef,
-                                     id.vars = c("ModelYear",
-                                                 "VehicleCategory",
-                                                 "Speed",
-                                                 "vehicles",
-                                                 "fuel"),
-                                     measure.vars = mval,
-                                     variable.name = "pollutant",
-                                     value.name = "gmiles")
+    id.vars = c("ModelYear",
+      "VehicleCategory",
+      "Speed",
+      "vehicles",
+      "fuel"),
+    measure.vars = mval,
+    variable.name = "pollutant",
+    value.name = "gmiles")
 
   pollutant <- NULL
 
@@ -84,9 +84,9 @@ ef_emfac <- function(efpath,
   ef_nofc <- def[pollutant != "FC"]
   ef_fc <- def[pollutant == "FC"]
 
-  lt <- ef_fc$gmiles*3.79
+  lt <- ef_fc$gmiles * 3.79
 
-  m3 <- lt/1000
+  m3 <- lt / 1000
 
   d_kg_m3 <- ifelse(
     ef_fc$fuel == "G", dg,
@@ -96,44 +96,44 @@ ef_emfac <- function(efpath,
         ef_fc$fuel == "CNG", dcng,
         ifelse(
           ef_fc$fuel == "HY", dhy,
-          1)))) #kg/m3
+          1)))) # kg/m3
 
-  ef_fc$gmiles <- m3*d_kg_m3*1000
+  ef_fc$gmiles <- m3 * d_kg_m3 * 1000
 
   def <- rbind(ef_nofc,
-               ef_fc)
+    ef_fc)
   # fix for missiing values for some speeds
 
-  if(fill_missing) {
+  if (fill_missing) {
 
     gmiles <- vehicles <- NULL
     . <- pollutant <- ModelYear <- NULL
 
     # mean of the non-zero values (zeros are the missing values)
     full <- def[,
-                if (any(gmiles > 0, na.rm = TRUE)) mean(gmiles[gmiles > 0], na.rm = TRUE) else 0,
-                by = .(vehicles,
-                       pollutant,
-                       ModelYear)]
+      if (any(gmiles > 0, na.rm = TRUE)) mean(gmiles[gmiles > 0], na.rm = TRUE) else 0,
+      by = .(vehicles,
+        pollutant,
+        ModelYear)]
 
     empty <- def[gmiles == 0]
 
-    if(verbose) {
+    if (verbose) {
       cat("Identified ", nrow(empty), " 0 gmiles\n")
     }
     df_em <- merge(empty,
-                   full,
-                   by = c("vehicles",
-                          "pollutant",
-                          "ModelYear"),
-                   all.x = TRUE,
-                   allow.cartesian = TRUE)
+      full,
+      by = c("vehicles",
+        "pollutant",
+        "ModelYear"),
+      all.x = TRUE,
+      allow.cartesian = TRUE)
     df_em$gmiles <- NULL # 0
     names(df_em)[ncol(df_em)] <- "gmiles"
 
     gmiles <- NULL
     def <- rbind(def[gmiles > 0],
-                 df_em)
+      df_em)
     # this is a fix for real missing EF
     # if 0 is for SO2 CNG, will be 0
   }

@@ -24,28 +24,28 @@
 #' netsf <- sf::st_as_sf(net)[, c("ldv", "hdv")]
 #' xx <- split_emis(netsf, g, add_column = c("A", "B"))
 #' }
-split_emis <- function(net, distance, add_column, verbose = TRUE){
+split_emis <- function(net, distance, add_column, verbose = TRUE) {
   net <- sf::st_as_sf(net)
-  if(is.numeric(distance)){
-    if(verbose) cat("Creating grid\n")
+  if (is.numeric(distance)) {
+    if (verbose) cat("Creating grid\n")
     g <- make_grid(spobj = net, width = distance)
   } else if (inherits(distance, "sf")) {
     g <- distance
   }
   net$id <- NULL
-  if(verbose){
-    sumemis <- sum(sf::st_set_geometry(net, NULL), na.rm = T)/1000
+  if (verbose) {
+    sumemis <- sum(sf::st_set_geometry(net, NULL), na.rm = T) / 1000
     cat("Total Emissions", sumemis, " kg \n")
   }
   ncolnet <- names(sf::st_set_geometry(net, NULL))
   net$LKM <- sf::st_length(net)
-  if(verbose) cat("Intersecting\n")
+  if (verbose) cat("Intersecting\n")
   gnet <- suppressMessages(suppressWarnings(st_intersection(net, g)))
 
   # check add_column and store it
-  if(!missing(add_column)){
+  if (!missing(add_column)) {
     nc <- list()
-      for(i in 1:length(add_column)){
+    for (i in 1:length(add_column)) {
       nc[[i]] <- gnet[[add_column[i]]]
       gnet[[add_column[i]]] <- NULL
     }
@@ -54,16 +54,16 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   gnet$LKM2 <- sf::st_length(gnet)
   geo <- sf::st_geometry(gnet)
   gnet <- as.data.frame(sf::st_set_geometry(gnet, NULL))
-  gnet[, ncolnet] <- gnet[, ncolnet] * as.numeric(gnet$LKM2/gnet$LKM)
+  gnet[, ncolnet] <- gnet[, ncolnet] * as.numeric(gnet$LKM2 / gnet$LKM)
   gnet <- as.data.frame(gnet[, ncolnet, drop = FALSE])
   names(gnet) <- ncolnet
-  if(verbose){
-    sumemis <- sum(gnet, na.rm = T)/1000
+  if (verbose) {
+    sumemis <- sum(gnet, na.rm = T) / 1000
     cat("Total Emissions", sumemis, " kg \n")
   }
-  if(!missing(add_column)){
-    if(verbose) cat("Adding Column\n")
-    for(i in 1:length(add_column)){
+  if (!missing(add_column)) {
+    if (verbose) cat("Adding Column\n")
+    for (i in 1:length(add_column)) {
       gnet[[add_column[i]]] <- nc[[i]]
     }
   }
@@ -71,4 +71,3 @@ split_emis <- function(net, distance, add_column, verbose = TRUE){
   gnet <- sf::st_sf(gnet, geometry = geo)
   return(gnet)
 }
-

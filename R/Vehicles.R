@@ -39,64 +39,64 @@
 #' plot(LT_B5)
 #' }
 #' @export
-Vehicles <- function(x, ..., time=NULL) {
- # units::install_unit("veh")
+Vehicles <- function(x, ..., time = NULL) {
+  # units::install_unit("veh")
 
-  if(inherits(x, "sf")) {
+  if (inherits(x, "sf")) {
 
     geo <- sf::st_geometry(x)
 
     e <- sf::st_set_geometry(x, NULL)
-    for(i in 1:ncol(e)){
-      e[,i] <- e[,i]*units::as_units("veh")
+    for (i in 1:ncol(e)) {
+      e[, i] <- e[, i] * units::as_units("veh")
     }
 
-    if(!is.null(time)){
-      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, time)
+    if (!is.null(time)) {
+      for (i in 1:ncol(e)) e[, i] <- e[, i] * units::as_units(1, time)
     }
     veh <- sf::st_sf(e, geometry = geo)
 
 
-  } else  if  (is.matrix(x) ) {
+  } else  if  (is.matrix(x)) {
 
     veh <- as.data.frame(x)
 
-    for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i]*units::as_units("veh")
+    for (i in 1:ncol(veh)) {
+      veh[, i] <- veh[, i] * units::as_units("veh")
     }
 
-    if(!is.null(time)){
-      for(i in 1:ncol(veh)) veh[,i] <- veh[,i]*units::as_units(1, time)
+    if (!is.null(time)) {
+      for (i in 1:ncol(veh)) veh[, i] <- veh[, i] * units::as_units(1, time)
     }
 
-    class(veh) <- c("Vehicles",class(veh))
+    class(veh) <- c("Vehicles", class(veh))
 
-  } else if ( is.data.frame(x) ) {
+  } else if (is.data.frame(x)) {
 
     veh <- x
 
-    for(i in 1:ncol(veh)){
-      veh[,i] <- veh[,i]*units::as_units("veh")
+    for (i in 1:ncol(veh)) {
+      veh[, i] <- veh[, i] * units::as_units("veh")
     }
 
-    if(!is.null(time)){
-      for(i in 1:ncol(veh)) veh[,i] <- veh[,i]*units::as_units(1, time)
+    if (!is.null(time)) {
+      for (i in 1:ncol(veh)) veh[, i] <- veh[, i] * units::as_units(1, time)
     }
 
-    class(veh) <- c("Vehicles",class(x))
+    class(veh) <- c("Vehicles", class(x))
 
-  } else if ( inherits(x, "units" )) {
+  } else if (inherits(x, "units")) {
 
     veh <- x
 
-    if(!identical(units(x)$numerator, "veh")) stop("units are not 'veh'")
+    if (!identical(units(x)$numerator, "veh")) stop("units are not 'veh'")
 
-  } else if( is.numeric(x) ) {
+  } else if (is.numeric(x)) {
 
-    veh <- x*units::as_units("veh")
+    veh <- x * units::as_units("veh")
 
-    if(!is.null(time)){
-      veh <- veh*units::as_units(1, time)
+    if (!is.null(time)) {
+      veh <- veh * units::as_units(1, time)
     }
 
   } else {
@@ -110,7 +110,7 @@ Vehicles <- function(x, ..., time=NULL) {
 #' @export
 print.Vehicles <- function(x, ...) {
   nr <- min(nrow(x), 5)
-  if(ncol(x) == 1) {
+  if (ncol(x) == 1) {
     ndf <- names(x)
     df <- data.frame(ndf = x[seq_len(nr), ])
     names(df) <- ndf
@@ -118,7 +118,7 @@ print.Vehicles <- function(x, ...) {
   } else {
     print.data.frame(x[seq_len(nr), , drop = FALSE])
   }
-  if(nrow(x) > 5)     cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
+  if (nrow(x) > 5) cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
 }
 
 #' @rdname Vehicles
@@ -127,15 +127,15 @@ print.Vehicles <- function(x, ...) {
 summary.Vehicles <- function(object, ...) {
   # units::install_unit("veh")
   veh <- object
-  avage <- sum(seq(1,ncol(veh))*colSums(veh)/sum(veh))
+  avage <- sum(seq(1, ncol(veh)) * colSums(veh) / sum(veh))
   cat("\nVehicles by columns in study area = \n")
-  print(summary(colSums(veh)) )
-  cat("Average = ", round(avage,2),"\n")
+  print(summary(colSums(veh)))
+  cat("Average = ", round(avage, 2), "\n")
   summary(rowSums(veh))
-  avveh <- mean(rowSums(veh), na.rm=T)
+  avveh <- mean(rowSums(veh), na.rm = T)
   cat("Vehicles by street in study area = \n")
   print(summary(rowSums(veh)))
-  cat("\nAverage = ", round(avveh,2))
+  cat("\nAverage = ", round(avveh, 2))
 }
 
 #' @rdname Vehicles
@@ -145,9 +145,9 @@ plot.Vehicles <- function(x,
                           pal = "colo_lightningmccarl_into_the_night",
                           rev = TRUE,
                           bk =  NULL,
-                          fig1 = c(0,0.8,0,0.8),
-                          fig2 = c(0,0.8,0.55,1),
-                          fig3 = c(0.7,1,0,0.8),
+                          fig1 = c(0, 0.8, 0, 0.8),
+                          fig2 = c(0, 0.8, 0.55, 1),
+                          fig3 = c(0.7, 1, 0, 0.8),
                           mai1 = c(1.0, 0.82, 0.82, 0.42),
                           mai2 = c(1.8, 0.82, 0.50, 0.42),
                           mai3 = c(1.0, 1.00, 0.82, 0.20),
@@ -168,14 +168,14 @@ plot.Vehicles <- function(x,
   oldpar <- par(no.readonly = TRUE)       # code line i
   on.exit(par(oldpar))                    # code line i + 1
 
-  if(ncol(x) > 1) {
-    graphics::par(fig=fig1, #new=TRUE,
-                  mai = mai1,
-                  ...)
+  if (ncol(x) > 1) {
+    graphics::par(fig = fig1, # new=TRUE,
+      mai = mai1,
+      ...)
 
     col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
-                                               bias = bias)(seq(0, 1,0.01)),
-                          maxColorValue = 255)
+      bias = bias)(seq(0, 1, 0.01)),
+    maxColorValue = 255)
 
     # old code using fields
     # fields::image.plot(
@@ -189,40 +189,39 @@ plot.Vehicles <- function(x,
 
     # new using graphics and other imported code
     graphics::image(t(as.matrix(x))[, nrow(x):1],
-                    col = col,
-                    axe = FALSE,
-                    ylab = paste0("Vehicles by streets [",as.character(units(x[[1]])), "]"))
+      col = col,
+      axe = FALSE,
+      ylab = paste0("Vehicles by streets [", as.character(units(x[[1]])), "]"))
     axis(2, breaks = bk)
     addscale(t(as.matrix(x))[, nrow(x):1], col = col)
 
-    graphics::par(fig=fig2,
-                  mai = mai2,
-                  new=TRUE,
-                  ...)
-    avage <- sum(seq(1,ncol(x)) * colSums(x)/sum(x, na.rm = T))
+    graphics::par(fig = fig2,
+      mai = mai2,
+      new = TRUE,
+      ...)
+    avage <- sum(seq(1, ncol(x)) * colSums(x) / sum(x, na.rm = T))
     graphics::plot(colSums(x, na.rm = T),
-                   type="l",
-                   ylab = paste0("Sum vehicles [",as.character(units(x[[1]])), "]"),
-                   xlab = "",
-                   frame = FALSE,
-                   xaxt = 'n')
+      type = "l",
+      ylab = paste0("Sum vehicles [", as.character(units(x[[1]])), "]"),
+      xlab = "",
+      frame = FALSE,
+      xaxt = "n")
     graphics::axis(3)
 
-    graphics::abline(v = avage, col="red")
-    cat("Weighted mean = ",round(avage,2), "\n")
+    graphics::abline(v = avage, col = "red")
+    cat("Weighted mean = ", round(avage, 2), "\n")
 
-    graphics::par(fig=fig3, new=TRUE,
-                  mai = mai3,
-                  ...)
+    graphics::par(fig = fig3, new = TRUE,
+      mai = mai3,
+      ...)
     graphics::plot(x = rowSums(x, na.rm = T), y = nrow(x):1,
-                   type = "l", frame = FALSE, yaxt = "n",
-                   ylab = "", xlab = NULL
+      type = "l", frame = FALSE, yaxt = "n",
+      ylab = "", xlab = NULL
     )
-    graphics::abline(v = mean(rowSums(x, na.rm = T), na.rm = T), col="red")
+    graphics::abline(v = mean(rowSums(x, na.rm = T), na.rm = T), col = "red")
 
   } else {
     graphics::plot(unlist(x), type = "l", main = "1 column data")
   }
 
 }
-

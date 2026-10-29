@@ -38,7 +38,7 @@
   row <- tab[sel, , drop = FALSE]
   if (nrow(row) == 0) {
     stop("No emission factor for ", what,
-         ". Check the combination of arguments.", call. = FALSE)
+      ". Check the combination of arguments.", call. = FALSE)
   }
   row[1, , drop = FALSE]
 }
@@ -53,14 +53,14 @@
   needs_x <- "x" %in% all.vars(ex)
   if (needs_x && is.null(x)) {
     stop("'x' (sulphur or lead content of the fuel, ppm) is needed for ",
-         what, call. = FALSE)
+      what, call. = FALSE)
   }
   cf <- function(nm) {
     z <- row[[nm]]
     if (is.null(z)) 0 else as.numeric(z)
   }
   env <- list(a = cf("a"), b = cf("b"), c = cf("c"), d = cf("d"),
-              e = cf("e"), f = cf("f"), x = if (needs_x) as.numeric(x) else NA)
+    e = cf("e"), f = cf("f"), x = if (needs_x) as.numeric(x) else NA)
   minv <- as.numeric(row$MINV)
   maxv <- as.numeric(row$MAXV)
   kk <- as.numeric(k) * as.numeric(k2)

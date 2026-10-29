@@ -14,7 +14,7 @@
 #' }
 dmonth <- function(year, month) {
 
-  if(inherits(year, "Date")) {
+  if (inherits(year, "Date")) {
     date <- year
   } else {
     date <- as.Date(ISOdate(year, month, 1, 0, 0, 0))
@@ -23,12 +23,12 @@ dmonth <- function(year, month) {
 
   datef <- as.Date(unlist(lapply(seq_along(date), function(i) {
     seq.Date(date[i],
-             length.out = 2,
-             by = "1 months")[2]
+      length.out = 2,
+      by = "1 months")[2]
   })),
   origin = "1970-01-01")
 
   ddif <- datef - date
 
-    return(as.integer(ddif))
+  return(as.integer(ddif))
 }

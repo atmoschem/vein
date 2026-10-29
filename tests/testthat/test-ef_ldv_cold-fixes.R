@@ -5,25 +5,25 @@ test_that("k multiplies the cold quotient", {
   b <- ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = "I", p = "CO", k = 2)(20)
   expect_equal(b, 2 * a)
   b <- ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = c("I", "I"), p = "CO",
-                   k = 2, speed = Speed(20))
+    k = 2, speed = Speed(20))
   expect_equal(as.numeric(b[[1]]), 2 * a)
 })
 
 test_that("a numeric vector of temperatures is used (it returned NULL)", {
   r <- ef_ldv_cold(ta = c(10, 20), cc = "<=1400", f = "G", eu = "I", p = "CO",
-                   speed = Speed(20))
+    speed = Speed(20))
   expect_false(is.null(r))
   expect_equal(r$ta, c(10, 20))
   expect_equal(as.numeric(r[[1]]),
-               c(ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = "I", p = "CO")(20),
-                 ef_ldv_cold(ta = 20, cc = "<=1400", f = "G", eu = "I", p = "CO")(20)))
+    c(ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = "I", p = "CO")(20),
+      ef_ldv_cold(ta = 20, cc = "<=1400", f = "G", eu = "I", p = "CO")(20)))
   expect_error(ef_ldv_cold(ta = c(10, 20), cc = "<=1400", f = "G", eu = "I",
-                           p = "CO"), "speed")
+    p = "CO"), "speed")
 })
 
 test_that("missing emission factors give an informative error", {
   expect_error(ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = "XX", p = "CO"),
-               "No cold-start emission factor")
+    "No cold-start emission factor")
 })
 
 # data fixes in sysdata$cold and sysdata$ldv_det (fix_cold_det in buildvein)
@@ -59,15 +59,15 @@ test_that("petrol Euro 2+ bc factors reduce the cold excess", {
   r1 <- ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = "I", p = "CO")(20)
   expect_equal(r1, 0.156 * 20 - 0.155 * 10 + 3.519)
   expect_equal(ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = "II", p = "CO")(20),
-               1 + 0.72 * (r1 - 1))
+    1 + 0.72 * (r1 - 1))
   expect_equal(ef_ldv_cold(ta = 10, cc = "<=1400", f = "G", eu = "IV", p = "CO")(20),
-               1 + 0.18 * (r1 - 1))
+    1 + 0.18 * (r1 - 1))
   # Table 3-40: CO uses the low speed equation up to 33 km/h
   expect_equal(ef_ldv_cold(ta = 5, cc = "<=1400", f = "G", eu = "I", p = "CO")(30),
-               0.156 * 30 - 0.155 * 5 + 3.519)
+    0.156 * 30 - 0.155 * 5 + 3.519)
   # LPG Euro 1+ uses the petrol methodology
   expect_equal(ef_ldv_cold(ta = 10, cc = "<=1400", f = "LPG", eu = "IV", p = "CO")(20),
-               1 + 0.18 * (r1 - 1))
+    1 + 0.18 * (r1 - 1))
 })
 
 test_that("ldv_det has no padded Euro labels", {

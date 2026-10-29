@@ -71,13 +71,13 @@
 #'                         rev = TRUE),
 #'      cex = 3)
 #' }
-emis_grid <- function (spobj = net,
-                       g,
-                       sr,
-                       type = "lines",
-                       FN = "sum",
-                       flux = TRUE,
-                       k = 1){
+emis_grid <- function(spobj = net,
+                      g,
+                      sr,
+                      type = "lines",
+                      FN = "sum",
+                      flux = TRUE,
+                      k = 1) {
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   # add as.data.frame when net comes from data.table
@@ -95,12 +95,12 @@ emis_grid <- function (spobj = net,
   # units of each column
   uninet <- lapply(netdata, function(x) if (inherits(x, "units")) units(x) else NULL)
   hasunits <- !vapply(uninet, is.null, logical(1))
-  if(!any(hasunits)) {
+  if (!any(hasunits)) {
     message("Your data has no units")
   } else {
     message("Your units are: ")
     message(paste(unique(vapply(uninet[hasunits], as.character, character(1))),
-                  collapse = ", "))
+      collapse = ", "))
   }
   for (i in seq_along(netdata)) {
     netdata[[i]] <- as.numeric(netdata[[i]])
@@ -139,7 +139,7 @@ emis_grid <- function (spobj = net,
     net$.vein_size1 <- 1
     netg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
     size2 <- rep(1, nrow(netg))
-  } else if(type %in% c("polygons", "polygon", "area")){
+  } else if (type %in% c("polygons", "polygon", "area")) {
     cat(paste0("Sum of polygon emissions ", round(sum(snetdf), 2), "\n"))
     net$.vein_size1 <- as.numeric(sf::st_area(net))
     netg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
@@ -164,12 +164,12 @@ emis_grid <- function (spobj = net,
 
   fn <- match.fun(FN)
   dfm <- xgg[,
-             lapply(.SD, fn, na.rm = TRUE),
-             by = "id",
-             .SDcols = namesnet]
+    lapply(.SD, fn, na.rm = TRUE),
+    by = "id",
+    .SDcols = namesnet]
   dfm <- as.data.frame(dfm)
 
-  for(i in seq_along(namesnet)) dfm[[namesnet[i]]] <- dfm[[namesnet[i]]]*k
+  for (i in seq_along(namesnet)) dfm[[namesnet[i]]] <- dfm[[namesnet[i]]] * k
 
   gx <- data.frame(id = g$id)
 
@@ -178,17 +178,17 @@ emis_grid <- function (spobj = net,
   gx[is.na(gx)] <- 0
 
   cat(paste0("Sum of gridded emissions ",
-             round(sum(vapply(namesnet, function(n) sum(as.numeric(gx[[n]])), numeric(1))), 2), "\n"))
+    round(sum(vapply(namesnet, function(n) sum(as.numeric(gx[[n]])), numeric(1))), 2), "\n"))
 
-  for(i in seq_along(namesnet)) {
-    if(hasunits[i]) units(gx[[namesnet[i]]]) <- uninet[[i]]
+  for (i in seq_along(namesnet)) {
+    if (hasunits[i]) units(gx[[namesnet[i]]]) <- uninet[[i]]
   }
 
-  if(flux) {
+  if (flux) {
     area <- sf::st_area(g)
     area <- units::set_units(area, "km^2")
-    for(i in seq_along(namesnet)) {
-      gx[[namesnet[i]]] <- gx[[namesnet[i]]]/area  # !
+    for (i in seq_along(namesnet)) {
+      gx[[namesnet[i]]] <- gx[[namesnet[i]]] / area  # !
     }
     gx <- sf::st_sf(gx, geometry = sf::st_geometry(g))
     return(gx)

@@ -56,42 +56,42 @@
 #' # plot(dfsf, pal = cptcity::lucky(colorRampPalette = TRUE, rev = TRUE),
 #' # key.pos = 1, max.plot = 9)
 #' }
-netspeed <- function (q = 1,
-                      ps,
-                      ffs,
-                      cap,
-                      lkm,
-                      alpha = 0.15,
-                      beta = 4,
-                      net,
-                      scheme = FALSE,
-                      dist = "km"){
+netspeed <- function(q = 1,
+                     ps,
+                     ffs,
+                     cap,
+                     lkm,
+                     alpha = 0.15,
+                     beta = 4,
+                     net,
+                     scheme = FALSE,
+                     dist = "km") {
   to_dist <- function(v) {
-    if(inherits(v, "units")) {
+    if (inherits(v, "units")) {
       v <- units::set_units(v, paste0(dist, "/h"), mode = "standard")
     }
     as.numeric(v)
   }
 
-  if (scheme == FALSE & missing(q)){
+  if (scheme == FALSE & missing(q)) {
     stop("No vehicles on 'q'")
-  } else if (scheme == FALSE){
+  } else if (scheme == FALSE) {
     qq <- as.data.frame(remove_units(q))
-    for (i  in 1:ncol(qq) ) {
-      qq[,i] <- as.numeric(qq[,i])
+    for (i  in 1:ncol(qq)) {
+      qq[, i] <- as.numeric(qq[, i])
     }
     nl <- nrow(qq)
     ffs <- rep_len(to_dist(ffs), nl)
     cap <- rep_len(as.numeric(cap), nl)
 
     bad <- !is.na(cap) & cap <= 0
-    if(any(bad)) {
+    if (any(bad)) {
       warning(sum(bad), " link(s) with 'cap' <= 0, returning NA speed")
     }
-    if(!missing(lkm)) {
+    if (!missing(lkm)) {
       lkm <- rep_len(as.numeric(lkm), nl)
       badl <- !is.na(lkm) & lkm <= 0
-      if(any(badl)) {
+      if (any(badl)) {
         warning(sum(badl), " link(s) with 'lkm' <= 0, returning NA speed")
       }
       bad <- bad | badl
@@ -99,8 +99,8 @@ netspeed <- function (q = 1,
     cap[bad] <- NA
 
     # BPR: lkm / (lkm/ffs*(1 + alpha*(q/cap)^beta)) = ffs/(1 + alpha*(q/cap)^beta)
-    dfv <- as.data.frame(do.call("cbind",(lapply(1:ncol(qq), function(i) {
-      sp <- ffs/(1 + alpha*(qq[,i]/cap)^beta)
+    dfv <- as.data.frame(do.call("cbind", (lapply(1:ncol(qq), function(i) {
+      sp <- ffs / (1 + alpha * (qq[, i] / cap)^beta)
       sp[bad] <- NA
       sp
     }))))
@@ -114,12 +114,12 @@ netspeed <- function (q = 1,
     n <- max(length(ps), length(ffs))
     ps <- rep_len(ps, n)
     ffs <- rep_len(ffs, n)
-    avs <- 0.5*(ps + ffs)
+    avs <- 0.5 * (ps + ffs)
 
     # hours 00-06 ffs, 06-07 avg, 07-10 ps, 10-17 avg, 17-20 ps, 20-22 avg,
     # 22-24 ffs
     hs <- c(rep("ffs", 6), "avs", rep("ps", 3), rep("avs", 7), rep("ps", 3),
-            rep("avs", 2), rep("ffs", 2))
+      rep("avs", 2), rep("ffs", 2))
     lv <- list(ffs = ffs, avs = avs, ps = ps)
 
     dfv <- as.data.frame(matrix(unlist(lv[hs]), nrow = n, ncol = 24))
@@ -128,10 +128,10 @@ netspeed <- function (q = 1,
     df_speed <- Speed(dfv, dist = dist)
 
   }
-  if(!missing(net)){
+  if (!missing(net)) {
     netsf <- sf::st_as_sf(net)
     df_speedsf <- sf::st_sf(df_speed,
-                            geometry = sf::st_geometry(netsf))
+      geometry = sf::st_geometry(netsf))
     return(df_speedsf)
   } else {
     return(df_speed)

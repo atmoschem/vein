@@ -54,11 +54,11 @@
 .hbefa_pol <- function(p) {
   if (length(p) != 1) stop("'pollutant' must be of length 1")
   map <- c(co2 = "CO2", co = "CO", hc = "HC", fc = "FC", fuel = "FC",
-           nox = "NOx", pm = "PM", pmx = "PM", ec = "EC", electricity = "EC")
+    nox = "NOx", pm = "PM", pmx = "PM", ec = "EC", electricity = "EC")
   q <- map[tolower(p)]
   if (is.na(q)) {
     stop("Unknown pollutant '", p, "'. Use one of: ",
-         paste(.HBEFA_POL, collapse = ", "))
+      paste(.HBEFA_POL, collapse = ", "))
   }
   unname(q)
 }
@@ -92,7 +92,7 @@
   }
   if (is.na(i)) {
     stop("Unknown emission class '", class, "' for model ", model,
-         ". See hbefa_classes(\"", model, "\")")
+      ". See hbefa_classes(\"", model, "\")")
   }
   list(model = model, name = nm[i], row = im[i])
 }
@@ -123,7 +123,7 @@
   low <- which(v < .HBEFA_SPEED_DCEL_MIN)
   if (length(low)) {
     res[low] <- (v / .HBEFA_SPEED_DCEL_MIN *
-                   dec(rep_len(.HBEFA_SPEED_DCEL_MIN, length(v))))[low]
+      dec(rep_len(.HBEFA_SPEED_DCEL_MIN, length(v))))[low]
   }
   res
 }
@@ -146,7 +146,7 @@
     } else {
       alpha <- asin(a / .HBEFA_GRAVITY) * 180. / pi
       x <- (f[1] + f[2] * alpha * kmh + f[3] * alpha * alpha * kmh + f[4] * kmh +
-              f[5] * kmh * kmh + f[6] * kmh * kmh * kmh) / scale
+        f[5] * kmh * kmh + f[6] * kmh * kmh * kmh) / scale
     }
     out <- ifelse(x > 0, x, 0)
   } else if (res$model == "HBEFA3") {
@@ -157,7 +157,7 @@
     }
     a2 <- a + .HBEFA_GRAVITY * sin(slope * pi / 180.)
     x <- (f[1] + f[2] * a2 * v + f[3] * a2 * a2 * v + f[4] * v + f[5] * v * v +
-            f[6] * v * v * v) / scale
+      f[6] * v * v * v) / scale
     out <- ifelse(x > 0, x, 0)
   } else {
     # HelpersHBEFA4.h
@@ -167,7 +167,7 @@
     }
     a2 <- a + .HBEFA_GRAVITY * sin(slope * pi / 180.)
     x <- (f[1] + f[2] * v + f[3] * a2 + f[4] * v * v + f[5] * v * v * v +
-            f[6] * a2 * v + f[7] * a2 * v * v) / scale
+      f[6] * a2 * v + f[7] * a2 * v * v) / scale
     out <- if (pol != "EC") ifelse(0.0 > x, 0.0, x) else x
   }
   if (coasting && !(res$model == "HBEFA4" && sfuel == "Electricity")) {
@@ -237,10 +237,10 @@ hbefa_classes <- function(model = "HBEFA4") {
   tab <- .hbefa_tab()
   tab <- tab[tab$model %in% model, ]
   out <- data.frame(class = paste0(tab$model, "/", tab$name),
-                    tab[, c("model", "name", "heavy", "category", "fuel", "euro",
-                            "euro_label", "technology", "size",
-                            "hbefa_subsegment", "hbefa_id")],
-                    stringsAsFactors = FALSE)
+    tab[, c("model", "name", "heavy", "category", "fuel", "euro",
+      "euro_label", "technology", "size",
+      "hbefa_subsegment", "hbefa_id")],
+    stringsAsFactors = FALSE)
   out$sumo_fuel <- unlist(lapply(seq_len(nrow(tab)), function(i) {
     .hbefa_sumo_fuel(tab$model[i], tab$name[i])
   }))
@@ -342,7 +342,7 @@ emis_hbefa <- function(class, pollutant, v, a, slope = 0, model = "HBEFA4",
   mass <- .hbefa_num(mass, "kg")
   frontal_area <- .hbefa_num(frontal_area, "m^2")
   n <- max(length(class), length(v), length(a), length(slope),
-           length(mass), length(frontal_area))
+    length(mass), length(frontal_area))
   mu <- .hbefa_mass_unit(pol, volumetric_fuel)
   if (n == 0 || length(class) == 0 || length(v) == 0 || length(a) == 0) {
     return(units::as_units(numeric(0), paste0(mu, " s-1")))
@@ -358,7 +358,7 @@ emis_hbefa <- function(class, pollutant, v, a, slope = 0, model = "HBEFA4",
     i <- which(class == k)
     res <- .hbefa_resolve(k, model)
     out[i] <- .hbefa_rate(res, pol, v[i], a[i], slope[i], mass[i],
-                          frontal_area[i], coasting, volumetric_fuel)
+      frontal_area[i], coasting, volumetric_fuel)
   }
   units::as_units(out * .hbefa_conv(pol), paste0(mu, " s-1"))
 }
@@ -430,9 +430,9 @@ ef_hbefa <- function(class, pollutant, model = "HBEFA4", speed, slope = 0,
       V <- .hbefa_num(V, "km/h")
       V <- ifelse(V < vmin, vmin, V)
       r <- .hbefa_rate(res, pol, v = V / 3.6, a = rep_len(0, length(V)),
-                       slope = rep_len(slope, length(V)), mass = mass,
-                       frontal_area = frontal_area, coasting = TRUE,
-                       volumetric_fuel = volumetric_fuel)
+        slope = rep_len(slope, length(V)), mass = mass,
+        frontal_area = frontal_area, coasting = TRUE,
+        volumetric_fuel = volumetric_fuel)
       r / (V / 3600) * .hbefa_conv(pol)
     }
   }
@@ -535,7 +535,7 @@ ef_hbefa_cycle <- function(class, pollutant, speed, dt = 1, model = "HBEFA4",
   dist <- sum(vv * dt) / 1000
   res <- lapply(class, function(cl) {
     r <- as.numeric(emis_hbefa(cl, pol, v = vv, a = a, slope = ss,
-                               model = model, ...))
+      model = model, ...))
     tot <- sum(r * dt)
     list(ef = tot / dist, total = tot, rate = r)
   })
@@ -545,11 +545,11 @@ ef_hbefa_cycle <- function(class, pollutant, speed, dt = 1, model = "HBEFA4",
   ef <- EmissionFactors(unname(ef), mass = mu)
   if (!full) return(ef)
   list(ef = ef,
-       total = units::as_units(vapply(res, function(z) z$total, numeric(1)), mu),
-       distance = units::as_units(dist, "km"),
-       v = units::as_units(vv, "m/s"),
-       a = units::as_units(a, "m/s^2"),
-       rate = units::as_units(do.call(cbind, lapply(res, function(z) z$rate)),
-                              paste0(mu, " s-1")),
-       class = class)
+    total = units::as_units(vapply(res, function(z) z$total, numeric(1)), mu),
+    distance = units::as_units(dist, "km"),
+    v = units::as_units(vv, "m/s"),
+    a = units::as_units(a, "m/s^2"),
+    rate = units::as_units(do.call(cbind, lapply(res, function(z) z$rate)),
+      paste0(mu, " s-1")),
+    class = class)
 }

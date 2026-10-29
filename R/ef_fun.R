@@ -24,16 +24,15 @@ ef_fun <- function(ef,
                    type = "logistic",
                    x = 1:length(ef),
                    x0 = mean(x),
-                   k = 1/4,
+                   k = 1 / 4,
                    L = max(ef),
                    verbose = TRUE) {
-  if(type == "logistic"){
+  if (type == "logistic") {
     FD <- function(x, x0, L, k) {
-      L/(1 + exp(1)^(-k*(x - x0))  )
+      L / (1 + exp(1)^(-k * (x - x0)))
     }
-    if(verbose) print(FD)
+    if (verbose) print(FD)
     a <- vein::EmissionFactors(FD(x, x0 = x0, k = k, L = L))
     return(a)
   }
 }
-

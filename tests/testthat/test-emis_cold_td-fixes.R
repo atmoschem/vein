@@ -6,7 +6,7 @@ nc <- 3
 # temperature varies by row and month, so efcold differs in each row/month
 dt <- matrix(c(5, 10, 15), ncol = 12, nrow = nr) + rep(0:11, each = nr) * 0.5
 efc <- ef_ldv_cold(ta = dt, cc = "<=1400", f = "G", eu = euros, p = "CO",
-                   speed = Speed(34))
+  speed = Speed(34))
 lkm <- units::as_units(c(10, 20, 30), "km")
 veh <- age_veh(c(10, 20, 30), "ldv", agemax = nc)
 beta <- as.data.frame(matrix(0.1 * (1:(nr * 12)), nr, 12))
@@ -20,7 +20,7 @@ efcm <- as.data.frame(lapply(efc[, 1:nc], as.numeric))
 ref <- c()
 for (k in 1:12) for (j in 1:nc) for (i in 1:nr) {
   ref <- c(ref, beta[i, k] * as.numeric(lkm)[j] * veh[i, j] * pmn[k] *
-             as.numeric(ef1)[j] * efcm[(k - 1) * nr + i, j])
+    as.numeric(ef1)[j] * efcm[(k - 1) * nr + i, j])
 }
 nt_ok <- check_nt() > 2
 
@@ -40,9 +40,9 @@ test_that("emis_cold_td: all monthly branches, R and fortran, equal the referenc
 
 test_that("emis_cold_td: one-row pro_month is replicated by row", {
   expect_equal(as.numeric(emis_cold_td(veh, lkm, ef1, efc, beta,
-                                       pro_month = pmdf[1, ])$emissions), ref)
+    pro_month = pmdf[1, ])$emissions), ref)
   expect_equal(as.numeric(emis_cold_td(veh, lkm, efdf, efc, beta,
-                                       pro_month = pmdf[1, ])$emissions), ref)
+    pro_month = pmdf[1, ])$emissions), ref)
 })
 
 test_that("emis_cold_td: without monthly profile", {
@@ -58,7 +58,7 @@ test_that("emis_cold_td: without monthly profile", {
 test_that("emis_cold_td: units are converted and sf is accepted", {
   a <- emis_cold_td(veh, lkm, ef1, efc, beta, pro_month = pm)
   b <- emis_cold_td(veh, units::set_units(lkm, "m"), units::set_units(ef1, "mg/km"),
-                    efc, beta, pro_month = pm)
+    efc, beta, pro_month = pm)
   expect_equal(as.numeric(b$emissions), as.numeric(a$emissions))
   data(net)
   vsf <- sf::st_sf(veh, geometry = sf::st_geometry(sf::st_as_sf(net))[1:3])

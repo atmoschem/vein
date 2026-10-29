@@ -83,15 +83,15 @@ emis_det <- function(po,
   if (is.data.frame(km) || is.matrix(km)) {
     stop("'km' must be a vector with class 'units', one value per age")
   }
-  if(!inherits(km, "units")){
+  if (!inherits(km, "units")) {
     stop("km neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
   km <- as.numeric(units::set_units(km, "km", mode = "standard"))
 
-  #Check cc
-  if(is.numeric(cc)){
+  # Check cc
+  if (is.numeric(cc)) {
     cc <- ifelse(cc <= 1400, "<=1400",
-                 ifelse(cc <= 2000, "1400_2000", ">2000"))
+      ifelse(cc <= 2000, "1400_2000", ">2000"))
   }
   cc <- as.character(cc)
   if (length(cc) != 1) stop("'cc' must have length 1")
@@ -102,8 +102,8 @@ emis_det <- function(po,
     stop("'po' must be one of: ", paste(unique(ldv_det$POLLUTANT), collapse = ", "))
   }
 
-  #Check speed
-  if(!inherits(speed, "units")){
+  # Check speed
+  if (!inherits(speed, "units")) {
     stop("speed neeeds to has class 'units' in 'km/h'. Please, check package '?units::set_units'")
   }
   speed <- as.numeric(units::set_units(speed, "km/h", mode = "standard"))
@@ -113,7 +113,7 @@ emis_det <- function(po,
     e <- as.character(e)
     e0 <- if (e %in% c("VId", "VII")) "VIc" else if (e == "III+DPF") "III" else e
     df <- ldv_det[ldv_det$POLLUTANT == po & ldv_det$CC == cc &
-                    ldv_det$EURO == e0, ]
+      ldv_det$EURO == e0, ]
     if (nrow(df) == 0) {
       stop("No deterioration factor for po = ", po, ", cc = ", cc, ", eu = ", e)
     }
@@ -121,8 +121,8 @@ emis_det <- function(po,
     MC_URBAN <- ifelse(kmi < df$a, df$b * kmi + df$c, df$d)
     MC_ROAD <- ifelse(kmi < df$e, df$f * kmi + df$g, df$h)
     mc <- ifelse(speed < 19, MC_URBAN,
-                 ifelse(speed > 63, MC_ROAD,
-                        MC_URBAN + (speed - 19) * (MC_ROAD - MC_URBAN) / 44))
+      ifelse(speed > 63, MC_ROAD,
+        MC_URBAN + (speed - 19) * (MC_ROAD - MC_URBAN) / 44))
     pmax(mc, 1)
   }
 
@@ -133,9 +133,9 @@ emis_det <- function(po,
     }
     if (show.equation) {
       df <- ldv_det[ldv_det$POLLUTANT == po & ldv_det$CC == cc &
-                      ldv_det$EURO == eu[1], ]
+        ldv_det$EURO == eu[1], ]
       cat(paste0("b = ", df$b, ", c = ", df$c, ", MAX MC URBAN = ", df$d,
-                 ", \nf = ", df$f,", g = ", df$g , ", MAX MC ROAD = ", df$h, "\n"))
+        ", \nf = ", df$f, ", g = ", df$g, ", MAX MC ROAD = ", df$h, "\n"))
       cat("V < 19: MC_URBAN = b*km + c\n")
       cat("V >= 63: MC_ROAD = f*km + g\n")
       cat("19 <= V < 63: MC_URBAN + (V - 19)*(MC_ROAD - MC_URBAN)/44\n")
@@ -148,12 +148,12 @@ emis_det <- function(po,
     km <- rep_len(km, n)
     mc <- lapply(seq_len(n), function(i) det1(eu[i], km[i]))
     if (length(speed) > 1) {
-      if(verbose) message("As speed has many values, this a data.frame")
+      if (verbose) message("As speed has many values, this a data.frame")
       mc <- as.data.frame(do.call("cbind", mc))
       names(mc) <- paste0("km", seq_len(n))
       mc$speed <- Speed(speed)
     } else {
-      if(verbose) message("As speed has 1 value, this a vector")
+      if (verbose) message("As speed has 1 value, this a vector")
       mc <- unlist(mc)
     }
     return(mc)
@@ -168,7 +168,7 @@ emis_det <- function(po,
     dff <- do.call("cbind", lapply(seq_len(ncol(eu)), function(i) {
       det1(eu[j, i], km[i])
     }))
-    if(verbose) message("as 'eu' is a data.frame, this is a data.frame")
+    if (verbose) message("as 'eu' is a data.frame, this is a data.frame")
     dff <- as.data.frame(dff)
     dff$speed <- Speed(speed)
     dff

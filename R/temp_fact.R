@@ -24,17 +24,17 @@ temp_fact <- function(q, pro, net, time) {
   if (missing(q) || is.null(q)) {
     stop("No traffic data")
   }
-  if(!missing(time)){
-    df <- Vehicles(as.data.frame(as.matrix(q) %*% matrix(unlist(pro), nrow=1)), time = time)
+  if (!missing(time)) {
+    df <- Vehicles(as.data.frame(as.matrix(q) %*% matrix(unlist(pro), nrow = 1)), time = time)
   } else {
-    df <- Vehicles(as.data.frame(as.matrix(q) %*% matrix(unlist(pro), nrow=1)))
+    df <- Vehicles(as.data.frame(as.matrix(q) %*% matrix(unlist(pro), nrow = 1)))
 
   }
 
-   if(!missing(net)){
-  netsf <- sf::st_as_sf(net)
-  speed <- sf::st_sf(df, geometry = sf::st_geometry(netsf))
-  return(speed)
+  if (!missing(net)) {
+    netsf <- sf::st_as_sf(net)
+    speed <- sf::st_sf(df, geometry = sf::st_geometry(netsf))
+    return(speed)
   } else {
     return(df)
   }

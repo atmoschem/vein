@@ -9,6 +9,5 @@ a <- add_polid(polyg = bb, street = nets, by = "id")
 
 test_that("emis_merge works", {
   expect_equal(add_polid(polyg = bb, street = nets, by = "id")$id[1],
-                "a")
+    "a")
 })
-

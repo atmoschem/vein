@@ -73,127 +73,127 @@
 #' a <- ef_evap(ef ="erhotc", v = "PC", cc = "<=1400", ltrip = lkm,
 #' dt = dt, ca = "no")
 #' }
-ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
-                     k = 1, ltrip,  kmday, show = FALSE,
-                     verbose = FALSE){
-  a <- (-5+10)/2
-  b <-   (0+15)/2
-  c <- (10+25)/2
-  d <- (20+35)/2
+ef_evap <- function(ef, v, cc, dt, ca, pollutant = "NMHC",
+                    k = 1, ltrip,  kmday, show = FALSE,
+                    verbose = FALSE) {
+  a <- (-5 + 10) / 2
+  b <-   (0 + 15) / 2
+  c <- (10 + 25) / 2
+  d <- (20 + 35) / 2
   ta <- "-5_10"
   tb <- "0_15"
   tc <- "10_25"
   td <- "20_35"
   # numeric temperature -> class with the nearest centre (2.5, 7.5, 17.5, 27.5)
   classdt <- function(x) {
-    ifelse(x < (a + b)/2, ta,
-           ifelse(x < (b + c)/2, tb,
-                  ifelse(x < (c + d)/2, tc, td)))
+    ifelse(x < (a + b) / 2, ta,
+      ifelse(x < (b + c) / 2, tb,
+        ifelse(x < (c + d) / 2, tc, td)))
   }
   ef_ev <- sysdata$ev
   efs <- as.character(unique(ef_ev$ef))
-  if(any(!ef %in% efs)) {
+  if (any(!ef %in% efs)) {
     cat("Please, select any of: \n")
     print(efs)
     cat("\n")
     stop()
   }
   # Check ltrip
-  if(!missing(ltrip) & !missing(kmday)){
+  if (!missing(ltrip) & !missing(kmday)) {
     stop("You can convert to g/km runing losses and soak with ltrip OR diurnal with kmday. Not both at the same time")
   }
-  if(is.matrix(dt)) dt <- as.data.frame(dt)
+  if (is.matrix(dt)) dt <- as.data.frame(dt)
   # Checking length of ef and ltrip and kmday
-  if(!missing(ltrip)){
-    if(length(ltrip) > 1) stop("Please, enter one value of 'ltrip'")
+  if (!missing(ltrip)) {
+    if (length(ltrip) > 1) stop("Please, enter one value of 'ltrip'")
     # Check units
-    if(!inherits(ltrip, "units")){
+    if (!inherits(ltrip, "units")) {
       stop("ltrip neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
-    if(units(ltrip) == units(units::as_units("m"))){
+    if (units(ltrip) == units(units::as_units("m"))) {
       stop("Units of ltrip is 'm'. Please, check package '?units::set_units'")
     }
-    if(units(ltrip) == units(units::as_units("km"))){
+    if (units(ltrip) == units(units::as_units("km"))) {
       ltrip <- as.numeric(ltrip)
     }
 
   }
   # Check kmday
-  if(!missing(kmday)){
-    if(length(kmday) > 1) stop("Please, enter one value of 'kmday'")
+  if (!missing(kmday)) {
+    if (length(kmday) > 1) stop("Please, enter one value of 'kmday'")
     # Check units
-    if(!inherits(kmday, "units")){
+    if (!inherits(kmday, "units")) {
       stop("kmday neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
     }
-    if(units(kmday) == units(units::as_units("m"))){
+    if (units(kmday) == units(units::as_units("m"))) {
       stop("Units of kmday is 'm'. Please, check package '?units::set_units'")
     }
-    if(units(kmday) == units(units::as_units("km"))){
+    if (units(kmday) == units(units::as_units("km"))) {
       kmday <- as.numeric(kmday)
     }
   }
   # check(dt)
-    dt <- remove_units(dt)
+  dt <- remove_units(dt)
 
-  if(!is.data.frame(dt)){
+  if (!is.data.frame(dt)) {
     # if(class(dt) == "factor"){
     #   stop("Please, enter numeric or character")
     # }
-    if(is.numeric(dt)){
+    if (is.numeric(dt)) {
       dt <- classdt(dt)
     }
 
-    if(length(dt) == 1 & length(ef) == 1){
+    if (length(dt) == 1 & length(ef) == 1) {
       df <- ef_ev[ef_ev$ef == ef &
-                    ef_ev$veh %in% v &
-                    ef_ev$cc %in% cc &
-                    ef_ev$dt == dt &
-                    ef_ev$canister %in% ca &
-                    ef_ev$pollutant == pollutant, ]
+        ef_ev$veh %in% v &
+        ef_ev$cc %in% cc &
+        ef_ev$dt == dt &
+        ef_ev$canister %in% ca &
+        ef_ev$pollutant == pollutant, ]
 
-    } else if (length(dt) > 1 & length(ef) == 1){
+    } else if (length(dt) > 1 & length(ef) == 1) {
       df <- do.call("rbind",
-                    lapply(1:length(dt), function(i){
-                      ef_ev[ef_ev$ef == ef &
-                              ef_ev$veh %in% v &
-                              ef_ev$cc %in% cc &
-                              ef_ev$dt == dt[i] &
-                              ef_ev$canister %in% ca &
-                              ef_ev$pollutant == pollutant, ]
+        lapply(1:length(dt), function(i) {
+          ef_ev[ef_ev$ef == ef &
+            ef_ev$veh %in% v &
+            ef_ev$cc %in% cc &
+            ef_ev$dt == dt[i] &
+            ef_ev$canister %in% ca &
+            ef_ev$pollutant == pollutant, ]
 
-                    }))
-    } else if(length(dt) == 1 & length(ef) > 1){
+        }))
+    } else if (length(dt) == 1 & length(ef) > 1) {
       df <- do.call("rbind",
-                    lapply(1:length(ef), function(i){
-                      ef_ev[ef_ev$ef == ef[i] &
-                              ef_ev$veh %in% v &
-                              ef_ev$cc %in% cc &
-                              ef_ev$dt == dt &
-                              ef_ev$canister %in% ca &
-                              ef_ev$pollutant == pollutant, ]
+        lapply(1:length(ef), function(i) {
+          ef_ev[ef_ev$ef == ef[i] &
+            ef_ev$veh %in% v &
+            ef_ev$cc %in% cc &
+            ef_ev$dt == dt &
+            ef_ev$canister %in% ca &
+            ef_ev$pollutant == pollutant, ]
 
-                    }))
+        }))
 
 
-    } else if(length(dt) > 1 & length(ef) > 1){
-      df <- do.call("rbind", lapply(1:length(dt), function(j){
+    } else if (length(dt) > 1 & length(ef) > 1) {
+      df <- do.call("rbind", lapply(1:length(dt), function(j) {
         do.call("rbind",
-                lapply(1:length(ef), function(i){
-                  ef_ev[ef_ev$ef == ef[i] &
-                          ef_ev$veh %in% v &
-                          ef_ev$cc %in% cc &
-                          ef_ev$dt == dt[j] &
-                          ef_ev$canister %in% ca &
-                          ef_ev$pollutant == pollutant, ]
-                }))
+          lapply(1:length(ef), function(i) {
+            ef_ev[ef_ev$ef == ef[i] &
+              ef_ev$veh %in% v &
+              ef_ev$cc %in% cc &
+              ef_ev$dt == dt[j] &
+              ef_ev$canister %in% ca &
+              ef_ev$pollutant == pollutant, ]
+          }))
       }))
     }
 
 
 
-    if(!missing(ltrip) ){
+    if (!missing(ltrip)) {
       if (any(ef  %in% "ed")) stop ("ef must cannot be Diurnal Evaporative ed")
-      df$g <- EmissionFactors(df$g*k/ltrip)
+      df$g <- EmissionFactors(df$g * k / ltrip)
       df$units <- NULL
       if (show) {
         return(df)
@@ -201,13 +201,13 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
         return(df$g)
       }
 
-    } else if (!missing(kmday)){
-      if (any(!ef  %in%  "ed")){
+    } else if (!missing(kmday)) {
+      if (any(!ef  %in%  "ed")) {
         stop ("kmday converts g/day to g/km, so ef must be the diurnal 'ed'")
       }
-      df$g <- EmissionFactors(df$g*k/kmday)
+      df$g <- EmissionFactors(df$g * k / kmday)
       df$units <- NULL
-      if(show){
+      if (show) {
         return(df)
       } else {
         return(df$g)
@@ -222,102 +222,102 @@ ef_evap <- function (ef, v, cc, dt, ca, pollutant = "NMHC",
       return(df$g)
     }
 
-  } else if (is.data.frame(dt)){
-    if(is.numeric(dt[, 1])){
-      for(i in 1:ncol(dt)){
+  } else if (is.data.frame(dt)) {
+    if (is.numeric(dt[, 1])) {
+      for (i in 1:ncol(dt)) {
         dt[, i] <- classdt(dt[, i])
       }
     }
-    if(length(v) > 1 | length(cc) > 1 | length(ca) > 1){
+    if (length(v) > 1 | length(cc) > 1 | length(ca) > 1) {
       stop("When dt is data.frame, lengths of 'v', 'cc' and 'ca' must be 1, and perhaps only works with direct injection")
     }
 
-    if(ncol(dt) == 1 & length(ef) == 1){
+    if (ncol(dt) == 1 & length(ef) == 1) {
       df <- do.call("rbind",
-                    lapply(1:nrow(dt), function(i){
-                      ef_ev[ef_ev$ef == ef &
-                              ef_ev$veh == v &
-                              ef_ev$cc == cc &
-                              ef_ev$dt == unlist(dt)[i] &
-                              ef_ev$canister == ca &
-                              ef_ev$pollutant == pollutant, ]$g
-                    }))
-      if(!missing(ltrip)){
-        return(EmissionFactors(df*k/ltrip))
-      } else if(!missing(kmday)){
-        return(EmissionFactors(df*k/kmday))
-      } else if(missing(ltrip) & missing(kmday)){
-        return(Emissions(df*k))
+        lapply(1:nrow(dt), function(i) {
+          ef_ev[ef_ev$ef == ef &
+            ef_ev$veh == v &
+            ef_ev$cc == cc &
+            ef_ev$dt == unlist(dt)[i] &
+            ef_ev$canister == ca &
+            ef_ev$pollutant == pollutant, ]$g
+        }))
+      if (!missing(ltrip)) {
+        return(EmissionFactors(df * k / ltrip))
+      } else if (!missing(kmday)) {
+        return(EmissionFactors(df * k / kmday))
+      } else if (missing(ltrip) & missing(kmday)) {
+        return(Emissions(df * k))
       }
-    } else if (ncol(dt) > 1 & length(ef) == 1){
-      df <- do.call("rbind", lapply(1:ncol(dt), function(j){
+    } else if (ncol(dt) > 1 & length(ef) == 1) {
+      df <- do.call("rbind", lapply(1:ncol(dt), function(j) {
         df <- do.call("rbind",
-                      lapply(1:nrow(dt), function(i){
-                        ef_ev[ef_ev$ef == ef &
-                                ef_ev$veh == v &
-                                ef_ev$cc == cc &
-                                ef_ev$dt == dt[i, j] &
-                                ef_ev$canister == ca &
-                                ef_ev$pollutant == pollutant, ]$g
-                      }))
+          lapply(1:nrow(dt), function(i) {
+            ef_ev[ef_ev$ef == ef &
+              ef_ev$veh == v &
+              ef_ev$cc == cc &
+              ef_ev$dt == dt[i, j] &
+              ef_ev$canister == ca &
+              ef_ev$pollutant == pollutant, ]$g
+          }))
         df <- as.data.frame(df)
         names(df) <- "ef"
         df$cols_temp <- j
         df
       }))
-      if(!missing(ltrip)){
-        df$ef <- EmissionFactors(df$ef*k/ltrip)
+      if (!missing(ltrip)) {
+        df$ef <- EmissionFactors(df$ef * k / ltrip)
         return(df)
-      } else if(!missing(kmday)){
-        df$ef <- EmissionFactors(df$ef*k/kmday)
+      } else if (!missing(kmday)) {
+        df$ef <- EmissionFactors(df$ef * k / kmday)
         return(df)
-      } else if(missing(ltrip) & missing(kmday)){
-        df$ef <- Emissions(df$ef*k)
+      } else if (missing(ltrip) & missing(kmday)) {
+        df$ef <- Emissions(df$ef * k)
         return(df)
       }
-    } else if(ncol(dt) == 1 & length(ef) > 1){
-      df <- do.call("cbind", lapply(1:length(ef), function(j){
+    } else if (ncol(dt) == 1 & length(ef) > 1) {
+      df <- do.call("cbind", lapply(1:length(ef), function(j) {
         do.call("rbind",
-                lapply(1:nrow(dt), function(i){
-                  ef_ev[ef_ev$ef == ef[j] &
-                          ef_ev$veh == v &
-                          ef_ev$cc == cc &
-                          ef_ev$dt == unlist(dt)[i] &
-                          ef_ev$canister == ca &
-                          ef_ev$pollutant == pollutant, ]$g
-                }))
+          lapply(1:nrow(dt), function(i) {
+            ef_ev[ef_ev$ef == ef[j] &
+              ef_ev$veh == v &
+              ef_ev$cc == cc &
+              ef_ev$dt == unlist(dt)[i] &
+              ef_ev$canister == ca &
+              ef_ev$pollutant == pollutant, ]$g
+          }))
       }))
-      if(!missing(ltrip)){
-        return(EmissionFactors(df*k/ltrip))
-      } else if(!missing(kmday)){
-        return(EmissionFactors(df*k/kmday))
-      } else if(missing(ltrip) & missing(kmday)){
-        return(Emissions(df*k))
+      if (!missing(ltrip)) {
+        return(EmissionFactors(df * k / ltrip))
+      } else if (!missing(kmday)) {
+        return(EmissionFactors(df * k / kmday))
+      } else if (missing(ltrip) & missing(kmday)) {
+        return(Emissions(df * k))
       }
-    } else if(length(dt) > 1 & length(ef) > 1){
-      df <- do.call("rbind", lapply(1:ncol(dt), function(k){
-        df <- do.call("cbind", lapply(1:length(ef), function(j){
+    } else if (length(dt) > 1 & length(ef) > 1) {
+      df <- do.call("rbind", lapply(1:ncol(dt), function(k) {
+        df <- do.call("cbind", lapply(1:length(ef), function(j) {
           do.call("rbind",
-                  lapply(1:nrow(dt), function(i){
-                    ef_ev[ef_ev$ef == ef[j] &
-                            ef_ev$veh == v &
-                            ef_ev$cc == cc &
-                            ef_ev$dt == dt[i, k] &
-                            ef_ev$canister == ca &
-                            ef_ev$pollutant == pollutant, ]$g
-                  }))
+            lapply(1:nrow(dt), function(i) {
+              ef_ev[ef_ev$ef == ef[j] &
+                ef_ev$veh == v &
+                ef_ev$cc == cc &
+                ef_ev$dt == dt[i, k] &
+                ef_ev$canister == ca &
+                ef_ev$pollutant == pollutant, ]$g
+            }))
         }))
       }))
-      if(!missing(ltrip)){
+      if (!missing(ltrip)) {
 
-        df <- EmissionFactors(df*k/ltrip)
+        df <- EmissionFactors(df * k / ltrip)
         df$col_temp <- rep(1:ncol(dt), each = nrow(dt))
-      } else if(!missing(kmday)){
+      } else if (!missing(kmday)) {
 
-        df <- EmissionFactors(df*k/kmday)
+        df <- EmissionFactors(df * k / kmday)
         df$col_temp <- rep(1:ncol(dt), each = nrow(dt))
-      } else if(missing(ltrip) & missing(kmday)){
-        df <- Emissions(df*k)
+      } else if (missing(ltrip) & missing(kmday)) {
+        df <- Emissions(df * k)
         df$col_temp <- rep(1:ncol(dt), each = nrow(dt))
       }
 

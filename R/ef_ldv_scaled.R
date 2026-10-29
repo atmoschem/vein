@@ -59,7 +59,7 @@
 #' prog$G        # distinct equations after grouping
 #' }
 ef_ldv_scaled <- function(df,
-                          dfcol ,
+                          dfcol,
                           SDC  = 34.12,
                           v,
                           t = "4S",
@@ -68,11 +68,11 @@ ef_ldv_scaled <- function(df,
                           eu,
                           p,
                           programs_only = FALSE) {
-  if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
+  if (length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
   n <- length(dfcol)
   base <- ef_ldv_programs(v = v, t = t, cc = cc, f = f,
-                          eu = as.character(eu), p = p, k = rep(1, n))
+    eu = as.character(eu), p = p, k = rep(1, n))
   SDC0 <- vapply(base, function(pr) ef_eval_program(pr, SDC), numeric(1))
   ks <- dfcol / SDC0
   progs <- lapply(seq_len(n), function(i) {
@@ -84,14 +84,14 @@ ef_ldv_scaled <- function(df,
   if (programs_only) return(programs)
   la <- lapply(seq_len(n), function(i) {
     ef_ldv_speed(v = v,
-                 t = t,
-                 cc = cc,
-                 f = f,
-                 eu = as.character(eu[i]),
-                 p = p,
-                 k = ks[i],
-                 show.equation = FALSE)
-   })
+      t = t,
+      cc = cc,
+      f = f,
+      eu = as.character(eu[i]),
+      p = p,
+      k = ks[i],
+      show.equation = FALSE)
+  })
   class(la) <- c("EmissionFactorsList", class(la))
   attr(la, "programs") <- programs
   return(la)

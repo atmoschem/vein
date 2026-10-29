@@ -3,11 +3,11 @@
 # (ef_hbefa.R), and an EEA-key interface to the HBEFA speed functions.
 
 .hbefa_eu_ldv <- c(I = "Euro-1", II = "Euro-2", III = "Euro-3", IV = "Euro-4",
-                   V = "Euro-5", VI = "Euro-6ab", VIc = "Euro-6d-temp",
-                   VId = "Euro-6d", VII = "Euro-7")
+  V = "Euro-5", VI = "Euro-6ab", VIc = "Euro-6d-temp",
+  VId = "Euro-6d", VII = "Euro-7")
 .hbefa_eu_hdv <- c(PRE = "80ties", I = "Euro-I", II = "Euro-II", III = "Euro-III",
-                   IV = "Euro-IV_SCR", V = "Euro-V_SCR", VI = "Euro-VI_A-C",
-                   VIc = "Euro-VI_D-E", VId = "Euro-VI_D-E")
+  IV = "Euro-IV_SCR", V = "Euro-V_SCR", VI = "Euro-VI_A-C",
+  VIc = "Euro-VI_D-E", VId = "Euro-VI_D-E")
 .hbefa_hdv_veh <- c("Trucks", "Ubus", "Coach")
 
 # One EEA key -> c(class, note); note is "" when the equivalence is direct
@@ -16,8 +16,8 @@
   note <- function(...) nt <<- c(nt, paste0(...))
   no <- function(why = "") {
     stop("No HBEFA4 equivalent for v = '", v, "', t = '", t, "', cc = '", cc,
-         "', f = '", f, "', eu = '", eu, "'", if (nzchar(why)) paste0(": ", why),
-         ". See hbefa_eea()", call. = FALSE)
+      "', f = '", f, "', eu = '", eu, "'", if (nzchar(why)) paste0(": ", why),
+      ". See hbefa_eea()", call. = FALSE)
   }
   eu_l <- function(e, last = "Euro-7") {
     x <- .hbefa_eu_ldv[e]
@@ -39,8 +39,8 @@
   }
   cls <- if (v == "PC") {
     if (!t %in% c("4S", "2S", "GDI", "GDI_GPF", "ECE_1501", "ECE_1502", "ECE_1503",
-                  "ECE_1504", "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "DPF",
-                  "DPF_SWU", "LNT_DPF", "DPF_SCR")) no("unknown type")
+      "ECE_1504", "IMPROVED_CONVENTIONAL", "OPEN_LOOP", "DPF",
+      "DPF_SWU", "LNT_DPF", "DPF_SCR")) no("unknown type")
     if (f %in% c("G", "FH")) {
       if (f == "FH") note("no full hybrid class in HBEFA4: conventional petrol")
       if (t %in% c("GDI", "GDI_GPF")) note("no GDI class in HBEFA4: petrol")
@@ -85,23 +85,23 @@
       fu <- if (f == "PHEV_G") "petrol" else "diesel"
       mode <- if (f == "PHEV_G") "(P)" else "(D)"
       e <- switch(eu, IV = "Euro-4", V = "Euro-5", VI = "Euro-6ab",
-                  VIc = {
-                    note("Euro 6 d-temp PHEV as Euro-6d")
-                    "Euro-6d"
-                  },
-                  VId = "Euro-6d",
-                  VII = {
-                    note("Euro 7 PHEV as Euro-6d")
-                    "Euro-6d"
-                  },
-                  no())
+        VIc = {
+          note("Euro 6 d-temp PHEV as Euro-6d")
+          "Euro-6d"
+        },
+        VId = "Euro-6d",
+        VII = {
+          note("Euro 7 PHEV as Euro-6d")
+          "Euro-6d"
+        },
+        no())
       paste0("PC_PHEV_", fu, "_", e, "_", mode)
     } else {
       no("unknown fuel")
     }
   } else if (v == "LCV") {
     sz <- switch(cc, "<3.5" = "N1-III", "N1-I" = "M+N1-I", "N1-II" = "N1-II",
-                 "N1-III" = "N1-III", no("unknown LCV class"))
+      "N1-III" = "N1-III", no("unknown LCV class"))
     if (!f %in% c("G", "D")) no("LCV fuels are G and D")
     fu <- if (f == "G") "petrol" else "diesel"
     if (eu == "PRE") {
@@ -121,7 +121,7 @@
     if (f != "G") no("L-category fuel is G")
     e <- if (eu == "PRE") "preEuro" else {
       x <- c(I = "Euro-1", II = "Euro-2", III = "Euro-3", IV = "Euro-4",
-             V = "Euro-5", VI = "Euro-6")[eu]
+        V = "Euro-5", VI = "Euro-6")[eu]
       if (is.na(x)) no("unknown euro standard")
       unname(x)
     }
@@ -132,7 +132,7 @@
       paste0("Moped_le50cc_", e)
     } else if (t == "4S") {
       sz <- switch(cc, "<=250" = "le250cc", "250_750" = "gt250cc",
-                   ">=750" = "gt250cc", no("unknown motorcycle cc"))
+        ">=750" = "gt250cc", no("unknown motorcycle cc"))
       paste0("MC_4S_", sz, "_", e)
     } else if (t == "2S") {
       note("2-stroke motorcycles >50 cc as HBEFA <=250 cc")
@@ -144,11 +144,11 @@
     if (!f %in% c("D", "CNG")) no("heavy vehicle fuels are D and CNG")
     if (f == "CNG") {
       e <- c(II = "Euro-II", III = "Euro-III", IV = "Euro-IV", V = "Euro-V",
-             VI = "Euro-VI")[eu]
+        VI = "Euro-VI")[eu]
       if (is.na(e)) no()
       if (v == "Ubus") {
         sz <- switch(t, Midi = "Midi_lt15t", Std = "Std_gt15-18t",
-                     Artic = "Artic_gt18t", no("unknown bus type"))
+          Artic = "Artic_gt18t", no("unknown bus type"))
         paste0("UBus_", sz, "_CNG_", e)
       } else if (v == "Trucks" && t == "RT") {
         if (!eu %in% c("IV", "V", "VI")) no()
@@ -166,27 +166,27 @@
       if (v == "Trucks") {
         if (t == "RT") {
           sz <- switch(cc, "<=7.5" = "le7.5t", ">7.5 & <=12" = "gt7_5-12t",
-                       ">12 & <=14" = "gt12-14t", ">14 & <=20" = "gt14-20t",
-                       ">20 & <=26" = "gt20-26t", ">26 & <=28" = "gt26-28t",
-                       ">28 & <=32" = "gt28-32t", ">32" = "gt32t",
-                       no("unknown rigid truck weight"))
+            ">12 & <=14" = "gt12-14t", ">14 & <=20" = "gt14-20t",
+            ">20 & <=26" = "gt20-26t", ">26 & <=28" = "gt26-28t",
+            ">28 & <=32" = "gt28-32t", ">32" = "gt32t",
+            no("unknown rigid truck weight"))
           paste0("RT_", sz, "_", e)
         } else if (t == "TT") {
           sz <- switch(cc, ">14 & <=20" = "gt14-20t", ">20 & <=28" = "gt20-28t",
-                       ">28 & <=34" = "gt28-34t", ">34 & <=40" = "gt34-40t",
-                       ">40 & <=50" = "gt40-50t", ">50 & <=60" = "gt50-60t",
-                       no("unknown articulated truck weight"))
+            ">28 & <=34" = "gt28-34t", ">34 & <=40" = "gt34-40t",
+            ">40 & <=50" = "gt40-50t", ">50 & <=60" = "gt50-60t",
+            no("unknown articulated truck weight"))
           paste0("TT_AT_", sz, "_", e)
         } else {
           no("truck types are RT and TT")
         }
       } else if (v == "Ubus") {
         sz <- switch(t, Midi = "Midi_le15t", Std = "Std_gt15-18t",
-                     Artic = "Artic_gt18t", no("unknown bus type"))
+          Artic = "Artic_gt18t", no("unknown bus type"))
         paste0("UBus_", sz, "_", e)
       } else {
         sz <- switch(t, Std = "Std_le18t", "3Axes" = "3-Axes_gt18t",
-                     Midi = "Midi_le15t", no("unknown coach type"))
+          Midi = "Midi_le15t", no("unknown coach type"))
         paste0("Coach_", sz, "_", e)
       }
     }
@@ -253,7 +253,7 @@ hbefa_eea <- function(v, t = "4S", cc, f, eu, details = FALSE) {
     ldv <- unique(sysdata$ldv[, c("VEH", "TYPE", "CC", "FUEL", "EURO")])
     hdv <- unique(sysdata$hdv_criteria[, c("VEH", "TYPE", "GW", "EURO")])
     hdv <- data.frame(VEH = hdv$VEH, TYPE = hdv$TYPE, CC = hdv$GW,
-                      FUEL = "D", EURO = hdv$EURO, stringsAsFactors = FALSE)
+      FUEL = "D", EURO = hdv$EURO, stringsAsFactors = FALSE)
     keys <- rbind(ldv, hdv)
     return(.hbefa_eea_keys(keys, strict = FALSE))
   }
@@ -264,11 +264,11 @@ hbefa_eea <- function(v, t = "4S", cc, f, eu, details = FALSE) {
   if (missing(eu)) stop("Add 'eu'")
   n <- max(length(v), length(t), length(cc), length(f), length(eu))
   k <- data.frame(VEH = rep_len(as.character(v), n),
-                  TYPE = rep_len(as.character(t), n),
-                  CC = rep_len(as.character(cc), n),
-                  FUEL = rep_len(as.character(f), n),
-                  EURO = rep_len(as.character(eu), n),
-                  stringsAsFactors = FALSE)
+    TYPE = rep_len(as.character(t), n),
+    CC = rep_len(as.character(cc), n),
+    FUEL = rep_len(as.character(f), n),
+    EURO = rep_len(as.character(eu), n),
+    stringsAsFactors = FALSE)
   k <- .hbefa_eea_keys(k, strict = TRUE)
   if (!details) return(k$class)
   k
@@ -359,7 +359,7 @@ ef_hbefa_speed <- function(v, t = "4S", cc, f, eu, p, k = 1, speed,
   hp <- c("CO", "HC", "NOx", "PM", "FC", "CO2", "EC")
   if (!p %in% c(hp, "NO2", "NO")) {
     stop("Pollutant '", p, "' is not available in HBEFA4. Use one of: ",
-         paste(c(hp, "NO2", "NO"), collapse = ", "))
+      paste(c(hp, "NO2", "NO"), collapse = ", "))
   }
   if (is.matrix(eu) | is.data.frame(eu)) {
     eu <- as.data.frame(eu)
@@ -382,16 +382,16 @@ ef_hbefa_speed <- function(v, t = "4S", cc, f, eu, p, k = 1, speed,
       })
     }
     row <- .ef_row(sysdata$ldv,
-                   list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = e,
-                        POLLUTANT = p),
-                   paste(v, t, cc, f, e, p))
+      list(VEH = v, TYPE = t, CC = cc, FUEL = f, EURO = e,
+        POLLUTANT = p),
+      paste(v, t, cc, f, e, p))
     x <- as.numeric(row$x)
     function(V) x
   }
   fun_eu <- function(e) {
     cl <- hbefa_eea(v, t, cc, f, e)
     f1 <- ef_hbefa(cl, if (p %in% c("NO2", "NO")) "NOx" else p,
-                   slope = slope, vmin = vmin)
+      slope = slope, vmin = vmin)
     sh <- share(e)
     kk <- as.numeric(k) * .fcorr_k2(e, fcorr)
     function(V) {
@@ -425,7 +425,7 @@ ef_hbefa_speed <- function(v, t = "4S", cc, f, eu, p, k = 1, speed,
     d <- hbefa_eea(v, t, cc, f, eu, details = TRUE)
     for (i in seq_len(nrow(d))) {
       cat(paste0(d$EURO[i], " -> ", d$class[i],
-                 if (nzchar(d$note[i])) paste0(" (", d$note[i], ")"), "\n"))
+        if (nzchar(d$note[i])) paste0(" (", d$note[i], ")"), "\n"))
     }
   }
   if (length(eu) == 1) {
@@ -440,8 +440,8 @@ ef_hbefa_speed <- function(v, t = "4S", cc, f, eu, p, k = 1, speed,
   if (!missing(speed)) {
     if (is.data.frame(speed)) {
       stop("When length(eu) > 1, 'speed' must be a numeric vector. ",
-           "For speeds by street and hour use 'eu' as data.frame or ",
-           "one call per euro standard.")
+        "For speeds by street and hour use 'eu' as data.frame or ",
+        "one call per euro standard.")
     }
     dff <- do.call("cbind", lapply(lf, function(fi) fi(speed)))
     dff <- EmissionFactors(dff, mass = mu)

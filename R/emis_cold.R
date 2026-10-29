@@ -86,40 +86,40 @@
 #'                           hour = 2,
 #'                           day = 1)
 #' }
-emis_cold <- function (veh,
-                       lkm,
-                       ef,
-                       efcold,
-                       beta,
-                       speed = 34,
-                       agemax = if (!inherits(x = veh, what = "list")) {
-                         ncol(veh)
-                       } else {
-                         ncol(veh[[1]])
-                       },
-                       profile,
-                       simplify = FALSE,
-                       hour = nrow(profile),
-                       day = ncol(profile),
-                       array = TRUE,
-                       verbose = FALSE) {
+emis_cold <- function(veh,
+                      lkm,
+                      ef,
+                      efcold,
+                      beta,
+                      speed = 34,
+                      agemax = if (!inherits(x = veh, what = "list")) {
+                        ncol(veh)
+                      } else {
+                        ncol(veh[[1]])
+                      },
+                      profile,
+                      simplify = FALSE,
+                      hour = nrow(profile),
+                      day = ncol(profile),
+                      array = TRUE,
+                      verbose = FALSE) {
   # lkm can have any length unit, it is converted to km
   lkm <- vein_as_km(lkm, "lkm")
 
   # At least, on e of these
-  if(any(!class(ef) %in% c("list", "units", "EmissionFactorsList",
-                           "EmissionFactors", "data.frame"))){
+  if (any(!class(ef) %in% c("list", "units", "EmissionFactorsList",
+    "EmissionFactors", "data.frame"))) {
     stop("ef must be either of 'list', 'units', 'EmissionFactorsList', 'EmissionFactors' or 'data.frame'")
   }
 
   # Checking sf
-  if(inherits(veh, "sf")){
-    if(verbose) message("Transforming sf to data.frame")
+  if (inherits(veh, "sf")) {
+    if (verbose) message("Transforming sf to data.frame")
     veh <- sf::st_set_geometry(veh, NULL)
   }
 
   speed <- as.data.frame(remove_units(speed))
-  for (i  in 1:ncol(speed) ) {
+  for (i  in 1:ncol(speed)) {
     speed[, i] <- as.numeric(speed[, i])
   }
   beta <- as.numeric(unlist(beta))
@@ -133,12 +133,12 @@ emis_cold <- function (veh,
   # veh is "Vehicles" data-frame
   if (!inherits(x = veh, what = "list")) {
     veh <- as.data.frame(remove_units(veh))
-    for(i in 1:ncol(veh)){
-      veh[,i] <- as.numeric(veh[,i])
+    for (i in 1:ncol(veh)) {
+      veh[, i] <- as.numeric(veh[, i])
     }
 
     # top down
-    if(missing(profile)){
+    if (missing(profile)) {
       stop("For top down approach, use 'emis_cold_td'")
     }
     profile <- remove_units(profile)
@@ -163,7 +163,7 @@ emis_cold <- function (veh,
 
     # speed is passed unevaluated to the ef functions, as many of them
     # (e.g. constant emission factors) do not use it
-    if(simplify) {
+    if (simplify) {
       pro <- as.numeric(profile)
       d <- array(NA_real_, dim = c(nr, nc, length(pro)))
       for (j in seq_along(pro)) { # hours x days
@@ -185,14 +185,14 @@ emis_cold <- function (veh,
         }
       }
     }
-    if(verbose) message(round(sum(d, na.rm = TRUE)/1000,2),
-                        " kg emissions in ", nh, " hours and ", nd, " days")
+    if (verbose) message(round(sum(d, na.rm = TRUE) / 1000, 2),
+      " kg emissions in ", nh, " hours and ", nd, " days")
     return(EmissionsArray(d))
   } else {
     for (j in seq_along(veh)) {
       veh[[j]] <- as.data.frame(remove_units(veh[[j]]))
-      for (i  in 1:ncol(veh[[j]]) ) {
-        veh[[j]][,i] <- as.numeric(veh[[j]][,i])
+      for (i  in 1:ncol(veh[[j]])) {
+        veh[[j]][, i] <- as.numeric(veh[[j]][, i])
       }
     }
     if (agemax > ncol(veh[[1]])) {
@@ -213,8 +213,8 @@ emis_cold <- function (veh,
           coldf(efcold[[k]](speed[, i]))
       }
     }
-    if(verbose)  message(round(sum(d, na.rm = TRUE)/1000,2),
-                         " kg emissions in ", length(veh), " hours")
+    if (verbose) message(round(sum(d, na.rm = TRUE) / 1000, 2),
+      " kg emissions in ", length(veh), " hours")
     return(EmissionsArray(d))
   }
 }

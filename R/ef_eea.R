@@ -54,17 +54,17 @@
 #' load = 0)(10)
 #' }
 ef_eea <- function(
-  category,
-  fuel,
-  segment,
-  euro,
-  tech,
-  pol,
-  mode,
-  slope,
-  load,
-  speed,
-  fcorr = rep(1, 8)
+                   category,
+                   fuel,
+                   segment,
+                   euro,
+                   tech,
+                   pol,
+                   mode,
+                   slope,
+                   load,
+                   speed,
+                   fcorr = rep(1, 8)
 ) {
 
   # copy: never modify the internal table by reference
@@ -80,28 +80,28 @@ ef_eea <- function(
 
   # category
   u_cat <- unique(eea$Category)
-  if(any(!category %in% u_cat)) {
+  if (any(!category %in% u_cat)) {
     stop("Select categories from:\n", paste(u_cat, collapse = "\n"))
   }
   ef <- eea[Category %in% category]
 
   # fuel
   u_fuel <- unique(ef$Fuel)
-  if(any(!fuel %in% u_fuel)) {
+  if (any(!fuel %in% u_fuel)) {
     stop("Select fuel from:\n", paste(u_fuel, collapse = "\n"))
   }
   ef <- ef[Fuel %in% fuel]
 
   # segment
   u_segment <- unique(ef$Segment)
-  if(any(!segment %in% u_segment)) {
+  if (any(!segment %in% u_segment)) {
     stop("Select segment from:\n", paste(u_segment, collapse = "\n"))
   }
   ef <- ef[Segment %in% segment]
 
   # euro
   u_euro <- unique(ef$EuroStandard)
-  if(any(!euro %in% u_euro)) {
+  if (any(!euro %in% u_euro)) {
     stop("Select euro from:\n", paste(u_euro, collapse = "\n"))
   }
   ef <- ef[EuroStandard %in% euro]
@@ -110,42 +110,42 @@ ef_eea <- function(
 
   # tech
   u_tech <- unique(ef$Technology)
-  if(any(!tech %in% u_tech)) {
+  if (any(!tech %in% u_tech)) {
     stop("Select tech from:\n", paste(u_tech, collapse = "\n"))
   }
   ef <- ef[Technology %in% tech]
 
   # pollutant
   u_pol <- unique(ef$Pollutant)
-  if(any(!pol %in% u_pol)) {
+  if (any(!pol %in% u_pol)) {
     stop("Select pol from:\n", paste(u_pol, collapse = "\n"))
   }
   ef <- ef[Pollutant %in% pol]
 
   # mode
   u_mode <- unique(ef$Mode)
-  if(any(!mode %in% u_mode)) {
+  if (any(!mode %in% u_mode)) {
     stop("Select mode from:\n", paste(u_mode, collapse = "\n"))
   }
   ef <- ef[Mode %in% mode]
 
   # slope
   u_slope <- unique(ef$RoadSlope)
-  if(any(!slope %in% u_slope)) {
+  if (any(!slope %in% u_slope)) {
     stop("Select slope from:\n", paste(u_slope, collapse = "\n"))
   }
   ef <- ef[RoadSlope %in% slope]
 
   # load
   u_load <- unique(ef$Load)
-  if(any(!load %in% u_load)) {
+  if (any(!load %in% u_load)) {
     stop("Select load from:\n", paste(u_load, collapse = "\n"))
   }
   ef <- ef[Load %in% load]
 
   if (nrow(ef) != 1) {
     stop("The arguments select ", nrow(ef), " rows; select one value of ",
-         "each argument so that only one equation remains")
+      "each argument so that only one equation remains")
   }
 
   # EF = (Alpha x V2 + Beta x V + Gamma + Delta / V) / (Epsilon x V2 + Zeta x V + Eta) x (1 - RF)
@@ -161,16 +161,16 @@ ef_eea <- function(
   minv <- ef$MinSpeed_kmh
   maxv <- ef$MaxSpeed_kmh
 
-  fv <- function(V){
+  fv <- function(V) {
     V <- as.numeric(V)
     V <- pmin(pmax(V, minv), maxv)
-    out <- (alpha*V*V + beta*V + gamma + delta / V) /
-      (epsilon*V*V + zeta*V + eta)*(1-RF)*k2
+    out <- (alpha * V * V + beta * V + gamma + delta / V) /
+      (epsilon * V * V + zeta * V + eta) * (1 - RF) * k2
     out[!is.na(out) & out < 0] <- 0
     out
   }
 
-  if(missing(speed)) {
+  if (missing(speed)) {
     return(fv)
   } else {
     return(EmissionFactors(fv(speed)))

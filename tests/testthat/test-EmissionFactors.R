@@ -2,32 +2,32 @@ context("EmissionFactors")
 
 test_that("EmissionFactors works", {
   expect_equal(ef_cetesb("CO",
-                         "PC_G",
-                         year = 2017)[[1]],
-               EmissionFactors(0.1612112) )
+    "PC_G",
+    year = 2017)[[1]],
+  EmissionFactors(0.1612112))
 })
 
 test_that("EmissionFactors works", {
   expect_message(EmissionFactors(units::set_units(1, "g/km")),
-                 ".")
+    ".")
 })
 
 test_that("EmissionFactors prints", {
   expect_output(print(EmissionFactors(data.frame(a = 1:5, b = 1:5))),
-                "...?")
+    "...?")
   expect_output(print(EmissionFactors(data.frame(a = 1:11, b = 1:11))),
-                "...?")
+    "...?")
   expect_output(print(EmissionFactors(matrix(0, ncol = 11))),
-                "...?")
+    "...?")
   expect_output(print(EmissionFactors(matrix(1:110, ncol = 11))),
-                "...?")
+    "...?")
 })
 
 test_that("EmissionFactors prints", {
   expect_output(summary(EmissionFactors(data.frame(a = 1:11, b = 1:11))),
-                "Mean?")
-  expect_output(summary(EmissionFactors(data.frame(a = 1:11, b = 1:11)))[1,1],
-                "Min.?")
+    "Mean?")
+  expect_output(summary(EmissionFactors(data.frame(a = 1:11, b = 1:11)))[1, 1],
+    "Min.?")
 })
 
 
@@ -35,7 +35,7 @@ test_that("EmissionFactors works", {
   # expect_equal(plot(EmissionFactors(data.frame(a = 1:5)))$mfrow[1],
   # 1)
   expect_equal(plot(EmissionFactors(data.frame(a = 1:11, b = 1:11)))$mfrow[1],
-               NULL)
+    NULL)
   # expect_equal(plot(EmissionFactors(matrix(0, ncol = 4)))$mfrow[1],
   # 2)
   # expect_equal(plot(EmissionFactors(matrix(0, ncol = 6)))$mfrow[1],
@@ -46,4 +46,3 @@ test_that("EmissionFactors works", {
   # "Plo?")
 
 })
-

@@ -7,25 +7,25 @@ as.numeric(ef_wear(wear = "tyre", type = "PC", pol = "PM10", speed = df))
 
 test_that("ef_wear works", {
   expect_equal(as.numeric(ef_wear(wear = "tyre", type = "PC", pol = "PM10",
-                                  speed = df)),
-               0.0089238)
+    speed = df)),
+  0.0089238)
 })
 
 test_that("ef_wear works", {
   expect_equal(as.numeric(ef_wear(wear = "tyre", type = "PC", pol = "PM10",
-                                  speed = unlist(df))),
-               0.0089238)
+    speed = unlist(df))),
+  0.0089238)
 })
 
 
 test_that("ef_wear works", {
   expect_equal(as.numeric(ef_wear(wear = "break", type = "PC", pol = "PM10",
-                                  speed = df)),
-               0.0122745)
+    speed = df)),
+  0.0122745)
 })
 
 test_that("ef_wear works", {
   expect_equal(as.numeric(ef_wear(wear = "road", type = "PC", pol = "PM10",
-                                  speed = df)),
-               0.0075)
+    speed = df)),
+  0.0075)
 })

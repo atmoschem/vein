@@ -37,4 +37,3 @@
 #   expect_output(inventory(name = name, show.dir = TRUE, showWarnings = FALSE),
 #                  "D.?")
 # })
-

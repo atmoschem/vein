@@ -26,25 +26,25 @@
 #' class(vkms2)
 #' dim(vkms2)
 #' }
-vkm <- function (veh,
-                 lkm,
-                 profile,
-                 hour = nrow(profile),
-                 day = ncol(profile),
-                 array = TRUE,
-                 as_df = TRUE) {
-  if(!missing(profile) & is.vector(profile)){
+vkm <- function(veh,
+                lkm,
+                profile,
+                hour = nrow(profile),
+                day = ncol(profile),
+                array = TRUE,
+                as_df = TRUE) {
+  if (!missing(profile) & is.vector(profile)) {
     profile <- matrix(profile, ncol = 1)
   }
   veh <- as.numeric(veh)
-  if(inherits(lkm, "units")) {
+  if (inherits(lkm, "units")) {
     lkm <- units::set_units(lkm, "km", mode = "standard")
   }
   lkm <- as.numeric(lkm)
-  if(array == F){
-    lista <- lapply(1:day,function(j){
-      lapply(1:hour,function(i){
-        veh*profile[i,j]*lkm
+  if (array == F) {
+    lista <- lapply(1:day, function(j) {
+      lapply(1:hour, function(i) {
+        veh * profile[i, j] * lkm
       })
     })
     return(lista)
@@ -53,18 +53,18 @@ vkm <- function (veh,
     d <- array(
       unlist(lapply(1:day, function(j) {
         lapply(1:hour, function(i) {
-          rep_len(veh* profile[i, j]*lkm, nveh)
+          rep_len(veh * profile[i, j] * lkm, nveh)
         })
       })),
       dim = c(nveh, hour, day)
     )
-    if(as_df == FALSE){
+    if (as_df == FALSE) {
       return(d)
     } else {
       df <- as.data.frame(matrix(data = as.vector(d),
-                                 nrow = nveh,
-                                 ncol = hour*day))
-      names(df) <- paste0("h",1:length(df))
+        nrow = nveh,
+        ncol = hour * day))
+      names(df) <- paste0("h", 1:length(df))
       return(df)
     }
   }

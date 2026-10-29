@@ -11,12 +11,12 @@ test_that("ef_local works", {
 
 test_that("ef_local stops", {
   expect_error(ef_local("caca", "PC_G", ef = ef),
-               ".?")
+    ".?")
 })
 
 test_that("ef_local stops", {
   expect_error(ef_local("CO", "PC_G", ef = ef, year = 0),
-               ".?")
+    ".?")
 })
 
 
@@ -27,14 +27,14 @@ test_that("ef_local works", {
 
 test_that("ef_local works", {
   expect_equal(as.numeric(ef_local("CO",
-                                    "PC_G", ef = ef,
-                                    year = 2020)[1]),
-               0.155)
+    "PC_G", ef = ef,
+    year = 2020)[1]),
+  0.155)
 })
 
 test_that("ef_local works", {
   expect_equal(as.numeric(ef_local("CO",
-                                    "PC_G", ef = ef,
-                                    year = 1980)[1]),
-               33)
+    "PC_G", ef = ef,
+    year = 1980)[1]),
+  33)
 })

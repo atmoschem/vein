@@ -4,12 +4,12 @@
 .moves_cache <- new.env(parent = emptyenv())
 
 .moves_columns <- c("MOVESScenarioID", "MOVESRunID", "yearID", "monthID",
-                    "dayID", "hourID", "linkID", "pollutantID", "processID",
-                    "sourceTypeID", "regClassID", "SCC", "fuelTypeID",
-                    "modelYearID", "roadTypeID", "avgSpeedBinID", "temperature",
-                    "relHumidity", "ratePerDistance", "massUnits",
-                    "distanceUnits", "energyUnits", "masterVersion",
-                    "defaultDatabaseUsed")
+  "dayID", "hourID", "linkID", "pollutantID", "processID",
+  "sourceTypeID", "regClassID", "SCC", "fuelTypeID",
+  "modelYearID", "roadTypeID", "avgSpeedBinID", "temperature",
+  "relHumidity", "ratePerDistance", "massUnits",
+  "distanceUnits", "energyUnits", "masterVersion",
+  "defaultDatabaseUsed")
 
 .moves_table <- function(x, label) {
   if (is.character(x) && length(x) == 1L && !is.na(x)) {
@@ -18,8 +18,8 @@
       con <- gzfile(x, "rt")
       on.exit(close(con))
       x <- utils::read.table(con, header = TRUE, stringsAsFactors = FALSE,
-                             sep = if (grepl("\\.tsv\\.gz$", x)) "\t" else ",",
-                             check.names = FALSE, comment.char = "")
+        sep = if (grepl("\\.tsv\\.gz$", x)) "\t" else ",",
+        check.names = FALSE, comment.char = "")
     } else {
       x <- as.data.frame(data.table::fread(file = x))
     }
@@ -43,9 +43,9 @@
 
 .moves_numeric <- function(x, name, integer = FALSE) {
   if (!is.numeric(x) || inherits(x, "units") || any(!is.finite(x)) ||
-      (integer && any(x != floor(x)))) {
+    (integer && any(x != floor(x)))) {
     stop(name, " must contain finite ", if (integer) "integer " else "numeric ",
-         "values without units")
+      "values without units")
   }
 }
 
@@ -63,7 +63,7 @@
   }
   out <- unname(scale[key])
   if (anyNA(out)) stop("Unknown MOVES ", type, " units: ",
-                       paste(unique(x[is.na(out)]), collapse = ", "))
+    paste(unique(x[is.na(out)]), collapse = ", "))
   out
 }
 
@@ -130,29 +130,29 @@ moves_factors <- function(rates, runs, vehicles) {
   rates <- .moves_table(rates, "rates")
   runs <- .moves_table(runs, "runs")
   required <- c("MOVESRunID", "yearID", "pollutantID", "processID",
-                "sourceTypeID", "fuelTypeID", "modelYearID", "roadTypeID",
-                "avgSpeedBinID", "temperature", "relHumidity", "ratePerDistance")
+    "sourceTypeID", "fuelTypeID", "modelYearID", "roadTypeID",
+    "avgSpeedBinID", "temperature", "relHumidity", "ratePerDistance")
   .moves_required(rates, required, "rates")
   .moves_required(runs, c("MOVESRunID", "massUnits", "distanceUnits",
-                          "masterVersion", "defaultDatabaseUsed"), "runs")
+    "masterVersion", "defaultDatabaseUsed"), "runs")
   for (name in required) {
     .moves_numeric(rates[[name]], name,
-                   integer = !name %in% c("temperature", "relHumidity", "ratePerDistance"))
+      integer = !name %in% c("temperature", "relHumidity", "ratePerDistance"))
   }
   .moves_numeric(runs$MOVESRunID, "runs$MOVESRunID", integer = TRUE)
   if (anyDuplicated(runs$MOVESRunID)) stop("runs has duplicate MOVESRunID values")
   run <- match(rates$MOVESRunID, runs$MOVESRunID)
   if (anyNA(run)) stop("Every rate must match a MOVESRunID in runs")
   if (any(!rates$processID %in% .moves_distance_processes) ||
-      any(!rates$roadTypeID %in% 2:5)) {
+    any(!rates$roadTypeID %in% 2:5)) {
     stop("Select distance-based processes (running exhaust 1, brakewear 9, ",
-         "tirewear 10, evaporative 11--13) on roadTypeID 2--5")
+      "tirewear 10, evaporative 11--13) on roadTypeID 2--5")
   }
   if (any(rates$pollutantID %in% 91:94)) {
     stop("Energy consumption rates are not mass factors; export pollutants separately")
   }
   if (any(rates$sourceTypeID <= 0 | rates$fuelTypeID <= 0 |
-          rates$modelYearID <= 0 | rates$yearID < rates$modelYearID)) {
+    rates$modelYearID <= 0 | rates$yearID < rates$modelYearID)) {
     stop("Export disaggregated source, fuel and model year; modelYearID must not exceed yearID")
   }
   if (any(!rates$avgSpeedBinID %in% 1:16)) stop("avgSpeedBinID must be in 1:16")
@@ -190,7 +190,7 @@ moves_factors <- function(rates, runs, vehicles) {
   } else {
     vehicles <- .moves_table(vehicles, "vehicles")
     .moves_required(vehicles, c("sourceTypeID", "sourceTypeName",
-                                "fuelTypeID", "fuelTypeDesc"), "vehicles")
+      "fuelTypeID", "fuelTypeDesc"), "vehicles")
     .moves_numeric(vehicles$sourceTypeID, "vehicles$sourceTypeID", integer = TRUE)
     .moves_numeric(vehicles$fuelTypeID, "vehicles$fuelTypeID", integer = TRUE)
     if (anyDuplicated(vehicles[c("sourceTypeID", "fuelTypeID")])) {
@@ -204,22 +204,22 @@ moves_factors <- function(rates, runs, vehicles) {
   if ("linkID" %in% names(rates)) {
     .moves_numeric(rates$linkID[!is.na(rates$linkID)], "linkID", integer = TRUE)
     rates$locationID <- ifelse(is.na(rates$linkID), NA_character_,
-                               paste0("link:", rates$linkID))
+      paste0("link:", rates$linkID))
     # ExecutionRunSpec.java: virtual link = (zoneID * 10 + roadTypeID) * 100 + bin.
     # Keep the zone separate from speed so two counties can never be conflated.
     if ("domain" %in% names(runs)) {
       virtual <- which(runs$domain[run] %in% c("DEFAULT", "SINGLE") & rates$linkID > 0)
       link <- rates$linkID[virtual]
       if (any(link %% 100 != rates$avgSpeedBinID[virtual] |
-              floor(link / 100) %% 10 != rates$roadTypeID[virtual])) {
+        floor(link / 100) %% 10 != rates$roadTypeID[virtual])) {
         stop("Virtual linkID does not agree with the road type and speed bin")
       }
       rates$locationID[virtual] <- paste0("zone:", floor(link / 1000))
     }
   }
   result <- structure(list(rates = rates, runs = runs, vehicles = vehicles,
-                           schema_version = 1L, basis = "distance"),
-                      class = "MOVESFactors")
+    schema_version = 1L, basis = "distance"),
+  class = "MOVESFactors")
   if (cache) assign("distance", result, envir = .moves_cache)
   result
 }
@@ -234,7 +234,7 @@ moves_factors <- function(rates, runs, vehicles) {
   }
   key <- tolower(trimws(value))
   found <- unique(vehicles[[id]][!is.na(vehicles[[name]]) &
-                                    tolower(trimws(vehicles[[name]])) == key])
+    tolower(trimws(vehicles[[name]])) == key])
   if (!length(found)) stop("Unknown ", label, " '", value, "'; see moves_vehicles()")
   if (length(found) > 1L) stop("Ambiguous ", label, " '", value, "'; use its numeric ID")
   found
@@ -252,11 +252,11 @@ moves_factors <- function(rates, runs, vehicles) {
     return(as.integer(x))
   }
   map <- c(running = 1L, brake = 9L, brakewear = 9L, tire = 10L, tirewear = 10L,
-           permeation = 11L, venting = 12L, leaks = 13L)
+    permeation = 11L, venting = 12L, leaks = 13L)
   out <- unname(map[tolower(as.character(x))])
   if (is.na(out)) {
     stop("Unknown process; use running, brake, tire, permeation, venting, leaks ",
-         "or a numeric MOVES ID")
+      "or a numeric MOVES ID")
   }
   out
 }
@@ -265,9 +265,9 @@ moves_factors <- function(rates, runs, vehicles) {
   if (length(x) != 1L || anyNA(x)) stop("pollutant must be one name or MOVES ID")
   if (is.numeric(x) && is.finite(x) && x > 0 && x == floor(x)) return(x)
   map <- c(CO = 2L, NOX = 3L, HC = 1L, THC = 1L, CH4 = 5L, N2O = 6L, NH3 = 30L,
-           SO2 = 31L, NMHC = 79L, NMOG = 80L, TOG = 86L, VOC = 87L, CO2 = 90L,
-           CO2E = 98L, PM10 = 100L, `PM2.5` = 110L, OC = 111L, EC = 112L,
-           SO4 = 115L)
+    SO2 = 31L, NMHC = 79L, NMOG = 80L, TOG = 86L, VOC = 87L, CO2 = 90L,
+    CO2E = 98L, PM10 = 100L, `PM2.5` = 110L, OC = 111L, EC = 112L,
+    SO4 = 115L)
   key <- toupper(as.character(x))
   out <- unname(map[key])
   # Brake and tire wear particulate matter have their own pollutant IDs.
@@ -276,7 +276,7 @@ moves_factors <- function(rates, runs, vehicles) {
   }
   if (is.na(out)) {
     stop("Unknown pollutant; use CO, NOx, THC, CH4, N2O, NH3, SO2, NMHC, NMOG, ",
-         "TOG, VOC, CO2, CO2e, PM2.5, PM10, OC, EC, SO4 or a numeric MOVES ID")
+      "TOG, VOC, CO2, CO2e, PM2.5, PM10, OC, EC, SO4 or a numeric MOVES ID")
   }
   out
 }
@@ -304,7 +304,7 @@ moves_vehicles <- function(factors = moves_factors()) {
     vehicles$fuelTypeDesc <- NA_character_
   }
   vehicles <- vehicles[c("sourceTypeID", "sourceTypeName",
-                         "fuelTypeID", "fuelTypeDesc")]
+    "fuelTypeID", "fuelTypeDesc")]
   vehicles <- vehicles[order(vehicles$sourceTypeID, vehicles$fuelTypeID), ]
   rownames(vehicles) <- NULL
   vehicles
@@ -367,31 +367,31 @@ moves_vehicles <- function(factors = moves_factors()) {
 #' f <- ef_moves("NOx", model_year = 2020, select = list(hourID = 1))
 #' f(c(20, 40, 60))
 ef_moves <- function(pollutant, model_year, speed, factors = moves_factors(),
-                      source_type_id = 21, fuel_type_id = 1, road_type_id = 5,
-                      temperature, rel_humidity, select = list(),
-                      method = c("bin", "linear"), process = 1L) {
+                     source_type_id = 21, fuel_type_id = 1, road_type_id = 5,
+                     temperature, rel_humidity, select = list(),
+                     method = c("bin", "linear"), process = 1L) {
   if (!inherits(factors, "MOVESFactors") || !identical(factors$schema_version, 1L) ||
-      !identical(factors$basis, "distance")) {
+    !identical(factors$basis, "distance")) {
     stop("factors must be created by moves_factors()")
   }
   method <- match.arg(method)
   source_type_id <- .moves_id(source_type_id, factors$vehicles,
-                              "sourceTypeID", "sourceTypeName", "source_type_id")
+    "sourceTypeID", "sourceTypeName", "source_type_id")
   fuel_type_id <- .moves_id(fuel_type_id, factors$vehicles,
-                            "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
+    "fuelTypeID", "fuelTypeDesc", "fuel_type_id")
   process <- .moves_process(process)
   filters <- list(pollutantID = .moves_pollutant(pollutant, process),
-                  modelYearID = model_year, sourceTypeID = source_type_id,
-                  fuelTypeID = fuel_type_id, roadTypeID = road_type_id,
-                  processID = process)
+    modelYearID = model_year, sourceTypeID = source_type_id,
+    fuelTypeID = fuel_type_id, roadTypeID = road_type_id,
+    processID = process)
   if (!missing(temperature)) filters$temperature_C <- temperature
   if (!missing(rel_humidity)) filters$relHumidity <- rel_humidity
   if (!is.list(select) || (length(select) &&
-      (is.null(names(select)) || anyNA(names(select)) || any(!nzchar(names(select))) ||
-       anyDuplicated(names(select))))) stop("select must be a named list of scalar values")
+    (is.null(names(select)) || anyNA(names(select)) || any(!nzchar(names(select))) ||
+      anyDuplicated(names(select))))) stop("select must be a named list of scalar values")
   if (length(intersect(names(filters), names(select)))) {
     stop("select duplicates a named argument: ",
-         paste(intersect(names(filters), names(select)), collapse = ", "))
+      paste(intersect(names(filters), names(select)), collapse = ", "))
   }
   filters <- c(filters, select)
   rates <- factors$rates
@@ -401,7 +401,7 @@ ef_moves <- function(pollutant, model_year, speed, factors = moves_factors(),
   for (name in names(filters)) {
     value <- filters[[name]]
     if (length(value) != 1L || anyNA(value) || inherits(value, "units") ||
-        !is.atomic(value) || (is.numeric(value) && !is.finite(value))) {
+      !is.atomic(value) || (is.numeric(value) && !is.finite(value))) {
       stop("Select one non-missing value without units for ", name)
     }
     keep <- if (name %in% c("temperature_C", "temperature", "relHumidity")) {
@@ -414,9 +414,9 @@ ef_moves <- function(pollutant, model_year, speed, factors = moves_factors(),
   }
   if (!nrow(rates)) stop("No MOVES rates match the requested vehicle/scenario")
   dimensions <- setdiff(names(rates), c(forbidden,
-                                       if ("locationID" %in% names(rates)) "linkID"))
+    if ("locationID" %in% names(rates)) "linkID"))
   ambiguous <- dimensions[vapply(rates[dimensions], function(x) length(unique(x)) > 1L,
-                                  logical(1))]
+    logical(1))]
   if (length(ambiguous)) {
     stop("Select one scenario; ambiguous dimensions: ", paste(ambiguous, collapse = ", "))
   }
@@ -458,7 +458,7 @@ ef_moves <- function(pollutant, model_year, speed, factors = moves_factors(),
       id <- findInterval(mph[valid], seq(2.5, 72.5, 5)) + 1L
       index <- match(id, bins)
       if (anyNA(index)) stop("Missing MOVES speed bins: ",
-                             paste(unique(id[is.na(index)]), collapse = ", "))
+        paste(unique(id[is.na(index)]), collapse = ", "))
       out[valid] <- values[index]
     } else {
       v <- mph[valid]

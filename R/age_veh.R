@@ -61,20 +61,20 @@
 #' LT_B5 <- age_veh(x = net$hdv, type = "hdv", name = "LT_B5")
 #' plot(LT_B5)
 #' }
-age_veh <- function (x,
-                     type = "ldv",
-                     name = "age",
-                     a = if(type == "ldv") 1.698 else 0.2,
-                     b = if(type == "ldv") -0.2 else 17,
-                     agemin = 1,
-                     agemax = 50,
-                     k = 1,
-                     bystreet = F,
-                     net,
-                     verbose = FALSE,
-                     namerows,
-                     time){
-  if(!type %in% c("ldv", "hdv", "mc"))stop("Type can be ldv, hdv or mc")
+age_veh <- function(x,
+                    type = "ldv",
+                    name = "age",
+                    a = if (type == "ldv") 1.698 else 0.2,
+                    b = if (type == "ldv") -0.2 else 17,
+                    agemin = 1,
+                    agemax = 50,
+                    k = 1,
+                    bystreet = F,
+                    net,
+                    verbose = FALSE,
+                    namerows,
+                    time) {
+  if (!type %in% c("ldv", "hdv", "mc")) stop("Type can be ldv, hdv or mc")
 
   # check na
   x[is.na(x)] <- 0
@@ -82,92 +82,100 @@ age_veh <- function (x,
   x <- as.numeric(x)
 
   # length k
-  if(length(k) != 1 && length(k) != length(x)){
+  if (length(k) != 1 && length(k) != length(x)) {
     stop("length of 'k' must be 1 or equal to length of 'x'")
   }
   k <- as.numeric(k)
 
-  #check agemax
-  if(agemax < 1) stop("'agemax' must be >= 1")
-  if(agemin < 1) stop("'agemin' must be >= 1")
-  if(agemin > agemax) stop("'agemin' must be <= 'agemax'")
+  # check agemax
+  if (agemax < 1) stop("'agemax' must be >= 1")
+  if (agemin < 1) stop("'agemin' must be >= 1")
+  if (agemin > agemax) stop("'agemin' must be <= 'agemax'")
 
   # distribution by age from a survival curve
   # -diff(S) and the remainder distributed uniformly so that sum is 1
   dist_age <- function(fx, anos) {
-    if(length(anos) == 1) return(1)
-    d <- (-1)*diff(fx(anos))
-    d[length(d)+1] <- d[length(d)]
-    d + (1 - sum(d))/length(d)
+    if (length(anos) == 1) return(1)
+    d <- (-1) * diff(fx(anos))
+    d[length(d) + 1] <- d[length(d)]
+    d + (1 - sum(d)) / length(d)
   }
 
   anos <- seq(agemin, agemax)
 
-  #bystreet = TRUE
-  if (bystreet == T){
-    if(length(x) != length(a)){
+  # bystreet = TRUE
+  if (bystreet == T) {
+    if (length(x) != length(a)) {
       stop("Lengths of veh and age must be the same")
     }
-    if(length(b) == 1) b <- rep(b, length(x))
-    if(length(x) != length(b)){
+    if (length(b) == 1) b <- rep(b, length(x))
+    if (length(x) != length(b)) {
       stop("length of 'b' must be 1 or equal to length of 'x'")
     }
 
     d <- lapply(seq_along(x), function(i) {
-      if(type == "ldv") {
-        fx <- function (t) {1 - exp(-exp(a[i] + b[i]*t))}
+      if (type == "ldv") {
+        fx <- function(t) {
+          1 - exp(-exp(a[i] + b[i] * t))
+        }
       } else {
-        fx <- function (t) {1/(1 + exp(a[i]*(t+b[i])))+1/(1 + exp(a[i]*(t-b[i])))}
+        fx <- function(t) {
+          1 / (1 + exp(a[i] * (t + b[i]))) + 1 / (1 + exp(a[i] * (t - b[i])))
+        }
       }
-      dist_age(fx, anos)*x[i]
+      dist_age(fx, anos) * x[i]
     })
     df <- as.data.frame(do.call("rbind", d))
 
-    #bystreet = FALSE
+    # bystreet = FALSE
   } else {
     # functions
-    if(type == "ldv") {
-      fx <- function (t) {1 - exp(-exp(a + b*t))}
+    if (type == "ldv") {
+      fx <- function(t) {
+        1 - exp(-exp(a + b * t))
+      }
     } else {
-      fx <- function (t) {1/(1 + exp(a*(t+b)))+1/(1 + exp(a*(t-b)))}
+      fx <- function(t) {
+        1 / (1 + exp(a * (t + b))) + 1 / (1 + exp(a * (t - b)))
+      }
     }
 
     d <- dist_age(fx, anos)
-    df <- as.data.frame(as.matrix(x) %*%matrix(d,ncol=length(anos), nrow=1))
+    df <- as.data.frame(as.matrix(x) %*% matrix(d, ncol = length(anos), nrow = 1))
   }
 
-  df <- as.data.frame(cbind(as.data.frame(matrix(0,ncol=agemin-1,
-                                                 nrow=length(x))),
-                            df))
+  df <- as.data.frame(cbind(as.data.frame(matrix(0, ncol = agemin - 1,
+    nrow = length(x))),
+  df))
 
-  names(df) <- paste(name,seq(1,agemax),sep="_")
+  names(df) <- paste(name, seq(1, agemax), sep = "_")
 
   # k is applied only once
-  df <- df*k
+  df <- df * k
 
-  if(verbose){
-    message(paste("Average age of",name, "is",
-                  round(sum(seq(1,agemax)*base::colSums(df, na.rm = T)/sum(df, na.rm = T)), 2),
-                  sep=" "))
-    message(paste("Number of",name, "is",
-                  round(sum(df, na.rm = T)/1000, 2),
-                  "* 10^3 veh",
-                  sep=" ")
+  if (verbose) {
+    message(paste("Average age of", name, "is",
+      round(sum(seq(1, agemax) * base::colSums(df, na.rm = T) / sum(df, na.rm = T)), 2),
+      sep = " "))
+    message(paste("Number of", name, "is",
+      round(sum(df, na.rm = T) / 1000, 2),
+      "* 10^3 veh",
+      sep = " ")
     )
     cat("\n")
   }
-  if(!missing(namerows)) {
-    if(length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
+  if (!missing(namerows)) {
+    if (length(namerows) != nrow(df)) stop("length of namerows must be the length of number of rows of veh")
     row.names(df) <- namerows
   }
 
-  if(!missing(time)){
+  if (!missing(time)) {
     veh <- Vehicles(df, time = time)
   } else {
     veh <- Vehicles(df)
   }
 
-  if(!missing(net)){
+  if (!missing(net)) {
     netsf <- sf::st_as_sf(net)
     return(sf::st_sf(veh, geometry = sf::st_geometry(netsf)))
   } else {

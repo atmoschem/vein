@@ -18,23 +18,23 @@
 #' @export
 celsius <- function(x) {
   to_u <- function(v) {
-    if(inherits(v, "units")) {
+    if (inherits(v, "units")) {
       units::set_units(v, "degC", mode = "standard")
     } else {
-      v*units::as_units("degC")
+      v * units::as_units("degC")
     }
   }
-  if ( is.matrix(x) ) {
+  if (is.matrix(x)) {
     e <- as.data.frame(x)
-    for(i in 1:ncol(e)){
-      e[,i] <- to_u(e[,i])
+    for (i in 1:ncol(e)) {
+      e[, i] <- to_u(e[, i])
     }
-  } else if ( is.data.frame(x) ) {
+  } else if (is.data.frame(x)) {
     e <- x
-    for(i in 1:ncol(x)){
-      e[,i] <- to_u(e[,i])
+    for (i in 1:ncol(x)) {
+      e[, i] <- to_u(e[, i])
     }
-  } else if( is.numeric(x) ) {
+  } else if (is.numeric(x)) {
     e <- to_u(x)
   } else {
     stop("'x' must be of class 'data.frame', 'matrix', 'units', 'numeric' or 'integer'")

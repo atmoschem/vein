@@ -2,7 +2,7 @@ context("colplot")
 
 a <-   colplot(
   EmissionFactors(data.frame(a = 1:5,
-                             b = 1:5))
+    b = 1:5))
 )
 a
 test_that("colplot works", {
@@ -16,4 +16,3 @@ test_that("colplot works", {
       EmissionFactors(data.frame(a = 1:5))
     )$rect$w, 0), 0)
 })
-

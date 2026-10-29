@@ -38,95 +38,95 @@ ef_local <- function(p,
                      ef,
                      full = FALSE,
                      project = "constant",
-                     verbose = TRUE){
+                     verbose = TRUE) {
 
   ef[is.na(ef)] <- 0
 
   # Check names
-  if(verbose) {
+  if (verbose) {
     cat("\nNames of the ef data.frame: \n")
     print(names(ef))
   }
 
   # Check column Pollutant
   iss <- unique(grepl(pattern = "Year", x = names(ef)))
-  if(length(iss) == 1) stop("Please, add a column named `Year` in your ef data.frame")
+  if (length(iss) == 1) stop("Please, add a column named `Year` in your ef data.frame")
   year1 <- ef$Year[1]
 
   # Check names
-  if(verbose) {
+  if (verbose) {
     cat("\nRange Year:", range(ef$Year), "\n")
   }
-  if(year < min(ef$Year)) stop("Min Year:", min(ef$Year), "\n")
+  if (year < min(ef$Year)) stop("Min Year:", min(ef$Year), "\n")
 
   # Check column Pollutant
   iss <- unique(grepl(pattern = "Pollutant", x = names(ef)))
-  if(length(iss) == 1) stop("Please, add a column named `Pollutant` in your ef data.frame")
+  if (length(iss) == 1) stop("Please, add a column named `Pollutant` in your ef data.frame")
 
   pols <- as.character(unique(ef$Pollutant))
-  if(verbose) cat("\nNames of the Pollutants: ", unique(ef$Pollutant), "\n")
+  if (verbose) cat("\nNames of the Pollutants: ", unique(ef$Pollutant), "\n")
 
   # Selecting
   ef <- ef[ef$Year <= year, ]
 
-  if(!p %in% pols){
+  if (!p %in% pols) {
     stop("Please, choose one of the following pollutants:\n",
-         paste(pols, collapse = ", "))
+      paste(pols, collapse = ", "))
   }
 
-  if(full) {
+  if (full) {
 
     df <- cbind(ef[ef$Pollutant %in% p, 1:3],
-                EmissionFactors(ef[ef$Pollutant == p, veh]))
+      EmissionFactors(ef[ef$Pollutant == p, veh]))
     names(df)[ncol(df)] <- p
 
-  } else{
+  } else {
 
     df <- vein::EmissionFactors(ef[ef$Pollutant == p, veh])
     row.names(df)
   }
 
 
-  if(is.data.frame(df)){
+  if (is.data.frame(df)) {
     # project future EF
-    if(project == "constant"){
-      if(year > year1){
+    if (project == "constant") {
+      if (year > year1) {
         dif <- year - year1
 
-        eff <- do.call("rbind",(lapply(1:dif, function(i){
+        eff <- do.call("rbind", (lapply(1:dif, function(i) {
           df[1, ]
         })))
         df <- rbind(eff, df[seq_len(max(0, agemax - dif)), ])
         row.names(df) <- NULL
-        if("Age" %in% names(df)) df$Age <- seq_len(nrow(df))
-        if("Year" %in% names(df)) df$Year <- year - seq_len(nrow(df)) + 1
+        if ("Age" %in% names(df)) df$Age <- seq_len(nrow(df))
+        if ("Year" %in% names(df)) df$Year <- year - seq_len(nrow(df)) + 1
       }
     }
 
-    #Filling older ef
-    if(!missing(agemax)){
-      if(nrow(df) < agemax){
+    # Filling older ef
+    if (!missing(agemax)) {
+      if (nrow(df) < agemax) {
         dif <- agemax - nrow(df)
-        df[nrow(df):(nrow(df)+dif), ] <- df[nrow(df), ]
+        df[nrow(df):(nrow(df) + dif), ] <- df[nrow(df), ]
       }
       df <-  df[1:agemax, ]
     }
 
   } else {
     # project future EF
-    if(project == "constant"){
-      if(year > year1){
+    if (project == "constant") {
+      if (year > year1) {
         dif <- year - year1
         eff <- rep(df[1], dif)
         df <- c(eff, df[seq_len(max(0, agemax - dif))])
       }
     }
 
-    #Filling older ef
-    if(!missing(agemax)){
-      if(length(df) < agemax){
+    # Filling older ef
+    if (!missing(agemax)) {
+      if (length(df) < agemax) {
         dif <- agemax - length(df)
-        df[length(df):(length(df)+dif)] <- df[length(df)]
+        df[length(df):(length(df) + dif)] <- df[length(df)]
       }
       df <-  df[1:agemax]
     }

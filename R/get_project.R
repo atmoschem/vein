@@ -44,7 +44,7 @@
 get_project <- function(directory, case, url) {
   if (missing(directory)) {
     stop("Please, add a path to a directory")
-  } #nocov start
+  } # nocov start
 
   if (missing(case) && missing(url)) {
     stop("Please, select a case. run ?vein::get_project")
@@ -67,7 +67,7 @@ get_project <- function(directory, case, url) {
   if (!missing(url)) {
     is_zip <- grepl("\\.zip$", url, ignore.case = TRUE)
     is_tar <- grepl("\\.(tar\\.gz|tgz|tar|tar\\.bz2|tar\\.xz)$", url,
-                    ignore.case = TRUE)
+      ignore.case = TRUE)
     if (!is_zip && !is_tar) {
       stop("'url' must point to a .tar.gz, .tgz, .tar or .zip file")
     }
@@ -139,7 +139,7 @@ get_project <- function(directory, case, url) {
   } else if (case %in% c("argentina")) {
     dl_untar(paste0(gh, "argentina.tar.gz"))
     dl(paste0(gl, "wrf_argentina/wrfinput_d01"),
-       file.path(directory, "wrfinput_d01"))
+      file.path(directory, "wrfinput_d01"))
     message("Your directory is in ", directory)
 
     # brazil_bu_chem_streets ####
@@ -152,7 +152,7 @@ get_project <- function(directory, case, url) {
     rf <- c(
       list.files(directory, pattern = "^main.*\\.R$", full.names = TRUE),
       list.files(file.path(directory, "scripts"), pattern = "\\.R$",
-                 full.names = TRUE)
+        full.names = TRUE)
     )
     for (f in rf) {
       x <- readLines(f, warn = FALSE)
@@ -212,13 +212,13 @@ get_project <- function(directory, case, url) {
     message("Your directory for vehicular emissions is in ", directory)
 
     dir.create(file.path(directory, "network"), showWarnings = FALSE,
-               recursive = TRUE)
+      recursive = TRUE)
     dl(paste0(gl, "curitiba_all/gtfs_cur.zip"),
-       file.path(directory, "network", "gtfs_cur.zip"))
+      file.path(directory, "network", "gtfs_cur.zip"))
     message("GTFS Curitba is in  ", file.path(directory, "network"))
 
     dl_untar(paste0(gl, "curitiba_all/curitiba_industrial.tar.gz"),
-             exdir = file.path(directory, "industry"))
+      exdir = file.path(directory, "industry"))
     message("Your directory for industrial emissions is in ", directory)
   } else {
     stop("Other cases not supported yet")

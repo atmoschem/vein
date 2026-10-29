@@ -67,11 +67,11 @@ ef_hdv_scaled <- function(df,
                           l = 0.5,
                           p,
                           programs_only = FALSE) {
-  if(length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
+  if (length(dfcol) != length(eu)) stop("Length of dfcol must be the same as length of eu")
   dfcol <- as.numeric(dfcol)
   n <- length(dfcol)
   base <- ef_hdv_programs(v = v, t = t, g = g, eu = as.character(eu),
-                          gr = gr, l = l, p = p, k = rep(1, n))
+    gr = gr, l = l, p = p, k = rep(1, n))
   SDC0 <- vapply(base, function(pr) ef_eval_program(pr, SDC), numeric(1))
   ks <- dfcol / SDC0
   progs <- lapply(seq_len(n), function(i) {
@@ -83,17 +83,16 @@ ef_hdv_scaled <- function(df,
   if (programs_only) return(programs)
   la <- lapply(seq_len(n), function(i) {
     ef_hdv_speed(v = v,
-                 t = t,
-                 g = g,
-                 eu = as.character(eu[i]),
-                 gr = gr,
-                 l = l,
-                 p = p,
-                 k = ks[i],
-                 show.equation = FALSE)
+      t = t,
+      g = g,
+      eu = as.character(eu[i]),
+      gr = gr,
+      l = l,
+      p = p,
+      k = ks[i],
+      show.equation = FALSE)
   })
   class(la) <- c("EmissionFactorsList", class(la))
   attr(la, "programs") <- programs
   return(la)
 }
-

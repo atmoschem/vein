@@ -13,9 +13,9 @@ test_that("emis_to_streets keeps the order of streets with several IDs", {
   expect_equal(r$ldv, d$ldv)
   expect_true(all(sf::st_equals(r, d, sparse = FALSE)[cbind(1:4, 1:4)]))
   expect_equal(r$CO, ifelse(d$ID == "A", 100 * L / sum(L[d$ID == "A"]),
-                            1000 * L / sum(L[d$ID == "B"])))
+    1000 * L / sum(L[d$ID == "B"])))
   expect_equal(r$BC, ifelse(d$ID == "A", 1 * L / sum(L[d$ID == "A"]),
-                            10 * L / sum(L[d$ID == "B"])))
+    10 * L / sum(L[d$ID == "B"])))
 })
 
 test_that("emis_to_streets keeps the names of dfemis columns", {
@@ -34,7 +34,7 @@ test_that("emis_to_streets with stpro keeps the order of streets", {
   d$stpro <- c("z", "a", "z", "a")
   L <- as.numeric(sf::st_length(d))
   r <- suppressMessages(emis_to_streets(d, data.frame(BC = 1, ID = "A"),
-                                        stpro = data.frame(stpro = c("a", "z"), VAL = c(1, 3))))
+    stpro = data.frame(stpro = c("a", "z"), VAL = c(1, 3))))
   expect_equal(r$ldv, d$ldv)
   expect_equal(r$stpro, d$stpro)
   w <- L * ifelse(d$stpro == "z", 3, 1)
@@ -45,7 +45,7 @@ test_that("emis_to_streets keeps streets without emissions", {
   d3 <- nsf[1:3, "ldv"]
   d3$ID <- c("A", "A", "Z")
   r <- expect_warning(suppressMessages(emis_to_streets(d3, data.frame(BC = 1, ID = "A"))),
-                      "not present")
+    "not present")
   expect_equal(nrow(r), 3)
   expect_equal(r$BC[3], 0)
   expect_equal(sum(r$BC), 1)

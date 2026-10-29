@@ -34,28 +34,28 @@
 #' data(decoder)
 #' decoder
 #' }
-moves_rpdy <- function (veh,
-                        lkm,
-                        ef,
-                        source_type_id = 21,
-                        fuel_type_id = 1,
-                        pollutant_id = 91,
-                        road_type_id = 5,
-                        fuel_type,
-                        speed_bin,
-                        profile,
-                        vehicle,
-                        vehicle_type,
-                        fuel_subtype,
-                        process_id,
-                        net,
-                        path_all,
-                        verbose = FALSE) {
+moves_rpdy <- function(veh,
+                       lkm,
+                       ef,
+                       source_type_id = 21,
+                       fuel_type_id = 1,
+                       pollutant_id = 91,
+                       road_type_id = 5,
+                       fuel_type,
+                       speed_bin,
+                       profile,
+                       vehicle,
+                       vehicle_type,
+                       fuel_subtype,
+                       process_id,
+                       net,
+                       path_all,
+                       verbose = FALSE) {
 
   has_fuel <- !missing(fuel_type)
   has_process <- !missing(process_id)
   profile <- as.data.frame(profile)
-  if("Hour" %in% names(profile)) {
+  if ("Hour" %in% names(profile)) {
     profile$Hour <- NULL
   }
 
@@ -66,8 +66,8 @@ moves_rpdy <- function (veh,
 
   lxspeed <- data.table::rbindlist(lapply(ll, function(i) {
 
-    if(verbose) cat("Estimating emissions of veh", i, " sourceTypeID",
-                    source_type_id[i], "and fuelTypeID",  fuel_type_id[i], "\n")
+    if (verbose) cat("Estimating emissions of veh", i, " sourceTypeID",
+      source_type_id[i], "and fuelTypeID",  fuel_type_id[i], "\n")
 
     data.table::rbindlist(lapply(1:ncol(speed_bin), function(j) {
       # hour of the day for any number of days
@@ -76,9 +76,9 @@ moves_rpdy <- function (veh,
       hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
 
       def <- ef[hourID == hour_j &
-                  pollutantID == pollutant_id &
-                  sourceTypeID == source_type_id[i] &
-                  fuelTypeID == fuel_type_id[i],]
+        pollutantID == pollutant_id &
+        sourceTypeID == source_type_id[i] &
+        fuelTypeID == fuel_type_id[i], ]
       if (has_process && "processID" %in% names(def)) {
         def <- def[processID == process_id]
       }
@@ -87,13 +87,13 @@ moves_rpdy <- function (veh,
       }
       if (nrow(def) == 0) {
         stop("No EF for hourID ", hour_j, ", pollutantID ", pollutant_id,
-             ", sourceTypeID ", source_type_id[i], ", fuelTypeID ",
-             fuel_type_id[i], " and roadTypeID ", road_type_id)
+          ", sourceTypeID ", source_type_id[i], ", fuelTypeID ",
+          fuel_type_id[i], " and roadTypeID ", road_type_id)
       }
       if ("modelYearID" %in% names(def) &&
-          anyDuplicated(def[, c("avgSpeedBinID", "modelYearID"), with = FALSE])) {
+        anyDuplicated(def[, c("avgSpeedBinID", "modelYearID"), with = FALSE])) {
         stop("ef has more than one EF per avgSpeedBinID and modelYearID; ",
-             "filter it by processID/roadTypeID first")
+          "filter it by processID/roadTypeID first")
       }
 
       data.table::setorderv(def, cols = "modelYearID", order = -1)
@@ -104,27 +104,27 @@ moves_rpdy <- function (veh,
       efbin$id <- 1:nrow(efbin)
       dfbin <- merge(dfbin, efbin, by = "bin", all.x = T)
 
-      if(sum(is.na(dfbin$id)) > 0){
+      if (sum(is.na(dfbin$id)) > 0) {
         fill_bins <- dfbin[!is.na(dfbin$id), ]$bin[1]
         missing_bins <- dfbin[is.na(dfbin$id), ]$bin
-        if(verbose) warning("Detected missing bins in ef: ", paste(missing_bins, collapse = " "),
-                            "\nAssuming: ", fill_bins)
+        if (verbose) warning("Detected missing bins in ef: ", paste(missing_bins, collapse = " "),
+          "\nAssuming: ", fill_bins)
       }
 
       # here we rename modelYearID by age of use
       modelYearID <- avgSpeedBinID <- .N <- NULL
-      def[, modelYearID :=1:.N, by = avgSpeedBinID]
+      def[, modelYearID := 1:.N, by = avgSpeedBinID]
 
       def_veh <- dcast.data.table(data = def,
-                                  formula = avgSpeedBinID ~ modelYearID,
-                                  value.var = "EF")
+        formula = avgSpeedBinID ~ modelYearID,
+        value.var = "EF")
 
       names(def_veh)[2:ncol(def_veh)] <- paste0("age_", names(def_veh)[2:ncol(def_veh)])
 
-      if(sum(is.na(dfbin$id)) > 0){
+      if (sum(is.na(dfbin$id)) > 0) {
         la <- replicate(n = length(missing_bins),
-                        expr = def_veh[avgSpeedBinID == fill_bins],
-                        simplify = F)
+          expr = def_veh[avgSpeedBinID == fill_bins],
+          simplify = F)
         la <- data.table::rbindlist(la)
         la$avgSpeedBinID <- missing_bins
         def_veh <- rbind(def_veh, la)
@@ -134,82 +134,82 @@ moves_rpdy <- function (veh,
 
       # id keeps the order of the links after merge()
       dt <- data.table::data.table(id = seq_along(speed_bin[[j]]),
-                                   avgSpeedBinID = speed_bin[[j]])
+        avgSpeedBinID = speed_bin[[j]])
 
       df_net_ef <- merge(dt,
-                         def_veh,
-                         by = "avgSpeedBinID",
-                         all.x = T)
+        def_veh,
+        by = "avgSpeedBinID",
+        all.x = T)
       df_net_ef <- df_net_ef[order(df_net_ef$id), ]
       df_net_ef$id <- NULL
 
-      #EmissionFactors
+      # EmissionFactors
 
-      EF <- df_net_ef[,2:ncol(df_net_ef)]
+      EF <- df_net_ef[, 2:ncol(df_net_ef)]
 
       if (pollutant_id == 91) {
         if (!has_fuel) stop("Please, add `fuel_type` data.frame from MOVES")
         df_fuel <- data.table::as.data.table(fuel_type)[fuelTypeID == fuel_type_id[i],
-                                                        lapply(.SD, mean, na.rm = T),
-                                                        .SDcols = c("carbonContent",
-                                                                    "humidityCorrectionCoeff",
-                                                                    "energyContent",
-                                                                    "fuelDensity"),
-                                                        by = fuelTypeID]
-        EF <- EF/1000 * 1/df_fuel$energyContent * 1/df_fuel$fuelDensity
-        for(kk in 1:ncol(EF)) {
-          EF[[kk]] <- units::set_units(EF[[kk]],"gallons/miles/veh")
+          lapply(.SD, mean, na.rm = T),
+          .SDcols = c("carbonContent",
+            "humidityCorrectionCoeff",
+            "energyContent",
+            "fuelDensity"),
+          by = fuelTypeID]
+        EF <- EF / 1000 * 1 / df_fuel$energyContent * 1 / df_fuel$fuelDensity
+        for (kk in 1:ncol(EF)) {
+          EF[[kk]] <- units::set_units(EF[[kk]], "gallons/miles/veh")
         }
 
       } else {
         EF <- EmissionFactors(x = as.data.frame(EF), mass = "g", dist = "miles")
 
-        for(kk in 1:ncol(EF)) {
-          EF[[kk]] <- EF[[kk]]*units::set_units(1,"1/veh")
+        for (kk in 1:ncol(EF)) {
+          EF[[kk]] <- EF[[kk]] * units::set_units(1, "1/veh")
         }
       }
 
       if (is.data.frame(veh)) {
 
-        if(ncol(EF) < ncol(veh)) {
-          if(verbose)  message("Number of columns of EF is lower than number of columns of veh. Fixing")
+        if (ncol(EF) < ncol(veh)) {
+          if (verbose) message("Number of columns of EF is lower than number of columns of veh. Fixing")
           dif_col <- ncol(veh) - ncol(EF)
-          for(kk in (ncol(EF) + 1):(ncol(EF) + dif_col)) {
+          for (kk in (ncol(EF) + 1):(ncol(EF) + dif_col)) {
             EF[[kk]] <- EF[[ncol(EF)]]
           }
         }
 
         lx <- data.table::rbindlist(lapply(1:agemax,
-                                           function(k) {
-                                             data.table::data.table(
-                                               emi = EF[[k]] * veh[[k]] * lkm * profile[j, i],
-                                               id = 1:nrow(df_net_ef),
-                                               age = k,
-                                               hour = j)
-                                           }))
+          function(k) {
+            data.table::data.table(
+              emi = EF[[k]] * veh[[k]] * lkm * profile[j, i],
+              id = 1:nrow(df_net_ef),
+              age = k,
+              hour = j)
+          }))
       } else if (is.list(veh)) {
 
-        if(ncol(EF) < ncol(veh[[i]])) {
-          if(verbose) message("Number of columns of EF is lower than number of columns of veh. Fixing")
+        if (ncol(EF) < ncol(veh[[i]])) {
+          if (verbose) message("Number of columns of EF is lower than number of columns of veh. Fixing")
           dif_col <- ncol(veh[[i]]) - ncol(EF)
 
-          for(kk in (ncol(EF) + 1):(ncol(EF) + dif_col)) {
+          for (kk in (ncol(EF) + 1):(ncol(EF) + dif_col)) {
             EF[[kk]] <- EF[[ncol(EF)]]
           }
         }
 
         lx <- data.table::rbindlist(lapply(1:agemax,
-                                           function(k) {
-                                             data.table::data.table(
-                                               emi = EF[[k]] * veh[[i]][[k]] * lkm * profile[j, i],
-                                               id = 1:nrow(df_net_ef),
-                                               age = k,
-                                               hour = j)
-                                           }))
+          function(k) {
+            data.table::data.table(
+              emi = EF[[k]] * veh[[i]][[k]] * lkm * profile[j, i],
+              id = 1:nrow(df_net_ef),
+              age = k,
+              hour = j)
+          }))
       }
       emi <- data.table::dcast.data.table(lx,
-                                          formula = id + hour ~ age,
-                                          value.var = "emi")
+        formula = id + hour ~ age,
+        value.var = "emi")
       names(emi)[3:ncol(emi)] <- paste0("age_", names(emi)[3:ncol(emi)])
       emi$veh <- vehicle[i]
       emi$veh_type <- vehicle_type[i]
@@ -226,28 +226,28 @@ moves_rpdy <- function (veh,
   if (!missing(path_all)) {
     if (verbose)
       message("The table has size ", format(object.size(lxspeed),
-                                            units = "Mb"))
+        units = "Mb"))
     saveRDS(lxspeed, paste0(path_all, ".rds"))
   }
 
   id <- hour <- . <- NULL
 
   by_street <- lxspeed[,
-                       lapply(.SD, sum, na.rm = T),
-                       .SDcols = paste0("age_", 1:agemax),
-                       by = .(id, hour)]
+    lapply(.SD, sum, na.rm = T),
+    .SDcols = paste0("age_", 1:agemax),
+    by = .(id, hour)]
 
   by_street$age_total <- rowSums(by_street[, 3:(agemax + 2)])
 
   age_total <- NULL
 
   by_street2 <- by_street[,
-                          sum(age_total, na.rm = T),
-                          by = .(id, hour)]
+    sum(age_total, na.rm = T),
+    by = .(id, hour)]
 
   streets <- data.table::dcast.data.table(by_street2,
-                                          formula = id ~ hour,
-                                          value.var = "V1")
+    formula = id ~ hour,
+    value.var = "V1")
 
   names(streets)[2:ncol(streets)] <- paste0("H", names(streets)[2:ncol(streets)])
 
@@ -260,19 +260,19 @@ moves_rpdy <- function (veh,
   veh <- veh_type <- fuelTypeID <- pollutantID <- processID <- sourceTypeID <- NULL
 
   by_veh <- lxspeed[, -"id"][,
-                             lapply(.SD, sum, na.rm = T),
-                             .SDcols = paste0("age_", 1:agemax),
-                             by = .(hour,
-                                    veh,
-                                    veh_type,
-                                    fuelTypeID,
-                                    pollutantID,
-                                    processID,
-                                    sourceTypeID)
+    lapply(.SD, sum, na.rm = T),
+    .SDcols = paste0("age_", 1:agemax),
+    by = .(hour,
+      veh,
+      veh_type,
+      fuelTypeID,
+      pollutantID,
+      processID,
+      sourceTypeID)
   ]
   veh <- data.table::melt.data.table(data = by_veh,
-                                     id.vars = names(by_veh)[1:7],
-                                     measure.vars = paste0("age_", 1:agemax))
+    id.vars = names(by_veh)[1:7],
+    measure.vars = paste0("age_", 1:agemax))
   variable <- NULL
   veh[, age := as.numeric(gsub("age_", "", variable))]
 

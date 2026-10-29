@@ -59,24 +59,24 @@
 #'         verbose = FALSE)
 #'
 #' }
-ef_wear <- function (wear,
-                     type,
-                     pol = "TSP",
-                     speed,
-                     load = 0.5,
-                     axle=2,
-                     road = "urban",
-                     verbose = FALSE) {
+ef_wear <- function(wear,
+                    type,
+                    pol = "TSP",
+                    speed,
+                    load = 0.5,
+                    axle = 2,
+                    road = "urban",
+                    verbose = FALSE) {
 
-  if(length(type) > 1) stop("only 1 type")
-  if(!type %in% c("E6DV", "BEV")) {
+  if (length(type) > 1) stop("only 1 type")
+  if (!type %in% c("E6DV", "BEV")) {
 
     types <- c("2W", "MC", "Motorcycle", "PC", "LCV", "HDV", "BUS", "TRUCKS")
-    if(!type %in% types) {
+    if (!type %in% types) {
       stop("Select type from:\n", paste(types, collapse = "\n"))
     }
     pols <- c("TSP", "PM10", "PM2.5", "PM1", "PM0.1")
-    if(!pol %in% pols) {
+    if (!pol %in% pols) {
       stop("Select pol from:\n", paste(pols, collapse = "\n"))
     }
 
@@ -84,63 +84,63 @@ ef_wear <- function (wear,
       ef <- ifelse(
         type %in% c("2W", "MC", "Motorcycle"), 0.0046,
         ifelse(
-          type=="PC",0.0107,
+          type == "PC", 0.0107,
           ifelse(
-            type=="LCV", 0.0109,
-            (axle/2)*(1.41 + 1.38*load)*0.0107)))
+            type == "LCV", 0.0109,
+            (axle / 2) * (1.41 + 1.38 * load) * 0.0107)))
 
       f <- c(TSP = 1, PM10 = 0.6, PM2.5 = 0.42, PM1 = 0.06, PM0.1 = 0.048)[[pol]]
 
       scf <- function(V) {
         ifelse(V < 40, 1.39,
-               ifelse(V <= 90, -0.00974*V + 1.78, 0.902))
+          ifelse(V <= 90, -0.00974 * V + 1.78, 0.902))
       }
 
-    } else if (wear %in% c("break", "brake")){
+    } else if (wear %in% c("break", "brake")) {
       ef <- ifelse(
-        type%in% c("2W", "MC", "Motorcycle"), 0.0037,
+        type %in% c("2W", "MC", "Motorcycle"), 0.0037,
         ifelse(
-          type=="PC",0.0075,
+          type == "PC", 0.0075,
           ifelse(
-            type=="LCV", 0.0117,
-            3.13*(1 + 0.79*load)*0.0075)))
+            type == "LCV", 0.0117,
+            3.13 * (1 + 0.79 * load) * 0.0075)))
 
       f <- c(TSP = 1, PM10 = 0.98, PM2.5 = 0.39, PM1 = 0.1, PM0.1 = 0.08)[[pol]]
 
       scf <- function(V) {
         ifelse(V < 40, 1.67,
-               ifelse(V <= 95, -0.0270*V + 2.75, 0.185))
+          ifelse(V <= 95, -0.0270 * V + 2.75, 0.185))
       }
 
-    } else if (wear == "road"){
+    } else if (wear == "road") {
       ef <- ifelse(
-        type%in% c("2W", "MC", "Motorcycle"), 0.0060,
+        type %in% c("2W", "MC", "Motorcycle"), 0.0060,
         ifelse(
-          type=="PC",0.0150,
+          type == "PC", 0.0150,
           ifelse(
-            type=="LCV", 0.0150,
+            type == "LCV", 0.0150,
             0.0760)))
 
       f <- c(TSP = 1, PM10 = 0.5, PM2.5 = 0.27, PM1 = 0.27, PM0.1 = 0.27)[[pol]]
-      return(EmissionFactors(ef*f))
+      return(EmissionFactors(ef * f))
     } else {
       stop("wear must be 'tyre', 'tire', 'break', 'brake' or 'road'")
     }
 
-    if(missing(speed)) stop("'speed' is needed for tyre and brake wear")
-    if(inherits(speed, "sf")) speed <- sf::st_set_geometry(speed, NULL)
+    if (missing(speed)) stop("'speed' is needed for tyre and brake wear")
+    if (inherits(speed, "sf")) speed <- sf::st_set_geometry(speed, NULL)
     kmh <- function(x) {
-      if(inherits(x, "units")) x <- units::set_units(x, "km/h", mode = "standard")
+      if (inherits(x, "units")) x <- units::set_units(x, "km/h", mode = "standard")
       as.numeric(x)
     }
-    if(is.null(dim(speed))){
+    if (is.null(dim(speed))) {
       speed <- matrix(kmh(speed), ncol = 1)
     }
-    sv <- do.call("cbind", lapply(seq_len(ncol(speed)), function(i){
+    sv <- do.call("cbind", lapply(seq_len(ncol(speed)), function(i) {
       scf(kmh(speed[, i]))
     }))
 
-    efw <- EmissionFactors(ef*f*sv)
+    efw <- EmissionFactors(ef * f * sv)
     return(efw)
 
   } else {
@@ -148,87 +148,87 @@ ef_wear <- function (wear,
 
     data.frame(
       stringsAsFactors = FALSE,
-      wear = c("brake","brake",
-               "brake","brake","brake","brake","brake","brake",
-               "brake","brake","brake","brake","tyre","tyre",
-               "tyre","tyre","tyre","tyre","tyre","tyre","tyre",
-               "tyre","tyre","tyre","road","road","road","road",
-               "road","road","road","road","road","road",
-               "road","road","res","res","res","res","res","res",
-               "res","res","res","res","res","res"),
-      veh = c("E6DV","E6DV","E6DV",
-              "E6DV","E6DV","E6DV","BEV","BEV","BEV","BEV",
-              "BEV","BEV","E6DV","E6DV","E6DV","E6DV","E6DV",
-              "E6DV","BEV","BEV","BEV","BEV","BEV","BEV",
-              "E6DV","E6DV","E6DV","E6DV","E6DV","E6DV","BEV",
-              "BEV","BEV","BEV","BEV","BEV","E6DV","E6DV",
-              "E6DV","E6DV","E6DV","E6DV","BEV","BEV","BEV",
-              "BEV","BEV","BEV"),
-      road = c("urban","rural",
-               "motorway","urban","rural","motorway","urban","rural",
-               "motorway","urban","rural","motorway","urban",
-               "rural","motorway","urban","rural","motorway",
-               "urban","rural","motorway","urban","rural",
-               "motorway","urban","rural","motorway","urban","rural",
-               "motorway","urban","rural","motorway","urban",
-               "rural","motorway","urban","rural","motorway",
-               "urban","rural","motorway","urban","rural",
-               "motorway","urban","rural","motorway"),
-      pol = c("PM2.5","PM2.5",
-              "PM2.5","PM10","PM10","PM10","PM2.5","PM2.5","PM2.5",
-              "PM10","PM10","PM10","PM2.5","PM2.5","PM2.5",
-              "PM10","PM10","PM10","PM2.5","PM2.5","PM2.5",
-              "PM10","PM10","PM10","PM2.5","PM2.5","PM2.5",
-              "PM10","PM10","PM10","PM2.5","PM2.5","PM2.5","PM10",
-              "PM10","PM10","PM2.5","PM2.5","PM2.5","PM10",
-              "PM10","PM10","PM2.5","PM2.5","PM2.5","PM10",
-              "PM10","PM10"),
-      ef = c(18,11,3.4,47,28,
-             8.4,19,12,3.7,50,31,9.1,19,15,13,27,21,18,
-             20,16,13,29,22,19,18,18,18,32,32,32,19,
-             19,19,35,35,35,25,25,25,100,100,100,27,27,
-             27,110,110,110),
-      efi = c(12,4.2,0,31,9.8,0,
-              12,4.4,0,33,10,0,15,12,9.8,21,16,14,15,
-              12,10,22,17,15,13,13,13,24,24,24,14,14,
-              14,25,25,25,7.6,7.6,7.6,32,32,32,8.2,8.2,
-              8.2,34,34,34),
-      efs = c(27L,27L,17L,70L,69L,
-              43L,29L,30L,20L,74L,76L,49L,27L,21L,18L,
-              38L,30L,25L,29L,22L,19L,40L,31L,27L,24L,24L,
-              24L,43L,43L,43L,26L,26L,26L,47L,47L,47L,
-              150L,150L,150L,590L,590L,590L,170L,170L,170L,
-              690L,690L,690L)
+      wear = c("brake", "brake",
+        "brake", "brake", "brake", "brake", "brake", "brake",
+        "brake", "brake", "brake", "brake", "tyre", "tyre",
+        "tyre", "tyre", "tyre", "tyre", "tyre", "tyre", "tyre",
+        "tyre", "tyre", "tyre", "road", "road", "road", "road",
+        "road", "road", "road", "road", "road", "road",
+        "road", "road", "res", "res", "res", "res", "res", "res",
+        "res", "res", "res", "res", "res", "res"),
+      veh = c("E6DV", "E6DV", "E6DV",
+        "E6DV", "E6DV", "E6DV", "BEV", "BEV", "BEV", "BEV",
+        "BEV", "BEV", "E6DV", "E6DV", "E6DV", "E6DV", "E6DV",
+        "E6DV", "BEV", "BEV", "BEV", "BEV", "BEV", "BEV",
+        "E6DV", "E6DV", "E6DV", "E6DV", "E6DV", "E6DV", "BEV",
+        "BEV", "BEV", "BEV", "BEV", "BEV", "E6DV", "E6DV",
+        "E6DV", "E6DV", "E6DV", "E6DV", "BEV", "BEV", "BEV",
+        "BEV", "BEV", "BEV"),
+      road = c("urban", "rural",
+        "motorway", "urban", "rural", "motorway", "urban", "rural",
+        "motorway", "urban", "rural", "motorway", "urban",
+        "rural", "motorway", "urban", "rural", "motorway",
+        "urban", "rural", "motorway", "urban", "rural",
+        "motorway", "urban", "rural", "motorway", "urban", "rural",
+        "motorway", "urban", "rural", "motorway", "urban",
+        "rural", "motorway", "urban", "rural", "motorway",
+        "urban", "rural", "motorway", "urban", "rural",
+        "motorway", "urban", "rural", "motorway"),
+      pol = c("PM2.5", "PM2.5",
+        "PM2.5", "PM10", "PM10", "PM10", "PM2.5", "PM2.5", "PM2.5",
+        "PM10", "PM10", "PM10", "PM2.5", "PM2.5", "PM2.5",
+        "PM10", "PM10", "PM10", "PM2.5", "PM2.5", "PM2.5",
+        "PM10", "PM10", "PM10", "PM2.5", "PM2.5", "PM2.5",
+        "PM10", "PM10", "PM10", "PM2.5", "PM2.5", "PM2.5", "PM10",
+        "PM10", "PM10", "PM2.5", "PM2.5", "PM2.5", "PM10",
+        "PM10", "PM10", "PM2.5", "PM2.5", "PM2.5", "PM10",
+        "PM10", "PM10"),
+      ef = c(18, 11, 3.4, 47, 28,
+        8.4, 19, 12, 3.7, 50, 31, 9.1, 19, 15, 13, 27, 21, 18,
+        20, 16, 13, 29, 22, 19, 18, 18, 18, 32, 32, 32, 19,
+        19, 19, 35, 35, 35, 25, 25, 25, 100, 100, 100, 27, 27,
+        27, 110, 110, 110),
+      efi = c(12, 4.2, 0, 31, 9.8, 0,
+        12, 4.4, 0, 33, 10, 0, 15, 12, 9.8, 21, 16, 14, 15,
+        12, 10, 22, 17, 15, 13, 13, 13, 24, 24, 24, 14, 14,
+        14, 25, 25, 25, 7.6, 7.6, 7.6, 32, 32, 32, 8.2, 8.2,
+        8.2, 34, 34, 34),
+      efs = c(27L, 27L, 17L, 70L, 69L,
+        43L, 29L, 30L, 20L, 74L, 76L, 49L, 27L, 21L, 18L,
+        38L, 30L, 25L, 29L, 22L, 19L, 40L, 31L, 27L, 24L, 24L,
+        24L, 43L, 43L, 43L, 26L, 26L, 26L, 47L, 47L, 47L,
+        150L, 150L, 150L, 590L, 590L, 590L, 170L, 170L, 170L,
+        690L, 690L, 690L)
     ) -> dx
 
-    #wear
+    # wear
     uwear <- unique(dx$wear)
-    if(any(!wear %in% uwear)) {
+    if (any(!wear %in% uwear)) {
       stop("Select wear from:\n", paste(uwear, collapse = "\n"))
     }
     dx <- dx[dx$wear == wear, ]
 
-    #veh
+    # veh
     uveh <- unique(dx$veh)
-    if(any(!type %in% uveh)) {
+    if (any(!type %in% uveh)) {
       stop("Select type from:\n", paste(uveh, collapse = "\n"))
     }
     dx <- dx[dx$veh == type, ]
 
-    #road
+    # road
     uroad <- unique(dx$road)
-    if(any(!road %in% uroad)) {
+    if (any(!road %in% uroad)) {
       stop("Select road from:\n", paste(uroad, collapse = "\n"))
     }
     dx <- dx[dx$road == road, ]
 
-    #pol
+    # pol
     upol <- unique(dx$pol)
-    if(any(!pol %in% upol)) {
+    if (any(!pol %in% upol)) {
       stop("Select pol from:\n", paste(upol, collapse = "\n"))
     }
     dx <- dx[dx$pol %in% pol, ]
-    if(verbose) print(dx)
+    if (verbose) print(dx)
     return(EmissionFactors(dx$ef))
   }
 }

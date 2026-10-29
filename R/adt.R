@@ -48,17 +48,17 @@ adt <- function(pc, lcv, hgv, bus, mc,
   bus <- remove_units(bus)
   mc <- remove_units(mc)
 
-  df_pc <- vein::temp_fact(q = pc*feq_pc, pro = p_pc)
-  df_lcv <- vein::temp_fact(q = lcv*feq_lcv, pro = p_lcv)
-  df_hgv <- vein::temp_fact(q = hgv*feq_hgv, pro = p_hgv)
-  df_bus <- vein::temp_fact(q = bus*feq_bus, pro = p_bus)
-  df_mc <- vein::temp_fact(q = mc*feq_mc, pro = p_mc)
+  df_pc <- vein::temp_fact(q = pc * feq_pc, pro = p_pc)
+  df_lcv <- vein::temp_fact(q = lcv * feq_lcv, pro = p_lcv)
+  df_hgv <- vein::temp_fact(q = hgv * feq_hgv, pro = p_hgv)
+  df_bus <- vein::temp_fact(q = bus * feq_bus, pro = p_bus)
+  df_mc <- vein::temp_fact(q = mc * feq_mc, pro = p_mc)
 
   veq = df_pc + df_lcv + df_hgv + df_bus + df_mc
 
-  n <- ncol(veq)/24
-  dx <- do.call("cbind", lapply(1:n, function(i){
-    rowSums(veq[, (24*(i-1) + 1) : (24*(i-1) + 24)])
+  n <- ncol(veq) / 24
+  dx <- do.call("cbind", lapply(1:n, function(i) {
+    rowSums(veq[, (24 * (i - 1) + 1):(24 * (i - 1) + 24)])
   }))
 
   ADT <- rowMeans(dx)

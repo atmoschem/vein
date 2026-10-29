@@ -53,22 +53,22 @@ emis_long <- function(x,
                       tfs,
                       speed,
                       verbose = TRUE,
-                      array = FALSE){
+                      array = FALSE) {
 
   # checks
-  if(nrow(x) != length(lkm)) stop("length lkm and nrow x must be equal")
-  if(length(tfs) != ncol(speed)) stop("length tfs and ncol speed must be equal")
-  if(ncol(ef) != ncol(x)) stop("ncol of ef and x must be equal")
+  if (nrow(x) != length(lkm)) stop("length lkm and nrow x must be equal")
+  if (length(tfs) != ncol(speed)) stop("length tfs and ncol speed must be equal")
+  if (ncol(ef) != ncol(x)) stop("ncol of ef and x must be equal")
   LKM <- rep(lkm, length(tfs))
-  if(nrow(ef) != length(lkm)*length(tfs)) stop("nrow of ef must be equal with length lkm time length tfs")
+  if (nrow(ef) != length(lkm) * length(tfs)) stop("nrow of ef must be equal with length lkm time length tfs")
 
   # Vehicle
-  if(verbose) cat("\nProcessing Vehicles\n")
+  if (verbose) cat("\nProcessing Vehicles\n")
   nr <- nrow(x)
   nc <- ncol(x)
   xx <- temp_veh(x = x, tfs = tfs)
 
-  if(verbose) cat("Estimating Base EF\n")
+  if (verbose) cat("Estimating Base EF\n")
 
   # speed
   s  <- data.table::rbindlist(lapply(1:ncol(speed), function(i) {
@@ -76,22 +76,22 @@ emis_long <- function(x,
   }))
 
 
-  if(verbose) cat("Estimating emissions\n")
+  if (verbose) cat("Estimating emissions\n")
   E <- Emissions(do.call("cbind", lapply(1:nc, function(i) {
     as.data.frame(ef)[, i] * as.data.frame(xx)[, i] * LKM
   })))
   # return(E)
   E$Hour <- rep(seq_along(tfs), each = nr)
 
-  if(array) {
+  if (array) {
     lx <- split(E, E$Hour)
     lxx <- unlist(lapply(seq_along(lx), function(i) {
       unlist(lx[[i]][, 1:nc])
     }))
     a <- EmissionsArray(array(data = lxx,
-                              dim = c(nr,
-                                      nc,
-                                      length(tfs))))
+      dim = c(nr,
+        nc,
+        length(tfs))))
     return(a)
   } else {
     return(E)

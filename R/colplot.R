@@ -36,22 +36,22 @@
 #' #colplot(df = a, cols = "PC_FG", main = "EF", ylab = "CO [g/km]")
 #' #colplot(df = a, ylab = "CO [g/km]", theme = "clean")
 #' }
-colplot <- function (df,
-                     cols = names(df),
-                     xlab = "",
-                     ylab = "",
-                     xlim = c(1, nrow(df)),
-                     ylim = NULL,
-                     main = NULL,
-                     theme = "black",
-                     col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4],
-                                        n = length(names(df))),
-                     type = "b",
-                     lwd = 2,
-                     pch = 1:ncol(df),
-                     familyfont = "",
-                     all_values = FALSE,
-                     ...){
+colplot <- function(df,
+                    cols = names(df),
+                    xlab = "",
+                    ylab = "",
+                    xlim = c(1, nrow(df)),
+                    ylim = NULL,
+                    main = NULL,
+                    theme = "black",
+                    col = cptcity::cpt(pal = cptcity::find_cpt("pastel")[4],
+                      n = length(names(df))),
+                    type = "b",
+                    lwd = 2,
+                    pch = 1:ncol(df),
+                    familyfont = "",
+                    all_values = FALSE,
+                    ...) {
 
 
   oldpar <- par(no.readonly = TRUE)       # code line i
@@ -62,69 +62,69 @@ colplot <- function (df,
 
   if (theme == "clean") {
     graphics::par(fg = "black", adj = 0.5, ann = TRUE,
-                  bg = "white", bty = "o", cex = 1, cex.axis = 0.7,
-                  cex.lab = 0.8, cex.main = 1, cex.sub = 0.8, col = "black",
-                  col.axis = "black", col.lab = "black",
-                  col.main = "black", col.sub = "black",
-                  family = familyfont, font = 1, font.axis = 1, font.lab = 1,
-                  font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
-                  lend = "round", ljoin = "round", lmitre = 10,
-                  lty = "solid", lwd = 1, mgp = c(2, 0.5, 0),
-                  # pch = 20,
-                  tck = -0.01, xaxs = "r", xaxt = "s",
-                  xpd = FALSE, yaxs = "r", yaxt = "s")
-  }  else if (theme == "ink") {
+      bg = "white", bty = "o", cex = 1, cex.axis = 0.7,
+      cex.lab = 0.8, cex.main = 1, cex.sub = 0.8, col = "black",
+      col.axis = "black", col.lab = "black",
+      col.main = "black", col.sub = "black",
+      family = familyfont, font = 1, font.axis = 1, font.lab = 1,
+      font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
+      lend = "round", ljoin = "round", lmitre = 10,
+      lty = "solid", lwd = 1, mgp = c(2, 0.5, 0),
+      # pch = 20,
+      tck = -0.01, xaxs = "r", xaxt = "s",
+      xpd = FALSE, yaxs = "r", yaxt = "s")
+  } else if (theme == "ink") {
     graphics::par(fg = "blue", adj = 0.5, ann = TRUE,
-                  bg = "navajowhite", bty = "o", cex = 0.8,
-                  cex.axis = 1, cex.lab = 1, cex.main = 1.5, cex.sub = 1,
-                  col = "blue", col.axis = "blue", col.lab = "blue",
-                  col.main = "blue", col.sub = "blue",
-                  family = familyfont, font = 3, font.axis = 3, font.lab = 4,
-                  font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
-                  lend = "round", ljoin = "round", lmitre = 10,
-                  lty = "dotted", lwd = 2, mgp = c(2, 0.5, 0),
-                  # pch = 4,
-                  tck = -0.01, xaxs = "r", xaxt = "s",
-                  xpd = FALSE, yaxs = "r", yaxt = "s")
-  }  else if (theme == "dark") {
+      bg = "navajowhite", bty = "o", cex = 0.8,
+      cex.axis = 1, cex.lab = 1, cex.main = 1.5, cex.sub = 1,
+      col = "blue", col.axis = "blue", col.lab = "blue",
+      col.main = "blue", col.sub = "blue",
+      family = familyfont, font = 3, font.axis = 3, font.lab = 4,
+      font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
+      lend = "round", ljoin = "round", lmitre = 10,
+      lty = "dotted", lwd = 2, mgp = c(2, 0.5, 0),
+      # pch = 4,
+      tck = -0.01, xaxs = "r", xaxt = "s",
+      xpd = FALSE, yaxs = "r", yaxt = "s")
+  } else if (theme == "dark") {
     graphics::par(fg = "#7E848C", adj = 0.5, ann = TRUE,
-                  bg = "#2E3947", bty = "n", cex = 0.8,
-                  cex.axis = 1, cex.lab = 1, cex.main = 1.5, cex.sub = 1,
-                  col = "#BEBEBE", col.axis = "#7E848C",
-                  col.lab = "#BEBEBE", col.main = "#EFF0F2",
-                  col.sub = "#737D89", family = familyfont, font = 1,
-                  font.axis = 1, font.lab = 2, font.main = 2, font.sub = 3,
-                  lab = c(5, 5, 7), las = 1, lend = "round",
-                  ljoin = "round", lmitre = 10, lty = 1, lwd = 1,
-                  mgp = c(3, 0.7, 0),
-                  # pch = 19,
-                  tck = -0.01, xaxs = "r",
-                  xaxt = "s", xpd = FALSE, yaxs = "r",
-                  yaxt = "s")
-  }  else if (theme == "black") {
+      bg = "#2E3947", bty = "n", cex = 0.8,
+      cex.axis = 1, cex.lab = 1, cex.main = 1.5, cex.sub = 1,
+      col = "#BEBEBE", col.axis = "#7E848C",
+      col.lab = "#BEBEBE", col.main = "#EFF0F2",
+      col.sub = "#737D89", family = familyfont, font = 1,
+      font.axis = 1, font.lab = 2, font.main = 2, font.sub = 3,
+      lab = c(5, 5, 7), las = 1, lend = "round",
+      ljoin = "round", lmitre = 10, lty = 1, lwd = 1,
+      mgp = c(3, 0.7, 0),
+      # pch = 19,
+      tck = -0.01, xaxs = "r",
+      xaxt = "s", xpd = FALSE, yaxs = "r",
+      yaxt = "s")
+  } else if (theme == "black") {
     graphics::par(fg = "#7E848C", adj = 0.5, ann = TRUE,
-                  bg = "black", bty = "n", cex = 0.8, cex.axis = 1,
-                  cex.lab = 1, cex.main = 1.5, cex.sub = 1, col = "white",
-                  col.axis = "white", col.lab = "white",
-                  col.main = "white", col.sub = "white",
-                  family = familyfont, font = 1, font.axis = 1, font.lab = 2,
-                  font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
-                  lend = "round", ljoin = "round", lmitre = 10,
-                  lty = 1, lwd = 1, mgp = c(3, 0.7, 0),
-                  # pch = 19,
-                  tck = -0.01,
-                  xaxt = "s", xpd = FALSE, yaxs = "r",
-                  yaxt = "s")
+      bg = "black", bty = "n", cex = 0.8, cex.axis = 1,
+      cex.lab = 1, cex.main = 1.5, cex.sub = 1, col = "white",
+      col.axis = "white", col.lab = "white",
+      col.main = "white", col.sub = "white",
+      family = familyfont, font = 1, font.axis = 1, font.lab = 2,
+      font.main = 2, font.sub = 3, lab = c(5, 5, 7), las = 1,
+      lend = "round", ljoin = "round", lmitre = 10,
+      lty = 1, lwd = 1, mgp = c(3, 0.7, 0),
+      # pch = 19,
+      tck = -0.01,
+      xaxt = "s", xpd = FALSE, yaxs = "r",
+      yaxt = "s")
   }
 
   # function add legend
   add_legend <- function(...) {
-    opar <- graphics::par(fig=c(0, 1, 0, 1),
-                          oma=c(0, 0, 0, 0),
-                          mar=c(0, 0, 0, 0),
-                          new=TRUE)
+    opar <- graphics::par(fig = c(0, 1, 0, 1),
+      oma = c(0, 0, 0, 0),
+      mar = c(0, 0, 0, 0),
+      new = TRUE)
     on.exit(graphics::par(opar))
-    plot(0, 0, type='n', bty='n', xaxt='n', yaxt='n')
+    plot(0, 0, type = "n", bty = "n", xaxt = "n", yaxt = "n")
     graphics::legend(...)
   }
 
@@ -137,44 +137,44 @@ colplot <- function (df,
   if (!missing(cols)) df <- df[cols]
 
   df <- remove_units(df)
-  if(!all_values) df[df == 0] <- NA
-  if(is.null(ylim)) ylim <- c(0, max(df, na.rm = TRUE))
+  if (!all_values) df[df == 0] <- NA
+  if (is.null(ylim)) ylim <- c(0, max(df, na.rm = TRUE))
   # ldf <- as.list(df)
 
   # c(5, 4, 1.4, 0.2)
 
   plot(df[[1]],
-       xlim = xlim,
-       ylim = ylim,
-       type = type,
-       pch = pch[1],
-       col = col[1],
-       ylab = ylab,
-       xlab = xlab,
-       main = main,
-       lwd = lwd,
-       ...)
+    xlim = xlim,
+    ylim = ylim,
+    type = type,
+    pch = pch[1],
+    col = col[1],
+    ylab = ylab,
+    xlab = xlab,
+    main = main,
+    lwd = lwd,
+    ...)
 
-  if(ncol(df) > 1) {
-    for(i in 2:ncol(df)) {
+  if (ncol(df) > 1) {
+    for (i in 2:ncol(df)) {
       graphics::points(df[[i]],
-                       type = type,
-                       pch = pch[i],
-                       col = col[i],
-                       lwd = lwd)
+        type = type,
+        pch = pch[i],
+        col = col[i],
+        lwd = lwd)
     }
 
   }
 
 
   add_legend("topright",
-             legend = names(df),
-             col = col[1:ncol(df)],
-             horiz=TRUE,
-             bty='n',
-             cex=1,
-             text.font=4,
-             pch = pch)
+    legend = names(df),
+    col = col[1:ncol(df)],
+    horiz = TRUE,
+    bty = "n",
+    cex = 1,
+    text.font = 4,
+    pch = pch)
 
 
   # graphics::plot(ldf[[1]], ylim = c(0, max(df, na.rm = TRUE)),

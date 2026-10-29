@@ -18,27 +18,27 @@
 #' a <- cold_mileage(lkm, ta)
 #' colplot(a)
 #' }
-cold_mileage <- function(ltrip, ta){
+cold_mileage <- function(ltrip, ta) {
   # Check units
-  if(!inherits(ltrip, "units")){
+  if (!inherits(ltrip, "units")) {
     stop("ltrip neeeds to has class 'units' in 'km'. Please, check package '?units::set_units'")
   }
   ltrip <- as.numeric(units::set_units(ltrip, "km", mode = "standard"))
 
   to_degC <- function(v) {
-    if(!inherits(v, "units")) stop("ta must be units in celsius, use units::set_units(ta, degC)")
+    if (!inherits(v, "units")) stop("ta must be units in celsius, use units::set_units(ta, degC)")
     as.numeric(units::set_units(v, "degC", mode = "standard"))
   }
 
-  if(is.data.frame(ta) | is.matrix(ta)){
+  if (is.data.frame(ta) | is.matrix(ta)) {
     ta <- as.data.frame(ta)
-    for(i in 1:ncol(ta)) {
+    for (i in 1:ncol(ta)) {
       ta[, i] <- to_degC(ta[, i])
     }
     clkm <- as.data.frame(matrix(
       unlist(lapply(
         1:ncol(ta),
-        function(i){
+        function(i) {
           ifelse(
             0.6474 - 0.02545 * ltrip - (0.00974 - 0.000385 * ltrip) * ta[, i] < 0, 0,
             ifelse(
@@ -61,5 +61,5 @@ cold_mileage <- function(ltrip, ta){
   }
 
 
-return(clkm)
+  return(clkm)
 }

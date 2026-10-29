@@ -63,13 +63,13 @@ emis_paved <- function(veh,         # hourly traffic flow multiplier of 24
   veh$id <- NULL
 
   sL <- ifelse(adt <= 500, sL1,
-               ifelse(adt > 500 & adt <= 5000, sL2,
-                      ifelse(adt > 5000 & adt <=10000, sL3,
-                             sL4)))
+    ifelse(adt > 500 & adt <= 5000, sL2,
+      ifelse(adt > 5000 & adt <= 10000, sL3,
+        sL4)))
   emi <- veh * lkm * k * sL^0.91 * W^1.02
 
   emi[is.na(emi)] <- 0
-  if(!missing(net)) {
+  if (!missing(net)) {
     net <- sf::st_as_sf(net)
     emi <- sf::st_sf(Emissions(emi), geometry = sf::st_geometry(net))
     return(emi)

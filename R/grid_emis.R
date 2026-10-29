@@ -17,7 +17,7 @@
 #' grid with several emissions at different hours, being each hour a column,
 #' it is better to use top_down = FALSE. In this way all the hourly emissions
 #' are considered, however, each hourly emissions has to have the name "V" and the
-#'number of the hour like "V1"
+#' number of the hour like "V1"
 #' @param sr Spatial reference e.g: 31983, "EPSG:31983" or "+init=epsg:31983".
 #' It is required if spobj and g are not projected. When the crs of spobj and
 #' g are different, spobj is transformed to the crs of g.
@@ -80,7 +80,7 @@
 #' }
 #' }
 grid_emis <- function(spobj, g,  top_down = FALSE,
-                      sr, pro, char = "V", verbose = FALSE){
+                      sr, pro, char = "V", verbose = FALSE) {
   net <- sf::st_as_sf(spobj)
   net$id <- NULL
   netdata <- sf::st_set_geometry(net, NULL)
@@ -88,25 +88,25 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
   g$id <- NULL
   g$id <- 1:nrow(g)
 
-  if(sf::st_crs(g) != sf::st_crs(net)){
-    if(verbose) message("Changing CRS of 'spobj' to match 'g'") #nocov
+  if (sf::st_crs(g) != sf::st_crs(net)) {
+    if (verbose) message("Changing CRS of 'spobj' to match 'g'") # nocov
     net <- sf::st_transform(net, sf::st_crs(g))
   }
-  for(i in seq_along(netdata)){
+  for (i in seq_along(netdata)) {
     netdata[, i] <- as.numeric(netdata[, i])
   }
   net <- sf::st_sf(netdata, geometry = sf::st_geometry(net))
 
-  if(!missing(sr)){
+  if (!missing(sr)) {
     sr <- vein_crs(sr)
-    if(verbose) message("Transforming spatial objects to 'sr' ") #nocov
+    if (verbose) message("Transforming spatial objects to 'sr' ") # nocov
     net <- sf::st_transform(net, sr)
     g <- sf::st_transform(g, sr)
   }
   net$lkm1 <- as.numeric(sf::st_length(net))
   xg <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
 
-  if(!top_down) {
+  if (!top_down) {
     net$id <- NULL
     a <- suppressMessages(suppressWarnings(sf::st_intersection(net, g)))
     a$lm <- st_length(a)
@@ -117,9 +117,9 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
     vars <- grep(pattern = paste0("^", char, "[0-9]+$"), x = names(g), value = TRUE)
     if (length(vars) == 0) stop("'g' has no columns named '", char, "' plus the hour, like '", char, "1'")
     cdf <- colSums(sf::st_set_geometry(g, NULL)[vars], na.rm = T)
-    for(i in 1:length(cdf)) {
-      df[[vars[i]]] <- df[[vars[i]]]*df$lm/df$total_lkm
-      df[[vars[i]]] <- df[[vars[i]]]*cdf[i]/sum(df[[vars[i]]], na.rm = TRUE)
+    for (i in 1:length(cdf)) {
+      df[[vars[i]]] <- df[[vars[i]]] * df$lm / df$total_lkm
+      df[[vars[i]]] <- df[[vars[i]]] * cdf[i] / sum(df[[vars[i]]], na.rm = TRUE)
     }
     data.table::setDF(df)
     df <- sf::st_as_sf(df, geometry = df$geometry)
@@ -129,48 +129,48 @@ grid_emis <- function(spobj, g,  top_down = FALSE,
     sumg <- sum(g$emission)
 
 
-    if(missing(pro)){
+    if (missing(pro)) {
       lxxy <- do.call("rbind",
-                      lapply(1:length(g$id),
-                             function(i) {
-                               emis_dist(gy = g[g$id == i,]$emission,
-                                         spobj = xg[xg$id == i, ],
-                                         verbose = FALSE)
-                             }))
+        lapply(1:length(g$id),
+          function(i) {
+            emis_dist(gy = g[g$id == i, ]$emission,
+              spobj = xg[xg$id == i, ],
+              verbose = FALSE)
+          }))
       df <- st_set_geometry(lxxy, NULL)
-      fx <- as.numeric(sumg/sum(df, na.rm = TRUE))
-      df <- df*fx
-      if(verbose) { #nocov
+      fx <- as.numeric(sumg / sum(df, na.rm = TRUE))
+      df <- df * fx
+      if (verbose) { # nocov
         cat(paste0("Sum of gridded emissions ",
-                   round(sumg, 2), "\n"))
+          round(sumg, 2), "\n"))
       }
-      if(verbose) { #nocov
+      if (verbose) { # nocov
         cat(paste0("Sum of street emissions ",
-                   round(sum(df), 2), "\n"))
+          round(sum(df), 2), "\n"))
       }
       df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
       # if(verbose) cat("Columns:", names(df), "\n")
       return(df)
     }
-    if(!missing(pro) ){
+    if (!missing(pro)) {
       lxxy <- do.call("rbind",
-                      lapply(1:length(g$id),
-                             function(i) {
-                               emis_dist(gy = g[g$id == i,]$emission,
-                                         spobj = xg[xg$id == i, ],
-                                         pro = pro,
-                                         verbose = FALSE)
-                             }))
+        lapply(1:length(g$id),
+          function(i) {
+            emis_dist(gy = g[g$id == i, ]$emission,
+              spobj = xg[xg$id == i, ],
+              pro = pro,
+              verbose = FALSE)
+          }))
       df <- st_set_geometry(lxxy, NULL)
-      fx <- as.numeric(sumg/sum(df, na.rm = TRUE))
-      df <- df*fx
-      if(verbose) {
+      fx <- as.numeric(sumg / sum(df, na.rm = TRUE))
+      df <- df * fx
+      if (verbose) {
         cat(paste0("Sum of gridded emissions ",
-                   round(sum(df), 2), "\n"))
+          round(sum(df), 2), "\n"))
       }
-      if(verbose) { #nocov
+      if (verbose) { # nocov
         cat(paste0("Sum of street emissions ",
-                   round(sum(df), 2), "\n"))
+          round(sum(df), 2), "\n"))
       }
       df <- sf::st_sf(df, geometry = sf::st_geometry(lxxy))
       return(df)

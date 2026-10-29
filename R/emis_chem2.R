@@ -66,7 +66,7 @@
 #'  "MACR"  "MECHO" "MEK"   "MXYL"  "NC4"   "OLE1"
 #'  "OLE2"  "OLE3"  "OLE4"  "OLEA1" "OTH1"  "OTH3"  "OTH4"  "OXYL"
 #'  "PROP"  "PROPE" "PXYL"  "RCHO" "STYRS" "TOLU"
-#'}
+#' }
 #' @examples {
 #' id <-1:2
 #' df <- data.frame(V1 = 1:2, V2 = 1:2)
@@ -97,7 +97,7 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
   if (mech %in% c("CB05", "CB4", "CBMZ", "CB05opt2")) {
     cheml <- suppressWarnings(
       data.table::melt(
-        data = chem, #[pol %in% unique(df[["pol"]])],
+        data = chem, # [pol %in% unique(df[["pol"]])],
         id.vars = c("ID", "pol", "Mwt"),
         measure.vars = grep(
           pattern = paste0(mech, "_"),
@@ -142,7 +142,7 @@ emis_chem2 <- function(df, mech, nx, na.rm = FALSE) {
   nomw <- unique(cheml$pol[is.na(cheml$Mwt) & cheml$pol %in% df$pol])
   if (length(nomw)) {
     warning("Molar mass not available for: ", paste(nomw, collapse = ", "),
-            ". Their moles are NA.")
+      ". Their moles are NA.")
   }
 
   y <- merge(x = df, y = cheml, by = "pol", all = TRUE, allow.cartesian = TRUE)

@@ -62,72 +62,72 @@
 #' @export
 Emissions <- function(x, mass = "g", time, ...) {
 
-  if(inherits(x, "sf")) {
+  if (inherits(x, "sf")) {
     geo <- sf::st_geometry(x)
 
     e <- sf::st_set_geometry(x, NULL)
 
-    for(i in 1:ncol(e)){
-      e[,i] <- e[,i]*units::as_units(mass)
+    for (i in 1:ncol(e)) {
+      e[, i] <- e[, i] * units::as_units(mass)
     }
 
-    if(!missing(time)){
-      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, paste0(time, "-1"))
+    if (!missing(time)) {
+      for (i in 1:ncol(e)) e[, i] <- e[, i] * units::as_units(1, paste0(time, "-1"))
     }
     e <- sf::st_sf(e, geometry = geo)
 
-  } else if ( is.matrix(x) ) {
+  } else if (is.matrix(x)) {
 
     e <- as.data.frame(x)
 
-    for(i in 1:ncol(e)){
-      e[,i] <- e[,i]*units::as_units(mass)
+    for (i in 1:ncol(e)) {
+      e[, i] <- e[, i] * units::as_units(mass)
     }
 
-    if(!missing(time)){
-      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, paste0(time, "-1"))
+    if (!missing(time)) {
+      for (i in 1:ncol(e)) e[, i] <- e[, i] * units::as_units(1, paste0(time, "-1"))
     }
 
     class(e) <- c("Emissions", class(e))
 
-  } else if ( is.data.frame(x) ) {
+  } else if (is.data.frame(x)) {
 
     e <- as.data.frame(x)
 
-    for(i in 1:ncol(x)){
-      e[,i] <- e[,i]*units::as_units(mass)
+    for (i in 1:ncol(x)) {
+      e[, i] <- e[, i] * units::as_units(mass)
     }
 
-    if(!missing(time)){
-      for(i in 1:ncol(e)) e[,i] <- e[,i]*units::as_units(1, paste0(time, "-1"))
+    if (!missing(time)) {
+      for (i in 1:ncol(e)) e[, i] <- e[, i] * units::as_units(1, paste0(time, "-1"))
     }
 
-    class(e) <- c("Emissions",class(x))
+    class(e) <- c("Emissions", class(x))
 
-  } else if ( inherits(x, "units" )) {
+  } else if (inherits(x, "units")) {
 
     e <- x
     target <- if (missing(time)) mass else paste0(mass, "/", time)
 
-    if(as.character(units(e)) != target){
+    if (as.character(units(e)) != target) {
       message("Converting ", as.character(units(e)), " to ", target)
       e <- tryCatch(
         units::set_units(e, target, mode = "standard"),
         error = function(err) {
           stop("The units of x (", as.character(units(e)), ") cannot be converted to ",
-               target, ": ", conditionMessage(err), call. = FALSE)
+            target, ": ", conditionMessage(err), call. = FALSE)
         })
     } else {
       message("Units are the same and no cerversions will be made")
     }
 
 
-  } else if( inherits(x, "numeric") | inherits(x, "integer")) {
+  } else if (inherits(x, "numeric") | inherits(x, "integer")) {
 
-    e <- x*units::as_units(mass)
+    e <- x * units::as_units(mass)
 
-    if(!missing(time)){
-      e <- e*units::as_units(1, paste0(time, "-1"))
+    if (!missing(time)) {
+      e <- e * units::as_units(1, paste0(time, "-1"))
     }
   } else {
     stop("Class of x must be 'sf', 'matrix', 'data.frame', 'units' or numeric")
@@ -140,7 +140,7 @@ Emissions <- function(x, mass = "g", time, ...) {
 #' @export
 print.Emissions <- function(x, ...) {
   nr <- ifelse(nrow(x) <= 5, nrow(x), 5)
-  if(ncol(x) == 1) {
+  if (ncol(x) == 1) {
     ndf <- names(x)
     df <- data.frame(ndf = x[1:nr, ])
     names(df) <- ndf
@@ -148,7 +148,7 @@ print.Emissions <- function(x, ...) {
   } else {
     print.data.frame(x[1:nr, ])
   }
-  if(nrow(x) > 5)     cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
+  if (nrow(x) > 5) cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
 }
 
 
@@ -157,10 +157,10 @@ print.Emissions <- function(x, ...) {
 #' @export
 summary.Emissions <- function(object, ...) {
   e <- object
-  avemi <- sum(seq(1,ncol(e))*colSums(e)/sum(e))
+  avemi <- sum(seq(1, ncol(e)) * colSums(e) / sum(e))
   cat("Total emissions by column in study area = \n")
   print(summary(colSums(e)))
-  cat("\nAverage = ", round(avemi,2))
+  cat("\nAverage = ", round(avemi, 2))
   cat(" \n\n")
   cat("Emissions by street in study area = \n")
   print(summary(rowSums(e)))
@@ -176,9 +176,9 @@ summary.Emissions <- function(object, ...) {
 plot.Emissions <- function(x,
                            pal = "colo_angelafaye_Coloured_sky_in",
                            rev = FALSE,
-                           fig1 = c(0,0.8,0,0.8),
-                           fig2 = c(0,0.8,0.55,1),
-                           fig3 = c(0.7,1,0,0.8),
+                           fig1 = c(0, 0.8, 0, 0.8),
+                           fig2 = c(0, 0.8, 0.55, 1),
+                           fig3 = c(0.7, 1, 0, 0.8),
                            mai1 = c(0.2, 0.82, 0.82, 0.42),
                            mai2 = c(1.3, 0.82, 0.82, 0.42),
                            mai3 = c(0.7, 0.72, 0.82, 0.42),
@@ -189,13 +189,13 @@ plot.Emissions <- function(x,
   on.exit(par(oldpar))                    # code line i + 1
   # e <- x
   #
-  if(ncol(x) > 1) {
-    graphics::par(fig=fig1, #new=TRUE,
-                  mai = mai1,
-                  ...)
+  if (ncol(x) > 1) {
+    graphics::par(fig = fig1, # new=TRUE,
+      mai = mai1,
+      ...)
     col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
-                                               bias = bias)(seq(0, 1,0.01)),
-                          maxColorValue = 255)
+      bias = bias)(seq(0, 1, 0.01)),
+    maxColorValue = 255)
 
     # fields::image.plot(
     #   x = 1:ncol(x),
@@ -206,39 +206,39 @@ plot.Emissions <- function(x,
     #   col = col, horizontal = TRUE)
 
     graphics::image(x = 1:ncol(x),
-                    xaxt = "n",
-                    z =t(as.matrix(x))[, nrow(x):1],
-                    xlab = "",
-                    ylab = paste0("Emissions by streets [",as.character(units(x[[1]])), "]"),
-                    col = col,
-                    axe = FALSE)
+      xaxt = "n",
+      z = t(as.matrix(x))[, nrow(x):1],
+      xlab = "",
+      ylab = paste0("Emissions by streets [", as.character(units(x[[1]])), "]"),
+      col = col,
+      axe = FALSE)
     axis(2)
     addscale(t(as.matrix(x))[, nrow(x):1], col = col)
 
-    graphics::par(fig=fig2,
-                  mai = mai2,
-                  new=TRUE,
-                  ...)
-    avage <- sum(seq(1,ncol(x)) * colSums(x)/sum(x, na.rm = T))
+    graphics::par(fig = fig2,
+      mai = mai2,
+      new = TRUE,
+      ...)
+    avage <- sum(seq(1, ncol(x)) * colSums(x) / sum(x, na.rm = T))
     graphics::plot(colSums(x, na.rm = T),
-                   type="l",
-                   ylab = paste0("Emissions [",as.character(units(x[[1]])), "]"),
-                   xlab = "",
-                   frame = FALSE,
-                   xaxt = 'n')
+      type = "l",
+      ylab = paste0("Emissions [", as.character(units(x[[1]])), "]"),
+      xlab = "",
+      frame = FALSE,
+      xaxt = "n")
     graphics::axis(3)
 
-    graphics::abline(v = avage, col="red")
-    cat("Weighted mean = ",round(avage,2), "\n")
+    graphics::abline(v = avage, col = "red")
+    cat("Weighted mean = ", round(avage, 2), "\n")
 
-    graphics::par(fig=fig3, new=TRUE,
-                  mai = mai3,
-                  ...)
+    graphics::par(fig = fig3, new = TRUE,
+      mai = mai3,
+      ...)
     graphics::plot(x = rowSums(x, na.rm = T), y = nrow(x):1,
-                   type = "l", frame = FALSE, yaxt = "n",
-                   ylab = "", xlab = NULL
+      type = "l", frame = FALSE, yaxt = "n",
+      ylab = "", xlab = NULL
     )
-    graphics::abline(v = avage, col="red")
+    graphics::abline(v = avage, col = "red")
 
   } else {
     graphics::plot(unlist(x), type = "l", main = "1 column data")

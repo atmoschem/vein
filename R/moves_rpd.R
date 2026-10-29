@@ -39,7 +39,7 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
                       fuel_type,  # data.frame from moves
                       speed_bin,
                       profile,
-                      source_type_id = 21, #Passenger car
+                      source_type_id = 21, # Passenger car
                       fuel_type_id = 1, # Gasoline
                       pollutant_id = 91, # Total Energy Consumption
                       road_type_id = 5, # Urban Unrestricted Access
@@ -48,14 +48,14 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
                       vehicle_type = NULL,
                       fuel_subtype = NULL,
                       net,
-                      path_all, #path to save RDS
+                      path_all, # path to save RDS
                       verbose = FALSE) {
 
   has_fuel <- !missing(fuel_type)
   profile <- as.data.frame(profile)
   profile$Hour <- NULL
 
-  ll <- if(is.data.frame(veh)) 1 else seq_along(veh)
+  ll <- if (is.data.frame(veh)) 1 else seq_along(veh)
 
   agemax <- ifelse(
     is.data.frame(veh),
@@ -64,53 +64,53 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
   )
 
   data.table::rbindlist(
-    lapply(ll, function(i){
+    lapply(ll, function(i) {
 
       data.table::rbindlist(
-        lapply(1:ncol(speed_bin), function(j){
+        lapply(1:ncol(speed_bin), function(j) {
 
           hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
           def <- ef[hourID == j &
-                      pollutantID == pollutant_id &
-                      processID == process_id &
-                      sourceTypeID == source_type_id[i] &
-                      fuelTypeID == fuel_type_id[i] &
-                      roadTypeID == road_type_id, ]
+            pollutantID == pollutant_id &
+            processID == process_id &
+            sourceTypeID == source_type_id[i] &
+            fuelTypeID == fuel_type_id[i] &
+            roadTypeID == road_type_id, ]
           if (anyDuplicated(def$avgSpeedBinID)) {
             stop("ef has more than one ratePerDistance per avgSpeedBinID ",
-                 "(e.g. several modelYearID) for hourID ", j,
-                 ". Filter or aggregate ef first, or use moves_rpdy")
+              "(e.g. several modelYearID) for hourID ", j,
+              ". Filter or aggregate ef first, or use moves_rpdy")
           }
 
           dcols <- c("avgSpeedBinID", "ratePerDistance")
           if (pollutant_id == 91) {
             if (!has_fuel) stop("Please, add `fuel_type` data.frame from MOVES")
             data.table::as.data.table(fuel_type)[,
-                                                 lapply(.SD, mean, na.rm = T),
-                                                 .SDcols = c("carbonContent",
-                                                             "humidityCorrectionCoeff",
-                                                             "energyContent",
-                                                             "fuelDensity"),
-                                                 by = fuelTypeID] -> df_fuel
+              lapply(.SD, mean, na.rm = T),
+              .SDcols = c("carbonContent",
+                "humidityCorrectionCoeff",
+                "energyContent",
+                "fuelDensity"),
+              by = fuelTypeID] -> df_fuel
 
             def <- merge(def, df_fuel, by = "fuelTypeID")
             dcols <- c(dcols, "carbonContent", "humidityCorrectionCoeff",
-                       "energyContent", "fuelDensity")
+              "energyContent", "fuelDensity")
           }
 
           # id keeps the order of the links after merge()
           dt <- data.table::data.table(id = seq_along(speed_bin[[j]]),
-                                       sourceTypeID = source_type_id[i],
-                                       avgSpeedBinID = speed_bin[[j]])
+            sourceTypeID = source_type_id[i],
+            avgSpeedBinID = speed_bin[[j]])
 
           df_net_ef <- merge(dt,
-                             def[, dcols, with = FALSE],
-                             by = "avgSpeedBinID",
-                             all.x = T)
+            def[, dcols, with = FALSE],
+            by = "avgSpeedBinID",
+            all.x = T)
           df_net_ef <- df_net_ef[order(df_net_ef$id), ]
 
-          if(pollutant_id == 91) {
-            df_net_ef$ef <- df_net_ef$ratePerDistance/1000*1/df_net_ef$energyContent*1/df_net_ef$fuelDensity
+          if (pollutant_id == 91) {
+            df_net_ef$ef <- df_net_ef$ratePerDistance / 1000 * 1 / df_net_ef$energyContent * 1 / df_net_ef$fuelDensity
             df_net_ef$ef <- units::set_units(df_net_ef$ef, "gallons/miles/veh")
           } else {
             df_net_ef$ef <- df_net_ef$ratePerDistance
@@ -118,25 +118,25 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
           }
 
 
-          if(is.data.frame(veh)) {
-            data.table::rbindlist(lapply(1:agemax, function(k){
-              data.table::data.table(emi = df_net_ef$ef*veh[[k]]*lkm*profile[j, i],
-                                     id = 1:nrow(df_net_ef),
-                                     age = k,
-                                     hour = j)
-            }))-> lx
+          if (is.data.frame(veh)) {
+            data.table::rbindlist(lapply(1:agemax, function(k) {
+              data.table::data.table(emi = df_net_ef$ef * veh[[k]] * lkm * profile[j, i],
+                id = 1:nrow(df_net_ef),
+                age = k,
+                hour = j)
+            })) -> lx
 
-          } else if(is.list(veh)) {
-            data.table::rbindlist(lapply(1:agemax, function(k){
-              data.table::data.table(emi = df_net_ef$ef*veh[[i]] [[k]]*lkm*profile[j, i],
-                                     id = 1:nrow(df_net_ef),
-                                     age = k,
-                                     hour = j)
-            }))-> lx
+          } else if (is.list(veh)) {
+            data.table::rbindlist(lapply(1:agemax, function(k) {
+              data.table::data.table(emi = df_net_ef$ef * veh[[i]] [[k]] * lkm * profile[j, i],
+                id = 1:nrow(df_net_ef),
+                age = k,
+                hour = j)
+            })) -> lx
 
           }
 
-          data.table::dcast.data.table(lx, formula = id+hour~age, value.var = "emi") -> emi
+          data.table::dcast.data.table(lx, formula = id + hour ~ age, value.var = "emi") -> emi
           names(emi)[3:ncol(emi)] <- paste0("age_", names(emi)[3:ncol(emi)])
           emi$veh <- vehicle[i]
           emi$veh_type <- vehicle_type[i]
@@ -153,8 +153,8 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
     })
   ) -> lxspeed
 
-  if(!missing(path_all)){
-    if(verbose) message("The table has size ", format(object.size(lxspeed), units = "Mb"))
+  if (!missing(path_all)) {
+    if (verbose) message("The table has size ", format(object.size(lxspeed), units = "Mb"))
     saveRDS(lxspeed, paste0(path_all, ".rds"))
   }
 
@@ -162,24 +162,24 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
 
   id <- hour <- . <- NULL
   by_street <- lxspeed[,
-                       lapply(.SD, sum, na.rm = T),
-                       .SDcols =  paste0("age_", 1:agemax),
-                       by = .(id, hour)]
+    lapply(.SD, sum, na.rm = T),
+    .SDcols =  paste0("age_", 1:agemax),
+    by = .(id, hour)]
 
   by_street$age_total <- rowSums(by_street[,  3:(agemax + 2)])
 
   age_total <- NULL
   by_street2 <- by_street[,
-                          sum(age_total, na.rm = T),
-                          by = .(id, hour)]
+    sum(age_total, na.rm = T),
+    by = .(id, hour)]
 
 
   data.table::dcast.data.table(by_street2,
-                               formula = id~hour,
-                               value.var = "V1") -> streets
+    formula = id ~ hour,
+    value.var = "V1") -> streets
 
   names(streets)[2:ncol(streets)] <- paste0("H", names(streets)[2:ncol(streets)])
-  if(!missing(net)) {
+  if (!missing(net)) {
     streets <- cbind(net, streets)
   }
 
@@ -187,20 +187,20 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
   veh <- veh_type <- fuelTypeID <- pollutantID <- processID <-  sourceTypeID <- NULL
 
   by_veh <- lxspeed[, -"id"][,
-                             lapply(.SD, sum, na.rm = T),
-                             .SDcols = paste0("age_", 1:agemax),
-                             by = .(hour,
-                                    veh,
-                                    veh_type,
-                                    fuelTypeID,
-                                    pollutantID,
-                                    processID,
-                                    sourceTypeID)
+    lapply(.SD, sum, na.rm = T),
+    .SDcols = paste0("age_", 1:agemax),
+    by = .(hour,
+      veh,
+      veh_type,
+      fuelTypeID,
+      pollutantID,
+      processID,
+      sourceTypeID)
   ]
 
   data.table::melt.data.table(data = by_veh,
-                              id.vars = names(by_veh)[1:7],
-                              measure.vars = paste0("age_", 1:agemax)) -> veh
+    id.vars = names(by_veh)[1:7],
+    measure.vars = paste0("age_", 1:agemax)) -> veh
 
   variable <- NULL
   veh[, age := as.numeric(gsub("age_", "", variable))]
@@ -217,4 +217,3 @@ moves_rpd <- function(veh, #  x <- readRDS(paste0("veh/", metadata$vehicles[i], 
   )
 
 }
-

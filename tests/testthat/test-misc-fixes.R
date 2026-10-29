@@ -4,12 +4,12 @@ test_that("add_polid uses the polygon and not its bounding box", {
   t1 <- sf::st_polygon(list(rbind(c(0, 0), c(10, 0), c(10, 10), c(0, 0))))
   t2 <- sf::st_polygon(list(rbind(c(0, 0), c(10, 10), c(0, 10), c(0, 0))))
   polyg <- sf::st_sf(id = c("A", "B"),
-                     geometry = sf::st_sfc(t1, t2, crs = 31983))
+    geometry = sf::st_sfc(t1, t2, crs = 31983))
   street <- sf::st_sf(len = 1:2,
-                      geometry = sf::st_sfc(
-                        sf::st_linestring(rbind(c(1, 8), c(2, 9))),
-                        sf::st_linestring(rbind(c(1, 5), c(9, 5))),
-                        crs = 31983))
+    geometry = sf::st_sfc(
+      sf::st_linestring(rbind(c(1, 8), c(2, 9))),
+      sf::st_linestring(rbind(c(1, 5), c(9, 5))),
+      crs = 31983))
   a <- add_polid(polyg, street, by = "id")
   expect_equal(nrow(a), 3)
   expect_equal(sort(a$id[a$len == 1]), "B")
@@ -23,8 +23,8 @@ test_that("aw returns visibly with net", {
   p1 <- pc_profile[, 1]
   n3 <- sf::st_as_sf(net[1:3, ])
   v <- withVisible(aw(pc = n3$ldv, lcv = n3$ldv, hgv = n3$hdv, bus = n3$hdv,
-                      mc = n3$ldv, p_pc = p1, p_lcv = p1, p_hgv = p1,
-                      p_bus = p1, p_mc = p1, net = n3))
+    mc = n3$ldv, p_pc = p1, p_lcv = p1, p_hgv = p1,
+    p_bus = p1, p_mc = p1, net = n3))
   expect_true(v$visible)
   expect_true(inherits(v$value, "sf"))
 })
@@ -55,7 +55,7 @@ test_that("colplot uses all_values and ylim", {
   pdf(NULL)
   on.exit(dev.off())
   expect_silent(colplot(data.frame(a = c(0, 1, 2), b = c(1, 0, 3)),
-                        all_values = TRUE, ylim = c(0, 10)))
+    all_values = TRUE, ylim = c(0, 10)))
 })
 
 test_that("get_project downloads and extracts url", {

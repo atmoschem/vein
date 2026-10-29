@@ -1,7 +1,7 @@
 context("ef_nitro fixes")
 
 args <- list(v = "PC", t = "Hot", cond = "Urban", f = "G", cc = "<=1400",
-             p = "NH3", S = 10)
+  p = "NH3", S = 10)
 
 test_that("fcorr is applied", {
   a <- do.call(ef_nitro, c(args, eu = "III"))(10000)
@@ -10,7 +10,7 @@ test_that("fcorr is applied", {
   km <- units::set_units(10000, "km")
   a <- do.call(ef_nitro, c(args, list(eu = c("III", "IV"), cumileage = km)))
   b <- do.call(ef_nitro, c(args, list(eu = c("III", "IV"), cumileage = km,
-                                       fcorr = c(1, 1, 1, 0.5, 0.2, 1, 1, 1))))
+    fcorr = c(1, 1, 1, 0.5, 0.2, 1, 1, 1))))
   expect_equal(as.numeric(b[[1]]), as.numeric(a[[1]]) * 0.5)
   expect_equal(as.numeric(b[[2]]), as.numeric(a[[2]]) * 0.2)
 })

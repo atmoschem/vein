@@ -10,7 +10,7 @@ test_that("emis_dist with osm distributes all gy", {
   expect_equal(sum(r$emission), 1000)
   expect_true(all(r$highway != "residential"))
   r2 <- suppressWarnings(emis_dist(gy = 1000, spobj = n2, osm = c(5, 3, 2, 1, 1),
-                                   pro = matrix(1, 24, 1)))
+    pro = matrix(1, 24, 1)))
   expect_equal(sum(sf::st_set_geometry(r2, NULL)[, 1:24]), 1000)
   n2$highway <- rep(c("motorway", "trunk", "primary", "secondary", "tertiary"), 4)
   r3 <- emis_dist(gy = 1000, spobj = n2, osm = c(5, 3, 2, 1, 1))
@@ -63,6 +63,6 @@ test_that("GriddedEmissionsArray default times with sf", {
   b <- GriddedEmissionsArray(gg, rows = 11, cols = nc, times = 1, rotate = "cols")
   expect_equal(dim(b), c(11, nc, 1))
   m <- GriddedEmissionsArray(as.matrix(sf::st_set_geometry(gg, NULL)[, c("V1", "V2")]),
-                             rows = 11, cols = nc)
+    rows = 11, cols = nc)
   expect_equal(dim(m), c(nc, 11, 2))
 })

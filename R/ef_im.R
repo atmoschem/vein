@@ -30,15 +30,15 @@ ef_im <- function(ef,
                   amileage,
                   max_amileage,
                   max_ef,
-                  verbose = TRUE){
-  if(missing(ef)) stop("No ef")
-  if(missing(tc)) stop("No tc")
-  if(!missing(max_amileage)) {
-    if(verbose) cat("adjusting amileage\n")
+                  verbose = TRUE) {
+  if (missing(ef)) stop("No ef")
+  if (missing(tc)) stop("No tc")
+  if (!missing(max_amileage)) {
+    if (verbose) cat("adjusting amileage\n")
     amileage <- ifelse(amileage > max_amileage, max_amileage, amileage)
   }
-  if(!missing(max_ef)) {
-    if(verbose) cat("adjusting ef\n")
+  if (!missing(max_ef)) {
+    if (verbose) cat("adjusting ef\n")
     ef <- ifelse(ef > max_ef, max_ef, ef)
   }
   nef <- ef * (1 + amileage * tc)

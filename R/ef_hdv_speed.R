@@ -92,30 +92,30 @@
 #' aa <- ef_hdv_speed(v = "Trucks", t = "RT", g = ">32", gr = 0,
 #' eu = rbind(euro, euro), l = 0.5, p = "NOx", speed = Speed(0:125))
 #' }
-ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
-                         show.equation = FALSE, speed, fcorr = rep(1, 8)){
+ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5, p, k = 1,
+                         show.equation = FALSE, speed, fcorr = rep(1, 8)) {
   p_cri <- as.character(unique(sysdata$hdv_criteria$POLLUTANT))
   p_ghg <- as.character(unique(sysdata$hdv_ghg$POLLUTANT))
   xx <- if (missing(x)) NULL else x
 
-  #Check eu
-  if(is.matrix(eu) | is.data.frame(eu)){
+  # Check eu
+  if (is.matrix(eu) | is.data.frame(eu)) {
     eu <- as.data.frame(eu)
-    for(i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
+    for (i in 1:ncol(eu)) eu[, i] <- as.character(eu[, i])
   } else {
     eu = as.character(eu)
   }
 
-  if(p %in% p_cri){
+  if (p %in% p_cri) {
     ef_hdv <- sysdata$hdv_criteria
-  } else if(p %in% p_ghg){
+  } else if (p %in% p_ghg) {
     ef_hdv <- sysdata$hdv_ghg
   } else {
     stop("Pollutant '", p, "' not available. Use one of: ",
-         paste(unique(c(p_cri, p_ghg)), collapse = ", "))
+      paste(unique(c(p_cri, p_ghg)), collapse = ", "))
   }
   # Check speed
-  if(!missing(speed)){
+  if (!missing(speed)) {
     speed <- .speed_kmh(speed)
     if (is.data.frame(speed)) stop("'speed' must be a vector")
   }
@@ -124,34 +124,34 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
   fun_eu <- function(e) {
     what <- paste(v, t, g, e, "gr =", gr, "l =", l, p)
     df <- .ef_row(ef_hdv,
-                  list(VEH = v, TYPE = t, GW = g, EURO = e, GRA = gr,
-                       LOAD = l, POLLUTANT = p),
-                  what)
+      list(VEH = v, TYPE = t, GW = g, EURO = e, GRA = gr,
+        LOAD = l, POLLUTANT = p),
+      what)
     .ef_speed_fun(df, k = k, k2 = .fcorr_k2(e, fcorr), x = xx, what = what)
   }
 
   # fun starts
-  if(!is.data.frame(eu)){
-    if(length(eu) == 1){
+  if (!is.data.frame(eu)) {
+    if (length(eu) == 1) {
       f1 <- fun_eu(eu)
       if (show.equation == TRUE) {
         df <- .ef_row(ef_hdv,
-                      list(VEH = v, TYPE = t, GW = g, EURO = eu, GRA = gr,
-                           LOAD = l, POLLUTANT = p),
-                      p)
+          list(VEH = v, TYPE = t, GW = g, EURO = eu, GRA = gr,
+            LOAD = l, POLLUTANT = p),
+          p)
         cat(paste0("a = ", df$a, ", b = ", df$b, ", c = ", df$c, ", d = ", df$d,
-                   ", e = ", df$e, ", f = ", df$f, "\n"))
-        cat(paste0("Equation = ", "(",as.character(df$Y), ")", "*", k, "*",
-                   .fcorr_k2(eu, fcorr), "\n"))
+          ", e = ", df$e, ", f = ", df$f, "\n"))
+        cat(paste0("Equation = ", "(", as.character(df$Y), ")", "*", k, "*",
+          .fcorr_k2(eu, fcorr), "\n"))
       }
-      if(!missing(speed)){
+      if (!missing(speed)) {
         return(EmissionFactors(f1(speed)))
       } else {
         return(f1)
       }
 
-    } else if(length(eu) > 1) {
-      if(missing(speed)) stop("if length(eu) > 1, 'speed' is needed")
+    } else if (length(eu) > 1) {
+      if (missing(speed)) stop("if length(eu) > 1, 'speed' is needed")
       dff <- do.call("cbind", lapply(eu, function(e) fun_eu(e)(speed)))
       dff <- EmissionFactors(dff)
       names(dff) <- paste0(eu, "_", 1:length(eu))
@@ -159,11 +159,11 @@ ef_hdv_speed <- function(v, t, g, eu, x, gr = 0, l = 0.5 ,p, k=1,
       return(dff)
     }
 
-  } else if (is.data.frame(eu)){
-    if(missing(speed)) stop("Add 'speed' please for each row")
-    dff <- do.call("rbind", lapply(1:nrow(eu), function(j){
-      do.call("cbind", lapply(1:ncol(eu), function(i){
-        fun_eu(eu[j,i][[1]])(speed)
+  } else if (is.data.frame(eu)) {
+    if (missing(speed)) stop("Add 'speed' please for each row")
+    dff <- do.call("rbind", lapply(1:nrow(eu), function(j) {
+      do.call("cbind", lapply(1:ncol(eu), function(i) {
+        fun_eu(eu[j, i][[1]])(speed)
       }))
     }))
     dff <- EmissionFactors(dff)

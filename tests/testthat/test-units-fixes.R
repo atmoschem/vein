@@ -20,7 +20,7 @@ test_that("cold_mileage converts temperature and length units", {
   a <- cold_mileage(units::set_units(5, "km"), celsius(c(0, 10)))
   expect_equal(a, c(0.52015, 0.44200))
   expect_equal(cold_mileage(units::set_units(5, "km"),
-                            units::set_units(c(273.15, 283.15), "K")), a)
+    units::set_units(c(273.15, 283.15), "K")), a)
   expect_equal(cold_mileage(units::set_units(5000, "m"), celsius(c(0, 10))), a)
   b <- cold_mileage(units::set_units(5, "km"), celsius(matrix(c(0, 10), nrow = 1)))
   expect_equal(dim(b), c(1, 2))
@@ -29,22 +29,22 @@ test_that("cold_mileage converts temperature and length units", {
 
 test_that("vkm converts lkm units and supports one street", {
   expect_equal(vkm(veh = c(1, 1, 1), lkm = lm, profile = matrix(1, 1, 1))$h1,
-               as.numeric(units::set_units(lm, "km")))
+    as.numeric(units::set_units(lm, "km")))
   expect_equal(dim(vkm(veh = 10, lkm = 1, profile = matrix(1, 24, 7))),
-               c(1, 168))
+    c(1, 168))
   expect_equal(dim(vkm(veh = 10, lkm = 1, profile = matrix(1, 24, 7),
-                       as_df = FALSE)),
-               c(1, 24, 7))
+    as_df = FALSE)),
+  c(1, 24, 7))
   expect_equal(dim(vkm(veh = 1:3, lkm = 1, profile = matrix(1, 24, 7),
-                       as_df = FALSE)),
-               c(3, 24, 7))
+    as_df = FALSE)),
+  c(3, 24, 7))
 })
 
 test_that("Vehicles with time", {
   expect_equal(as.character(units(Vehicles(data.frame(a = 1), time = "1/h")$a)),
-               "veh/h")
+    "veh/h")
   expect_equal(as.character(units(Vehicles(matrix(1), time = "1/h")$V1)),
-               "veh/h")
+    "veh/h")
   expect_error(Vehicles(TRUE), "class")
   expect_error(Vehicles(units::set_units(1, "veh*veh")), "veh")
   expect_output(print(Vehicles(data.frame(a = numeric(0)))), "a")

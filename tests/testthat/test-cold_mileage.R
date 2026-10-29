@@ -6,17 +6,17 @@ a <- cold_mileage(lkm, rbind(ta, ta))
 
 test_that("cold_mileage works", {
   expect_equal(round(cold_mileage(lkm, rbind(ta, ta))$V1[1]),
-  1)
+    1)
   expect_error(cold_mileage(ltrip = as.numeric(lkm), rbind(ta, ta)),
-               ".?")
+    ".?")
 
   # lengths in m are converted to km
   expect_equal(cold_mileage(ltrip = units::set_units(lkm, "m"),
-                            rbind(ta, ta)),
-               cold_mileage(lkm, rbind(ta, ta)))
+    rbind(ta, ta)),
+  cold_mileage(lkm, rbind(ta, ta)))
   expect_error(cold_mileage(ltrip = units::set_units(as.numeric(lkm), "m"),
-                            remove_units(rbind(ta, ta))),
-               ".?")
+    remove_units(rbind(ta, ta))),
+  ".?")
 
 
 })
@@ -24,18 +24,17 @@ test_that("cold_mileage works", {
 
 test_that("cold_mileage works", {
   expect_equal(round(cold_mileage(lkm, ta[1])$V1[1]),
-               1)
+    1)
   expect_error(cold_mileage(lkm, as.numeric(ta$V1)),
-               ".?")
+    ".?")
   expect_error(round(cold_mileage(lkm, remove_units(ta)[1])$V1[1]),
-               ".?")
+    ".?")
   expect_equal(round(cold_mileage(lkm, ta)$V1[1]),
-               1)
+    1)
 })
 
 
 test_that("cold_mileage works", {
   expect_equal(round(cold_mileage(lkm, celsius(10))[1]),
-               1)
+    1)
 })
-

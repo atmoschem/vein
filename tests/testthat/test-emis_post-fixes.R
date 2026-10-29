@@ -29,11 +29,11 @@ test_that("emis_post streets and veh conserve mass", {
 test_that("emis_post works with one street or one category", {
   a41 <- EmissionsArray(array(1, c(1, 2, 2, 2)))
   v <- emis_post(a41, pollutant = "CO", by = "veh", veh = "PC", size = "s",
-                 fuel = "G", type_emi = "e")
+    fuel = "G", type_emi = "e")
   expect_equal(as.numeric(v$g), rep(1, 8))
   a42 <- EmissionsArray(array(1, c(3, 1, 2, 2)))
   v <- emis_post(a42, pollutant = "CO", by = "veh", veh = "PC", size = "s",
-                 fuel = "G", type_emi = "e")
+    fuel = "G", type_emi = "e")
   expect_equal(as.numeric(v$g), rep(3, 4))
   s <- emis_post(a41, pollutant = "CO", by = "streets")
   expect_equal(dim(s), c(1, 4))
@@ -43,5 +43,5 @@ test_that("emis_post works with one street or one category", {
 
 test_that("emis_post rejects arrays that are not 3D or 4D", {
   expect_error(emis_post(EmissionsArray(matrix(1, 2, 2)), pollutant = "CO", by = "streets"),
-               "emis_post only reads")
+    "emis_post only reads")
 })

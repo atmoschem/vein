@@ -42,18 +42,18 @@
 #' PC_E25_1400 <- age_veh(x = net$ldv, name = "PC_E25_1400", net = net)
 #' plot(PC_E25_1400)
 #' }
-age_ldv <- function (x,
-                     name = "age",
-                     a = 1.698,
-                     b = -0.2,
-                     agemin = 1,
-                     agemax = 50,
-                     k = 1,
-                     bystreet = F,
-                     net,
-                     verbose = FALSE,
-                     namerows,
-                     time){
+age_ldv <- function(x,
+                    name = "age",
+                    a = 1.698,
+                    b = -0.2,
+                    agemin = 1,
+                    agemax = 50,
+                    k = 1,
+                    bystreet = F,
+                    net,
+                    verbose = FALSE,
+                    namerows,
+                    time) {
   .Deprecated("age_veh")
   args <- lapply(as.list(match.call())[-1], eval, parent.frame())
   do.call(age_veh, c(list(type = "ldv"), args))

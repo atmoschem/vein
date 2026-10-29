@@ -26,18 +26,18 @@
 #' data(decoder)
 #' decoder
 #' }
-moves_rpdy_sf <- function (veh,
-                           lkm,
-                           ef,
-                           speed_bin,
-                           profile,
-                           source_type_id = 21,
-                           vehicle = NULL,
-                           vehicle_type = NULL,
-                           fuel_subtype = NULL,
-                           # net,
-                           path_all,
-                           verbose = FALSE) {
+moves_rpdy_sf <- function(veh,
+                          lkm,
+                          ef,
+                          speed_bin,
+                          profile,
+                          source_type_id = 21,
+                          vehicle = NULL,
+                          vehicle_type = NULL,
+                          fuel_subtype = NULL,
+                          # net,
+                          path_all,
+                          verbose = FALSE) {
 
 
   ll <- if (is.data.frame(veh)) 1 else seq_along(veh)
@@ -71,27 +71,27 @@ moves_rpdy_sf <- function (veh,
         efbin$id <- 1:nrow(efbin)
         dfbin <- merge(dfbin, efbin, by = "bin", all.x = T)
 
-        if(sum(is.na(dfbin$id)) > 0){
+        if (sum(is.na(dfbin$id)) > 0) {
           fill_bins <- dfbin[!is.na(dfbin$id), ]$bin[1]
           missing_bins <- dfbin[is.na(dfbin$id), ]$bin
-          if(verbose) warning("Detected missing bins in ef: ", paste(missing_bins, collapse = " "),
-                              "\nAssuming: ", fill_bins)
+          if (verbose) warning("Detected missing bins in ef: ", paste(missing_bins, collapse = " "),
+            "\nAssuming: ", fill_bins)
         }
 
         # here we rename modelYearID by age of use
         modelYearID <- avgSpeedBinID <- .N <- NULL
-        ef[, modelYearID :=1:.N, by = avgSpeedBinID]
+        ef[, modelYearID := 1:.N, by = avgSpeedBinID]
 
         def_veh <- dcast.data.table(data = ef,
-                                    formula = avgSpeedBinID ~ modelYearID,
-                                    value.var = "EF")
+          formula = avgSpeedBinID ~ modelYearID,
+          value.var = "EF")
 
         names(def_veh)[2:ncol(def_veh)] <- paste0("age_", names(def_veh)[2:ncol(def_veh)])
 
-        if(sum(is.na(dfbin$id)) > 0){
+        if (sum(is.na(dfbin$id)) > 0) {
           la <- replicate(n = length(missing_bins),
-                          expr = def_veh[avgSpeedBinID == fill_bins],
-                          simplify = F)
+            expr = def_veh[avgSpeedBinID == fill_bins],
+            simplify = F)
           la <- data.table::rbindlist(la)
           la$avgSpeedBinID <- missing_bins
           def_veh <- rbind(def_veh, la)
@@ -100,47 +100,47 @@ moves_rpdy_sf <- function (veh,
 
         # speed bins of hour i; id keeps the order of the links
         dt <- data.table::data.table(id = seq_along(speed_bin[[i]]),
-                                     avgSpeedBinID = speed_bin[[i]])
+          avgSpeedBinID = speed_bin[[i]])
 
         df_net_ef <- merge(dt,
-                           def_veh,
-                           by = "avgSpeedBinID",
-                           all.x = T)
+          def_veh,
+          by = "avgSpeedBinID",
+          all.x = T)
         df_net_ef <- df_net_ef[order(df_net_ef$id), ]
         df_net_ef$id <- NULL
 
-        #EmissionFactors
-        EF <- df_net_ef[,2:ncol(df_net_ef)]
+        # EmissionFactors
+        EF <- df_net_ef[, 2:ncol(df_net_ef)]
 
         EF <- EmissionFactors(x = as.data.frame(EF), mass = "g", dist = "miles")
 
-        for(kk in 1:ncol(EF)) {
-          EF[[kk]] <- EF[[kk]]*units::set_units(1,"1/veh")
+        for (kk in 1:ncol(EF)) {
+          EF[[kk]] <- EF[[kk]] * units::set_units(1, "1/veh")
         }
 
         # estimating emissions ####
-        if(ncol(EF) < ncol(veh)) {
+        if (ncol(EF) < ncol(veh)) {
 
-          if(verbose)  message("Number of columns of EF is lower than number of columns of veh. Fixing")
+          if (verbose) message("Number of columns of EF is lower than number of columns of veh. Fixing")
 
           dif_col <- ncol(veh) - ncol(EF)
-          for(kk in (ncol(EF) + 1):(ncol(EF) + dif_col)) {
+          for (kk in (ncol(EF) + 1):(ncol(EF) + dif_col)) {
             EF[[kk]] <- EF[[ncol(EF)]]
           }
         }
 
         lx <- data.table::rbindlist(lapply(1:agemax,
-                                           function(ll) {
-                                             data.table::data.table(
-                                               emi = EF[[ll]] * veh[[ll]] * lkm * unlist(profile)[i],
-                                               id = 1:nrow(df_net_ef),
-                                               age = ll,
-                                               hour = i)
-                                           }))
+          function(ll) {
+            data.table::data.table(
+              emi = EF[[ll]] * veh[[ll]] * lkm * unlist(profile)[i],
+              id = 1:nrow(df_net_ef),
+              age = ll,
+              hour = i)
+          }))
 
         emi <- data.table::dcast.data.table(lx,
-                                            formula = id + hour ~ age,
-                                            value.var = "emi")
+          formula = id + hour ~ age,
+          value.var = "emi")
         names(emi)[3:ncol(emi)] <- paste0("age_", names(emi)[3:ncol(emi)])
         emi$veh <- vehicle
         emi$veh_type <- vehicle_type
@@ -158,19 +158,19 @@ moves_rpdy_sf <- function (veh,
   if (!missing(path_all)) {
     if (verbose)
       message("The table has size ", format(object.size(lxspeed),
-                                            units = "Mb"))
+        units = "Mb"))
     saveRDS(lxspeed, paste0(path_all, ".rds"))
   }
   # return(lxspeed)
   id <- hour <- . <- NULL
 
   by_street <- lxspeed[,
-                       lapply(.SD, sum, na.rm = T),
-                       .SDcols = paste0("age_", 1:agemax),
-                       by = .(id,
-                              pollutantID,
-                              hour,
-                              processID)
+    lapply(.SD, sum, na.rm = T),
+    .SDcols = paste0("age_", 1:agemax),
+    by = .(id,
+      pollutantID,
+      hour,
+      processID)
   ]
 
   by_street$age_total <- rowSums(by_street[, paste0("age_", 1:agemax), with = FALSE])
@@ -178,15 +178,15 @@ moves_rpdy_sf <- function (veh,
   age_total <- NULL
 
   by_street2 <- by_street[,
-                          sum(age_total, na.rm = T),
-                          by = .(id,
-                                 pollutantID,
-                                 hour,
-                                 processID)
+    sum(age_total, na.rm = T),
+    by = .(id,
+      pollutantID,
+      hour,
+      processID)
   ]
   streets <- data.table::dcast.data.table(by_street2,
-                                          formula = id + pollutantID + processID~ hour,
-                                          value.var = "V1")
+    formula = id + pollutantID + processID ~ hour,
+    value.var = "V1")
 
   names(streets)[4:ncol(streets)] <- paste0("H", names(streets)[4:ncol(streets)])
 
@@ -197,19 +197,19 @@ moves_rpdy_sf <- function (veh,
   veh <- veh_type <- fuelTypeID <- pollutantID <- processID <- sourceTypeID <- NULL
 
   by_veh <- lxspeed[, -"id"][,
-                             lapply(.SD, sum, na.rm = T),
-                             .SDcols = paste0("age_", 1:agemax),
-                             by = .(hour,
-                                    veh,
-                                    veh_type,
-                                    fuelTypeID,
-                                    pollutantID,
-                                    processID,
-                                    sourceTypeID)]
+    lapply(.SD, sum, na.rm = T),
+    .SDcols = paste0("age_", 1:agemax),
+    by = .(hour,
+      veh,
+      veh_type,
+      fuelTypeID,
+      pollutantID,
+      processID,
+      sourceTypeID)]
 
   veh <- data.table::melt.data.table(data = by_veh,
-                                     id.vars = names(by_veh)[1:7],
-                                     measure.vars = paste0("age_", 1:agemax))
+    id.vars = names(by_veh)[1:7],
+    measure.vars = paste0("age_", 1:agemax))
   variable <- NULL
   veh[, age := as.numeric(gsub("age_", "", variable))]
 
@@ -219,4 +219,3 @@ moves_rpdy_sf <- function (veh,
   return(list(streets = streets, veh = veh))
 
 }
-

@@ -13,7 +13,7 @@
 #' \item Spatial object of class "Spatial". Columns are hourly emissions.
 #' \item Spatial Object of class "sf". Columns are hourly emissions.
 #' \item "data.frame", "matrix" or "Emissions".
-#'}
+#' }
 #'
 #' In all cases, columns are hourly emissions.
 #' @param lt_emissions Local time of the emissions at the first hour. It must be
@@ -76,21 +76,21 @@
 #' }
 #'
 emis_order <- function(x, # 24 hours or one week
-                        lt_emissions,
-                        start_utc_time,
-                        desired_length,
-                        tz_lt = Sys.timezone(),
-                        seconds = 0,
-                        k = 1,
-                        net,
-                        verbose = TRUE) {
+                       lt_emissions,
+                       start_utc_time,
+                       desired_length,
+                       tz_lt = Sys.timezone(),
+                       seconds = 0,
+                       k = 1,
+                       net,
+                       verbose = TRUE) {
 
-  if(as.POSIXct(lt_emissions) >= as.POSIXct(start_utc_time)) {
+  if (as.POSIXct(lt_emissions) >= as.POSIXct(start_utc_time)) {
     stop("lt_emissions must start before start_utc_time")
   }
-  if(verbose) cat("Transforming into data.frame\n")
+  if (verbose) cat("Transforming into data.frame\n")
 
-  if(inherits(x, "sf")){
+  if (inherits(x, "sf")) {
     x <- sf::st_set_geometry(x, NULL)
   }
   # x <- remove_units(x)
@@ -107,11 +107,11 @@ emis_order <- function(x, # 24 hours or one week
   # check tz
   itz <- intersect(tz_lt, OlsonNames())
 
-  if(length(itz) == 0){
-    choice <- utils::menu(OlsonNames(), title="Choose your time zone")
+  if (length(itz) == 0) {
+    choice <- utils::menu(OlsonNames(), title = "Choose your time zone")
     tz_lt <- OlsonNames()[choice]
   }
-  if(verbose) cat("Your local_tz is: ", tz_lt, "\n")
+  if (verbose) cat("Your local_tz is: ", tz_lt, "\n")
 
   # first_hour_lt <- as.POSIXct(x = local_time, tz = "Asia/Tokyo")
   # first_hour_lt <- as.POSIXct(x = local_time, tz = "America/Sao_Paulo")
@@ -121,25 +121,25 @@ emis_order <- function(x, # 24 hours or one week
 
   # primero ver start_day
   seq_wrf <- seq.POSIXt(from = as.POSIXct(start_utc_time, tz = "UTC"),
-                        by = 3600,
-                        length.out = desired_length)
+    by = 3600,
+    length.out = desired_length)
   dwrf <- data.frame(seq_wrf = seq_wrf,
-                     cutc = as.character(seq_wrf))
+    cutc = as.character(seq_wrf))
 
 
   lt <- seq.POSIXt(from = first_hour_lt,
-                   by = 3600,
-                   #I need that lt be long enoigh so that dwrf$cutc is inside df_x$cutc
-                   # Hence, recycling names(x)
-                   length.out = nx*desired_length)
+    by = 3600,
+    # I need that lt be long enoigh so that dwrf$cutc is inside df_x$cutc
+    # Hence, recycling names(x)
+    length.out = nx * desired_length)
 
 
   df_x <- data.frame(lt = lt,
-                     utc = as.POSIXct(format(lt, tz = "UTC"), tz = "UTC")+seconds,
-                     cutc = as.character(as.POSIXct(format(lt, tz = "UTC"), tz = "UTC")+seconds))
+    utc = as.POSIXct(format(lt, tz = "UTC"), tz = "UTC") + seconds,
+    cutc = as.character(as.POSIXct(format(lt, tz = "UTC"), tz = "UTC") + seconds))
 
   a <- data.table::hour(df_x$lt[1]) - data.table::hour(df_x$utc[1])
-  if(verbose) cat("Difference with UTC: ", a, "\n")
+  if (verbose) cat("Difference with UTC: ", a, "\n")
 
 
   df_x$nx <- names(x)
@@ -147,11 +147,11 @@ emis_order <- function(x, # 24 hours or one week
   df <- merge(x = dwrf, y = df_x, by = "cutc", all.x = T)
   if (anyNA(df$nx)) {
     stop("Some hours of start_utc_time do not match hours of the emissions. ",
-         "Check 'seconds', it must keep the emissions in exact hours")
+      "Check 'seconds', it must keep the emissions in exact hours")
   }
   x <- x[, df$nx, drop = FALSE] * k
 
-  if(!missing(net)){
+  if (!missing(net)) {
     netsf <- sf::st_as_sf(net)
     dfsf <- sf::st_sf(x, geometry = sf::st_geometry(netsf))
     return(dfsf)

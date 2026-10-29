@@ -98,7 +98,7 @@ emis_speed <- function(veh,
 
   if (agemax > prog$n) {
     stop("`ef` has ", prog$n, " ages but ", agemax, " are needed. ",
-         "Provide one emission factor per age column of `veh` or set `agemax`.")
+      "Provide one emission factor per age column of `veh` or set `agemax`.")
   }
   agemax <- min(agemax, A)
   if (agemax < A) {

@@ -30,13 +30,13 @@
 #' length(l_cold)
 #' }
 ef_ldv_cold_list <- function(df, v = "LDV", ta, cc, f, eu, p) {
-  if(!missing(df) && NROW(df) != length(eu) && NCOL(df) != length(eu)) {
+  if (!missing(df) && NROW(df) != length(eu) && NCOL(df) != length(eu)) {
     warning("'df' is ignored; the list has one function per element of 'eu'")
   }
-  lista <- lapply(seq_along(eu), function(i)  {
+  lista <- lapply(seq_along(eu), function(i) {
     ef_ldv_cold(v = v, ta = ta, cc = cc, f = f,
-                eu = as.character(eu[i]), p = p, k = 1,
-                show.equation = FALSE)
+      eu = as.character(eu[i]), p = p, k = 1,
+      show.equation = FALSE)
   })
   return(lista)
 }

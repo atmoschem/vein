@@ -16,11 +16,11 @@
 #' ef <- ef_cetesb(p = "CO", veh = "PC_FG", full = T)
 #' to_latex(ef)
 #' }
-to_latex <- function (df,
-                      file,
-                      caption = "My table",
-                      label = "tab:df"){
-  if(inherits(df, "sf")) df <- sf::st_set_geometry(df, NULL)
+to_latex <- function(df,
+                     file,
+                     caption = "My table",
+                     label = "tab:df") {
+  if (inherits(df, "sf")) df <- sf::st_set_geometry(df, NULL)
   df <- as.data.frame(df)
   # escape LaTeX special characters
   esc <- function(x) {
@@ -34,7 +34,7 @@ to_latex <- function (df,
   order <- paste0(ifelse(lo == TRUE, "r", "l"))
 
   body <- as.data.frame(lapply(df, function(x) {
-    if(is.numeric(x)) as.character(as.numeric(x)) else esc(as.character(x))
+    if (is.numeric(x)) as.character(as.numeric(x)) else esc(as.character(x))
   }), stringsAsFactors = FALSE)
   rows <- apply(body, 1, paste, collapse = " & ")
   rows <- paste0(rows, " \\\\ ")
@@ -58,7 +58,7 @@ to_latex <- function (df,
     "\\end{table}"
   )
 
-  if(missing(file)){
+  if (missing(file)) {
     cat(out, sep = "\n")
   } else {
     cat(file, "\n")

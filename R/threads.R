@@ -11,6 +11,6 @@
 #' }
 check_nt <- function() {
   .Fortran("checkntf",
-           nt = integer(1L)
+    nt = integer(1L)
   )$nt
 }

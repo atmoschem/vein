@@ -44,11 +44,11 @@
 #' sum(df2$BC)
 #' }
 emis_to_streets <- function(streets,
-                             dfemis,
-                             by = "ID",
-                             stpro,
-                             verbose = TRUE){
-  if(inherits(dfemis, "sf")) {
+                            dfemis,
+                            by = "ID",
+                            stpro,
+                            verbose = TRUE) {
+  if (inherits(dfemis, "sf")) {
     dfemis <- sf::st_set_geometry(dfemis, NULL)
   }
   dfemis <- as.data.frame(dfemis)
@@ -60,10 +60,10 @@ emis_to_streets <- function(streets,
   w <- as.numeric(sf::st_length(streets))
 
   # check stpro
-  if(!missing(stpro)) {
-    if(names(stpro)[1] != "stpro") stop("First name of data.frame stpro must be 'stpro'")
-    if(names(stpro)[2] != "VAL") stop("Second name of data.frame stpro must be 'VAL'")
-    if(!"stpro" %in% names(dfa)) stop("'streets' must have the column 'stpro'")
+  if (!missing(stpro)) {
+    if (names(stpro)[1] != "stpro") stop("First name of data.frame stpro must be 'stpro'")
+    if (names(stpro)[2] != "VAL") stop("Second name of data.frame stpro must be 'VAL'")
+    if (!"stpro" %in% names(dfa)) stop("'streets' must have the column 'stpro'")
     val <- stpro$VAL[match(dfa$stpro, stpro$stpro)]
     val[is.na(val)] <- 1
     w <- w * val
@@ -73,7 +73,7 @@ emis_to_streets <- function(streets,
   vars <- setdiff(names(dfemis), by)
   out <- matrix(0, nrow = nrow(dfa), ncol = length(vars))
   for (i in seq_len(nrow(dfemis))) {
-    if(verbose)   message(paste0("filtering ", dfemis[[by]][i]))
+    if (verbose) message(paste0("filtering ", dfemis[[by]][i]))
     idx <- which(dfa[[by]] == dfemis[[by]][i])
     if (length(idx) == 0) {
       warning("There are no streets with ", by, " = ", dfemis[[by]][i])
@@ -86,7 +86,7 @@ emis_to_streets <- function(streets,
   nomatch <- !dfa[[by]] %in% dfemis[[by]]
   if (any(nomatch)) {
     warning(sum(nomatch), " streets have a '", by,
-            "' not present in 'dfemis', their emissions are 0")
+      "' not present in 'dfemis', their emissions are 0")
   }
   for (j in seq_along(vars)) {
     x <- out[, j]

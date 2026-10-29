@@ -38,30 +38,30 @@ moves_speed <- function(x, net) {
     b
   }
 
-  if(inherits(x = x, what = "sf")) {
+  if (inherits(x = x, what = "sf")) {
     net <- sf::st_geometry(x)
     x <- sf::st_set_geometry(x, NULL)
   }
 
-  if  ( is.matrix(x) ) {
+  if  (is.matrix(x)) {
     spd <- as.data.frame(x)
-    for(i in 1:ncol(spd)){
+    for (i in 1:ncol(spd)) {
       spd[[i]] <- fx(to_mph(spd[[i]]))
     }
-  } else if ( is.data.frame(x) ) {
+  } else if (is.data.frame(x)) {
     spd <- as.data.frame(x)
     class(spd) <- "data.frame"
-    for(i in 1:ncol(spd)){
+    for (i in 1:ncol(spd)) {
       spd[[i]] <- fx(to_mph(spd[[i]]))
     }
-  } else if ( is.list(x) ) {
+  } else if (is.list(x)) {
     spd <- lapply(x, function(v) fx(to_mph(v)))
   } else {
     spd <- fx(to_mph(x))
   }
 
-  if(!missing(net)) {
-   spd <- sf::st_sf(spd, geometry = sf::st_geometry(net))
+  if (!missing(net)) {
+    spd <- sf::st_sf(spd, geometry = sf::st_geometry(net))
   }
 
   return(spd)

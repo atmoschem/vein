@@ -22,11 +22,11 @@ test_that("ef_cetesb: resuspension EF for trucks is not 0", {
 
 test_that("ef_cetesb: SO2 uses sppm of each vehicle", {
   a <- ef_cetesb("SO2", c("PC_G", "LCV_D", "PC_E"), year = 2020, agemax = 3,
-                 sppm = c(50, 500, 50))
+    sppm = c(50, 500, 50))
   b <- ef_cetesb("SO2", "LCV_D", year = 2020, agemax = 3, sppm = 500)
   expect_equal(as.numeric(a$LCV_D), as.numeric(b))
   expect_equal(as.numeric(a$PC_G),
-               raw_ef("FC", "PC_G", 2018:2020) * 50 * 2e-6)
+    raw_ef("FC", "PC_G", 2018:2020) * 50 * 2e-6)
   expect_true(all(as.numeric(a$PC_E) == 0))
 })
 

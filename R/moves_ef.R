@@ -21,7 +21,7 @@
 #' }
 moves_ef <- function(ef,
                      vehicles,
-                     source_type_id = 21, #Passenger car
+                     source_type_id = 21, # Passenger car
                      process_id = 1,
                      fuel_type_id = 1, # Gasoline
                      pollutant_id = 2, # Total Energy Consumption
@@ -29,32 +29,32 @@ moves_ef <- function(ef,
                      speed_bin) {
 
   data.table::rbindlist(
-    lapply(seq_along(source_type_id), function(i){
+    lapply(seq_along(source_type_id), function(i) {
       data.table::rbindlist(
-        lapply(1:ncol(speed_bin), function(j){
+        lapply(1:ncol(speed_bin), function(j) {
 
           hourID <- processID <- pollutantID <- sourceTypeID <- fuelTypeID <- roadTypeID <- NULL
           def <- ef[hourID == j &
-                      pollutantID == pollutant_id &
-                      processID == process_id &
-                      sourceTypeID == source_type_id[i] &
-                      fuelTypeID == fuel_type_id[i] &
-                      roadTypeID == road_type_id, ]
+            pollutantID == pollutant_id &
+            processID == process_id &
+            sourceTypeID == source_type_id[i] &
+            fuelTypeID == fuel_type_id[i] &
+            roadTypeID == road_type_id, ]
           if (anyDuplicated(def$avgSpeedBinID)) {
             stop("ef has more than one ratePerDistance per avgSpeedBinID ",
-                 "(e.g. several modelYearID) for hourID ", j,
-                 ". Filter or aggregate ef first, or use moves_rpdy")
+              "(e.g. several modelYearID) for hourID ", j,
+              ". Filter or aggregate ef first, or use moves_rpdy")
           }
 
-          dt <- data.table::data.table(id =1:nrow(speed_bin),
-                                       sourceTypeID = source_type_id[i],
-                                       avgSpeedBinID = speed_bin[[j]])
+          dt <- data.table::data.table(id = 1:nrow(speed_bin),
+            sourceTypeID = source_type_id[i],
+            avgSpeedBinID = speed_bin[[j]])
 
           df_net_ef <- merge(dt,
-                             def[, c("avgSpeedBinID",
-                                     "ratePerDistance")],
-                             by = "avgSpeedBinID",
-                             all.x = T)
+            def[, c("avgSpeedBinID",
+              "ratePerDistance")],
+            by = "avgSpeedBinID",
+            all.x = T)
           df_net_ef$hour <- j
           df_net_ef$vehicles <- vehicles[i]
           df_net_ef
@@ -65,9 +65,8 @@ moves_ef <- function(ef,
   data.table::setorderv(lxspeed, cols = "id")
 
   data.table::dcast.data.table(lxspeed[, c("id", "hour", "ratePerDistance", "vehicles")],
-                               formula = id+vehicles~hour,
-                               value.var = "ratePerDistance") -> emi
+    formula = id + vehicles ~ hour,
+    value.var = "ratePerDistance") -> emi
 
   return(emi)
 }
-

@@ -103,75 +103,75 @@ emis_post <- function(arra,
                       type_emi,
                       k = 1) {
 
-   if (inherits(arra, "EmissionsArray") && length(dim(arra)) == 4){
-    if (by == "veh"){
+  if (inherits(arra, "EmissionsArray") && length(dim(arra)) == 4) {
+    if (by == "veh") {
       # categories x hours x days, categories varying fastest
       x <- as.vector(apply(X = unclass(arra), MARGIN = c(2, 3, 4), FUN = sum, na.rm = TRUE))
       df <- cbind(deparse(substitute(arra)),
-                  as.data.frame(x))
-      names(df) <- c(as.character(df[1,1]), "g")
-      nombre <- rep(paste(as.character(df[1,1]),
-                          seq(1:dim(arra)[2]),
-                          sep = "_"),
-                    dim(arra)[3]*dim(arra)[4],
-                    by = dim(arra)[4])
-      df[,1] <- nombre
-      if(!missing(veh)) {
+        as.data.frame(x))
+      names(df) <- c(as.character(df[1, 1]), "g")
+      nombre <- rep(paste(as.character(df[1, 1]),
+        seq(1:dim(arra)[2]),
+        sep = "_"),
+      dim(arra)[3] * dim(arra)[4],
+      by = dim(arra)[4])
+      df[, 1] <- nombre
+      if (!missing(veh)) {
         df$veh <- rep(veh, nrow(df))
       } else {
         warning("You should add `veh`")
       }
-      if(!missing(size)) {
+      if (!missing(size)) {
         df$size <- rep(size, nrow(df))
       } else {
         warning("You should add `size`")
       }
-      if(!missing(fuel)) {
+      if (!missing(fuel)) {
         df$fuel <- rep(fuel, nrow(df))
       } else {
         warning("You should add `fuel`")
       }
-      if(!missing(type_emi)) {
+      if (!missing(type_emi)) {
         df$type_emi <- rep(type_emi, nrow(df))
       } else {
         warning("You should add `type_emi`")
       }
-      if(!missing(pollutant)) {
+      if (!missing(pollutant)) {
         df$pollutant <- rep(pollutant, nrow(df))
       } else {
         stop("At pleast write the name of the `pollutant`")
       }
       df$age <- rep(seq(1:dim(arra)[2]),
-                    dim(arra)[3]*dim(arra)[4],
-                    by = dim(arra)[4])
-      hour <- rep(1:(dim(arra)[3]*dim(arra)[4]), #hours x days
-                  each = dim(arra)[2]) #veh cat
+        dim(arra)[3] * dim(arra)[4],
+        by = dim(arra)[4])
+      hour <- rep(1:(dim(arra)[3] * dim(arra)[4]), # hours x days
+        each = dim(arra)[2]) # veh cat
       df$hour <- hour
-      df$g <- Emissions(df$g)*k
+      df$g <- Emissions(df$g) * k
 
       return(df)
     } else if (by == "streets_narrow") {
 
       # streets x hours x days, streets varying fastest
-      x <- as.vector(apply(X = unclass(arra), MARGIN = c(1, 3, 4), FUN = sum, na.rm = TRUE))*k
-      df <- cbind(deparse(substitute(arra)),as.data.frame(x))
-      hour <- rep(seq(0: (dim(arra)[3]-1) ),
-                  times = dim(arra)[4],
-                  each=dim(arra)[1])
+      x <- as.vector(apply(X = unclass(arra), MARGIN = c(1, 3, 4), FUN = sum, na.rm = TRUE)) * k
+      df <- cbind(deparse(substitute(arra)), as.data.frame(x))
+      hour <- rep(seq(0:(dim(arra)[3] - 1)),
+        times = dim(arra)[4],
+        each = dim(arra)[1])
       df$hour <- hour
       names(df) <- c("street", "g", "hour")
-      df[,1] <- seq(1,dim(arra)[1])
-      df[,2] <- Emissions(df[,2])
+      df[, 1] <- seq(1, dim(arra)[1])
+      df[, 2] <- Emissions(df[, 2])
 
 
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
-      x <- as.vector(apply(X = unclass(arra), MARGIN = c(1, 3, 4), FUN = sum, na.rm = TRUE))*k
-      m <- matrix(x, nrow=dim(arra)[1], ncol=dim(arra)[3]*dim(arra)[4])
+      x <- as.vector(apply(X = unclass(arra), MARGIN = c(1, 3, 4), FUN = sum, na.rm = TRUE)) * k
+      m <- matrix(x, nrow = dim(arra)[1], ncol = dim(arra)[3] * dim(arra)[4])
 
       df <- as.data.frame(m)
 
-      if(!missing(net)){
+      if (!missing(net)) {
         netsf <- sf::st_as_sf(net)
         dfsf <- sf::st_sf(Emissions(df), geometry = sf::st_geometry(netsf))
         return(dfsf)
@@ -180,61 +180,61 @@ emis_post <- function(arra,
       }
     }
 
-  } else if(inherits(arra, "EmissionsArray") && length(dim(arra)) == 3){
-    if (by == "veh"){
-      x <- as.vector(apply(X = unclass(arra), MARGIN = c(2,3), FUN = sum, na.rm = TRUE))
+  } else if (inherits(arra, "EmissionsArray") && length(dim(arra)) == 3) {
+    if (by == "veh") {
+      x <- as.vector(apply(X = unclass(arra), MARGIN = c(2, 3), FUN = sum, na.rm = TRUE))
       df <- cbind(deparse(substitute(arra)),
-                  as.data.frame(x))
-      names(df) <- c(as.character(df[1,1]), "g")
-      nombre <- rep(paste(as.character(df[1,1]),
-                          seq(1:dim(arra)[2]),
-                          sep = "_"),dim(arra)[3], by=7 )
-      df[,1] <- nombre
-      if(!missing(veh)) {
+        as.data.frame(x))
+      names(df) <- c(as.character(df[1, 1]), "g")
+      nombre <- rep(paste(as.character(df[1, 1]),
+        seq(1:dim(arra)[2]),
+        sep = "_"), dim(arra)[3], by = 7)
+      df[, 1] <- nombre
+      if (!missing(veh)) {
         df$veh <- rep(veh, nrow(df))
       } else {
         warning("You should add `veh`")
       }
-      if(!missing(size)) {
+      if (!missing(size)) {
         df$size <- rep(size, nrow(df))
       } else {
         warning("You should add `size`")
       }
-      if(!missing(fuel)) {
+      if (!missing(fuel)) {
         df$fuel <- rep(fuel, nrow(df))
       } else {
         warning("You should add `fuel`")
       }
-      if(!missing(type_emi)) {
+      if (!missing(type_emi)) {
         df$type_emi <- rep(type_emi, nrow(df))
       } else {
         warning("You should add `type_emi`")
       }
-      if(!missing(pollutant)) {
+      if (!missing(pollutant)) {
         df$pollutant <- rep(pollutant, nrow(df))
       } else {
         stop("At pleast write the name of the `pollutant`")
       }
       df$age <- rep(1:dim(arra)[2], dim(arra)[3])
 
-      hour <- rep(1:dim(arra)[3], #hours x days
-                  each = dim(arra)[2]) #veh cat
+      hour <- rep(1:dim(arra)[3], # hours x days
+        each = dim(arra)[2]) # veh cat
       df$hour <- hour
-      df$g <- Emissions(df$g)*k
+      df$g <- Emissions(df$g) * k
       return(df)
     } else if (by %in% c("streets_narrow")) {
-      df <- as.vector(apply(X = unclass(arra), MARGIN = c(1,3), FUN = sum, na.rm = TRUE))*k
+      df <- as.vector(apply(X = unclass(arra), MARGIN = c(1, 3), FUN = sum, na.rm = TRUE)) * k
       df <- data.frame(street = rep(seq_len(dim(arra)[1]), dim(arra)[3]),
-                       g = Emissions(df),
-                       hour = rep(1:dim(arra)[3], each = dim(arra)[1]))
+        g = Emissions(df),
+        hour = rep(1:dim(arra)[3], each = dim(arra)[1]))
       return(df)
     } else if (by %in% c("streets_wide", "streets")) {
-      df <- apply(X = unclass(arra), MARGIN = c(1,3), FUN = sum, na.rm = TRUE)*k
+      df <- apply(X = unclass(arra), MARGIN = c(1, 3), FUN = sum, na.rm = TRUE) * k
       df <- matrix(df, nrow = dim(arra)[1], ncol = dim(arra)[3])
 
       df <- as.data.frame(df)
 
-      if(!missing(net)){
+      if (!missing(net)) {
         netsf <- sf::st_as_sf(net)
         dfsf <- sf::st_sf(Emissions(df), geometry = sf::st_geometry(netsf))
         return(dfsf)
@@ -244,21 +244,21 @@ emis_post <- function(arra,
     }
 
 
-  } else if(inherits(arra, "Emissions") && length(dim(arra)) == 2) {
-    if(by != "veh") stop("Only by  == 'veh' accepted")
+  } else if (inherits(arra, "Emissions") && length(dim(arra)) == 2) {
+    if (by != "veh") stop("Only by  == 'veh' accepted")
     x_DF <- data.frame(array_x = paste0("array_", 1:nrow(arra)))
-    x_DF$g <- arra$emissions*k
+    x_DF$g <- arra$emissions * k
     x_DF$veh <- veh
     x_DF$size <- size
     x_DF$fuel <- fuel
     x_DF$type_emi <- type_emi
     x_DF$pollutant <- pollutant
     x_DF$age <- arra$age
-    if("month" %in% names(arra)) {
+    if ("month" %in% names(arra)) {
       x_DF$month <- arra$month
     }
     return(x_DF)
   } else {
-      stop("emis_post only reads `EmissionsArray` or `Emissions`")
-    }
+    stop("emis_post only reads `EmissionsArray` or `Emissions`")
+  }
 }

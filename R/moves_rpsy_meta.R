@@ -33,7 +33,7 @@ moves_rpsy_meta <- function(metadata,
                             simplify = TRUE,
                             verbose = FALSE,
                             colk,
-                            colkt = F){
+                            colkt = F) {
 
   profile <- as.data.frame(profile)
   profile$Hour <- sourceTypeID <- fuelTypeID <- pollutantID <- processID <- NULL
@@ -47,7 +47,7 @@ moves_rpsy_meta <- function(metadata,
 
   data.table::rbindlist(lapply(seq_along(uni_source), function(m) {
 
-    if(verbose) cat(paste0("sourceTypeID: ", uni_source[m], "\n"))
+    if (verbose) cat(paste0("sourceTypeID: ", uni_source[m], "\n"))
 
     def <- ef[sourceTypeID == uni_source[m]]
 
@@ -56,14 +56,14 @@ moves_rpsy_meta <- function(metadata,
 
     data.table::rbindlist(lapply(seq_along(uni_fuel), function(k) {
 
-      if(verbose) cat(paste0("Fuel: ",  uni_fuel[k], "\n"))
+      if (verbose) cat(paste0("Fuel: ",  uni_fuel[k], "\n"))
 
       def <- def[fuelTypeID == uni_fuel[k]]
 
       # read vehicles
       nveh <- metadata[fuelTypeID == uni_fuel[k] & sourceTypeID == uni_source[m]]$vehicles
 
-      if(verbose) cat(paste0("Reading: veh/", nveh, ".rds\n\n"))
+      if (verbose) cat(paste0("Reading: veh/", nveh, ".rds\n\n"))
 
       veh <- readRDS(paste0("veh/", nveh, ".rds"))
 
@@ -72,7 +72,7 @@ moves_rpsy_meta <- function(metadata,
 
       data.table::rbindlist(lapply(seq_along(uni_process), function(l) {
 
-        if(verbose) cat(paste0("Process: ", uni_process[l], "\n"))
+        if (verbose) cat(paste0("Process: ", uni_process[l], "\n"))
 
         def <- def[processID == uni_process[l]]
 
@@ -81,7 +81,7 @@ moves_rpsy_meta <- function(metadata,
 
         data.table::rbindlist(lapply(seq_along(uni_pol), function(j) {
 
-          if(verbose) cat(paste0("Pollutant: ", uni_pol[j], "\n"))
+          if (verbose) cat(paste0("Pollutant: ", uni_pol[j], "\n"))
 
           def <- def[pollutantID == uni_pol[j]]
 
@@ -108,13 +108,13 @@ moves_rpsy_meta <- function(metadata,
             # } else {
             def <- def[hourID == hour_i, ]
 
-            if(nrow(def) == 0) return()
+            if (nrow(def) == 0) return()
             # }
 
 
             data.table::setorderv(def,
-                                  cols = "modelYearID",
-                                  order = -1)
+              cols = "modelYearID",
+              order = -1)
 
 
 
@@ -125,22 +125,22 @@ moves_rpsy_meta <- function(metadata,
 
             . <- NULL
             def_veh <- dcast.data.table(data = def,
-                                        formula = . ~ modelYearID,
-                                        value.var = "EF")
+              formula = . ~ modelYearID,
+              value.var = "EF")
 
             names(def_veh)[2:ncol(def_veh)] <- paste0("age_", names(def_veh)[2:ncol(def_veh)])
 
 
             la <- replicate(n = length(lkm),
-                            expr = def_veh[, 2:ncol(def_veh)],
-                            simplify = F)
+              expr = def_veh[, 2:ncol(def_veh)],
+              simplify = F)
             EF <- data.table::rbindlist(la)
 
-            if(colkt){
+            if (colkt) {
               # to convert starts (trips) to km (EF g/start * start/km => g/km)
               # in metadata k should be "km_trip"
               nk <- metadata[fuelTypeID == uni_fuel[k] & sourceTypeID == uni_source[m]][[colk]]
-              EF <- EF/as.numeric(nk)
+              EF <- EF / as.numeric(nk)
             }
 
 
@@ -149,22 +149,22 @@ moves_rpsy_meta <- function(metadata,
               vehicles <- NULL
 
               df_fuel <- data.table::as.data.table(fuel_type)[fuelTypeID == metadata[vehicles == nveh]$fuelTypeID,
-                                                              lapply(.SD, mean, na.rm = T),
-                                                              .SDcols = c("carbonContent",
-                                                                          "humidityCorrectionCoeff",
-                                                                          "energyContent",
-                                                                          "fuelDensity"),
-                                                              by = fuelTypeID]
+                lapply(.SD, mean, na.rm = T),
+                .SDcols = c("carbonContent",
+                  "humidityCorrectionCoeff",
+                  "energyContent",
+                  "fuelDensity"),
+                by = fuelTypeID]
 
-              EF <- EF/1000 * 1/df_fuel$energyContent * 1/df_fuel$fuelDensity
+              EF <- EF / 1000 * 1 / df_fuel$energyContent * 1 / df_fuel$fuelDensity
 
               for (kk in 1:ncol(EF)) {
                 EF[[kk]] <- units::set_units(EF[[kk]], "gallons/miles/veh")
               }
             } else {
               EF <- EmissionFactors(x = as.data.frame(EF),
-                                    mass = "g",
-                                    dist = "miles")
+                mass = "g",
+                dist = "miles")
 
               for (kk in 1:ncol(EF)) {
                 EF[[kk]] <- EF[[kk]] * units::set_units(1, "1/veh")
@@ -185,16 +185,16 @@ moves_rpsy_meta <- function(metadata,
             }
             lx <- data.table::rbindlist(
               lapply(1:agemax,
-                     function(n) {
-                       data.table::data.table(emi = EF[[n]] * veh[[n]] *  lkm * profile[i, nveh],
-                                              id = 1:length(lkm),
-                                              age = n,
-                                              hour = i)
-                     }))
+                function(n) {
+                  data.table::data.table(emi = EF[[n]] * veh[[n]] *  lkm * profile[i, nveh],
+                    id = 1:length(lkm),
+                    age = n,
+                    hour = i)
+                }))
 
             emi <- data.table::dcast.data.table(lx,
-                                                formula = id + hour ~ age,
-                                                value.var = "emi")
+              formula = id + hour ~ age,
+              value.var = "emi")
 
             names(emi)[3:ncol(emi)] <- paste0("age_", names(emi)[3:ncol(emi)])
 
@@ -230,14 +230,14 @@ moves_rpsy_meta <- function(metadata,
     # To obtain NMHC by processID, fuelTypeID and sourceTypeID, !simplify must be used
 
     by_street <- lxstart[,
-                         c("id", "hour", "age_total"),
-                         with = F][,
-                                   sum(age_total),
-                                   by = c("id", "hour")]
+      c("id", "hour", "age_total"),
+      with = F][,
+      sum(age_total),
+      by = c("id", "hour")]
 
     streets <- data.table::dcast.data.table(by_street,
-                                            formula = id ~ hour,
-                                            value.var = "V1")
+      formula = id ~ hour,
+      value.var = "V1")
     names(streets)[2:ncol(streets)] <- paste0("H", names(streets)[2:ncol(streets)])
 
     if (!missing(net)) {
@@ -248,20 +248,20 @@ moves_rpsy_meta <- function(metadata,
     names(lxstart)
 
     by_veh <- lxstart[,
-                      lapply(.SD, sum, na.rm = T),
-                      .SDcols = paste0("age_", 1:agemax),
-                      by = c("hour",
-                             "veh",
-                             "veh_type",
-                             "fuel",
-                             "fuelTypeID",
-                             "pollutantID",
-                             "processID",
-                             "sourceTypeID")]
+      lapply(.SD, sum, na.rm = T),
+      .SDcols = paste0("age_", 1:agemax),
+      by = c("hour",
+        "veh",
+        "veh_type",
+        "fuel",
+        "fuelTypeID",
+        "pollutantID",
+        "processID",
+        "sourceTypeID")]
 
     veh <- data.table::melt.data.table(data = by_veh,
-                                       id.vars = names(by_veh)[1:8],
-                                       measure.vars = paste0("age_", 1:agemax))
+      id.vars = names(by_veh)[1:8],
+      measure.vars = paste0("age_", 1:agemax))
     variable <- NULL
 
     veh[, `:=`(age, as.numeric(gsub("age_", "",  variable)))]

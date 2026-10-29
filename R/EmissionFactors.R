@@ -47,26 +47,26 @@ EmissionFactors <- function(x,
       z * units::as_units(u)
     }
   }
-  if ( is.matrix(x) ) {
+  if (is.matrix(x)) {
     ef <- as.data.frame(x)
-    for(i in 1:ncol(ef)){
-      ef[,i] <- set_ef(ef[,i])
+    for (i in 1:ncol(ef)) {
+      ef[, i] <- set_ef(ef[, i])
     }
-    class(ef) <- c("EmissionFactors",class(ef))
-  } else if ( is.data.frame(x) ) {
+    class(ef) <- c("EmissionFactors", class(ef))
+  } else if (is.data.frame(x)) {
     ef <- x
-    for(i in 1:ncol(ef)){
-      ef[,i] <- set_ef(ef[,i])
+    for (i in 1:ncol(ef)) {
+      ef[, i] <- set_ef(ef[, i])
     }
-    class(ef) <- unique(c("EmissionFactors",class(ef)))
-  } else if ( inherits(x, "units")) {
-    if(as.character(units(x)) != paste0(mass, "/", dist) ){
+    class(ef) <- unique(c("EmissionFactors", class(ef)))
+  } else if (inherits(x, "units")) {
+    if (as.character(units(x)) != paste0(mass, "/", dist)) {
       message("Converting ", as.character(units(x)), " to ", mass, "/", dist)
     } else {
       message("Units are the same and no cerversions will be made")
     }
     ef <- set_ef(x)
-  } else if( is.numeric(x) || is.logical(x) ) {
+  } else if (is.numeric(x) || is.logical(x)) {
     ef <- set_ef(x)
   } else {
     stop("'x' must be numeric, matrix, data.frame or units")
@@ -80,7 +80,7 @@ EmissionFactors <- function(x,
 #' @export
 print.EmissionFactors <- function(x, ...) {
   nr <- ifelse(nrow(x) <= 5, nrow(x), 5)
-  if(ncol(x) == 1) {
+  if (ncol(x) == 1) {
     ndf <- names(x)
     df <- data.frame(ndf = x[1:nr, ])
     names(df) <- ndf
@@ -88,7 +88,7 @@ print.EmissionFactors <- function(x, ...) {
   } else {
     print.data.frame(x[1:nr, ], ...)
   }
-  if(nrow(x) > 5)     cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
+  if (nrow(x) > 5) cat(paste0("... and ", nrow(x) - 5, " more rows\n"))
 }
 
 
@@ -109,61 +109,61 @@ summary.EmissionFactors <- function(object, ...) {
 plot.EmissionFactors <- function(x,
                                  pal = "mpl_viridis",
                                  rev = TRUE,
-                                 fig1 = c(0,0.8,0,0.8),
-                                 fig2 = c(0,0.8,0.55,1),
-                                 fig3 = c(0.7,1,0,0.8),
+                                 fig1 = c(0, 0.8, 0, 0.8),
+                                 fig2 = c(0, 0.8, 0.55, 1),
+                                 fig3 = c(0.7, 1, 0, 0.8),
                                  mai1 = c(0.2, 0.82, 0.82, 0.42),
                                  mai2 = c(1.3, 0.82, 0.82, 0.42),
                                  mai3 = c(0.7, 0.62, 0.82, 0.42),
                                  bias = 1.5,
                                  ...) {
 
-    oldpar <- par(no.readonly = TRUE)       # code line i
+  oldpar <- par(no.readonly = TRUE)       # code line i
   on.exit(par(oldpar))                    # code line i + 1
 
-  if(ncol(x) > 1) {
-    graphics::par(fig=fig1, #new=TRUE,
-                  mai = mai1,
-                  ...)
+  if (ncol(x) > 1) {
+    graphics::par(fig = fig1, # new=TRUE,
+      mai = mai1,
+      ...)
 
     col <- grDevices::rgb(grDevices::colorRamp(colors = cptcity::cpt(pal, rev = rev),
-                                               bias = bias)(seq(0, 1,0.01)),
-                          maxColorValue = 255)
+      bias = bias)(seq(0, 1, 0.01)),
+    maxColorValue = 255)
 
     graphics::image(x = 1:ncol(x),
-                    xaxt = "n",
-                    z =t(as.matrix(x))[, nrow(x):1],
-                    xlab = "",
-                    ylab = paste0("EF by streets [",as.character(units(x[[1]])), "]"),
-                    col = col,
-                    axe = FALSE)
+      xaxt = "n",
+      z = t(as.matrix(x))[, nrow(x):1],
+      xlab = "",
+      ylab = paste0("EF by streets [", as.character(units(x[[1]])), "]"),
+      col = col,
+      axe = FALSE)
     axis(2)
     addscale(t(as.matrix(x))[, nrow(x):1], col = col)
 
-    graphics::par(fig=fig2,
-                  mai = mai2,
-                  new=TRUE,
-                  ...)
+    graphics::par(fig = fig2,
+      mai = mai2,
+      new = TRUE,
+      ...)
     avage <- mean(unlist(x), na.rm = T)
     graphics::plot(colMeans(x, na.rm = T),
-                   type="l",
-                   ylab = paste0("Mean EF [",as.character(units(x[[1]])), "]"),
-                   xlab = "",
-                   frame = FALSE,
-                   xaxt = 'n')
+      type = "l",
+      ylab = paste0("Mean EF [", as.character(units(x[[1]])), "]"),
+      xlab = "",
+      frame = FALSE,
+      xaxt = "n")
     graphics::axis(3)
 
-    graphics::abline(h = avage, col="red")
-    cat("Weighted mean = ",round(avage,2), "\n")
+    graphics::abline(h = avage, col = "red")
+    cat("Weighted mean = ", round(avage, 2), "\n")
 
-    graphics::par(fig=fig3, new=TRUE,
-                  mai = mai3,
-                  ...)
+    graphics::par(fig = fig3, new = TRUE,
+      mai = mai3,
+      ...)
     graphics::plot(x = rowMeans(x, na.rm = T), y = nrow(x):1,
-                   type = "l", frame = FALSE, yaxt = "n",
-                   ylab = "", xlab = NULL
+      type = "l", frame = FALSE, yaxt = "n",
+      ylab = "", xlab = NULL
     )
-    graphics::abline(v = avage, col="red")
+    graphics::abline(v = avage, col = "red")
 
   } else {
     graphics::plot(unlist(x), type = "l", main = "1 column data")
