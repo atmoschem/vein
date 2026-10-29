@@ -19,7 +19,7 @@ SQL, Java, a MOVES executable or a network connection.
 | Vehicle model years | 2000--2025 where MOVES reports that combination |
 | Average speed bins | All 16 MOVES positive-speed bins |
 | Meteorology | 20, 10 and 30 degrees C for hours 1, 2 and 3 respectively; RH 50% |
-| Time / fuel context | January weekday, with EPA default fuel and other inputs |
+| Time / fuel context | January weekend day (dayID 2), with EPA default fuel and other inputs |
 | Rows | 86,304 (every group has 16 speed bins) |
 
 Start exhaust is a separate event-based table: 5,394 rows of CO/NOx in g/start,
